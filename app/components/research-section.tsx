@@ -21,29 +21,46 @@ interface Publication {
   additionalImages?: Array<{
     src: string;
     alt: string;
-    width?: number;
-    height?: number;
+    width?: number; // Width in pixels (used for image optimization)
+    height?: number; // Height in pixels (used for image optimization)
   }>;
 }
 
 // Create a wrapper component that combines ProjectCard with expandable content
-const PublicationCard = ({ publication }: { publication: Publication }) => {
-  const [expanded, setExpanded] = useState(false);
+const PublicationCard = ({
+  publication,
+  index,
+  expanded,
+  setExpanded,
+}: {
+  publication: Publication;
+  index: number;
+  expanded: number | null;
+  setExpanded: (index: number | null) => void;
+}) => {
+  const isExpanded = expanded === index;
   const [contentHeight, setContentHeight] = useState("0px");
   const contentRef = useRef<HTMLDivElement>(null);
+  const imageRef = useRef<HTMLDivElement>(null);
+  const [imageWidth, setImageWidth] = useState<number>(0);
+
+  // Capture the image width when first rendered
+  useEffect(() => {
+    if (imageRef.current && !isExpanded) {
+      setImageWidth(imageRef.current.offsetWidth);
+    }
+  }, []);
 
   // Handle height measurement for smooth animation
   useEffect(() => {
-    if (expanded && contentRef.current) {
-      // Get the scrollHeight to determine the full height of the content
+    if (isExpanded && contentRef.current) {
       const height = contentRef.current.scrollHeight;
       setContentHeight(`${height}px`);
     } else {
       setContentHeight("0px");
     }
-  }, [expanded]);
+  }, [isExpanded]);
 
-  // Convert links to a primary link for the ProjectCard
   const primaryLink =
     publication.links?.pdf ||
     publication.links?.demo ||
@@ -51,151 +68,170 @@ const PublicationCard = ({ publication }: { publication: Publication }) => {
     "#";
 
   return (
-    <div className="relative mb-8">
-      {/* Card container */}
-      <div
-        onClick={() => setExpanded(!expanded)}
-        className="cursor-pointer overflow-hidden rounded-lg border bg-card text-card-foreground shadow-md transition-all duration-300 ease-in-out"
-      >
-        {/* Card Content */}
-        <div className="aspect-video w-full overflow-hidden">
-          <Image
-            src={
-              publication.coverImage || "/placeholder.svg?height=400&width=600"
-            }
-            alt={publication.title}
-            width={600}
-            height={400}
-            className="h-full w-full object-cover transition-all hover:scale-105 duration-300"
-          />
-        </div>
-
-        <div className="p-4">
-          <h3 className="text-xl font-bold">{publication.title}</h3>
-
-          <p className="text-sm text-muted-foreground mt-1">
-            {publication.authors.join(", ")}
-            <span className="ml-2 italic">
-              (
-              {publication.type.charAt(0).toUpperCase() +
-                publication.type.slice(1)}
-              )
-            </span>
-          </p>
-
-          {/* Always show first paragraph */}
-          <div className="mt-3 text-muted-foreground">
-            <p>
-              {publication.description[0].substring(0, 150) +
-                (publication.description[0].length > 150 && !expanded
-                  ? "..."
-                  : "")}
-              {expanded && publication.description[0].length > 150
-                ? publication.description[0].substring(150)
-                : ""}
-            </p>
-          </div>
-
-          {/* Expandable content area - contains additional paragraphs */}
-          <div
-            ref={contentRef}
-            style={{
-              height: contentHeight,
-              opacity: expanded ? 1 : 0,
-              visibility: expanded ? "visible" : "hidden", // Ensure content is clickable only when expanded
-            }}
-            className="mt-4 overflow-hidden transition-all duration-500 ease-in-out"
-          >
-            {/* Additional paragraphs (2nd and onwards) */}
-            <div className="space-y-4 text-muted-foreground">
-              {publication.description.slice(1).map((paragraph, idx) => (
-                <p key={idx}>{paragraph}</p>
-              ))}
+    <div
+      className={`mb-8 transition-all duration-500 ease-in-out ${
+        isExpanded ? "col-span-full" : "col-span-1"
+      }`}
+    >
+      <div className="relative">
+        {/* Card container */}
+        <div
+          onClick={() => setExpanded(isExpanded ? null : index)}
+          className="cursor-pointer overflow-hidden rounded-lg border bg-card text-card-foreground shadow-md transition-all duration-300 ease-in-out"
+        >
+          {/* Card Content */}
+          <div className="flex flex-col">
+            {/* Image with fixed width when expanded */}
+            <div
+              ref={imageRef}
+              style={
+                isExpanded && imageWidth ? { maxWidth: `${imageWidth}px` } : {}
+              }
+              className={isExpanded ? "ml-0" : ""}
+            >
+              <div className="aspect-video w-full overflow-hidden">
+                <Image
+                  src={
+                    publication.coverImage ||
+                    "/placeholder.svg?height=400&width=600"
+                  }
+                  alt={publication.title}
+                  width={600}
+                  height={400}
+                  className="h-full w-full object-cover transition-all hover:scale-105 duration-300"
+                />
+              </div>
             </div>
 
-            {/* Additional images */}
-            {publication.additionalImages &&
-              publication.additionalImages.length > 0 && (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-6">
-                  {publication.additionalImages.map((image, idx) => (
-                    <div
-                      key={idx}
-                      className="relative h-48 overflow-hidden rounded-md border"
-                    >
-                      <Image
-                        src={image.src}
-                        alt={image.alt}
-                        fill
-                        className="object-contain"
-                      />
-                    </div>
-                  ))}
+            <div className="p-4 flex flex-col flex-grow">
+              <h3 className="text-xl font-medium">{publication.title}</h3>
+
+              <p className="text-sm text-muted-foreground mt-1">
+                {publication.authors.join(", ")}
+              </p>
+
+              {/* Always show first paragraph in preview */}
+              <div
+                className={`mt-3 text-muted-foreground ${
+                  isExpanded ? "" : "line-clamp-3"
+                }`}
+              >
+                <p>
+                  {!isExpanded
+                    ? publication.description[0].substring(0, 150) +
+                      (publication.description[0].length > 150 ? "..." : "")
+                    : publication.description[0]}
+                </p>
+              </div>
+
+              {/* Expandable content area - only shown when expanded */}
+              {isExpanded && (
+                <div
+                  ref={contentRef}
+                  style={{
+                    height: contentHeight,
+                    opacity: isExpanded ? 1 : 0,
+                    transition:
+                      "height 0.5s ease-in-out, opacity 0.5s ease-in-out",
+                  }}
+                  className="mt-4 overflow-hidden"
+                >
+                  {/* Additional paragraphs (2nd and onwards) */}
+                  <div className="space-y-4 text-muted-foreground">
+                    {publication.description.slice(1).map((paragraph, idx) => (
+                      <p key={idx}>{paragraph}</p>
+                    ))}
+                  </div>
+
+                  {/* Additional images */}
+                  {publication.additionalImages &&
+                    publication.additionalImages.length > 0 && (
+                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mt-6">
+                        {publication.additionalImages.map((image, idx) => (
+                          <div
+                            key={idx}
+                            className="relative h-48 overflow-hidden rounded-md border"
+                          >
+                            <Image
+                              src={image.src}
+                              alt={image.alt}
+                              fill
+                              className="object-contain"
+                            />
+                          </div>
+                        ))}
+                      </div>
+                    )}
                 </div>
               )}
+            </div>
           </div>
         </div>
-      </div>
 
-      {/* Icons for links that appear on the card */}
-      <div className="absolute top-4 right-4 flex space-x-2 z-10">
-        {publication.links?.demo && (
-          <a
-            href={publication.links.demo}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-primary text-primary-foreground p-2 rounded-full hover:bg-primary/90 transition-colors"
-            title="View Demo"
-            onClick={(e) => e.stopPropagation()}
+        {/* Icons for links that appear on the card */}
+        <div className="absolute top-4 right-4 flex space-x-2 z-10">
+          {publication.links?.demo && (
+            <a
+              href={publication.links.demo}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-primary text-primary-foreground p-2 rounded-full hover:bg-primary/90 transition-colors"
+              title="View Demo"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <FaPlay size={16} />
+            </a>
+          )}
+
+          {publication.links?.github && (
+            <a
+              href={publication.links.github}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-foreground text-background p-2 rounded-full hover:bg-foreground/90 transition-colors"
+              title="View Source Code"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <FaGithub size={16} />
+            </a>
+          )}
+
+          {publication.links?.pdf && (
+            <a
+              href={publication.links.pdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-muted text-foreground p-2 rounded-full hover:bg-muted/90 transition-colors"
+              title="Read Paper"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <FaFilePdf size={16} />
+            </a>
+          )}
+
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setExpanded(isExpanded ? null : index);
+            }}
+            className={`bg-muted text-muted-foreground p-2 rounded-full hover:bg-muted/90 transition-all duration-300 ${
+              isExpanded ? "rotate-180" : "rotate-0"
+            }`}
+            title={isExpanded ? "Show less" : "Show more"}
+            aria-expanded={isExpanded}
           >
-            <FaPlay size={16} />
-          </a>
-        )}
-
-        {publication.links?.github && (
-          <a
-            href={publication.links.github}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-foreground text-background p-2 rounded-full hover:bg-foreground/90 transition-colors"
-            title="View Source Code"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <FaGithub size={16} />
-          </a>
-        )}
-
-        {publication.links?.pdf && (
-          <a
-            href={publication.links.pdf}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-destructive text-destructive-foreground p-2 rounded-full hover:bg-destructive/90 transition-colors"
-            title="Read Paper"
-            onClick={(e) => e.stopPropagation()}
-          >
-            <FaFilePdf size={16} />
-          </a>
-        )}
-
-        <button
-          onClick={(e) => {
-            e.stopPropagation();
-            setExpanded(!expanded);
-          }}
-          className={`bg-muted text-muted-foreground p-2 rounded-full hover:bg-muted/90 transition-all duration-300 ${
-            expanded ? "rotate-180" : "rotate-0"
-          }`}
-          title={expanded ? "Show less" : "Show more"}
-          aria-expanded={expanded}
-        >
-          <FaChevronDown size={16} />
-        </button>
+            <FaChevronDown size={16} />
+          </button>
+        </div>
       </div>
     </div>
   );
 };
 
 export default function ResearchSection() {
+  // Manage which publication is expanded (only one at a time)
+  const [expandedCard, setExpandedCard] = useState<number | null>(null);
+
   // Sample data for one publication
   const publications: Publication[] = [
     {
@@ -203,7 +239,7 @@ export default function ResearchSection() {
       type: "dissertation",
       title: "New Applications of the Nearest-neighbor Chain Algorithm",
       authors: ["Nil Mamano"],
-      coverImage: "nnc/localGreedyTSPcrop.gif",
+      coverImage: "/blog/greedy/localGreedyTSPcrop.gif",
       links: {
         pdf: "/thesis/nilthesis.pdf",
       },
@@ -233,7 +269,35 @@ export default function ResearchSection() {
         },
       ],
     },
-    // We'll add more publications later
+    // Let's add a dummy publication to test the grid layout
+    {
+      id: "dummy1",
+      type: "conference",
+      title: "Stable-Matching Voronoi Diagrams",
+      authors: ["Nil Mamano", "David Eppstein", "Michael Goodrich"],
+      coverImage: "/placeholder.svg?height=400&width=600",
+      links: {
+        pdf: "#",
+      },
+      description: [
+        "This is a placeholder description for testing the grid layout.",
+        "This is a second paragraph to test the expansion behavior.",
+      ],
+    },
+    {
+      id: "dummy2",
+      type: "conference",
+      title: "Euclidean TSP and Motorcycle Graphs",
+      authors: ["Nil Mamano", "Another Author"],
+      coverImage: "/placeholder.svg?height=400&width=600",
+      links: {
+        pdf: "#",
+      },
+      description: [
+        "Another placeholder description for testing the grid layout.",
+        "This is a second paragraph to test the expansion behavior.",
+      ],
+    },
   ];
 
   // Group publications by type
@@ -262,9 +326,15 @@ export default function ResearchSection() {
         {/* PhD Dissertation Section */}
         <div className="mb-12">
           <h3 className="text-2xl font-semibold mb-6">PhD Dissertation</h3>
-          <div className="grid grid-cols-1 gap-4">
-            {dissertations.map((publication) => (
-              <PublicationCard key={publication.id} publication={publication} />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {dissertations.map((publication, index) => (
+              <PublicationCard
+                key={publication.id}
+                publication={publication}
+                index={index}
+                expanded={expandedCard}
+                setExpanded={setExpandedCard}
+              />
             ))}
           </div>
         </div>
@@ -275,11 +345,14 @@ export default function ResearchSection() {
             Conference Publications
           </h3>
           {conferencePublications.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {conferencePublications.map((publication) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {conferencePublications.map((publication, index) => (
                 <PublicationCard
                   key={publication.id}
                   publication={publication}
+                  index={dissertations.length + index}
+                  expanded={expandedCard}
+                  setExpanded={setExpandedCard}
                 />
               ))}
             </div>
@@ -292,11 +365,16 @@ export default function ResearchSection() {
         <div className="mb-12">
           <h3 className="text-2xl font-semibold mb-6">Journal Publications</h3>
           {journalPublications.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {journalPublications.map((publication) => (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {journalPublications.map((publication, index) => (
                 <PublicationCard
                   key={publication.id}
                   publication={publication}
+                  index={
+                    dissertations.length + conferencePublications.length + index
+                  }
+                  expanded={expandedCard}
+                  setExpanded={setExpandedCard}
                 />
               ))}
             </div>
