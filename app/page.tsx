@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import ProjectCard from "./components/project-card";
 import TechStack from "./components/tech-stack";
+import ResearchSection from "./components/research-section";
 
 export default function Page() {
   return (
@@ -349,6 +350,8 @@ export default function Page() {
             </div>
           </div>
         </section>
+
+        <ResearchSection />
 
         <section id="projects" className="py-12 md:py-24 lg:py-32">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-12 text-center">
