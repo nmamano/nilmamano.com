@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  font-size: 112.5%; /* This sets the base to 18px (16px × 1.125 = 18px) */
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -50,17 +54,17 @@ body {
   }
   .dark {
     --background: 220 40% 13%; /* Your chosen muted dark blue */
-    --foreground: 220 15% 95%; /* Slightly warm white */
+    --foreground: 220 10% 98%; /* Increased to near-white for better contrast */
     --card: 220 40% 11%; /* Slightly darker than background */
-    --card-foreground: 220 15% 95%;
+    --card-foreground: 220 10% 98%; /* Matching main foreground */
     --popover: 220 40% 11%; /* Matches card */
-    --popover-foreground: 220 15% 95%;
+    --popover-foreground: 220 10% 98%;
     --primary: 220 60% 50%; /* More visible but not harsh blue */
-    --primary-foreground: 220 15% 95%;
+    --primary-foreground: 220 10% 98%;
     --secondary: 220 35% 16%; /* Slightly lighter than background */
-    --secondary-foreground: 220 15% 95%;
+    --secondary-foreground: 220 10% 98%;
     --muted: 220 35% 16%; /* Matches secondary */
-    --muted-foreground: 220 20% 70%; /* Softer text */
+    --muted-foreground: 220 15% 80%; /* Brightened for better readability */
     --accent: 220 40% 20%; /* Subtle accent */
     --accent-foreground: 220 15% 95%;
     --destructive: 0 60% 50%; /* Muted red for destructive actions */
