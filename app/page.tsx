@@ -38,9 +38,15 @@ export default function Page() {
               </Link>
             </nav>
           </div>
-          <Button variant="outline" className="ml-auto">
-            Resume
-          </Button>
+          <div className="ml-auto">
+            <Link
+              href="/resume/Resume_NilMamano.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Button variant="outline">Resume</Button>
+            </Link>
+          </div>
         </div>
       </header>
 
@@ -252,7 +258,15 @@ export default function Page() {
                     >
                       Research
                     </Link>{" "}
-                    for more.
+                    for more or download my{" "}
+                    <Link
+                      href="/resume/CV_NilMamano.pdf"
+                      className="text-primary hover:underline"
+                      target="_blank"
+                    >
+                      academic CV
+                    </Link>
+                    .
                   </p>
                 </div>
 

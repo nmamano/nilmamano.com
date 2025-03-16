@@ -26,3 +26,14 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# LaTeX compilation artifacts
+public/resume/*.aux
+public/resume/*.log
+public/resume/*.out
+public/resume/*.toc
+public/resume/*.lof
+public/resume/*.lot
+public/resume/*.fls
+public/resume/*.synctex.gz
+public/resume/*.fdb_latexmk
