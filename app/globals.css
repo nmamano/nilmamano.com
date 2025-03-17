@@ -53,9 +53,9 @@ body {
     --sidebar-ring: 217.2 91.2% 59.8%;
   }
   .dark {
-    --background: 220 40% 13%; /* Your chosen muted dark blue */
+    --background: 220 40% 14%; /* Your chosen muted dark blue */
     --foreground: 220 10% 98%; /* Increased to near-white for better contrast */
-    --card: 220 40% 11%; /* Slightly darker than background */
+    --card: 220 40% 10%; /* Slightly darker than background */
     --card-foreground: 220 10% 98%; /* Matching main foreground */
     --popover: 220 40% 11%; /* Matches card */
     --popover-foreground: 220 10% 98%;

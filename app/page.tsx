@@ -3,9 +3,9 @@ import { FaXTwitter, FaLinkedin, FaGithub } from "react-icons/fa6";
 import { SiGooglescholar } from "react-icons/si";
 import Link from "next/link";
 import Image from "next/image";
-import ProjectCard from "./components/project-card";
 import TechStack from "./components/tech-stack";
 import ResearchSection from "./components/research-section";
+import ProjectsSection from "./components/projects-section";
 
 export default function Page() {
   return (
@@ -366,34 +366,7 @@ export default function Page() {
 
         <ResearchSection />
 
-        <section id="projects" className="py-12 md:py-24 lg:py-32">
-          <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-12 text-center">
-            Projects
-          </h2>
-          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            <ProjectCard
-              title="E-commerce Platform"
-              description="A full-stack e-commerce platform built with Next.js, Prisma, and Stripe integration."
-              image="/placeholder.svg?height=400&width=600"
-              link="https://github.com"
-              tags={["Next.js", "Prisma", "Stripe"]}
-            />
-            <ProjectCard
-              title="Task Management App"
-              description="A real-time task management application with team collaboration features."
-              image="/placeholder.svg?height=400&width=600"
-              link="https://github.com"
-              tags={["React", "Node.js", "Socket.io"]}
-            />
-            <ProjectCard
-              title="AI Chat Interface"
-              description="An AI-powered chat interface with natural language processing capabilities."
-              image="/placeholder.svg?height=400&width=600"
-              link="https://github.com"
-              tags={["OpenAI", "Next.js", "TailwindCSS"]}
-            />
-          </div>
-        </section>
+        <ProjectsSection />
 
         <section className="py-12 md:py-24 lg:py-32">
           <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-12 text-center">
