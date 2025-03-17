@@ -34,12 +34,6 @@ export default function Page() {
               >
                 Projects
               </Link>
-              <Link
-                href="#contact"
-                className="transition-colors hover:text-foreground/80"
-              >
-                Contact
-              </Link>
             </nav>
           </div>
           <div className="ml-auto">
