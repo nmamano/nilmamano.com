@@ -50,17 +50,6 @@ const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "bctci-parser",
-    title: "BCTCI Problem Parser",
-    coverImage: "/book-cover.png", // You'll need to add this image
-    links: {
-      demo: "https://bctci.co",
-    },
-    description: [
-      "The online platform that goes along with the book 'Beyond Cracking the Coding Interview' (built by interviewing.io) allows you to try to solve all 200+ problems in the book and shows you solutions in your preferred language among Python, JS, Java, and C++. To make this possible, I built a script that, for each problem, takes the raw solutions in all four languages, runs their tests, and then parses the source code to detect top-level definitions. This allows us (the authors) to inject the corresponding snippets into the solution articles in a language-agnostic way (from a single source solution document, the script generates four different solution articles, one for each language, by injecting the appropriate code snippets). The repo is private.",
-    ],
-  },
-  {
     id: "merging-geometry",
     title: "Merging Geometries",
     coverImage: "/merging_geometry/twisted_square_torus.gif", // You'll need to add this image
@@ -84,18 +73,18 @@ const PROJECTS: Project[] = [
         scale: 1,
       },
       {
-        src: "/merging_geometry/octahedron_bad.gif",
+        src: "/merging_geometry/octahedron2.png",
+        alt: "Merging octahedron faces (2)",
+        scale: 1,
+      },
+      {
+        src: "/merging_geometry/2face.gif",
         alt: "Blender experiment",
         scale: 1,
       },
       {
         src: "/merging_geometry/octahedron1.png",
         alt: "Merging octahedron faces (1)",
-        scale: 1,
-      },
-      {
-        src: "/merging_geometry/octahedron2.png",
-        alt: "Merging octahedron faces (2)",
         scale: 1,
       },
     ],
@@ -146,6 +135,30 @@ const PROJECTS: Project[] = [
     ],
     additionalImages: [],
   },
+  {
+    id: "bctci-parser",
+    title: "BCTCI Problem Parser",
+    coverImage: "/book-cover.png", // You'll need to add this image
+    links: {
+      demo: "https://bctci.co",
+    },
+    description: [
+      "The online platform that goes along with the book 'Beyond Cracking the Coding Interview' (built by interviewing.io) allows you to try to solve all 200+ problems in the book and shows you solutions in your preferred language among Python, JS, Java, and C++. To make this possible, I built a script that, for each problem, takes the raw solutions in all four languages, runs their tests, and then parses the source code to detect top-level definitions. This allows us (the authors) to inject the corresponding snippets into the solution articles in a language-agnostic way (from a single source solution document, the script generates four different solution articles, one for each language, by injecting the appropriate code snippets). The repo is private.",
+    ],
+  },
+  {
+    id: "ttlcache",
+    title: "LRU + TTL Cache",
+    coverImage: "/multiplicative_hashing.png", // You'll need to add this image
+    links: {
+      github: "https://github.com/nmamano/ttlcache",
+    },
+    description: [
+      "An in-memory hash table that acts as a Cache for a Key-Value storage. It is inspired by Redis and Memcached. It has an LRU (least recently used) eviction mechanism, and it also supports timeouts: entries expire after a certain TTL (<q>time-to-live</q>). The project focuses on how to handle expired entries. They can be handled in two ways: 1) passively, when they are <q>discovered</q> through read/write operations. 2) actively, by searching for them.",
+
+      'Using only passive removal may result in the LRU mechanism evicting entries that are still <q>alive</q> while the cache is poluted by expired entries. Memcached uses a <a href="https://memcached.org/blog/modern-lru/" class="text-primary hover:underline" target="_blank" onClick="event.stopPropagation()">segmented LRU mechanism</a> which takes TTL\'s into account. It can be considered as a type of passive removal. In contrast, Redis implements an active <a href="https://redis.io/commands/expire" class="text-primary hover:underline" target="_blank" onClick="event.stopPropagation()">probabilistic algorithm</a> to keep the fraction of expired entries low, which I implemented in this project. In the future, this project may serve as a testbed for comparing different algorithms for handling expired entries.',
+    ],
+  },
   // {
   //   id: "simplified-svg",
   //   title: "Simplified SVG",
@@ -180,19 +193,6 @@ const PROJECTS: Project[] = [
   //     "For the demo, use the right arrow key to show the slides (not possible on mobile browsers). See more on the github repo.",
   //   ],
   // },
-  {
-    id: "ttlcache",
-    title: "LRU + TTL Cache",
-    coverImage: "/multiplicative_hashing.png", // You'll need to add this image
-    links: {
-      github: "https://github.com/nmamano/ttlcache",
-    },
-    description: [
-      "An in-memory hash table that acts as a Cache for a Key-Value storage. It is inspired by Redis and Memcached. It has an LRU (least recently used) eviction mechanism, and it also supports timeouts: entries expire after a certain TTL (<q>time-to-live</q>). The project focuses on how to handle expired entries. They can be handled in two ways: 1) passively, when they are <q>discovered</q> through read/write operations. 2) actively, by searching for them.",
-
-      'Using only passive removal may result in the LRU mechanism evicting entries that are still <q>alive</q> while the cache is poluted by expired entries. Memcached uses a <a href="https://memcached.org/blog/modern-lru/" class="text-primary hover:underline" target="_blank" onClick="event.stopPropagation()">segmented LRU mechanism</a> which takes TTL\'s into account. It can be considered as a type of passive removal. In contrast, Redis implements an active <a href="https://redis.io/commands/expire" class="text-primary hover:underline" target="_blank" onClick="event.stopPropagation()">probabilistic algorithm</a> to keep the fraction of expired entries low, which I implemented in this project. In the future, this project may serve as a testbed for comparing different algorithms for handling expired entries.',
-    ],
-  },
 ];
 
 // Create a wrapper component that combines ProjectCard with expandable content
@@ -508,13 +508,13 @@ export default function ProjectsSection() {
       </h2>
       <div className="max-w-6xl mx-auto">
         <p className="text-muted-foreground mb-8">
-          Click on a project for a brief explanation. More projects on my{" "}
+          Click on a project for a brief explanation. More projects on{" "}
           <Link
             href="https://github.com/nmamano"
             className="text-primary hover:underline"
             target="_blank"
           >
-            GitHub page
+            GitHub
           </Link>
           .
         </p>
