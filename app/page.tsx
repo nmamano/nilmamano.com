@@ -26,6 +26,12 @@ export default function Page() {
                 About
               </Link>
               <Link
+                href="#research"
+                className="transition-colors hover:text-foreground/80"
+              >
+                Research
+              </Link>
+              <Link
                 href="#projects"
                 className="transition-colors hover:text-foreground/80"
               >
@@ -209,16 +215,23 @@ export default function Page() {
                     </Link>
                     ,{" "}
                     <Link href="#" className="text-primary hover:underline">
-                      blog article
+                      blog post
                     </Link>
-                    ,
+                    ,{" "}
                     <Link
                       href="/dissertation/nildissertationslides.pdf"
                       className="text-primary hover:underline"
                       target="_blank"
                     >
-                      {" "}
                       defense slides
+                    </Link>
+                    ,{" "}
+                    <Link
+                      href="https://11011110.github.io/blog/2019/09/26/congratulations-dr-mamano.html"
+                      className="text-primary hover:underline"
+                      target="_blank"
+                    >
+                      David's blog
                     </Link>
                     ) studies how to relax the "greedy choice" in certain greedy
                     algorithms without affecting the final solution. This idea,

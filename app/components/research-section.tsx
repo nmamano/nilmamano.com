@@ -94,6 +94,27 @@ const PublicationCard = ({
     }
   };
 
+  // Add this useEffect to handle links in the description
+  useEffect(() => {
+    if (isExpanded) {
+      // Find all links in the expanded content and prevent them from collapsing the card
+      const links = contentRef.current?.querySelectorAll("a");
+      links?.forEach((link) => {
+        link.addEventListener("click", (e) => {
+          e.stopPropagation();
+        });
+      });
+
+      return () => {
+        links?.forEach((link) => {
+          link.removeEventListener("click", (e) => {
+            e.stopPropagation();
+          });
+        });
+      };
+    }
+  }, [isExpanded]);
+
   const primaryLink =
     publication.links?.pdf ||
     publication.links?.demo ||
@@ -109,7 +130,14 @@ const PublicationCard = ({
       <div className="relative">
         {/* Card container */}
         <div
-          onClick={() => toggleExpanded(index)}
+          onClick={(e) => {
+            // Don't trigger expansion if user is selecting text
+            const selection = window.getSelection();
+            if (selection && selection.toString().length > 0) {
+              return; // Exit without toggling if text is selected
+            }
+            toggleExpanded(index);
+          }}
           className="cursor-pointer overflow-hidden rounded-lg border bg-card text-card-foreground shadow-md transition-all duration-300 ease-in-out"
         >
           {/* Card Content */}
@@ -170,12 +198,18 @@ const PublicationCard = ({
                   isExpanded ? "" : "line-clamp-3"
                 }`}
               >
-                <p>
-                  {!isExpanded
-                    ? publication.description[0].substring(0, 150) +
-                      (publication.description[0].length > 150 ? "..." : "")
-                    : publication.description[0]}
-                </p>
+                {!isExpanded ? (
+                  <p>
+                    {publication.description[0].substring(0, 150) +
+                      (publication.description[0].length > 150 ? "..." : "")}
+                  </p>
+                ) : (
+                  <p
+                    dangerouslySetInnerHTML={{
+                      __html: publication.description[0],
+                    }}
+                  ></p>
+                )}
               </div>
 
               {/* Expandable content area - only shown when expanded */}
@@ -193,7 +227,10 @@ const PublicationCard = ({
                   {/* Additional paragraphs (2nd and onwards) */}
                   <div className="space-y-4 text-muted-foreground">
                     {publication.description.slice(1).map((paragraph, idx) => (
-                      <p key={idx}>{paragraph}</p>
+                      <p
+                        key={idx}
+                        dangerouslySetInnerHTML={{ __html: paragraph }}
+                      ></p>
                     ))}
                   </div>
 
@@ -255,7 +292,7 @@ const PublicationCard = ({
               href={publication.links.demo}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-primary text-primary-foreground p-2 rounded-full hover:bg-primary/90 transition-colors"
+              className="bg-muted text-foreground p-2 rounded-full hover:bg-muted/90 transition-colors"
               title="View Demo"
               onClick={(e) => e.stopPropagation()}
             >
@@ -268,7 +305,7 @@ const PublicationCard = ({
               href={publication.links.github}
               target="_blank"
               rel="noopener noreferrer"
-              className="bg-foreground text-background p-2 rounded-full hover:bg-foreground/90 transition-colors"
+              className="bg-muted text-foreground p-2 rounded-full hover:bg-muted/90 transition-colors"
               title="View Source Code"
               onClick={(e) => e.stopPropagation()}
             >
@@ -429,7 +466,7 @@ export default function ResearchSection() {
         pdf: "https://arxiv.org/pdf/1902.06875.pdf",
       },
       description: [
-        "This paper contains some of the results from the thesis on speeding up greedy algorithms (read the thesis' summary above). For instance, we improve the runtime of the multi-fragment algorithm for Euclidean TSP from O(n²) to O(n log n).",
+        "This paper contains some of the results from the thesis on speeding up greedy algorithms (read the thesis' summary above). For instance, we improve the runtime of the multi-fragment algorithm for Euclidean TSP from O(n²) to O(n log n). See <a href='https://11011110.github.io/blog/2019/02/21/mutual-nearest-neighbors.html' class='text-primary hover:underline' target='_blank' onClick='event.stopPropagation()'>David's blog</a>.",
       ],
       additionalImages: [
         {
@@ -455,7 +492,7 @@ export default function ResearchSection() {
       description: [
         "Imagine that you have a set of facilities in the plane, such as post offices, and you are tasked with assigning a service region to each one, under two constraints. First, each service region should be close to the corresponding facility. Second, all the service regions should have the same area. If we drop the second condition, we end up with the well known Voronoi diagram. The Voronoi diagram assigns each point in the plane with the closest facility.",
 
-        "Stable matching Voronoi diagrams are a generalization that also addresses the second constraint by borrowing the notion of stable matching from the field of market design. Stable matching studies how to pair, e.g., buyers and sellers in an auction, in a way such that no one is better off by breaking the given assignment. Stable matching Voronoi diagrams model the facilities and the plane as the two sides of a market to be matched in such a manner. In this paper, we give an algorithm to construct these diagrams and show that they may have a quadratic number of faces.",
+        "Stable matching Voronoi diagrams are a generalization that also addresses the second constraint by borrowing the notion of stable matching from the field of market design. Stable matching studies how to pair, e.g., buyers and sellers in an auction, in a way such that no one is better off by breaking the given assignment. Stable matching Voronoi diagrams model the facilities and the plane as the two sides of a market to be matched in such a manner. In this paper, we give an algorithm to construct these diagrams and show that they may have a quadratic number of faces. See <a href='https://11011110.github.io/blog/2018/04/26/stable-marriage-voronoi.html' class='text-primary hover:underline' target='_blank' onClick='event.stopPropagation()'>David's blog</a>.",
       ],
       additionalImages: [
         {
@@ -482,7 +519,7 @@ export default function ResearchSection() {
         pdf: "https://arxiv.org/pdf/1803.04555.pdf",
       },
       description: [
-        "The problem in this paper is inspired by private-car services such as Uber or Lyft. We give a data structure that maintains a set of nodes in a graph (the drivers in a road network) subject to two operations: first, updates in the locations of the drivers. Second, queries asking for the closest driver to a given node (the location of a client requesting a ride). In the paper, we study how to strike a balance between the cost of updates and queries. Our technique is based on graph separators: road networks can be split into two similarly-sized parts with a small number of nodes connecting the two and no other edges between them. This is useful because if the closest driver to a client is in the other part, then it must pass through one of a small number of nodes.",
+        "The problem in this paper is inspired by private-car services such as Uber or Lyft. We give a data structure that maintains a set of nodes in a graph (the drivers in a road network) subject to two operations: first, updates in the locations of the drivers. Second, queries asking for the closest driver to a given node (the location of a client requesting a ride). In the paper, we study how to strike a balance between the cost of updates and queries. Our technique is based on graph separators: road networks can be split into two similarly-sized parts with a small number of nodes connecting the two and no other edges between them. This is useful because if the closest driver to a client is in the other part, then it must pass through one of a small number of nodes. See <a href='https://11011110.github.io/blog/2018/03/14/finding-nearest-open.html' class='text-primary hover:underline' target='_blank' onClick='event.stopPropagation()'>David's blog</a>.",
       ],
       additionalImages: [
         {
@@ -506,7 +543,7 @@ export default function ResearchSection() {
         pdf: "https://arxiv.org/pdf/1706.09593.pdf",
       },
       description: [
-        "In theory, political districts should be balanced in population and should have compact shapes. Partisan gerrymandering is the manipulation of district boundaries for political advantage. A potential solution is to use geometric 'politically-agnostic' algorithms to draw fair districts. In this paper, we consider the use of stable matching, a concept from market design, to assign districts to district centers. Depending on the center locations, we found that the resulting districts from stable matching may be concave or not even connected. This solution can be seen as a network-based variant of the stable-matching Voronoi diagrams studied in the ICALP'18 paper.",
+        "In theory, political districts should be balanced in population and should have compact shapes. Partisan gerrymandering is the manipulation of district boundaries for political advantage. A potential solution is to use geometric 'politically-agnostic' algorithms to draw fair districts. In this paper, we consider the use of stable matching, a concept from market design, to assign districts to district centers. Depending on the center locations, we found that the resulting districts from stable matching may be concave or not even connected. This solution can be seen as a network-based variant of the stable-matching Voronoi diagrams studied in the ICALP'18 paper. See <a href='https://11011110.github.io/blog/2017/06/29/stable-redistricting-in.html' class='text-primary hover:underline' target='_blank' onClick='event.stopPropagation()'>David's blog</a>.",
       ],
       additionalImages: [
         {
@@ -529,7 +566,7 @@ export default function ResearchSection() {
         pdf: "https://arxiv.org/pdf/1704.02303.pdf",
       },
       description: [
-        "Whereas paper ICALP'18 gives algorithms for stable-matching Voronoi diagrams in the plane, this paper gives algorithms for such diagrams in a pixelated setting. It also considers the use these diagrams for clustering. We show that they can be used to cluster data into compact and equal-sized clusters. In contrast, the classical k-means clustering algorithm optimizes for compactness, but is oblivious of cluster sizes.",
+        "Whereas paper ICALP'18 gives algorithms for stable-matching Voronoi diagrams in the plane, this paper gives algorithms for such diagrams in a pixelated setting. It also considers the use these diagrams for clustering. We show that they can be used to cluster data into compact and equal-sized clusters. In contrast, the classical k-means clustering algorithm optimizes for compactness, but is oblivious of cluster sizes. See <a href='https://11011110.github.io/blog/2017/04/11/stable-grid-matching.html' class='text-primary hover:underline' target='_blank' onClick='event.stopPropagation()'>David's blog</a>.",
       ],
       additionalImages: [
         {
@@ -628,7 +665,7 @@ export default function ResearchSection() {
       publisher: "Bioinformatics: Oxford Journals, 2018",
       authors: ["W. Hayes", "N. Mamano"],
       not_alphabetical_order: true,
-      coverImage: "/placeholder.svg?height=400&width=600",
+      coverImage: "/sana/netgo-diagram.png",
       links: {
         pdf: "https://academic.oup.com/bioinformatics/article/34/8/1345/4708230",
         github: "https://github.com/waynebhayes/SANA",
@@ -680,13 +717,21 @@ export default function ResearchSection() {
   return (
     <section id="research" className="py-12 md:py-24 lg:py-32 scroll-mt-16">
       <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-12 text-center">
-        Research
+        Research Publications
       </h2>
       <div className="max-w-6xl mx-auto">
         <p className="text-muted-foreground mb-8">
-          Click on a publication title for a brief summary. All papers are
-          freely available online. Authors are in alphabetical order—per
-          convention in CS theory—except when marked with "*".
+          Click on a publication for a brief summary. All papers are freely
+          available online. Authors are in alphabetical order—per convention in
+          CS theory—except when marked with "*". See also my{" "}
+          <Link
+            href="/resume/CV_NilMamano.pdf"
+            className="text-primary hover:underline"
+            target="_blank"
+          >
+            academic CV
+          </Link>
+          .
         </p>
 
         {/* Conference Publications Section - now first */}
@@ -749,16 +794,6 @@ export default function ResearchSection() {
               />
             ))}
           </div>
-        </div>
-
-        <div className="text-center mt-8">
-          <Link
-            href="/cv/CV_NilMamano.pdf"
-            className="text-primary hover:underline"
-            target="_blank"
-          >
-            <Button>View Academic CV</Button>
-          </Link>
         </div>
       </div>
     </section>
