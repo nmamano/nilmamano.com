@@ -3,6 +3,8 @@ import Link from "next/link";
 import AboutSection from "./components/about-section";
 import ResearchSection from "./components/research-section";
 import ProjectsSection from "./components/projects-section";
+import PersonalSection from "./components/personal-section";
+import MediaKitSection from "./components/media-kit-section";
 
 export default function Page() {
   return (
@@ -34,6 +36,18 @@ export default function Page() {
               >
                 Projects
               </Link>
+              <Link
+                href="#personal"
+                className="transition-colors hover:text-foreground/80"
+              >
+                Personal
+              </Link>
+              <Link
+                href="#media-kit"
+                className="transition-colors hover:text-foreground/80"
+              >
+                Media Kit
+              </Link>
             </nav>
           </div>
           <div className="ml-auto">
@@ -52,6 +66,8 @@ export default function Page() {
         <AboutSection />
         <ResearchSection />
         <ProjectsSection />
+        <PersonalSection />
+        <MediaKitSection />
       </main>
 
       <footer className="border-t">
