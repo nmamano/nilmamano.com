@@ -50,6 +50,57 @@ const PROJECTS: Project[] = [
     ],
   },
   {
+    id: "bctci-parser",
+    title: "BCTCI Problem Parser",
+    coverImage: "/book-cover.png", // You'll need to add this image
+    links: {
+      demo: "https://bctci.co",
+    },
+    description: [
+      "The online platform that goes along with the book 'Beyond Cracking the Coding Interview' (built by interviewing.io) allows you to try to solve all 200+ problems in the book and shows you solutions in your preferred language among Python, JS, Java, and C++. To make this possible, I built a script that, for each problem, takes the raw solutions in all four languages, runs their tests, and then parses the source code to detect top-level definitions. This allows us (the authors) to inject the corresponding snippets into the solution articles in a language-agnostic way (from a single source solution document, the script generates four different solution articles, one for each language, by injecting the appropriate code snippets). The repo is private.",
+    ],
+  },
+  {
+    id: "merging-geometry",
+    title: "Merging Geometries",
+    coverImage: "/merging_geometry/twisted_square_torus.gif", // You'll need to add this image
+    links: {
+      github: "https://github.com/nmamano/mobiustorus",
+    },
+    description: [
+      "I've been researching the types of shapes you can get by taking a 3D shape and 'merging' two of its faces. Blog post WIP.",
+    ],
+    additionalImages: [
+      {
+        src: "/merging_geometry/cube.png",
+        alt: "Cube with faces labeled",
+        scale: 1,
+        fullRow: true,
+        fullWidth: true,
+      },
+      {
+        src: "/merging_geometry/rules.png",
+        alt: "Rules for merging adjacent and opposite edges",
+        scale: 1,
+      },
+      {
+        src: "/merging_geometry/octahedron_bad.gif",
+        alt: "Blender experiment",
+        scale: 1,
+      },
+      {
+        src: "/merging_geometry/octahedron1.png",
+        alt: "Merging octahedron faces (1)",
+        scale: 1,
+      },
+      {
+        src: "/merging_geometry/octahedron2.png",
+        alt: "Merging octahedron faces (2)",
+        scale: 1,
+      },
+    ],
+  },
+  {
     id: "racso",
     title: "RACSO Online Judge (contribution)",
     coverImage: "/racso_benchmark.png", // You'll need to add this image
