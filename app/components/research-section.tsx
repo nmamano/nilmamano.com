@@ -735,9 +735,9 @@ export default function ResearchSection() {
           .
         </p>
 
-        {/* Conference Publications Section - now first */}
+        {/* Conference Publications Section */}
         <div className="mb-12">
-          <h3 className="text-2xl font-semibold mb-6">
+          <h3 className="text-2xl font-semibold mb-12 text-center">
             Conference Publications
           </h3>
           {conferencePublications.length > 0 ? (
@@ -757,9 +757,11 @@ export default function ResearchSection() {
           )}
         </div>
 
-        {/* Journal Publications Section - now second */}
+        {/* Journal Publications Section */}
         <div className="mb-12">
-          <h3 className="text-2xl font-semibold mb-6">Journal Publications</h3>
+          <h3 className="text-2xl font-semibold mb-12 text-center">
+            Journal Publications
+          </h3>
           {journalPublications.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {journalPublications.map((publication, index) => (
@@ -777,9 +779,11 @@ export default function ResearchSection() {
           )}
         </div>
 
-        {/* PhD Dissertation Section - now third/last */}
+        {/* PhD Dissertation Section */}
         <div className="mb-12">
-          <h3 className="text-2xl font-semibold mb-6">PhD Dissertation</h3>
+          <h3 className="text-2xl font-semibold mb-12 text-center">
+            PhD Dissertation
+          </h3>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {dissertations.map((publication, index) => (
               <PublicationCard
