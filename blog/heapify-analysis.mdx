@@ -50,7 +50,7 @@ Heapify uses the "bubble-down" procedure, which starts at a node that may not sa
   width="70%"
 />
 
-```py
+```python
   def bubble_down(self, idx):
     left_idx, right_idx = left_child(idx), right_child(idx)
     is_leaf = left_idx >= len(self.heap)
@@ -78,7 +78,7 @@ This figure shows the heapify steps for a min-heap. The first tree is the initia
 
 In the array-based heap implementation, `heapify()` looks like this:
 
-```py
+```python
   def heapify(self, arr):
     self.heap = arr
     for idx in range(len(self.heap) // 2, -1, -1):
