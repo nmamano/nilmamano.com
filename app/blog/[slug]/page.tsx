@@ -3,6 +3,8 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
 import { format } from "date-fns";
 import Link from "next/link";
+import Image from "next/image";
+import components from "../../../components/MdxComponents";
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
@@ -12,8 +14,18 @@ export async function generateStaticParams() {
   }));
 }
 
-export default function BlogPost({ params }: { params: { slug: string } }) {
-  const post = getPostBySlug(params.slug);
+// Make the component async and correctly handle params
+export default async function BlogPost({
+  params,
+}: {
+  params: { slug: string };
+}) {
+  // Await the params object before using it
+  const resolvedParams = await params;
+  const slug = resolvedParams.slug;
+
+  // Now use the resolved slug
+  const post = await getPostBySlug(slug);
 
   // If post doesn't exist, show 404
   if (!post) {
@@ -42,8 +54,30 @@ export default function BlogPost({ params }: { params: { slug: string } }) {
           )}
         </div>
 
+        {/* Cover Image */}
+        {post.coverImage && (
+          <div className="flex justify-center mb-8">
+            <div className="w-[300px] h-[192px] flex items-center justify-center">
+              <Image
+                src={post.coverImage}
+                alt={post.title}
+                width={300}
+                height={192}
+                style={{
+                  maxWidth: "100%",
+                  maxHeight: "100%",
+                  width: "auto",
+                  height: "auto",
+                  objectFit: "contain",
+                }}
+                className="rounded-md"
+              />
+            </div>
+          </div>
+        )}
+
         <div className="markdown-content">
-          <MDXRemote source={post.content} />
+          <MDXRemote source={post.content} components={components} />
         </div>
       </article>
     </div>

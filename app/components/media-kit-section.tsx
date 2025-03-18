@@ -63,7 +63,7 @@ export default function MediaKitSection() {
                   nilmamano.com
                 </Link>
               </li>
-              <li>nil @ mamano . com</li>
+              <li>nil at mamano dot com</li>
               <li>
                 <Link
                   href="https://linkedin.com/in/nilmamano"

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { getAllPosts } from "../lib/blog";
 import { format } from "date-fns";
 
@@ -22,45 +23,74 @@ export default function BlogIndex() {
               key={post.slug}
               className="border rounded-lg p-6 hover:shadow-md transition-shadow"
             >
-              <Link href={`/blog/${post.slug}`}>
-                <h2 className="text-2xl font-semibold hover:text-primary transition-colors mb-2">
-                  {post.title}
-                </h2>
-              </Link>
-
-              <div className="text-sm text-muted-foreground mb-4">
-                {post.date && (
-                  <time dateTime={new Date(post.date).toISOString()}>
-                    {format(new Date(post.date), "MMMM d, yyyy")}
-                  </time>
+              <div className="flex flex-col md:flex-row gap-6">
+                {/* Cover Image */}
+                {post.coverImage && (
+                  <div className="md:w-1/3">
+                    <Link href={`/blog/${post.slug}`}>
+                      <div className="w-full h-[192px] flex items-center justify-center">
+                        <Image
+                          src={post.coverImage}
+                          alt={post.title}
+                          width={300}
+                          height={192}
+                          style={{
+                            maxWidth: "100%",
+                            maxHeight: "100%",
+                            width: "auto",
+                            height: "auto",
+                            objectFit: "contain",
+                          }}
+                          className="rounded-md"
+                        />
+                      </div>
+                    </Link>
+                  </div>
                 )}
-              </div>
 
-              {post.excerpt && (
-                <p className="text-muted-foreground">{post.excerpt}</p>
-              )}
+                {/* Content */}
+                <div className={post.coverImage ? "md:w-2/3" : "w-full"}>
+                  <Link href={`/blog/${post.slug}`}>
+                    <h2 className="text-2xl font-semibold hover:text-primary transition-colors mb-2">
+                      {post.title}
+                    </h2>
+                  </Link>
 
-              <div className="mt-4">
-                <Link
-                  href={`/blog/${post.slug}`}
-                  className="text-primary hover:underline inline-flex items-center"
-                >
-                  Read more
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    className="h-4 w-4 ml-1"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
-                  </svg>
-                </Link>
+                  <div className="text-sm text-muted-foreground mb-4">
+                    {post.date && (
+                      <time dateTime={new Date(post.date).toISOString()}>
+                        {format(new Date(post.date), "MMMM d, yyyy")}
+                      </time>
+                    )}
+                  </div>
+
+                  {post.excerpt && (
+                    <p className="text-muted-foreground">{post.excerpt}</p>
+                  )}
+
+                  <div className="mt-4">
+                    <Link
+                      href={`/blog/${post.slug}`}
+                      className="text-primary hover:underline inline-flex items-center"
+                    >
+                      Read more
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 ml-1"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </Link>
+                  </div>
+                </div>
               </div>
             </article>
           ))
