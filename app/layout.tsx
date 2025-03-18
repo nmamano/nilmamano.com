@@ -1,4 +1,6 @@
 import { ThemeProvider } from "@/components/theme-provider";
+import { HeaderWithActiveLink } from "@/app/components/header-with-active-link";
+import { SiteFooter } from "@/app/components/site-footer";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -57,7 +59,13 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          {children}
+          <div className="min-h-screen flex flex-col">
+            <HeaderWithActiveLink />
+            <main className="container mx-auto max-w-7xl px-4 md:px-6 flex-grow">
+              {children}
+            </main>
+            <SiteFooter />
+          </div>
         </ThemeProvider>
       </body>
     </html>

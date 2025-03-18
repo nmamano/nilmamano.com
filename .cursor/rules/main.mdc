@@ -6,7 +6,8 @@ alwaysApply: true
 
 ## Context
 
-See context in [robot_instructions.md](mdc:robot_instructions.md)
+See context in [robot_instructions.md](mdc:robot_instructions.md) (it may be outdated)
+The main website page is [page.tsx](mdc:app/page.tsx).
 
 We are migrating a personal site from raw html/css.
 
