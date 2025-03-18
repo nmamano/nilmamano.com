@@ -26,6 +26,28 @@ body {
   .prose :not(pre) > code {
     @apply bg-muted px-1 py-0.5 rounded text-sm font-mono;
   }
+
+  .prose pre {
+    @apply bg-muted text-muted-foreground border border-border mt-4 mb-6 overflow-x-auto;
+  }
+
+  .dark .prose pre {
+    @apply bg-gray-900 border-gray-700;
+  }
+
+  /* Make code block font smaller */
+  pre, 
+  pre code,
+  pre[class*="language-"],
+  code[class*="language-"] {
+    font-size: 0.85rem !important; /* You can adjust this value */
+    line-height: 1.5 !important;
+  }
+  
+  /* Keep inline code (not in pre blocks) at a reasonable size */
+  :not(pre) > code {
+    font-size: 0.9rem !important;
+  }
 }
 
 @layer base {

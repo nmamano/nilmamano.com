@@ -105,7 +105,7 @@ A _perfect_ binary tree is a complete tree where the last level is full:
 
 For instance:
 
-```py
+```
 - Height 1: 1 leaf,   0 internal nodes,  1 total
 - Height 2: 2 leaves, 1 internal node,   3 total
 - Height 3: 4 leaves, 3 internal nodes,  7 total
@@ -163,7 +163,7 @@ And that's the proof!
 
 We can compute the actual number of swaps needed, in the worst case, for concrete heights:
 
-```py
+```
 - Height 1 (  1 node ):   0 swaps
 - Height 2 (  3 nodes):   1 swap
 - Height 3 (  7 nodes):   4 swaps: 2 to bubble down the root and  1*2 for the 2 subtrees of the root
@@ -178,7 +178,7 @@ We can see that the number of swaps never catches up with the root, per the Main
 
 We can also show how the number of nodes grows vs the number of swaps:
 
-```py
+```
 - Height 1 to 2: the size increases from  1 to  3. We add  2 nodes and  1 swap
 - Height 2 to 3: the size increases from  3 to  7. We add  4 nodes and  3 swaps
 - Height 3 to 4: the size increases from  7 to 15. We add  8 nodes and  7 swaps
@@ -188,7 +188,7 @@ We can also show how the number of nodes grows vs the number of swaps:
 
 ## Appendix: Full heap implementation
 
-```py
+```python
 def parent(idx):
   if idx == 0: return -1  # The root has no parent.
   return (idx - 1) // 2

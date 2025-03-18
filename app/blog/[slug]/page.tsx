@@ -5,6 +5,7 @@ import { format } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
 import components from "../../../components/MdxComponents";
+import ClientSyntaxHighlighter from "../../../components/ClientSyntaxHighlighter";
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
@@ -76,8 +77,12 @@ export default async function BlogPost({
           </div>
         )}
 
+        {/* MDX content first rendered server-side */}
         <div className="markdown-content">
-          <MDXRemote source={post.content} components={components} />
+          {/* Then wrapped with client-side syntax highlighter */}
+          <ClientSyntaxHighlighter>
+            <MDXRemote source={post.content} components={components} />
+          </ClientSyntaxHighlighter>
         </div>
       </article>
     </div>
