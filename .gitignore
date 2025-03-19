@@ -37,3 +37,5 @@ public/resume/*.lot
 public/resume/*.fls
 public/resume/*.synctex.gz
 public/resume/*.fdb_latexmk
+
+todo.md

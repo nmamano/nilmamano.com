@@ -6,6 +6,7 @@ interface BlogImageProps {
   alt: string;
   width?: string;
   centered?: boolean;
+  needsBackground?: boolean;
 }
 
 export function BlogImage({
@@ -13,7 +14,11 @@ export function BlogImage({
   alt,
   width = "100%",
   centered = true,
+  needsBackground = false,
 }: BlogImageProps) {
+  // Check if the image is a PNG
+  const isPng = src.toLowerCase().endsWith(".png");
+
   return (
     <div
       style={{
@@ -25,7 +30,13 @@ export function BlogImage({
       <img
         src={src}
         alt={alt}
-        style={{ width, maxWidth: "100%" }}
+        style={{
+          width,
+          maxWidth: "100%",
+          backgroundColor: needsBackground ? "white" : "transparent",
+          padding: needsBackground ? "16px" : "0",
+          borderRadius: needsBackground ? "8px" : "0",
+        }}
         className="rounded-md"
       />
     </div>
