@@ -23,15 +23,16 @@ export default function PersonalSection() {
           </p>
 
           <p>
-            During my time in southern California, I started hiking. Here are{" "}
+            During my time in southern California, I started hiking and going on
+            motorcycle trips. Here are{" "}
             <Link
               href="https://www.instagram.com/nil_in_the_desert/"
               className="text-primary hover:underline"
               target="_blank"
             >
               some pictures
-            </Link>{" "}
-            from hikes.
+            </Link>
+            .
           </p>
 
           <p>
@@ -47,12 +48,21 @@ export default function PersonalSection() {
             .
           </p>
 
-          <div className="mt-8 flex justify-center">
+          <div className="h-6"></div>
+
+          <div className="flex justify-center gap-16 flex-col sm:flex-row">
             <Image
-              src="/deathvalley.jpg"
+              src="/personal/deathvalley.jpg"
               alt="Playing guitar in Death Valley"
-              width={500}
-              height={500}
+              width={400}
+              height={400}
+              className="rounded-lg shadow-md"
+            />
+            <Image
+              src="/personal/cat.jpg"
+              alt="My cat relaxing"
+              width={400}
+              height={400}
               className="rounded-lg shadow-md"
             />
           </div>

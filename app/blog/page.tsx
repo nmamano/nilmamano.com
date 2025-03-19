@@ -9,7 +9,7 @@ export default function BlogIndex() {
   return (
     <div className="container mx-auto max-w-5xl px-4 py-12">
       <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-12 text-center">
-        Blog
+        Nil's Blog
       </h1>
 
       <div className="space-y-10">
