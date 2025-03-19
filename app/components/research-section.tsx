@@ -35,7 +35,7 @@ const PUBLICATIONS: Publication[] = [
     type: "dissertation",
     title: "New Applications of the Nearest-neighbor Chain Algorithm",
     authors: ["Nil Mamano"],
-    coverImage: "/blog/greedy-algorithms/localGreedyTSPcrop.gif",
+    coverImage: "/blog/greedy-algorithms/local_greedy_tsp_crop.gif",
     links: {
       pdf: "/thesis/nilthesis.pdf",
     },
