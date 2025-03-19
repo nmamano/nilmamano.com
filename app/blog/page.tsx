@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { getAllPosts } from "../lib/blog";
-import { format } from "date-fns";
+import { formatDate } from "../lib/date-utils";
 
 export default function BlogIndex() {
   const posts = getAllPosts();
@@ -58,9 +58,7 @@ export default function BlogIndex() {
 
                   <div className="text-sm text-muted-foreground mb-4">
                     {post.date && (
-                      <time dateTime={new Date(post.date).toISOString()}>
-                        {format(new Date(post.date), "MMMM d, yyyy")}
-                      </time>
+                      <time dateTime={post.date}>{formatDate(post.date)}</time>
                     )}
                   </div>
 

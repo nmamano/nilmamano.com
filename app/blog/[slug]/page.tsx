@@ -1,11 +1,11 @@
 import { getPostBySlug, getAllPostSlugs } from "../../lib/blog";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
-import { format } from "date-fns";
 import Link from "next/link";
 import Image from "next/image";
 import components from "../../../components/MdxComponents";
 import ClientSyntaxHighlighter from "../../../components/ClientSyntaxHighlighter";
+import { formatDate } from "../../lib/date-utils";
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {
@@ -49,9 +49,7 @@ export default async function BlogPost({
 
         <div className="text-sm text-muted-foreground mb-8">
           {post.date && (
-            <time dateTime={new Date(post.date).toISOString()}>
-              {format(new Date(post.date), "MMMM d, yyyy")}
-            </time>
+            <time dateTime={post.date}>{formatDate(post.date)}</time>
           )}
         </div>
 
