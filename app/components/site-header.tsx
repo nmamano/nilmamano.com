@@ -2,9 +2,35 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
+  const isBlog = currentRoute === "blog";
+
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
       <div className="container flex h-14 items-center px-8 md:px-10">
+        {/* Mobile back link - only shown on blog pages */}
+        {isBlog && (
+          <Link
+            href="/"
+            className="md:hidden text-primary flex items-center text-sm font-medium"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="mr-1"
+            >
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+            Home
+          </Link>
+        )}
+
         <div className="mr-4 hidden md:flex">
           <div className="mr-6 flex items-center space-x-2">
             <Link href="/" className="hidden font-bold sm:inline-block">

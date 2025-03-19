@@ -6,6 +6,13 @@ html {
   font-size: 112.5%; /* This sets the base to 18px (16px × 1.125 = 18px) */
 }
 
+/* Add media query to reduce base font size on mobile */
+@media (max-width: 640px) {
+  html {
+    font-size: 100%; /* This will set the base to 16px on mobile */
+  }
+}
+
 body {
   font-family: Arial, Helvetica, sans-serif;
 }
@@ -47,6 +54,27 @@ body {
   /* Keep inline code (not in pre blocks) at a reasonable size */
   :not(pre) > code {
     font-size: 1.05rem !important; /* Increased from 0.9rem */
+  }
+
+  /* Adjust the prose text size specifically for blog content */
+  .prose {
+    @apply text-base; /* Set default prose text to base size */
+  }
+  
+  /* Make headings a bit smaller on mobile */
+  @media (max-width: 640px) {
+    .prose h1 {
+      @apply text-2xl;
+    }
+    .prose h2 {
+      @apply text-xl;
+    }
+    .prose h3 {
+      @apply text-lg;
+    }
+    .prose p, .prose li, .prose blockquote {
+      @apply text-sm leading-relaxed;
+    }
   }
 }
 
