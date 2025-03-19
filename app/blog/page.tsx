@@ -12,7 +12,7 @@ export default function BlogIndex() {
         Nil's Blog
       </h1>
 
-      <div className="space-y-10">
+      <div className="space-y-4">
         {posts.length === 0 ? (
           <p className="text-center text-muted-foreground">
             No blog posts found.
@@ -56,11 +56,42 @@ export default function BlogIndex() {
                     </h2>
                   </Link>
 
-                  <div className="text-sm text-muted-foreground mb-4">
+                  <div className="text-sm text-muted-foreground mb-2">
                     {post.date && (
                       <time dateTime={post.date}>{formatDate(post.date)}</time>
                     )}
                   </div>
+
+                  {/* Category chips */}
+                  {post.categories && post.categories.length > 0 && (
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {post.categories.map((category) => {
+                        let chipColor;
+                        switch (category.toLowerCase()) {
+                          case "tutorial":
+                            chipColor = "bg-blue-100 text-blue-800";
+                            break;
+                          case "research":
+                            chipColor = "bg-purple-100 text-purple-800";
+                            break;
+                          case "ds&a":
+                            chipColor = "bg-green-100 text-green-800";
+                            break;
+                          default:
+                            chipColor = "bg-gray-100 text-gray-800";
+                        }
+
+                        return (
+                          <span
+                            key={category}
+                            className={`text-xs px-2 py-1 rounded-full ${chipColor}`}
+                          >
+                            {category}
+                          </span>
+                        );
+                      })}
+                    </div>
+                  )}
 
                   {post.excerpt && (
                     <p className="text-muted-foreground">{post.excerpt}</p>

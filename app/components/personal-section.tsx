@@ -53,14 +53,14 @@ export default function PersonalSection() {
           <div className="flex justify-center gap-16 flex-col sm:flex-row">
             <Image
               src="/personal/deathvalley.jpg"
-              alt="Playing guitar in Death Valley"
+              alt="Death Valley"
               width={400}
               height={400}
               className="rounded-lg shadow-md"
             />
             <Image
               src="/personal/cat.jpg"
-              alt="My cat relaxing"
+              alt="Cat"
               width={400}
               height={400}
               className="rounded-lg shadow-md"

@@ -56,7 +56,7 @@ export default function AboutSection() {
             <Link href="https://www.amazon.com/dp/195570600X" target="_blank">
               <Image
                 src="/book-cover.png"
-                alt="My New Book Cover"
+                alt="BCtCI Book Cover"
                 width={200}
                 height={300}
                 className="rounded-md shadow-lg cursor-pointer"
@@ -291,7 +291,7 @@ export default function AboutSection() {
           <div className="md:w-1/3 flex justify-center mt-6 md:mt-0 order-2 md:order-2">
             <Image
               src="/nil2024.jpg"
-              alt="Nil Mamano"
+              alt="Nil, 2024"
               width={300}
               height={300}
               className="rounded-lg shadow-md"

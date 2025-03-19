@@ -35,7 +35,7 @@ const PUBLICATIONS: Publication[] = [
     type: "dissertation",
     title: "New Applications of the Nearest-neighbor Chain Algorithm",
     authors: ["Nil Mamano"],
-    coverImage: "/blog/greedy/localGreedyTSPcrop.gif",
+    coverImage: "/blog/greedy-algorithms/localGreedyTSPcrop.gif",
     links: {
       pdf: "/thesis/nilthesis.pdf",
     },
@@ -52,18 +52,18 @@ const PUBLICATIONS: Publication[] = [
     ],
     additionalImages: [
       {
-        src: "/blog/greedy/gleexamples.PNG",
-        alt: "Four different problems and the corresponding solutions found by classic Greedy algorithms whose selection rules can be weakened",
+        src: "/blog/greedy-algorithms/gleexamples.PNG",
+        alt: "Four different problems and the corresponding solutions found by Greedy algorithms",
         scale: 0.6,
         fullRow: true,
       },
       {
-        src: "/blog/greedy/greedyTSP.gif",
+        src: "/blog/greedy-algorithms/greedyTSP.gif",
         alt: "The multi-fragment algorithm for TSP",
         scale: 0.5,
       },
       {
-        src: "/blog/greedy/localGreedyTSPcrop.gif",
+        src: "/blog/greedy-algorithms/localGreedyTSPcrop.gif",
         alt: "Our algorithm with a weakened selection rule that finds the same solution",
         scale: 0.5,
       },
@@ -101,12 +101,12 @@ const PUBLICATIONS: Publication[] = [
       },
       {
         src: "/knight/xing.svg",
-        alt: "Counting crossings",
+        alt: "Part of our construction.",
         scale: 0.7,
       },
       {
         src: "/knight/giraffe.svg",
-        alt: "Part of our giraffe tour",
+        alt: "Part of our giraffe tour construction.",
         scale: 0.7,
       },
     ],
@@ -164,7 +164,7 @@ const PUBLICATIONS: Publication[] = [
     additionalImages: [
       {
         src: "/smvd/example.PNG",
-        alt: "A SMVD can be visualized as the lower envelope of a set of 3D cones (see paper for context)",
+        alt: "A stable matching Voronoi diagram.",
         scale: 0.6,
       },
       {
@@ -191,7 +191,7 @@ const PUBLICATIONS: Publication[] = [
     additionalImages: [
       {
         src: "/road/sep.svg",
-        alt: "Illustration of a graph separator",
+        alt: "A graph separator",
         scale: 0.35,
         fullRow: true,
       },

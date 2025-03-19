@@ -3,6 +3,7 @@ title: "Why Many Greedy Algorithms Are Pickier Than They Need To Be"
 date: "2020-02-20"
 excerpt: "Many greedy algorithms can be modified to make local rather than global choices while still producing the same solutions."
 coverImage: "/blog/greedy-algorithms/thumbnail.png"
+categories: ["research", "DS&A"]
 ---
 
 ## Introduction
@@ -11,7 +12,7 @@ The image below shows four problems from completely different domains. A possibl
 
 <BlogImage
   src="/blog/greedy-algorithms/gleexamples.PNG"
-  alt="Greedy for Maximum-weight matching"
+  alt="Greedy for hierarchical clustering, TSP, shortest superstring, and matching."
   width="80%"
 />
 
@@ -87,7 +88,7 @@ I claimed I wouldn't get into proofs, but the proof of GLE for the MWM Greedy is
 
 <BlogImage
   src="/blog/greedy-algorithms/proofGleMatching.png"
-  alt="Local Greedy for Maximum-weight matching"
+  alt="Proof of local-global equivalence for matching."
   width="70%"
   needsBackground={true}
 />
@@ -186,7 +187,7 @@ For example, we have GLE with single-linkage and complete-linkage, but not with 
 
 <BlogImage
   src="/blog/greedy-algorithms/noglehc.png"
-  alt="Hierarchical Clustering with centroid metric"
+  alt="Local vs global greedy for hierarchical clustering"
   width="90%"
   needsBackground={true}
 />
@@ -228,7 +229,7 @@ The final cycle will be the same regardless of the choices we make:
 
 <BlogImage
   src="/blog/greedy-algorithms/gleTSP.png"
-  alt="GLE for TSP"
+  alt="Global-local equivalence for TSP"
   width="66%"
 />
 

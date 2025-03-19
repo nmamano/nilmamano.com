@@ -12,6 +12,7 @@ export interface BlogPost {
   excerpt?: string;
   coverImage?: string;
   content: string;
+  categories?: string[];
   [key: string]: any; // For any additional frontmatter fields
 }
 

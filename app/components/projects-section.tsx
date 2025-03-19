@@ -62,14 +62,14 @@ const PROJECTS: Project[] = [
     additionalImages: [
       {
         src: "/merging_geometry/cube.png",
-        alt: "Cube with faces labeled",
+        alt: "Cube derivations",
         scale: 1,
         fullRow: true,
         fullWidth: true,
       },
       {
         src: "/merging_geometry/rules.png",
-        alt: "Rules for merging adjacent and opposite edges",
+        alt: "Rules for merging edges",
         scale: 1,
       },
       {

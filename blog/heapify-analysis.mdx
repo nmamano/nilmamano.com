@@ -3,6 +3,7 @@ title: "Heapify Analysis Without Math"
 date: "2024-10-30"
 excerpt: "A proof that heapify takes linear time without using complex equations."
 coverImage: "/blog/heapify-analysis/thumbnail.png"
+categories: ["DS&A"]
 ---
 
 I'm writing about heaps for Beyond Cracking the Coding Interview ([beyondctci.com](https://www.beyondctci.com/)), and the most technical part is the analysis of _heapify_. It's easy to show that it takes `O(n log n)` time, where `n` is the number of nodes in the heap, but it's not straightforward to show that this is not tight and the method actually takes `O(n)`. time.
@@ -11,7 +12,7 @@ Every proof I have found online involves a summation over the levels of the heap
 
 <BlogImage
   src="/blog/heapify-analysis/wikipedia.png"
-  alt="wikipedia"
+  alt="wikipedia formula"
   width="40%"
 />
 
@@ -97,7 +98,7 @@ A _perfect_ binary tree is a complete tree where the last level is full:
 
 <BlogImage
   src="/blog/heapify-analysis/perfect.png"
-  alt="Perfect tree"
+  alt="Perfect binary tree"
   width="45%"
 />
 
@@ -121,7 +122,7 @@ The sum of the first few powers of 2 add up to one less than the next power of 2
 
 <BlogImage
   src="/blog/heapify-analysis/zeno.png"
-  alt="Sum of power's of 2"
+  alt="Sum of powers of 2"
   width="100%"
 />
 
@@ -150,7 +151,7 @@ To see why (2) is true, imagine we add a new level to a perfect tree:
 
 <BlogImage
   src="/blog/heapify-analysis/mainclaim.png"
-  alt="mainclaim"
+  alt="Main claim of the proof"
   width="100%"
 />
 
