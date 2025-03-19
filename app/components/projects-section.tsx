@@ -92,7 +92,7 @@ const PROJECTS: Project[] = [
   {
     id: "racso",
     title: "RACSO Online Judge (contribution)",
-    coverImage: "/racso_benchmark.png", // You'll need to add this image
+    coverImage: "/racso_benchmark.png",
     links: {
       demo: "https://racso.cs.upc.edu/juezwsgi/index",
       github: "https://github.com/nmamano/SATReductionLang",
@@ -108,7 +108,7 @@ const PROJECTS: Project[] = [
   {
     id: "bandwidth-enforcer",
     title: "Bandwidth Enforcer Visualizer",
-    coverImage: "/projects/bwevisualizer.png", // You'll need to add this image
+    coverImage: "/projects/bwevisualizer.png",
     links: {
       demo: "http://nilmamano.com/bandwidth-enforcer-plotter/",
       github: "https://github.com/nmamano/bandwidth-enforcer-plotter",

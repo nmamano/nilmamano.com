@@ -128,7 +128,7 @@ const PUBLICATIONS: Publication[] = [
       "V. Polishchuk",
     ],
     not_alphabetical_order: true,
-    coverImage: "/nnc/TSP.PNG",
+    coverImage: "/nnc/TSP.png",
     links: {
       pdf: "https://arxiv.org/pdf/1902.06875.pdf",
     },
@@ -180,7 +180,7 @@ const PUBLICATIONS: Publication[] = [
     title: "Reactive Proximity Data Structures for Graphs",
     publisher: "LATIN'18",
     authors: ["D. Eppstein", "M.T. Goodrich", "N. Mamano"],
-    coverImage: "/road/roadnetwork.PNG",
+    coverImage: "/road/roadnetwork.png",
     links: {
       github: "https://github.com/nmamano/NearestNeighborInGraphs",
       pdf: "https://arxiv.org/pdf/1803.04555.pdf",
@@ -261,7 +261,7 @@ const PUBLICATIONS: Publication[] = [
       "M. Mitzenmacher",
       "M. Torres",
     ],
-    coverImage: "/watermarkplot.PNG",
+    coverImage: "/watermarkplot.png",
     links: {
       github: "https://github.com/nmamano/GraphWatermarking",
       pdf: "https://arxiv.org/pdf/1605.09425.pdf",
@@ -290,7 +290,7 @@ const PUBLICATIONS: Publication[] = [
       "M.C. Osegueda",
       "P. Williams",
     ],
-    coverImage: "/knight/20x20.PNG",
+    coverImage: "/knight/20x20.png",
     links: {
       demo: "https://nmamano.github.io/MinCrossingsKnightsTour/index.html",
       github: "https://github.com/nmamano/MinCrossingsKnightsTour",
@@ -361,7 +361,7 @@ const PUBLICATIONS: Publication[] = [
     ],
     additionalImages: [
       {
-        src: "/sana/comp.PNG",
+        src: "/sana/comp.png",
         alt: "Comparison between several state-of-the-art network aligners in terms of preserved topology (left) and biology (right), with SANA on top in both",
         scale: 0.9,
         fullRow: true,
