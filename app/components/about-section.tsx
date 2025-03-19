@@ -215,7 +215,7 @@ export default function AboutSection() {
                 </Link>{" "}
                 for more or download my{" "}
                 <Link
-                  href="/resume/CV_NilMamano.pdf"
+                  href="/resume/cv_nilmamano.pdf"
                   className="text-primary hover:underline"
                   target="_blank"
                 >

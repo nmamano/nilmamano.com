@@ -11,7 +11,7 @@ categories: ["research", "DS&A"]
 The image below shows four problems from completely different domains. A possible solution to each is shown in red.
 
 <BlogImage
-  src="/blog/greedy-algorithms/gleexamples.PNG"
+  src="/blog/greedy-algorithms/gleexamples.png"
   alt="Greedy for hierarchical clustering, TSP, shortest superstring, and matching."
   width="80%"
 />
@@ -37,7 +37,7 @@ In the MWM example, a greedy algorithm constructs a matching one edge at a time.
 Here is an example execution of the Greedy for MWM in a geometric setting. Nodes are points in the plane and every pair of points is connected by an edge with weight proportional to their proximity (closer nodes have higher weight). The greedy algorithm repeatedly matches the closest available pair.
 
 <BlogImage
-  src="/blog/greedy-algorithms/greedyMatching.gif"
+  src="/blog/greedy-algorithms/greedy_matching.gif"
   alt="Greedy for Maximum-weight matching"
   width="60%"
 />
@@ -59,7 +59,7 @@ We can turn the Greedy algorithm that we saw for MWM into LG: at each step, choo
 Here is one of the possible runs of local greedy for the geometric version of MWM (the circles pairs are all the options LG can choose):
 
 <BlogImage
-  src="/blog/greedy-algorithms/localGreedyMatching.gif"
+  src="/blog/greedy-algorithms/local_greedy_matching.gif"
   alt="Local Greedy for Maximum-weight matching"
   width="60%"
 />
@@ -75,7 +75,7 @@ Not all greedy algorithms exhibit GLE. We will see examples of both and understa
 As mentioned, MWM is one of the problems with GLE. Here we can see that even though the orderings differ, the final matching in the previous example is the same:
 
 <BlogImage
-  src="/blog/greedy-algorithms/gleMatching.PNG"
+  src="/blog/greedy-algorithms/gle_matching.png"
   alt="Global-local equivalence for Maximum-weight matching"
   width="70%"
 />
@@ -87,7 +87,7 @@ I claimed I wouldn't get into proofs, but the proof of GLE for the MWM Greedy is
 **Proof:** Assume, for a contradiction, that _M1_ differs from _M2_. Let _e_ be the heaviest edge in one (without loss of generality, _M1_) but not the other (_M2_). During the course of the algorithm, every edge is either added to the matching or invalidated because a heavier neighbor was picked. Since _e_ is not in _M2_, _M2_ contains a neighbor edge _e'_ of _e_ that is heavier than _e_ (see the figure below). However, _e'_ cannot be in _M1_ because _e_ is in _M1_. This contradicts the assumption that _e_ was the heaviest edge in only one of the matchings. That completes the proof.
 
 <BlogImage
-  src="/blog/greedy-algorithms/proofGleMatching.png"
+  src="/blog/greedy-algorithms/proof_gle_matching.png"
   alt="Proof of local-global equivalence for matching."
   width="70%"
   needsBackground={true}
@@ -98,7 +98,7 @@ Since any two runs of LG find the same solution, and GG is a special case of LG,
 I'll take a quick detour into the story of GLE for MWM. Before it was discovered, LG was proposed as a "new" algorithm and it was proven that it achieves a 1/2 approximation ratio, just like Greedy (of course, they achieve the same approximation ratio because they find the same solution). A funny thing I found is that there is a paper doing an empirical comparison of the solution quality of different MWM algorithms, and it includes the traditional Greedy and LG as different algorithms. **They compared two things mathematically proven to be the same.** In the experiment, they actually obtain slightly different results for the two, which must come down to handling ties differently. Had they used consistent tie-breaking rules in both implementations, they would have got the exact same numbers, probably rising some questions. Here is the table from their paper (LG is labeled LAM):
 
 <BlogImage
-  src="/blog/greedy-algorithms/empiricalcomp.PNG"
+  src="/blog/greedy-algorithms/empiricalcomp.png"
   alt="Comparison of MWM algorithms"
   width="70%"
 />
@@ -112,7 +112,7 @@ Set cover has some important special cases such as vertex cover.
 The image below shows a set cover instance: on the left, we have a visual representation of the elements in _U_ and the subsets they belong to. On the middle, the same instance is represented as a bipartite graph where the edges denote that the element belongs to the set. On the left, we have the "interactions" between the sets: two sets interact if they have an element in common.
 
 <BlogImage
-  src="/blog/greedy-algorithms/setcover.PNG"
+  src="/blog/greedy-algorithms/setcover.png"
   alt="Set cover instance"
   width="90%"
   needsBackground={true}
@@ -172,7 +172,7 @@ I'll omit the proof to avoid getting technical, but I'll recommend it to readers
 [Hierarchical clustering](https://en.wikipedia.org/wiki/Hierarchical_clustering) deals with the organization of data into hierarchies. Given a set of points, we can construct a hierarchy as follows: each point starts as a base cluster (a cluster is a set of points). Then, a hierarchy of clusters is constructed by repeatedly merging the two "closest" clusters into a single one until there is only one cluster left.
 
 <BlogImage
-  src="/blog/greedy-algorithms/hc.PNG"
+  src="/blog/greedy-algorithms/hc.png"
   alt="Hierarchical Clustering instance"
   width="65%"
 />
@@ -209,7 +209,7 @@ A greedy algorithm that seems to perform better in practice is the [_multi-fragm
 Here is an animation of the multi-fragment algorithm. The gray nodes are those that are internal to a fragment and cannot be matched anymore. The closest pair of fragments at each step is highlighted in red.
 
 <BlogImage
-  src="/blog/greedy-algorithms/greedyTSP.gif"
+  src="/blog/greedy-algorithms/greedy_tsp.gif"
   alt="Greedy for TSP"
   width="50%"
 />
@@ -220,7 +220,7 @@ We can say that two fragments are MNN if they are closer to each other than to a
 Here is an animation of the LG algorithm. The dashed red loops highlight all the MNN that we _could_ connect at each step. One of them is chosen arbitrarily.
 
 <BlogImage
-  src="/blog/greedy-algorithms/localGreedyTSP.gif"
+  src="/blog/greedy-algorithms/local_greedy_tsp.gif"
   alt="Local Greedy for TSP"
   width="50%"
 />
@@ -228,7 +228,7 @@ Here is an animation of the LG algorithm. The dashed red loops highlight all the
 The final cycle will be the same regardless of the choices we make:
 
 <BlogImage
-  src="/blog/greedy-algorithms/gleTSP.png"
+  src="/blog/greedy-algorithms/gle_tsp.png"
   alt="Global-local equivalence for TSP"
   width="66%"
 />
@@ -240,7 +240,7 @@ Shortest Common Superstring (SCS) is an optimization problem over strings: given
 One of the killer applications of SCS is DNA sequencing. My (limited) understanding is that biologists have methods to _sample_ short segments of a much longer DNA sequence, but they cannot pinpoint exactly where in the sequence the sample was extracted.
 
 <BlogImage
-  src="/blog/greedy-algorithms/scs.PNG"
+  src="/blog/greedy-algorithms/scs.png"
   alt="SCS instance"
   width="90%"
 />
@@ -250,7 +250,7 @@ They end up with a big pool of overlapping samples, and SCS is used to try to re
 The problem is NP-hard, but some approximation algorithms are known. The most famous is a greedy algorithm simply known as Greedy (in our context, it corresponds to GG). This algorithm maintains a set of strings. Initially, this set is just the input set. Then, it repeatedly takes two strings in the set with the longest overlap and replaces them with the shortest superstring of both. We call this _merging_ two strings. Greedy finishes when there is a single string left, which is returned.
 
 <BlogImage
-  src="/blog/greedy-algorithms/greedySCS.PNG"
+  src="/blog/greedy-algorithms/greedy_scs.png"
   alt="Greedy for SCS"
   width="90%"
 />
@@ -258,7 +258,7 @@ The problem is NP-hard, but some approximation algorithms are known. The most fa
 This algorithm is similar to the multi-fragment algorithm for TSP, and, indeed, GLE also holds. Here, LG repeatedly merges _any_ two strings which overlap more with each other than with any third string. It is harder to see, but we proved that the resulting merged strings do not overlap more with other strings than the original strings did before the merge.
 
 <BlogImage
-  src="/blog/greedy-algorithms/localGreedySCS.PNG"
+  src="/blog/greedy-algorithms/local_greedy_scs.png"
   alt="Local Greedy for SCS"
   width="90%"
 />

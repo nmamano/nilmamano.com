@@ -81,7 +81,7 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
             </Link>
 
             <Link
-              href="/resume/Resume_NilMamano.pdf"
+              href="/resume/resume_nilmamano.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center px-2 py-1 border border-muted-foreground/30 rounded text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"

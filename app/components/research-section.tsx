@@ -52,18 +52,18 @@ const PUBLICATIONS: Publication[] = [
     ],
     additionalImages: [
       {
-        src: "/blog/greedy-algorithms/gleexamples.PNG",
+        src: "/blog/greedy-algorithms/gleexamples.png",
         alt: "Four different problems and the corresponding solutions found by Greedy algorithms",
         scale: 0.6,
         fullRow: true,
       },
       {
-        src: "/blog/greedy-algorithms/greedyTSP.gif",
+        src: "/blog/greedy-algorithms/greedy_tsp.gif",
         alt: "The multi-fragment algorithm for TSP",
         scale: 0.5,
       },
       {
-        src: "/blog/greedy-algorithms/localGreedyTSPcrop.gif",
+        src: "/blog/greedy-algorithms/local_greedy_tsp_crop.gif",
         alt: "Our algorithm with a weakened selection rule that finds the same solution",
         scale: 0.5,
       },
@@ -90,7 +90,7 @@ const PUBLICATIONS: Publication[] = [
     ],
     additionalImages: [
       {
-        src: "/knight/20x20.PNG",
+        src: "/knight/20x20.png",
         alt: "Our tour for a 20x20 board",
         scale: 0.9,
       },
@@ -128,7 +128,7 @@ const PUBLICATIONS: Publication[] = [
       "V. Polishchuk",
     ],
     not_alphabetical_order: true,
-    coverImage: "/nnc/TSP.png",
+    coverImage: "/nnc/tsp.png",
     links: {
       pdf: "https://arxiv.org/pdf/1902.06875.pdf",
     },
@@ -151,7 +151,7 @@ const PUBLICATIONS: Publication[] = [
       "Stable-Matching Voronoi Diagrams: Combinatorial Complexity and Algorithms",
     publisher: "ICALP'18",
     authors: ["G. Barequet", "D. Eppstein", "M.T. Goodrich", "N. Mamano"],
-    coverImage: "/smvd/cones.PNG",
+    coverImage: "/smvd/cones.png",
     links: {
       demo: "https://nmamano.github.io/StableMatchingVoronoiDiagram/index.html",
       pdf: "https://arxiv.org/pdf/1804.09411.pdf",
@@ -163,7 +163,7 @@ const PUBLICATIONS: Publication[] = [
     ],
     additionalImages: [
       {
-        src: "/smvd/example.PNG",
+        src: "/smvd/example.png",
         alt: "A stable matching Voronoi diagram.",
         scale: 0.6,
       },
@@ -204,7 +204,7 @@ const PUBLICATIONS: Publication[] = [
       "Defining Equitable Geographic Districts in Road Networks via Stable Matching",
     publisher: "SIGSPATIAL'17 (short paper)",
     authors: ["D. Eppstein", "M.T. Goodrich", "D. Korkmaz", "N. Mamano"],
-    coverImage: "/maps/LA.jpg",
+    coverImage: "/maps/la.jpg",
     links: {
       github: "https://github.com/nmamano/StableDistricting",
       pdf: "https://arxiv.org/pdf/1706.09593.pdf",
@@ -214,7 +214,7 @@ const PUBLICATIONS: Publication[] = [
     ],
     additionalImages: [
       {
-        src: "/maps/TX.jpg",
+        src: "/maps/tx.jpg",
         alt: "Stable matching districts in Texas",
         scale: 0.35,
         fullRow: true,
@@ -726,7 +726,7 @@ export default function ResearchSection() {
           available online. Authors are in alphabetical order—per convention in
           CS theory—except when marked with "*". See also my{" "}
           <Link
-            href="/resume/CV_NilMamano.pdf"
+            href="/resume/cv_nilmamano.pdf"
             className="text-primary hover:underline"
             target="_blank"
           >
