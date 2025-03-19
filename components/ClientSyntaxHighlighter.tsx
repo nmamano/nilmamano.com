@@ -20,26 +20,16 @@ export default function ClientSyntaxHighlighter({
           // Import CSS theme
           await import("prismjs/themes/prism-tomorrow.css");
 
-          // Import Python support
+          // Import language support in the correct dependency order
           await import("prismjs/components/prism-python");
+
+          // C must be loaded before C++
+          await import("prismjs/components/prism-c");
+          await import("prismjs/components/prism-cpp");
 
           // Setup complete, run highlighter
           Prism.highlightAll();
           highlighted.current = true;
-
-          // Load C++ support after initial highlighting (for future posts)
-          // This avoids the error while still providing C++ support
-          setTimeout(async () => {
-            try {
-              await import("prismjs/components/prism-cpp");
-              // No need to run highlightAll again since there's no C++ code yet
-            } catch (e) {
-              // Silently fail if C++ support can't be loaded
-              console.log(
-                "Note: C++ syntax highlighting support couldn't be loaded"
-              );
-            }
-          }, 100);
         } catch (err) {
           console.error("Error initializing syntax highlighting:", err);
         }
