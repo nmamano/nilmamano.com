@@ -214,7 +214,8 @@ Here is how I would lay out the table for LCS (you can find a different layout i
 <BlogImage
   src="/blog/breaking-down-dynamic-programming/lcstable.svg"
   alt="LCS table"
-  width="40%"
+  width="70%"
+  needsBackground={true}
 />
 
 Next (Step 4), we fill the memo table with a nested for loop. If the layout is good, this should be easy. Before the main loop, we fill the base case entries. Then, we must make sure to iterate through the table in an order that respects the dependencies between cells. In the case of LCS, we can iterate both by rows or by columns.
@@ -306,7 +307,8 @@ Based on this recurrence equation, we can design the following DP table:
 <BlogImage
   src="/blog/breaking-down-dynamic-programming/palindrometable.svg"
   alt="Palindrome substring count"
-  width="40%"
+  width="70%"
+  needsBackground={true}
 />
 
 This type of "diagonal" DP tables are very common when the subproblems are substrings/sublists. In this case, the base cases are substrings of length 1 or 2. The goal is `Pal(0,n-1)`.
