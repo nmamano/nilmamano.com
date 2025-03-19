@@ -156,7 +156,10 @@ export default function AboutSection() {
                   pdf
                 </Link>
                 ,{" "}
-                <Link href="#" className="text-primary hover:underline">
+                <Link
+                  href="/blog/greedy-algorithms"
+                  className="text-primary hover:underline"
+                >
                   blog post
                 </Link>
                 ,{" "}

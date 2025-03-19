@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
   const isBlog = currentRoute === "blog";
@@ -105,7 +106,7 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
             </Link>
           </nav>
         </div>
-        <div className="ml-auto">
+        <div className="ml-auto flex items-center space-x-3">
           <Link href="/blog">
             <Button
               variant="default"
@@ -118,6 +119,8 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
               Blog
             </Button>
           </Link>
+
+          <ThemeToggle />
         </div>
       </div>
     </header>
