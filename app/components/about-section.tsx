@@ -50,7 +50,7 @@ export default function AboutSection() {
         </div>
       </div>
 
-      <div className="mt-12 p-4 md:p-6 rounded-lg border bg-card text-card-foreground shadow-sm max-w-4xl mx-auto">
+      <div className="mt-12 p-4 md:p-6 rounded-lg card-border bg-card text-card-foreground shadow-sm max-w-4xl mx-auto">
         <div className="flex flex-col md:flex-row gap-4 items-center">
           <div className="md:w-1/4 flex justify-center">
             <Link href="https://www.amazon.com/dp/195570600X" target="_blank">

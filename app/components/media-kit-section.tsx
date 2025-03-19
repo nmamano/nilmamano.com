@@ -11,7 +11,7 @@ export default function MediaKitSection() {
 
         <div className="space-y-8">
           {/* Bio Section */}
-          <div className="bg-card p-6 rounded-lg border shadow-sm">
+          <div className="bg-card p-6 rounded-lg card-border shadow-sm">
             <h3 className="text-2xl font-semibold mb-4">Bio</h3>
 
             <div className="space-y-6">
@@ -51,7 +51,7 @@ export default function MediaKitSection() {
           </div>
 
           {/* Contact Section */}
-          <div className="bg-card p-6 rounded-lg border shadow-sm">
+          <div className="bg-card p-6 rounded-lg card-border shadow-sm">
             <h3 className="text-2xl font-semibold mb-4">Contact</h3>
             <p className="text-muted-foreground mb-2">Find Nil online at:</p>
             <ul className="space-y-2 text-muted-foreground">
@@ -77,7 +77,7 @@ export default function MediaKitSection() {
           </div>
 
           {/* Headshot Section */}
-          <div className="bg-card p-6 rounded-lg border shadow-sm">
+          <div className="bg-card p-6 rounded-lg card-border shadow-sm">
             <h3 className="text-2xl font-semibold mb-4">Headshot</h3>
             <div className="flex flex-col md:flex-row gap-8 justify-center items-center">
               <div className="flex flex-col items-center">

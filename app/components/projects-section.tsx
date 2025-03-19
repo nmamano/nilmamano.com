@@ -300,7 +300,7 @@ const ProjectCard = ({
             }
             toggleExpanded(index);
           }}
-          className="cursor-pointer overflow-hidden rounded-lg border bg-card text-card-foreground shadow-md transition-all duration-300 ease-in-out h-full"
+          className="cursor-pointer overflow-hidden rounded-lg card-border bg-card text-card-foreground shadow-md transition-all duration-300 ease-in-out h-full"
         >
           {/* Card Content */}
           <div className="flex flex-col h-full">

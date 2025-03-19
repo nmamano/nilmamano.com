@@ -21,7 +21,7 @@ export default function BlogIndex() {
           posts.map((post) => (
             <article
               key={post.slug}
-              className="border rounded-lg p-6 hover:shadow-md transition-shadow"
+              className="card-border rounded-lg p-6 hover:shadow-md transition-shadow bg-card text-card-foreground"
             >
               <div className="flex flex-col md:flex-row gap-6">
                 {/* Cover Image */}

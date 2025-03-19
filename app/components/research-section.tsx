@@ -479,7 +479,7 @@ const PublicationCard = ({
             }
             toggleExpanded(index);
           }}
-          className="cursor-pointer overflow-hidden rounded-lg border bg-card text-card-foreground shadow-md transition-all duration-300 ease-in-out"
+          className="cursor-pointer overflow-hidden rounded-lg card-border bg-card text-card-foreground shadow-md transition-all duration-300 ease-in-out"
         >
           {/* Card Content */}
           <div className="flex flex-col">

@@ -76,6 +76,11 @@ body {
       @apply text-sm leading-relaxed;
     }
   }
+
+  /* Card border styling for consistent appearance across site */
+  .card-border {
+    @apply border-2 border-gray-200 dark:border-gray-700;
+  }
 }
 
 @layer base {
