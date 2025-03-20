@@ -6,6 +6,47 @@ import Image from "next/image";
 import components from "../../../components/MdxComponents";
 import ClientSyntaxHighlighter from "../../../components/ClientSyntaxHighlighter";
 import { formatDate } from "../../lib/date-utils";
+import { Metadata } from "next";
+
+// Generate metadata for each blog post
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
+  const post = await getPostBySlug(params.slug);
+
+  if (!post) {
+    return {};
+  }
+
+  // Now coverImage is mandatory so we don't need to check if it exists
+  return {
+    title: post.title,
+    description: post.excerpt || `${post.title} - Nil Mamano's blog`,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt || `${post.title} - Nil Mamano's blog`,
+      type: "article",
+      publishedTime: post.date,
+      url: `https://nilmamano.com/blog/${post.slug}`,
+      images: [
+        {
+          url: post.coverImage,
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt || `${post.title} - Nil Mamano's blog`,
+      images: [post.coverImage],
+    },
+  };
+}
 
 // Generate static params for all blog posts
 export async function generateStaticParams() {

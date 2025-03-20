@@ -10,7 +10,7 @@ export interface BlogPost {
   title: string;
   date: string;
   excerpt?: string;
-  coverImage?: string;
+  coverImage: string; // Must be 1200x630px because it is used as OG image
   content: string;
   categories?: string[];
   [key: string]: any; // For any additional frontmatter fields
@@ -33,6 +33,11 @@ export function getAllPosts(): BlogPost[] {
 
       // Use gray-matter to parse the post metadata section
       const { data, content } = matter(fileContents);
+
+      // Validate that coverImage exists
+      if (!data.coverImage) {
+        console.warn(`Warning: Blog post ${slug} is missing a coverImage`);
+      }
 
       // Combine the data with the slug
       return {
