@@ -81,6 +81,16 @@ body {
   .card-border {
     @apply border-2 border-gray-200 dark:border-gray-700;
   }
+
+  /* Reduce heading thickness for blog content */
+  .prose h1,
+  .prose h2, 
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    @apply font-medium;
+  }
 }
 
 @layer base {
