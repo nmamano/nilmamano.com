@@ -43,6 +43,53 @@ export function BlogImage({
   );
 }
 
+interface CalloutProps {
+  children: React.ReactNode;
+  type?: "info" | "warning" | "success" | "error";
+  title?: string;
+}
+
+export function Callout({ children, type = "info", title }: CalloutProps) {
+  const styles = {
+    info: {
+      borderColor: "#3b82f6", // blue
+      backgroundColor: "rgba(59, 130, 246, 0.1)",
+    },
+    warning: {
+      borderColor: "#f59e0b", // amber
+      backgroundColor: "rgba(245, 158, 11, 0.1)",
+    },
+    success: {
+      borderColor: "#10b981", // emerald
+      backgroundColor: "rgba(16, 185, 129, 0.1)",
+    },
+    error: {
+      borderColor: "#ef4444", // red
+      backgroundColor: "rgba(239, 68, 68, 0.1)",
+    },
+  };
+
+  return (
+    <div
+      className="rounded-md p-4 my-6"
+      style={{
+        borderLeft: `4px solid ${styles[type].borderColor}`,
+        backgroundColor: styles[type].backgroundColor,
+      }}
+    >
+      {title && (
+        <div
+          className="font-medium mb-2"
+          style={{ color: styles[type].borderColor }}
+        >
+          {title}
+        </div>
+      )}
+      <div>{children}</div>
+    </div>
+  );
+}
+
 const slugify = (text: string) => {
   return text
     .toLowerCase()
@@ -53,6 +100,7 @@ const slugify = (text: string) => {
 // Define all your MDX components here
 const components = {
   BlogImage,
+  Callout,
   // Custom heading components that add IDs
   h1: ({ children, ...props }: any) => {
     const id = slugify(children as string);

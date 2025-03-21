@@ -10,6 +10,7 @@ import type React from "react";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://nilmamano.com"),
   title: "Nil Mamano",
   description: "Computer scientist, software engineer, author.",
   icons: {

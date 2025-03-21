@@ -7,13 +7,16 @@ export default function ClientSyntaxHighlighter({
 }: {
   children: React.ReactNode;
 }) {
-  const highlighted = useRef(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const prismLoaded = useRef(false);
 
   useEffect(() => {
-    // Only run this once per component instance
-    if (!highlighted.current && typeof window !== "undefined") {
-      const loadAndHighlight = async () => {
-        try {
+    let observer: MutationObserver | null = null;
+
+    const loadAndHighlight = async () => {
+      try {
+        // Only load Prism once
+        if (!prismLoaded.current) {
           // Import and configure Prism
           const Prism = (await import("prismjs")).default;
 
@@ -27,17 +30,40 @@ export default function ClientSyntaxHighlighter({
           await import("prismjs/components/prism-c");
           await import("prismjs/components/prism-cpp");
 
-          // Setup complete, run highlighter
-          Prism.highlightAll();
-          highlighted.current = true;
-        } catch (err) {
-          console.error("Error initializing syntax highlighting:", err);
-        }
-      };
+          prismLoaded.current = true;
 
+          // Apply highlighting to current content
+          Prism.highlightAllUnder(containerRef.current!);
+
+          // Set up an observer to detect content changes
+          observer = new MutationObserver(() => {
+            Prism.highlightAllUnder(containerRef.current!);
+          });
+
+          // Observe changes to the container and its descendants
+          if (containerRef.current) {
+            observer.observe(containerRef.current, {
+              childList: true,
+              subtree: true,
+            });
+          }
+        }
+      } catch (err) {
+        console.error("Error initializing syntax highlighting:", err);
+      }
+    };
+
+    if (typeof window !== "undefined") {
       loadAndHighlight();
     }
+
+    // Cleanup observer on unmount
+    return () => {
+      if (observer) {
+        observer.disconnect();
+      }
+    };
   }, []);
 
-  return <div>{children}</div>;
+  return <div ref={containerRef}>{children}</div>;
 }

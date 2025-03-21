@@ -14,7 +14,11 @@ export async function generateMetadata({
 }: {
   params: { slug: string };
 }): Promise<Metadata> {
-  const post = await getPostBySlug(params.slug);
+  // Need to await params before destructuring
+  const { slug } = await params;
+
+  // Then use the destructured variable
+  const post = await getPostBySlug(slug);
 
   if (!post) {
     return {};
@@ -62,11 +66,10 @@ export default async function BlogPost({
 }: {
   params: { slug: string };
 }) {
-  // Await the params object before using it
-  const resolvedParams = await params;
-  const slug = resolvedParams.slug;
+  // Need to await params before destructuring
+  const { slug } = await params;
 
-  // Now use the resolved slug
+  // Then use the destructured variable
   const post = await getPostBySlug(slug);
 
   // If post doesn't exist, show 404

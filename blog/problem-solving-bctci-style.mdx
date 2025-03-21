@@ -104,9 +104,18 @@ for each possible substring start
         if they match, it is not special
 ```
 
-Interviews often involve considering trade offs between algorithms, so it's a good habit to give them names and list their time/space complexity. (In this case, the space complexity depends on how we process the special substrings, so we'll leave that out for now.)
+<Callout>
+  Interviews often involve considering trade offs between algorithms, so it's a
+  good habit to give them names and list their time/space complexity.
+</Callout>
 
-Bonus: sketching the brute force solution helps us ensure we understand the problem (and if we are solving for the wrong thing, we give the interviewer a chance to let us know).
+In this case, the space complexity depends on how many special substrings we might find, which is not clear yet, so we'll leave it out for now.
+
+<Callout>
+  Sketching the brute force solution helps us ensure we understand the problem
+  (and if we are solving for the wrong thing, we give the interviewer a chance
+  to let us know).
+</Callout>
 
 ## I: Identify upper and lower bounds
 
@@ -157,11 +166,7 @@ The boosters are roughly ordered, but we don't always have to use them in order.
 
 The first booster is straightforward: take the brute force pseudocode we already have and try to optimize it.
 
-In the boosters diagram, we list three ways to go about it.
-
-### Data structure pattern
-
-Many bottlenecks come from having to do some calculation inside a loop. In those situations, ask yourself,
+In the boosters diagram, we list three ways to go about it. One of them is the **Data structure pattern**. Many bottlenecks come from having to do some calculation inside a loop. In those situations, ask yourself,
 
 _"Do I know of any data structure which makes this type of operation faster?"_
 
@@ -178,7 +183,12 @@ for each possible substring start
       if it is in the set, it is not special
 ```
 
-Quick tangent: If you have working code or pseudocode but think of an optimization or better approach, do NOT edit your code. Copy-paste it and work on a separate copy. This way, if you don't have time to finish or realize it's wrong, you'll still have the previous working version.
+<Callout>
+  If you have working code or pseudocode but think of an optimization or better
+  approach, do NOT edit your code. Copy-paste it and work on a separate copy.
+  This way, if you don't have time to finish or realize it's wrong, you'll still
+  have the previous working version.
+</Callout>
 
 ## Boster 2: Hunting for properties
 
@@ -218,7 +228,10 @@ for each possible substring start i
       if it is in the set, it is not special
 ```
 
-We like to write down the big O simplification (`O(26 * n^2) = O(n^2)`), so the interviewer doesn't think we missed steps.
+<Callout>
+  We like to write down the big O simplification (`O(26 * n^2) = O(n^2)`), so
+  the interviewer doesn't think we missed steps.
+</Callout>
 
 We haven't hit our target time complexity yet, so let's keep hunting for properties. Here is another one:
 
