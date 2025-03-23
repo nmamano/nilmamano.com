@@ -72,10 +72,11 @@ export function BlogImage({
       )}
       {caption && (
         <figcaption
-          className="text-base font-medium mt-3"
+          className="text-base font-medium"
           style={{
             maxWidth: width === "100%" ? "100%" : width,
             textAlign: centered ? "center" : "left",
+            marginTop: "0rem",
           }}
         >
           {caption}
