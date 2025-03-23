@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import NextImage from "next/image";
 
 interface BlogImageProps {
   src: string;
@@ -7,6 +8,7 @@ interface BlogImageProps {
   width?: string;
   centered?: boolean;
   needsBackground?: boolean;
+  caption?: string;
 }
 
 export function BlogImage({
@@ -15,9 +17,22 @@ export function BlogImage({
   width = "100%",
   centered = true,
   needsBackground = false,
+  caption,
 }: BlogImageProps) {
-  // Check if the image is a PNG
-  const isPng = src.toLowerCase().endsWith(".png");
+  // Check if the image is a GIF
+  const isGif = src.toLowerCase().endsWith(".gif");
+
+  // Convert width to number for Next.js Image if possible
+  // Next.js Image needs numeric width/height
+  const numericWidth = width.endsWith("%") ? undefined : parseInt(width);
+
+  const imageStyle = {
+    maxWidth: "100%",
+    height: "auto",
+    backgroundColor: needsBackground ? "white" : "transparent",
+    padding: needsBackground ? "16px" : "0",
+    borderRadius: needsBackground ? "8px" : "0",
+  };
 
   return (
     <div
@@ -25,20 +40,47 @@ export function BlogImage({
         display: centered ? "flex" : "block",
         justifyContent: centered ? "center" : "flex-start",
         margin: "1.5rem 0",
+        flexDirection: "column",
+        alignItems: centered ? "center" : "flex-start",
       }}
     >
-      <img
-        src={src}
-        alt={alt}
-        style={{
-          width,
-          maxWidth: "100%",
-          backgroundColor: needsBackground ? "white" : "transparent",
-          padding: needsBackground ? "16px" : "0",
-          borderRadius: needsBackground ? "8px" : "0",
-        }}
-        className="rounded-md"
-      />
+      {isGif ? (
+        // Use unoptimized for GIFs to preserve animation
+        <NextImage
+          src={src}
+          alt={alt}
+          width={numericWidth || 1000} // Default size, will be constrained by CSS
+          height={numericWidth ? numericWidth * 0.75 : 750} // Approximate aspect ratio
+          style={{
+            ...imageStyle,
+            width: width,
+          }}
+          className="rounded-md"
+          unoptimized={true} // Key prop for animated GIFs
+        />
+      ) : (
+        // Regular image
+        <img
+          src={src}
+          alt={alt}
+          style={{
+            width,
+            ...imageStyle,
+          }}
+          className="rounded-md"
+        />
+      )}
+      {caption && (
+        <figcaption
+          className="text-base font-medium mt-3"
+          style={{
+            maxWidth: width === "100%" ? "100%" : width,
+            textAlign: centered ? "center" : "left",
+          }}
+        >
+          {caption}
+        </figcaption>
+      )}
     </div>
   );
 }
