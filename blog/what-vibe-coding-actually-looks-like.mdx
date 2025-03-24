@@ -1,0 +1,211 @@
+---
+title: "What Vibe Coding Actually Looks Like (prompts included)"
+date: "2025-03-23"
+excerpt: "A step-by-step journey of creating an interactive 3D torus visualization using prompts to an AI assistant."
+coverImage: "/blog/vibe-coding/cover.png"
+categories: ["coding", "ai"]
+---
+
+One afternoon, I was lying in bed with a case of _malaise_. I was thinking about this gif I had [seen](https://x.com/PhysInHistory/status/1892892736048468367) earlier and how it would be cool to have an interactive visualization for shapes like this.
+
+<BlogImage
+  src="/blog/merging-geometry/mobius-strip.gif"
+  alt="'Mobius strip' by u/BoonFanz on reddit"
+  width="35%"
+  caption="'Mobius strip' by u/BoonFanz on reddit: reddit.com/r/gifs/comments/vvfuts/mobius_strip/"
+/>
+
+I wasn't in the mood to start coding a 3D graphics app, but vibe coding is fun, and chill, and lazy, so I thought, "I'm not doing it, but I'll ask Claude and see what happens."
+
+The term _vibe coding_ went viral from an Andrej Karpathy [tweet](https://x.com/karpathy/status/1886192184808149383). However, a lot of people still don't know what it is or how it works.
+
+Vibe coding is when you code a project by repeatedly prompting an LLM to add features and make changes, without looking at the code. The LLM proposes a code change, and rather than reviewing it, you click "accept" and check if it does what you want. If it doesn't, you prompt it to fix it or undo the change and refine your prompt.
+
+For me, it has made side projects a lot more fun and productive (the entire website you are reading this post on was vibe coded), so I want to share how it works and **make it concrete** by showing the exact prompts used to create a project.
+
+### The project
+
+I'll show the first **17** prompts I used for [github.com/nmamano/mobiustorus](https://github.com/nmamano/mobiustorus), an interactive python app for visualizing 3D toruses with different polygonal cross sections and 'twists'.
+
+This was the final result after the 17 prompts, including failed ones:
+
+<BlogImage
+  src="/blog/vibe-coding/state17.gif"
+  alt="Final result: an interactive 3D torus visualization with polygonal cross sections and twists"
+  width="100%"
+/>
+
+### Setup
+
+I used Claude-3.5-Sonnet via the Cursor IDE. The two popular choices for vibe coding right now seem to be Cursor and Windsurf. I've only tried Cursor so I don't have an opinion on which is better.
+
+I wasn't trying to be fast or efficient, but I clocked the whole thing at 35 minutes, so about 2 minutes per prompt. The LLM is fast, so the main bottleneck was writing the prompts.
+
+To be fair, this was probably a lucky/_happy_ run, and it could have taken longer. However, LLMs keep getting better (we now have _thinking mode_ for Claude 3.7 in Cursor), so the trend will be the opposite.
+
+The [resulting code](https://github.com/nmamano/mobiustorus/blob/9bb4a44872dff9d740e03a46d05c9017d2fbe5f1/mobius.py) was 180 LoC.
+
+## The prompts
+
+> 1. write a python script that draws a 3d torus. make it interactive if possible
+
+<BlogImage
+  src="/blog/vibe-coding/state1.gif"
+  alt="An interactive 3D torus visualization with color gradient"
+  width="70%"
+  caption="Result from prompt 1."
+/>
+
+Notice how I don't start by asking for the final state. Part of vibe coding is _chuncking_ what you want to do into a series of conceivable steps.
+
+> 2. can you make the torus more like a doughnut? make the cross section a circle
+
+The AI pushed back saying it was already a circle.
+
+> 3. the problem is in the visualization then. the axises don't all have the same scaling
+
+<BlogImage
+  src="/blog/vibe-coding/state3.png"
+  alt="Torus with corrected scaling on all axes"
+  width="40%"
+  caption="Result from prompt 3."
+/>
+
+It's good to fix issues (like the distorted scaling) before trying to add more features.
+
+> 4. can you hide the axes and planes so there's only the torus left
+
+<BlogImage
+  src="/blog/vibe-coding/state4.png"
+  alt="Torus with hidden axes and planes"
+  width="40%"
+  caption="Result from prompt 4."
+/>
+
+> 5. now the challenging part. Add a parameter k, which you can initialize to 4 by default. Then, instead of a circle, the cross section should be a regular polygon with k sides. like a square for k = 4
+
+<BlogImage
+  src="/blog/vibe-coding/state5.png"
+  alt="First attempt at a polygonal torus that looks like a lamp"
+  width="50%"
+  caption="Result from prompt 5."
+/>
+
+> 6. it didn't work. it looks more like a lamp
+
+<BlogImage
+  src="/blog/vibe-coding/state6.gif"
+  alt="Polygonal torus with gaps between faces"
+  width="60%"
+  caption="Result from prompt 6."
+/>
+
+> 7. that's almost correct, but thre's a weird gap where some of the sides don't touch
+
+The AI made some changes that didn't fix it.
+
+> 8. still happening (with attachment: a screenshot of the shape)
+
+This finally fixed it.
+
+<Callout>
+  **Tip:** I didn't do it here but it's often easier to roll back a bad change
+  and refine your prompt than to try to fix it.
+</Callout>
+
+> 9. color each face of the torus with a different color
+
+I ran into some compilation errors.
+
+> 10. help (with attachment: the error from the terminal)
+
+<BlogImage
+  src="/blog/vibe-coding/state10.gif"
+  alt="Interactive torus with a slider to change the number of sides"
+  width="70%"
+  caption="Result from prompt 10."
+/>
+
+> 11. add a way to change the k parameter in the interaction
+
+<BlogImage
+  src="/blog/vibe-coding/state11.gif"
+  alt="Torus with twisting added"
+  width="100%"
+  caption="Result from prompt 11."
+/>
+
+Notice how I didn't specify what the UI for changing the parameter should look like. Often, the LLM does a better job when it has fewer constraints.
+
+> 12. can you add an option to add twisting to the shape. in one full rotation of the 'torus' each face has twisted to matchup with the 'next' face
+
+<BlogImage
+  src="/blog/vibe-coding/state12.gif"
+  alt="Torus with face alignment in twists"
+  width="100%"
+  caption="Result from prompt 12."
+/>
+
+> 13. It should skip twists where the faces don't perfectly match. So, depending on the number of faces, it should calculate the degrees to twist to align the next face, and that should be the smallest incremental twist
+
+<BlogImage
+  src="/blog/vibe-coding/state13.gif"
+  alt="Torus with colored twist faces aligned"
+  width="100%"
+  caption="Result from prompt 13."
+/>
+
+> 14. can you support one more twist, so that each face can match with its original starting face
+
+This worked.
+
+> 15. here's a crazy idea. instead of showing the torus once, show it twice, side by side, with the second one looking at it from the opposite side (like from deep in the z axis i guess)
+
+It showed two toruses, but they moved independently.
+
+> 16. Nice!! I want the position of the 2 toruses to be related though. when i move one, the other should move too, but seen from the opposite side
+
+<BlogImage
+  src="/blog/vibe-coding/state16.gif"
+  alt="Two toruses side by side showing different perspectives"
+  width="100%"
+  caption="Result from prompt 16."
+/>
+
+> 17. close enough. now the 2 are moving together as i wanted, but i'm not getting the 2 perspectives that i want. the left torus is perfect as is. the right torus should be as if i was looking at the left torus from behind
+
+This produced the final result I showed at the beginning.
+
+<BlogImage
+  src="/blog/vibe-coding/state17.gif"
+  alt="Two synchronized toruses showing front and back views"
+  width="100%"
+  caption="Result from prompt 17."
+/>
+
+## Some thoughts
+
+After this initial experiment, I used this app to write another blog post, [Merging Geometry](https://nmamano.com/blog/merging-geometry).
+
+I kept adding features to this app, like:
+
+- making the shapes rotate automatically
+- a button to download gifs of the animations
+- adding more shapes
+- remembering which shape was open the last time the app was used and opening it directly (using local storage)
+- automatically reopening the app when the code changes
+
+It is now ~1200 LoC, and I still have no idea whatsoever how to draw a 3D shape with Python.
+
+**_"But you're not learning anything!"_**
+
+Some people think that that is a _wasted opportunity_ and that it makes me a worse programmer because I am not learning anything.
+
+Here is the thing: people operate in different modes. I wanted these visualizations to satisfy my curiousity, and later to write the blog post, not because I wanted to code. I was in _writer mode_. My goal was to convey information clearly, and vibe coding is a _tool_ that helped me do that.
+
+**_"Is coding a useless skill now?"_**
+
+As much as I like vibe coding, I'll push back against this idea. Personally, I wouldn't trust vibe coding to handle anything with real users or personal data. I would still use LLM chats, but I would want to control the architecture and understand the codebase.
+
+Even if I didn't look at the code for this project, I still needed an intuitive understanding of how hard it is to code something (for an LLM) in order to chunk the project into doable steps.
+
