@@ -7,6 +7,7 @@ import components from "../../../components/MdxComponents";
 import ClientSyntaxHighlighter from "../../../components/ClientSyntaxHighlighter";
 import { formatDate } from "../../lib/date-utils";
 import { Metadata } from "next";
+import BlogFooter from "../../components/blog-footer";
 
 // Generate metadata for each blog post
 export async function generateMetadata({
@@ -127,6 +128,9 @@ export default async function BlogPost({
           </ClientSyntaxHighlighter>
         </div>
       </article>
+      
+      {/* Add the footer component */}
+      <BlogFooter />
     </div>
   );
 }
