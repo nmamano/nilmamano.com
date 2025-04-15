@@ -1,0 +1,59 @@
+---
+title: "Get Binary Search Right Every Time, Explained Without Code"
+date: "2025-04-15"
+excerpt: "A binary search recipe that works for every problem, explained without code."
+coverImage: "/blog/binary-search/cover.png"
+categories: ["tutorial", "DS&A"]
+---
+
+One of the things that makes binary search tricky to implement is that you usually need to tweak the pointer manipulation logic in subtle ways based on the specifics of the problem.
+
+E.g., an implementation that works for finding a target in a sorted array when the target is present, may not work if the target is missing. Or, it may not be clear how to tweak the code to find the last occurrence of the target instead of the first one. And of course, there are plenty of less conventional applications of binary search, like [catching bike thieves](https://x.com/AlecStapp/status/1728953538301345889).
+
+In [Beyond Cracking the Coding Interview](https://www.amazon.com/dp/195570600X), we wanted to simplify this, so we went looking for a general binary search template. Going into it, I thought we might need at least two templates, but we ended up with just one, which we called the "transition point recipe", and which works for every problem we tried, including the 17 problems in the binary search chapter of the book. If you find one where it doesn't work, let me know!
+
+## The transition point problem
+
+Here is the thesis of the transition point recipe:
+
+<Callout>
+  Every binary search problem can be reduced to the 'transition point problem'.
+</Callout>
+
+In the 'transition point problem', you are given an array of boolean values where all the `false` values come before the `true` values, and you need to point where it changes.
+
+E.g., in the array `[false, false, true, true, true]`, the last `false` is at index `1` and the first `true` is at index `2`.
+
+Knowing how to solve this specific problem is key to our recipe. The specific binary search implementation is not important, but there is an invariant we can follow that makes it quite easy: ensure that the left pointer is always at a `false` and the right pointer is always at a `true`.
+
+We give code in the book, but remembering exact code in an interview is error prone. Instead, the four bullet points below are all I *personally* remember, and I feel confident that I can derive the rest easily.
+
+1. Start by handling some edge cases:
+    - The array is empty
+    - Every value is `true`
+    - Every value is `false`
+2. Initialize two pointers, `left` and `right`, to the first and last indices, respectively.
+3. For the main binary search loop, always maintain the *invariant* that the value at `left` is `false` and the value at `right` is `true`. Let this invariant guide your pointer manipulation logic, so that you don't need to memorize any code.
+4. Stop when the `left` and `right` pointers are next to each other (i.e., `left + 1 == right`).
+
+Combining the invariant with the stopping condition, we get that, at the end, `left` will be at the last `false` and `right` will be at the first `true`.
+
+These bullet points rely on two ideas to make binary search easier: (1) handling edge cases upfront, and (2) letting strong invariants guide the implementation. Notice how the invariant even guides the edge cases at the beginning, as they are the necessary ones to be able to initialize `left` and `right` in a way that satisfies it.
+
+## The reduction
+
+Ok, so now, let's take for granted that we can solve the transition point problem. How does this help us solve other binary search problems?
+
+The idea is to come up with a (problem-specific) *predicate*, like `< target`, `>= target`, or `x % 2 == 0`, which splits the search range into two regions, the "before" region and the "after" region.
+
+This predicate is a function that takes an element of the search range and returns a boolean, and -- as you probably saw coming -- it is key that the all the elements with `false` values come before the elements with `true` values.
+
+Then, we can use the solution to the transition point problem to find the transition point between the 'before' and 'after' regions. The only difference is that, instead of checking boolean values directly, we check the result of the predicate.
+
+You can even wrap the predicate in a function, which we called `is_before(x)` in the book, which tells you whether a given element is in the 'before' region. Then, it's really obvious that we are just solving the transition point problem every time.
+
+The only part that requires some thinking is choosing the right transition point. For example:
+
+- if we want to find the *first* occurrence of `target` in a sorted array, we can use `is_before(x) = x < target`, which means that, if `target` is present, the first occurrence is the first element in the 'after' region (so, we can check/return the `right` pointer at the end).
+- if we want to find the *last* occurrence of `target` in a sorted array, we can use `is_before(x) = x <= target`, which means that, if `target` is present, the last occurrence is the last element in the 'before' region (so, we can check/return the `left` pointer at the end).
+
