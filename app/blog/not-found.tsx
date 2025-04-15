@@ -15,4 +15,4 @@ export default function BlogNotFound() {
       </Link>
     </div>
   );
-} 
+}
