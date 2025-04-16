@@ -1,0 +1,175 @@
+---
+title: "In Defense of Coding Interviews"
+date: "2025-04-16"
+excerpt: "A collection of arguments in favor of coding interviews."
+coverImage: "/blog/in-defense-of-coding-interviews/cover.png"
+categories: ["career"]
+---
+
+There is already a lot of discourse about everything wrong with coding interviews. Indeed, one of the first chapters in _Beyond Cracking the Coding Interview_ is *What's Broken About Coding Interviews?* (it's one of the sneak peek free chapters in [bctci.co/free-chapters](https://bctci.co/free-chapters)).
+
+Here, I want to **collect all the arguments for the contrary view: that there are no clear better alternatives to coding interviews at Big Tech companies.**
+
+<Callout>
+  Disclaimers:
+  - I am one of the authors of _Beyond Cracking the Coding Interview_, a prep book for coding interviews. Thus, I am vested in coding interviews not going away.
+  - I love leetcoding and specialized in DS&A for my PhD, so I haven't personally experienced the *dread* that most people feel grinding it.
+  - I've been an interviewer at Google in the past, but I'm not currently working for Big Tech, and I don't have any inside knowledge. This is just my assessment.
+  - This post is only about Big Tech. I don't think coding interviews are a good idea for startups.
+  - This post contains "Strong Opinions, Weakly Held". I believe everything here, but I'm very receptive to pushback and opposing data.
+</Callout>
+
+## The rationale for coding interviews
+
+I think Big Tech companies understand that being cracked at DS&A is not really necessary to be a good SWE. I don't think coding interviews are about that at all.
+
+Imagine you are a Big Tech company, like Google. You receive a massive stream of applications, and you have to trim that down to a still large number of hires. Your hiring system needs to be *scalable*:
+
+- you need to quickly train many interviewers
+- you need a way to evaluate candidates that minimizes interviewer bias (not *your* bias, or a specific person's bias, but all the biases of a large, heterogeneous group)
+
+So, the first thing you do to scale--in true engineering fashion--is decoupling hiring and team matching. But that means you cannot hire for specific tech or domain experience: You don't know in what team candidates will end up, and your teams use a bunch of different languages and tech stacks (and a lot of it is internal anyway, so you definitely can't hire for that).
+
+So, you need a *competence assessment* that is independent of any particulars about the job, much like the role the SAT plays for college admissions. How do you do that?
+
+If you are a Big Tech company, what you actually want is candidates who can take any complex software system (that's not part of the candidate's previous expertise) and answer hard questions about it, like what's the best way to add a feature, how to optimize it, or how it should be refactored. In other words, the competence you want to assess is general problem-solving skills, and that's what coding interviews are designed for: you are given a tough problem that you have *ideally* never seen before (more on this later), and asked to showcase your thought process on how you approach it. When working as intended, I believe it gives more *signal* about your problem-solving skills and is easier to evaluate impartially than other popular interview formats, like talking about previous experience or take-home assignments.
+
+Yes, there's a lot more to being a SWE than problem-solving skills--and that's why Google also does system design and behavioral interviews, but you still want to hire for this trait.
+
+## The two crucial flaws: memorization and cheating
+
+Hopefully, the rationale above covered one of the most common criticisms of coding interviews: that they do not reflect the day-to-day work of an engineer. Instead, I want to focus on what *I* think are the two biggest issues with coding interviews:
+
+1. **Memorizing an absurd amount of leetcode problems gives you an edge.** This is the classic reason why people [*hate*](https://www.teamblind.com/post/We-wrote-the-official-sequel-to-Cracking-the-Coding-Interview-AMA-sosHtL28/44294147?commentsSort=top) coding interviews with a passion. It has led to an "arms race" where candidates have to memorize more and more problems to improve their odds, and interviewers keep asking about more niche topics. At the extreme, coding interviews end up feeling like a lottery, and candidates find prep a soul-sucking waste of time.
+
+2. **Cheating has become easy with AI.** This is a newer issue that's becoming more prevalent due to the fact that LLMs are pretty good at leetcoding. In real time, a cheater can feed the problem statement to an LLM (without obvious tales like "select all"), get a solution, and even a script for what to say.
+
+From the company's side, Issue (1) is not much of an issue. It definitely undermines the "problem-solving" part of the interview if a candidate is just recalling the question, but, statistically, if they do enough rounds, it's unlikely to happen every round. Some people (not me) also argue that the memorization is even good for the companies because it rewards hard work and dedication.
+
+<Callout>
+  For what it's worth, one thing we hoped to change about the interview prep discourse with BCtCI is that candidates should focus on improving their problem-solving skills rather than memorizing. See, for instance, my blog post about how we taught [binary search](https://nilmamano.com/blog/binary-search). But yes, grinding is still necessary.
+</Callout>
+
+Issue (1) also means that they'll lose a big chunk of candidates who are great SWEs but won't put up with grinding leetcode or that simply don't perform well under pressure (and, from personal experience, many great developers fall in this group). This sucks from the candidate's perspective, but if you are Google, you receive an overwhelming amount of applications from qualified candidates, so you are more OK with rejecting good candidates than accepting bad ones.
+
+Issue (2), on the other hand, has the potential to completely ruin coding interviews from the company's side. I'm seeing a quick rise of stories from frustrated interviewers who interviewed or even hired cheaters who could then not do the job (Exhibit [A](https://www.reddit.com/r/interviews/comments/1joh0w1/interview_coder_ai_is_a_complete_scam_and_total/)).
+
+I expect to see some kind of systematic response to this from Big Tech, but it's not clear what as of April 2025. [This article](https://www.cnbc.com/2025/03/09/google-ai-interview-coder-cheat.html) includes some internal comments from Google execs:
+
+> [Brian] Ong [Google’s vice president of recruiting] said candidates and Google employees have said they prefer virtual job interviews because scheduling a video call is easier than finding a time to meet in available conference rooms. The virtual interview process is about two weeks faster, he added.
+>
+> He said interviewers are instructed to probe candidates on their answers as a way to decipher whether they actually know what they’re talking about.
+> 
+> “We definitely have more work to do to integrate how AI is now more prevalent in the interview process,” said Ong. He said his recruiting organization is working with Google’s software engineer steering committee to figure out how the company can refine its interviewing process.
+>
+> “Given we all work hybrid, I think it’s worth thinking about some fraction of the interviews being in person,” Pichai responded. “I think it’ll help both the candidates understand Google’s culture and I think it’s good for both sides.”
+
+I thought going back to in-person interviews would be a *no-brainer* for a company like Google, but my reading of these comments is that they don't seem too bothered for now. ~shrug~
+
+<Callout>
+  Disclaimer: I haven't worked for a Big Tech company since before AI cheating went viral, so I don't have internal insight into what people in charge of hiring are actually thinking.
+</Callout>
+
+Two related arguments that I don't subscribe to are (1) that leetcode-style interviews are no longer relevant because AI can solve them, and (2) that LLMs should be allowed during coding interviews because they are allowed on the job. The fact that AI can solve coding questions doesn't change that it still gives you the important signal that you want from humans: algorithmic thinking and general problem-solving skills. We just need humans to not cheat.
+
+I'll share my thoughts on how to improve coding interviews to address these issues. First, let's see why I think the alternatives are not better.
+
+## The problems with the alternatives
+
+### Take-home assignments
+
+Take-home assignments are even more subject to cheating, so that can't be the answer to cheating. Never mind LLMs, you don't even know who did the assignment. But take-home assignments have other flaws:
+
+- They create an asymmetry between company and candidate, where the company asks for a ton of work from the candidate without putting any effort in. "Oh, we have way too many candidates we need to filter down to a shortlist? Send all of them a complex task to do over the weekend." I prefer a model where both company and candidate have to put in time. I'm more OK with take-home assignments as the final stage of the process.
+- They favor people with a lot of free time to polish the assignment, which can be a bias against, e.g., people with caregiving responsibilities.
+
+### Previous experience
+
+I find this too subjective to give signal about problem-solving skills, and it's more about being a good "salesperson". I also think it's more subject to bias: *people with a similar background as yours are probably more likely to have similar interests, and thus you may find their side-projects more interesting.*
+
+## Trial periods
+
+This makes sense to me in smaller companies, where you find a candidate with the perfect profile for the task at hand. It doesn't scale to Big Tech companies.
+
+### Other alternatives
+
+If there are other alternatives that fulfill the same purpose as coding interviews but don't suffer from the same issues, I'd love to hear about them.
+
+One idea I liked is going through a code review during the interview, but it's not clear that (1) it offers as much signal about problem-solving skills, and (2) it is easy to evaluate impartially.
+
+## How to improve coding interviews
+
+Right now, FAANG interviewers focus too much on "Did they solve the question or not?" That's because they don't get much training on how to interview well (if at all), and it's the most straightforward way to pass on a hire/no hire recommendation to the hiring committee. This leads to many interviewers just pasting the prompt in and mostly sitting in silence. This is the ideal scenario for cheaters.
+
+### The obvious things
+
+There are obvious ways to improve this situation:
+
+- In-person interviews. These have other benefits, like allowing the candidate to get a better sense of the company culture.
+- Not using publicly available questions, and actively scanning for leaks.
+- Cheating detection software (privacy is a concern here -- would it be too crazy for a company to ship a laptop to the candidate just for the interview?).
+- Stop asking questions that require knowing some niche trick that a normal person wouldn't be able to figure out on the spot. Those reinforce a focus on memorization.
+
+### Low effort ways of countering cheating
+
+I also think that measures designed to throw LLMs off could be effective (at least in the short term) and require minimal effort, such as:
+
+- Stating the question, or part of it, instead of writing the whole thing down
+- Including a 'decoy' question and telling the candidate, "Ignore that line, it is part of our anti-cheating measures."
+
+See [LinkedIn discussion](https://www.linkedin.com/posts/nilmamano_if-coding-interview-cheating-is-a-big-issue-activity-7306108316126957569-3Pgy?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC6jqIwBADV70xmTEpmkxbAnN_32mssoxA8).
+
+### If we are allowed to dream...
+
+Perhaps the most effective way to counter both memorization and cheating is to make coding interviews more open ended and conversational. To use a chess analogy, a cheater may make a great move, but if you ask them to explain them why they did, they may not be able to.
+
+The interviewer can use a coding question as a launching point, but then drill down on technical topics as they come up. So, e.g., if a candidate chooses to use a heap, the interviewer could go into:
+
+- What made you think of using a heap? What properties are important for this problem?
+- What are the tradeoffs of using a heap vs binary search trees?
+- How would you go about implementing a heap that supports arbitrary priorities?
+- Why is [heapify faster than inserting one by one](https://nilmamano.com/blog/heapify-analysis)?
+
+If interviewers did that, it wouldn't even be necessary to ask tricky questions. They could even [ask *Fibonacci*](https://www.linkedin.com/posts/chrisverges_here-are-my-interview-questions-for-a-software-activity-7259700112145158144-YqnR?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC6jqIwBADV70xmTEpmkxbAnN_32mssoxA8).
+
+The problem is that, the more open ended the interview is, the more difficult it is to evaluate candidates systematically. You'd need better interviewers and better interviewer training.
+
+## More good things about coding interviews
+
+### Only one thing to study
+
+An underrated upside of leetcode interviews is that you only need to study one thing for all the big companies. I feel like if every company asked different things, interview prep time would decrease for any specific company but increase overall.
+
+In fact, a likely outcome of the push for fewer leetcode-style interviews is an even worse compromise: coding interviews won't completely go away, so you'll still need to grind leetcode, but you'll also have to prep a bunch of specialized stuff for each company on top of that.
+
+See [LinkedIn discussion](https://www.linkedin.com/posts/nilmamano_an-underrated-upside-of-leetcode-interviews-activity-7312845744674091010-K0EU?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC6jqIwBADV70xmTEpmkxbAnN_32mssoxA8).
+
+### They are not based on pedigree
+
+Coding interviews act as a form of standardized testing, similar to the role of SAT for college admissions in the US. And, much like the SAT allows high-school students from all backgrounds to attend top colleges, coding interviews allow candidates from all backgrounds to get at the top companies. The leetcode grind is the same for everyone.
+
+If we kill coding interviews without a good alternative, it seems inevitable that Big Tech companies will give more weight to resume and referrals. We all agree that's a bad thing.
+
+## Final thoughts
+
+The best question we got in our [Reddit AMA](https://www.reddit.com/r/cscareerquestions/comments/1j4zsjj/we_wrote_the_official_sequel_to_ctci_cracking_the/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) for BCtCI was whether [we'd use coding interviews ourselves if we were in charge of hiring](https://www.reddit.com/r/cscareerquestions/comments/1j4zsjj/comment/mgdfddt/). You can see Gayle's, Mike's ([mikemroczka.com](https://www.mikemroczka.com/)), and my answers. We all said *no* in its current form, but yes with caveats/improvements.
+
+My favorite answer was Mike's. He's less of a proponent of leetcode-style interviews than I am, but I think he strikes a thoughtful balance between DS&A and practical stuff:
+
+> Best question so far. Yes, I would ask DS&A questions still, but not exclusively and not difficult ones. Many startups shouldn't ask them though, because most people are bad at discerning what a reasonable question is.
+> 
+> I would do 4-5 rounds of interviews because less than that is hard to be significant, but more than that and you're wasting too much of a candidate's time (Netflix has a whopping 8 rounds!!). For a senior engineer role, I'd do something like this.
+>
+> Round 1: An online DS&A assessment to filter out people that can't do the simple things (easy & very simple medium questions only, not hard)
+>
+> Round 2: Live interview of DS&A (simple medium, not hard. essentially just making sure you didn't cheat on the previous round by asking you to explain your answers and code something new from scratch)
+>
+> Round 3: System design (no need for perfect answers, but I'd ask an uncommon question to ensure it was something they hadn't memorized)
+>
+> Round 4: Behavioral, with a focus on cross-team impact. This would just be a simple pass/fail and just a vibe check. It might also be skipped if the prior two rounds had good signal for emotional intelligence
+>
+> Round 5: Remote logging into a server and working on an actual bug that was fixed in our codebase before. There would be no time limit, but time on the server would be logged to weed people out who needed days to complete a simple task.
+>
+> This ends up testing a little bit of theory, practical knowledge, emotional intelligence, and the generalized SWE skillset.
+>
+> Full disclosure. This is my answer. Not the answer of every author. Again, I'd stress that the average startup wouldn't benefit from DS&A and shouldn't be asking them

@@ -20,23 +20,23 @@ Here is the thesis of the transition point recipe:
   Every binary search problem can be reduced to the 'transition point problem'.
 </Callout>
 
-In the 'transition point problem', you are given an array of boolean values where all the `false` values come before the `true` values, and you need to point where it changes.
+In the 'transition point problem', you are given an array with just two values, say `1` and `2`, where all the `1`s come before the `2`s, and you need to point where it changes.
 
-E.g., in the array `[false, false, true, true, true]`, the last `false` is at index `1` and the first `true` is at index `2`.
+E.g., in the array `[1, 1, 1, 1, 1, 2, 2, 2]`, the last `1` is at index `4` and the first `2` is at index `5`.
 
-Knowing how to solve this specific problem is key to our recipe. The specific binary search implementation is not important, but there is an invariant we can follow that makes it quite easy: ensure that the left pointer is always at a `false` and the right pointer is always at a `true`.
+Knowing how to solve this specific problem is key to our recipe. The specific binary search implementation is not important, but there is an invariant we can follow that makes it quite easy: ensure that the left pointer is always at a `1` and the right pointer is always at a `2`.
 
 We give code in the book, but remembering exact code in an interview is error prone. Instead, the four bullet points below are all I *personally* remember, and I feel confident that I can derive the rest easily.
 
 1. Start by handling some edge cases:
     - The array is empty
-    - Every value is `true`
-    - Every value is `false`
+    - Every value is `1`
+    - Every value is `2`
 2. Initialize two pointers, `left` and `right`, to the first and last indices, respectively.
-3. For the main binary search loop, always maintain the *invariant* that the value at `left` is `false` and the value at `right` is `true`. Let this invariant guide your pointer manipulation logic, so that you don't need to memorize any code.
+3. For the main binary search loop, always maintain the *invariant* that the value at `left` is `1` and the value at `right` is `2`. Let this invariant guide your pointer manipulation logic, so that you don't need to memorize any code.
 4. Stop when the `left` and `right` pointers are next to each other (i.e., `left + 1 == right`).
 
-Combining the invariant with the stopping condition, we get that, at the end, `left` will be at the last `false` and `right` will be at the first `true`.
+Combining the invariant with the stopping condition, we get that, at the end, `left` will be at the last `1` and `right` will be at the first `2`.
 
 These bullet points rely on two ideas to make binary search easier: (1) handling edge cases upfront, and (2) letting strong invariants guide the implementation. Notice how the invariant even guides the edge cases at the beginning, as they are the necessary ones to be able to initialize `left` and `right` in a way that satisfies it.
 
@@ -46,7 +46,7 @@ Ok, so now, let's take for granted that we can solve the transition point proble
 
 The idea is to come up with a (problem-specific) *predicate*, like `< target`, `>= target`, or `x % 2 == 0`, which splits the search range into two regions, the "before" region and the "after" region.
 
-This predicate is a function that takes an element of the search range and returns a boolean, and -- as you probably saw coming -- it is key that the all the elements with `false` values come before the elements with `true` values.
+This predicate is a function that takes an element of the search range and returns a boolean, and -- as you probably saw coming -- it is key that the all the elements with `true` values come before the elements with `false` values (or the other way around).
 
 Then, we can use the solution to the transition point problem to find the transition point between the 'before' and 'after' regions. The only difference is that, instead of checking boolean values directly, we check the result of the predicate.
 
