@@ -64,11 +64,14 @@ export async function generateStaticParams() {
 // Make the component async and correctly handle params
 export default async function BlogPost({
   params,
+  searchParams,
 }: {
   params: { slug: string };
+  searchParams: { category?: string };
 }) {
   // Need to await params before destructuring
   const { slug } = await params;
+  const { category } = searchParams;
 
   // Then use the destructured variable
   const post = await getPostBySlug(slug);
@@ -78,11 +81,13 @@ export default async function BlogPost({
     notFound();
   }
 
+  const backLink = category ? `/blog/category/${category}` : "/blog";
+
   return (
     <div className="container mx-auto max-w-4xl px-4 py-12">
       <div className="mb-8">
         <Link
-          href="/blog"
+          href={backLink}
           className="text-primary hover:underline inline-flex items-center"
         >
           ← Back to all posts

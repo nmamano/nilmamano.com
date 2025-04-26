@@ -134,7 +134,7 @@ export default function BlogList({ posts: allPosts, initialCategory }: BlogListP
                 {/* Cover Image */}
                 {post.coverImage && (
                   <div className="md:w-1/3">
-                    <Link href={`/blog/${post.slug}`}>
+                    <Link href={`/blog/${post.slug}${selectedCategory ? `?category=${selectedCategory}` : ''}`}>
                       <div className="w-full h-[192px] flex items-center justify-center">
                         <Image
                           src={post.coverImage}
@@ -157,7 +157,7 @@ export default function BlogList({ posts: allPosts, initialCategory }: BlogListP
 
                 {/* Content */}
                 <div className={post.coverImage ? "md:w-2/3" : "w-full"}>
-                  <Link href={`/blog/${post.slug}`}>
+                  <Link href={`/blog/${post.slug}${selectedCategory ? `?category=${selectedCategory}` : ''}`}>
                     <h2 className="text-2xl font-semibold hover:text-primary transition-colors mb-2">
                       {post.title}
                     </h2>
@@ -192,7 +192,7 @@ export default function BlogList({ posts: allPosts, initialCategory }: BlogListP
 
                   <div className="mt-4">
                     <Link
-                      href={`/blog/${post.slug}`}
+                      href={`/blog/${post.slug}${selectedCategory ? `?category=${selectedCategory}` : ''}`}
                       className="text-primary hover:underline inline-flex items-center"
                     >
                       Read more
