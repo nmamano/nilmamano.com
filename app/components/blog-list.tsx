@@ -3,8 +3,9 @@
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "../lib/date-utils";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { BlogPost } from "../lib/blog";
+import { useRouter, usePathname } from "next/navigation";
 
 interface CategoryConfig {
   name: string;
@@ -23,7 +24,7 @@ const CATEGORIES: Record<string, CategoryConfig> = {
     bgColor: "bg-purple-100",
     textColor: "text-purple-800",
   },
-  "ds&a": {
+  "dsa": {
     name: "DS&A",
     bgColor: "bg-green-100",
     textColor: "text-green-800",
@@ -50,10 +51,27 @@ function getCategoryConfig(category: string): CategoryConfig {
 
 interface BlogListProps {
   posts: BlogPost[];
+  initialCategory?: string;
 }
 
-export default function BlogList({ posts: allPosts }: BlogListProps) {
-  const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
+export default function BlogList({ posts: allPosts, initialCategory }: BlogListProps) {
+  const router = useRouter();
+  const pathname = usePathname();
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    initialCategory || null
+  );
+
+  useEffect(() => {
+    if (initialCategory) {
+      setSelectedCategory(initialCategory);
+    }
+  }, [initialCategory]);
+
+  const handleCategoryChange = (category: string | null) => {
+    setSelectedCategory(category);
+    const categoryPath = category ? `/blog/category/${category}` : "/blog";
+    router.push(categoryPath);
+  };
 
   const posts = selectedCategory
     ? allPosts.filter((post) => {
@@ -77,7 +95,7 @@ export default function BlogList({ posts: allPosts }: BlogListProps) {
       {/* Category Filter */}
       <div className="flex flex-wrap gap-2 justify-center mb-8">
         <button
-          onClick={() => setSelectedCategory(null)}
+          onClick={() => handleCategoryChange(null)}
           className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
             selectedCategory === null
               ? "bg-primary text-primary-foreground"
@@ -89,7 +107,7 @@ export default function BlogList({ posts: allPosts }: BlogListProps) {
         {Object.entries(CATEGORIES).map(([key, config]) => (
           <button
             key={key}
-            onClick={() => setSelectedCategory(key)}
+            onClick={() => handleCategoryChange(key)}
             className={`px-4 py-2 rounded-full text-sm font-medium transition-colors ${
               selectedCategory === key
                 ? `${config.bgColor} ${config.textColor}`
