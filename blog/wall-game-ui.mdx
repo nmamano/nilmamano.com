@@ -1,0 +1,559 @@
+---
+title: "Wall Game UI Design WIP"
+date: "2025-05-02"
+excerpt: "The specs of the UI for the wall game."
+coverImage: "/blog/wall-game-ui/cover.png"
+categories: ["WIP"]
+---
+
+This is the specification of the frontend for the *wall game*, an online strategy board game.
+It only specifies the logic/functionality. It is agnostic of the look.
+
+A first version of the game is already available at [wallwars.net](https://wallwars.net).
+This is a UI overhaul with the following goals:
+
+- A smooth onboarding experience. It should be very clear how to navigate the site and in what order to do things.
+- Teaching the game to new players in a structured way.
+- Expansive solo modes so that players can have fun even if there is no one else online.
+- Improving the user journey of inviting friends to play.
+- Supporting game variants as a first-class feature (this was a key feature for replayability when playing with a physical board).
+- Supporting game variants with a varying number of players.
+- Supporting multiple bots, including custom bots to foster the "engine dev" community.
+- Clean interface to game data, like past games, player history, rankings, etc., by showing interlinked tables with SQL-like features like filtering.
+- More "social" features, like an in-game chat and the ability to watch live games.
+
+## Frontend Overview
+
+The site is a SPA (single page app). There are 9 main pages, all of which are accessible from the top navigation bar.
+If a screen is not wide enough to show all the tabs, they are collapsed as necessary into a hamburger menu icon.
+Tabs act as buttons to show the corresponding page. Pages are self-contained and have their own URL:
+
+In order, the tabs are:
+
+1. Play (default) - wallgame.io
+2. Ranking - wallgame.io/ranking
+3. Past games - wallgame.io/past-games
+4. Live games - wallgame.io/live-games
+5. Learn - wallgame.io/learn
+6. About - wallgame.io/about
+7. Settings - wallgame.io/settings
+8. Profile (appears as Login if the user is not logged in) - wallgame.io/profile
+
+The navigation bar is always visible, and the current tab is highlighted.
+
+We'll first go over the [basic concepts](#concepts), then some of the [basic components](#components) reused across multiple pages, and finally, we'll go over each page (out of order).
+
+## Concepts
+
+- **Variants:** the game will have variants with slightly different rules. The only initial variants are "Standard" and "Classic", but the UI is designed to support new variants.
+- **Time control:** games are timed, like in chess. The time control specifies the amount of time each player has and the increment per turn. The time controls are "Bullet (1+0)", "Blitz (3+2)", "Rapid (10+2)", and "Classical (30+0)". The notation "x+y" indicates the starting time per side (x) and the increment per move (y). The default is "Rapid (10+2)". There is no way to customize the duration/increment within a category like "Bullet".
+- **Board dimensions:** games are played on a board which is a rectangular grid. In most variants, players can choose the dimensions they want to play on. The minimum width is 2, and the maximum is 12. Same for the height. Board dimensions are grouped into "Small" (up to 36 squares), "Medium" (up to 81 squares) and "Large" (more than 81 squares). Default is 8x8.
+- **Turns and moves:** a game consists of a series of turns. Each turn consists of a move by every player. The variant determines the number of players.
+- **Player order:**  Each turn, each player makes a move in a specific order established before the start of the game. Players can be identified by move order as "first mover", "second mover", ... (and maybe more depending on the variant). The player order is established at the end of the "matching stage".
+- **Pawns types:** players move pieces called pawns. Pawns can have different types, depending on the variants. E.g., in the "standard" variant, a pawn can be a "cat" or a "mouse". In the "classic" variant, a pawn can be a "cat" or a "goal".
+- **Pawn aesthetics:** Pawn looks can be customized by the user without affecting game logic. Players can choose between different shapes for each pawn type. There is a default shape for each type (i.e., select among a few options for "cat", a few options for "mouse", etc.). Players can also choose colors freely or leave the color as "default". The default color is special because it depends on the player order (e.g., first mover defaults to red, and second mover defaults to blue). If both players choose the same color, default colors will be used instead.
+- **Walls:** walls block the movement of pawns across the board. A wall can be placed, usually by a player, horizontally or vertically between two cells. Wall colors indicate who placed them.
+- **Bot:** also known as engine or "AI". A program that can play the game. The game comes with 3 built-in bots: "Easy", "Medium", "Hard". Bots interface with the game like a human: they need to manage their time, etc.
+- **Custom bot:** the site allows users to plug in their own bots to play games on the website. This requires the user to use a special client/API that acts as a bridge between their bot and the server.
+- **ELO:** ELO is a number indicating the strength of a player, like in chess. Players have a separate ELO for each time control and variant. Games can be rated or not rated. Only rated games affect ELO. Only logged-in users can play rated games. The starting ELO is 1200. Non-logged in users are always considered to have a rating of 1200. Bots have a fixed ELO: 1200 for "Easy", 1500 for "Medium", and 1800 for "Strong".
+
+- **Game parameters:** each variant has its own set of parameters that affect the logic of the game, and which can be adjusted by players before starting. (Time control is not considered part of the game parameters since every variant has it.) A common parameter among most variants is the board dimenions. Another possible example would be the starting position of the pawns. Some parameters can also involve randomization (e.g., "place X walls randomly"). Randomized effects are applied when the game starts, at the end of the "matching stage".
+
+- **Matching stage:** after a player has fully configured all the necessary parameters for a game, and decided who will be each player (e.g., are they playing vs a bot, or waiting for a friend to join, or trying to match with a stranger online), the game enters the "matching stage" where it waits for all the players to be ready. E.g., the matching stage may be instantaneous when playing a bot, but it may take a while to find someone online to play. If *any* player leaves during the matching stage, the game is aborted. E.g., if the variant has 4 players, and 3 players are ready, but one of them navigates away from the page, the game is aborted.
+
+- **Player types:** there are 5 player types in the context of a game created by a user:
+    - **"You"**: the user itself.
+    - **"Friend"**: an out-of-the-game friend of the user. When entering the matching stage, a link is generated for each "friend" to join the game. The user can send it to them. (Following the link directly joins the game. If the 'friend' wants to play with an account instead of being anonymous, they should first go to wallgame.io, create an account, and then click the link.)
+    - **"Bot"**: one of the built-in bots ("Easy", "Medium", or "Strong").
+    - **"Custom bot"**: the user's own bot. When entering the matching stage, an access token is created that the user needs to give to the client running their bot to join the game.
+    - **"Matched user"** (need a better name for this): When entering the matching stage, the game is added to the public lobby. From there, anyone can click on it to join the game. The game will also try to automatically match users in the matching stage. However, they must have compatible settings: time control, rated status (whether the game is rated or not), and game parameters. When waiting for a matched user, inside the matching stage, there is a box you can check to "Match even if the game parameters are different as long as the time control, rated status, and variant are the same". If there is no one available, the user stays in the matching stage until there is someone, or times out after 3 minutes (with an informational message). If there are multiple options, players with similar ratings will be paired.
+
+- **Actions:** Each move consists of a series of actions. For instance, the 'standard' variation has two actions per move. The most common actions are "move" and "wall". A "move" action consists of moving a pawn to an adjacent cell (not blocked by a wall). A "wall" action consists of placing a wall between two cells.
+- **Action staging:** a "move" is not final until the user has indicated all the actions. That means that, e.g., if a move is two actions and a player chooses a "wall" action as their first action, that action is not final until they choose their second action. The first action is "staged". The user can change their mind and undo staged actions. Opponents don't see staged actions.
+- **Premoving:** during the opponents turn, a player can make "premoves", actions that are automaticaly staged or submitted when it is the player's turn. You can only premove the number of actions in one move.
+- **Calculations:** a player may want help visualizing moves by themselves or their opponents before they are actually played. They can simulate placing walls and draw arrows between cells (to simulate pawn moves) without actually moving/staging/premoving anything. Calculations are just a visual aid and not part of the game logic.
+
+- **Match:** a match is a series of consecutive games between the same players. To extend a match with another game, players just need to propose and accept a rematch. Matches have scores: for two player games, wins are 1 point and draws are 0.5 points for each.
+
+- **Player names:** also known as playertags. Non-logged in users are all called "Anon". This means there is no way to distinguish non-logged in users, which acts as an incentive to create an account. Logged in users, get a random, unique username upon account creation. They can change it by going to settings. However, player names are unique across the whole game, meaning that they can only pick a name not already taken.
+
+- **Puzzle:** a game that starts from a specific position (not necessarily a realistic one), without time control, and where the user always moves first. The user is given a goal upfront: win or draw. When the user moves, the following can happen (the criterion to determine which one is determined by the puzzle setter):
+    - The user has made a mistake. The user is notified and the move is undone automatically rolled back. The user is also allowed to "play the game through" after a mistake to understand why their move is wrong. In this case, a strong bot takes over, which should be able to convert the position into a win (if the user's goal was to draw) or a win or draw (if the user's goal was to win).
+    - The user has gained a 'decisive advantage' (if the goal is to win) or 'secured a draw' (if the goal is to draw). The puzzle ends successfully.
+    - The user has made a correct move but the puzzle is not over. The opponent makes a move, which can either be fixed by the puzzle setter or played by a strong bot (the wall game often has many equally good moves, so it is not possible to preprogram an answer to every possible user move). The puzzle goes on.
+
+- **Replay notation:** a JSON string representing a game (finished or unfinished). It not only includes the list of moves, but the player information and every interaction needed to perfectly reproduce the game as it happened when played (e.g., the timing of the moves, rejected draw offers, etc). Each variant may require tweaks. For varirants with parameters involving randomization, the random seed is included. The only thing that is not saved is the chat.
+- **Standard notation:** a string format representing a game (finished or unfinished). It contains a header with the variant and parameters and the player names, and a body with the sequence of moves. It is meant to be compact while human-readable. Each variant may require tweaks. The standard notation is based on cell names (e.g., "e4").
+
+## Components
+
+This section describes specific high-level components of the UI, which are reused in various places.
+
+### Board
+
+This is the main component involved in playing the game.
+
+- A rectangular grid of square cells, with thick margins between them (that's where the walls go).
+- A cell may contain one or more pawns. There is no limit on how many pawns can be in the same cell.
+- A staged or premoved pawn move is shown with an arrow. Arbitrary arrows can also be added as calculations. It should be clear which one is which.
+- Between every two cells adjacent vertically or horizontally, there is a space where a wall can be *placed*, *staged*, *premoved*, *calculated*, or missing.
+- The corner between four cells is called a "pillar" and is not an inteactable element.
+- Placed walls are colored according to the color of the pawns of the player who placed them.
+- Similar to chess and checkers, the cells are colored alternatively, so that cells that are an even number of moves away from each other share a color. The contrast between the two colors is subtle.
+- Like chess, rows are labeled with numbers (starting from 1 on the top) and columns are labeled with letters (starting from 'a' on the left). The first cell in each row is labeled with the corresponding row number. The first cell in each column is labeled with the corresponding column letter. The labels are subtle, taking only a corner of the cell.
+- The last move is highlighted so it is easy for players to see what the opponent just did.
+
+### Board view
+
+This includes the board itself and surrounding elements for any related information and interactions:
+- the board
+- the timers. The timer of the player to move is highlighted.
+- the player names and ELOs. The name of the player to move is highlighted.
+- the move history in standard notation, with buttons to go back and forth and buttons to go to the beginning and latest move.
+- the chat. The chat can have multiple "channels":
+    - the "game chat", seen by all the players but not the audience
+    - the "team chat", seen only by players on the same team
+    - the "audience chat", seen only by the audience
+- an indicator of whose turn it is
+- online indicators for each player (if a player does not have the game tab/app active, it shows as offline)
+- menus for out-of-game interactions: "resign", "offer draw", "propose take back", "give time (1 min)", "rematch"
+- a button to toggle sounds
+- contextual information:
+    - the game variant and parameters
+    - the time control
+    - rated status
+    - the match score
+    - whose turn it is
+    - the player types ("you", "friend", "easy/medium/hard bot", "custom bot", "matched player")
+    - after the game ends, the game outcome (who won or if it is a draw) and the reason (e.g., time, resignation)
+- a button to see/copy the game's replay notation and standard notation
+
+### Game configuration panel
+
+This includes all the configuration options for a game.
+
+- time control: a selector with the options "Bullet (1+0)", "Blitz (3+2)", "Rapid (10+2)", and "Classical (30+0)".
+- rated status: yes/no. If the player is not logged in, the 'rated status' is set to "no" and grayed out. There should be an informational text that says that the user needs to be logged in to play rated games.
+- variant: a selector of supported variants.
+- additional parameters that depend on the variant. These parameters appear in a container, and the container changes depending on the variant.
+
+For example, for the standard variant:
+- Board width: number. Default: 8
+- Board height: number. Default: 8
+
+### Player configuration
+
+A little component that lets you configure how a player in a game will move.
+It consists of a selector with a few options, each of which has an informational text.
+
+- **"You"**: "You'll make the moves."
+- **"Friend"**: "You'll get a link to share with a friend to join the game."
+- **"Matched user"**: "You'll be paired with a random player with compatible settings and similar rating."
+- **"Easy Bot"**: "You'll play against an easy AI bot."
+- **"Medium Bot"**: "You'll play against a medium AI bot."
+- **"Hard Bot"**: "You'll play against a hard AI bot."
+- **"Custom bot"**: "You'll get an access token so that you can connect your own bot. See here for more information."
+The text links to a blog post explaining how to make a custom bot and connect it to the game using the token.
+
+There is no default. It depends on the context.
+
+### Game setup page
+
+This page has its own URL: wallgame.io/game-setup.
+
+It has two sections:
+
+- Create game
+- Join game
+
+#### Create game
+
+This part has the following elements:
+
+1. A button: "Create game".
+2. A player configuration component for each player (which depends on the variant, as set in #4).
+    - The selectors are labeled "Player 1", "Player 2", and so on.
+    - The default option for "Player 1" is "You", and for the others it is "Easy Bot".
+3. The game configuration panel. Choosing a variant with more than 2 players will affect the number of player configuration components in #2.
+
+#### Join game
+
+This part has the following elements:
+
+1. A heading "Join game"
+2. A table showing games from other players that are in the "matching stage" and waiting for someone to join.
+
+The table has the following columns:
+
+- **Join**: a button which, when clicked, joins the game.
+- **Variant**
+- **Rated**: yes/no.
+- **Time control**: a string formatted like "blitz (3+2)"
+- **Board size**: a string formatted like "medium (8x8)" (width x height).
+- **Player**: a string formatted like "name1 (1200)". The numbers in paretheses is the rating. Depending on the variant, if the variant has more than two players, this string may look different. E.g., "name1 (XXX) & name2 (YYY) vs name3 (ZZZ)".
+
+The rows are ordered by ELO closest to the current user's ELO.
+If the user chose a variant, rated status, time control, or board size in the game configuration panel, rows matching those settings are prioritized.
+Games that have been in "matching stage" for longer are also prioritized.
+
+### Game page
+
+The parameterized URL is wallgame.io/game/game-id
+
+The game page shows a game, identified with a given game ID in the URL.
+The game could be in the "matching stage", ongoing, or finished (a past game)
+The URL can be shared to join the game (if it is in the "matching stage"), to spectate it live (if it is ongoing) or watch it as a past game (if it is finished).
+
+The game page has one main component: the board view.
+
+Depending on the context, it could contain other elements.
+See, e.g., the case of the "Solo campaign" puzzles, which contain an additional explanation text. So far, this seems to be the only exception.
+
+### Matching stage panel
+
+When a user creates a game from wallgame.io/game-setup, a game ID is generated and they are taken to the game page with that game ID.
+
+However, it is possible that not all players are ready. For instance, if one of the player types is "friend", the game cannot start until the friend joins the game.
+
+If not all players are ready, a "matching stage" panel component is shown as a modal over a faded out version of the game page.
+
+The modal has a title: "Waiting for players".
+It contains one row for each player. Each row contains:
+- The player type (e.g., "You", "Friend", "Easy Bot", "Medium Bot", "Hard Bot", "Custom Bot", "Matched player")
+- An indication of whether the player is ready.
+- Instructions for how that player should join the game
+  - If the player is "You", the player is automatically ready.
+  - If the player is "Friend", the instructions include a link to share with the friend and an easy way to copy it to the clipboard.
+  - If the player is "Easy Bot", "Medium Bot", or "Hard Bot", the player is automatically ready.
+  - If the player is "Custom Bot", the instructions include an access token for a custom bot.
+  - If the player is "Matched player", the instructions are to wait for someone to join.
+- A button to abort the game and return to the previous page.
+
+If a player joins a game but there are other players that are not ready (in the case of variants with more than 2 players), they will also see the matching stage panel.
+
+## Tab 7: Settings
+
+Settings have three sections:
+
+1. User settings
+2. Visual style
+3. Default game parameters
+
+For sections 2 and 3, there should be an information box indicating that if the user is not logged in, they are saved as local cookies in the web browser. If they are logged in, the settings are saved to their account instead.
+
+### 1. User settings
+
+This has one field:
+
+- Display name (text field)
+
+It behaves a bit differently depending on if the user is logged in.
+
+For logged in users, the display name shows their current name and it is editable.
+
+There should be a button next to the "display name" text field that says "Change if available" and an informational text that says "Names must be unique across the site (case insensitive). You can only switch to another name not already in use." The button should be grayed out if the text field matches their current name. Names including "anon" or "deleted" are not allowed. If the user tries to change to such a name, it should be explained to them.
+
+If the user is not logged in, the display name should be grayed out and fixed as: "Anon"
+
+There should also be an indication that the user needs to be logged in to change their display name, with a button to the Profile page.
+
+### 2. Visual style
+
+- Dark theme: on/off. Default: on
+- Board theme: selector. Default: "classic".
+- Pawn color: selector. Default: default.
+- Cat pawn: selector.
+- Mouse pawn: selector. 
+- ... (one selector for each pawn type that appears in any variant)
+
+The pawn selectors are between icons/small images.
+
+### 3. Default game parameters.
+
+This is the game configuration panel component.
+
+A text says, "When setting up a game, these parameters will be used as default."
+
+## Tab 6: About
+
+This contains short informational text. The text can be something like this:
+
+"Wall game is a board game about building walls and outsmarting your opponents.
+It is inspired by quoridor (wiki link) and blockade (wiki link).
+Basic instructions about navigating the website (where to find the rules etc).
+Created by Nil Mamano (link).
+For more, you can read the blog (link)."
+
+## Tab 8: Profile
+
+This page looks different depending on whether the user is logged in or not.
+
+### Not logged in
+
+The tab appears as "Login".
+
+The page shows two main buttons: log in and sign up
+
+It includes a bit of text: "Log in or sign up to choose a name, play rated games, and see your game history."
+
+For the login and sign up flows, the user is redirected to an external auth service, so they are not part of this UI.
+
+### Logged in
+
+The tab appeas as "Profile".
+
+It shows the user display name and rating at the top, followed by a series of buttons grouped in two groups:
+
+Group 1:
+
+- Past Games: takes you to the Past Games tab but with the user's name already set as filter.
+- Ranking: takes you to the Ranking tab but with the user's name already set as filter.
+- Settings: takes you to the settings page.
+
+Group 2:
+
+- Log out
+- Delete account
+
+The delete account button shows a confirmation dialog: "Your email will be deleted from the DB and all games you played will appear as 'Deleted User' and you won't be able to play again with this account. Are you sure?"
+
+## Tab 3: Past games
+
+This page consists of a set of filters and a table where rows are filtered by those filters.
+
+### Filters
+
+All the filters have an "all" option which is the default.
+Filters are added as query parameters to the URL, so they can be shared.
+
+- Variant: selector
+- Rated: yes/no
+- Time control: selector
+- Board dimensions: selector with (small / medium / large / all). This field may be disabled (grayed out) depending on the variant.
+- ELO: a numerical range
+- Player: text field (empty field acts as "all")
+- Player: text field (empty field acts as "all"). 
+- Time period: a time range
+
+The two player fields serve the same purpose. Filling only one gives you all games with that player. Filling both gives you all games including both players.
+
+Games with fewer than 2 moves are filtered out.
+Games aborted during the "matching stage" are not even stored.
+
+### Columns
+
+The rows are ordered by date. The order cannot be changed.
+
+- Watch: a button which, when clicked, takes you to see the past game.
+- Variant: clicking on a variant sets the variant filter.
+- Rated: yes/no. Clicking on a rating sets the rated status filter.
+- Time control: a string formatted like "blitz (3+2)". Clicking on a time control sets the time control filter.
+- Board size: a string formatted like "medium (8x8)" (width x height). Clicking on a board size sets the board size filter.
+- Players: a string formatted like "name1 (1200) vs name2 (1234)". The numbers in paretheses are the ratings at the start of the game. Clicking on a name sets the first player filter. Depending on the variant, if the variant has more than two players, this string may look different. E.g., "name1 (1200) & name2 (1234) vs name3 (1234) & name4 (1234)". Clicking on the "vs" sets both player filters, with slight tweaks depending on the variant.
+- moves: a number. The number of moves of the game.
+- Views: a number. The number of views the game got.
+- date: date type. When the game was played.
+
+The name of the winning player is highlighted. Draws are also indicated.
+
+### Past game view
+
+When a user clics the "Watch" button for a past game, they are taken to the ["game page"](#game-page) for that game (e.g., wallgame.io/game/2ei3nd43). 
+
+The final position is shown by default.
+
+The chat is grayed out with a message that says "Chat is not preserved."
+
+## Tab 4: Live games
+
+Similar to the "Past games" page, this page consists of a set of filters and a table where rows are filtered by those filters.
+
+### Filters
+
+All the filters have an "all" option which is the default.
+
+- Variant: selector
+- Rated: yes/no
+- Time control: selector
+- Board dimensions: selector with (small / medium / large / all). This field may be disabled (grayed out) depending on the variant.
+- ELO: a numerical range
+
+### Columns
+
+The formatting of the columns is the same as for "Past Games".
+
+- Watch: a button that takes you to spectate the game in real time.
+- Viewers: a number.
+- Variant: see "Past games" table.
+- Rated: see "Past games" table.
+- Time control: see "Past games" table.
+- Board size: see "Past games" table.
+- Players: see "Past games" table.
+- Moves: see "Past games" table.
+
+The rows are sorted by viewers first, by max ELO second.
+
+When a game ends, the number of spectators becomes the initial number of views in the past games table.
+
+### Live game view
+
+When a user clics the "Watch" button for a live game, they are taken to the ["game page"](#game-page) for that game (e.g., wallgame.io/live/2ei3nd43).
+
+The latest state of the game is shown by default.
+
+As players make moves, spectators receive and see real-time updates.
+
+Spectators see the "Spectator chat", which is different than the ones the players see.
+
+## Tab 2: Ranking
+
+This page consists of a set of filters and a table where rows are filtered by those filters.
+
+### Filters
+
+The filters do *not* have an "all" option.
+
+- Variant: default: standard
+- Time control: default: rapid
+- Player: text field. Default: empty. The player filter acts more like a search box. If filled and the player exists, it only shows the row corresponding to that player and a few rows before and after. If the player does not exist, it shows nothing.
+
+### Columns
+
+- Rank: number starting at 1
+- Player: the display name. It updates whenever players change their names delete their accounts.
+- Rating: the ELO rating. These are numbers sorted in decreasing order.
+- Peak rating: the max ELO rating that player has ever had.
+- Record: a string formatted like "10-4" indicating the number of points the player got and lost across all its games.
+- First game: a date.
+- Last game: a date.
+
+Clicking anywhere on a row takes you to the "Past games" page with the variant, time control, and player filters set. The "rated" filter is also set to "yes".
+
+## Tab 5: Learn
+
+This page contains only static content, in four sections:
+
+- Rules (standard)
+- Notation (standard)
+- Lessons (standard)
+- Variants
+
+All the sections may contain images.
+
+Sections can be collapsed.
+
+### Rules
+
+This contains a couple of paragraphs explaining the rules of the "standard" variant.
+
+It ends with: "You can now start the solo campaign.", with a link to the play tab (wallgame.io).
+
+### Notation
+
+This contains a couple of paragraphs explaining the standard notation. This is useful since it appears in the game history element of the "board view" component.
+
+### Lessons
+
+This contains a bullet point list of links to blog posts explaining strategic and tactical ideas. More lessons can be added over time.
+
+### Variants
+
+This contains definitions and special rules for all the supported variants.
+
+## Tab 1: Play
+
+This is the 'landing' page.
+
+Its main purpose is to easily access the 6 game modes:
+
+1. Solo campaign
+2. Puzzles
+3. Play vs AI
+4. Study board
+5. Play with others
+6. Invite friend
+
+It contains three sections:
+
+- Single-player fun
+- Play with others
+- Game showcase
+
+The first two contain various buttons to go to the various game modes.
+The final one is just decorative. It's not there because it's related to the "Play" theme, but because it's the landing page.
+
+### Single-player fun
+
+This section contains the following buttons:
+
+- Solo campaign. There is an annotation that says "Start here!"
+- Puzzles
+- Play vs AI
+- Study board
+
+### Play with others
+
+This section contains the following buttons:
+
+- Find others
+- Invite friend
+
+### Game showcase
+
+This section shows a board and autoplays random past games, at high speed (2 moves per second).
+Above the board, a text says: "Game showcase: name1 (1200) vs name2 (1234) (DATE)", with the players and date updating as the game changes.
+
+Clicking on it takes you to the ["game page"](#game-page) to watch the game, analogous to the "Past games" page.
+The only difference is that the game starts at the position that last played automatically in the game showcase.
+
+### Game mode 2: Puzzles
+
+The URL is wallgame.io/puzzles
+
+The puzzles page has a list of puzzles.
+
+Each puzzle has:
+- name
+- play button
+- difficulty rating
+- completed: yes/no. An indication of whether the user already solved it
+
+If the user is not logged in, the 'completed' status is grayed out.
+There should be an information box indicating that the user should log in to save their completion status.
+
+When the user clicks on a puzzle, they are taken to the ["game page"](#game-page) initialized with the starting position of the puzzle.
+The route is wallgame.io/puzzles/1, where 1 is the puzzle number.
+This makes it so that the user can share a puzzle by sharing the route.
+
+### Game mode 1: Solo campaign
+
+The URL is wallgame.io/solo-campaign
+
+The solo campaign menu consists of a list of puzzles just like the menu for puzzles.
+
+When the user clicks on a puzzle, they are taken to the ["game page"](#game-page) initialized with the starting position of the puzzle.
+The route is wallgame.io/solo-campaign/1, where 1 is the puzzle number.
+
+Unlike in normal puzzles, in solo campaign puzzles:
+- There is a text above the board view indicating what to do to win.
+- The game is usually played until the end.
+
+### Game mode 3: Play vs AI
+
+This is just the ["game setup page"](#game-setup-page) with the first player defaulting to "You" and the others to "Easy Bot".
+
+### Game mode 5: Play with others
+
+This is just the ["game setup page"](#game-setup-page) with the first player defaulting to "You" and the others to "Matched user".
+
+### Game mode 6: Invite friend
+
+This is just the ["game setup page"](#game-setup-page) with the first player defaulting to "You" and the others to "Friend".
+
+### Game mode 4: Study board
+
+This takes you to a special instance of the ["game page"](#game-page) with route wallgame.io/study-board.
+
+The design for the study board page is work in progress.
+
+## Conclusion

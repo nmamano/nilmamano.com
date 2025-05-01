@@ -71,7 +71,8 @@ export default async function BlogPost({
 }) {
   // Need to await params before destructuring
   const { slug } = await params;
-  const { category } = searchParams;
+  const searchParamsObj = await searchParams;
+  const { category } = searchParamsObj;
 
   // Then use the destructured variable
   const post = await getPostBySlug(slug);
