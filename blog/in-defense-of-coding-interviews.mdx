@@ -6,48 +6,57 @@ coverImage: "/blog/in-defense-of-coding-interviews/cover.png"
 categories: ["career"]
 ---
 
-There is already a lot of discourse about everything wrong with coding interviews. Indeed, one of the first chapters in _Beyond Cracking the Coding Interview_ is *What's Broken About Coding Interviews?* (it's one of the sneak peek free chapters in [bctci.co/free-chapters](https://bctci.co/free-chapters)).
+There is already a lot of discourse about everything wrong with coding interviews. Indeed, one of the first chapters in _Beyond Cracking the Coding Interview_ is _What's Broken About Coding Interviews?_ (it's one of the sneak peek free chapters in [bctci.co/free-chapters](https://bctci.co/free-chapters)).
 
 Here, I want to **collect all the arguments for the contrary view: that there are no clear better alternatives to coding interviews at Big Tech companies.**
 
 <Callout>
-  Disclaimers:
-  - I am one of the authors of _Beyond Cracking the Coding Interview_, a prep book for coding interviews. Thus, I am vested in coding interviews not going away.
-  - I love leetcoding and specialized in DS&A for my PhD, so I haven't personally experienced the *dread* that most people feel grinding it.
-  - I've been an interviewer at Google in the past, but I'm not currently working for Big Tech, and I don't have any inside knowledge. This is just my assessment.
-  - This post is only about Big Tech. I don't think coding interviews are a good idea for startups.
-  - This post contains "Strong Opinions, Weakly Held". I believe everything here, but I'm very receptive to pushback and opposing data.
+
+**Disclaimers:**
+
+- I am one of the authors of _Beyond Cracking the Coding Interview_, a prep book for coding interviews. Thus, I am vested in coding interviews not going away.
+- I love leetcoding and specialized in DS&A for my PhD, so I haven't personally experienced the _dread_ that most people feel grinding it.
+- I've been an interviewer at Google in the past, but I'm not currently working for Big Tech, and I don't have any inside knowledge. This is just my assessment.
+- This post is only about Big Tech. I don't think coding interviews are a good idea for startups.
+- This post contains "Strong Opinions, Weakly Held". I believe everything here, but I'm very receptive to pushback and opposing data.
+
 </Callout>
 
 ## The rationale for coding interviews
 
 I think Big Tech companies understand that being cracked at DS&A is not really necessary to be a good SWE. I don't think coding interviews are about that at all.
 
-Imagine you are a Big Tech company, like Google. You receive a massive stream of applications, and you have to trim that down to a still large number of hires. Your hiring system needs to be *scalable*:
+Imagine you are a Big Tech company, like Google. You receive a massive stream of applications, and you have to trim that down to a still large number of hires. Your hiring system needs to be _scalable_:
 
 - you need to quickly train many interviewers
-- you need a way to evaluate candidates that minimizes interviewer bias (not *your* bias, or a specific person's bias, but all the biases of a large, heterogeneous group)
+- you need a way to evaluate candidates that minimizes interviewer bias (not _your_ bias, or a specific person's bias, but all the biases of a large, heterogeneous group)
 
 So, the first thing you do to scale--in true engineering fashion--is decoupling hiring and team matching. But that means you cannot hire for specific tech or domain experience: You don't know in what team candidates will end up, and your teams use a bunch of different languages and tech stacks (and a lot of it is internal anyway, so you definitely can't hire for that).
 
-So, you need a *competence assessment* that is independent of any particulars about the job, much like the role the SAT plays for college admissions. How do you do that?
+So, you need a _competence assessment_ that is independent of any particulars about the job, much like the role the SAT plays for college admissions. How do you do that?
 
-If you are a Big Tech company, what you actually want is candidates who can take any complex software system (that's not part of the candidate's previous expertise) and answer hard questions about it, like what's the best way to add a feature, how to optimize it, or how it should be refactored. In other words, the competence you want to assess is general problem-solving skills, and that's what coding interviews are designed for: you are given a tough problem that you have *ideally* never seen before (more on this later), and asked to showcase your thought process on how you approach it. When working as intended, I believe it gives more *signal* about your problem-solving skills and is easier to evaluate impartially than other popular interview formats, like talking about previous experience or take-home assignments. And there's an impartial way to evaluate them, by looking at the optimality of the solution.
+If you are a Big Tech company, what you actually want is candidates who can take any complex software system (that's not part of the candidate's previous expertise) and answer hard questions about it, like what's the best way to add a feature, how to optimize it, or how it should be refactored. In other words, the competence you want to assess is general problem-solving skills, and that's what coding interviews are designed for: you are given a tough problem that you have _ideally_ never seen before (more on this later), and asked to showcase your thought process on how you approach it. When working as intended, I believe it gives more _signal_ about your problem-solving skills and is easier to evaluate impartially than other popular interview formats, like talking about previous experience or take-home assignments. And there's an impartial way to evaluate them, by looking at the optimality of the solution.
 
 Yes, there's a lot more to being a SWE than problem-solving skills--and that's why Google also does system design and behavioral interviews, but you still want to hire for this trait.
 
 ## The two crucial flaws: memorization and cheating
 
-Hopefully, the rationale above covered one of the most common criticisms of coding interviews: that they do not reflect the day-to-day work of an engineer. Instead, I want to focus on what *I* think are the two biggest issues with coding interviews:
+Hopefully, the rationale above covered one of the most common criticisms of coding interviews: that they do not reflect the day-to-day work of an engineer. Instead, I want to focus on what _I_ think are the two biggest issues with coding interviews:
 
-1. **Memorizing an absurd amount of leetcode problems gives you an edge.** This is the classic reason why people [*hate*](https://www.teamblind.com/post/We-wrote-the-official-sequel-to-Cracking-the-Coding-Interview-AMA-sosHtL28/44294147?commentsSort=top) coding interviews with a passion. It has led to an "arms race" where candidates have to memorize more and more problems to improve their odds, and interviewers keep asking about more niche topics. At the extreme, coding interviews end up feeling like a lottery, and candidates find prep a soul-sucking waste of time.
+1. **Memorizing an absurd amount of leetcode problems gives you an edge.** This is the classic reason why people [_hate_](https://www.teamblind.com/post/We-wrote-the-official-sequel-to-Cracking-the-Coding-Interview-AMA-sosHtL28/44294147?commentsSort=top) coding interviews with a passion. It has led to an "arms race" where candidates have to memorize more and more problems to improve their odds, and interviewers keep asking about more niche topics. At the extreme, coding interviews end up feeling like a lottery, and candidates find prep a soul-sucking waste of time.
 
 2. **Cheating has become easy with AI.** This is a newer issue that's becoming more prevalent due to the fact that LLMs are pretty good at leetcoding. In real time, a cheater can feed the problem statement to an LLM (without obvious tales like "select all"), get a solution, and even a script for what to say.
 
 From the company's side, Issue (1) is not much of an issue. It definitely undermines the "problem-solving" part of the interview if a candidate is just recalling the question, but, statistically, if they do enough rounds, it's unlikely to happen every round. Some people (not me) also argue that the memorization is even good for the companies because it rewards hard work and dedication.
 
 <Callout>
-  For what it's worth, one thing we hoped to change about the interview prep discourse with BCtCI is that candidates should focus on improving their problem-solving skills rather than memorizing. See, for instance, how we [teach binary search](https://nilmamano.com/blog/binary-search) or how we [approach hard problems](https://nilmamano.com/blog/problem-solving-bctci-style). But yes, grinding is still necessary.
+  For what it's worth, one thing we hoped to change about the interview prep
+  discourse with BCtCI is that candidates should focus on improving their
+  problem-solving skills rather than memorizing. See, for instance, how we
+  [teach binary search](https://nilmamano.com/blog/binary-search) or how we
+  [approach hard
+  problems](https://nilmamano.com/blog/problem-solving-bctci-style). But yes,
+  grinding is still necessary.
 </Callout>
 
 Issue (1) also means that they'll lose a big chunk of candidates who are great SWEs but won't put up with grinding leetcode or that simply don't perform well under pressure (and, from personal experience, many great developers fall in this group). This sucks from the candidate's perspective, but if you are Google, you receive an overwhelming amount of applications from qualified candidates, so you are more OK with rejecting good candidates than accepting bad ones.
@@ -59,15 +68,17 @@ I expect to see some kind of systematic response to this from Big Tech, but it's
 > [Brian] Ong [Google’s vice president of recruiting] said candidates and Google employees have said they prefer virtual job interviews because scheduling a video call is easier than finding a time to meet in available conference rooms. The virtual interview process is about two weeks faster, he added.
 >
 > He said interviewers are instructed to probe candidates on their answers as a way to decipher whether they actually know what they’re talking about.
-> 
+>
 > “We definitely have more work to do to integrate how AI is now more prevalent in the interview process,” said Ong. He said his recruiting organization is working with Google’s software engineer steering committee to figure out how the company can refine its interviewing process.
 >
 > “Given we all work hybrid, I think it’s worth thinking about some fraction of the interviews being in person,” Pichai responded. “I think it’ll help both the candidates understand Google’s culture and I think it’s good for both sides.”
 
-I thought going back to in-person interviews would be a *no-brainer* for a company like Google, but my reading of these comments is that they don't seem too bothered for now. ~shrug~
+I thought going back to in-person interviews would be a _no-brainer_ for a company like Google, but my reading of these comments is that they don't seem too bothered for now. ~shrug~
 
 <Callout>
-  Disclaimer: I haven't worked for a Big Tech company since before AI cheating went viral, so I don't have internal insight into what people in charge of hiring are actually thinking.
+  Disclaimer: I haven't worked for a Big Tech company since before AI cheating
+  went viral, so I don't have internal insight into what people in charge of
+  hiring are actually thinking.
 </Callout>
 
 Two related arguments that I don't subscribe to are (1) that leetcode-style interviews are no longer relevant because AI can solve them, and (2) that LLMs should be allowed during coding interviews because they are allowed on the job. The fact that AI can solve coding questions doesn't change that it still gives you the important signal that you want from humans: algorithmic thinking and general problem-solving skills. We just need humans to not cheat.
@@ -81,11 +92,11 @@ I'll share my thoughts on how to improve coding interviews to address these issu
 Take-home assignments are even more subject to cheating, so that can't be the answer to cheating. Never mind LLMs, you don't even know who did the assignment. But take-home assignments have other flaws:
 
 - They create an asymmetry between company and candidate, where the company asks for a ton of work from the candidate without putting any effort in. "Oh, we have way too many candidates we need to filter down to a shortlist? Send all of them a complex task to do over the weekend." I prefer a model where both company and candidate have to put in time. I'm more OK with take-home assignments as the final stage of the process.
-- They favor people who are unemployed and/or have a lot of free time to polish the assignment. 
+- They favor people who are unemployed and/or have a lot of free time to polish the assignment.
 
 ### Previous experience
 
-I find this too subjective to give signal about problem-solving skills, and it's more about being a good "salesperson". I also think it's more subject to bias: *people with a similar background as yours are probably more likely to have similar interests, and thus you may find their side-projects more interesting.*
+I find this too subjective to give signal about problem-solving skills, and it's more about being a good "salesperson". I also think it's more subject to bias: _people with a similar background as yours are probably more likely to have similar interests, and thus you may find their side-projects more interesting._
 
 ## Trial periods
 
@@ -119,9 +130,9 @@ I also think that measures designed to throw LLMs off could be effective (at lea
 
 See [LinkedIn discussion](https://www.linkedin.com/posts/nilmamano_if-coding-interview-cheating-is-a-big-issue-activity-7306108316126957569-3Pgy?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC6jqIwBADV70xmTEpmkxbAnN_32mssoxA8).
 
-### If we are allowed to dream...
+### A fundamental tradeoff
 
-Perhaps the most effective way to counter both memorization and cheating is to make coding interviews more open ended and conversational. To use a chess analogy, a cheater may make a great move, but if you ask them to explain them why they did, they may not be able to.
+Perhaps the most effective way to counter both memorization and cheating is to make coding interviews more open ended and conversational. To use a chess analogy, a cheater may make a great move, but if you ask them to explain why they did it, they may not be able to.
 
 The interviewer can use a coding question as a launching point, but then drill down on technical topics as they come up. So, e.g., if a candidate chooses to use a heap, the interviewer could go into:
 
@@ -130,9 +141,17 @@ The interviewer can use a coding question as a launching point, but then drill d
 - How would you go about implementing a heap that supports arbitrary priorities?
 - Why is [heapify faster than inserting one by one](https://nilmamano.com/blog/heapify-analysis)?
 
-If interviewers did that, it wouldn't even be necessary to ask tricky questions. They could even [ask *Fibonacci*](https://www.linkedin.com/posts/chrisverges_here-are-my-interview-questions-for-a-software-activity-7259700112145158144-YqnR?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC6jqIwBADV70xmTEpmkxbAnN_32mssoxA8).
+If interviewers did that, it wouldn't even be necessary to ask tricky questions. They could even [ask _Fibonacci_](https://www.linkedin.com/posts/chrisverges_here-are-my-interview-questions-for-a-software-activity-7259700112145158144-YqnR?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC6jqIwBADV70xmTEpmkxbAnN_32mssoxA8).
 
-The problem is that, the more open ended the interview is, the more difficult it is to evaluate candidates systematically. To start, you'd need better interviewers and better interviewer training. However, it seems there is a fundamental tradeoff between how objective the evaluation is and how _gameable_ the interview is by memorizing.
+<Callout>
+  The problem is that, the more open ended the interview is, the more difficult
+  it is to evaluate candidates systematically. To start, you'd need better
+  interviewers and better interviewer training. However, it seems to me that
+  there is **a fundamental tradeoff between how objective the evaluation is and
+  how _gameable_ the interview is by memorizing or cheating.**
+</Callout>
+
+I don't have a good solution to this--I would love to hear yours.
 
 ## More good things about coding interviews
 
@@ -152,12 +171,12 @@ If we kill coding interviews without a good alternative, it seems inevitable tha
 
 ## Final thoughts
 
-The best question we got in our [Reddit AMA](https://www.reddit.com/r/cscareerquestions/comments/1j4zsjj/we_wrote_the_official_sequel_to_ctci_cracking_the/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) for BCtCI was whether [we'd use coding interviews ourselves if we were in charge of hiring](https://www.reddit.com/r/cscareerquestions/comments/1j4zsjj/comment/mgdfddt/). You can see Gayle's, Mike's ([mikemroczka.com](https://www.mikemroczka.com/)), and my answers. We all said *no* in its current form, but yes with caveats/improvements.
+The best question we got in our [Reddit AMA](https://www.reddit.com/r/cscareerquestions/comments/1j4zsjj/we_wrote_the_official_sequel_to_ctci_cracking_the/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) for BCtCI was whether [we'd use coding interviews ourselves if we were in charge of hiring](https://www.reddit.com/r/cscareerquestions/comments/1j4zsjj/comment/mgdfddt/). You can see Gayle's, Mike's ([mikemroczka.com](https://www.mikemroczka.com/)), and my answers. We all said _no_ in its current form, but yes with caveats/improvements.
 
 My favorite answer was Mike's. He's less of a proponent of leetcode-style interviews than I am, but I think he strikes a thoughtful balance between DS&A and practical stuff:
 
 > Best question so far. Yes, I would ask DS&A questions still, but not exclusively and not difficult ones. Many startups shouldn't ask them though, because most people are bad at discerning what a reasonable question is.
-> 
+>
 > I would do 4-5 rounds of interviews because less than that is hard to be significant, but more than that and you're wasting too much of a candidate's time (Netflix has a whopping 8 rounds!!). For a senior engineer role, I'd do something like this.
 >
 > Round 1: An online DS&A assessment to filter out people that can't do the simple things (easy & very simple medium questions only, not hard)
@@ -174,4 +193,4 @@ My favorite answer was Mike's. He's less of a proponent of leetcode-style interv
 >
 > Full disclosure. This is my answer. Not the answer of every author. Again, I'd stress that the average startup wouldn't benefit from DS&A and shouldn't be asking them
 
-*Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_in-defense-of-coding-interviews-activity-7318682168845639680-beDg?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC6jqIwBADV70xmTEpmkxbAnN_32mssoxA8) or the [X post](https://x.com/Nil053/status/1912916866235846936).*
+_Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_in-defense-of-coding-interviews-activity-7318682168845639680-beDg?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC6jqIwBADV70xmTEpmkxbAnN_32mssoxA8) or the [X post](https://x.com/Nil053/status/1912916866235846936)._
