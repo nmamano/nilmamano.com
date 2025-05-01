@@ -14,26 +14,31 @@ interface CategoryConfig {
 }
 
 const CATEGORIES: Record<string, CategoryConfig> = {
-  tutorial: {
-    name: "Tutorial",
-    bgColor: "bg-blue-100",
-    textColor: "text-blue-800",
+  dsa: {
+    name: "DS&A",
+    bgColor: "bg-green-100",
+    textColor: "text-green-800",
   },
   research: {
     name: "Research",
     bgColor: "bg-purple-100",
     textColor: "text-purple-800",
   },
-  "dsa": {
-    name: "DS&A",
-    bgColor: "bg-green-100",
-    textColor: "text-green-800",
+  swe: {
+    name: "SWE",
+    bgColor: "bg-yellow-100",
+    textColor: "text-yellow-800",
   },
-  // wallgame: {
-  //   name: "Wall Game",
-  //   bgColor: "bg-orange-100",
-  //   textColor: "text-orange-800",
-  // },
+  wallgame: {
+    name: "Wall Game",
+    bgColor: "bg-orange-100",
+    textColor: "text-orange-800",
+  },
+  personal: {
+    name: "Personal",
+    bgColor: "bg-blue-100",
+    textColor: "text-blue-800",
+  },
   wip: {
     name: "W.I.P.",
     bgColor: "bg-gray-100",
@@ -42,11 +47,13 @@ const CATEGORIES: Record<string, CategoryConfig> = {
 };
 
 function getCategoryConfig(category: string): CategoryConfig {
-  return CATEGORIES[category.toLowerCase()] || {
-    name: category,
-    bgColor: "bg-gray-100",
-    textColor: "text-gray-800",
-  };
+  return (
+    CATEGORIES[category.toLowerCase()] || {
+      name: category,
+      bgColor: "bg-gray-100",
+      textColor: "text-gray-800",
+    }
+  );
 }
 
 interface BlogListProps {
@@ -54,7 +61,10 @@ interface BlogListProps {
   initialCategory?: string;
 }
 
-export default function BlogList({ posts: allPosts, initialCategory }: BlogListProps) {
+export default function BlogList({
+  posts: allPosts,
+  initialCategory,
+}: BlogListProps) {
   const router = useRouter();
   const pathname = usePathname();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
@@ -76,15 +86,21 @@ export default function BlogList({ posts: allPosts, initialCategory }: BlogListP
   const posts = selectedCategory
     ? allPosts.filter((post) => {
         // If post has WIP category, only show it when WIP is selected
-        if (post.categories?.some(category => category.toLowerCase() === 'wip')) {
-          return selectedCategory.toLowerCase() === 'wip';
+        if (
+          post.categories?.some((category) => category.toLowerCase() === "wip")
+        ) {
+          return selectedCategory.toLowerCase() === "wip";
         }
         // For non-WIP posts, show if they match the selected category
-        return post.categories?.some((category) => 
-          category.toLowerCase() === selectedCategory.toLowerCase()
+        return post.categories?.some(
+          (category) =>
+            category.toLowerCase() === selectedCategory.toLowerCase()
         );
       })
-    : allPosts.filter(post => !post.categories?.some(category => category.toLowerCase() === 'wip'));
+    : allPosts.filter(
+        (post) =>
+          !post.categories?.some((category) => category.toLowerCase() === "wip")
+      );
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-12">
@@ -122,7 +138,11 @@ export default function BlogList({ posts: allPosts, initialCategory }: BlogListP
       <div className="space-y-4">
         {posts.length === 0 ? (
           <p className="text-center text-muted-foreground">
-            No blog posts found{selectedCategory ? ` in category "${getCategoryConfig(selectedCategory).name}"` : ""}.
+            No blog posts found
+            {selectedCategory
+              ? ` in category "${getCategoryConfig(selectedCategory).name}"`
+              : ""}
+            .
           </p>
         ) : (
           posts.map((post) => (
@@ -134,7 +154,11 @@ export default function BlogList({ posts: allPosts, initialCategory }: BlogListP
                 {/* Cover Image */}
                 {post.coverImage && (
                   <div className="md:w-1/3">
-                    <Link href={`/blog/${post.slug}${selectedCategory ? `?category=${selectedCategory}` : ''}`}>
+                    <Link
+                      href={`/blog/${post.slug}${
+                        selectedCategory ? `?category=${selectedCategory}` : ""
+                      }`}
+                    >
                       <div className="w-full h-[192px] flex items-center justify-center">
                         <Image
                           src={post.coverImage}
@@ -157,7 +181,11 @@ export default function BlogList({ posts: allPosts, initialCategory }: BlogListP
 
                 {/* Content */}
                 <div className={post.coverImage ? "md:w-2/3" : "w-full"}>
-                  <Link href={`/blog/${post.slug}${selectedCategory ? `?category=${selectedCategory}` : ''}`}>
+                  <Link
+                    href={`/blog/${post.slug}${
+                      selectedCategory ? `?category=${selectedCategory}` : ""
+                    }`}
+                  >
                     <h2 className="text-2xl font-semibold hover:text-primary transition-colors mb-2">
                       {post.title}
                     </h2>
@@ -192,7 +220,9 @@ export default function BlogList({ posts: allPosts, initialCategory }: BlogListP
 
                   <div className="mt-4">
                     <Link
-                      href={`/blog/${post.slug}${selectedCategory ? `?category=${selectedCategory}` : ''}`}
+                      href={`/blog/${post.slug}${
+                        selectedCategory ? `?category=${selectedCategory}` : ""
+                      }`}
                       className="text-primary hover:underline inline-flex items-center"
                     >
                       Read more
@@ -220,4 +250,4 @@ export default function BlogList({ posts: allPosts, initialCategory }: BlogListP
       </div>
     </div>
   );
-} 
+}

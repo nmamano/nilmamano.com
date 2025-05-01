@@ -3,12 +3,10 @@ title: "Decision trees: how to think about backtracking, DP, and greedy algorith
 date: "2025-04-20"
 excerpt: "Understanding the relationship between these three popular algorithmic techniques."
 coverImage: "/blog/decision-trees/cover.png"
-categories: ["tutorial", "DSA", "WIP"]
+categories: ["dsa", "wip"]
 ---
 
-<Callout>
-  Work in progress.
-</Callout>
+<Callout>Work in progress.</Callout>
 
 In coding interviews, we often have to choose between backtracking, dynamic programming (DP), and greedy algorithms, and it can be hard to tell when to use each.
 
@@ -28,26 +26,29 @@ You get the idea. Since this is a broad class of problems, it's helpful to have 
 
 ## Decision trees
 
-A sequence of choices can be modeled as a **decision tree**. The root of the tree is the 'empty solution', before we have made any choices. Then, each possible choice we can make is a child of the root. This goes on recursively, until we have reached a base case where there are no more choices to make. We can think of the *leaves* as 'full solutions' and the *internal nodes* as partial solutions.
+A sequence of choices can be modeled as a **decision tree**. The root of the tree is the 'empty solution', before we have made any choices. Then, each possible choice we can make is a child of the root. This goes on recursively, until we have reached a base case where there are no more choices to make. We can think of the _leaves_ as 'full solutions' and the _internal nodes_ as partial solutions.
 
 The challenge with such problems is that decision trees tend to grow exponentially. For optimization problems, we may have an exponential number of leaves with full solutions, and only one of them is the optimal one (or a few of them, in case of ties).
 
 Decision trees also apply to other types of problems, like counting problems, but I'll focus on optimization problems to start.
 
 <Callout>
-  A decision tree is not a data structure that lives in memory (unlike, e.g., binary trees or tries). It is a concept we use to reason about problems.
+  A decision tree is not a data structure that lives in memory (unlike, e.g.,
+  binary trees or tries). It is a concept we use to reason about problems.
 </Callout>
 
-Problems don't have a single decision tree--we can often build solutions through different types of decisions. For example, in the 'house robber' problem, we can (a) make a decision to rob or not rob each house, *or* we can (b) make decisions about which house to rob next.
+Problems don't have a single decision tree--we can often build solutions through different types of decisions. For example, in the 'house robber' problem, we can (a) make a decision to rob or not rob each house, _or_ we can (b) make decisions about which house to rob next.
 
 Some decision trees are larger than others, too. For example, the decision tree for (a) only has two children at each node, while the decision tree for (b) has up to `n` (the number of houses).
 
 Decision trees are the central concept that ties together backtracking, DP, and greedy algorithms. In short:
 
 <Callout>
-- Backtracking = DFS through the recursion tree to find the optimal solution
-- Greedy = Following a single path down the decision tree, at each step choosing the path that looks most promising
-- DP = Reframing the nodes of decision tress from "partial solutons" to "subproblems", and caching solutions to subproblems
+  - Backtracking = DFS through the recursion tree to find the optimal solution -
+  Greedy = Following a single path down the decision tree, at each step choosing
+  the path that looks most promising - DP = Reframing the nodes of decision
+  tress from "partial solutons" to "subproblems", and caching solutions to
+  subproblems
 </Callout>
 
 As you can see, DP is the odd one, so we'll leave that for last.
@@ -58,19 +59,20 @@ The idea of the greedy approach is to build the output step-by-step, always pick
 
 Starting from the empty solution, at each step, it looks at the available choices, and evaluates them according to some **greedy criterion** that we (the problem solvers) must provide. Then, it picks the best choice according to the greedy criterion, and it never undoes that choice.
 
-A greedy algorithm picks among the children of a node based only on those children, and not what may be further down the tree. This type of *short-sightedness* means that greedy algorithms often fail to find the optimal solution.
+A greedy algorithm picks among the children of a node based only on those children, and not what may be further down the tree. This type of _short-sightedness_ means that greedy algorithms often fail to find the optimal solution.
 
 <Callout>
-  Proposing a greedy algorithm without realizing that it doesn't always find the optimal solution is a common mistake in coding interviews. 
+  Proposing a greedy algorithm without realizing that it doesn't always find the
+  optimal solution is a common mistake in coding interviews.
 </Callout>
 
-My best advice for greedy algorithms is to always look for *counterexamples*: inputs designed to 'trick' the greedy algorithm and return a suboptimal solution.
+My best advice for greedy algorithms is to always look for _counterexamples_: inputs designed to 'trick' the greedy algorithm and return a suboptimal solution.
 
-If you can't find any counterexamples, then the greedy algorithm *may* be correct. Proving that they are correct can be pretty tricky, and it is not usually expected in interviews--instead, it's common to give a hand-wavy explanation.
+If you can't find any counterexamples, then the greedy algorithm _may_ be correct. Proving that they are correct can be pretty tricky, and it is not usually expected in interviews--instead, it's common to give a hand-wavy explanation.
 
 ## Backtracking
 
-Backtracking can be seen as a *brute force* algorithm that finds the optimal solution by visiting every leaf of the decision tree. This is usually done in a depth-first manner, so if you've ever written a depth-first search (DFS) on a binary tree, that is pretty close to backtracking: in both cases, we have one recursive call per node. The main difference is that, in the case of the binary tree, the tree exists in memory, while the decision tree is just a concept.
+Backtracking can be seen as a _brute force_ algorithm that finds the optimal solution by visiting every leaf of the decision tree. This is usually done in a depth-first manner, so if you've ever written a depth-first search (DFS) on a binary tree, that is pretty close to backtracking: in both cases, we have one recursive call per node. The main difference is that, in the case of the binary tree, the tree exists in memory, while the decision tree is just a concept.
 
 To do that, we have a 'current partial solution' variable (or variables), which starts as an empty solution, corresponding to the root of the decision tree. Then, to "visit" a node, we update this variable to the partial solution corresponding to that node. We also keep track of the best solution we found overall. At the end of the traversal, this will contain the optimal solution.
 
@@ -79,15 +81,17 @@ Now you know why people often call backtracking DFS. The 'backtracking' part of 
 Backtracking guarnatees optimality, but it is slow, often taking exponential time.
 
 <Callout>
-  Proposing a backtracking algorithm without realizing that there are more efficient algorithms is a common mistake in coding interviews. 
+  Proposing a backtracking algorithm without realizing that there are more
+  efficient algorithms is a common mistake in coding interviews.
 </Callout>
 
 ## Dynamic programming
 
-So, every node in the decision tree is a partial solution. DP starts by asking a question: from a given partial solution, what's left to complete the solution? For *some* problems, the remaining work from each partial solution looks *just like* the original problem, but with a smaller input. We call these *subproblems*.
+So, every node in the decision tree is a partial solution. DP starts by asking a question: from a given partial solution, what's left to complete the solution? For _some_ problems, the remaining work from each partial solution looks _just like_ the original problem, but with a smaller input. We call these _subproblems_.
 
 <Callout>
-  Dynamic programming is about reframing the nodes of decision trees from "partial solutions" to "subproblems".
+  Dynamic programming is about reframing the nodes of decision trees from
+  "partial solutions" to "subproblems".
 </Callout>
 
 For example, in the word break problem, if you have the input "insideout" and you choose to insert a space after "in", you are left with a suffix of the original string, "sideout", which needs to be broken into words. This is a subproblem.
@@ -97,22 +101,3 @@ Not every decision tree can have its nodes reframed as subproblems. For instance
 The key insight of DP is that we can often reach the same subproblem through different paths in the decision tree. When that happens, we don't need to solve the subproblem from scratch every time--we can cache the solution to the subproblem and reuse it.
 
 DP can be very efficient because, often, the number of partial solution is exponential, while the number of subproblems is relatively small.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

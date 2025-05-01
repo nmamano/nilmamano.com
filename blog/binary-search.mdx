@@ -3,7 +3,7 @@ title: "Get Binary Search Right Every Time, Explained Without Code"
 date: "2025-04-15"
 excerpt: "A binary search recipe that works for every problem, explained without code."
 coverImage: "/blog/binary-search/cover.png"
-categories: ["tutorial", "DSA"]
+categories: ["dsa"]
 ---
 
 One of the things that makes binary search tricky to implement is that you usually need to tweak the pointer manipulation logic in subtle ways based on the specifics of the problem.
@@ -26,14 +26,14 @@ E.g., in the array `[1, 1, 1, 1, 1, 2, 2, 2]`, the last `1` is at index `4` and 
 
 Knowing how to solve this specific problem is key to our recipe. The specific binary search implementation is not important, but there is an invariant we can follow that makes it quite easy: ensure that the left pointer is always at a `1` and the right pointer is always at a `2`.
 
-We give code in the book, but remembering exact code in an interview is error prone. Instead, the four bullet points below are all I *personally* remember, and I feel confident that I can derive the rest easily.
+We give code in the book, but remembering exact code in an interview is error prone. Instead, the four bullet points below are all I _personally_ remember, and I feel confident that I can derive the rest easily.
 
 1. Start by handling some edge cases:
-    - The array is empty
-    - Every value is `1`
-    - Every value is `2`
+   - The array is empty
+   - Every value is `1`
+   - Every value is `2`
 2. Initialize two pointers, `left` and `right`, to the first and last indices, respectively.
-3. For the main binary search loop, always maintain the *invariant* that the value at `left` is `1` and the value at `right` is `2`. Let this invariant guide your pointer manipulation logic, so that you don't need to memorize any code.
+3. For the main binary search loop, always maintain the _invariant_ that the value at `left` is `1` and the value at `right` is `2`. Let this invariant guide your pointer manipulation logic, so that you don't need to memorize any code.
 4. Stop when the `left` and `right` pointers are next to each other (i.e., `left + 1 == right`).
 
 Combining the invariant with the stopping condition, we get that, at the end, `left` will be at the last `1` and `right` will be at the first `2`.
@@ -44,7 +44,7 @@ These bullet points rely on two ideas to make binary search easier: (1) handling
 
 Ok, so now, let's take for granted that we can solve the transition point problem. How does this help us solve other binary search problems?
 
-The idea is to come up with a (problem-specific) *predicate*, like `< target`, `>= target`, or `x % 2 == 0`, which splits the search range into two regions, the "before" region and the "after" region.
+The idea is to come up with a (problem-specific) _predicate_, like `< target`, `>= target`, or `x % 2 == 0`, which splits the search range into two regions, the "before" region and the "after" region.
 
 This predicate is a function that takes an element of the search range and returns a boolean, and -- as you probably saw coming -- it is key that the all the elements with `true` values come before the elements with `false` values (or the other way around).
 
@@ -54,8 +54,8 @@ You can even wrap the predicate in a function, which we called `is_before(x)` in
 
 The only part that requires some thinking is choosing the right transition point. For example:
 
-- if we want to find the *first* occurrence of `target` in a sorted array, we can use `is_before(x) = x < target`, which means that, if `target` is present, the first occurrence is the first element in the 'after' region (so, we can check/return the `right` pointer at the end).
-- if we want to find the *last* occurrence of `target` in a sorted array, we can use `is_before(x) = x <= target`, which means that, if `target` is present, the last occurrence is the last element in the 'before' region (so, we can check/return the `left` pointer at the end).
+- if we want to find the _first_ occurrence of `target` in a sorted array, we can use `is_before(x) = x < target`, which means that, if `target` is present, the first occurrence is the first element in the 'after' region (so, we can check/return the `right` pointer at the end).
+- if we want to find the _last_ occurrence of `target` in a sorted array, we can use `is_before(x) = x <= target`, which means that, if `target` is present, the last occurrence is the last element in the 'before' region (so, we can check/return the `left` pointer at the end).
 
 And so on for other problems.
 
@@ -65,4 +65,4 @@ You can try the transition-point recipe on all the problems from the binary sear
 
 By the way, the binary search chapter of the book is free -- it's in [bctci.co/free-chapters](https://bctci.co/free-chapters).
 
-*Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_get-binary-search-right-every-time-explained-activity-7319072161481084932-74ga?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC6jqIwBADV70xmTEpmkxbAnN_32mssoxA8) or the [X post](https://x.com/Nil053/status/1913316583298011224).*
+_Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_get-binary-search-right-every-time-explained-activity-7319072161481084932-74ga?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC6jqIwBADV70xmTEpmkxbAnN_32mssoxA8) or the [X post](https://x.com/Nil053/status/1913316583298011224)._
