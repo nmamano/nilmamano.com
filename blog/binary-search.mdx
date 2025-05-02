@@ -46,7 +46,7 @@ Ok, so now, let's take for granted that we can solve the transition point proble
 
 The idea is to come up with a (problem-specific) _predicate_, like `< target`, `>= target`, or `x % 2 == 0`, which splits the search range into two regions, the "before" region and the "after" region.
 
-This predicate is a function that takes an element of the search range and returns a boolean, and -- as you probably saw coming -- it is key that the all the elements with `true` values come before the elements with `false` values (or the other way around).
+This predicate is a function that takes an element of the search range and returns a boolean, and -- as you probably saw coming -- it is key that all the elements with `true` values come before the elements with `false` values (or the other way around).
 
 Then, we can use the solution to the transition point problem to find the transition point between the 'before' and 'after' regions. The only difference is that, instead of checking boolean values directly, we check the result of the predicate.
 

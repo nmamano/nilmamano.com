@@ -84,7 +84,7 @@ const PUBLICATIONS: Publication[] = [
       pdf: "https://arxiv.org/pdf/1904.02824.pdf",
     },
     description: [
-      "In the knight's tour puzzle a knight starts in the top-left corner of a chess board. The challenge is to visit every square, without repetition, using only knight moves. This puzzle becomes an interesting computational problem when generalized to n x n boards for any n. In particular, sequential heuristics such as Warnsdorff's algorithm quickly reveal their exponential nature.",
+      "In the knight's tour puzzle, a knight starts in the top-left corner of a chess board. The challenge is to visit every square, without repetition, using only knight moves. This puzzle becomes an interesting computational problem when generalized to n x n boards for any n. In particular, sequential heuristics such as Warnsdorff's algorithm quickly reveal their exponential nature.",
 
       "Before this paper, all the efficient algorithms for the generalized knight's tour were based on a divide-and-conquer strategy, where the board is split into four quadrants, each quadrant is solved recursively, and then some of the boundary moves are changed to concatenate the different bits together. We propose the first algorithm following a completely new approach, where the knight repeatedly crosses the entire board in long lines of moves in the same direction. In doing so, we prove the existence of knight's tours in n x n boards with only O(n) crossings (points where the knight crosses over its prior path). All prior algorithms have O(n²) crossings. We also extended our algorithm to 3D boards, giraffe tours, and other generalizations.",
     ],
