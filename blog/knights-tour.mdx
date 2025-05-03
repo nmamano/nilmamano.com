@@ -3,7 +3,7 @@ title: "Lifecycle of a CS research paper: my knight's tour paper"
 date: "2025-05-02"
 excerpt: "The backstory and thought process behind a fun paper from my PhD."
 coverImage: "/blog/knights-tour/cover.png"
-categories: ["research", "wip"]
+categories: ["research"]
 ---
 
 In math research, the way we arrive at a proof is nothing like how it is laid out in a paper at the end.
@@ -12,13 +12,9 @@ The latter is designed to be formal, concise, and neutral, devoid of any trace o
 
 While rigor is very important in a paper with theorems and proofs, it has the unfortunate side effect of being unrelatable. A common reaction is _"How did they come up with that? I could never."_
 
-So, as someone who'd love to increase interest in theoretical CS research, I'll take one of my papers and try to make it more relatable by talking about everything that is *not* in it.
+So, as someone who'd love to increase interest in theoretical CS research, I'll take one of my papers and try to make it more relatable by talking about everything that is _not_ in it.
 
-I'll choose a paper that was particularly *fun*: [Taming the Knight's Tour: Minimizing Turns and Crossings](https://arxiv.org/pdf/1904.02824.pdf) (co-authored with Juan Jose Besa, Timothy Johnson, Martha C. Osegueda, and Parker Williams).
-
-To get a sample of the "unrelatable academic voice", here is the abstract:
-
-> We introduce two new metrics of "simplicity" for knight's tours: the number of turns and the number of crossings. We give a novel algorithm that produces tours with `9.25n + O(1)` turns and `12n + O(1)` crossings on an `n x n` board, and we show lower bounds of `(6 - ε)n` and `4n - O(1)` on the respective problems of minimizing these metrics. Hence, our algorithm achieves approximation ratios of `9.25/6 + o(1)` and `3 + o(1)`. Our algorithm takes linear time and is fully parallelizable, i.e., the tour can be computed in `O(n^2 / p)` time using `p` processors in the CREW PRAM model. We generalize our techniques to rectangular boards, high-dimensional boards, symmetric tours, odd boards with a missing corner, and tours for `(1, 4)`-leapers. In doing so, we show that these extensions also admit a constant approximation ratio on the minimum number of turns, and on the number of crossings in most cases.
+I'll choose a paper that was particularly _fun_: [Taming the Knight's Tour: Minimizing Turns and Crossings](https://arxiv.org/pdf/1904.02824.pdf) (co-authored with Juan Jose Besa, Timothy Johnson, Martha C. Osegueda, and Parker Williams).
 
 ## Background: the knight's tour problem
 
@@ -45,7 +41,7 @@ A knight starts in any square of a chess board. The challenge is to visit every 
 
 The [research group](https://ics.uci.edu/~theory/) where I did my PhD had a fun little tradition: every Wednesday afternoon, we'd have a "tea time", where someone would propose a math riddle, and we'd try to solve it as a group while drinking tea and eating cookies.
 
-Our group does research on *graph drawing* (among other things), which is the study of graph embeddings in the plane. One of the central questions is about how to draw a graph in the plane with as few edge crossings as possible. With that in mind, I proposed the following problem during tea time:
+Our group does research on _graph drawing_ (among other things), which is the study of graph embeddings in the plane. One of the central questions is about how to draw a graph in the plane with as few edge crossings as possible. With that in mind, I proposed the following problem during tea time:
 
 _"Look at a knight's tour on an 8x8 chessboard as a graph embedding, where the squares are nodes and the knight moves are edges. Can you find the tour that minimizes the number of crossings?"_
 
@@ -53,29 +49,35 @@ This created a cute intersection between a classic riddle and one of the group's
 
 The co-authors mentioned above were other PhD students from the group who came to tea time that week (except for Parker Williams, who will come into the picture later). This ended up being my only publication without any professor involved!
 
+<Callout>
+  _"Recreational mathematics is a gateway drug to hard math."_ - Erik Demaine (I
+  believe).
+</Callout>
+
 ## Initial exploration
 
 The first step is always the play around with the problem by hand to start building some intuitions around it.
 We started drawing tours on the whiteboard while trying to avoid crossings as much as possible.
 
 The first observation was that the 8x8 board felt too small and constrained to avoid crossings, so we decided that it would be more interesting as a generalized problem in `n x n` boards for arbitrarily large `n`.
-This put us more firmly in CS territory, where we care about how things *scale*. Instead of finding a specific solution, we were now looking for a generic way of constructing tours for any `n x n` board with a small number of crossings. That is, we were looking for an *algorithm*.
+This put us more firmly in CS territory, where we care about how things _scale_. Instead of finding a specific solution, we were now looking for a generic way of constructing tours for any `n x n` board with a small number of crossings. That is, we were looking for an _algorithm_.
 
 ## Upper and lower bounds
 
-When looking at a new problem, it is always a good idea to establish 
+When looking at a new problem, it is always a good idea to establish
 
 - (1) how well do existing algorithms do on the problem, and
 - (2) what is the absolute best we could hope for.
 
-The former sets a baseline for what we have to beat to have something interesting at all; it gives us an *upper bound* on the number of crossings in the optimal tour. The latter establishes a *lower bound*.
+The former sets a baseline for what we have to beat to have something interesting at all; it gives us an _upper bound_ on the number of crossings in the optimal tour. The latter establishes a _lower bound_.
 
 Sometimes, you find that the upper bound and the lower bound match, in which case there is no room for progress and the project is essentially dead.
 
-When thinking about these bounds, we realized that it'd be easier, while still interesting, to minimize *turns* instead of *crossings*. A "turn" is a cell where the knight changes directions. Turns are easier to work with because a cell is either a turn or it is not, while an edge can be involved in multiple crossings. So, we decided to focus on minimizing turns.
+When thinking about these bounds, we realized that it'd be easier, while still interesting, to minimize _turns_ instead of _crossings_. A "turn" is a cell where the knight changes directions. Turns are easier to work with because a cell is either a turn or it is not, while an edge can be involved in multiple crossings. So, we decided to focus on minimizing turns.
 
 <Callout>
-As you can see, we have already reframed the problem twice. Trying to find the most interesting (but still doable) questions is an organic part of research.
+  As you can see, we have already reframed the problem twice. Trying to find the
+  most interesting (but still doable) questions is an organic part of research.
 </Callout>
 
 Working with turns instead of crossings gave us a trivial lower bound: every cell along the edge of the board **must** be a turn, so we have at least `4n - 4` turns on an `n x n` board.
@@ -89,12 +91,12 @@ Working with turns instead of crossings gave us a trivial lower bound: every cel
 
 To establish an upper bound, we looked at how existing algorithms do on the metric of minimizing turns. We found that there are only two main kinds of knight's tour algorithms:
 
-1. Backtracking algorithms with heuristics like *Warnsdorff's rule*. The idea is to construct a tour step by step, always going to the most promising next move (according to the rule), and backtrack if we get stuck. These algorithms, while very effective for 8x8 boards, quickly reveal their exponential nature for larger boards.
+1. Backtracking algorithms with heuristics like _Warnsdorf's rule_. The idea is to construct a tour step by step, always going to the most promising next move (according to the rule), and backtrack if we get stuck. These algorithms, while very effective for 8x8 boards, quickly reveal their exponential nature for larger boards.
 
 <BlogImage
   src="/blog/knights-tour/warnsdorf_tour.png"
-  alt="Tour found by backtracking with Warnsdorff's rule"
-  caption="Tour found by backtracking with Warnsdorff's rule. Source: ianparberry.com/research/puzzles/knightstour/"
+  alt="Tour found by backtracking with Warnsdorf's rule"
+  caption="Tour found by backtracking with Warnsdorf's rule. Source: ianparberry.com/research/puzzles/knightstour/"
   width="90%"
 />
 
@@ -114,14 +116,18 @@ The divide-and-conquer algorithms, however, allowed us to establish an upper bou
 This leaves us with a very interesting gap between the `O(n^2)` upper bound and the `O(n)` lower bound.
 
 <Callout>
-At the time, after playing around with the problem and looking at existing backtracking and divide-and-conquer solutions, I had a strong intuition that `O(n^2)` was the best possible number of turns. I had an even stronger intuition that `O(n)` turns was impossible. At best, I thought we could find something in between, like `O(n^1.5)` turns.
+  At the time, after playing around with the problem and looking at existing
+  backtracking and divide-and-conquer solutions, I had a strong intuition that
+  `O(n^2)` was the best possible number of turns. I had an even stronger
+  intuition that `O(n)` turns was impossible. At best, I thought we could find
+  something in between, like `O(n^1.5)` turns.
 </Callout>
 
 ## First approach: generalizing from small boards
 
 A common problem-solving technique is to look at the solution for small inputs, and try to extrapolate the pattern to larger inputs. In our case, that means brute-forcing the problem for small boards, and see what the optimal solutions look like there. Maybe, that would show us some emergent structure that we could use to construct larger solutions.
 
-However, even for small boards, it is far from easy to find the optimal tour. To that end, Tim encoded the problem in the [Z3 theorem solver](https://en.wikipedia.org/wiki/Z3_Theorem_Prover), a  general optimization tool, to find the tour with the least number of turns.
+However, even for small boards, it is far from easy to find the optimal tour. To that end, Tim encoded the problem in the [Z3 theorem solver](https://en.wikipedia.org/wiki/Z3_Theorem_Prover), a general optimization tool, to find the tour with the least number of turns.
 
 This was a laughable failure: the solver took about 2 hours to run for `6x6` boards (the smallest size with a tour), and it never finished running for the next smallest board with a tour, the `8x8` one.
 
@@ -136,7 +142,7 @@ Here is the optimal tour for `6x6` boards:
 33 26  5 14 17 24
 ```
 
-Looking at the "optimal" tour for 6x6 boards gave absolutely no insight: due to the small size, almost every square was a turn. The optimal tour has a total of 32 turns out of 36 squares. 
+Looking at the "optimal" tour for 6x6 boards gave absolutely no insight: due to the small size, almost every square was a turn. The optimal tour has a total of 32 turns in 36 squares. Face palm moment.
 
 ## Second approach: aim for the sky
 
@@ -146,69 +152,187 @@ _"If a tour with `O(n)` turns existed, what would it look like? And, if it is no
 
 Understanding _what_, exactly, makes a problem hard, can lead to insights for how to address it.
 
-So, we drew a chessboard on the whiteboard and asked, "what if *none* of the inner squares had a turns?" What if all the turns were along the edges?"
+So, we asked, _"what if none of the inner squares had a turns?" What if all the turns were along the edges?"_
 
-We had something like this:
+We started drawing a tour that would only turn near the edges, like this, knowing that it would be practically impossible to actually finish it:
 
-IMAGE: board with straight lines and missing moves around the edges
+<BlogImage
+  src="/blog/knights-tour/aim_for_sky.png"
+  alt="Partial ideal tour"
+  width="90%"
+/>
 
-Now, the _"only"_ thing that was left to get a tour with O(n) turns was _wiring_ the long lines together at the edges, making a single continuous tour.
+We learned that we could cover a compact chunk of the board this way, leaving only the edges to figure out later:
 
-While obviously hard, it didn't seem outright impossible.
+<BlogImage
+  src="/blog/knights-tour/aim_for_sky2.png"
+  alt="Partial ideal tour"
+  width="90%"
+/>
+
+Now, the _"only"_ thing that was left to get a tour with `O(n)` turns was completing the the edges of the board. While obviously hard, it didn't seem outright impossible.
+
+We started looking at ways of covering a narrow strip, and we found constructions like this, which consists of two separate path segments (red and blue):
+
+<BlogImage
+  src="/blog/knights-tour/aim_for_sky3.png"
+  alt="Partial ideal tour"
+  width="60%"
+/>
+
+Since the previous image shows a way of covering an edge pattern with two path segments, we started exploring the idea of covering the main body of the board with multiple path segments as well. Here's an example with 3 path segments:
+
+<BlogImage
+  src="/blog/knights-tour/aim_for_sky4.png"
+  alt="Partial ideal tour"
+  width="60%"
+/>
 
 ## A happy idea
 
-Thinking about the previous idea, led us to the key insight that unblocked this problem:
+At this point, we still didn't have anything concrete, but we kept exploring patterns.
 
-1. Finding a "king's tour" instead of a knight's tour is trivial (a king moves one square in any direction).
-2. What makes the knight case hard compared to a king is that, when it moves, it leaves "gaps" that need to be filled later.
-3. A **formation of four knights moves kind of like a king, leaving no gaps.**
+We found that using **4** path segments seemed to fill the board with a pretty regular shape:
 
-IMAGE: 4 knight formation moves
+<BlogImage
+  src="/blog/knights-tour/aim_for_sky5.png"
+  alt="Partial ideal tour"
+  width="100%"
+/>
 
-This insight suggested a completely new approach to solving the knight's tour problem: instead of traversing the board with a single knight, traverse it with a formation of four knights. Then, somewhere, like in a corner of the board, tie together the individual pahts of the four knights into a single path.
+It was looking at this that we hit on the **key abstraction** that made the whole project fall into place:
+
+<Callout>
+  A `2x2` formation of knights moves kind of like a king. That is, four knights
+  can make straight moves (up, down, left, right) or diagonal moves without
+  leaving any gaps in between.
+</Callout>
+
+<BlogImage
+  src="/blog/knights-tour/formation_moves.png"
+  alt="Formation moves"
+  width="80%"
+/>
+
+What makes the knight case hard compared to a king is that, when it moves, it leaves "gaps" that need to be filled later. But this formation solves this problem!
+
+We now had a clear direction: instead of traversing the board with a single knight, we'd traverse it with a formation of four knights.
+Then, somewhere, like in a corner of the board, we'd reserve a special region to tie together the four knights into a single path.
 
 Obviously, we still need to work out the "tie together" part, but that seemed very doable.
 
 Unlike the divide-and-conquer approaches, this new approach is actually great for minimizing turns. Straight formation moves (up, down, left, right) introduce turns, so they are no good, but consecutive diagonal moves in the same direction do not. Thus, our approach to minimize turns consisted on maximizing long sequences of diagonal moves, resulting in this zig-zag pattern across the board:
 
-IMAGE: zig-zag pattern, with corners missing.
+<BlogImage
+  src="/blog/knights-tour/formation_path.png"
+  alt="Formation path"
+  width="80%"
+/>
 
-The final piece was working out what to put in the corners to tie the formation together. This is a fun little puzzle, if you want to give it a try!
+And this can be tied together into a single tour by filling in the corners carefully:
 
-With it, we now had a tour with `O(n)` turns, since all turns and crossings happen along the edges, which contain `O(n)` cells. This matches our lower bound, at least asymptotically, defeating my intuition that it wouldn't be possible.
+<BlogImage src="/blog/knights-tour/full_tour.png" alt="Full tour" width="80%" />
 
-## Generalizations
+## Figuring out the corners
 
-When presenting a new idea in a paper, it is a good idea to ask "what other problems can be solved with this idea? can it be generalized to other problems?" This is a good way to make your paper stronger and increase your chances of getting through peer review.
+One challenge is that different board dimensions require different corner patterns, so we had to put some attention to detail when proving that the construction works for all dimensions.
 
-In our case, it seemed clear that our idea should be able to handle rectangular boards, so, when we formalized the algorithm, we made it in a way that works for any dimensions where a tour exists (i.e., where the dimensions are not too small and at least one dimension is even).
+Eventually, we showed that we can handle any board dimensions with some combinations of the following corner patterns:
 
-Different board dimensions required different corner patterns, so we needed to put some attention to detail when proving that the construction works for all dimensions.
+<BlogImage
+  src="/blog/knights-tour/corners.png"
+  alt="Corner patterns"
+  width="100%"
+/>
 
-IMAGE: different corner patterns
-
-You can also try our interactive demo here: https://nmamano.github.io/MinCrossingsKnightsTour/index.html
+You can try different dimensions in our interactive demo here: [nmamano.github.io/MinCrossingsKnightsTour](https://nmamano.github.io/MinCrossingsKnightsTour/index.html).
 
 This is formalized as Algorithm 1 in the paper (along with a formal proof that it always forms a complete tour).
 
-But we didn't stop at rectangular boards. Since we had to go through the literature on the knight's tour problem anyway to make sure our idea was new, as we did so, we looked at all the variants that people have addressed in the past. Then, we used our knight formation idea to tackle those as well:
+With it, we now had our holy grail: a tour with `O(n)` turns and crossings, since all turns and crossings happen along the edges, which contain `O(n)` cells. This matches our lower bound, at least asymptotically, defeating my intuition that it was impossible.
 
-- boards with three and higher dimensions
+Now, if you just read the paper, you'd think that plugging in the right corners was straightforward. And, to be clear, finding corners that work is not too hard. But we still spent a lot of time figuring out the cleanest way to handle them. Here is a collage of sketches we shared in the project's group chat--and it's not all of them:
 
-IMAGE: 3d tour
+<BlogImage
+  src="/blog/knights-tour/collage.png"
+  alt="Corner attempts"
+  width="100%"
+/>
 
-- tours that are symmetric under 90 degree rotations.
+I could make another collage for how to handle the bottom-right and top-left corners, which we covered with formation moves. For instance, here is some case analysis we did for how to handle these corners for different rectangular board dimensions:
 
-IMAGE: 90 degree rotation symmetric tour
+<BlogImage
+  src="/blog/knights-tour/case_analysis_corners.png"
+  alt="Case analysis for corners"
+  width="100%"
+/>
 
-- tours for "giraffes", which move one square in one direction and 4 in the other.
+This case analysis used "square" corners in the bottom-left and top-right corners, which we ended up not using in the paper.
 
-IMAGE: giraffe tour
+<Callout>
+  Like the tip of an iceberg, a paper hides most of the work that goes into
+  making it.
+</Callout>
 
-We also showed that our algorithm was highly efficient (linear time) and highly parallelizable.
+## Generalizations
 
-This essentially covers the main variations discussed in the literature. In each case, we mostly had to make little tweaks about how to handle corners (to me, this shows that our technique should be the go-to approach for the knight's tour problem even when you don't care about turns and crossings, but I may be biased ;)).
+When presenting a new idea in a paper, it is a good idea to ask _"what other problems can be solved with this idea? can it be generalized to other problems?"_ This is a good way to make your paper stronger and increase your chances of getting through peer review.
+
+In our case, it seemed clear that our idea should be able to handle rectangular boards, so, when we formalized the algorithm, we made it in a way that works for any dimensions where a tour exists (i.e., where the dimensions are not too small and at least one dimension is even).
+
+But we didn't stop at rectangular boards. Since we had to go through the literature on the knight's tour problem to make sure our idea was new, as we did, we looked at all the variants that people have addressed in the past. Then, we used our knight formation idea to tackle those as well:
+
+- **Tours on boards with three and higher dimensions.** Here you can see the 4-knight formation moving from one layer of a 3D board to the next:
+
+<BlogImage src="/blog/knights-tour/3d.png" alt="3D tour" width="50%" />
+
+(This figure sent me on a side quest to figure out perspective drawing in a 2D drawing editor).
+
+- **Tours that are symmetric under 90 degree rotations.** We did this by stitching together four copies of our tour:
+
+<BlogImage
+  src="/blog/knights-tour/symmetric_tour.png"
+  alt="Symmetric tour"
+  width="100%"
+/>
+
+- **Tours for "giraffes"**, which move one square in one direction and 4 in the other. This one is funny because it involves a formation of 16 giraffes:
+
+<BlogImage
+  src="/blog/knights-tour/giraffe_formation.png"
+  alt="Giraffe formation"
+  width="60%"
+/>
+
+Transition from one diagonal to the next with 16 giraffes is kind of an ordeal:
+
+<BlogImage
+  src="/blog/knights-tour/giraffe_transition.png"
+  alt="Giraffe transition"
+  width="90%"
+/>
+
+And making sure that the corners tied the 16 giraffes together into a single path was impossible to do by hand. I coded a backtracking algorithm to crack it.
+
+<BlogImage
+  src="/blog/knights-tour/giraffe_corners.png"
+  alt="Giraffe corners"
+  width="90%"
+/>
+
+Behold, the ultimate monster:
+
+<BlogImage
+  src="/blog/knights-tour/giraffe_tour.png"
+  alt="Giraffe tour"
+  width="100%"
+/>
+
+Anyway, enough _horsing around_...
+
+We essentially covered the main variations discussed in the literature. In each case, we mostly had to make tweaks about how to handle corners, but the main idea held well. To me, this suggests that our technique should be the go-to approach for the knight's tour problem even when you don't care about turns and crossings, but I may be biased ;)
+
+Besides these variations, to further strengthen our paper, we also showed that our algorithm was not only efficient (running in linear time) but also highly parallelizable.
 
 ## Approximation ratios
 
@@ -216,50 +340,64 @@ As we mentioned, the number of turns on an `nxn` board, `O(n)`, is asymptoticall
 
 However, we can refine that: what is the exact number? and how close is that to the optimal number?
 
-The first question is easy to answer: we calculate how many zig-zags the formation makes on an `n x n` board, and then multiply that by the number of turns each time the formation makes a turn to get onto the next diagonal. In total, we get `9.25n + C` turns, where `C` is some small constant.
+The first question is straightforward: we calculate how many zig-zags the formation makes as a function of `n`, and then multiply that by the number of turns made by the formation each time it transitions to the next diagonal. In total, we get `9.25n + C` turns, where `C` is some small constant.
 
-The second question is much more difficult. To know how far we are from the optimal number, we would have to know the optimal tour, which is of course a much harder problem. Instead, if we can find some *lower bound* on the number of turns, then the ratio between the lower bound and our count gives us an *approximation ratio* of how far off we are from the optimal number in the worst case.
+The second question is much more difficult. To know how far we are from the optimal number, we would need the optimal tour, which we obviously don't have. Instead, if we can find some _lower bound_ on the number of turns, then the ratio between the lower bound and our count gives us an _approximation ratio_ of how far off we are from the optimal number in the worst case.
 
-We already discussed a trivial lower bound: every cell along the edge of the board **must** be a turn, so we have at least `4n - 4` turns. 
+We already discussed a trivial lower bound: every cell along the edge of the board _must_ be a turn, so we have at least `4n - 4` turns.
 However, the higher we can take it, the better our approximation ratio will look.
 
-We were able to prove a lower bound of `5.99n`. That is, no matter the approach, there must be at least `5.99n` turns in *any* knight's tour. (The exact statement is: for any `ε > 0`, there exists an `n0` such that, for all `n > n0`, a knight's tour on an `nxn` board has at least `(6 - ε)n` turns.)
+We were able to prove a lower bound of `5.99n`. That is, no matter the approach, there must be at least `5.99n` turns in _any_ knight's tour. (The exact statement is: for any `ε > 0`, there exists an `n0` such that, for all `n > n0`, a knight's tour on an `nxn` board has at least `(6 - ε)n` turns.)
 
-The proof is a bit convoluted, but it comes from a simple intuition (as is often the case...). Take all `~4n` edge cells. Each one has two "legs": sequences of aligned moves coming out of it. The legs end when either (a) they reach another edge of the board, or (b) they run into something that prevents them from reaching it. The idea is that the `~8n` legs running across the board make the board too crowded and eventually some of them "crash" into each other, creating new turns that are not at edge cells. We show that there must be at least `~2n` "crashes", bringing the lower bound up to `~6n`.
+The proof is a bit convoluted, but it comes from a simple intuition (as is often the case...). Take all `~4n` edge cells. Each one has two "legs": sequences of aligned moves coming out of it. The legs end when they either (a) reach another edge of the board, or (b) run into something that prevents them from reaching it. The idea is that the `~8n` legs running across the board make the board too crowded and eventually some of them "crash" into each other, creating new turns that are not at edge cells. We show that there must be at least `~2n` "crashes", bringing the lower bound up to `~6n`.
 
 I won't get into why (you can see the paper), but I found it pretty unexpected that the proof involves a fractal, so I'll just show the fractal here out of context:
 
-IMAGE: fractal
+<BlogImage
+  src="/blog/knights-tour/lower_bound_fractal.svg"
+  alt="Lower bound fractal"
+  width="100%"
+  needsBackground={true}
+/>
 
-Combining the upper and lower bounds, we get an approximation ratio of `~9.25/6`--a pretty small gap!
+Combining the upper and lower bounds, we get an approximation ratio of `~9.25/6`. A pretty small gap!
 
 <Callout>
-So, what do I think is the actual optimal number? I'm really not sure, but I think it will be easier to raise the lower bound than to lower the upper bound.
+  So, what do I think is the _actual_ optimal number? I'm really not sure, but I
+  think it will be easier to raise the lower bound than to lower the upper
+  bound.
 </Callout>
 
 Eventually, we circled back to the original problem of minimizing crossings, and we were able to show an approximation ratio of `~3` in that case. Our construction has `~12n` crossings, and the best lower bound we were able to show is `~4n`. (This lower bound seems like low hanging fruit for improvement, if anyone is looking for a problem to work on!)
 
 ## Unexpected help
 
-One day, I received the most random (and delightful) of emails: a student from a class I TA'd, Parker Williams, sent me an improvement to our approximation ratio straight to my inbox. This was unexpected since we never discussed collaborating on this.
+One day, I received the most random (and delightful) of emails: a student from a class I TA'd, Parker Williams, sent me an improvement to our approximation ratio out of nowhere. We had never discussed collaborating on this.
 
-The email reads:
+The email read:
 
 > Hi Nil,
-> 
+>
 > I had a look at the heel in the open problems doc and I couldn't help myself, here are all possible tours for the "small heel" (there are possible improvements for both turns and crossings!) the one used in the paper is the fourth one down:
-
-IMAGE: parker's pic
-
+>
+> <BlogImage
+>   src="/blog/knights-tour/parker_email.png"
+>   alt="Heels found by Parker"
+>   width="100%"
+> />
+>
 > I found this list by searching the problem space exhaustively, I was expecting it to take too long and that maybe a greedy/DP type algorithm would be necessary but the whole search actually finished in less than a second in python on a laptop.
+>
 > [...]
-> Are any of the small heel findings valuable?  I understand it's a very marginal improvement in upper bound [...].
+>
+> Are any of the small heel findings valuable? I understand it's a very marginal improvement in upper bound [...].
 
-Yes, yes, they are! Parker's optimized diagonal transitions improved our upper bounds from `~9.5n` turns and `~13n` crossings to the `~9.25n` turns and `~12n` crossings mentioned above, tightening the approximation ratios a bit further.
+Yes, _yes, they are!_ Parker's optimized diagonal transitions improved our upper bounds from `~9.5n` turns and `~13n` crossings to `~9.25n` turns and `~12n` crossings (as mentioned above), tightening the approximation ratios a bit further.
 
-By that point, we had already published the paper in a conference called [FUN](https://sites.google.com/view/fun2020/acceptedpapers) (short for "Fun with algorithms"), but we had been invited to publish a journal version in [TCS](https://en.wikipedia.org/wiki/Theoretical_Computer_Science_(journal)), so we added Parker's results to the journal version and added him as a co-author.
+By that point, we had already published the paper in a conference called [FUN](https://sites.google.com/view/fun2020/acceptedpapers) (short for "Fun with algorithms"), but we had been invited to publish a journal version in [TCS](<https://en.wikipedia.org/wiki/Theoretical_Computer_Science_(journal)>), so we added Parker's results to the journal version and added him as a co-author.
 
 Still one of my favorite emails I've ever received.
 
 ## Conclusion
 
+I hope this post helped demystify CS theory research a bit--even if it is for a silly puzzle that originated at tea time. I may summarize it as: it's not as hard as it seems, but it is more work than it seems. So, enjoying the process and having fun is probably more important than being a genius.
