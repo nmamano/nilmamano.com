@@ -1,0 +1,142 @@
+---
+title: "Choosing a tech stack in 2025"
+date: "2025-05-04"
+excerpt: "My process for picking a tech stack in 2025."
+coverImage: "/blog/2025-stack/cover.png"
+categories: ["swe", "wallgame", "wip"]
+---
+
+I'm planning on rebuilding one of my side projects, the [wall game](https://wallwars.net), from scratch.
+
+One of the first choices for a new project is the tech stack, so this blog post will go over my choice for this project and the thought process behind it.
+
+## Features
+
+To choose a tech stack, we should start from the features we need.
+
+In this case, the easiest way to think about the feature set is that we are building a Lichess clone (lichess.org), except for a different game.
+
+I'll list here the main features and their implications about what tech we need.
+
+### Functional requirements
+
+- Real-time turn-based multiplayer games.
+  - **Implications:** This means using **websockets**, which, as far as I know, is the main networking protocol for this use case. This also means that "serverless" stacks are out of the question.
+- Matchmaking: people can broadcast if they are looking for someone to play.
+  - **Implications:** This requires a broadcasting mechanism--everyone online should see that someone is looking for a game. Websockets also handle this use case.
+  - Another feature that requires broadcasting is spectating on-going games.
+- Smart Bots based on an [Alpha-Zero-like AI](https://github.com/t-troebst/Deep-Wallwars), which requires many ML model inferences.
+  - **Implications:** This means that either the server needs **access to GPUs** (which would be very expensive in a cloud provider) or, the server needs to call an external (self-hosted) service to run the AI. The latter seems worth trying, given I have access to a mostly-idle RTX 4090.
+  - The current version of the game ([wallwars.net](https://wallwars.net) (I renamed "Wall Wars" to "Wall Game"--let me know what you think about the name change?)) has a C++, minimax-based bot that runs on the _frontend_. This added WebAssembly support as a requirement to run C++ in the browser. After dealing with that, I think it's not worth it, so this time I'm only considering bots that run on the backend. So, WebAssembly is not a requirement.
+- User accounts. We want to handle a mix of non-logged-in and logged-in players seamlessly.
+  - Ideally, we want to support something like Google log-in.
+  - **Implications:** This means either implementing authorization from scratch (this would be my first time) or using an **auth provider**.
+- Satisfying visuals and animations.
+  - **Implications:** We need a **modern UI library** that supports animations without requiring being an expert (which I'm not). As much as I love lichess, I hope for the game to look more... modern.
+- Phone and tablet support.
+  - **Implications:** A mature UI library that supports responsive design.
+- DB for things like finding recent games, your game history, leaderboards, etc.
+  - **Implications:** We don't have any need for NoSQL features. **SQL** should do just fine.
+- Allowing users to provide their own AIs.
+  - **Implications:** We will have to provide a game client as a separate repo which people can clone and run in order to run their own AI on the site.
+  - I considered the option of letting users upload their AI code to the backend, but I don't want to deal with the server costs or security concerns.
+- Blog: e.g., for dev journaling--you are probably reading it.
+  - **Implications:** An **SSG** (static-site generator) is a good fit for this. However, I'm thinking of just using my personal blog, but with a post filter to include only posts related to the game: [nilmamano.com/blog/category=wallgame](https://nilmamano.com/blog/category=wallgame).
+- A community space.
+  - **Implications:** I already set up a discord server for the first version of the game: [discord.gg/6XFsZHGZ](https://discord.gg/6XFsZHGZ). `:)`
+
+The following features have no additional implications on the tech stack, as far as I can tell, meaning that any stack should be able to handle them more or less equally well:
+
+- Single player modes: bots, puzzles and analysis board.
+- ELO system and rating-based matchmaking.
+- In-game chat (this is handled by websockets).
+- Sound effects and music.
+- Keyboard support.
+- Model training for the AI. This will be an offline process, independent of the app's tech stack.
+- Puzzle generation. This will also be an offline process, and the puzzles will be uploaded to the DB.
+
+### Non-functional requirements.
+
+- This app will be heavy on business logic, _both_ in the frontend and the backend. Usually, apps have minimal business logic in the frontend, but for a real-time game it is not ideal. For instance:
+  - We want move legality checks to be instantaneous: if the user hovers over a wall slot, we want to indicate to them if they can place it or not, and this requires bridge-detection graph algorithms. We don't want to add server lag for such things.
+  - Premoves are frontend-only and require graph algorithms like bridge detection.
+  - **Implication:** It would be great if the stack allowed us to **share business-logic code between frontend and backend**, meaning that both use the same language. However, LLMs have made code translation pretty trivial, so this is not a hard requirement.
+- Small storage needs (compared to a media-centered app). All games should be stored but they shouldn't take much space. We don't have to deal with heavy data like images or video.
+  - **Implications:** We don't need some kind of CDN.
+- Tests.
+  - **Implications:** I like to keep testing infrastructure to a minimum, so I won't add "testing framework" as a requirement.
+- CI/CD and dev environment.
+  - **Implications:** We need a cloud provider for the backend that supports such things.
+- Low budget. Since there is no plan to monetize the game, at least initially, we want to keep costs low.
+  - **Implications:** we will try to leverage free-tier plans where possible for cloud services (DB, auth, etc.).
+- LLM-friendly stack.
+  - **Implications:** I want to be able to leverage CHOP (chat-oriented programming). This means that popular frameworks and tools are preferred. Maybe more importantly, stable frameworks are preferred. It is a pain to work with an LLM with a knowledge cutoff date earlier than the version of a framework you are using.
+
+### Non-MVP features
+
+All of these probably make sense, but that's a problem for future me.
+
+- Mobile app.
+- Mailing list (to announce things like tournaments).
+- Ads.
+- In-game purchases.
+
+## Subjective goals for a stack
+
+After the requirements, a less important factor is the developer's (i.e., my) experience and preferences.
+
+- Minimize dependencies.
+  - [wallwars.net](https://wallwars.net) was my first project using npm and I was not mindful to vet dependencies. Now, it's a pain to keep them updated (I'm sure js devs can relate).
+  - For instance, this means avoiding needing an ORM if possible.
+- Avoid framework and hosting provider lock in.
+  - For instance, this pushes me away from `next.js` because of how it subtly and not so subtly pushes you into hosting on Vercel.
+  - Similarly, this means I prefer to implement auth from scratch rather than using a provider that would be hard to migrate from later on.
+- Strong typing. Ideally, even with consistent types across frontend and backend where appropriate.
+- Not OOP or purely functional. I favor procedural programming with minimum side-effects.
+- Avoid microservice stuff.
+  - Exception: it seems like a good idea to have a separate service for computing bot moves.
+- Fast languages.
+  - No Python, basically. It doesn't offer enough to be worth the speed hit.
+
+As you can see, the goals are often contradictory. For instance:
+
+- wanting a stable framework points to something like Django, but it is Python-based, and I want a fast language.
+- a stable framework would mean avoiding the mess that is the JS ecosystem, while reusing business-logic code across frontend and backend points to using a JS-everywhere stack.
+- wanting a type-safe and fast language points to Rust, but that would mean not reusing code, and I don't know how LLM-friendly it is.
+
+Etc, etc. Every tech has trade-offs, and I'm sure everyone would reach a different conclusion about the right stack.
+
+For this project, I'm not counting "learning new things" and "having fun" as goals. Otherwise, I might prioritize something like Rust for the backend.
+
+Before we get to my choice, I'll touch on a couple of relevant stacks.
+
+## Lichess stack
+
+Luckily, the creator of Lichess has written about its stack and the thought process behind it: LINK.
+
+As a tangent, the story behind Lichess is very inspiring, I highly recommend this video: LINK.
+
+Here is the stack:
+
+## wallwars.net stack
+
+The current site was built in 2019. It is based on a popular stack at the time: MERN (MongoDB, Express, React, Node.js). I actually chose the stack _first_, because my goal at the time was to learn full-stack development, and then chose the wall game as the project to learn on.
+
+One reason why I want to rebuild the site is that the MERN stack is quite outdated. Of the four letters, only the "R" is still recommended for new projects.
+
+It was also a `create-react-app` app, which didn't age well. Now something like "vite" would be recommended instead.
+
+## My choice: all in on JS
+
+The idea of this tech stack is to try to leverage the JS ecosystem as much as possible.
+
+As discussed above, the main pros are:
+
+- Factor out and reuse business logic across frontend and backend.
+- Frontend-backend communication may work better if they are implemented in the same language. (e.g., the websocket implementation).
+- It's popular, so I'm hoping I'll have an easier time integrating services like authentication.
+- LLM friendly-ish (popular, but not stable).
+- An overall ok language I'm already familiar with (TS): type-safe, fast, good UX, not too OOPy or functional.
+- Maybe in the future, the react frontend can become the basis for react native mobile apps.
+
+### Components
