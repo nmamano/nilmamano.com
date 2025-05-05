@@ -1,10 +1,19 @@
 ---
-title: "Wall Game UI Design"
+title: "Wall Game UI Design (+ Frontend Generators)"
 date: "2025-05-02"
 excerpt: "The specs of the UI for the wall game."
 coverImage: "/blog/wall-game-ui/cover.png"
 categories: ["wallgame"]
 ---
+
+<Callout>
+  This blog post is a design doc for the frontend of wallgame.io, a board game
+  I'm making. However, something probably more interesting came out of it: an
+  assessment of frontend generators' ability to one-shot a 6000-word design doc
+  prompt. The results deeply impressed me. They are in an appendix at the
+  bottom. Feel free to skip the design doc and check out the
+  [appendix](#appendix).
+</Callout>
 
 This is the specification of the frontend for the _wall game_, an online strategy board game.
 It only specifies the logic/functionality. It is agnostic of the look.
@@ -571,3 +580,38 @@ I usually figure out the shape of things as I build them, like I did for [wallwa
 - AI-assisted coding has made _all_ coding easier, but it has improved new code generation more than it has improved refactoring. For me, this shifted the tradeoff to the point where it seemed worth it to try to preempt as many direction shifts as possible.
 
 In any case, now that I have this doc, I think it's a good opportunity to test out the various frontend generators (lovable and company) and see what they spit out. I probably won't use any of them directly, but they should give me good ideas for the styling.
+
+## Appendix
+
+I fed this whole blog post to [v0.dev](https://v0.dev) (free tier). The prompt was "Create mocks for the attached design doc." + this blog post, which is about 6000 words (a 33kB attachment).
+
+<Callout>
+  Apart from putting the files in the wrong directory, it one-shotted the whole
+  app with **great prompt adherence** and, in my opinion, **great taste to fill
+  in the gaps** (recall that this design doc says basically nothing about
+  styling).
+</Callout>
+
+You can see the results below (I skipped the less interesting pages).
+
+<BlogImage src="/blog/wall-game-ui/v01.png" width="100%" />
+<BlogImage src="/blog/wall-game-ui/v02.png" width="100%" />
+<BlogImage src="/blog/wall-game-ui/v03.png" width="100%" />
+<BlogImage src="/blog/wall-game-ui/v04.png" width="100%" />
+<BlogImage src="/blog/wall-game-ui/v05.png" width="100%" />
+<BlogImage src="/blog/wall-game-ui/v06.png" width="100%" />
+<BlogImage src="/blog/wall-game-ui/v07.png" width="100%" />
+<BlogImage src="/blog/wall-game-ui/v08.png" width="100%" />
+<BlogImage src="/blog/wall-game-ui/v09.png" width="100%" />
+<BlogImage src="/blog/wall-game-ui/v010.png" width="100%" />
+<BlogImage src="/blog/wall-game-ui/v011.png" width="100%" />
+
+I emphasize that I did not have to break down the prompt into smaller chunks, as I'm so used to with tools like Cursor or basically anything LLM-based. I did not have to go screen by screen. It generated about 20 files and 3000 lines of next.js, with all navigation working as expected and mock data. I did not have to carefully craft a prompt on top of the design doc (though you can argue that this blog post is a great prompt). As someone who [uses vibe coding regularly](https://nilmamano.com/blog/what-vibe-coding-actually-looks-like), this truly impressed me.
+
+I tried other frontend generators with the same prompt. [lovable.dev](https://www.lovable.dev/) did OK with prompt adherence (some pages did not work), but it did not have the same taste as v0.dev. It looks like a generic corporate site. Lovable's board component also looks messed up.
+
+<BlogImage src="/blog/wall-game-ui/lovable.png" width="100%" />
+
+[bolt.new](https://bolt.new/) had great prompt adherence, about the same as v0.dev, but the site looked generic like lovable's (and the board was also messed up). Other tools had a prompt length limit, so I didn't even try.
+
+In the end, I just went back to v0.dev and used the rest of my daily free credits to ask it for [different color themes](https://x.com/Nil053/status/1919387360480927909).
