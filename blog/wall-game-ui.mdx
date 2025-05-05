@@ -1,7 +1,7 @@
 ---
 title: "Wall Game UI Design (+ Frontend Generators)"
 date: "2025-05-02"
-excerpt: "The specs of the UI for the wall game."
+excerpt: "The specs of the UI for the Wall Game and renders from frontend generators."
 coverImage: "/blog/wall-game-ui/cover.png"
 categories: ["wallgame"]
 ---
@@ -15,7 +15,7 @@ categories: ["wallgame"]
   [appendix](#appendix).
 </Callout>
 
-This is the specification of the frontend for the _wall game_, an online strategy board game.
+This is the specification of the frontend for the _Wall Game_, an online strategy board game.
 It only specifies the logic/functionality. It is agnostic of the look.
 
 A first version of the game is already available at [wallwars.net](https://wallwars.net).
@@ -91,7 +91,7 @@ We'll first go over the [basic concepts](#concepts), then some of the [basic com
 
   - The user has made a mistake. The user is notified and the move is undone automatically rolled back. The user is also allowed to "play the game through" after a mistake to understand why their move is wrong. In this case, a strong bot takes over, which should be able to convert the position into a win (if the user's goal was to draw) or a win or draw (if the user's goal was to win).
   - The user has gained a 'decisive advantage' (if the goal is to win) or 'secured a draw' (if the goal is to draw). The puzzle ends successfully.
-  - The user has made a correct move but the puzzle is not over. The opponent makes a move, which can either be fixed by the puzzle setter or played by a strong bot (the wall game often has many equally good moves, so it is not possible to preprogram an answer to every possible user move). The puzzle goes on.
+  - The user has made a correct move but the puzzle is not over. The opponent makes a move, which can either be fixed by the puzzle setter or played by a strong bot (the Wall Game often has many equally good moves, so it is not possible to preprogram an answer to every possible user move). The puzzle goes on.
 
 - **Replay notation:** a JSON string representing a game (finished or unfinished). It not only includes the list of moves, but the player information and every interaction needed to perfectly reproduce the game as it happened when played (e.g., the timing of the moves, rejected draw offers, etc). Each variant may require tweaks. For varirants with parameters involving randomization, the random seed is included. The only thing that is not saved is the chat.
 - **Standard notation:** a string format representing a game (finished or unfinished). It contains a header with the variant and parameters and the player names, and a body with the sequence of moves. It is meant to be compact while human-readable. Each variant may require tweaks. The standard notation is based on cell names (e.g., "e4").
@@ -292,7 +292,7 @@ A text says, "When setting up a game, these parameters will be used as default."
 
 This contains short informational text. The text can be something like this:
 
-"Wall game is a board game about building walls and outsmarting your opponents.
+"Wall Game is a board game about building walls and outsmarting your opponents.
 It is inspired by quoridor (wiki link) and blockade (wiki link).
 Basic instructions about navigating the website (where to find the rules etc).
 Created by Nil Mamano (link).
@@ -516,6 +516,7 @@ This section contains the following buttons:
 
 This section shows a board and autoplays random past games, at high speed (2 moves per second).
 Above the board, a text says: "Game showcase: name1 (1200) vs name2 (1234) (DATE)", with the players and date updating as the game changes.
+There should also be a button to stop the autoplay.
 
 Clicking on it takes you to the ["game page"](#game-page) to watch the game, analogous to the "Past games" page.
 The only difference is that the game starts at the position that last played automatically in the game showcase.
@@ -612,6 +613,12 @@ I tried other frontend generators with the same prompt. [lovable.dev](https://ww
 
 <BlogImage src="/blog/wall-game-ui/lovable.png" width="100%" />
 
-[bolt.new](https://bolt.new/) had great prompt adherence, about the same as v0.dev, but the site looked generic like lovable's (and the board was also messed up). Other tools had a prompt length limit, so I didn't even try.
+[bolt.new](https://bolt.new/) had great prompt adherence, about the same as v0.dev, but the site looked generic like lovable's (and the board was also messed up). V0 had the best use of space.
+
+<BlogImage src="/blog/wall-game-ui/bolt.png" width="100%" />
+
+Other tools I tried had a prompt length limit, so I didn't bother.
 
 In the end, I just went back to v0.dev and used the rest of my daily free credits to ask it for [different color themes](https://x.com/Nil053/status/1919387360480927909).
+
+_Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_v0dev-just-blew-my-mind-so-im-building-activity-7325214964774752256-sSfl?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC6jqIwBADV70xmTEpmkxbAnN_32mssoxA8) or the [X post](https://x.com/Nil053/status/1919446218398429531)._
