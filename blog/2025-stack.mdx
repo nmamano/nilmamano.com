@@ -1,142 +1,295 @@
 ---
 title: "Choosing a tech stack in 2025"
-date: "2025-05-04"
-excerpt: "My process for picking a tech stack in 2025."
-coverImage: "/blog/2025-stack/cover.png"
-categories: ["swe", "wallgame", "wip"]
+date: "2025-05-07"
+excerpt: "How would you build a Lichess clone in 2025? My process for picking a tech stack."
+coverImage: "/blog/2025-stack/cover.gif"
+categories: ["swe", "wallgame"]
 ---
 
-I'm planning on rebuilding one of my side projects, the [wall game](https://wallwars.net), from scratch.
+I'm [rebuilding](https://nilmamano.com/blog/wall-game-ui) one of my side projects from scratch, the Wall Game. The first version is playable at [wallwars.net](https://wallwars.net) _(Side note: let me know what name you prefer, WallWars or Wall Game)_.
 
 One of the first choices for a new project is the tech stack, so this blog post will go over my choice for this project and the thought process behind it.
 
-## Features
+## Requirements
 
-To choose a tech stack, we should start from the features we need.
+<Callout>
+  To choose a tech stack, we should start from the features we need.
+</Callout>
 
-In this case, the easiest way to think about the feature set is that we are building a Lichess clone (lichess.org), except for a different game.
+In this case, the easiest way to think about the feature set is that we are building a Lichess clone ([lichess.org](https://lichess.org)), except for a different board game.
 
-I'll list here the main features and their implications about what tech we need.
+I'll list here the main features and their implications about the tech we need.
 
-### Functional requirements
+### Features
 
 - Real-time turn-based multiplayer games.
-  - **Implications:** This means using **websockets**, which, as far as I know, is the main networking protocol for this use case. This also means that "serverless" stacks are out of the question.
-- Matchmaking: people can broadcast if they are looking for someone to play.
-  - **Implications:** This requires a broadcasting mechanism--everyone online should see that someone is looking for a game. Websockets also handle this use case.
-  - Another feature that requires broadcasting is spectating on-going games.
-- Smart Bots based on an [Alpha-Zero-like AI](https://github.com/t-troebst/Deep-Wallwars), which requires many ML model inferences.
-  - **Implications:** This means that either the server needs **access to GPUs** (which would be very expensive in a cloud provider) or, the server needs to call an external (self-hosted) service to run the AI. The latter seems worth trying, given I have access to a mostly-idle RTX 4090.
-  - The current version of the game ([wallwars.net](https://wallwars.net) (I renamed "Wall Wars" to "Wall Game"--let me know what you think about the name change?)) has a C++, minimax-based bot that runs on the _frontend_. This added WebAssembly support as a requirement to run C++ in the browser. After dealing with that, I think it's not worth it, so this time I'm only considering bots that run on the backend. So, WebAssembly is not a requirement.
+  - **Implications:** This means using **websockets**, the main networking protocol for this use case. This also means that "serverless" backends are out of the question.
+- Matchmaking: people can broadcast if they are looking for someone to play, and everyone online should be able to see it.
+  - **Implications:** This requires a broadcasting mechanism. Websockets also handle this use case.
+- Human-level bots running [Deep WallWars](https://github.com/t-troebst/Deep-Wallwars), an Alpha-Zero-like AI.
+  - **Implications:** The AI requires a beefy CPU (for the [MCTS](https://en.wikipedia.org/wiki/Monte_Carlo_tree_search)) and GPU (for ML model inferences) per move. This means that either the server needs **access to GPUs** (which would be very expensive in a cloud provider) or, the AI needs to be self-hosted.
+  - The current version of the game has a C++, [minimax-based bot](https://github.com/nmamano/wallwars/tree/master/AI) that runs on the _frontend_. This requires transpiling C++ to WASM, which hasn't worked well in every browser/device. After dealing with that, I think it's not worth it, so this time I'm only considering bots that run on the backend.
 - User accounts. We want to handle a mix of non-logged-in and logged-in players seamlessly.
   - Ideally, we want to support something like Google log-in.
   - **Implications:** This means either implementing authorization from scratch (this would be my first time) or using an **auth provider**.
 - Satisfying visuals and animations.
-  - **Implications:** We need a **modern UI library** that supports animations without requiring being an expert (which I'm not). As much as I love lichess, I hope for the game to look more... modern.
-- Phone and tablet support.
+  - **Implications:** We need a **modern UI library** that supports animations without requiring being an expert (which I'm not). As much as I love Lichess, I want the game to have more dynamic visuals and animations.
+- Phone and tablet support. A native phone app may come later, but for now I want the website to work well on every device.
   - **Implications:** A mature UI library that supports responsive design.
 - DB for things like finding recent games, your game history, leaderboards, etc.
-  - **Implications:** We don't have any need for NoSQL features. **SQL** should do just fine.
+  - **Implications:** We don't have any need for NoSQL features. A **SQL DB** should do just fine.
 - Allowing users to provide their own AIs.
-  - **Implications:** We will have to provide a game client as a separate repo which people can clone and run in order to run their own AI on the site.
+  - **Implications:** We will have to provide a game client as a separate repo which people can clone to run their own AI locally and connect to the site.
   - I considered the option of letting users upload their AI code to the backend, but I don't want to deal with the server costs or security concerns.
-- Blog: e.g., for dev journaling--you are probably reading it.
-  - **Implications:** An **SSG** (static-site generator) is a good fit for this. However, I'm thinking of just using my personal blog, but with a post filter to include only posts related to the game: [nilmamano.com/blog/category=wallgame](https://nilmamano.com/blog/category=wallgame).
-- A community space.
+- A blog for dev journaling--you are probably reading it.
+  - **Implications:** An **SSG** (static-site generator) is a good fit for this.
+- A community space to discuss the game.
   - **Implications:** I already set up a discord server for the first version of the game: [discord.gg/6XFsZHGZ](https://discord.gg/6XFsZHGZ). `:)`
 
 The following features have no additional implications on the tech stack, as far as I can tell, meaning that any stack should be able to handle them more or less equally well:
 
-- Single player modes: bots, puzzles and analysis board.
+- Single player modes: playing vs bots, puzzles, and analysis board.
 - ELO system and rating-based matchmaking.
 - In-game chat (this is handled by websockets).
+- Spectating on-going games (this is handled by websocket broadcasting).
 - Sound effects and music.
 - Keyboard support.
-- Model training for the AI. This will be an offline process, independent of the app's tech stack.
-- Puzzle generation. This will also be an offline process, and the puzzles will be uploaded to the DB.
+- Model training for the AI. This will be an offline process based on PyTorch, independent of the app's tech stack.
+- Puzzle generation. The puzzles will be generated and uploaded to the DB as part of an offline process.
 
-### Non-functional requirements.
+### Non-functional requirements
 
-- This app will be heavy on business logic, _both_ in the frontend and the backend. Usually, apps have minimal business logic in the frontend, but for a real-time game it is not ideal. For instance:
-  - We want move legality checks to be instantaneous: if the user hovers over a wall slot, we want to indicate to them if they can place it or not, and this requires bridge-detection graph algorithms. We don't want to add server lag for such things.
-  - Premoves are frontend-only and require graph algorithms like bridge detection.
-  - **Implication:** It would be great if the stack allowed us to **share business-logic code between frontend and backend**, meaning that both use the same language. However, LLMs have made code translation pretty trivial, so this is not a hard requirement.
+- This app will be heavy on business logic, _both_ in the frontend and the backend.
+  - **Implication:** It would be great if the stack used the **same language for frontend and backend** to allow us to share business-logic code between them. However, LLMs have made code translation pretty trivial, so this is not a hard requirement.
+
+Usually, apps have minimal business logic in the frontend, but for a real-time game it is not ideal. For instance:
+
+1. We want move legality checks to be instantaneous: if the user hovers over a wall slot, we want to indicate to them if they can place it or not, and this requires bridge-detection graph algorithms. We don't want to add server lag for such things.
+2. Premoves are frontend-only and require graph algorithms like bridge detection to do properly.
+
 - Small storage needs (compared to a media-centered app). All games should be stored but they shouldn't take much space. We don't have to deal with heavy data like images or video.
-  - **Implications:** We don't need some kind of CDN.
+  - **Implications:** We don't need some kind of **CDN**.
 - Tests.
-  - **Implications:** I like to keep testing infrastructure to a minimum, so I won't add "testing framework" as a requirement.
-- CI/CD and dev environment.
-  - **Implications:** We need a cloud provider for the backend that supports such things.
+  - **Implications:** I like to keep testing infrastructure to a minimum, so I won't add **testing framework** as a requirement.
+- Safe rollouts.
+  - **Implications:** We need a cloud provider for the backend that supports **CI/CD** and a **dev environment**.
 - Low budget. Since there is no plan to monetize the game, at least initially, we want to keep costs low.
   - **Implications:** we will try to leverage free-tier plans where possible for cloud services (DB, auth, etc.).
-- LLM-friendly stack.
-  - **Implications:** I want to be able to leverage CHOP (chat-oriented programming). This means that popular frameworks and tools are preferred. Maybe more importantly, stable frameworks are preferred. It is a pain to work with an LLM with a knowledge cutoff date earlier than the version of a framework you are using.
+- LLM-friendly stack. I want to be able to do CHOP (chat-oriented programming).
+  - **Implications:** This means that popular frameworks and tools are preferred. Maybe more importantly, stable frameworks are preferred. (It is a pain to work with an LLM with a knowledge cutoff date earlier than the version of a framework you are using.)
+- Big and stable (i.e., boring) ecosystem. We don't want simple integrations to become an adventure.
+- Minimize dependencies.
+
+[wallwars.net](https://wallwars.net) was my first project using `npm` and I was not mindful to vet dependencies, and it's been a drag to keep them updated. For instance, I used a "React wrapper" around Material UI which was not updated when a new React version came out, and it was a pain to migrate out of it (I'm sure js devs can relate). The new philosophy will be to avoid dependencies as much as possible.
+
+- Avoid framework and hosting provider lock in.
+
+At some point, Heroku suddenly removed the free tier that [wallwars.net](https://wallwars.net) was on. So, the new philosophy will be to try to avoid getting locked in into specific tech or services. Here are some implications of this goal:
+
+1. This pushes me away from `next.js` because of how it subtly and not so subtly pushes you into hosting on Vercel.
+2. I'd rather avoid ORMs (Object-Relational Mappers), or, if I do use one, it should be a thin wrapper around SQL and not use features specific to that ORM.
+3. Rolling out my own authentication becomes a lot more appealing, as this can be particularly hard to migrate.
+
+- Avoid the complexity of microservices.
+  - Exception: it seems like a good idea to have a separate service for computing bot moves, so the main service can stay responsive by avoiding compute-heavy tasks.
+- Avoid slow languages.
+  - I'd be concerned about running the game logic in a language like Python.
 
 ### Non-MVP features
 
-All of these probably make sense, but that's a problem for future me.
+All of these probably make sense at some point, but that's a problem for future me. The initial scope is just to make the web experience great.
 
 - Mobile app.
 - Mailing list (to announce things like tournaments).
 - Ads.
 - In-game purchases.
 
-## Subjective goals for a stack
+### Subjective preferences
 
 After the requirements, a less important factor is the developer's (i.e., my) experience and preferences.
 
-- Minimize dependencies.
-  - [wallwars.net](https://wallwars.net) was my first project using npm and I was not mindful to vet dependencies. Now, it's a pain to keep them updated (I'm sure js devs can relate).
-  - For instance, this means avoiding needing an ORM if possible.
-- Avoid framework and hosting provider lock in.
-  - For instance, this pushes me away from `next.js` because of how it subtly and not so subtly pushes you into hosting on Vercel.
-  - Similarly, this means I prefer to implement auth from scratch rather than using a provider that would be hard to migrate from later on.
-- Strong typing. Ideally, even with consistent types across frontend and backend where appropriate.
-- Not OOP or purely functional. I favor procedural programming with minimum side-effects.
-- Avoid microservice stuff.
-  - Exception: it seems like a good idea to have a separate service for computing bot moves.
-- Fast languages.
-  - No Python, basically. It doesn't offer enough to be worth the speed hit.
+I favor plain old procedural programming, with strong typing. I try to keep as much logic as possible in pure functions, but I don't like when functional languages are forcefully strict about it (e.g., Haskell). I'm allergic to OOP.
+
+I'd probably rank the languages I've used by preference like this: Go > TS > Python > JS > C++ > Java. I like languages a bit on the lower level, so the "modern C++ replacements" like Rust and Zig seem appealing if I were to use a new language.
+
+For this project, I'm not counting "learning new things" as a goal. Otherwise, I might prioritize something like Rust for the backend.
+
+### Trade-offs
 
 As you can see, the goals are often contradictory. For instance:
 
-- wanting a stable framework points to something like Django, but it is Python-based, and I want a fast language.
-- a stable framework would mean avoiding the mess that is the JS ecosystem, while reusing business-logic code across frontend and backend points to using a JS-everywhere stack.
-- wanting a type-safe and fast language points to Rust, but that would mean not reusing code, and I don't know how LLM-friendly it is.
+- Django is a very stable and mature framework, which is a plus, but it is Python-based, and I want a fast language.
+- Wanting a stable ecosystem would mean avoiding the mess that is the JS ecosystem, but using TypeScript for both the frontend and backend seems like the easiest way of reusing business logic code between them.
+- Wanting a type-safe and fast language points to Rust, but I'm not sure how good LLM completions would be compared to, e.g., TS.
+- Etc, etc.
 
-Etc, etc. Every tech has trade-offs, and I'm sure everyone would reach a different conclusion about the right stack.
+Every tech has trade-offs, and I'm sure each dev would reach a different conclusion about the right stack based on these requirements. What would _you_ use?
 
-For this project, I'm not counting "learning new things" and "having fun" as goals. Otherwise, I might prioritize something like Rust for the backend.
-
-Before we get to my choice, I'll touch on a couple of relevant stacks.
+Before we get to my choice, I'll go over the Lichess stack and the current [wallwars.net](https://wallwars.net) stack.
 
 ## Lichess stack
 
-Luckily, the creator of Lichess has written about its stack and the thought process behind it: LINK.
+Lichess is a [free](https://lichess.org/@/lichess/blog/why-lichess-will-always-be-free/YF-ZORQA) open-source online chess platform with a significant share of online chess, only second to [chess.com](https://chess.com). The Lichess case study should be very interesting to any solo builders: it was built by basically one person, [Thibault Duplessis](https://lichess.org/@/thibault/blog), and it has hosted over 6 billion games. I highly recommend the video, "[How 1 Software Engineer Outperforms 138 - Lichess Case Study](https://www.youtube.com/watch?v=7VSVfQcaxFY)" by Tom Delalande.
 
-As a tangent, the story behind Lichess is very inspiring, I highly recommend this video: LINK.
+Luckily, Thibault has given [talks](https://www.youtube.com/watch?v=LZgyVadkgmI) and written about the Lichess stack and the thought process behind it (see his [blog](https://lichess.org/@/thibault/blog) and his Reddit [AMA](https://www.reddit.com/r/chess/comments/mpasyl/i_started_lichess_ask_me_anything/)).
+
+Thibault's philosophy is based on simplicity and minimalism, prioritizing cleaning up tech debt over adding new features. Here's an excerpt from [We don't want all the features](https://lichess.org/@/thibault/blog/we-dont-want-all-the-features/q3nOzv4n):
+
+> Lines of code are not valuable. They are a cost, that is not paid while writing them, but while maintaining them. Sometimes years later. And they pile up.
 
 Here is the stack:
 
+- Bidirectional communication: WebSocket
+- Frontend:
+  - Type: SPA
+  - Language: TypeScript
+  - Framework: Snabbdom
+  - CSS framework: Sass
+- Backend:
+  - Type: "Monolith with satellites"
+  - Language: Scala (+ other languages like Rust for special tasks)
+  - Framework: Play Framework
+  - Ecosystem: Java/JVM
+  - Database: MongoDB
+  - DB cache: Redis
+- Deployment:
+  - Backend host: self-hosted
+  - Authentication service: Custom
+  - Database host: MongoDB Atlas
+- Phone app: Flutter (Android and iOS)
+
+Comments (mostly based on Tom Delalande's video):
+
+- Scala: Thibault chose it because it is functional, high-level, and, even though it is not popular, it can leverage the JVM ecosystem. That last point is why he chose it over other functional languages like Haskell.
+- Play Framework: Thibault says the framework sped up the initial development, but now he would prefer to ditch it and use "smaller independent libraries that we can swap as needed" for things like HTTP, routing, JSON, etc.
+- MongoDB: Thibault would now probably go for PostgreSQL because it's open source and cheaper.
+- Snabbdom: this is a minimalistic virtual DOM library. Thibault chose it because of its simplicity compared to something like React.
+- Sass: Thibault said "Sass is annoying, but that's just because CSS is annoying."
+
+One reason why I'm not considering Lichess' stack is that I want the website to have an engaging look and feel, complete with animations and cool visual effects. Thibault said on Reddit:
+
+> I'm a programmer, not a designer, that's why it's always been quite bland, with no images and very little colors. I made up for my lack of UI skills by focusing on UX (user experience) and I think it paid out. There's lots to improve, though...
+
 ## wallwars.net stack
 
-The current site was built in 2019. It is based on a popular stack at the time: MERN (MongoDB, Express, React, Node.js). I actually chose the stack _first_, because my goal at the time was to learn full-stack development, and then chose the wall game as the project to learn on.
+The current site ([wallwars.net](https://wallwars.net)) was built in 2019. It is based on the popular web stack at the time: MERN (MongoDB, Express, React, Node.js). I actually chose the stack _first_, because my goal was to learn full-stack development, and _then_ chose the Wall Game as the project to learn on.
 
-One reason why I want to rebuild the site is that the MERN stack is quite outdated. Of the four letters, only the "R" is still recommended for new projects.
+- Containerization: None
+- Language: JS, latter ported to TypeScript (frontend and backend)
+- Package manager: `npm`
+- Bidirectional communication: Websocket
+- Frontend:
+  - Type: SPA
+  - Build tool: the default for `CRA` (Create React App)
+  - Framework: React
+  - CSS framework: None, just plain CSS
+  - Component library: Material UI
+  - Router: React Router
+  - AI: C++17 -> LLVM -> WASM (running in the browser)
+- Backend:
+  - Runtime: Node.js
+  - Web server: Express
+  - Database: MongoDB
+  - DB wrapper: Mongoose
+- Deployment:
+  - Backend host: Heroku
+  - Authentication service: Auth0
+  - Database host: MongoDB Atlas
 
-It was also a `create-react-app` app, which didn't age well. Now something like "vite" would be recommended instead.
+A lot of the stack is considered fairly outdated now. You can see the replacements in the next section.
 
-## My choice: all in on JS
+Two special callouts for things I want to change:
 
-The idea of this tech stack is to try to leverage the JS ecosystem as much as possible.
+- MongoDB: NoSQL was a mistake for this application. Everything I need from the DB is easily expressed in SQL.
+- Heroku: it rug-pulled the free tier, costing $5/month now.
 
-As discussed above, the main pros are:
+## My choice: modern JS ecosystem
 
-- Factor out and reuse business logic across frontend and backend.
-- Frontend-backend communication may work better if they are implemented in the same language. (e.g., the websocket implementation).
-- It's popular, so I'm hoping I'll have an easier time integrating services like authentication.
-- LLM friendly-ish (popular, but not stable).
-- An overall ok language I'm already familiar with (TS): type-safe, fast, good UX, not too OOPy or functional.
+I decided to stick with the JS ecosystem, as it seems to be consolidating around a more stable and sane set of tools.
+
+<Callout>
+  I'll include this section of the blog post in the system prompt (e.g., "cursor
+  rules") when building the game. It will provide useful context for the LLM.
+</Callout>
+
+As discussed in the [Requirements](#requirements) section, the main reasons are:
+
+- (My impression that) JS frontend frameworks can more easily create slick interactive UIs than other languages because they are closer to the browser. If that's incorrect, let me know!
+- Factoring out and reusing business logic across frontend and backend.
+- Frontend-backend communication may work better if they are implemented in the same language. E.g.:
+  - Type checking and autocomplete across API boundaries.
+  - [socket.io](https://socket.io/) is a JS/TS WebSocket implementation with client and server components. The fact that the two sides are built by the same team means it will probably work better out of the box.
+- It's popular, so I'm hoping I'll have an easier time integrating services like authentication, DBs, etc.
+- LLM friendly-ish (popular, but APIs change constantly).
+- An alright language I'm already familiar with, TS: it's type-safe(ish), fast(ish), and has good DX(ish).
 - Maybe in the future, the react frontend can become the basis for react native mobile apps.
 
-### Components
+I used the Youtube video, "[The React, Bun & Hono Tutorial 2024 - Drizzle, Kinde, Tanstack, Tailwind, TypeScript, RPC, & more](https://www.youtube.com/watch?v=jXyTIQOfTTk)" by [Sam Meech-Ward](https://x.com/Meech_Ward) as a baseline for the stack. I highly recommend this video!
+
+I found Sam's choices and explanations reasonable and clear, so I didn't change much and didn't do much additional research beyond that. (Any bad choices will be found by the tried-and-true _FAFO method_.)
+
+- Type: Monorepo
+- Containerization: [Docker](https://www.docker.com/)
+- Language: [TypeScript](https://www.typescriptlang.org/) (both frontend and backend)
+- Package manager: [Bun](https://bun.sh/) (both frontend and backend)
+- Bidirectional communication: [Socket.io](https://socket.io/)
+- Frontend:
+  - Type: SPA (single-page application with client-side rendering)
+  - Build tool: [Vite](https://vite.dev/)
+  - Framework: [React](https://react.dev/)
+  - CSS framework: [Tailwind](https://tailwindcss.com/)
+  - Component library: [Shadcn/ui](https://ui.shadcn.com/)
+  - Router: [TanStack Router](https://tanstack.com/router/latest)
+- Backend:
+  - Type: Monolith with an external service for bot moves
+  - Runtime: Bun
+  - Web server: [Hono](https://hono.dev/)
+  - Database: [PostgreSQL](https://www.postgresql.org/)
+  - ORM: [Drizzle](https://orm.drizzle.team/)
+  - Bot service: some minimalistic web server (TBD) running the bot (C++, [CUDA](https://developer.nvidia.com/cuda-toolkit) & [TensorRT](https://developer.nvidia.com/tensorrt) for inference).
+- Deployment:
+  - Backend host: [Fly.io](https://fly.io/) (with self-hosting for the bot service)
+  - Authentication service: [Kinde](https://kinde.com/)
+  - Database host: [Neon](https://neon.tech/)
+
+Comments:
+
+- Docker should help with things like migrating hosting providers if necessary.
+- Vite is a modern alternative to CRA that covers a lot of functionality, reducing dependencies. For local development, it allows hot reloading/HMR and running TS and JSX code natively. For production, it "builds" the frontend (removing TS and JSX, tree shaking, bundling, minification). Vite also allows importing node modules directly in the frontend, which may be useful for sharing code between the frontend and backend.
+- Bun acts as both a package manager and a runtime, replacing both `npm` and Node. Deno would also work.
+- Instead of using an SSG like `11ty` (eleventy) for the blog, I'm thinking of just using my personal blog, but with a post filter to include only posts related to the game: [nilmamano.com/blog/category/wallgame](https://nilmamano.com/blog/category/wallgame).
+- Hono seems to be recommended over Express because it is more lightweight (it is built directly on top of browser standards, without additional dependencies), at the cost of less available middleware. It has a frontend client which can import the API types, adding type checking between the frontend and backend (in both directions).
+- Drizzle adds type safety to the database layer. I'm not interested in ORM abstractions/features beyond that, but Drizzle can be used as a [thin wrapper](https://orm.drizzle.team/docs/overview#why-sql-like) around SQL queries.
+- Tanstack Router adds type safety over the normal React Router. It also does file-based routing (_à la_ next.js) instead of code-based routing.
+
+Costs:
+
+- Fly.io has a usage-based plan, which means that, if nobody is playing, I don't pay anything. Details: [fly.io/pricing](https://fly.io/docs/about/pricing/).
+- Kinde has a free plan with up to 10500 MAU (monthly active users). After that, it increases steeply. I decided to use an authentication provider to move faster at the start. I may regret this.
+- Neon has a free plan with only 0.5GB of storage. After that, it is $19/month for 10GB. This seems borderline unacceptable, so I'm happy to hear any suggestions. Maybe Supabase?
+
+### Request-response flow diagram
+
+<BlogImage
+  src="/blog/2025-stack/cover.gif"
+  alt="Request-response flow diagram"
+/>
+
+- **React Query** (also known as Tanstack Query) is an optional dependency--we could use a raw `useEffect` hook to fetch data. But it seems like a helpful wrapper around it for handling the data fetching lifecycle of API requests (caching, authentication, loading states, errors).
+- **Zod** is another optional dependency. Together with Hono's compile-time type checking, it adds _defense in depth_ in ensuring frontend and backend types match. It makes it easier to add runtime validations on data received by the backend. I decided to add it because I hope it will surface tricky bugs earlier. Zod can also be used to validate data sent from the backend to the frontend, but since we have full control over backend responses, compile-time type checking is probably enough.
+
+The steps for WebSocket messages would be similar.
+
+### Local development with Vite Server Proxy
+
+This setup is explained by Sam in the video linked above.
+
+In production, Vite builds the frontend, and the same server that runs the backend also serves the frontend (e.g., `wallgame.io/` serves you the frontend and `wallgame.io/api/` allows you to call the backend). This simplifies deployment and helps remove CORS issues.
+
+The question then is: how do we match this situation when developing locally and make it so both frontend and backend share the same port?
+
+Locally, we don't want to use a built/bundled version of the frontend served through the backend. We want to run the frontend directly with Vite to leverage features like "hot reloading" and having useful error messages right in the browser during a crash. So, we can get the frontend running (usually on port 5173 for Vite) in parallel to the backend (usually on port 3000). But if we go to `http://localhost:5173/api/`, we won't get to the backend.
+
+To fix that, we use [Vite Server Proxy](https://vite.dev/config/server-options#server-proxy). It is a configuration that automatically redirects calls to `http://localhost:5173/api/` to `http://localhost:3000/api/`.
+
+So, locally, everything goes through the frontend (due to the Vite Server Proxy), while in production, everything goes through the backend. What matters is that, in both cases, the same origin serves the frontend and the backend.

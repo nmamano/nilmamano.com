@@ -1,0 +1,20 @@
+---
+title: "Timers in Online Games (WIP)"
+date: "2025-05-07"
+excerpt: "A guide to using timers in online games. WIP"
+coverImage: "/blog/work_in_progress.png"
+categories: ["wallgame", "swe", "wip"]
+---
+
+In this blog post, we will go over a correct implementation of timers in online turn-based games like chess.
+
+After implementing timers for [wallwars.net](https://wallwars.net), I realized it is not trivial.
+With my first (careless) implementation, there wasn't a clear source of truth for the timers, so if a player moved right before their timer run out, they could thing the game kept going while the opponent saw that they timed out.
+
+## Source of truth
+
+## Flow diagram
+
+## Lag compensation
+
+## Optimistic client-side rendering
