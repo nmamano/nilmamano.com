@@ -24,27 +24,49 @@ export default function ClientSyntaxHighlighter({
           await import("prismjs/themes/prism-tomorrow.css");
 
           // Import language support in the correct dependency order
-          await import("prismjs/components/prism-python");
-          await import("prismjs/components/prism-c");
-          await import("prismjs/components/prism-cpp");
+          try {
+            await import("prismjs/components/prism-python");
+            await import("prismjs/components/prism-c");
+            await import("prismjs/components/prism-cpp");
+            await import("prismjs/components/prism-sql");
+          } catch (err) {
+            console.warn("Failed to load some language support:", err);
+            // Continue with basic highlighting
+          }
 
           prismLoaded.current = true;
 
           // Apply highlighting to current content
           if (containerRef.current) {
-            Prism.highlightAllUnder(containerRef.current);
+            try {
+              Prism.highlightAllUnder(containerRef.current);
+            } catch (err) {
+              console.warn("Failed to highlight code:", err);
+              // If highlighting fails, at least preserve the code content
+              const codeBlocks =
+                containerRef.current.getElementsByTagName("code");
+              Array.from(codeBlocks).forEach((block) => {
+                if (!block.className) {
+                  block.className = "language-plaintext";
+                }
+              });
+            }
           } else {
-            console.error("Container ref is null when trying to apply highlighting");
+            console.error(
+              "Container ref is null when trying to apply highlighting"
+            );
           }
 
           // Set up an observer to detect content changes
           observer = new MutationObserver((mutations) => {
             // Check if the changes are from Prism or actual content changes
-            const isPrismChange = mutations.some(mutation => {
+            const isPrismChange = mutations.some((mutation) => {
               // If any of the added nodes have Prism classes, it's a Prism change
-              return Array.from(mutation.addedNodes).some(node => 
-                node instanceof Element && 
-                (node.classList.contains('token') || node.parentElement?.classList.contains('token'))
+              return Array.from(mutation.addedNodes).some(
+                (node) =>
+                  node instanceof Element &&
+                  (node.classList.contains("token") ||
+                    node.parentElement?.classList.contains("token"))
               );
             });
 
@@ -59,7 +81,7 @@ export default function ClientSyntaxHighlighter({
               childList: true,
               subtree: true,
               attributes: true,
-              attributeFilter: ['class']
+              attributeFilter: ["class"],
             });
           } else {
             console.error("Container ref is null when setting up observer");
@@ -73,7 +95,7 @@ export default function ClientSyntaxHighlighter({
     };
 
     if (typeof window !== "undefined") {
-      loadAndHighlight().catch(err => {
+      loadAndHighlight().catch((err) => {
         console.error("Fatal error in syntax highlighting:", err);
       });
     }
