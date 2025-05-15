@@ -1,0 +1,119 @@
+---
+title: "The Wall Game Project"
+date: "2025-05-14"
+excerpt: "An introduction to the Wall Game, my new project."
+coverImage: "/blog/wall-game-intro/cover2.png"
+categories: ["wallgame"]
+---
+
+Welcome to the _Wall Game project_! The Wall Game is a multiplayer board game I invented, and which I'm building in public in 2025.
+
+In this post, I'll go over [how to play](#rules-of-the-game), my approach to [building in public](#building-in-public), and the [backstory](#backstory) of the game. Once finished, it will be available at [wallgame.io](https://wallgame.io).
+
+<Callout>
+  **_"Why are you building this?"_**
+
+First of all, because I think it's a
+_great_ game. I've shown it to many people over the years, and the reaction is
+always that (1) it's fun; and (2) it's super easy to pick up (it passes the
+[subway-legibility test](http://stfj.net/DesigningForSubwayLegibility/)).
+
+On a more personal note, my goal for 2025 is to get better at building things,
+and I believe that working on things you find fun is key for consistency.
+
+</Callout>
+
+<BlogVideo
+  src="/blog/wall-game-intro/livegame.mp4"
+  width="50%"
+  caption="Time lapse of a 4-player game of the Wall Game."
+/>
+
+## Rules of the game
+
+The Wall Game is simple to understand.
+
+**Initial setup:** In the "standard" 2-player version of the Wall Game, the board setup looks like this:
+
+<BlogImage
+  src="/blog/wall-game-intro/setup.png"
+  alt="The standard 2-player board."
+  caption="The standard 2-player board."
+  width="50%"
+/>
+
+**Goal:** The red player controls the red cat and mouse, and the blue player controls the blue cat and mouse. The red player wins if the red cat catches the blue mouse before the blue cat catches the red mouse.
+
+**How to move:** the game is turn-based. On each turn, you can make **2 actions**. One action can be **moving your cat**, **moving your mouse**, or **placing a wall**. Cats and mice move to adjacent cells, but walls can be placed _anywhere_ between two cells on the board. The only restriction is that you cannot completely block the opponent's cat from reaching your mouse.
+
+<BlogImage
+  src="/blog/wall-game-intro/actions.png"
+  alt="The actions you can make on each turn."
+  caption="The actions you can make on each turn."
+  width="100%"
+/>
+
+_That's it!_ That's all the rules. It's simple enough that you can play it with just pen and paper.
+
+To preempt the two most common questions:
+
+- Moving diagonally counts as 2 actions.
+- You cannot move through your own walls.
+
+## Example game
+
+Here is an example of a full game that was played on [wallwars.net](https://wallwars.net) (the first version of the site, which I'm currently rebuilding).
+
+<BlogVideo
+  src="/blog/wall-game-intro/full_game.mp4"
+  width="50%"
+  caption="A game of the 'classic' variant, where there are no mice, and the goal is to get to the opposite corner first."
+/>
+
+## Building in public
+
+I love the concept of building in public, sharing my learnings, and getting feedback.
+If nothing else, writing down my thought process helps future-me reference what I learned.
+
+So, as I build it, I'm making a series of blog posts about the game. You can find them all at [nilmamano.com/blog/category/wallgame](/blog/category/wallgame).
+
+So far, I've written about:
+
+- [Choosing a tech stack](/blog/2025-stack)
+- [Designing the UI](/blog/wall-game-ui)
+- [Designing the DB](/blog/wall-game-db)
+
+Next, I'll write about [Deep Wallwars](https://github.com/t-troebst/Deep-Wallwars), an alpha-zero-like AI made by a friend, as well as other interesting aspects of the app's implementation, like automatic puzzle generation, or the graph theory concepts behind move validity checking.
+
+Ultimately, this collection of posts should provide a playbook for building any multiplayer online game, not just the Wall Game.
+
+## Backstory
+
+The game dates back to my high school days, circa 2006, when my friends and I entertained ourselves with pen-and-paper games. Around that time, I played [Quoridor](https://en.wikipedia.org/wiki/Quoridor) once at a friend's house, and that inspired me to make a pen-and-paper game with similar ideas but with my own rules, like having two actions per move and unlimited walls (the two games feel quite different; Quoridor has a "resource-management" aspect, as you can only place 10 walls, which I don't personally enjoy). After some experimentation, we settled on a 10x12 board, with players starting at the top corners and having to move to their opposite corners.
+
+The game was a hit between my high-school friends, and I've basically been playing it and showing it to people ever since. For example, the name _WallWars_, which I used until the recent rebranding to the _Wall Game_, was coined by a PhD colleague in 2016 (let me know which name you like more).
+
+In 2012, during college, I implemented a version of the game in Python (it's on [GitHub](https://github.com/nmamano/WallWarsOld)):
+
+<BlogImage
+  src="/blog/wall-game-intro/python_version.png"
+  alt="The 2012 Python implementation."
+  caption="The 2012 Python implementation. Back then, I called the game 'Wall-e'."
+  width="70%"
+/>
+
+However, that version was not online, so, in 2020, I reimplemented it as a full-stack app to play with my friends during the Covid-19 lockdowns. It's currently live at [wallwars.net](https://wallwars.net). According to the DB, 421 online games have been played as of May 2025 (I'm the most active player by far).
+
+In 2021, I started building a C++ [minimax](https://en.wikipedia.org/wiki/Minimax)-based engine for the game, which you can play against on [wallwars.net](https://wallwars.net) thanks to WebAssembly. Optimizing it was a challenge, as the branching factor is much higher than, e.g., in chess. Eventually, I got it to work well for small boards, but it was still not good enough for the exponential explosion that comes from bigger boards. That's when [Thorben](https://github.com/t-troebst) came to the rescue with the [Deep Wallwars](https://github.com/t-troebst/Deep-Wallwars) project, an alpha-zero-like engine that scales a lot better to bigger boards. This is not integrated on the site yet, but it's planned for the rebuild.
+
+In 2023, I built a physical board to play in person:
+
+<BlogImage
+  src="/blog/wall-game-intro/physical_board.png"
+  alt="The physical board."
+  width="80%"
+/>
+
+We started experimenting with different variants, in part to accommodate 4 players, but also because we realized that exploring variants of the rule increased the game's replayability. As long as the same strategic and tactical patterns are present, variants are really fun, like playing a new level of a video game. This is also when I adopted the "cat and mouse" variant as the default.
+
+Two of the main reasons I want to rebuild the site is to integrate Deep Wallwars and to support variants, as each of these would require a major overhaul.

@@ -86,6 +86,67 @@ export function BlogImage({
   );
 }
 
+interface BlogVideoProps {
+  src: string;
+  width?: string;
+  centered?: boolean;
+  autoPlay?: boolean;
+  muted?: boolean;
+  loop?: boolean;
+  controls?: boolean;
+  caption?: string;
+}
+
+export function BlogVideo({
+  src,
+  width = "100%",
+  centered = true,
+  autoPlay = true,
+  muted = true,
+  loop = true,
+  controls = true,
+  caption,
+}: BlogVideoProps) {
+  return (
+    <div
+      style={{
+        display: centered ? "flex" : "block",
+        justifyContent: centered ? "center" : "flex-start",
+        margin: "1.5rem 0",
+        flexDirection: "column",
+        alignItems: centered ? "center" : "flex-start",
+      }}
+    >
+      <video
+        src={src}
+        style={{
+          width,
+          maxWidth: "100%",
+          height: "auto",
+        }}
+        className="rounded-md"
+        autoPlay={autoPlay}
+        muted={muted}
+        loop={loop}
+        controls={controls}
+        playsInline
+      />
+      {caption && (
+        <figcaption
+          className="text-base font-medium"
+          style={{
+            maxWidth: width === "100%" ? "100%" : width,
+            textAlign: centered ? "center" : "left",
+            marginTop: "0rem",
+          }}
+        >
+          {caption}
+        </figcaption>
+      )}
+    </div>
+  );
+}
+
 interface CalloutProps {
   children: React.ReactNode;
   type?: "info" | "warning" | "success" | "error";
@@ -143,6 +204,7 @@ const slugify = (text: string) => {
 // Define all your MDX components here
 const components = {
   BlogImage,
+  BlogVideo,
   Callout,
   // Custom heading components that add IDs
   h1: ({ children, ...props }: any) => {
