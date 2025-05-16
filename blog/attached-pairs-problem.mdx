@@ -1,0 +1,304 @@
+---
+title: "The algorithm behind invalid move detection in the Wall Game"
+date: "2025-05-15"
+excerpt: "A linear-time algorithm for a graph problem that comes up in the Wall Game."
+coverImage: "/blog/attached-pairs-problem/cover.png"
+categories: ["research", "wallgame"]
+---
+
+In this post, we'll solve a graph problem that comes up in the [Wall Game](/blog/wall-game-intro.mdx).
+
+## Attached Pairs Problem
+
+You are given an undirected, unweighted, connected graph `G` with `V` nodes and `E` edges, where each node is identified by an integer from `0` to `V - 1`. You are also given a list, `attached_pairs` of `k` pairs of nodes.
+
+We say an edge is _indelible_ if removing it from `G` disconnects two _attached nodes_ (two nodes in one of the attached pairs).
+Return a list of the indelible edges.
+
+**Example:**
+
+<BlogImage
+  src="/blog/attached-pairs-problem/input_example.png"
+  alt="Input example"
+  width="60%"
+/>
+
+Given this graph and the list `attached_pairs = [[0, 1], [1, 5], [5, 7]]`, the output would be `[[0, 1], [2, 4]]`:
+
+- removing the edge `[0, 1]` disconnects the first pair, `[0, 1]`
+- removing the edge `[2, 4]` disconnects the second pair, `[1, 5]`
+- there is no way to disconnect the third pair, `[5, 7]`
+
+## Motivation
+
+This is the key problem behind whether a wall can be added or not in the [Wall Game](/blog/wall-game-intro.mdx). The board of the wall game may look something like this:
+
+<BlogImage
+  src="/blog/attached-pairs-problem/graph_modeling.png"
+  alt="Graph modeling"
+  width="100%"
+  caption="Left: A Wall Game position. Right: the board modeled as a graph. For the attached pairs (u, v) and (w, x), the indelible edges are shown in red."
+/>
+
+Players can build walls anywhere, with the only constraint that they cannot fully block the opponent's path to their goal (or their own).
+
+The board can be modeled as a graph, where the cells are nodes and two adjacent nodes are connected if there is no wall between them. Building a wall is like removing an edge. In this setting, each player is _attached_ to its goal, and the _indelible edges_ correspond to walls that **cannot** be placed.
+
+Imagine that you want to implement a Wall Game feature where, when you hover over a wall slot, it is highlighted in red if the move is invalid. To be able to do this, we need to solve the attached-pairs problem. Beyond that, it could also be useful to program an engine that needs to consider lots of moves.
+
+Note: the graph from the Wall Game may _not_ be connected (see, e.g., the isolated connected component in the top-left corner)--all we are guaranteed is that each attached pair is in the same connected component. We make the assumption that the graph is connected in this blog post for simplicity, but it is not hard to extend the algorithm to the disconnected case.
+
+Why do we frame the problem in terms of `k` pairs, and not just two? There are variants of the Wall Game with more than two players:
+
+<BlogImage
+  src="/blog/attached-pairs-problem/four_player_game.png"
+  alt="Wall Game position"
+  width="50%"
+/>
+
+In this 4-player variant, Player 1 needs to catch Player 2 before they themselves are caught by Player 4, Player 2 needs to catch Player 3 before they are caught by Player 1, and so on. We can think of it as having four attached pairs.
+
+## Brute force solution
+
+The naive solution is to consider each edge individually.
+For each edge `e` in `E`, we:
+
+1. Remove it from `G` (we denote the resulting graph as `G - {e}`).
+2. Find the connected components in `G - {e}`.
+3. If two attached nodes are in different connected components, `e` is indelible.
+
+Step (1) takes `O(1)` time, Step (2) takes `O(E)` time (it can be done with a DFS or a BFS), and Step (3) takes `O(k)` time.
+The total runtime is `O(E * (E+k))`.
+
+## Efficient solution
+
+In this section, we'll solve the problem in `O(E * k)` time. In the [next section](#optimal-algorithm), we'll see a more complicated but optimal `O(E + k)` algorithm.
+
+We'll build up to it with a series of definitions and intermediate steps.
+
+1. **Definition: bridge.** In a connected graph, a _bridge_ is an edge which, if removed, disconnects the graph.
+
+In the example [above](#statement), the bridges are `[0, 1]`, `[2, 4]`, and `[7, 8]`.
+
+2. **Definition: `uv`-bridge.** Given a pair of nodes in a connected graph, `u` and `v`, an edge is a `uv`-bridge if removing it disconnects `u` and `v`.
+
+In the context of our problem, an edge is _indelible_ if it is a `uv`-bridge for some attached pair `(u, v)`.
+
+3. **Observation 1:** Every `uv`-bridge is a bridge, but not necessarily the other way around.
+4. **Observation 2:** Given two nodes, `u` and `v`, take _any_ path between them, `P`. Every `uv`-bridge must be in `P`. This is because if we remove any edge not in `P`, `u` and `v` will still be connected via `P`.
+5. **Main result:** Let `P` be any path between `u` and `v`. An edge is a `uv`-bridge if and only if it is both a bridge and in `P`.
+
+We can now formulate an algorithm based on this property:
+
+```
+Input: G (adjacency list), attached_pairs (list of pairs)
+Output: set of indelible edges
+
+Find all the bridges in G
+For each attached pair (u, v):
+    Find a path P between u and v
+    For each edge in P:
+        If it is a bridge:
+            Add it to the set of indelible edges
+```
+
+We can find all the bridges in `O(E)` time using [Tarjan's algorithm](<https://en.wikipedia.org/wiki/Bridge_(graph_theory)#Tarjan's_bridge-finding_algorithm>). We can find each path using DFS or BFS in `O(E)` time. The total runtime is `O(E + k * E) = O(E * k)`.
+
+Here's a TypeScript implementation:
+
+```typescript
+// Type definitions
+type Graph = number[][]; // Adjacency list as array of arrays
+type Edge = [number, number];
+
+// Returns a unique ID for an edge {u, v}, where u and v are node indices
+// ranging from 0 to V-1. {u, v} and {v, u} are the same edge, so they get the
+// same ID.
+function edgeToId(u: number, v: number, n: number): number {
+  return u < v ? u * n + v : v * n + u;
+}
+
+// Returns the edge corresponding to a given unique ID. Inverse of edgeToId.
+function idToEdge(edgeId: number, n: number): Edge {
+  const u = Math.floor(edgeId / n);
+  const v = edgeId % n;
+  return [u, v];
+}
+
+// Returns the indelible edges in the graph as a set of edge IDs.
+function findIndelibleEdges(
+  graph: Graph,
+  attachedPairs: [number, number][]
+): Set<number> {
+  const bridgeSet = findBridges(graph);
+  const indelibleEdgesSet = new Set<number>();
+  for (const [u, v] of attachedPairs) {
+    const pathEdgeIds = findPath(graph, u, v);
+    for (const edgeId of pathEdgeIds) {
+      if (bridgeSet.has(edgeId)) {
+        indelibleEdgesSet.add(edgeId);
+      }
+    }
+  }
+  return indelibleEdgesSet;
+}
+
+// Returns a set with the edge IDs of all the bridges. Uses Tarjan's algorithm.
+function findBridges(graph: Graph): Set<number> {
+  const n = graph.length;
+  const bridgeSet = new Set<number>();
+
+  const rank = new Array(n).fill(-1);
+  const lowlink = new Array(n).fill(-1);
+  let nextRank = 0;
+
+  function dfs(u: number, parent: number) {
+    rank[u] = nextRank;
+    lowlink[u] = nextRank;
+    nextRank++;
+
+    for (const v of graph[u]) {
+      if (v === parent) continue;
+      if (rank[v] === -1) {
+        dfs(v, u);
+
+        // Update lowlink value of u
+        lowlink[u] = Math.min(lowlink[u], lowlink[v]);
+        // If the lowest vertex reachable from subtree under v is below u,
+        // then u-v is a bridge
+        if (lowlink[v] > rank[u]) {
+          bridgeSet.add(edgeToId(u, v, n));
+        }
+      }
+      // Update lowlink value of u for already visited vertices
+      else {
+        lowlink[u] = Math.min(lowlink[u], rank[v]);
+      }
+    }
+  }
+
+  dfs(0, -1);
+  return bridgeSet;
+}
+
+// Returns the edge IDs of the edges in a path between two nodes.
+// Uses a BFS variant using a stack instead of queue for efficiency. See:
+// https://www.linkedin.com/posts/nilmamano_arguably-the-best-algorithm-to-check-if-activity-7328874505303400448-hqNh
+function findPath(graph: Graph, start: number, end: number): number[] {
+  const n = graph.length;
+  const stack: number[] = [start];
+  const parent = new Array(n).fill(-1);
+  parent[start] = start;
+
+  while (stack.length > 0) {
+    let current = stack.pop()!;
+    if (current === end) {
+      // Reconstruct the path into edge IDs
+      const pathEdgeIds: number[] = [];
+      // Traverse back from the end node to the start using parent pointers
+      while (parent[current] !== current) {
+        pathEdgeIds.push(edgeToId(current, parent[current], n));
+        current = parent[current];
+      }
+      return pathEdgeIds;
+    }
+    for (const neighbor of graph[current]) {
+      if (parent[neighbor] === -1) {
+        parent[neighbor] = current;
+        stack.push(neighbor);
+      }
+    }
+  }
+  return []; // no path found (shouldn't happen in a connected graph)
+}
+
+// Example:
+const graph: number[][] = [
+  [1], // Node 0
+  [0, 2, 3], // Node 1
+  [1, 3, 4], // Node 2
+  [1, 2], // Node 3
+  [2, 5, 7], // Node 4
+  [4, 6], // Node 5
+  [5, 7], // Node 6
+  [4, 6, 8], // Node 7
+  [7], // Node 8
+];
+console.log(
+  findIndelibleEdges(graph, [
+    [0, 1],
+    [1, 5],
+    [5, 7],
+  ])
+); // [[0, 1], [2, 4]]
+console.log(findIndelibleEdges(graph, [[8, 0]])); // [[0, 1], [2, 4], [7, 8]]
+console.log(
+  findIndelibleEdges(graph, [
+    [1, 3],
+    [4, 7],
+  ])
+); // []
+```
+
+## Optimal algorithm
+
+If `k` is small, as in the Wall Game, the above algorithm is the most practical.
+In this section, we'll see a linear-time (`O(E + k)`) algorithm, which is optimal for any `k`.
+
+The bottleneck of the previous algorithm is finding the `k` paths between attached pairs. The key optimization we need to do is identifying all the edges in paths between attached pairs in a single pass.
+
+The key property we'll use is that, in [Observation 2](#efficient-solution) above, we can choose _any_ path between each attached pair. We can start by finding a _spanning tree_ of `G`, and focus only on the paths connecting the attached pairs through this tree. We can find a spanning tree in `O(E)` time using a DFS or a BFS (it doesn't matter).
+
+Let `T` be a spanning tree of `G`. It will be convenient to think of `T` as a _rooted_ tree, so that we can talk about node _depths_ and [lowest common ancestors](https://en.wikipedia.org/wiki/Lowest_common_ancestor). We can root it at any node.
+
+The root is at depth `0`, its children are at depth `1`, and so on. The _lowest common ancestor_ of a pair of nodes `u` and `v` in `T`, denoted `LCA(u, v)`, is the node in `T` that is an ancestor of both nodes and has maximum depth.
+
+Recall that we want to identify all the edges in `T` that form paths between pairs of attached nodes. Between any pair of nodes `u` and `v`, there is a unique path in `T`: the path that goes from `u` up to `LCA(u, v)` and from there down to `v` (note that `LCA(u, v)` could be `u` or `v` itself).
+
+We can start by finding the LCA of each attached pair in `T`. We can do this in linear time using [Tarjan's off-line lowest common ancestors algorithm](https://en.wikipedia.org/wiki/Tarjan%27s_off-line_lowest_common_ancestors_algorithm).
+
+Henceforth, we say that a node `u` is _attached_ if it attached to at least one other node.
+
+Next, for each attached node `u`, we define `min_lca(u)` as follows: among the LCA's of all attached pairs involving `u`, `min_lca(u)` is the one with **minimum** depth.
+
+- **Observation 3:** A bridge of `G` is indelible if and only if it is between an attached node `u` and `min_lca(u)`.
+
+On the one hand, if we removed a bridge between `u` and `min_lca(u)`, the attached pair consisting of `u` and the node `v` such that `LCA(u, v) = min_lca(u)` will become disconnected. On the other hand, if a bridge is _not_ between any attached node `u` and `min_lca(u)`, every attached pair has a path that doesn't go through it, so it is not indelible.
+
+The idea behind our linear-time algorithm is to do a traversal through `T`. At each node `u`, we want to find the minimum-depth node in `T` that is `min_lca(v)` for some node `v` in the subtree rooted at `u`. We actually only care about its depth, so we call it `subtree_min_lca_depth(u)`. We can compute `subtree_min_lca_depth(u)` recursively, aggregating the results from each child as well as the depth of `min_lca(u)` itself if `u` is attached:
+
+```
+subtree_min_lca_depth(u) = min(
+  depth(min_lca(u)) if u is attached, infinity otherwise,
+  subtree_min_lca_depth(v) for all v in children(u)
+)
+```
+
+We can finally characterize all the indelible edges:
+
+- **Observation 4:** If `u` is a child of `w` in `T`, the edge `(w, u)` is indelible if and only if (1) `(w, u)` is a bridge in `G` and (2) `subtree_min_lca_depth(u) < depth(u)`.
+
+Condition (2) says that there is some node in the subtree rooted at `u` that is attached to a node somewhere above `u`.
+
+Here is the full pseudocode:
+
+```
+Input: G (adjacency list), attached_pairs (list of pairs)
+Output: set of indelible edges
+
+Find all the bridges in G
+Build a DFS tree T of G rooted at any node
+Find the LCA (lowest common ancestor) of each attached pair in T
+Compute depth(u) for every node u in G
+Compute min_lca(u) for each attached node u
+Do a post-order traversal through T as follows:
+At each node u:
+    visit children recursively
+    if u is not the root:
+        let w be the parent of u
+        compute subtree_min_lca_depth(u) using the formula above
+        if (w, u) is a bridge in G and subtree_min_lca_depth(u) < depth(u):
+            mark (w, u) as indelible
+```
+
+As mentioned, finding bridges takes `O(E)` time, building a spanning tree takes `O(E)` time, finding all `k` LCA's takes `O(V + k)` time, and the remaining steps, including the main tree traversal, take `O(V)` time. Considering that the graph is connected, and thus `V <= E`, the total runtime is `O(E + k)`.

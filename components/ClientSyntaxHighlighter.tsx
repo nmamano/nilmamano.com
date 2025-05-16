@@ -28,6 +28,7 @@ export default function ClientSyntaxHighlighter({
             await import("prismjs/components/prism-python");
             await import("prismjs/components/prism-c");
             await import("prismjs/components/prism-cpp");
+            await import("prismjs/components/prism-typescript");
             await import("prismjs/components/prism-sql");
           } catch (err) {
             console.warn("Failed to load some language support:", err);
