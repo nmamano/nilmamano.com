@@ -65,7 +65,7 @@ The move generation [implementation](https://github.com/nmamano/wallwars/blob/d0
 
 However, I couldn't figure out how to handle the case of two walls in the same biconnected component and in the two precomputed paths in constant time, defaulting to a full graph traversal for that case ([here](https://github.com/nmamano/wallwars/blob/d062b58ebfd39a3d6b9d1a996cf92c3f7dfdb1dc/AI/include/negamax.h#L598)).
 
-I revisited the problem in 2025 because I'm [rebuilding](/blog/wall-game-intro.mdx#building-in-public) the game. The key new insight is the construction of the _path-segment graph_, which we'll get to [below](#the-path-segment-graph). Something that was very helpful in this breakthrough was [vibe coding](/blog/what-vibe-coding-actually-looks-like.mdx) a [tool](https://github.com/nmamano/two-edge-removal-problem/tree/main/python_visualization) to visualize the various graph transformations (we'll see screenshots of it in this post).
+I revisited the problem in 2025 because I'm [rebuilding](/blog/wall-game-intro) the game. The key new insight is the construction of the _path-segment graph_, which we'll get to [below](#the-path-segment-graph). Something that was very helpful in this breakthrough was [vibe coding](/blog/what-vibe-coding-actually-looks-like.mdx) a [tool](https://github.com/nmamano/two-edge-removal-problem/tree/main/python_visualization) to visualize the various graph transformations (we'll see screenshots of it in this post).
 
 Yes, I could have coded the visualization tool myself back then, but vibe coding removed the friction. Ironically, vibe coding has a rep for only being good at starting projects and then abandoning them, but here it helped me pick up an abandoned project and finish it.
 
