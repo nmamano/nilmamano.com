@@ -37,7 +37,7 @@ Any other pair of edges can be removed and `s` and `t` will remain in the same c
 
 The brute force solution is to do nothing at construction time. For each query, take each pair of edges, remove them, and then use a graph traversal to see if `s` and `t` are still connected. This takes `O(E)` time per query.
 
-The brute force implementation in on [github](https://github.com/nmamano/two-edge-removal-problem/blob/main/src/double_edge_cut_naive.ts). We'll compare it against the optimized solution in the [benchmark](#benchmark) at the end.
+The brute force implementation is on [github](https://github.com/nmamano/two-edge-removal-problem/blob/main/src/double_edge_cut_naive.ts). We'll compare it against the optimized solution in the [benchmark](#benchmark) at the end.
 
 ## Motivation
 
@@ -59,13 +59,15 @@ Imagine that you want to implement an engine for the Wall Game. One question you
 
 ### Backstory
 
-I got [nerd-snipped](https://xkcd.com/356/) by this problem in 2021, when I was coding an engine for the Wall Game (it's on [github](https://github.com/nmamano/wallwars/blob/master/AI/include/negamax.h); you can play against it on [wallwars.net](https://wallwars.net) thanks to WebAssembly). The engine is based on negamax with alpha-beta pruning, and the bottleneck is generating all the legal double-wall moves from a position.
+I got [nerd-sniped](https://xkcd.com/356/) by this problem in 2021, when I was coding an engine for the Wall Game (it's on [github](https://github.com/nmamano/wallwars/blob/master/AI/include/negamax.h); it's in C++ but you can play against it on [wallwars.net](https://wallwars.net) thanks to WebAssembly). The engine is based on negamax with alpha-beta pruning, and the bottleneck is generating all the valid double-wall moves from a position.
 
-The move generation [implementation](https://github.com/nmamano/wallwars/blob/d062b58ebfd39a3d6b9d1a996cf92c3f7dfdb1dc/AI/include/negamax.h#L262) from back then already uses some of the ideas we'll see in this post, like the idea of precomputing two node-disjoint paths for each biconnected component because two edges can only be an essential pair if they are in the same biconnected component and there is one edge in each path (this will make sense later).
+The move generation [implementation](https://github.com/nmamano/wallwars/blob/d062b58ebfd39a3d6b9d1a996cf92c3f7dfdb1dc/AI/include/negamax.h#L262) from back then already uses some of the ideas we'll see in this post, like the fact that we can precompute two node-disjoint paths for each biconnected component, and two walls can only be an invalid if they are in the same biconnected component and there is one wall in each path (this will make sense later).
 
-However, I couldn't figure out how to handle the case of two edges in the same biconnected component and in the two precomputed paths in constant time, defaulting to a full graph traversal for that case ([here](https://github.com/nmamano/wallwars/blob/d062b58ebfd39a3d6b9d1a996cf92c3f7dfdb1dc/AI/include/negamax.h#L598)).
+However, I couldn't figure out how to handle the case of two walls in the same biconnected component and in the two precomputed paths in constant time, defaulting to a full graph traversal for that case ([here](https://github.com/nmamano/wallwars/blob/d062b58ebfd39a3d6b9d1a996cf92c3f7dfdb1dc/AI/include/negamax.h#L598)).
 
-I revisited the problem in 2025 because I'm rebuilding the Wall Game. The key new insight is the construction of the _path-segment graph_, which I'll describe later.
+I revisited the problem in 2025 because I'm [rebuilding](/blog/wall-game-intro.mdx#building-in-public) the game. The key new insight is the construction of the _path-segment graph_, which we'll get to [below](#the-path-segment-graph). Something that was very helpful in this breakthrough was [vibe coding](/blog/what-vibe-coding-actually-looks-like.mdx) a [tool](https://github.com/nmamano/two-edge-removal-problem/tree/main/python_visualization) that allowed me to visualize the various graph transformations (we'll see screenshots of it in this post).
+
+Yes, I could have coded the visualization tool myself back then, but vibe coding removed the friction. Ironically, vibe coding has a rep for only being good at starting projects and then abandoning them, but here it helped me pick up an abandoned project and finish it.
 
 ## Preliminary definitions
 
@@ -244,7 +246,7 @@ Next, we'll describe how to compute the cross edges.
 
 If we take the original graph and remove all the red candidates and all the blue edges (`G - RC - BP`), we are left with a sequence of connected components, each of which contains one of the red-path segments, and perhaps additional connected components that don't contain any of the red-path segments.
 
-The connected components in `G - RC - BP` that contains the red segment `rs_i` is called `RCC_i`. Thus, the red path traverses `RCC_0, RCC_1, ..., RCC_k`, in this order. We also do the same for the blue path, and call the components `BCC_0, BCC_1, ..., BCC_k'`.
+We call `RCC_i` the connected component in `G - RC - BP` that contains the red segment `rs_i`. Thus, the red path traverses `RCC_0, RCC_1, ..., RCC_k`, in this order. We also do the same for the blue path, and call the components `BCC_0, BCC_1, ..., BCC_k'`.
 
 Here we can see the two sets of connected components for the example above (shown in different colors):
 
@@ -278,7 +280,7 @@ The path-segment graph can be computed in linear time. In particular, it has at 
 
 ### Reducing connectivity in the original graph to connectivity in the path-segment graph
 
-Starting from this section, we need one more bit of notation: we use the subindex `>=i` to indicate "all subindices greater than or equal to `i`". Similarly for subindex `<i`.
+Starting from this section, we need one more bit of notation: we use the subindex `>=i` to indicate "all subindices greater than or equal to `i`" and the subindex `<i` to indicate "all subindices less than `i`".
 
 The following lemma shows that instead of checking if a candidate pair, `(ri, bj)`, disconnects `s` and `t` in the original graph, we can check if it disconnects `rs_0` and `rs_k` in the path-segment graph. This makes our job easier since the path-segment graph is structurally simpler than the original graph.
 
@@ -325,7 +327,7 @@ In this path-segment graph, we compressed `r1`, `r2`, and `r3` into `r_1,3`, lef
 
 The result is a new graph, which we call the _compressed_ path-segment graph. It is similar to the path-segment graph, but with potentially fewer nodes and edges.
 
-We call a pair of edges in the compressed path-segment graph, `(r_x,y, b_z,w)`, _essential_ if they disconnect `r_0` and `r_k`. What that means is that _any_ red candidates compressed into `r_x,y` forms an essential pair with _any_ blue candidate compressed into `b_z,w`.
+We call a pair of edges in the compressed path-segment graph, `(r_x,y, b_z,w)`, _essential_ if they disconnect `r_0` and `r_k`. What that means is that _any_ red candidate compressed into `r_x,y` forms an essential pair with _any_ blue candidate compressed into `b_z,w`.
 
 The compressed path-segment graph has the property that _every_ node is adjacent to at least one cross edge. This is important for one reason:
 
@@ -374,7 +376,7 @@ For each biconnected component crossed by P with >2 nodes:
   For each red or blue candidate, store the following information:
     - The biconnected component
     - The color (red or blue)
-    - The index of the compressed edge with it
+    - The index of the compressed edge it belongs to
 ```
 
 Time and space: `O(V + E)`.

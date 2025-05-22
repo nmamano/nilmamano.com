@@ -146,7 +146,7 @@ For example, imagine that, in the tree above, node `1` is involved in 3 bonded p
 
 The following observation characterizes the essential edges in terms of `T`:
 
-- **Observation 3:** A bridge of `G` is essential if and only if it is between an bonded node `u` and `min_lca(u)`.
+- **Observation 3:** A bridge of `G` is essential if and only if it is between a bonded node `u` and `min_lca(u)`.
 
 On the one hand, if we removed a bridge between `u` and `min_lca(u)`, the bonded pair consisting of `u` and the node `v` such that `LCA(u, v) = min_lca(u)` will become disconnected. On the other hand, if a bridge is _not_ between any bonded node `u` and `min_lca(u)`, every bonded pair has a path that doesn't go through it, so it is not essential.
 
