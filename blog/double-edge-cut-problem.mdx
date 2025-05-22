@@ -172,10 +172,10 @@ Building the directed graph takes linear time, and each iteration of Ford-Fulker
 
 Among all the edges in the biconnected graph, we will start by filtering down the edges that _can_ be part of an essential pair to a smaller set of candidates.
 
-We start by finding _any_ two node-disjoint paths from `s` to `t`, as described above. Which we'll call the _red path_ (`RP`) and the _blue path_ (`BP`). We'll call the edges in `RP` _red edges_ and the edges in `BP` _blue edges_.
+We start by finding _any_ two node-disjoint paths from `s` to `t`, as described above. Which we'll call the _red path_ (`R`) and the _blue path_ (`B`). We'll call the edges in `R` _red edges_ and the edges in `B` _blue edges_.
 
 An edge pair can only be essential if it has one red edge and one blue edge (otherwise, `s` and `t` remain connected via one of the two paths).
-Thus, we can narrow down the set of candidate edges to those in `RP` and `BP`.
+Thus, we can narrow down the set of candidate edges to those in `R` and `B`.
 
 We can narrow the candidate edges further. Consider a red edge, `e1`. We know that if `e1` is part of an essential pair, `(e1, e2)`, then `e2` must be a blue edge. So, if `s` and `t` remain connected even after removing `e1` and _all_ the blue edges, then we can safely say that `e1` can never be part of an essential pair. That is, `e1` is not a candidate.
 
@@ -191,7 +191,7 @@ We can find all the red candidates, which we'll call `RC = (r1, r2, ..., rk)`, i
   width="100%"
 />
 
-Similarly, we can find all the blue candidates, which we'll call `BC = (b1, b2, ..., bk')`, by removing all the red edges from `G` and finding the bridges in the remaining graph that overlap with `BP`:
+Similarly, we can find all the blue candidates, which we'll call `BC = (b1, b2, ..., bk')`, by removing all the red edges from `G` and finding the bridges in the remaining graph that overlap with `B`:
 
 <Callout>
   An edge pair can only be essential if it contains an edge from `RC` and an
@@ -240,13 +240,13 @@ Here is the path-segment graph for the example above:
 
 The red path is broken into four segments: `rs_0` is just `s`, `rs_1` is just the node between `r1` and `r2`, `rs_2` is the segment up to `r3`, and `rs_3` is the final edge of the red path. Similarly, the blue path is broken into three segments.
 
-In the path-segment graph, there is always a cross edge between `rs_0` and `bs_0` because they share the node `s`. Similarly, there is always a cross edge between `rs_k` and `bs_k'` because they share the node `t`. For this specific example, there is also a cross edge between `rs_1` and `bs_1` because we can walk from the node to the right of `s` to the segment of `BP` that starts at the node below `s` without crossing any of the candidate edges.
+In the path-segment graph, there is always a cross edge between `rs_0` and `bs_0` because they share the node `s`. Similarly, there is always a cross edge between `rs_k` and `bs_k'` because they share the node `t`. For this specific example, there is also a cross edge between `rs_1` and `bs_1` because we can walk from the node to the right of `s` to the segment of `B` that starts at the node below `s` without crossing any of the candidate edges.
 
 Next, we'll describe how to compute the cross edges.
 
-If we take the original graph and remove all the red candidates and all the blue edges (`G - RC - BP`), we are left with a sequence of connected components, each of which contains one of the red-path segments, and perhaps additional connected components that don't contain any of the red-path segments.
+If we take the original graph and remove all the red candidates and all the blue edges (`G - RC - B`), we are left with a sequence of connected components, each of which contains one of the red-path segments, and perhaps additional connected components that don't contain any of the red-path segments.
 
-We call `RCC_i` the connected component in `G - RC - BP` that contains the red segment `rs_i`. Thus, the red path traverses `RCC_0, RCC_1, ..., RCC_k`, in this order. We also do the same for the blue path, and call the components `BCC_0, BCC_1, ..., BCC_k'`.
+We call `RCC_i` the connected component in `G - RC - B` that contains the red segment `rs_i`. Thus, the red path traverses `RCC_0, RCC_1, ..., RCC_k`, in this order. We also do the same for the blue path, and call the components `BCC_0, BCC_1, ..., BCC_k'`.
 
 Here we can see the two sets of connected components for the example above (shown in different colors):
 
@@ -293,12 +293,12 @@ In other words:
 
 **Proof:**
 
-Starting with (2), if there is a path from `rs_0` to `rs_k` in the path-segment graph that does not use `ri` or `bj`, we can turn it into an `s-t` path in the original graph that does not use `ri` or `bj` either: we follow one of the paths, say `RP`, until we have to use a cross edge in the path-segment graph, say, `(rs_x, bs_y)`. We know that `RCC_x` and `BCC_y` share at least a node, `v`, so we can find a path from one of the nodes in the path segment for `rs_x` to `v` and from `v` to one of the nodes in the path segment for `bs_y`. We can then continue following the other path, `BP`, until we reach `t` or need to use another cross edge, which we can handle in the same way.
+Starting with (2), if there is a path from `rs_0` to `rs_k` in the path-segment graph that does not use `ri` or `bj`, we can turn it into an `s-t` path in the original graph that does not use `ri` or `bj` either: we follow one of the paths, say `R`, until we have to use a cross edge in the path-segment graph, say, `(rs_x, bs_y)`. We know that `RCC_x` and `BCC_y` share at least a node, `v`, so we can find a path from one of the nodes in the path segment for `rs_x` to `v` and from `v` to one of the nodes in the path segment for `bs_y`. We can then continue following the other path, `B`, until we reach `t` or need to use another cross edge, which we can handle in the same way.
 
 For (1), we want to show that there is no `s-t` path in the original graph without `ri` and `bj`.
 
-By definition, without `ri`, there is no way to get to `RCC_>=i` without using edges from `BP`.
-However, using edges from `BP` before `bj` still does not allow us to reach any nodes in `RCC_>=i` (otherwise, `rs_0` and `rs_k` would still be connected in the path-segment graph thanks to a cross edge).
+By definition, without `ri`, there is no way to get to `RCC_>=i` without using blue edges.
+However, using blue edges before `bj` still does not allow us to reach any nodes in `RCC_>=i` (otherwise, `rs_0` and `rs_k` would still be connected in the path-segment graph thanks to a cross edge).
 
 _(The proof for (1) is admittedly hand-wavy, I may have to revisit it.)_
 
@@ -440,6 +440,6 @@ Optimizing the code was not the main point of this post. It can be optimized fur
 
 - Pre-allocating and reusing the `visited` and `stack` arrays across all the functions that need to do some kind of graph traversal.
 - Not explicitly constructing the directed graph in `findTwoNodeDisjointPaths()`.
-- Not explicitly constructing graphs like `G - RP`, `G - BP`, `G - RP - BC`, and `G - BP - RC`. Instead, we can pass around a set of "disallowed" edges. (The path-segment graph and the compressed path-segment graphs are already not constructed explicitly.)
+- Not explicitly constructing graphs like `G - R`, `G - B`, `G - R - BC`, and `G - B - RC`. Instead, we can pass around a set of "disallowed" edges. (The path-segment graph and the compressed path-segment graphs are already not constructed explicitly.)
 - Avoiding hash sets and maps with edges as keys. Instead, edges could be mapped to contiguous integers from `0` to `E - 1` (I already avoided using sets and maps when the keys are integers starting at `0`, like node indices).
 - Choosing a better language for low-level optimizations...
