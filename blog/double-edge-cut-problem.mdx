@@ -443,3 +443,7 @@ Optimizing the code was not the main point of this post. It can be optimized fur
 - Not explicitly constructing graphs like `G - R`, `G - B`, `G - R - BC`, and `G - B - RC`. Instead, we can pass around a set of "disallowed" edges. (The path-segment graph and the compressed path-segment graphs are already not constructed explicitly.)
 - Avoiding hash sets and maps with edges as keys. Instead, edges could be mapped to contiguous integers from `0` to `E - 1` (I already avoided using sets and maps when the keys are integers starting at `0`, like node indices).
 - Choosing a better language for low-level optimizations...
+
+---
+
+_Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_i-just-wrote-a-blog-post-about-a-graph-problem-activity-7331121986267439104-CVWy?utm_source=share&utm_medium=member_desktop&rcm=ACoAAC6jqIwBADV70xmTEpmkxbAnN_32mssoxA8) or the [X post](https://x.com/Nil053/status/1925363965183631671)._
