@@ -3,6 +3,61 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { FaXTwitter, FaLinkedin, FaGithub } from "react-icons/fa6";
 import { SiGooglescholar } from "react-icons/si";
+import { getLatestPost } from "../lib/blog";
+import { BlogPostCard } from "./blog-list";
+
+const bookAnnouncement = (
+  <div className="mt-12 p-4 md:p-6 rounded-lg card-border bg-card text-card-foreground shadow-sm max-w-4xl mx-auto">
+    <div className="flex flex-col md:flex-row gap-4 items-center">
+      <div className="md:w-1/4 flex justify-center">
+        <Link href="https://www.amazon.com/dp/195570600X" target="_blank">
+          <Image
+            src="/book-cover.png"
+            alt="BCtCI Book Cover"
+            width={160}
+            height={240}
+            className="rounded-md shadow-lg cursor-pointer"
+            priority
+          />
+        </Link>
+      </div>
+      <div className="md:w-3/4 space-y-2">
+        <h2 className="text-xl md:text-2xl font-bold">
+          Beyond Cracking the Coding Interview is out now!
+        </h2>
+        <p className="text-sm text-muted-foreground">
+          I co-wrote the sequel to CtCI with Gayle McDowell, Aline Lerner, and
+          Mike Mroczka.
+        </p>
+        <div className="pt-1">
+          <Link href="https://www.amazon.com/dp/195570600X" target="_blank">
+            <Button size="sm" className="font-medium">
+              Get Your Copy
+            </Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+// Latest blog post component
+function LatestBlogPost() {
+  const latestPost = getLatestPost();
+
+  if (!latestPost) {
+    return null;
+  }
+
+  return (
+    <div className="mt-8 max-w-4xl mx-auto">
+      <h2 className="text-lg md:text-xl font-bold mb-4 text-center">
+        Latest blog post
+      </h2>
+      <BlogPostCard post={latestPost} />
+    </div>
+  );
+}
 
 export default function AboutSection() {
   return (
@@ -50,43 +105,9 @@ export default function AboutSection() {
         </div>
       </div>
 
-      <div className="mt-12 p-4 md:p-6 rounded-lg card-border bg-card text-card-foreground shadow-sm max-w-4xl mx-auto">
-        <div className="flex flex-col md:flex-row gap-4 items-center">
-          <div className="md:w-1/4 flex justify-center">
-            <Link href="https://www.amazon.com/dp/195570600X" target="_blank">
-              <Image
-                src="/book-cover.png"
-                alt="BCtCI Book Cover"
-                width={200}
-                height={300}
-                className="rounded-md shadow-lg cursor-pointer"
-                priority
-              />
-            </Link>
-          </div>
-          <div className="md:w-3/4 space-y-2">
-            <h2 className="text-xl md:text-2xl font-bold">
-              'Beyond Cracking the Coding Interview' is out now!
-            </h2>
-            <p className="text-sm text-muted-foreground">
-              I recently co-wrote the official sequel to CtCI along with Gayle
-              Laakmann McDowell, Aline Lerner, and Mike Mroczka.
-            </p>
-            <div className="pt-1">
-              <Link href="https://www.amazon.com/dp/195570600X" target="_blank">
-                <Button size="sm" className="font-medium">
-                  Get Your Copy
-                </Button>
-              </Link>
-              {/* <Link href="#more-info" className="ml-4">
-                <Button variant="outline" size="lg">
-                  Learn More
-                </Button>
-              </Link> */}
-            </div>
-          </div>
-        </div>
-      </div>
+      {bookAnnouncement}
+
+      <LatestBlogPost />
 
       {/* Biographical Information Section */}
       <div className="mt-16 max-w-4xl mx-auto">
@@ -157,13 +178,6 @@ export default function AboutSection() {
                 </Link>
                 ,{" "}
                 <Link
-                  href="/blog/greedy-algorithms"
-                  className="text-primary hover:underline"
-                >
-                  blog post
-                </Link>
-                ,{" "}
-                <Link
                   href="/dissertation/nildissertationslides.pdf"
                   className="text-primary hover:underline"
                   target="_blank"
@@ -172,11 +186,18 @@ export default function AboutSection() {
                 </Link>
                 ,{" "}
                 <Link
+                  href="/blog/greedy-algorithms"
+                  className="text-primary hover:underline"
+                >
+                  blog post
+                </Link>
+                ,{" "}
+                <Link
                   href="https://11011110.github.io/blog/2019/09/26/congratulations-dr-mamano.html"
                   className="text-primary hover:underline"
                   target="_blank"
                 >
-                  David's blog
+                  advisor's blog post
                 </Link>
                 ) studies how to relax the "greedy choice" in certain greedy
                 algorithms without affecting the final solution. This idea,

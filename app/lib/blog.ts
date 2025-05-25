@@ -16,7 +16,7 @@ export interface BlogPost {
   [key: string]: any; // For any additional frontmatter fields
 }
 
-// Get all blog posts with metadata
+// Get all blog posts with metadata (excluding WIP posts)
 export function getAllPosts(): BlogPost[] {
   // Get all files in the posts directory
   const fileNames = fs.readdirSync(postsDirectory);
@@ -47,14 +47,35 @@ export function getAllPosts(): BlogPost[] {
       } as BlogPost;
     });
 
-  // Sort posts by date
-  return allPostsData.sort((a, b) => {
-    if (a.date < b.date) {
-      return 1;
-    } else {
-      return -1;
-    }
-  });
+  // Sort posts by date and filter out WIP posts
+  return allPostsData
+    .sort((a, b) => {
+      if (a.date < b.date) {
+        return 1;
+      } else {
+        return -1;
+      }
+    })
+    .filter(
+      (post) =>
+        !post.categories?.some((category) => category.toLowerCase() === "wip")
+    );
+}
+
+// Get posts filtered by category
+export function getPostsByCategory(category: string): BlogPost[] {
+  const allPosts = getAllPosts();
+  return allPosts.filter((post) =>
+    post.categories?.some(
+      (postCategory) => postCategory.toLowerCase() === category.toLowerCase()
+    )
+  );
+}
+
+// Get the latest blog post
+export function getLatestPost(): BlogPost | null {
+  const allPosts = getAllPosts();
+  return allPosts[0] || null; // getAllPosts already filters WIP and sorts by date
 }
 
 // Get a specific post by slug
@@ -67,22 +88,26 @@ export function getPostBySlug(slug: string): BlogPost | null {
     const { data, content } = matter(fileContents);
 
     // Combine the data with the slug and content
-    return {
+    const post = {
       slug,
       content,
       ...data,
     } as BlogPost;
+
+    // Return null if this is a WIP post (making them inaccessible)
+    if (post.categories?.some((category) => category.toLowerCase() === "wip")) {
+      return null;
+    }
+
+    return post;
   } catch (error) {
     console.error(`Error reading post: ${slug}`, error);
     return null;
   }
 }
 
-// Get all available post slugs
+// Get all available post slugs (excluding WIP posts)
 export function getAllPostSlugs(): string[] {
-  const fileNames = fs.readdirSync(postsDirectory);
-
-  return fileNames
-    .filter((fileName) => fileName.endsWith(".mdx"))
-    .map((fileName) => fileName.replace(/\.mdx$/, ""));
+  const allPosts = getAllPosts();
+  return allPosts.map((post) => post.slug);
 }
