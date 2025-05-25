@@ -52,7 +52,11 @@ function LatestBlogPost() {
   return (
     <div className="mt-8 max-w-4xl mx-auto">
       <h2 className="text-lg md:text-xl font-bold mb-4 text-center">
-        Latest blog post
+        Latest{" "}
+        <Link href="/blog" className="hover:underline">
+          blog
+        </Link>{" "}
+        post
       </h2>
       <BlogPostCard post={latestPost} />
     </div>
@@ -63,7 +67,7 @@ export default function AboutSection() {
   return (
     <section
       id="about"
-      className="pt-2 pb-12 md:pt-4 md:pb-24 lg:pt-6 lg:pb-32 scroll-mt-16"
+      className="pt-1 pb-6 md:pt-2 md:pb-12 lg:pt-3 lg:pb-16 scroll-mt-16"
     >
       <div className="flex flex-col items-center justify-center space-y-4 text-center">
         <div className="space-y-2">
@@ -121,7 +125,7 @@ export default function AboutSection() {
             </p>
 
             <div>
-              <h3 className="text-xl font-semibold mb-2 text-foreground">
+              <h3 className="text-lg font-semibold mb-2 text-foreground">
                 Academic Background
               </h3>
               <p>
@@ -247,7 +251,7 @@ export default function AboutSection() {
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold mb-2 text-foreground">
+              <h3 className="text-lg font-semibold mb-2 text-foreground">
                 Industry Experience
               </h3>
               <p>
@@ -266,7 +270,7 @@ export default function AboutSection() {
             </div>
 
             <div>
-              <h3 className="text-xl font-semibold mb-2 text-foreground">
+              <h3 className="text-lg font-semibold mb-2 text-foreground">
                 Current Projects
               </h3>
               <p>

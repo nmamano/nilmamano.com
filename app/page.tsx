@@ -1,17 +1,17 @@
 import AboutSection from "./components/about-section";
-import ResearchSection from "./components/research-section";
+import SelectedPublications from "./components/selected-publications";
 import ProjectsSection from "./components/projects-section";
 import PersonalSection from "./components/personal-section";
-import MediaKitSection from "./components/media-kit-section";
+import MediaKitHeader from "./components/media-kit-header";
 
 export default function Page() {
   return (
     <>
       <AboutSection />
-      <ResearchSection />
+      <SelectedPublications />
       <ProjectsSection />
       <PersonalSection />
-      <MediaKitSection />
+      <MediaKitHeader />
     </>
   );
 }

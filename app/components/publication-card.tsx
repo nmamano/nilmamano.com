@@ -1,24 +1,26 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
-import { FaGithub, FaPlay, FaChevronDown } from "react-icons/fa";
+import { FaGithub, FaFilePdf, FaPlay, FaChevronDown } from "react-icons/fa";
 import Image from "next/image";
-import { Project, getAllProjects } from "@/app/lib/research-projects";
+import { Publication } from "@/app/lib/publications";
 
-// Create a wrapper component that combines ProjectCard with expandable content
-const ProjectCard = ({
-  project,
-  index,
-  expandedCards,
+interface PublicationCardProps {
+  publication: Publication;
+  index?: number;
+  expandedCards?: Set<number>;
+  toggleExpanded?: (index: number) => void;
+  showExpansion?: boolean; // Whether to show expansion functionality
+}
+
+export const PublicationCard = ({
+  publication,
+  index = 0,
+  expandedCards = new Set(),
   toggleExpanded,
-}: {
-  project: Project;
-  index: number;
-  expandedCards: Set<number>;
-  toggleExpanded: (index: number) => void;
-}) => {
-  const isExpanded = expandedCards.has(index);
+  showExpansion = false,
+}: PublicationCardProps) => {
+  const isExpanded = showExpansion && expandedCards.has(index);
   const [contentHeight, setContentHeight] = useState("0px");
   const contentRef = useRef<HTMLDivElement>(null);
   const imageRef = useRef<HTMLDivElement>(null);
@@ -60,6 +62,17 @@ const ProjectCard = ({
     }
   }, [isExpanded, imagesLoaded]);
 
+  // Function to handle image load events
+  const handleImageLoaded = () => {
+    setImagesLoaded(true);
+
+    // Update height again after images are loaded
+    if (contentRef.current) {
+      const updatedHeight = contentRef.current.scrollHeight;
+      setContentHeight(`${updatedHeight}px`);
+    }
+  };
+
   // Add this useEffect to handle links in the description
   useEffect(() => {
     if (isExpanded) {
@@ -81,18 +94,16 @@ const ProjectCard = ({
     }
   }, [isExpanded]);
 
-  // Function to handle image load events
-  const handleImageLoaded = () => {
-    setImagesLoaded(true);
+  const handleCardClick = (e: React.MouseEvent) => {
+    if (!showExpansion || !toggleExpanded) return;
 
-    // Update height again after images are loaded
-    if (contentRef.current) {
-      const updatedHeight = contentRef.current.scrollHeight;
-      setContentHeight(`${updatedHeight}px`);
+    // Don't trigger expansion if user is selecting text
+    const selection = window.getSelection();
+    if (selection && selection.toString().length > 0) {
+      return; // Exit without toggling if text is selected
     }
+    toggleExpanded(index);
   };
-
-  const primaryLink = project.links?.demo || project.links?.github || "#";
 
   return (
     <div
@@ -103,18 +114,13 @@ const ProjectCard = ({
       <div className="relative">
         {/* Card container */}
         <div
-          onClick={(e) => {
-            // Don't trigger expansion if user is selecting text
-            const selection = window.getSelection();
-            if (selection && selection.toString().length > 0) {
-              return; // Exit without toggling if text is selected
-            }
-            toggleExpanded(index);
-          }}
-          className="cursor-pointer overflow-hidden rounded-lg card-border bg-card text-card-foreground shadow-md transition-all duration-300 ease-in-out h-full"
+          onClick={handleCardClick}
+          className={`overflow-hidden rounded-lg card-border bg-card text-card-foreground shadow-md transition-all duration-300 ease-in-out ${
+            showExpansion ? "cursor-pointer" : ""
+          }`}
         >
           {/* Card Content */}
-          <div className="flex flex-col h-full">
+          <div className="flex flex-col">
             {/* Image with fixed width when expanded */}
             <div
               ref={imageRef}
@@ -126,11 +132,13 @@ const ProjectCard = ({
               <div
                 className="w-full overflow-hidden"
                 style={{
-                  backgroundColor: project.coverImage?.endsWith(".svg")
+                  backgroundColor: publication.coverImage?.endsWith(".svg")
                     ? "white"
                     : "transparent",
-                  padding: project.coverImage?.endsWith(".svg") ? "16px" : "0",
-                  borderRadius: project.coverImage?.endsWith(".svg")
+                  padding: publication.coverImage?.endsWith(".svg")
+                    ? "16px"
+                    : "0",
+                  borderRadius: publication.coverImage?.endsWith(".svg")
                     ? "8px"
                     : "0",
                   height: "200px",
@@ -141,10 +149,10 @@ const ProjectCard = ({
               >
                 <Image
                   src={
-                    project.coverImage ||
+                    publication.coverImage ||
                     "/placeholder.svg?height=400&width=600"
                   }
-                  alt={project.title}
+                  alt={publication.title}
                   width={600}
                   height={400}
                   className="max-h-full max-w-full object-contain"
@@ -155,7 +163,13 @@ const ProjectCard = ({
             </div>
 
             <div className="p-4 flex flex-col flex-grow">
-              <h3 className="text-lg font-medium">{project.title}</h3>
+              <h3 className="text-lg font-medium">{publication.title}</h3>
+
+              <p className="text-sm text-muted-foreground mt-1">
+                {publication.not_alphabetical_order ? "* " : ""}
+                {publication.authors.join(", ")}
+                {publication.publisher && `. ${publication.publisher}`}
+              </p>
 
               {/* Always show first paragraph in preview */}
               <div
@@ -165,13 +179,13 @@ const ProjectCard = ({
               >
                 {!isExpanded ? (
                   <p>
-                    {project.description[0].substring(0, 150) +
-                      (project.description[0].length > 150 ? "..." : "")}
+                    {publication.description[0].substring(0, 150) +
+                      (publication.description[0].length > 150 ? "..." : "")}
                   </p>
                 ) : (
                   <p
                     dangerouslySetInnerHTML={{
-                      __html: project.description[0],
+                      __html: publication.description[0],
                     }}
                   ></p>
                 )}
@@ -191,7 +205,7 @@ const ProjectCard = ({
                 >
                   {/* Additional paragraphs (2nd and onwards) */}
                   <div className="space-y-4 text-muted-foreground">
-                    {project.description.slice(1).map((paragraph, idx) => (
+                    {publication.description.slice(1).map((paragraph, idx) => (
                       <p
                         key={idx}
                         dangerouslySetInnerHTML={{ __html: paragraph }}
@@ -200,10 +214,10 @@ const ProjectCard = ({
                   </div>
 
                   {/* Additional images */}
-                  {project.additionalImages &&
-                    project.additionalImages.length > 0 && (
+                  {publication.additionalImages &&
+                    publication.additionalImages.length > 0 && (
                       <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-6">
-                        {project.additionalImages.map((image, idx) => (
+                        {publication.additionalImages.map((image, idx) => (
                           <div
                             key={idx}
                             className={`${
@@ -252,9 +266,9 @@ const ProjectCard = ({
 
         {/* Icons for links that appear on the card */}
         <div className="absolute top-4 right-4 flex space-x-2 z-10">
-          {project.links?.demo && (
+          {publication.links?.demo && (
             <a
-              href={project.links.demo}
+              href={publication.links.demo}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-muted text-foreground p-2 rounded-full hover:bg-muted/90 transition-colors"
@@ -265,9 +279,9 @@ const ProjectCard = ({
             </a>
           )}
 
-          {project.links?.github && (
+          {publication.links?.github && (
             <a
-              href={project.links.github}
+              href={publication.links.github}
               target="_blank"
               rel="noopener noreferrer"
               className="bg-muted text-foreground p-2 rounded-full hover:bg-muted/90 transition-colors"
@@ -278,69 +292,36 @@ const ProjectCard = ({
             </a>
           )}
 
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              toggleExpanded(index);
-            }}
-            className={`bg-muted text-muted-foreground p-2 rounded-full hover:bg-muted/90 transition-all duration-300 ${
-              isExpanded ? "rotate-180" : "rotate-0"
-            }`}
-            title={isExpanded ? "Show less" : "Show more"}
-            aria-expanded={isExpanded}
-          >
-            <FaChevronDown size={16} />
-          </button>
+          {publication.links?.pdf && (
+            <a
+              href={publication.links.pdf}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="bg-muted text-foreground p-2 rounded-full hover:bg-muted/90 transition-colors"
+              title="Read Paper"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <FaFilePdf size={16} />
+            </a>
+          )}
+
+          {showExpansion && toggleExpanded && (
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                toggleExpanded(index);
+              }}
+              className={`bg-muted text-muted-foreground p-2 rounded-full hover:bg-muted/90 transition-all duration-300 ${
+                isExpanded ? "rotate-180" : "rotate-0"
+              }`}
+              title={isExpanded ? "Show less" : "Show more"}
+              aria-expanded={isExpanded}
+            >
+              <FaChevronDown size={16} />
+            </button>
+          )}
         </div>
       </div>
     </div>
   );
 };
-
-export default function ProjectsSection() {
-  // State for expanded cards
-  const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
-
-  // Create a toggle function that adds/removes cards from the set
-  const toggleExpanded = (index: number) => {
-    const newExpandedCards = new Set(expandedCards);
-    if (newExpandedCards.has(index)) {
-      newExpandedCards.delete(index);
-    } else {
-      newExpandedCards.add(index);
-    }
-    setExpandedCards(newExpandedCards);
-  };
-
-  return (
-    <section id="projects" className="py-6 md:py-12 lg:py-16 scroll-mt-16">
-      <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-12 text-center">
-        Projects
-      </h2>
-      <div className="max-w-6xl mx-auto">
-        <p className="text-muted-foreground mb-8 text-center">
-          Click on a project for a brief explanation. More projects on{" "}
-          <Link
-            href="https://github.com/nmamano"
-            className="text-primary hover:underline"
-            target="_blank"
-          >
-            GitHub
-          </Link>
-          .
-        </p>
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {getAllProjects().map((project, index) => (
-            <ProjectCard
-              key={project.id}
-              project={project}
-              index={index}
-              expandedCards={expandedCards}
-              toggleExpanded={toggleExpanded}
-            />
-          ))}
-        </div>
-      </div>
-    </section>
-  );
-}

@@ -48,7 +48,7 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
               About
             </Link>
             <Link
-              href="/#research"
+              href="/research"
               className={`transition-colors hover:text-foreground/80 ${
                 currentRoute === "research" ? "text-primary" : ""
               }`}
@@ -72,7 +72,7 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
               Personal
             </Link>
             <Link
-              href="/#media-kit"
+              href="/media-kit"
               className={`transition-colors hover:text-foreground/80 ${
                 currentRoute === "media-kit" ? "text-primary" : ""
               }`}

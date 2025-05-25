@@ -9,6 +9,10 @@ export function HeaderWithActiveLink() {
   let currentRoute;
   if (pathname.startsWith("/blog")) {
     currentRoute = "blog";
+  } else if (pathname === "/research") {
+    currentRoute = "research";
+  } else if (pathname === "/media-kit") {
+    currentRoute = "media-kit";
   } else if (pathname === "/") {
     // On home page, we can highlight based on hash if needed
     // This would require client-side JS to track hash changes

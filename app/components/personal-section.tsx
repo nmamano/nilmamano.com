@@ -3,7 +3,7 @@ import Image from "next/image";
 
 export default function PersonalSection() {
   return (
-    <section id="personal" className="py-12 md:py-24 lg:py-32 scroll-mt-16">
+    <section id="personal" className="py-6 md:py-12 lg:py-16 scroll-mt-16">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8 text-center">
           Personal
@@ -36,14 +36,12 @@ export default function PersonalSection() {
           </p>
 
           <p>
-            Of course, I also like playing WallWars with friends, the game I'm
-            developing at{" "}
+            Of course, I also like playing WallWars with friends, the game I'm{" "}
             <Link
-              href="https://wallwars.net"
+              href="/blog/wall-game-intro"
               className="text-primary hover:underline"
-              target="_blank"
             >
-              wallwars.net
+              building in public
             </Link>
             .
           </p>
