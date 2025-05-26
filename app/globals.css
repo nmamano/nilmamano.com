@@ -31,7 +31,8 @@ body {
   }
   
   .prose :not(pre) > code {
-    @apply bg-muted px-1 py-0.5 rounded text-sm font-mono;
+    @apply px-1 py-0.5 text-sm font-mono;
+    background-color: transparent;
   }
 
   .prose pre {
@@ -91,6 +92,17 @@ body {
   .prose h6 {
     @apply font-medium;
   }
+
+  /* Override prose text colors to use theme colors */
+  .prose {
+    color: hsl(var(--foreground));
+  }
+  
+  .prose p,
+  .prose li,
+  .prose blockquote {
+    color: hsl(var(--foreground));
+  }
 }
 
 @layer base {
@@ -101,12 +113,12 @@ body {
     --card-foreground: 0 0% 3.9%;
     --popover: 0 0% 100%;
     --popover-foreground: 0 0% 3.9%;
-    --primary: 0 0% 9%;
+    --primary: 220 70% 45%;
     --primary-foreground: 0 0% 98%;
     --secondary: 0 0% 96.1%;
     --secondary-foreground: 0 0% 9%;
-    --muted: 0 0% 96.1%;
-    --muted-foreground: 0 0% 45.1%;
+    --muted: 0 0% 92.1%;
+    --muted-foreground: 0 0% 5.1%;
     --accent: 0 0% 96.1%;
     --accent-foreground: 0 0% 9%;
     --destructive: 0 84.2% 60.2%;
@@ -131,7 +143,7 @@ body {
   }
   .dark {
     --background: 220 40% 14%; /* Your chosen muted dark blue */
-    --foreground: 220 10% 98%; /* Increased to near-white for better contrast */
+    --foreground: 220 10% 93%; /* Increased to near-white for better contrast */
     --card: 220 40% 10%; /* Slightly darker than background */
     --card-foreground: 220 10% 98%; /* Matching main foreground */
     --popover: 220 40% 11%; /* Matches card */
@@ -140,8 +152,8 @@ body {
     --primary-foreground: 220 10% 98%;
     --secondary: 220 35% 16%; /* Slightly lighter than background */
     --secondary-foreground: 220 10% 98%;
-    --muted: 220 35% 16%; /* Matches secondary */
-    --muted-foreground: 220 15% 80%; /* Brightened for better readability */
+    --muted: 220 35% 26%; /* Matches secondary */
+    --muted-foreground: 220 15% 91%; /* Brightened for better readability */
     --accent: 220 40% 20%; /* Subtle accent */
     --accent-foreground: 220 15% 95%;
     --destructive: 0 60% 50%; /* Muted red for destructive actions */

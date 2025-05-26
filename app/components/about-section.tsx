@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { FaXTwitter, FaLinkedin, FaGithub } from "react-icons/fa6";
+import { FaXTwitter, FaLinkedin, FaGithub, FaFilePdf } from "react-icons/fa6";
 import { SiGooglescholar } from "react-icons/si";
 import { getLatestPost } from "../lib/blog";
 import { BlogPostCard } from "./blog-list";
@@ -78,7 +78,7 @@ export default function AboutSection() {
             Computer scientist, software engineer, author.
           </p>
         </div>
-        <div className="space-x-4">
+        <div className="space-x-4 flex flex-nowrap whitespace-nowrap">
           <Link href="https://github.com/nmamano" target="_blank">
             <Button variant="outline" size="icon" className="h-10 w-10">
               <FaGithub style={{ width: "24px", height: "24px" }} />
@@ -106,6 +106,12 @@ export default function AboutSection() {
               <span className="sr-only">Google Scholar</span>
             </Button>
           </Link>
+          <Link href="/resume/resume_nilmamano.pdf" target="_blank">
+            <Button variant="outline" className="h-10 flex items-center gap-2">
+              <FaFilePdf style={{ width: "24px", height: "24px" }} />
+              <strong className="text-lg">Resume</strong>
+            </Button>
+          </Link>
         </div>
       </div>
 
@@ -121,7 +127,15 @@ export default function AboutSection() {
           <div className="md:w-2/3 space-y-6 text-muted-foreground order-1 md:order-1">
             <p>
               I am a computer scientist specialized in data structures and
-              algorithms.
+              algorithms. Here is my{" "}
+              <Link
+                href="/resume/resume_nilmamano.pdf"
+                target="_blank"
+                className="text-primary hover:underline"
+              >
+                resume
+              </Link>
+              .
             </p>
 
             <div>
