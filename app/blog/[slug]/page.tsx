@@ -134,7 +134,7 @@ export default async function BlogPost({
           </ClientSyntaxHighlighter>
         </div>
       </article>
-      
+
       {/* Add the footer component */}
       <BlogFooter />
     </div>

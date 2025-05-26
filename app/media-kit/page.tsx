@@ -1,13 +1,13 @@
-import MediaKitSection from "@/app/components/media-kit-section";
-
 import Image from "next/image";
 import Link from "next/link";
-
 function MediaKitSection() {
   return (
-    <section id="media-kit" className="py-6 md:py-12 lg:py-16 scroll-mt-16">
+    <section
+      id="media-kit"
+      className="pt-1 pb-6 md:pt-2 md:pb-12 lg:pt-3 lg:pb-16 scroll-mt-16"
+    >
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-8 text-center">
+        <h2 className="text-2xl font-medium tracking-tighter sm:text-3xl md:text-4xl mb-8 text-center">
           Media Kit
         </h2>
 

@@ -121,7 +121,7 @@ export default function AboutSection() {
 
       {/* Biographical Information Section */}
       <div className="mt-16 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold mb-6">About Me</h2>
+        <h2 className="text-2xl font-bold mb-6">About me</h2>
 
         <div className="flex flex-col md:flex-row gap-8 items-start">
           <div className="md:w-2/3 space-y-6 text-muted-foreground order-1 md:order-1">

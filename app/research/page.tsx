@@ -35,8 +35,11 @@ function ResearchSection() {
   );
 
   return (
-    <div id="research">
-      <h2 className="text-2xl font-bold tracking-tighter sm:text-3xl md:text-4xl mb-8 text-center">
+    <section
+      id="research"
+      className="pt-1 pb-6 md:pt-2 md:pb-12 lg:pt-3 lg:pb-16 scroll-mt-16"
+    >
+      <h2 className="text-2xl font-medium tracking-tighter sm:text-3xl md:text-4xl mb-8 text-center">
         Research Publications
       </h2>
       <div className="max-w-6xl mx-auto">
@@ -139,7 +142,7 @@ function ResearchSection() {
           </div>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 

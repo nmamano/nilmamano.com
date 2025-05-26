@@ -148,7 +148,7 @@ export default function BlogList({
 
   return (
     <div className="container mx-auto max-w-5xl px-4 py-12">
-      <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl mb-4 text-center">
+      <h1 className="text-3xl font-medium tracking-tighter sm:text-4xl md:text-5xl mb-4 text-center">
         Nil's Blog
       </h1>
       <p className="text-lg text-muted-foreground text-center mb-12">
