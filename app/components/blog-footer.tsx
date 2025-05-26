@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
 import { getRandomPosts } from "../lib/blog";
 import { BlogPostCard } from "./blog-post-card";
+import { NewsletterSubscription } from "./newsletter-subscription";
 
 interface BlogFooterProps {
   currentPostSlug?: string;
@@ -13,6 +14,11 @@ export default function BlogFooter({ currentPostSlug }: BlogFooterProps) {
 
   return (
     <footer className="mt-16 pt-8 border-t border-gray-300 dark:border-white/40">
+      {/* Newsletter subscription section */}
+      <div className="mb-12">
+        <NewsletterSubscription />
+      </div>
+
       {/* Random posts section */}
       {randomPosts.length > 0 && (
         <div className="mb-12">

@@ -16,6 +16,8 @@ This guide provides essential context for working with this Next.js portfolio co
 ```env
 RESEND_API_KEY=your_resend_api_key_here (given to you by Resend)
 CONTACT_EMAIL=your.email@example.com (the one you used to sign up for Resend)
+SENDER_API_KEY=your_sender_api_key_here (given to you by Sender)
+SENDER_GROUP_ID=your_sender_group_id_here (the group/list ID in Sender for newsletter subscribers)
 ```
 
 ## File Structure Context
@@ -66,12 +68,14 @@ CONTACT_EMAIL=your.email@example.com (the one you used to sign up for Resend)
 
 ## Component Architecture
 
-| Component          | Type              | Key Context                                |
-| ------------------ | ----------------- | ------------------------------------------ |
-| `app/actions.ts`   | Server Action     | Handles contact form with Resend email     |
-| `contact-form.tsx` | Client Component  | Uses useTransition, Zod validation         |
-| `site-header.tsx`  | Server Component  | Navigation includes #contact anchor        |
-| Most others        | Server Components | Default, only use "use client" when needed |
+| Component                     | Type              | Key Context                                                                        |
+| ----------------------------- | ----------------- | ---------------------------------------------------------------------------------- |
+| `app/actions.ts`              | Server Action     | Handles contact form with Resend email and newsletter subscription with Sender API |
+| `contact-form.tsx`            | Client Component  | Uses useTransition, Zod validation                                                 |
+| `newsletter-subscription.tsx` | Client Component  | Newsletter signup form with Sender API integration                                 |
+| `blog-footer.tsx`             | Server Component  | Includes newsletter subscription component                                         |
+| `site-header.tsx`             | Server Component  | Navigation includes #contact anchor                                                |
+| Most others                   | Server Components | Default, only use "use client" when needed                                         |
 
 ## Development Commands
 
@@ -87,6 +91,15 @@ bun dev             # Start development server
 - Email template is HTML string in server action
 - Environment variables keep email address out of source code
 - Form positioned between Personal and Media Kit sections
+
+## Newsletter Subscription Implementation Notes
+
+- Uses Sender API for mailing list management
+- Form validation with Zod schema in `app/actions.ts`
+- Positioned at the end of every blog post in `blog-footer.tsx`
+- Handles duplicate subscription gracefully
+- Environment variables keep API credentials secure
+- Copy emphasizes infrequent but valuable content
 
 ## Common Patterns
 

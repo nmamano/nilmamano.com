@@ -24,6 +24,13 @@ const contactFormSchema = z.object({
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
 
+// Newsletter subscription validation schema
+const newsletterSchema = z.object({
+  email: z.string().email("Please enter a valid email address"),
+});
+
+export type NewsletterData = z.infer<typeof newsletterSchema>;
+
 export async function submitContactForm(data: ContactFormData) {
   try {
     // Validate the form data
@@ -76,6 +83,74 @@ export async function submitContactForm(data: ContactFormData) {
         success: false,
         error: "Please check your form data and try again.",
         fieldErrors: error.flatten().fieldErrors,
+      };
+    }
+
+    return {
+      success: false,
+      error: "An unexpected error occurred. Please try again.",
+    };
+  }
+}
+
+export async function subscribeToNewsletter(data: NewsletterData) {
+  try {
+    // Validate the email
+    const validatedData = newsletterSchema.parse(data);
+
+    // Add subscriber to Sender via API
+    const response = await fetch("https://api.sender.net/v2/subscribers", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${process.env.SENDER_API_KEY}`,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      body: JSON.stringify({
+        email: validatedData.email,
+        // Add to groups if SENDER_GROUP_ID is provided, otherwise just add to general list
+        ...(process.env.SENDER_GROUP_ID && {
+          groups: [process.env.SENDER_GROUP_ID],
+        }),
+      }),
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error("Sender API error:", response.status, errorData);
+
+      // Handle specific error cases
+      if (
+        response.status === 409 ||
+        errorData.message?.includes("already exists")
+      ) {
+        return {
+          success: false,
+          error: "You're already subscribed to the newsletter!",
+        };
+      }
+
+      return {
+        success: false,
+        error: "Failed to subscribe. Please try again later.",
+      };
+    }
+
+    const result = await response.json();
+    console.log("Successfully subscribed:", result);
+
+    return {
+      success: true,
+      message:
+        "Successfully subscribed! You'll hear from me when I publish new content.",
+    };
+  } catch (error) {
+    console.error("Newsletter subscription error:", error);
+
+    if (error instanceof z.ZodError) {
+      return {
+        success: false,
+        error: "Please enter a valid email address.",
       };
     }
 

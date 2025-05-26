@@ -22,7 +22,7 @@ export default function ContactForm() {
     success: boolean;
     message?: string;
     error?: string;
-    fieldErrors?: Record<string, string[]>;
+    fieldErrors?: Record<string, string[] | undefined>;
   } | null>(null);
 
   const [formData, setFormData] = useState<ContactFormData>({
@@ -75,11 +75,11 @@ export default function ContactForm() {
   return (
     <Card className="w-full max-w-2xl mx-auto">
       <CardHeader>
-        <CardTitle className="text-2xl font-bold">Get in Touch</CardTitle>
+        <CardTitle className="text-2xl font-bold">Get in touch</CardTitle>
         <CardDescription>
           If you need an expert in DS&A or coding interviews, I may be able to
-          help! Currently open to interesting projects after finishing writing
-          'Beyond Cracking the Coding Interview'.
+          help! Currently open to interesting projects after writing{" "}
+          <em>Beyond Cracking the Coding Interview.</em>
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -103,7 +103,7 @@ export default function ContactForm() {
               />
               {result?.fieldErrors?.firstName && (
                 <p className="text-sm text-red-500">
-                  {result.fieldErrors.firstName[0]}
+                  {result.fieldErrors.firstName?.[0]}
                 </p>
               )}
             </div>
@@ -125,7 +125,7 @@ export default function ContactForm() {
               />
               {result?.fieldErrors?.lastName && (
                 <p className="text-sm text-red-500">
-                  {result.fieldErrors.lastName[0]}
+                  {result.fieldErrors.lastName?.[0]}
                 </p>
               )}
             </div>
@@ -147,7 +147,7 @@ export default function ContactForm() {
             />
             {result?.fieldErrors?.email && (
               <p className="text-sm text-red-500">
-                {result.fieldErrors.email[0]}
+                {result.fieldErrors.email?.[0]}
               </p>
             )}
           </div>
@@ -168,7 +168,7 @@ export default function ContactForm() {
             />
             {result?.fieldErrors?.message && (
               <p className="text-sm text-red-500">
-                {result.fieldErrors.message[0]}
+                {result.fieldErrors.message?.[0]}
               </p>
             )}
           </div>
