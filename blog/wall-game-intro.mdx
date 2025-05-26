@@ -42,9 +42,9 @@ The Wall Game is simple to understand.
   width="50%"
 />
 
-**Goal:** The red player controls the red cat and mouse, and the blue player controls the blue cat and mouse. The red player wins if the red cat catches the blue mouse before the blue cat catches the red mouse.
+**Goal:** The red player controls the red cat and mouse, and the blue player controls the blue cat and mouse. The red player wins by having their cat catch the blue mouse before the blue cat catches the red mouse.
 
-**How to move:** the game is turn-based. On each turn, you can make **2 actions**. One action can be **moving your cat**, **moving your mouse**, or **placing a wall**. Cats and mice move to adjacent cells, but walls can be placed _anywhere_ between two cells on the board. The only restriction is that you cannot completely block the opponent's cat from reaching your mouse.
+**How to move:** the game is turn-based. On each turn, you can make **2 actions**. Each action can be either **moving your cat**, **moving your mouse**, or **placing a wall**. Cats and mice move to adjacent cells, but walls can be placed _anywhere_ between two cells on the board. The only restriction is that you cannot completely block the opponent's cat from reaching your mouse.
 
 <BlogImage
   src="/blog/wall-game-intro/actions.png"
@@ -90,9 +90,9 @@ Ultimately, this collection of posts should provide a playbook for building any 
 
 ## Backstory
 
-The game dates back to my high school days, circa 2006, when my friends and I entertained ourselves with pen-and-paper games. Around that time, I played [Quoridor](https://en.wikipedia.org/wiki/Quoridor) once at a friend's house, and that inspired me to make a pen-and-paper game with similar ideas but with my own rules, like having two actions per move and unlimited walls (the two games feel quite different; Quoridor has a "resource-management" aspect, as you can only place 10 walls, which I don't personally enjoy). After some experimentation, we settled on a 10x12 board, with players starting at the top corners and having to move to their opposite corners.
+The game dates back to my high school days, circa 2006, when my friends and I entertained ourselves with pen-and-paper games. Around that time, I played [Quoridor](https://en.wikipedia.org/wiki/Quoridor) once at a friend's house, and that inspired me to make a pen-and-paper game with similar ideas but with my own rules, like having two actions per move and unlimited walls. After some experimentation, we settled on a 10x12 board, with players starting at the top corners and having to move to their opposite corners (there was no "mouse" yet).
 
-The game was a hit between my high-school friends, and I've basically been playing it and showing it to people ever since. For example, the name _WallWars_, which I used until the recent rebranding to the _Wall Game_, was coined by a PhD colleague in 2016 (let me know which name you like more).
+The game was a hit among my high-school friends, and I've basically been playing it and showing it to people ever since. For example, the name _WallWars_, which I used until the recent rebranding to the _Wall Game_, was coined by a PhD colleague in 2016 (let me know which name you like more).
 
 In 2012, during college, I implemented a version of the game in Python (it's on [GitHub](https://github.com/nmamano/WallWarsOld)):
 
@@ -117,4 +117,4 @@ In 2023, I built a physical board to play in person:
 
 We started experimenting with different variants, in part to accommodate 4 players, but also because we realized that exploring variants of the rule increased the game's replayability. As long as the same strategic and tactical patterns are present, variants are really fun, like playing a new level of a video game. This is also when I adopted the "cat and mouse" variant as the default.
 
-Two of the main reasons I want to rebuild the site is to integrate Deep Wallwars and to support variants, as each of these would require a major overhaul.
+Two of the main reasons I want to rebuild the site are to integrate Deep Wallwars and to support variants, as each of these would require a major overhaul.

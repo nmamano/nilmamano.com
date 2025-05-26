@@ -6,6 +6,7 @@ import { CATEGORIES, getCategoryConfig } from "../lib/blog-categories";
 import { filterPostsByCategory } from "../lib/blog-client";
 import { useRouter, usePathname } from "next/navigation";
 import { BlogPostCard } from "./blog-post-card";
+import { NewsletterSubscription } from "./newsletter-subscription";
 
 interface BlogListProps {
   posts: BlogPost[];
@@ -46,6 +47,11 @@ export default function BlogList({
       <p className="text-lg text-muted-foreground text-center mb-12">
         Teaching DS&A · research highlights · SWE musings · building in public
       </p>
+
+      {/* Newsletter Subscription */}
+      <div className="mb-12">
+        <NewsletterSubscription />
+      </div>
 
       {/* Category Filter */}
       <div className="flex flex-wrap gap-2 justify-center mb-8">

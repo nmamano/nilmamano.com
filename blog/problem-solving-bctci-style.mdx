@@ -190,7 +190,7 @@ for each possible substring start
   have the previous working version.
 </Callout>
 
-## Boster 2: Hunting for properties
+## Booster 2: Hunting for properties
 
 We got down to `O(n^3)` time, but we know we still need to bring this down to the target complexity.
 
@@ -276,7 +276,7 @@ As we grow the substring, we hit an `'a'`, which appears before `i`, and we real
 
 We can now add this logic to our algorithm. We can start the algorithm by computing the first and last index of each letter (this is an example of the **preprocessing pattern** in the boosters diagram -- it's common for properties from Booster 2 to enable optimizations from Booster 1).
 
-Then, as we grow each substring, we keep track of the farthest index we need to reach. (This is actually a common pattern in sliding window algorithms, where we maintain information about the window as it 'slides', rather than computing it form scratch every time the window moves. So, the 'sliding windows' trigger wasn't completely off).
+Then, as we grow each substring, we keep track of the farthest index we need to reach. (This is actually a common pattern in sliding window algorithms, where we maintain information about the window as it 'slides', rather than computing it from scratch every time the window moves. So, the 'sliding windows' trigger wasn't completely off).
 
 ```
 Algo 4: smallest special substring
