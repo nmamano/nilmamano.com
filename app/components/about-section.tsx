@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FaXTwitter, FaLinkedin, FaGithub, FaFilePdf } from "react-icons/fa6";
 import { SiGooglescholar } from "react-icons/si";
 import { getLatestPost } from "../lib/blog";
-import { BlogPostCard } from "./blog-list";
+import { BlogPostCard } from "./blog-post-card";
 
 const bookAnnouncement = (
   <div className="mt-12 p-4 md:p-6 rounded-lg card-border bg-card text-card-foreground shadow-sm max-w-4xl mx-auto">

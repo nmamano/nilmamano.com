@@ -111,3 +111,25 @@ export function getAllPostSlugs(): string[] {
   const allPosts = getAllPosts();
   return allPosts.map((post) => post.slug);
 }
+
+// Get 3 random posts (excluding the current post if provided)
+export function getRandomPosts(
+  excludeSlug?: string,
+  count: number = 3
+): BlogPost[] {
+  const allPosts = getAllPosts();
+
+  // Filter out the current post if provided
+  const availablePosts = excludeSlug
+    ? allPosts.filter((post) => post.slug !== excludeSlug)
+    : allPosts;
+
+  // If we don't have enough posts, return all available posts
+  if (availablePosts.length <= count) {
+    return availablePosts;
+  }
+
+  // Shuffle the array and take the first 'count' items
+  const shuffled = [...availablePosts].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, count);
+}

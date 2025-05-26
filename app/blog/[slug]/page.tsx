@@ -136,7 +136,7 @@ export default async function BlogPost({
       </article>
 
       {/* Add the footer component */}
-      <BlogFooter />
+      <BlogFooter currentPostSlug={post.slug} />
     </div>
   );
 }
