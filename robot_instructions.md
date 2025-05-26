@@ -1,208 +1,101 @@
-# Developer Portfolio
+# Developer Portfolio - Robot Guide
 
-A modern, responsive developer portfolio built with Next.js, React, and Tailwind CSS. This template provides a clean, professional layout to showcase your projects, skills, contact information, and blog posts.
+This guide provides essential context for working with this Next.js portfolio codebase.
 
-## Features
+## Key Architecture Context
 
-Modern, responsive design
-Light/dark mode support
-Mobile-friendly layout
-Modular component structure
-Contact form with server actions
-Easily customizable
-Blog with MDX support
-Image optimization with Next.js Image
+- **Framework**: Next.js 14 with App Router
+- **Package Manager**: Use `bun` (not npm/yarn)
+- **UI Components**: shadcn/ui with Tailwind CSS
+- **Email Service**: Contact form uses Resend API
+- **Validation**: Zod for form validation
+- **Content**: Blog posts use MDX format
 
-Tech Stack
-Framework: Next.js 14 (App Router)
-UI: React, Tailwind CSS, shadcn/ui components
-Icons: Lucide React
-Styling: Tailwind CSS with CSS variables for theming
-Form Handling: React Hook Form with Server Actions
-Content: MDX for blog posts with custom components
-Date Formatting: date-fns
-Typography: Tailwind Typography plugin for rich text formatting
+## Critical Environment Variables
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js 18.17 or later
-- bun (or npm, yarn, or pnpm)
-
-### Installation
-
-1. Clone the repository:
-
-2. Install dependencies:
-
-```shellscript
-bun install
+```env
+RESEND_API_KEY=your_resend_api_key_here (given to you by Resend)
+CONTACT_EMAIL=your.email@example.com (the one you used to sign up for Resend)
 ```
 
-3. Start the development server:
+## File Structure Context
 
-```shellscript
-bun run dev
 ```
-
-4. Open [http://localhost:3000](http://localhost:3000) in your browser to see the result.
-
-## Project Structure
-
-```plaintext
 ├── app/
-│   ├── actions.ts                # Server actions for form handling
-│   ├── blog/                     # Blog-related pages
+│   ├── actions.ts                # Server actions for contact form with Resend
+│   ├── blog/                     # Blog pages
 │   │   ├── page.tsx              # Blog index page
-│   │   ├── [slug]/               # Dynamic routing for blog posts
-│   │   └── layout.tsx            # Blog layout (optional)
+│   │   ├── [slug]/page.tsx       # Individual blog post pages
+│   │   └── category/[category]/page.tsx # Blog category pages
 │   ├── components/               # Page-specific components
-│   │   ├── about-section.tsx     # About section component
-│   │   ├── contact-form.tsx      # Contact form component
-│   │   ├── personal-section.tsx  # Personal section component
-│   │   ├── projects-section.tsx  # Projects section component
-│   │   ├── research-section.tsx  # Research section component
-│   │   ├── media-kit-section.tsx # Media kit section component
-│   │   └── site-header.tsx       # Site header with navigation
-│   ├── globals.css               # Global styles
-│   ├── layout.tsx                # Root layout component
-│   └── page.tsx                  # Main page component
-├── blog/                         # Blog content files in MDX format
-│   ├── first-post.md             # Example blog post
-│   └── heapify-analysis.mdx      # Blog post with MDX features
-├── components/                   # Shared components
-│   ├── MdxComponents.tsx         # Custom components for MDX content
-│   ├── theme-provider.tsx        # Theme provider component
-│   ├── theme-toggle.tsx          # Theme toggle component
-│   └── ui/                       # UI components from shadcn/ui
-├── lib/
-│   ├── blog.ts                   # Blog utility functions
-│   └── utils.ts                  # Utility functions
+│   │   ├── about-section.tsx     # About/intro section
+│   │   ├── contact-form.tsx      # Contact form with validation
+│   │   ├── media-kit-header.tsx  # Media kit section
+│   │   ├── personal-section.tsx  # Personal interests section
+│   │   ├── projects-section.tsx  # Projects showcase
+│   │   ├── selected-publications.tsx # Research publications
+│   │   ├── site-header.tsx       # Navigation with Contact link
+│   │   └── blog-footer.tsx       # Blog post footer
+│   ├── globals.css               # Global styles and CSS variables
+│   ├── layout.tsx                # Root layout with metadata
+│   ├── page.tsx                  # Main homepage with all sections
+│   └── research/page.tsx         # Research page
+├── blog/                         # MDX blog post content files
+│   ├── *.mdx                     # Individual blog posts
+├── components/                   # Shared/reusable components
+│   ├── MdxComponents.tsx         # Custom MDX components
+│   ├── theme-provider.tsx        # Theme context provider
+│   ├── theme-toggle.tsx          # Dark/light mode toggle
+│   └── ui/                       # shadcn/ui components
+│       ├── button.tsx            # Button component
+│       ├── card.tsx              # Card component
+│       ├── input.tsx             # Input component
+│       └── [other-ui].tsx        # Other UI components
+├── lib/                          # Utility functions
+│   ├── blog.ts                   # Blog post utilities
+│   ├── date-utils.ts             # Date formatting
+│   └── utils.ts                  # General utilities
 ├── public/                       # Static assets
-│   ├── blog/                     # Blog-related images and assets
-│   │   └── heapify-analysis/     # Images for specific blog posts
+│   ├── blog/                     # Blog post images
 │   └── projects/                 # Project images
-├── tailwind.config.ts            # Customize the theme
-├── postcss.config.mjs            #
-└── next.config.mjs               # Next.js configuration with MDX setup
+├── .env.local                    # Environment variables (not in git)
+├── middleware.ts                 # Next.js middleware
+├── next.config.mjs               # Next.js configuration
+└── tailwind.config.ts            # Tailwind CSS configuration
 ```
 
-## Customization
+## Component Architecture
 
-Projects
-Modify the ProjectsSection component to showcase your own projects.
+| Component          | Type              | Key Context                                |
+| ------------------ | ----------------- | ------------------------------------------ |
+| `app/actions.ts`   | Server Action     | Handles contact form with Resend email     |
+| `contact-form.tsx` | Client Component  | Uses useTransition, Zod validation         |
+| `site-header.tsx`  | Server Component  | Navigation includes #contact anchor        |
+| Most others        | Server Components | Default, only use "use client" when needed |
 
-Research
-Update the ResearchSection component with your publications and research work.
+## Development Commands
 
-Blog Posts
-Create new blog posts by adding .mdx files to the blog/ directory. Each post should include frontmatter with:
-
-```
----
-title: "Your Blog Post Title"
-date: "YYYY-MM-DD"
-excerpt: "A brief excerpt of your blog post"
-coverImage: "/blog/your-post-slug/cover-image.png"
----
+```bash
+bun install          # Install dependencies
+bun dev             # Start development server
 ```
 
-Images for blog posts should be placed in /public/blog/your-post-slug/.
+## Contact Form Implementation Notes
 
-log Custom Components
-The blog supports custom MDX components like BlogImage for better image display:
+- Uses Resend API for email delivery
+- Form validation with Zod schema in `app/actions.ts`
+- Email template is HTML string in server action
+- Environment variables keep email address out of source code
+- Form positioned between Personal and Media Kit sections
 
-```
-<BlogImage
-  src="/blog/your-post-slug/image.png"
-  alt="Image description"
-  width="60%"
-/>
-```
+## Common Patterns
 
-## Deployment
+- **Server Components**: Default, most components are server-side
+- **Client Components**: Only for interactivity (forms, theme toggle)
+- **Styling**: Tailwind utility classes, theme-aware CSS variables
+- **Navigation**: Anchor links to page sections (e.g., `/#contact`)
 
-This portfolio is ready to be deployed on Vercel:
+## Troubleshooting Context
 
-https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fyourusername%2Fdeveloper-portfolio
-
-## License
-
-This project is licensed under the MIT License - see the LICENSE file for details.
-
-# Robot Guide for Portfolio Codebase
-
-This guide is designed to help language models (LLMs) understand and work with this portfolio codebase. It provides detailed information about the structure, components, and patterns used in the project.
-
-## Codebase Architecture
-
-This is a Next.js 14 application using the App Router pattern. The key architectural elements are:
-
-1. **App Router Structure**: Uses the newer Next.js file-based routing system with `app/` directory
-2. **Server Components**: Most components are React Server Components by default
-3. **Client Components**: Components with interactivity are marked with `"use client"` directive
-4. **Server Actions**: Form submissions use Next.js Server Actions (in `app/actions.ts`)
-5. **shadcn/ui Components**: UI components from shadcn/ui library (in `components/ui/`)
-
-## File Purpose Map
-
-| File                            | Purpose                   | Client/Server    | Key Functions                                               |
-| ------------------------------- | ------------------------- | ---------------- | ----------------------------------------------------------- |
-| `app/page.tsx`                  | Main portfolio page       | Server Component | Renders all sections (About, Projects, Tech Stack, Contact) |
-| `app/layout.tsx`                | Root layout with metadata | Server Component | Sets up document structure, fonts, and ThemeProvider        |
-| `components/theme-provider.tsx` | Theme context             | Client Component | Provides theme context using next-themes                    |
-| `components/theme-toggle.tsx`   | Theme switcher            | Client Component | Button to toggle between light/dark modes                   |
-
-## Common Modification Patterns
-
-### Adding a New Page
-
-To add a new page:
-
-1. Create a new file in the `app` directory (e.g., `app/about/page.tsx`)
-2. Update the navigation links in `app/page.tsx`
-
-## Styling Approach
-
-This project uses:
-
-1. **Tailwind CSS**: For utility-based styling
-2. **shadcn/ui**: For pre-built components with consistent styling
-3. **CSS Variables**: For theming (light/dark mode)
-
-Key Tailwind classes to know:
-
-- Layout: `container`, `flex`, `grid`, `gap-*`
-- Spacing: `p-*`, `m-*`, `py-*`, `px-*`
-- Responsive: `md:*`, `lg:*` (mobile-first approach)
-- Theme-aware: `bg-background`, `text-foreground`, `border-border`
-
-## Theme System
-
-The theme system uses:
-
-1. `next-themes` for theme management
-2. CSS variables for theme-aware styling
-3. `ThemeProvider` to provide theme context
-4. `ThemeToggle` component to switch themes
-
-## Common Extension Points
-
-1. **Blog Section**: Add a blog with MDX files in `app/blog/`
-2. **Project Details Pages**: Create dynamic routes at `app/projects/[slug]/page.tsx`
-3. **Analytics**: Add analytics tracking
-
-## Troubleshooting Common Issues
-
-1. **Server/Client Component Errors**: Ensure interactive components use `"use client"` directive
-2. **Image Optimization**: All images should use Next.js `Image` component with proper dimensions
-3. **Theme Flickering**: Use `suppressHydrationWarning` on the html element (already implemented)
-
-## Best Practices When Modifying
-
-1. Maintain the component structure for consistency
-2. Use TypeScript interfaces for component props
-3. Keep server components as the default, only use client components when needed
-4. Follow the existing naming conventions (kebab-case for files, PascalCase for components)
-5. Leverage the existing UI components from shadcn/ui when possible
+- **Contact form issues**: Check environment variables and Resend API key
+- **Build errors**: Ensure "use client" directive on interactive components

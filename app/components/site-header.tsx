@@ -79,6 +79,14 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
             >
               Media Kit
             </Link>
+            <Link
+              href="/#contact"
+              className={`transition-colors hover:text-foreground/80 ${
+                currentRoute === "contact" ? "text-primary" : ""
+              }`}
+            >
+              Contact
+            </Link>
           </nav>
         </div>
         <div className="ml-auto flex items-center space-x-3">
