@@ -1,6 +1,8 @@
 import { ThemeProvider } from "@/components/theme-provider";
 import { HeaderWithActiveLink } from "@/app/components/header-with-active-link";
 import { SiteFooter } from "@/app/components/site-footer";
+import { GoogleAnalytics } from "@/lib/analytics";
+import { AnalyticsProvider } from "@/components/analytics-provider";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -77,19 +79,22 @@ export default function RootLayout({
           inter.className
         )}
       >
+        <GoogleAnalytics />
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
           enableSystem
           disableTransitionOnChange
         >
-          <div className="min-h-screen flex flex-col">
-            <HeaderWithActiveLink />
-            <main className="container mx-auto max-w-7xl px-4 md:px-6 flex-grow">
-              {children}
-            </main>
-            <SiteFooter />
-          </div>
+          <AnalyticsProvider>
+            <div className="min-h-screen flex flex-col">
+              <HeaderWithActiveLink />
+              <main className="container mx-auto max-w-7xl px-4 md:px-6 flex-grow">
+                {children}
+              </main>
+              <SiteFooter />
+            </div>
+          </AnalyticsProvider>
         </ThemeProvider>
       </body>
     </html>

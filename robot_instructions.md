@@ -18,6 +18,7 @@ RESEND_API_KEY=your_resend_api_key_here (given to you by Resend)
 CONTACT_EMAIL=your.email@example.com (the one you used to sign up for Resend)
 SENDER_API_KEY=your_sender_api_key_here (given to you by Sender)
 SENDER_GROUP_ID=your_sender_group_id_here (the group/list ID in Sender for newsletter subscribers)
+NEXT_PUBLIC_GA_ID=G-XXXXXXXXXX (your Google Analytics 4 measurement ID)
 ```
 
 ## File Structure Context
@@ -100,6 +101,15 @@ bun dev             # Start development server
 - Handles duplicate subscription gracefully
 - Environment variables keep API credentials secure
 - Copy emphasizes infrequent but valuable content
+
+## Google Analytics Implementation Notes
+
+- Uses Google Analytics 4 (GA4) with privacy-friendly settings
+- Automatically tracks page views across all routes
+- Tracks engagement events: contact form submissions and newsletter subscriptions
+- Privacy settings: anonymize_ip, no ad personalization, no Google signals
+- Implementation in `lib/analytics.tsx` with TypeScript support
+- Requires `NEXT_PUBLIC_GA_ID` environment variable
 
 ## Common Patterns
 

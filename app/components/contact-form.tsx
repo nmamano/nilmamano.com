@@ -2,6 +2,7 @@
 
 import { useState, useTransition } from "react";
 import { submitContactForm, type ContactFormData } from "../actions";
+import { event } from "@/lib/analytics";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -41,6 +42,13 @@ export default function ContactForm() {
       setResult(response);
 
       if (response.success) {
+        // Track successful contact form submission
+        event({
+          action: "contact_form_submit",
+          category: "engagement",
+          label: "contact_form",
+        });
+
         // Reset form on success
         setFormData({
           firstName: "",

@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Card, CardContent } from "@/components/ui/card";
 import { subscribeToNewsletter } from "../actions";
+import { event } from "@/lib/analytics";
 
 export function NewsletterSubscription() {
   const [email, setEmail] = useState("");
@@ -26,6 +27,13 @@ export function NewsletterSubscription() {
         const result = await subscribeToNewsletter({ email: email.trim() });
 
         if (result.success) {
+          // Track successful newsletter subscription
+          event({
+            action: "newsletter_subscribe",
+            category: "engagement",
+            label: "newsletter",
+          });
+
           setMessage(result.message || "Successfully subscribed!");
           setIsSuccess(true);
           setEmail("");
