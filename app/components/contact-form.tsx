@@ -73,7 +73,7 @@ export default function ContactForm() {
   };
 
   return (
-    <Card className="w-full max-w-2xl mx-auto">
+    <Card className="w-full max-w-2xl mx-auto border-2 border-gray-200 dark:border-gray-700">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Get in touch</CardTitle>
         <CardDescription>

@@ -137,7 +137,13 @@ export default function AboutSection() {
               </Link>
               .
             </p>
-
+            <p>
+              Are you looking for a short bio? See the{" "}
+              <Link href="/media-kit" className="text-primary hover:underline">
+                media kit page
+              </Link>
+              .
+            </p>
             <div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">
                 Academic Background
@@ -263,7 +269,6 @@ export default function AboutSection() {
                 .
               </p>
             </div>
-
             <div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">
                 Industry Experience
@@ -282,7 +287,6 @@ export default function AboutSection() {
                 services.
               </p>
             </div>
-
             <div>
               <h3 className="text-lg font-semibold mb-2 text-foreground">
                 Current Projects

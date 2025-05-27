@@ -64,12 +64,12 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
               Projects
             </Link>
             <Link
-              href="/#personal"
+              href="/#contact"
               className={`transition-colors hover:text-foreground/80 ${
-                currentRoute === "personal" ? "text-primary" : ""
+                currentRoute === "contact" ? "text-primary" : ""
               }`}
             >
-              Personal
+              Contact
             </Link>
             <Link
               href="/media-kit"
@@ -80,12 +80,12 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
               Media Kit
             </Link>
             <Link
-              href="/#contact"
+              href="/personal"
               className={`transition-colors hover:text-foreground/80 ${
-                currentRoute === "contact" ? "text-primary" : ""
+                currentRoute === "personal" ? "text-primary" : ""
               }`}
             >
-              Contact
+              Personal
             </Link>
           </nav>
         </div>
