@@ -22,6 +22,8 @@ I dealt with this issue myself while writing [Beyond Cracking the Coding Intervi
 
 The book is in Python, but we also translated all the solutions to C++, JS, and Java, so we had to figure out how to translate all those solutions to JS.
 
+If you know of any better workarounds, please let me know!
+
 <Callout>
   At the end, I'll also talk about **double-ended queues** (deques) and
   **heaps**, which are in a similar situation.
@@ -221,6 +223,8 @@ Heaps (also known as priority queues) are in the same situation as queues and de
 Let's revisit our options for heaps:
 
 1. **Assume a heap exists:** Your best option if the interviewer is okay with it. Implementing a heap from scratch could be a question in itself, so you are generally not expected to implement your own if other languages can just use a built-in heap.
-2. **Manual heap implementation:** Not recommended, as it requires implementing the bubble up/down logic.
+2. **Manual heap implementation:** Not recommended, as it requires implementing the bubble up/down logic. You can find the full heap implementation walkthrough from BCtCI here: [Implement a Heap](https://bctci.co/implement-a-heap).
 3. **Import a heap package:** Here is a suitable package: [heap-js](https://www.npmjs.com/package/heap-js) (see the Examples for usage).
 4. **Try non-heap solutions:** Some problems where you'd typically use a heap can be solved efficiently by sorting or by using Quickselect. For instance, in the classic [Smallest K Values](https://bctci.co/first-k) problem, Quickselect is faster than a heap.
+
+If you know of any better workarounds for any of these data structures, please let me know!
