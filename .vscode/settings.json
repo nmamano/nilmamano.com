@@ -6,8 +6,10 @@
     "bctci",
     "biconnected",
     "CPSG",
+    "datastructures",
     "dbdiagram",
     "Delalande",
+    "deques",
     "Duplessis",
     "eleventy",
     "FAFO",
@@ -41,11 +43,14 @@
     "Tarjan",
     "TIMESTAMPTZ",
     "transpiling",
+    "unshift",
     "VARCHAR",
+    "veganai",
     "Vercel",
     "Vite",
     "wallgame",
     "warnsdorf",
-    "Warnsdorf's"
+    "Warnsdorf's",
+    "yocto"
   ]
 }
