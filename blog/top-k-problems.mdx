@@ -27,8 +27,7 @@ The following table summarizes the different approaches and runtimes:
 
 Assumptions:
 
-- Sorting takes `O(n log n)` time (e.g., using merge sort or Quicksort).
-  Using a specialized sorting algorithm (like radix sort) could affect the analysis.
+- Sorting takes `O(n log n)` time (e.g., using merge sort or Quicksort). Using a specialized sorting algorithm (like radix sort) could affect the analysis.
 - If we modify the input array, we count that as using space.
 
 We can see that:
@@ -180,11 +179,9 @@ For example, if `S = 60`, `E = 10`, and `L = 30`, and `k = 76`, we would need to
 The implementation is similar to quicksort. In particular, the partition logic is the same. The main difference is that we have a single recursion call depending on the case analysis, a bit like in binary search.
 
 ```python
-def quickselect(nums, k):
-    if len(nums) == 1:
-        return nums[0]
-
-    smaller, equal, larger = partition(nums)
+# O(n) time, O(n) space
+def quickselect(arr, k):
+    smaller, equal, larger = partition(arr)
     S, E = len(smaller), len(equal)
 
     if k <= S:
