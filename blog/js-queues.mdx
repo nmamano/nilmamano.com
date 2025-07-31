@@ -54,28 +54,21 @@ It follows the classic linked-list implementation, but instead of:
 It all gets compacted into a single block by leveraging objects.
 
 ```js
-var queue = {
+const queue = {
   back: null,
   front: null,
   push: function (value) {
-    var node = { value: value, next: null };
-    if (this.back) {
-      this.back.next = node;
-    }
+    const node = { value: value, next: null };
+    if (this.back) this.back.next = node;
     this.back = node;
-    if (!this.front) {
-      this.front = node;
-    }
+    if (!this.front) this.front = node;
   },
   pop: function () {
-    var node = this.front;
-    if (node) {
-      this.front = node.next;
-    }
-    if (node === this.back) {
-      this.back = null;
-    }
-    return node ? node.value : null;
+    if (!this.front) return null;
+    const node = this.front;
+    this.front = node.next;
+    if (!this.front) this.back = null;
+    return node.value;
   },
 };
 ```
