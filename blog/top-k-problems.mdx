@@ -77,7 +77,7 @@ def min_heap_approach(arr, k):
     return [heapq.heappop(arr) for _ in range(k)]  # Sorted output
 ```
 
-This approach leverages that [we can build a heap in linear time with heapify](./heapify-analysis.mdx). After that, we do `k` heap pops. Since the heap has `O(n)` elements, each pop takes `O(log n)` time.
+This approach leverages that [we can build a heap in linear time with heapify](./heapify-analysis). After that, we do `k` heap pops. Since the heap has `O(n)` elements, each pop takes `O(log n)` time.
 
 To learn more about heaps, check out the [Implement a Heap](https://bctci.co/implement-a-heap) problem in the BCtCI online materials.
 
