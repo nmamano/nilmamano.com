@@ -27,7 +27,7 @@ The following table summarizes the different approaches and runtimes:
 
 Assumptions:
 
-- Sorting takes `O(n log n)` time (e.g., using merge sort or Quicksort). Using a specialized sorting algorithm (like radix sort) could affect the analysis.
+- Even though the problem is worded in terms of integers, we want to support generic comparison logic for the elements, so the `O(n log n)` sorting lower bound applies. Otherwise, specialized integer sorting algorithms like radix sort could affect the analysis.
 - If we modify the input array, we count that as using space.
 
 We can see that:
@@ -160,7 +160,7 @@ If the array can contain duplicates, `equal` may contain multiple elements:
 
 The key is to think about the position of the pivot:
 
-**Property 2:** After the Quicksort partition step, we know exactly how many elements are smaller or larger than the pivot. Thus, we can deduce the actual index of the pivot in the **sorted** order (or indices, if the pivot has duplicates).
+**Property 2:** After the quicksort partition step, we know exactly how many elements are smaller than the pivot. Thus, we can deduce the actual index of the pivot (or indices, if the pivot has duplicates) in the **sorted** order.
 
 Let `S` and `E` represent the number of elements in the `smaller` and `equal` arrays, respectively. We can do a **case analysis** to see whether the `k`th smallest element is in `smaller`, `equal`, or `larger`:
 
