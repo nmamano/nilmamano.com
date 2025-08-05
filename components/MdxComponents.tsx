@@ -1,6 +1,15 @@
 import React from "react";
 import Link from "next/link";
 import NextImage from "next/image";
+import {
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead as OriginalTableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
 
 interface BlogImageProps {
   src: string;
@@ -72,14 +81,14 @@ export function BlogImage({
       )}
       {caption && (
         <figcaption
-          className="text-base font-medium"
+          className="text-base font-medium text-gray-700 dark:text-gray-300"
           style={{
             maxWidth: width === "100%" ? "100%" : width,
             textAlign: centered ? "center" : "left",
             marginTop: "0rem",
           }}
         >
-          {caption}
+          {parseCaption(caption)}
         </figcaption>
       )}
     </div>
@@ -133,14 +142,14 @@ export function BlogVideo({
       />
       {caption && (
         <figcaption
-          className="text-base font-medium"
+          className="text-base font-medium text-gray-700 dark:text-gray-300"
           style={{
             maxWidth: width === "100%" ? "100%" : width,
             textAlign: centered ? "center" : "left",
             marginTop: "0rem",
           }}
         >
-          {caption}
+          {parseCaption(caption)}
         </figcaption>
       )}
     </div>
@@ -194,6 +203,71 @@ export function Callout({ children, type = "info", title }: CalloutProps) {
   );
 }
 
+interface BlogTableProps {
+  children: React.ReactNode;
+  caption?: string;
+  centered?: boolean;
+}
+
+export function BlogTable({
+  children,
+  caption,
+  centered = false,
+}: BlogTableProps) {
+  return (
+    <div
+      className="my-6"
+      style={{
+        display: centered ? "flex" : "block",
+        justifyContent: centered ? "center" : "flex-start",
+        flexDirection: "column",
+        alignItems: centered ? "center" : "flex-start",
+      }}
+    >
+      <Table>{children}</Table>
+      {caption && (
+        <figcaption
+          className="text-base font-medium mt-2 text-gray-700 dark:text-gray-300"
+          style={{
+            textAlign: centered ? "center" : "left",
+          }}
+        >
+          {parseCaption(caption)}
+        </figcaption>
+      )}
+    </div>
+  );
+}
+
+// Simple markdown parser for captions
+function parseCaption(text: string) {
+  const parts = [];
+  let currentIndex = 0;
+
+  // Replace **bold** with <strong> tags
+  const boldPattern = /\*\*(.*?)\*\*/g;
+  let match;
+
+  while ((match = boldPattern.exec(text)) !== null) {
+    // Add text before the match
+    if (match.index > currentIndex) {
+      parts.push(text.slice(currentIndex, match.index));
+    }
+
+    // Add the bold text
+    parts.push(<strong key={match.index}>{match[1]}</strong>);
+
+    currentIndex = match.index + match[0].length;
+  }
+
+  // Add remaining text
+  if (currentIndex < text.length) {
+    parts.push(text.slice(currentIndex));
+  }
+
+  return parts.length > 0 ? parts : text;
+}
+
 const slugify = (text: string) => {
   return text
     .toLowerCase()
@@ -205,7 +279,27 @@ const slugify = (text: string) => {
 const components = {
   BlogImage,
   BlogVideo,
+  BlogTable,
   Callout,
+  // Table components
+  Table,
+  TableBody,
+  TableCaption,
+  TableCell,
+  TableHead: (props: any) => (
+    <OriginalTableHead className="p-4 h-auto align-middle" {...props} />
+  ),
+  TableHeader,
+  TableRow,
+  // Map markdown table elements to our styled components
+  table: Table,
+  thead: TableHeader,
+  tbody: TableBody,
+  tr: TableRow,
+  th: (props: any) => (
+    <OriginalTableHead className="p-4 h-auto align-middle" {...props} />
+  ),
+  td: TableCell,
   // Custom heading components that add IDs
   h1: ({ children, ...props }: any) => {
     const id = slugify(children as string);

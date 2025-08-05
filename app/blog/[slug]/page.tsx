@@ -8,6 +8,7 @@ import ClientSyntaxHighlighter from "../../../components/ClientSyntaxHighlighter
 import { formatDate } from "../../lib/date-utils";
 import { Metadata } from "next";
 import BlogFooter from "../../components/blog-footer";
+import remarkGfm from "remark-gfm";
 
 // Generate metadata for each blog post
 export async function generateMetadata({
@@ -130,7 +131,16 @@ export default async function BlogPost({
         <div className="markdown-content">
           {/* Then wrapped with client-side syntax highlighter */}
           <ClientSyntaxHighlighter>
-            <MDXRemote source={post.content} components={components} />
+            <MDXRemote
+              source={post.content}
+              components={components}
+              options={{
+                mdxOptions: {
+                  remarkPlugins: [remarkGfm],
+                  rehypePlugins: [],
+                },
+              }}
+            />
           </ClientSyntaxHighlighter>
         </div>
       </article>

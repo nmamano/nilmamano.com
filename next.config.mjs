@@ -1,14 +1,13 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
-import nextMDX from "@next/mdx";
+import createMDX from "@next/mdx";
+import remarkGfm from "remark-gfm";
 
-const withMDX = nextMDX({
-  extension: /\.mdx?$/,
+const withMDX = createMDX({
   options: {
-    remarkPlugins: [],
+    remarkPlugins: [remarkGfm],
     rehypePlugins: [],
-    providerImportSource: "@mdx-js/react",
   },
 });
 

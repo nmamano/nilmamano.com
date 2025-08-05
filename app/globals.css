@@ -174,6 +174,70 @@ body {
   }
 }
 
+/* Footnote styles */
+.prose .footnotes {
+  @apply border-t border-border mt-8 pt-6;
+  scroll-margin-top: 4rem; /* Account for sticky header height (h-14 = 3.5rem + padding) */
+}
+
+.prose .footnotes ol {
+  @apply list-decimal pl-6 space-y-2;
+}
+
+.prose .footnotes li {
+  scroll-margin-top: 4rem; /* Account for sticky header when jumping to specific footnotes */
+}
+
+.prose .footnotes p {
+  @apply text-sm text-muted-foreground leading-relaxed m-0;
+}
+
+/* Footnote reference (superscript link) */
+.prose sup a {
+  @apply text-primary hover:text-primary/80 no-underline;
+  font-size: 0.8em; /* Slightly larger for better clickability */
+  font-weight: 600; /* Slightly bolder for better visibility */
+}
+
+/* Dark mode footnote contrast */
+.dark .prose sup a {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+/* Footnote reference anchors (for back navigation) */
+.prose sup a[id^="user-content-fnref"],
+.prose [id^="user-content-fnref"] {
+  scroll-margin-top: 4rem; /* Account for sticky header when returning from footnotes */
+}
+
+/* Footnote back reference */
+.prose .footnote-backref {
+  @apply text-primary hover:text-primary/80 no-underline ml-1;
+  font-size: 0.9em; /* Slightly larger for better clickability */
+  font-weight: 600; /* Slightly bolder for better visibility */
+}
+
+/* Dark mode footnote back reference contrast */
+.dark .prose .footnote-backref {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+/* Footnote definition links (the footnote numbers in the footnote section) */
+.prose .footnotes a:not(.footnote-backref) {
+  @apply text-primary hover:text-primary/80;
+  font-weight: 600; /* Consistent with other footnote elements */
+}
+
+/* Dark mode footnote definition links */
+.dark .prose .footnotes a:not(.footnote-backref) {
+  @apply text-blue-400 hover:text-blue-300;
+}
+
+/* Dark mode adjustments */
+.dark .prose .footnotes p {
+  @apply text-gray-300;
+}
+
 @layer base {
   * {
     @apply border-border;
