@@ -287,7 +287,11 @@ const components = {
   TableCaption,
   TableCell,
   TableHead: (props: any) => (
-    <OriginalTableHead className="p-4 h-auto align-middle" {...props} />
+    <OriginalTableHead
+      className="p-4 h-auto align-middle"
+      style={{ verticalAlign: "middle", ...props.style }}
+      {...props}
+    />
   ),
   TableHeader,
   TableRow,
@@ -297,7 +301,11 @@ const components = {
   tbody: TableBody,
   tr: TableRow,
   th: (props: any) => (
-    <OriginalTableHead className="p-4 h-auto align-middle" {...props} />
+    <OriginalTableHead
+      className="p-4 h-auto align-middle"
+      style={{ verticalAlign: "middle", ...props.style }}
+      {...props}
+    />
   ),
   td: TableCell,
   // Custom heading components that add IDs

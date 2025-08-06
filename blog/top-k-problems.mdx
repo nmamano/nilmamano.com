@@ -14,16 +14,66 @@ We'll consider two variants: one in which we need to return the elements in sort
 
 The following table summarizes the different approaches and runtimes:
 
-```
-|       Approach       |         Unsorted Output         |          Sorted Output          |
-|                      |      Time      |      Space     |      Time      |      Space     |
-| -------------------- | ------------------------------- | ------------------------------- |
-| Sorting              | O(n log n)     | O(n)           | O(n log n)     | O(n)           |
-| Min Heap             | O(n + k log n) | O(n)           | O(n + k log n) | O(n)           |
-| Max Heap of size k   | O(n log k)     | O(k)           | O(n log k)     | O(k)           |
-| Quickselect          | O(n)           | O(n)           | O(n + k log k) | O(n)           |
-| ???                  | O(n)           | O(k)           | O(n + k log k) | O(k)           |
-```
+<BlogTable
+  caption="**Table 1.** Time and space complexity comparison of different approaches for top-k problems."
+  centered={true}
+>
+  <TableHeader>
+    <TableRow>
+      <TableHead>Approach</TableHead>
+      <TableHead colSpan={2} className="text-center">
+        Unsorted Output
+      </TableHead>
+      <TableHead colSpan={2} className="text-center">
+        Sorted Output
+      </TableHead>
+    </TableRow>
+    <TableRow>
+      <TableHead></TableHead>
+      <TableHead className="text-center">Time</TableHead>
+      <TableHead className="text-center">Space</TableHead>
+      <TableHead className="text-center">Time</TableHead>
+      <TableHead className="text-center">Space</TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Sorting</TableCell>
+      <TableCell className="text-center">`O(n log n)`</TableCell>
+      <TableCell className="text-center">`O(n)`</TableCell>
+      <TableCell className="text-center">`O(n log n)`</TableCell>
+      <TableCell className="text-center">`O(n)`</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Min Heap</TableCell>
+      <TableCell className="text-center">`O(n + k log n)`</TableCell>
+      <TableCell className="text-center">`O(n)`</TableCell>
+      <TableCell className="text-center">`O(n + k log n)`</TableCell>
+      <TableCell className="text-center">`O(n)`</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Max Heap of size k</TableCell>
+      <TableCell className="text-center">`O(n log k)`</TableCell>
+      <TableCell className="text-center">`O(k)`</TableCell>
+      <TableCell className="text-center">`O(n log k)`</TableCell>
+      <TableCell className="text-center">`O(k)`</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Quickselect</TableCell>
+      <TableCell className="text-center">`O(n)`</TableCell>
+      <TableCell className="text-center">`O(n)`</TableCell>
+      <TableCell className="text-center">`O(n + k log k)`</TableCell>
+      <TableCell className="text-center">`O(n)`</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Impossible?</TableCell>
+      <TableCell className="text-center">`O(n)`</TableCell>
+      <TableCell className="text-center">`O(k)`</TableCell>
+      <TableCell className="text-center">`O(n + k log k)`</TableCell>
+      <TableCell className="text-center">`O(k)`</TableCell>
+    </TableRow>
+  </TableBody>
+</BlogTable>
 
 Assumptions:
 
@@ -34,7 +84,7 @@ We can see that:
 
 - Quickselect is best to optimize runtime, while heaps are best to optimize space.
 - The best possible time depends on whether the output needs to be sorted or not.
-- As of now, I don't know of any algorithm that combines the runtime of Quickselect and the space complexity of the max-heap solution (the `???` row).
+- As of now, I don't know of any algorithm that combines the runtime of Quickselect and the space complexity of the max-heap solution (the "Impossible?" row).
 
 In this post, we'll explain the four approaches and show the Python implementations.
 

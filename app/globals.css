@@ -228,6 +228,12 @@ body {
   font-weight: 600; /* Consistent with other footnote elements */
 }
 
+/* Table header vertical alignment fix */
+.prose table th {
+  vertical-align: middle !important;
+  padding: 12px 16px !important; /* Ensure consistent padding */
+}
+
 /* Dark mode footnote definition links */
 .dark .prose .footnotes a:not(.footnote-backref) {
   @apply text-blue-400 hover:text-blue-300;
