@@ -5,6 +5,11 @@ export interface CategoryConfig {
 }
 
 export const CATEGORIES: Record<string, CategoryConfig> = {
+  bctci: {
+    name: "BCtCI",
+    bgColor: "bg-blue-100",
+    textColor: "text-blue-800",
+  },
   dsa: {
     name: "DS&A",
     bgColor: "bg-green-100",
