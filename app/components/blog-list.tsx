@@ -45,7 +45,7 @@ export default function BlogList({
         Nil's Blog
       </h1>
       <p className="text-lg text-muted-foreground text-center mb-12">
-        Teaching DS&A · research highlights · SWE thoughts · building in public
+        Teaching DS&A · CS research highlights · SWE things · building in public
       </p>
 
       {/* Newsletter Subscription */}

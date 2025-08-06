@@ -38,56 +38,58 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
               Nil Mamano
             </Link>
           </div>
-          <nav className="flex items-center space-x-6 text-sm font-medium">
-            <Link
-              href="/#about"
-              className={`transition-colors hover:text-foreground/80 ${
-                currentRoute === "about" ? "text-primary" : ""
-              }`}
-            >
-              About
-            </Link>
-            <Link
-              href="/research"
-              className={`transition-colors hover:text-foreground/80 ${
-                currentRoute === "research" ? "text-primary" : ""
-              }`}
-            >
-              Research
-            </Link>
-            <Link
-              href="/#projects"
-              className={`transition-colors hover:text-foreground/80 ${
-                currentRoute === "projects" ? "text-primary" : ""
-              }`}
-            >
-              Projects
-            </Link>
-            <Link
-              href="/#contact"
-              className={`transition-colors hover:text-foreground/80 ${
-                currentRoute === "contact" ? "text-primary" : ""
-              }`}
-            >
-              Contact
-            </Link>
-            <Link
-              href="/media-kit"
-              className={`transition-colors hover:text-foreground/80 ${
-                currentRoute === "media-kit" ? "text-primary" : ""
-              }`}
-            >
-              Media Kit
-            </Link>
-            <Link
-              href="/personal"
-              className={`transition-colors hover:text-foreground/80 ${
-                currentRoute === "personal" ? "text-primary" : ""
-              }`}
-            >
-              Personal
-            </Link>
-          </nav>
+          {!isBlog && (
+            <nav className="flex items-center space-x-6 text-sm font-medium">
+              <Link
+                href="/#about"
+                className={`transition-colors hover:text-foreground/80 ${
+                  currentRoute === "about" ? "text-primary" : ""
+                }`}
+              >
+                About
+              </Link>
+              <Link
+                href="/research"
+                className={`transition-colors hover:text-foreground/80 ${
+                  currentRoute === "research" ? "text-primary" : ""
+                }`}
+              >
+                Research
+              </Link>
+              <Link
+                href="/#projects"
+                className={`transition-colors hover:text-foreground/80 ${
+                  currentRoute === "projects" ? "text-primary" : ""
+                }`}
+              >
+                Projects
+              </Link>
+              <Link
+                href="/#contact"
+                className={`transition-colors hover:text-foreground/80 ${
+                  currentRoute === "contact" ? "text-primary" : ""
+                }`}
+              >
+                Contact
+              </Link>
+              <Link
+                href="/media-kit"
+                className={`transition-colors hover:text-foreground/80 ${
+                  currentRoute === "media-kit" ? "text-primary" : ""
+                }`}
+              >
+                Media Kit
+              </Link>
+              <Link
+                href="/personal"
+                className={`transition-colors hover:text-foreground/80 ${
+                  currentRoute === "personal" ? "text-primary" : ""
+                }`}
+              >
+                Personal
+              </Link>
+            </nav>
+          )}
         </div>
         <div className="ml-auto flex items-center space-x-3">
           <Link href="/blog">
