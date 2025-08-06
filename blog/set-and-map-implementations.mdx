@@ -40,10 +40,10 @@ We'll start with sets, which are a bit simpler than maps.
 The set API is simple:
 
 ```
-add(x):      if x is not in the set, add x to the set.
-remove(x):   if x is in the set, remove it from the set.
-contains(x): return whether the element x is in the set.
-size():      return the number of elements in the set.
+add(x):      if x is not in the set, adds x to the set
+remove(x):   if x is in the set, removes it from the set
+contains(x): returns whether the element x is in the set
+size():      returns the number of elements in the set
 ```
 
 A question for the reader: Why do sets not have a function like `set(i, x)`, which sets an element at a particular index?[^1]
@@ -118,7 +118,7 @@ If you think about it, in our naive set implementation, we used a sort of hash f
 
 ### Hashing strings
 
-We want to be able to hash different types, not just integers. Strings are a type we often need to hash, but this poses the extra challenge of different input and output types: string \-\> number.
+We want to be able to hash different types, not just integers. Strings are a type we often need to hash, but this poses the extra challenge of different input and output types: string `->` number.
 
 We'll follow a two-step approach:
 
@@ -151,7 +151,7 @@ Can we use ASCII codes of the individual characters to convert a whole string in
 3. This function is much better because it factors in information from all the characters. Its weakness is that the _order_ of the characters does not matter: the string "spot" maps to the number `115 + 112 + 111 + 116 = 454`, but so do other words like `"stop"`, `"pots"`, and `"tops"`.
 4. This function is even better and results in fewer collisions because it uses information from all the characters _and_ also uses the order. However, it is still possible to find collisions, like `"!!"` and `"c"`. The ASCII code for `'!'` is `33`, so the number for `"!!"` is `33 * 1 + 33 * 2 = 99`, and the ASCII code for `'c'` is also `99`.
 
-It turns out that **there is a way to map ASCII strings to numbers without ever having any collisions**. The key is to think of the whole string as a number where each character is a 'digit' in base `128` (see Figure 2). For instance, `"a"` corresponds to the number `97` because that's the ASCII code for `'a'`, and `"aa"` corresponds to `12513` because `(97 * 1281) + (97 * 1280) = 12513`.
+It turns out that **there is a way to map ASCII strings to numbers without ever having any collisions**. The key is to think of the whole string as a number where each character is a 'digit' in base `128` (see Figure 2). For instance, `"a"` corresponds to the number `97` because that's the ASCII code for `'a'`, and `"aa"` corresponds to `12513` because `(97 * 128^1) + (97 * 128^0) = 12513`.
 
 <BlogImage
   src="/blog/set-and-map-implementations/fig2.png"
@@ -200,10 +200,20 @@ This is a good way to map strings into integers without overflowing. The runtime
 
 ## Putting it All Together
 
-**Problem 1: Hash Set Class**  
+<Problem
+  number={1}
+  title="Hash Set Class"
+  link="https://bctci.co/hash-set-class"
+/>
+
 Implement a hash set which supports `add()`, `contains()`, `remove()`, and `size()`.
 
-**Solution 1: Hash Set Class**  
+<Solution
+  number={1}
+  title="Hash Set Class"
+  link="https://bctci.co/hash-set-class"
+/>
+
 Our final set implementation will consist of a dynamic array of _buckets_, each bucket being itself a dynamic array of elements.[^7] The outer array is called a _hash table_. The number of elements is called the _size_, and the number of buckets is called the _capacity_. We can start with a modest capacity, like `10`:
 
 ```python
@@ -288,7 +298,7 @@ This completes our set implementation.
 
 ## Hash Set Analysis
 
-The `contains()` method has to compute the hash of the input and then loop through the elements hashed to a particular bucket. Assuming we have a decent hash function and a reasonable load factor, we expect each slot to be empty or contain very few elements. Thus, the **expected runtime** for a set of integers is `O(1)`. It is worth mentioning that this expectation only applies with a high-quality hash function\!
+The `contains()` method has to compute the hash of the input and then loop through the elements hashed to a particular bucket. Assuming we have a decent hash function and a reasonable load factor, we expect each slot to be empty or contain very few elements. Thus, the **expected runtime** for a set of integers is `O(1)`. It is worth mentioning that this expectation only applies with a high-quality hash function!
 
 The `add()` method has the same amortized analysis as our dynamic array. Most additions take `O(1)` expected time, since we just find the correct bucket and append the value to it. We _occasionally_ need to resize the array, which takes linear time, but, like with dynamic arrays, this happens so infrequently that the **amortized runtime** per addition over a sequence of additions is still `O(1)`. The analysis for `remove()` is similar.
 
@@ -298,36 +308,48 @@ Thus, we can expect **all the set operations to take constant time or amortized 
 
 The following problem set asks _data structure design_ questions related to hash sets.
 
-**Problem 2: Hash Set Class Extensions**  
+<Problem
+  number={2}
+  title="Hash Set Class Extensions"
+  link="https://bctci.co/hash-set-class-extensions"
+/>
+
 Add the following methods to our `HashSet` class. For each method, provide the time and space analysis.
 
 1. Implement an `elements()` method that takes no input and returns all the elements in the set in a dynamic array.
 2. Implement a `union(s)` method that takes another set, `s`, as input and returns a new set that includes all the elements in _either_ set. Do not modify either set.
 3. Implement an `intersection(s)` method that takes another set as input, `s`, and returns a new set that includes only the elements contained in _both_ sets. If the sets have no elements in common, return an empty set. Do not modify either set.
 
-**Problem 3: Multiset**  
+<Problem number={3} title="Multiset" link="https://bctci.co/multiset" />
+
 A _multiset_ is a set that allows multiple copies of the same element. Implement a `Multiset` class with the following methods:
 
-add(x): adds a 'copy' of x to the multiset.  
- remove(x): removes a 'copy of x from the multiset.  
- contains(x): return whether x is in the multiset (at least one copy).  
- size(): return the number of elements in the multiset (including copies).
+```
+add(x):      adds a copy of x to the multiset
+remove(x):   removes a copy of x from the multiset
+contains(x): returns whether x is in the multiset (at least one copy)
+size():      returns the number of elements in the multiset (including copies)
+```
 
 **Problem set solutions.**
 
-**Solution 2: Hash Set Class Extensions**
+<Solution
+  number={2}
+  title="Hash Set Class Extensions"
+  link="https://bctci.co/hash-set-class-extensions"
+/>
 
 1. `elements()`: We can start by initializing an empty dynamic array. Then, we can iterate through the list of buckets, and append to the list all the elements in each bucket. The runtime is `O(capacity + size) = O(size)` (since the load factor is at least 25%, so the capacity is at most four times the size), and the space complexity is `O(size)`.
 2. `union(s)`: We can start by initializing an empty set. Then, we can iterate through the elements in both `self` and `s` and call `add(x)` on the new set for each element `x`.
 3. `intersection(s)`: We can start by initializing an empty set. Then, we can iterate through the elements in `self` and call `add(x)` on the new set only for those elements where `s.contains(x)` is true.
 
-**Solution 3: Multiset**  
+<Solution number={3} title="Multiset" link="https://bctci.co/multiset" />
 We can approach it in two ways:
 
 1. We can tweak the `HashSet` implementation we already discussed. The `contains()`, `remove()`, and `size()` methods do not change. For `add()`, we need to remove the check for whether the element already exists.
 2. Alternatively, we could implement the multiset as a hash map with the elements in the set as keys and their counts as values.
 
-Approach 2 is more common because it can save space: if we add `n` strings of length `k`, we'll use only `O(k)` space instead of `O(n * k)` for Approach 1\. See the next section for more on maps.
+Approach 2 is more common because it can save space: if we add `n` strings of length `k`, we'll use only `O(k)` space instead of `O(n * k)` for Approach 1. See the next section for more on maps.
 
 # Hash Map Implementation
 
@@ -336,17 +358,17 @@ As we have seen, sets allow us to store unique elements and provide constant tim
 Map API:
 
 ```
-add(k, v):   if k is not in the map, add key k to the map with value v
-             if k is already in the map, update its value to v
+add(k, v):   if k is not in the map, adds key k to the map with value v
+             if k is already in the map, updates its value to v
 
-remove(k):   if k is in the map, remove it from the map
+remove(k):   if k is in the map, removes it from the map
 
-contains(k): return whether the key k is in the map
+contains(k): returns whether the key k is in the map
 
-get(k):      return the value for key k
-             if k is not in the map, return a null value
+get(k):      returns the value for key k
+             if k is not in the map, returns a null value
 
-size():      return the number of keys in the map
+size():      returns the number of keys in the map
 ```
 
 For instance, we could have a map with employee IDs as keys and their roles as values. This would allow us to quickly retrieve an employee's role from their ID.
@@ -359,33 +381,52 @@ We will leave the details of map internals as our final problem set in this chap
 
 The following problem set asks _data structure design_ questions related to maps.
 
-**Problem 4: Hash Map Class**  
+<Problem
+  number={4}
+  title="Hash Map Class"
+  link="https://bctci.co/hash-map-class"
+/>
+
 Implement a `HashMap` class with the API described in the 'Hash Map Implementation' section.
 
 Hint: you can modify the existing `HashSet` class to store key–value pairs.
 
-**Problem 5: Hash Map Class Extensions**
+<Problem
+  number={5}
+  title="Hash Map Class Extensions"
+  link="https://bctci.co/hash-map-class-extensions"
+/>
 
 Provide the time and space analysis of each method.
 
 1. Implement a `keys()` method that takes no input and returns a list of all keys in the map. The output order doesn't matter.
 2. Implement a `values()` method that takes no input and returns a list of the values of all the keys in the map. The output order doesn't matter. If a value appears more than once, return it as many times as it occurs.
 
-**Problem 6: Multimap**  
+<Problem number={6} title="Multimap" link="https://bctci.co/multimap" />
+
 A _multimap_ is a map that allows multiple key–value pairs with the same key. Implement a `Multiset` class with the following methods:
 
-add(k, v): adds key k with value v to the multimap, even if key k is  
- already found.  
- remove(k): removes **all** key-value pairs with k as the key.  
- contains(k): returns whether the multimap contains any key-value pair with  
- k as the key  
- get(k): returns **all** values associated to key k in a list. If there is none,  
- returns an empty list.  
- size(): return the number of key-value pairs in the multiset.
+```
+add(k, v):   adds key k with value v to the multimap, even if key k is already found
+
+remove(k):   removes all key-value pairs with k as the key
+
+contains(k): returns whether the multimap contains any key-value pair with k as the key
+
+get(k):      returns all values associated to key k in a list
+             if there is none, returns an empty list
+
+size():      returns the number of key-value pairs in the multiset
+```
 
 **Problem set solutions.**
 
-**Solution 4: Hash Map Class**  
+<Solution
+  number={4}
+  title="Hash Map Class"
+  link="https://bctci.co/hash-map-class"
+/>
+
 We can adapt the `HashSet` class. The main difference is that, in `add()`, we need to consider the case where the key already exists, and we just update its value.
 
 This was the `add()` method for the `HashSet` class:
@@ -400,7 +441,7 @@ def add(self, x):
     self._size += 1
     load_factor = self._size / self.capacity
     if load_factor > 1:
-        self.resize(self.capacity*2)
+        self.resize(self.capacity * 2)
 ```
 
 And this is the modified version for the `HashMap` class:
@@ -416,17 +457,22 @@ def add(self, k, v):
     self._size += 1
     load_factor = self._size / self.capacity
     if load_factor > 1:
-        self.resize(self.capacity*2)
+        self.resize(self.capacity * 2)
 ```
 
 The `get()` method is very similar to `contains()`.
 
-**Solution 5: Hash Map Class Extensions**
+<Solution
+  number={5}
+  title="Hash Map Class Extensions"
+  link="https://bctci.co/hash-map-class-extensions"
+/>
 
 1. `keys()`: This is analogous to the `elements()` method from the Set Quiz.
 2. `values()`: This is like `keys()`, but getting the values instead.
 
-**Solution 6: Multimap**  
+<Solution number={6} title="Multimap" link="https://bctci.co/multimap" />
+
 A multimap with values of type `T` can be implemented as a map where the values are arrays of elements of type `T`. The `add()` method appends to the array, the `get()` method returns the array, and `remove()` works as usual.
 
 # Rolling Hash Algorithm
@@ -435,7 +481,7 @@ Before wrapping up the chapter, we will illustrate a clever application of hash 
 
 Implement an `index_of(s, t)` method, which returns the first index where string `t` appears in string `s`, or `-1` if `s` does not contain `t`.
 
-A naive approach would be to compare `t` against every substring of `s` of the same length as `t`. If `sn` and `tn` are the lengths of `s` and `t`, there are `sn - tn + 1` substrings of `s` of length `tn`. Comparing two strings of length `tn` takes `O(tn)` time, so in total, this would take `O((sn - tn + 1)*tn) = O(sn*tn)` time.
+A naive approach would be to compare `t` against every substring of `s` of the same length as `t`. If `sn` and `tn` are the lengths of `s` and `t`, there are `sn - tn + 1` substrings of `s` of length `tn`. Comparing two strings of length `tn` takes `O(tn)` time, so in total, this would take `O((sn - tn + 1) * tn) = O(sn * tn)` time.
 
 We can do better than this naive algorithm. The Knuth-Morris-Pratt (KMP) algorithm is a famous but tricky algorithm for this problem that runs in `O(sn)` time, which is optimal. Here, we will introduce the _rolling hash algorithm_, another famous algorithm that is also optimal and which we find easier to learn and replicate in interviews.
 
@@ -454,23 +500,23 @@ However, computing the hash of each substring of `s` of length `tn` would still 
 
 So, how can we go from, e.g., `h("cbaa")` to `h("baab")`? We can do it in three steps. Recall that `ASCII('a') = 97`, `ASCII('b') = 98`, and `ASCII('c') = 99`. We start with:
 
-`h("cbaa") = 99 * 1283 + 98 * 1282 + 97 * 1281 + 97 * 1280 = 209236193`
+`h("cbaa") = 99 * 128^3 + 98 * 128^2 + 97 * 128^1 + 97 * 128^0 = 209236193`
 
 Then:
 
-1. First, we remove the contribution from the first letter, `'c'`, by subtracting `99 * 1283`. Now, we have:
+1. First, we remove the contribution from the first letter, `'c'`, by subtracting `99 * 128^3`. Now, we have:
 
-`98 * 1282 + 97 * 1281 + 97 * 1280 = 1618145`
+`98 * 128^2 + 97 * 128^1 + 97 * 128^0 = 1618145`
 
-2. Then, we multiply everything by `128`, which effectively increases the exponent of the `128` in each term by one. This is kind of like _shifting_ every letter to the left in Figure 5\. Now, we have:
+2. Then, we multiply everything by `128`, which effectively increases the exponent of the `128` in each term by one. This is kind of like _shifting_ every letter to the left in Figure 5. Now, we have:
 
-`98 * 1283 + 97 * 1282 + 97 * 1281 = 207122560`
+`98 * 128^3 + 97 * 128^2 + 97 * 128^1 = 207122560`
 
-3. Finally, we add the contribution of the new letter, `'b'`, which is `98 * 1280`. We end up with:
+3. Finally, we add the contribution of the new letter, `'b'`, which is `98 * 128^0`. We end up with:
 
-`98 * 1283 + 97 * 1282 + 97 * 1281 + 98 * 1280 = 207122658`
+`98 * 128^3 + 97 * 128^2 + 97 * 128^1 + 98 * 128^0 = 207122658`
 
-This is `h("baab")`. We are done\!
+This is `h("baab")`. We are done!
 
 Here is a little function to do these steps. Note that we use modulo (`%`) at each step to always keep the values bounded within a reasonable range.[^10]
 
@@ -490,7 +536,7 @@ def next_hash(s, tn, i, current_hash, first_power):
 
 Each step takes constant time, so, from the hash of a substring of `s`, we can compute the hash of the **next** substring in constant time.
 
-We pass `128tn-1 % 10^9 + 7` as the `first_power` parameter so that we do not need to compute it for each call to `next_hash()`, as that would increase the runtime. This way, we compute the hashes of all the substrings of length `t` in `O(sn)` time. Putting all the pieces together, we get the rolling hash algorithm:
+We pass `128^(tn-1) % 10^9 + 7` as the `first_power` parameter so that we do not need to compute it for each call to `next_hash()`, as that would increase the runtime. This way, we compute the hashes of all the substrings of length `t` in `O(sn)` time. Putting all the pieces together, we get the rolling hash algorithm:
 
 ```python
 LARGE_PRIME = 10**9 + 7
@@ -587,7 +633,7 @@ The 'Sets & Maps' chapter ([bctci.co/sets-and-maps](http://bctci.co/sets-and-map
 
 [^3]: Mathematicians call this the "pigeonhole principle". If you think of the inputs as pigeons and the hashes as holes, it says that if there are more pigeons than holes, some pigeons (inputs) will have to share a hole (have the same hash).
 
-[^4]: See the 'String Manipulation' chapter for more on the ASCII format.
+[^4]: See the 'String Manipulation' Chapter in BCtCI for more on the ASCII format.
 
 [^5]: Intermediate values may still exceed `32` bits, so, for typed languages, make sure to use 64-bit integers for the intermediate operations.
 

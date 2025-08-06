@@ -239,6 +239,54 @@ export function BlogTable({
   );
 }
 
+interface ProblemProps {
+  number: number;
+  title: string;
+  link: string;
+}
+
+export function Problem({ number, title, link }: ProblemProps) {
+  return (
+    <div className="flex items-center justify-between bg-blue-50 dark:bg-blue-950/30 border-l-4 border-blue-500 px-4 py-3 my-6 rounded-r-md">
+      <h4 className="text-lg font-semibold text-blue-900 dark:text-blue-100 m-0">
+        Problem {number}: {title}
+      </h4>
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 text-sm font-medium no-underline hover:underline"
+      >
+        Try it yourself →
+      </a>
+    </div>
+  );
+}
+
+interface SolutionProps {
+  number: number;
+  title: string;
+  link: string;
+}
+
+export function Solution({ number, title, link }: SolutionProps) {
+  return (
+    <div className="flex items-center justify-between bg-green-50 dark:bg-green-950/30 border-l-4 border-green-500 px-4 py-3 my-6 rounded-r-md">
+      <h4 className="text-lg font-semibold text-green-900 dark:text-green-100 m-0">
+        Solution {number}: {title}
+      </h4>
+      <a
+        href={link}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 text-sm font-medium no-underline hover:underline"
+      >
+        Full code & other languages →
+      </a>
+    </div>
+  );
+}
+
 // Simple markdown parser for captions
 function parseCaption(text: string) {
   const parts = [];
@@ -281,6 +329,8 @@ const components = {
   BlogVideo,
   BlogTable,
   Callout,
+  Problem,
+  Solution,
   // Table components
   Table,
   TableBody,
