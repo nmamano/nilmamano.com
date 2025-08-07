@@ -213,7 +213,7 @@ Implement a hash set which supports `add()`, `contains()`, `remove()`, and `size
 <Solution
   number={1}
   title="Hash Set Class"
-  link="https://bctci.co/hash-set-class"
+  link="https://bctci.co/hash-set-class-solution"
 />
 
 Our final set implementation will consist of a dynamic array of _buckets_, each bucket being itself a dynamic array of elements.[^7] The outer array is called a _hash table_. The number of elements is called the _size_, and the number of buckets is called the _capacity_. We can start with a modest capacity, like `10`:
@@ -338,14 +338,18 @@ size():      returns the number of elements in the multiset (including copies)
 <Solution
   number={2}
   title="Hash Set Class Extensions"
-  link="https://bctci.co/hash-set-class-extensions"
+  link="https://bctci.co/hash-set-class-extensions-solution"
 />
 
 1. `elements()`: We can start by initializing an empty dynamic array. Then, we can iterate through the list of buckets, and append to the list all the elements in each bucket. The runtime is `O(capacity + size) = O(size)` (since the load factor is at least 25%, so the capacity is at most four times the size), and the space complexity is `O(size)`.
 2. `union(s)`: We can start by initializing an empty set. Then, we can iterate through the elements in both `self` and `s` and call `add(x)` on the new set for each element `x`.
 3. `intersection(s)`: We can start by initializing an empty set. Then, we can iterate through the elements in `self` and call `add(x)` on the new set only for those elements where `s.contains(x)` is true.
 
-<Solution number={3} title="Multiset" link="https://bctci.co/multiset" />
+<Solution
+  number={3}
+  title="Multiset"
+  link="https://bctci.co/multiset-solution"
+/>
 We can approach it in two ways:
 
 1. We can tweak the `HashSet` implementation we already discussed. The `contains()`, `remove()`, and `size()` methods do not change. For `add()`, we need to remove the check for whether the element already exists.
@@ -426,7 +430,7 @@ size():      returns the number of key-value pairs in the multiset
 <Solution
   number={4}
   title="Hash Map Class"
-  link="https://bctci.co/hash-map-class"
+  link="https://bctci.co/hash-map-class-solution"
 />
 
 We can adapt the `HashSet` class. The main difference is that, in `add()`, we need to consider the case where the key already exists, and we just update its value.
@@ -467,13 +471,17 @@ The `get()` method is very similar to `contains()`.
 <Solution
   number={5}
   title="Hash Map Class Extensions"
-  link="https://bctci.co/hash-map-class-extensions"
+  link="https://bctci.co/hash-map-class-extensions-solution"
 />
 
 1. `keys()`: This is analogous to the `elements()` method from the Set Quiz.
 2. `values()`: This is like `keys()`, but getting the values instead.
 
-<Solution number={6} title="Multimap" link="https://bctci.co/multimap" />
+<Solution
+  number={6}
+  title="Multimap"
+  link="https://bctci.co/multimap-solution"
+/>
 
 A multimap with values of type `T` can be implemented as a map where the values are arrays of elements of type `T`. The `add()` method appends to the array, the `get()` method returns the array, and `remove()` works as usual.
 
