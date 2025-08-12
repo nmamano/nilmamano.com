@@ -257,18 +257,25 @@ Quickselect is not common in interviews, but it's not hard to implement if you a
 Quickselect runs in linear time with high probability, but the analysis is a bit tricky because it depends on how lucky we get with the pivots.
 To be clear, the analysis below is beyond what's expected for coding interviews.
 
+The partition step takes `O(n)` time.
+
 The key question is: when we make a recursive call, how small is the new array (`smaller` or `larger`) relative to `arr`? How much is the array size reduced at each step?
+
+If we are consistently unlucky, we might reduce the array size by only one at each recursive call. For instance, if `k` is `1`, and the random pivot happens to be the largest element, we'll only eliminate `1` element (the pivot itself). That's why, in the worst case with the worst possible luck, the number of steps is `O(n)`, and the total runtime is `O(n^2)`. However, the probability of this happening is negligible (approaches `0` exponentially fast as `n` grows).
 
 As you probably know from the analysis of binary search, if the array is reduced by 50% at each step, the number of steps is `log_2(n)`. (The definition of `log_2(n)` is "the number of times you can divide `n` by `2` until you get `1`".)
 
 However, we don't need the reduction to be 50% at each step. As long as the reduction is at least some constant fraction at each step (like, e.g., 25%), the number of steps is still logarithmic, just with a different base. In the end, it's still `O(log n)`, since the base of logarithms goes away in big O notation.
 
-The problem with Quickselect is that we don't always reduce the array by a constant fraction. For instance, if `k` is `1`, and the random pivot happens to be the largest element, we'll only eliminate `1` element (the pivot itself). That's why, in the worst case with the worst possible luck, the number of steps is `O(n)`.
+The challenge with Quickselect is that we don't always reduce the array by a constant fraction.
 
-However, since the pivot is random, there's a 50% chance that the pivot will be in the middle `n/2` elements of `arr`.
-If that happens, _at least_ 25% of the elements will be eliminated from the search range: if `k` is larger than the pivot's position, we'll eliminate the `n/4` smallest elements, and if `k` is smaller than the pivot's position, we'll eliminate the `n/4` largest elements.
+The key is that, since the pivot is random, there's a 50% chance that the pivot will be in the middle `n/2` elements of `arr`.
+If that happens, _at least_ 25% of the elements will be eliminated from the search range:
 
-Eliminating a constant fraction of the elements (at least 25%) with a 50% chance is enough to guarantee that the number of recursive calls is `O(log n)` with high probability. As `n` grows, the probability of being unlucky becomes negligible (approaches `0` exponentially fast).
+- If `k` is larger than the pivot's position, we'll eliminate the `n/4` smallest elements.
+- If `k` is smaller than the pivot's position, we'll eliminate the `n/4` largest elements.
+
+Eliminating a constant fraction of the elements (at least 25%) with a 50% chance is enough to guarantee that the number of recursive calls is `O(log n)` with high probability. As `n` grows, the probability of being unlucky becomes negligible.
 
 The final recurrence for the expected worst-case runtime of Quickselect is:
 
