@@ -10,6 +10,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
+import TocElement from "./TableOfContents";
 
 interface BlogImageProps {
   src: string;
@@ -331,6 +332,7 @@ const components = {
   Callout,
   Problem,
   Solution,
+  Toc: TocElement,
   // Table components
   Table,
   TableBody,
@@ -383,7 +385,30 @@ const components = {
       </h3>
     );
   },
-  // ... and so on for h4, h5, h6 if needed
+  h4: ({ children, ...props }: any) => {
+    const id = slugify(children as string);
+    return (
+      <h4 id={id} {...props}>
+        {children}
+      </h4>
+    );
+  },
+  h5: ({ children, ...props }: any) => {
+    const id = slugify(children as string);
+    return (
+      <h5 id={id} {...props}>
+        {children}
+      </h5>
+    );
+  },
+  h6: ({ children, ...props }: any) => {
+    const id = slugify(children as string);
+    return (
+      <h6 id={id} {...props}>
+        {children}
+      </h6>
+    );
+  },
 
   // You can add more custom components here
   a: (props: any) => {

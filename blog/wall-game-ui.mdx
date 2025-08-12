@@ -12,8 +12,12 @@ categories: ["wallgame"]
   interesting came out of it: an assessment of frontend generators' ability to
   one-shot a 6000-word design doc prompt. The results deeply impressed me. They
   are in an appendix at the bottom. Feel free to skip the design doc and check
-  out the [appendix](#appendix).
+  out the [appendix](#appendix-ui-generators).
 </Callout>
+
+<Toc />
+
+## Overview
 
 This is the specification of the frontend for the [Wall Game](/blog/wall-game-intro), an online strategy board game.
 It only specifies the logic/functionality. It is agnostic of the look.
@@ -282,7 +286,7 @@ There should also be an indication that the user needs to be logged in to change
 
 The pawn selectors are between icons/small images.
 
-### 3. Default game parameters.
+### 3. Default game parameters
 
 This is the game configuration panel component.
 
@@ -335,7 +339,7 @@ The delete account button shows a confirmation dialog: "Your email will be delet
 
 This page consists of a set of filters and a table where rows are filtered by those filters.
 
-### Filters
+### Past games filters
 
 All the filters have an "all" option which is the default.
 Filters are added as query parameters to the URL, so they can be shared.
@@ -354,7 +358,7 @@ The two player fields serve the same purpose. Filling only one gives you all gam
 Games with fewer than 2 moves are filtered out.
 Games aborted during the "matching stage" are not even stored.
 
-### Columns
+### Past games columns
 
 The rows are ordered by date. The order cannot be changed.
 
@@ -382,7 +386,7 @@ The chat is grayed out with a message that says "Chat is not preserved."
 
 Similar to the "Past games" page, this page consists of a set of filters and a table where rows are filtered by those filters.
 
-### Filters
+### Live games filters
 
 All the filters have an "all" option which is the default.
 
@@ -392,7 +396,7 @@ All the filters have an "all" option which is the default.
 - Board dimensions: selector with (small / medium / large / all). This field may be disabled (grayed out) depending on the variant.
 - ELO: a numerical range
 
-### Columns
+### Live games columns
 
 The formatting of the columns is the same as for "Past Games".
 
@@ -423,7 +427,7 @@ Spectators see the "Spectator chat", which is different than the ones the player
 
 This page consists of a set of filters and a table where rows are filtered by those filters.
 
-### Filters
+### Ranking filters
 
 The filters do _not_ have an "all" option.
 
@@ -431,7 +435,7 @@ The filters do _not_ have an "all" option.
 - Time control: default: rapid
 - Player: text field. Default: empty. The player filter acts more like a search box. If filled and the player exists, it only shows the row corresponding to that player and a few rows before and after. If the player does not exist, it shows nothing.
 
-### Columns
+### Ranking columns
 
 - Rank: number starting at 1
 - Player: the display name. It updates whenever players change their names delete their accounts.
@@ -582,7 +586,7 @@ I usually figure out the shape of things as I build them, like I did for [wallwa
 
 In any case, now that I have this doc, I think it's a good opportunity to test out the various frontend generators (lovable and company) and see what they spit out. I probably won't use any of them directly, but they should give me good ideas for the styling.
 
-## Appendix
+# Appendix: UI Generators
 
 I fed this whole blog post to [v0.dev](https://v0.dev) (free tier). The prompt was "Create mocks for the attached design doc." + this blog post, which is about 6000 words (a 33kB attachment).
 

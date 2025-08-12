@@ -97,7 +97,9 @@ export default async function BlogPost({
       </div>
 
       <article className="prose prose-lg dark:prose-invert max-w-none">
-        <h1 className="text-3xl font-bold mb-2">{post.title}</h1>
+        <h1 id="title" className="text-3xl font-bold mb-2">
+          {post.title}
+        </h1>
 
         <div className="text-sm text-muted-foreground mb-8">
           {post.date && (

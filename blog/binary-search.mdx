@@ -6,11 +6,15 @@ coverImage: "/blog/binary-search/cover.png"
 categories: ["bctci", "dsa"]
 ---
 
-One of the things that makes binary search tricky to implement is that you usually need to tweak the pointer manipulation logic in subtle ways based on the specifics of the problem.
+One of the things that makes binary search tricky to implement is that you
+usually need to tweak the pointer manipulation logic in subtle ways based on the
+specifics of the problem.
 
 E.g., an implementation that works for finding a target in a sorted array when the target is present, may not work if the target is missing. Or, it may not be clear how to tweak the code to find the last occurrence of the target instead of the first one. And of course, there are plenty of less conventional applications of binary search where the input is not an array, like [catching bike thieves](https://x.com/AlecStapp/status/1728953538301345889).
 
 In [Beyond Cracking the Coding Interview](https://www.amazon.com/dp/195570600X), we wanted to simplify this, so we went looking for a general binary search template. Going into it, I thought we might need at least two templates, but we ended up with just one, which we called the "transition point recipe", and which works for every problem we tried, including the 17 problems in the binary search chapter of the book. If you find one where it doesn't work, let me know!
+
+<Toc />
 
 ## The transition point problem
 
@@ -65,7 +69,7 @@ And so on for other problems.
   width="50%"
 />
 
-## Practice
+## Practice problems
 
 You can try the transition-point recipe on all the problems from the binary search chapter of the book online at [start.interviewing.io/beyond-ctci/part-vii-catalog/binary-search](https://start.interviewing.io/beyond-ctci/part-vii-catalog/binary-search), even if you don't have the book. There, you can also find all our solutions using the recipe, in Python, JS, Java, and C++.
 

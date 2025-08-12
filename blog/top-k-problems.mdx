@@ -12,6 +12,12 @@ One of the most classic problems in coding interviews is:
 
 We'll consider two variants: one in which we need to return the elements in sorted order, and the other in which we can return them in any order.
 
+In this post, we'll explain the four main approaches for this problem and show the Python implementations.
+
+<Toc />
+
+## Overview
+
 The following table summarizes the different approaches and runtimes:
 
 <BlogTable
@@ -20,12 +26,12 @@ The following table summarizes the different approaches and runtimes:
 >
   <TableHeader>
     <TableRow>
-      <TableHead>Approach</TableHead>
+      <TableHead>**Approach**</TableHead>
       <TableHead colSpan={2} className="text-center">
-        Unsorted Output
+        **Unsorted Output**
       </TableHead>
       <TableHead colSpan={2} className="text-center">
-        Sorted Output
+        **Sorted Output**
       </TableHead>
     </TableRow>
     <TableRow>
@@ -86,19 +92,17 @@ We can see that:
 - The best possible time depends on whether the output needs to be sorted or not.
 - As of now, I don't know of any algorithm that combines the runtime of Quickselect and the space complexity of the max-heap solution (the "Impossible?" row).
 
-In this post, we'll explain the four approaches and show the Python implementations.
+Instead of the `k` smallest values, we could also ask for the `k` largest values. The problem is essentially the same.
 
 <Callout>
   This blog post is based on Beyond Cracking the Coding Interview content.
   Credit in particular to [Mike Mroczka](https://www.mikemroczka.com/), who did
   a lot of the writing in the Sorting and Heaps chapters. You can find all four
-  approaches implemented online in **Python, JS, Java, and C++** in the online
-  materials -- see the [First K](https://bctci.co/first-k) problem. By clicking
-  the link, you can even try the problem yourself with our AI interviewer! The
-  online materials are free, but behind a login wall.
+  approaches in **Python, JS, Java, and C++** in the online materials -- see the
+  [First K](https://bctci.co/first-k) problem. By clicking the link, you can
+  even try the problem yourself with our AI interviewer! The online materials
+  are free, but behind a login wall.
 </Callout>
-
-Instead of the `k` smallest values, we could also ask for the `k` largest values. The problem is essentially the same.
 
 ## Sorting solution
 

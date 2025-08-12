@@ -8,6 +8,8 @@ categories: ["dsa"]
 
 Note: the approach in this guide later became the foundation for the dynamic programming chapter in [Beyond Cracking the Coding Interview](https://www.amazon.com/dp/195570600X).
 
+<Toc />
+
 ## Introduction
 
 When I was a TA for "Algorithm Design and Analysis", the students struggled with dynamic programming. To simplify/demystify it, I tried to break it down into a logical sequence of steps, each of which should not feel too intimidating on its own. This is explained in detail here. To complement the explanations, there are links to problems on [leetcode.com](https://leetcode.com/), in case the reader wants to practice. The code snippets are in Python, but Leetcode accepts most popular languages.
@@ -267,13 +269,13 @@ Note: this optimization is incompatible with reconstructing the solution, becaus
 
 Here are some typical patterns:
 
-### For Step 1. The subproblems.
+### Step 1 (The Subproblems) Patterns
 
 - If the input is a string or a list, the subproblems are usually prefixes or substrings/sublists, which can be specified as a pair of indices.
 - If the input is a number, the subproblems are usually smaller numbers.
 - Generally speaking, the number of subproblems will be linear or quadratic on the input size.
 
-### For Step 2. The recurrence equation.
+### Step 2 (The Recurrence Equation) Patterns
 
 - Often, we use `max` or `min` to choose between options, or sum to aggregate subsolutions.
 - The number of subproblems is most often constant, but sometimes it is linear on the subproblem size. In the latter case, we use an inner loop to aggregate/choose the best solution.

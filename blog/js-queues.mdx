@@ -6,13 +6,9 @@ coverImage: "/blog/js-queues/shift.png"
 categories: ["bctci", "dsa"]
 ---
 
-It's 2025 and JS still doesn't have built-in **queues**. This can be an issue in coding interviews, so, in this post, I'll go over the most practical workarounds:
+It's 2025 and JS still doesn't have built-in **queues**. This can be an issue in coding interviews, so, in this post, I'll go over the most practical workarounds.
 
-1. Assume a queue exists
-2. Manual queue implementation
-3. Use arrays and shift
-4. Use arrays, but never shift
-5. Import a Queue package
+<Toc />
 
 I dealt with this issue myself while writing [Beyond Cracking the Coding Interview](https://www.amazon.com/dp/195570600X), which goes over many problems that require queues, including:
 
@@ -24,12 +20,9 @@ The book is in Python, but we also translated all the solutions to C++, JS, and 
 
 If you know of any better workarounds, please let me know!
 
-<Callout>
-  At the end, I'll also talk about **double-ended queues** (deques) and
-  **heaps**, which are in a similar situation.
-</Callout>
+At the end, I'll also talk about **double-ended queues** (deques) and **heaps**, which are in a similar situation.
 
-### Option 1: Assume a queue exists
+## Option 1: Assume a queue exists
 
 In an interview, the most important thing is to not waste time, so the most practical option may be to say something like:
 
@@ -41,7 +34,7 @@ If you are in an interview where your code _must_ run, it's probably still a goo
 
 > If there is time at the end, I can circle back and implement it.
 
-### Option 2: Manual queue implementation
+## Option 2: Manual queue implementation
 
 If you **must** implement the queue yourself, this is the most concise JS implementation I've seen.
 
@@ -79,7 +72,7 @@ Thanks to veganaiZe on Discord for this implementation.
 
 If you want to learn to implement a linked-list queue from scratch, check out the [Linked-List-Based Queue](https://bctci.co/linked-list-based-queue) problem from BCtCI online (it's free, but behind a login wall).
 
-### Option 3: Use arrays and shift
+## Option 3: Use arrays and shift
 
 JS arrays have a `push()` method to add to the end in amortized constant time -- that's half of a queue.
 They also have a `shift()` method to remove from the front, but the problem is that it **_USUALLY_** takes linear time, not constant time.
@@ -106,7 +99,7 @@ If you choose to stick with arrays and `shift()`, you can try explaining to the 
 
 Remember, what matters is showcasing your knowledge of big O analysis and of your programming language.
 
-### Option 4: Use arrays, but never shift
+## Option 4: Use arrays, but never shift
 
 If you are implementing a BFS or a level-order traversal, you can simply never pop elements out of the queue. Instead, you can use a pointer to track the front of the queue. Instead of popping, we increment the pointer.
 
@@ -168,7 +161,7 @@ For example, if the problem asks us to implement a Queue data structure, using a
 
 </Callout>
 
-### Option 5: Import a Queue package
+## Option 5: Import a Queue package
 
 The interviewer may be okay with you importing third-party packages to supplement the shortcomings of JS.
 They may prefer this over simply "assuming a queue exists".
@@ -186,7 +179,7 @@ queue.dequeue();
 // ...
 ```
 
-### So, which option is best?
+## So, which option is best?
 
 Keep two factors in mind:
 

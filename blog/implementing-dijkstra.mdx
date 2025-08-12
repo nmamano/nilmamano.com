@@ -6,6 +6,8 @@ coverImage: "/blog/implementing-dijkstra/cover.png"
 categories: ["dsa"]
 ---
 
+<Toc />
+
 ## Introduction
 
 Dijkstra's algorithm for the shortest-path problem is one of the most important graph algorithms, so it is often covered in algorithm classes. However, going from the pseudocode to an actual implementation is made difficult by the fact that it relies on a priority queue with a "decrease key" operation. While most programming languages offer a priority queue data structure as part of their standard library, this operation is generally not supported (e.g., in C++, Java or Python). In this blog, we go over the different ways to implement Dijkstra's algorithm with and without this operation, and the implications of using each. All in all, we consider 5 versions of Dijkstra (names mostly made up by me):

@@ -8,12 +8,11 @@ categories: ["wallgame"]
 
 This blog post documents the initial design for the DB schema for the [Wall Game](/blog/wall-game-intro), with commentary on the design choices.
 
-<Callout>
-  **Disclaimer:** I haven't tested any of the SQL. The site has not been built
-  yet at the time of writing (March 2025). All the screenshots from the site are
-  from a prototype made with v0.dev as explained in [this
-  post](/blog/wall-game-ui). As always, if you spot any mistakes or
-  improvements, I'd love to know!
+<Callout title="Disclaimer">
+  I haven't tested any of the SQL. The site has not been built yet at the time
+  of writing (March 2025). All the screenshots from the site are from a
+  prototype made with v0.dev as explained in [this post](/blog/wall-game-ui). As
+  always, if you spot any mistakes or improvements, I'd love to know!
 </Callout>
 
 The DB is a PostgreSQL database, though I aim to keep the schema as dialect-agnostic as possible in case I want to migrate in the future. (You can see [this post](/blog/2025-stack) for a discussion on how I chose the tech stack.)
@@ -25,6 +24,8 @@ We'll start by designing all the tables, as shown in the diagram below, and then
   alt="Wall Game DB Diagram"
   caption="Made with dbdiagram.io."
 />
+
+<Toc />
 
 ## Users
 
@@ -304,9 +305,9 @@ Instead of "hard-coding" the solution, we can compare the user's move against th
 
 For now, we don't support user-created puzzles.
 
-### User settings
+## User settings
 
-The final tables store the user settings.
+The final tables stores the user settings.
 
 ```sql
 CREATE TABLE user_settings (
@@ -603,7 +604,7 @@ WHERE g.game_id = :game_id
 GROUP BY g.game_id, gd.config_parameters, gd.moves;
 ```
 
-### User settings
+### Settings
 
 When the user goes to the 'Settings' page, they can change the following settings, and this is stored in the DB:
 

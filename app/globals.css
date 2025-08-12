@@ -93,6 +93,26 @@ body {
     @apply font-medium;
   }
 
+  /* Add extra spacing above h1 when used in content */
+  .prose h1:not(:first-child) {
+    @apply mt-12;
+  }
+
+  /* Ensure the first h1 (usually the title) has normal spacing */
+  .prose h1:first-child {
+    @apply mt-0;
+  }
+
+  /* Add scroll margin to all headings with IDs to account for sticky header */
+  .prose h1[id],
+  .prose h2[id], 
+  .prose h3[id],
+  .prose h4[id],
+  .prose h5[id],
+  .prose h6[id] {
+    scroll-margin-top: 80px;
+  }
+
   /* Override prose text colors to use theme colors */
   .prose {
     color: hsl(var(--foreground));
