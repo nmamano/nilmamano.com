@@ -30,6 +30,11 @@ export const CATEGORIES: Record<string, CategoryConfig> = {
     bgColor: "bg-orange-100",
     textColor: "text-orange-800",
   },
+  ai: {
+    name: "AI",
+    bgColor: "bg-pink-100",
+    textColor: "text-pink-800",
+  },
 };
 
 export function getCategoryConfig(category: string): CategoryConfig {
