@@ -18,7 +18,7 @@ The image below shows four problems from completely different domains. A possibl
   width="80%"
 />
 
-The solutions in red are not just any solution. They are the results of well known greedy algorithms for each of these problems. Greedy algorithms, soon to be covered in detail, follow intuitive rules: in clustering, cluster together the two closest points. In routing, use the shortest edge in your route. In shorest superstring, combine the two strings that overlap the most. In matching, assign together the worker and task with the cheapest cost.
+The solutions in red are not just any solution. They are the results of well known greedy algorithms for each of these problems. Greedy algorithms, soon to be covered in detail, follow intuitive rules: in clustering, cluster together the two closest points. In routing, use the shortest edge in your route. In shortest superstring, combine the two strings that overlap the most. In matching, assign together the worker and task with the cheapest cost.
 
 This article is not about any of these algorithms in particular, but about something they have in common. We will take a look at greedy algorithms like those above and see that it is often possible to design alternative algorithms (what I will call local greedy algorithms below) with "weaker" selection rules that somehow still end up with the same solution. The meaning of this will become clear in time. This observation changed my understanding of greedy algorithms and led to many of the results in my research. I dedicated chapter 2 of [my thesis](http://nilmamano.com/thesis/nilthesis.pdf) to it. This article presents the main takeaways from that chapter and illustrates them with plenty of examples without getting into the weeds.
 
@@ -124,7 +124,7 @@ There is a well known Greedy for set cover which picks one set a time until all 
 
 To define LG, we need to start with the interactions: two sets interact if they have an element in common because picking one increases the cost-per-element of the other. Based on this, a set is locally dominant if it has a smaller cost-per-element than any other set with an element in common. LG constructs a cover by repeatedly picking a "locally-dominant" until every element is covered.
 
-Again, we have global-local equivalence in Set Cover. That is, GG and LG always end up with the same cover. To prove it, we cannot use the simple argument we saw for MWM. That proof relies on the ability to identify the heaviest edge where two matchings differ. However, the cost-per-element of the sets depend on the current partial solution, so the evaluations evolve over time. This makes it impossible to pinpoint the first discrepancy. I will later talk about how we proved GLE for set cover and other problems with changing evaluations.
+Again, we have global-local equivalence in Set Cover. That is, GG and LG always end up with the same cover. To prove it, we cannot use the simple argument we saw for MWM. That proof relies on the ability to identify the heaviest edge where two matchings differ. However, the cost-per-element of the sets depends on the current partial solution, so the evaluations evolve over time. This makes it impossible to pinpoint the first discrepancy. I will later talk about how we proved GLE for set cover and other problems with changing evaluations.
 
 Now, let us look at a greedy algorithm _without_ GLE.
 

@@ -100,7 +100,7 @@ For Dijkstra's algorithm, we can use a priority queue to maintain the nodes, usi
 
 - `change_priority(e, k)`: set the priority of `e` to `k` (assuming that `e` is in the priority queue).
 
-A related operation is removing elements that are not the most prioritary:
+A related operation is removing elements that are not the highest priority:
 
 - `remove(e)`: remove `e` (assuming that `e` is in the priority queue).
 
@@ -225,7 +225,7 @@ Using a Fibonacci heap, we get a total time of `O(n*log n + m)` for Dijkstra's a
 
 The most common way to implement a priority queue is with a **binary heap**. It is simple and fast in practice. Binary heaps support `insert` and `extract_min` in `O(log n)` like a Fibonacci heap. However, they do not support the `change_priority` operation.
 
-It is possible to modify a binary heap to to support the `change_priority` operation in `O(log n)` time. The result is sometimes called an "indexed priority queue". Using an indexed priority queue, we would get a total runtime of `O(n*log n + m*log n) = O(m*log n)`. This is slightly worse than with a Fibonacci heap, and faster in practice.
+It is possible to modify a binary heap to support the `change_priority` operation in `O(log n)` time. The result is sometimes called an "indexed priority queue". Using an indexed priority queue, we would get a total runtime of `O(n*log n + m*log n) = O(m*log n)`. This is slightly worse than with a Fibonacci heap, and faster in practice.
 
 In any case, the priority queues provided by languages like C++, Python, and Java, do not support the `change_priority` operation. This creates a disconnect between the pseudocode taught in classrooms and the actual code that we can write.
 

@@ -47,7 +47,7 @@ Decision trees are the central concept that ties together backtracking, DP, and 
   - Backtracking = DFS through the recursion tree to find the optimal solution -
   Greedy = Following a single path down the decision tree, at each step choosing
   the path that looks most promising - DP = Reframing the nodes of decision
-  tress from "partial solutons" to "subproblems", and caching solutions to
+  trees from "partial solutions" to "subproblems", and caching solutions to
   subproblems
 </Callout>
 
@@ -78,7 +78,7 @@ To do that, we have a 'current partial solution' variable (or variables), which 
 
 Now you know why people often call backtracking DFS. The 'backtracking' part of backtracking is going back up the decision tree (by returning from recursive calls) to explore other branches.
 
-Backtracking guarnatees optimality, but it is slow, often taking exponential time.
+Backtracking guarantees optimality, but it is slow, often taking exponential time.
 
 <Callout>
   Proposing a backtracking algorithm without realizing that there are more
@@ -96,7 +96,7 @@ So, every node in the decision tree is a partial solution. DP starts by asking a
 
 For example, in the word break problem, if you have the input "insideout" and you choose to insert a space after "in", you are left with a suffix of the original string, "sideout", which needs to be broken into words. This is a subproblem.
 
-Not every decision tree can have its nodes reframed as subproblems. For instance, in the 'graph coloring' problem, after you have chosen to color a few nodes, what you are left is not simply a smaller graph coloring instance on the remaining nodes--the previous choices influcence the set of possible choices for the remaining nodes. Subproblems must be self-contained--their solution cannot depend on what happened higher in the tree.
+Not every decision tree can have its nodes reframed as subproblems. For instance, in the 'graph coloring' problem, after you have chosen to color a few nodes, what you are left is not simply a smaller graph coloring instance on the remaining nodes--the previous choices influence the set of possible choices for the remaining nodes. Subproblems must be self-contained--their solution cannot depend on what happened higher in the tree.
 
 The key insight of DP is that we can often reach the same subproblem through different paths in the decision tree. When that happens, we don't need to solve the subproblem from scratch every time--we can cache the solution to the subproblem and reuse it.
 
