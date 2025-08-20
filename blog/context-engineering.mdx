@@ -6,9 +6,11 @@ coverImage: "/blog/context-engineering/primitive.png"
 categories: ["swe", "ai"]
 ---
 
+**_"Context engineering is the delicate art and science of filling the context window with just the right information for the next step."_** - [Andrej Karpathy](https://x.com/karpathy/status/1937902205765607626)
+
 Have you heard the terms "context engineering" and "context rot" recently?
 
-Lately, it seems that "context" is in everyone's minds -- and for good reason. In this post, we'll explain why.
+Lately, it seems that "context" is in everyone's minds -- and for good reason. In this high-level introduction to context engineering, we'll see why.
 
 <Toc />
 
@@ -16,10 +18,12 @@ Lately, it seems that "context" is in everyone's minds -- and for good reason. I
 
 LLMs are used for all sorts of fancy things, but it's important not to lose sight of the fact that, at their core, all LLMs do is a very simple task: predict the next word in a sentence (or, technically, token).
 
-And the next word you get **depends on only two things**:
+And the next word you get **depends on only two things**:[^2]
 
 - The model itself, consisting of billions of weights.
 - The text that you are asking it to continue -- that's the **context**.
+
+[^2]: There's also the _temperature_ parameter, a single knob that can make the probability distribution for the next token more "peaky" (sticking to the most likely token) or more "spread out" (more likely to pick a less likely token) at inference time.
 
 <BlogImage
   src="/blog/context-engineering/primitive.png"
@@ -40,12 +44,12 @@ But fast forward to 2025, and model progress seems to be stalling, with underwhe
 This has shifted everyone's attention to the other factor that affects output quality: the context.
 
 In terms of improving the model, there is still the idea of _fine-tuning_, where we
-refine the weights of a base model by giving it additional training data from
+refine the weights of a base model (or add extra parameters to it, in the case of LoRA) by giving it additional training data from
 a specific domain. This helps the response quality in that specific domain,
 but what we are learning is that working with the context is a lot more
 flexible and powerful.
 
-For example, RAG (Retrieval-Augmented Generation; more on this below) is a lot more successful than fine-tuning at reducing hallucinations. RAG changes the context; fine-tuning changes the model. (We can also do both!)
+For example, RAG (Retrieval-Augmented Generation; more on this below) is a lot more successful than fine-tuning at reducing hallucinations. RAG changes the context; fine-tuning changes the model. (We can also [do both](https://karlaortizflores.medium.com/the-ai-doctor-is-in-deconstructing-the-llm-that-passed-the-medical-boards-fa608a6a256d)!)
 
 So, we can let the big labs with GPU gigafarms worry about training models, and focus on what we can control.
 
@@ -61,9 +65,11 @@ Tool calling, agents, reasoning "models", deep web research, frontend generators
 
 And while the UI is crucial to make the illusion come to life, the success or failure of AI apps comes down to the builder's ability to fill the context with the right information and nothing else.[^1]
 
-[^1]: If you put too much stuff in the context, the quality of the output degrades. This is known as "context rot".
+[^1]: If you put too much stuff in the context, the quality of the output degrades. This is known as ["context rot"](https://research.trychroma.com/context-rot).
 
-That's why the term "context engineering" is taking off.
+That's why the term "context engineering" is taking off.[^3]
+
+[^3]: The term was popularized by Tobi Lutke in this [tweet](https://x.com/tobi/status/1935533422589399127).
 
 <Callout>
   Context engineering is also known as _prompt engineering_, but _context
@@ -250,3 +256,7 @@ Those are the kinds of amusing things that happen when you do context engineerin
 ## Conclusion
 
 If you can see the context behind the UI -- see through the illusion -- you'll have a good grasp of how AI apps are built. And if you want to build one yourself, the questions you should ask are: what exactly should there be in the context? What illusion am I trying to create?
+
+---
+
+_Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_what-is-context-engineering-activity-7364020871620956160-0Oz-) or the [X post](https://x.com/Nil053/status/1958255625047285868)._
