@@ -9,6 +9,7 @@ import { formatDate } from "../../lib/date-utils";
 import { Metadata } from "next";
 import BlogFooter from "../../components/blog-footer";
 import remarkGfm from "remark-gfm";
+import CopyLinkButton from "@/components/CopyLinkButton";
 
 // Generate metadata for each blog post
 export async function generateMetadata({
@@ -101,10 +102,13 @@ export default async function BlogPost({
           {post.title}
         </h1>
 
-        <div className="text-sm text-muted-foreground mb-8">
-          {post.date && (
-            <time dateTime={post.date}>{formatDate(post.date)}</time>
-          )}
+        <div className="text-sm text-muted-foreground mb-8 flex items-center justify-between gap-3">
+          <div>
+            {post.date && (
+              <time dateTime={post.date}>{formatDate(post.date)}</time>
+            )}
+          </div>
+          <CopyLinkButton slug={post.slug} />
         </div>
 
         {/* Cover Image */}

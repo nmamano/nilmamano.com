@@ -3,6 +3,7 @@ import { HeaderWithActiveLink } from "@/app/components/header-with-active-link";
 import { SiteFooter } from "@/app/components/site-footer";
 import { GoogleAnalytics } from "@/lib/analytics";
 import { AnalyticsProvider } from "@/components/analytics-provider";
+import { Toaster } from "@/components/ui/toaster";
 import { cn } from "@/lib/utils";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -94,6 +95,7 @@ export default function RootLayout({
               </main>
               <SiteFooter />
             </div>
+            <Toaster />
           </AnalyticsProvider>
         </ThemeProvider>
       </body>
