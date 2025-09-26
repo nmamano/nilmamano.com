@@ -35,9 +35,9 @@ def is_valid(r, c, grid, visited):
   return 0 <= r < R and 0 <= c < C and grid[r][c] == 1 and (r, c) not in visited
 
 def grid_bfs(start_r, start_c, grid, visited):
-  queue = [(start_r, start_c)]
+  queue = deque([(start_r, start_c)])
   while queue:
-    r, c = queue.pop(0)
+    r, c = queue.popleft()
     for dir_r, dir_c in directions:
       nbr_r, nbr_c = r + dir_r, c + dir_c
       if is_valid(nbr_r, nbr_c, grid, visited):
@@ -118,9 +118,9 @@ def is_valid(r, c, grid):
   return 0 <= r < R and 0 <= c < C and grid[r][c] == 1
 
 def grid_bfs(start_r, start_c, grid):
-  queue = [(start_r, start_c)]
+  queue = deque([(start_r, start_c)])
   while queue:
-    r, c = queue.pop(0)
+    r, c = queue.popleft()
     for dir_r, dir_c in directions:
       nbr_r, nbr_c = r + dir_r, c + dir_c
       if is_valid(nbr_r, nbr_c, grid):

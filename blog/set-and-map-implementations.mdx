@@ -86,7 +86,7 @@ We'll use `m` to denote the upper bound of the output range, which is excluded. 
 - `2 * 0.618... = 1.236...`
 - `3 * 0.618... = 1.854...`
 
-We can then take the fractional part alone, which is between `0` and `1`, and multiply it by `m` to scale it up to the range between `0` and `m`. Finally, we can truncate the decimal part and output the integer part of this number, which will be a "random-looking" number between `0` and `m-1`.[^2]
+We can then take the fractional part alone, which is between `0` and `1`, and multiply it by `m` to scale it up to the range between `0` and `m`. Finally, we truncate the fractional part and output the integer part, which will be a "random-looking" integer between `0` and `m-1`.[^2]
 
 <BlogImage
   src="/blog/set-and-map-implementations/fig1.png"
