@@ -6,17 +6,19 @@ coverImage: "/blog/counting-islands/cover.png"
 categories: ["dsa"]
 ---
 
-Which algorithm is better for the classic [Count Islands in a Grid](https://leetcode.com/problems/number-of-islands/description/) problem, DFS or BFS?
+Which algorithm is better for the [Count Islands in a Grid](https://leetcode.com/problems/number-of-islands/description/) problem, DFS or BFS?
+
+In this classic LeetCode problem, we have a grid where 0's represent water and 1's represent land, and we need to count the number of islands (connected components) present. [Try it yourself](https://leetcode.com/problems/number-of-islands/description/)!
+
+So, should we use DFS or BFS? Counting connected components is a basic graph problem, so you'd think there is not much to it.
 
 It's more contentious than you'd think.
 
-In this problem, we have a grid where 0's represent water and 1's represent land, and we need to count the number of islands (connected components) present.
+In this post, we'll use the different strengths of DFS and BFS to push the space complexity from `O(R*C)` to `O(min(R, C))` to `O(1)`.
 
 <Toc />
 
 ## Naive solution
-
-This problem is a LeetCode Easy--counting connected components is a basic graph problem.
 
 Since we don't care about distances, any graph traversal will do: both DFS and BFS solve the problem in linear time and linear extra space.
 
