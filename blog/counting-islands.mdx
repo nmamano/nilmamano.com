@@ -1,0 +1,204 @@
+---
+title: "Counting Islands in a Grid: DFS or BFS?"
+date: "2025-09-28"
+excerpt: "A deeper look at this classic grid problem."
+coverImage: "/blog/counting-islands/cover.png"
+categories: ["dsa"]
+---
+
+Which algorithm is better for the classic [Count Islands in a Grid](https://leetcode.com/problems/number-of-islands/description/) problem, DFS or BFS?
+
+It's more contentious than you'd think.
+
+In this problem, we have a grid where 0's represent water and 1's represent land, and we need to count the number of islands (connected components) present.
+
+## Naive solution
+
+This problem is a LeetCode Easy--counting connected components is a basic graph problem.
+
+Since we don't care about distances, any graph traversal will do: both DFS and BFS solve the problem in linear time and linear extra space.
+
+For instance, here is a BFS solution:[^1]
+
+[^1]: LeetCode uses strings for the cell values, but we use integers for simplicity.
+
+```python
+directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+# Returns if (r, c) is in bounds, "walkable", and not visited.
+def is_valid(r, c, grid, visited):
+  R, C = len(grid), len(grid[0])
+  return 0 <= r < R and 0 <= c < C and grid[r][c] == 1 and (r, c) not in visited
+
+def grid_bfs(start_r, start_c, grid, visited):
+  queue = [(start_r, start_c)]
+  while queue:
+    r, c = queue.pop(0)
+    for dir_r, dir_c in directions:
+      nbr_r, nbr_c = r + dir_r, c + dir_c
+      if is_valid(nbr_r, nbr_c, grid, visited):
+        visited.add((nbr_r, nbr_c))
+        queue.append((nbr_r, nbr_c))
+
+def count_islands(grid):
+  R, C = len(grid), len(grid[0])
+  island_count = 0
+  visited = set()
+  for r in range(R):
+    for c in range(C):
+      if is_valid(r, c, grid, visited):
+        visited.add((r, c))
+        grid_bfs(r, c, grid, visited)
+        island_count += 1
+  return island_count
+```
+
+## Trick: modifying the input grid
+
+Linear time for this problem is already optimal.
+Where it gets interesting is if we are allowed to modify the input grid to save extra space.
+
+Instead of tracking visited cells in a separate data structure, we can use a special value, like 2, directly in the input grid.
+
+Then, the extra space is based on:
+
+- The recursion stack for DFS
+- The queue for BFS
+
+With this optimization, suddenly BFS is better than DFS.
+
+Why?
+
+On the one hand, DFS is recursive, and the call stack still counts as extra space. In the worst case, we could zig-zag through the entire grid with DFS, making `O(rows * cols)` nested calls.[^2]
+
+[^2]: This is also the reason why, for DFS, we need to worry about stack overflow for large grids.
+
+On the other hand, BFS explores the nodes layer by layer, sorted by distance (first the nodes at distance `1`, then the nodes at distance `2`, and so on). BFS includes nodes from at most two distance layers in the queue at any given time.
+
+In a grid without any 0's, each distance layer forms a diamond shape, which contains at most two nodes in any given row or column:
+
+<BlogImage
+  src="/blog/counting-islands/diamond.png"
+  alt="Diamond shape"
+  width="30%"
+/>
+
+Thus, `len(queue) <= 2 * max_layer_size <= 2 * min(2*R, 2*C) = O(min(R, C))`.
+
+<Callout title="Open problem">
+I believe that the `O(min(R, C))` bound still applies when there are 0's in the grid, but I don't have a proof.
+The challenge with proving it is that, with 0's in the grid, it is no longer true that there are at most two nodes in any given row or column at the same distance from the starting node.
+
+This counterexample shows four 1's at distance 8 from the circled 1:
+
+<BlogImage
+  src="/blog/counting-islands/row_of_ones.png"
+  alt="Row of ones"
+  width="30%"
+/>
+
+If you know how to prove it, please tell me!
+
+</Callout>
+
+So, DFS uses `O(rows * cols)` extra space, while BFS uses `O(min(rows, cols))`.
+
+Here is the optimized BFS solution:
+
+```python
+directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+# Returns if (r, c) is in bounds, "walkable", and not visited (indicated by 2).
+def is_valid(r, c, grid):
+  R, C = len(grid), len(grid[0])
+  return 0 <= r < R and 0 <= c < C and grid[r][c] == 1
+
+def grid_bfs(start_r, start_c, grid):
+  queue = [(start_r, start_c)]
+  while queue:
+    r, c = queue.pop(0)
+    for dir_r, dir_c in directions:
+      nbr_r, nbr_c = r + dir_r, c + dir_c
+      if is_valid(nbr_r, nbr_c, grid):
+        grid[nbr_r][nbr_c] = 2
+        queue.append((nbr_r, nbr_c))
+
+def count_islands(grid):
+  R, C = len(grid), len(grid[0])
+  island_count = 0
+  for r in range(R):
+    for c in range(C):
+      if is_valid(r, c, grid):
+        grid[r][c] = 2
+        grid_bfs(r, c, grid)
+        island_count += 1
+  return island_count
+```
+
+## Iterative DFS
+
+But this is not the end of the journey.
+
+We can reduce the extra space from `O(min(R, C))` to `O(1)`, but we have to **switch back to DFS**!
+
+With `O(1)` extra space, we can't afford recursion at all, so we have to use iterative DFS.
+
+Iterative DFS typically uses an explicit stack; however, we can utilize the input grid itself to track the index of each cell in the DFS stack. Since the input already uses values 0 and 1, we can use negative numbers to track the stack: -1 for the first cell in the stack, -2 for the second, and so on.
+
+The reason why we can't bring BFS down to `O(1)` extra space is that when BFS explores the grid, it jumps around all over the place. Without storing pending nodes in an explicit queue, we don't know where to go next. DFS is our friend because it always explores from the same "head" of the path, which we can easily track with just a couple of extra variables (`head_row`, `head_col`).
+
+Here is the iterative DFS solution:
+
+```python
+directions = [(-1, 0), (1, 0), (0, 1), (0, -1)]
+
+def in_bounds(r, c, grid):
+  R, C = len(grid), len(grid[0])
+  return 0 <= r < R and 0 <= c < C
+
+# Finds the parent in the stack (neighbor with less negative stack value by 1)
+def find_parent(r, c, grid):
+  current_value = grid[r][c]
+  for dr, dc in directions:
+    nbr_r, nbr_c = r + dr, c + dc
+    if in_bounds(nbr_r, nbr_c, grid) and grid[nbr_r][nbr_c] == current_value + 1:
+      return nbr_r, nbr_c
+  return None, None
+
+def find_unvisited_neighbor(r, c, grid):
+  for dr, dc in directions:
+    nbr_r, nbr_c = r + dr, c + dc
+    if in_bounds(nbr_r, nbr_c, grid) and grid[nbr_r][nbr_c] == 1:
+      return nbr_r, nbr_c
+  return None, None
+
+def iterative_dfs(start_r, start_c, grid):
+  stack_level = -1
+  grid[start_r][start_c] = stack_level
+  head_r, head_c = start_r, start_c
+  while stack_level < 0:
+    nbr_r, nbr_c = find_unvisited_neighbor(head_r, head_c, grid)
+    if nbr_r is not None:
+      stack_level -= 1
+      grid[nbr_r][nbr_c] = stack_level
+      head_r, head_c = nbr_r, nbr_c
+    else:
+      # No unvisited neighbors, backtrack
+      stack_level += 1
+      head_r, head_c = find_parent(head_r, head_c, grid)
+
+def count_islands(grid):
+  R, C = len(grid), len(grid[0])
+  island_count = 0
+  for start_r in range(R):
+    for start_c in range(C):
+      if grid[start_r][start_c] == 1:
+        iterative_dfs(start_r, start_c, grid)
+        island_count += 1
+  return island_count
+```
+
+## Final thoughts
+
+I found it cool how, with more optimizations, we went from "both are the same" to "BFS is better" to "DFS is better".
+Thanks to a [BCtCI](https://www.amazon.com/dp/195570600X) reader for suggesting the BFS + grid modification combination.
