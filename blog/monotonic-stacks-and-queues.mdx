@@ -104,11 +104,7 @@ With standard implementations described in the Stacks & Queues chapter, all thes
 
 A "max queue" is a queue variation that tracks the maximum element in the queue. This operation can be really useful to solve certain problems we'll see later in this chapter, so it's useful to know how to implement it on the spot. As we'll see, the core technique to make max queues efficient is using a _monotonic deque_. Let's start with a _data structure design_ question about how to implement a max queue.
 
-<Problem
-  number={1}
-  title="Maximum queue"
-  link="https://bctci.co/maximum-queue"
-/>
+<Problem number={1} title="Max Queue" link="https://bctci.co/max-queue" />
 
 Implement a `MaxQueue` class that behaves like a normal queue but also supports a `max()` operation. This operation returns the maximum of the elements in the queue without modifying the queue.
 
@@ -153,8 +149,8 @@ q.max() // Returns 50.              [30, 20, 10, 50]
 
 <Solution
   number={1}
-  title="Maximum queue"
-  link="https://bctci.co/maximum-queue-solution"
+  title="Max Queue"
+  link="https://bctci.co/max-queue-solution"
 />
 
 Our `MaxQueue` class is built on top of a regular (internal) queue, which we'll call `queue`. Push, pop, peek, and size operations all operate on `queue`, as usual.
@@ -273,8 +269,8 @@ The common theme to problems that can be solved with a max queue is that they in
 
 <Problem
   number={2}
-  title="Sliding Maximum"
-  link="https://bctci.co/sliding-maximum"
+  title="Sliding Window Max"
+  link="https://bctci.co/sliding-window-max"
 />
 
 Given a non-empty integer array, `arr`, and a subarray size, `k`, find the maximum element in each subarray of size `k`, from left to right.
@@ -300,8 +296,8 @@ Assume that `0 < k <= n`, where `n` is the length of `arr`.
 
 <Solution
   number={2}
-  title="Sliding Maximum"
-  link="https://bctci.co/sliding-maximum-solution"
+  title="Sliding Window Max"
+  link="https://bctci.co/sliding-window-max-solution"
 />
 
 The naive solution is to iterate over each subarray of size `k` and find the maximum element. This takes `O(n * k)` time.
