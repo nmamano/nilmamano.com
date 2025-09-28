@@ -35,9 +35,11 @@ export function TableOfContents({ className = "" }: TableOfContentsProps) {
           id.includes("user-content-fn") ||
           text.toLowerCase().includes("footnote"));
 
-      // Exclude Problem components (they have specific text patterns)
-      const isProblemComponent =
-        text.startsWith("Problem ") && text.includes(":");
+      // Exclude only auto-numbered headings like "Problem 1:" or "Solution 1:"
+      // This avoids filtering legitimate headings like "Problem Statement: ..."
+      const isAutoNumberedHeading =
+        /^Problem\s+\d+:/i.test(text.trim()) ||
+        /^Solution\s+\d+:/i.test(text.trim());
 
       // Exclude the blog post title
       const isTitle = id === "title";
@@ -46,7 +48,7 @@ export function TableOfContents({ className = "" }: TableOfContentsProps) {
         id &&
         text &&
         !isFootnote &&
-        !isProblemComponent &&
+        !isAutoNumberedHeading &&
         !isTitle &&
         level <= 3
       ) {
