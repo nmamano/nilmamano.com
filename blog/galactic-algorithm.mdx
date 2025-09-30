@@ -1,0 +1,229 @@
+---
+title: "My Own Galactic Algorithm!"
+date: "2025-08-21"
+excerpt: "How do galactic algorithms even happen? An example from my research."
+coverImage: "/blog/galactic-algorithm/cover.png"
+categories: ["research", "wip"]
+---
+
+When we learn DS&A in undergrad, we learn that smaller class complexities mean faster algorithms. That's why merge sort (`O(n log n)`) is better than bubble sort (`O(n^2)`).
+
+But when talking about theoretical DS&A research, it is often the opposite: to bring down the big O analysis, we resort to tricks that blow up the constant factors to impractically high levels for realistic input sizes.
+
+I recently learned about a term to describe this phenomenon: [galactic algorithm](https://en.wikipedia.org/wiki/Galactic_algorithm).
+
+According to Wikipedia, "A galactic algorithm is an algorithm with record-breaking theoretical (asymptotic) performance, but which is not used due to practical constraints."
+
+You may be wondering, how do galactic algorithms even happen?
+
+I'll answer by talking about my own galactic algorithm!
+
+<Toc />
+
+## Background
+
+### The problem: geometric TSP
+
+Recall the classic [Travelling Salesperson Problem (TSP)](https://en.wikipedia.org/wiki/Travelling_salesman_problem). In particular, we'll talk about geometric (Euclidean) TSP:
+
+> Given a set of `n` points in a d-dimensional space, find the shortest possible tour going through all the points and returning to the beginning.
+
+Here is a 2D example (`d = 2`):
+
+<BlogImage
+  src="/blog/galactic-algorithm/tsp_example.png"
+  alt="Geometric TSP example"
+  width="80%"
+  caption="Source: en.wikipedia.org/wiki/Travelling_salesman_problem"
+/>
+
+### The multi-fragment algorithm
+
+The [multi-fragment algorithm](https://en.wikipedia.org/wiki/Multi-fragment_algorithm) is a classic greedy algorithm for this problem.[^1]
+
+[^1]: The multi-fragment algorithm has an approximation ratio of `2 * log_2(n)`, so it is not as optimal as [Christofides' algorithm](https://en.wikipedia.org/wiki/Christofides_algorithm), which has an approximation ratio of `1.5`. But it is just one of the most well-known algorithms for TSP.
+
+It goes like this:[^2]
+
+[^2]: The algorithm is essentially the same as [Kruskal's MST algorithm](https://en.wikipedia.org/wiki/Kruskal%27s_algorithm), but for constructing a tour instead of a spanning tree.
+
+- Process each pair of points from closest to farthest.
+- For each pair, add the line between them to the tour unless both of its endpoints are already part of the same fragment of the tour.
+- Stop when all points are connected.
+- Finally, close the cycle.
+
+<BlogImage
+  src="/blog/greedy-algorithms/greedy_tsp.gif"
+  alt="Multi-fragment algorithm animation"
+  width="50%"
+/>
+
+The bottleneck of the algorithm is sorting the pairs of points. The number of pairs is `(n choose 2) = O(n^2)`, and sorting `k` elements takes `O(k log k)` time, so the runtime is:
+
+`O((n^2) * log (n^2)) = O((n^2) * (2 log n)) = O(n^2 log n)`.
+
+### Prior improvements
+
+In 2000, my own advisor, [David Eppstein](https://ics.uci.edu/~eppstein/), came up with a way to find the same tour as the multi-fragment algorithm in just `O(n^2)` time, shaving off the log factor.[^3]
+
+[^3]: D. Eppstein. "Fast hierarchical clustering and other applications of dynamic closest pairs." J. Exp. Algorithmics, 5, 2000.
+
+### Our result
+
+That was the "state of the art" until, in 2019, we found a way to compute the same tour in `O(n log n)` time for any constant dimension `d` (see [the paper](https://arxiv.org/pdf/1902.06875) or Section 3.3 of [my dissertation](https://nilmamano.com/dissertation/nildissertation.pdf)).
+
+Going from `O(n^2)` to `O(n log n)` is a huge jump. However, as we'll see, the constant factors are ASTRONOMICAL.[^4]
+
+[^4]: To be fair to myself, depending on what data structure we use, our new approach also yields a `O(n^1.5)` algorithm with good constant factors, as well as a `O(n log^5 n)` algorithm where the constant factors are not horrible. It's only the `O(n log n)` result that is totally impractical, but it's the most remarkable from a theoretical standpoint.
+
+## Overview of our approach
+
+In this post, I won't describe our entire algorithm (which has quite a few steps) but I'll focus on the analysis. I want to answer the question: "How do galactic algorithms even happen?"
+
+### Processing pairs in a different order
+
+The key idea of our algorithm is that, instead of repeatedly finding the closest pair of "available" points in order to connect them (if possible), which is what the normal multi-fragment algorithm does, we can simply find any pair of points that are closer to each other than any other point. We call these mutual nearest neighbors.
+
+In the paper, we prove that connecting mutual nearest neighbors results in the **same** tour as the multi-fragment algorithm.[^5]
+
+[^5]: This is an example of global-local equivalence I talked about in [this post](./greedy-algorithms). Exploiting this type of equivalence for different problems was a running theme of my research.
+
+This animation shows how we can connect mutual nearest neighbors and end up with the same tour from the previous animation of the multi-fragment algorithm:
+
+<BlogImage
+  src="/blog/greedy-algorithms/local_greedy_tsp.gif"
+  alt="Connecting mutual nearest neighbors"
+  width="50%"
+/>
+
+### Zeroing in on mutual nearest neighbors
+
+Next, we need an efficient way to find mutual nearest neighbors.
+
+The next idea in our algorithm is to follow a chain of nearest neighbors:
+
+- Take any point, `p1`.
+- Find the point `p2` that is closest to `p1`.
+- Find the point `p3` that is closest to `p2`.
+- ...
+
+This chain eventually ends at a pair of points that are mutual nearest neighbors:
+
+<BlogImage
+  src="/blog/galactic-algorithm/nnc.png"
+  alt="Nearest-neighbor chain"
+  width="50%"
+/>
+
+The analysis of our algorithm came out to be `O(n * T(n, d))`, where `T(n, d)` is the time to find the nearest neighbor of a point in a `d`-dimensional space.
+
+As of 2019, the best known nearest-neighbor data structure that fit our requirements had a query time of `T(n, d) = O(log^5 n)` for any constant dimension `d`. Thus, combining our idea with this data structure, we get a `O(n log^5 n)` algorithm.
+
+It's only when trying to push further down to get to `O(n log n)` that the constant factors blow up to astronomical levels.
+
+### Leveraging approximate data structures
+
+By using a nearest-neighbor data structure, we can't go below `O(n log^5 n)`. Instead, we used an _approximate_ nearest-neighbor data structure, which are faster at the exchange of precision.
+
+Let's define this data structure precisely:
+
+A "d-dimensional epsilon-approximate k-nearest-neighbor data structure" is a data structure which receives a parameter `epsilon > 0` at construction time. We can add and remove d-dimensional points from it. It also supports queries: given a number `k` and a query point `q`, it returns a list of `k` of the stored points, where point `i` is within a factor of `(1+epsilon)` of the i-th closest point to `q`.
+
+At face value, this data structure is useless for us: even if we set `epsilon` to be very small, if we can't find the exact nearest neighbor, we can't be sure that our two points are mutual nearest neighbors. And if they aren't, our final tour might not be exactly the same as the multi-fragment algorithm.
+
+However, I found a way to use this imprecise data structure to go from any pair of points, `p` and `q`, to a closer pair of points (or determine that `p` and `q` are already mutual nearest neighbors). By repeating this step, we eventually get to mutual nearest neighbors.
+
+For simplicity, let's focus on the 2D case.
+
+Say we start with `p` and `q`, which might or might not be mutual nearest neighbors. If we query our approximate data structure with `p` as the query point, we might get back `q` or a point further away than `q`, but that doesn't mean that `p` and `q` are mutual nearest neighbors. It seems that we are stuck without making progress.
+
+The key idea is that we can ask the approximate data structure for multiple approximate nearest neighbors. Instead of just asking for the approximate nearest neighbor of `p`, we'll ask for the `k = 10` approximate nearest neighbors of `p`. We'll also set `epsilon` to `0.0492`, for reasons that will become clear later.
+
+There are two cases:
+
+1. One of the returned points, `r`, is closer to `p` than `q`. In that case, we successfully found a closer pair than `p` and `q`: `p` and `r`.
+2. None of the returned points are closer to `p` than `q`. Let `d*` be the (unknown) distance between `p` and its closest point. In this case, we have 10 points, `p1, p2, ..., p10` where:
+
+- `p1` is at distance `d* * 1.0492`.
+
+of `p` is at about the same distance of `q`, because our approximate data structure can't tell use which one
+
+The basic idea goes like this:
+
+- The hard case is when
+- Instead of asking for just an approximate nearest neighbor, we'll ask for `k = 10` approximate nearest neighbors.
+-
+
+One way galactic algorithms happen is by building on top of preexisting data structures that already have big constant factors.
+
+In my case, my algorithm requires O(n) queries of an epsilon-approximate k-nearest-neighbor data structure. This data structure stores n d-dimensional points and, given a query point, q, returns k of the stored points, where point i is within a factor of (1+epsilon) of the i-th closest point to q.
+
+At the time, the fastest such data structure had a query time of O(log n _ C), where C = d _ (k + (1 +6d/epsilon)^d) and d is the dimension of the points.^[Here is [the paper](https://dl.acm.org/doi/pdf/10.1145/293347.293348). To be fair, the actual constant factor may be smaller -- this is just the upper bound they proved in the paper. Also, I don't know if better results have come out since then.]
+
+The dependency on d and epsilon is severe, but if d, k, and epsilon are constants, C is just O(1).
+
+Unfortunately, my algorithm requires a very small epsilon.
+
+For d=2 (points in the plane) we computed that the optimal values for k and epsilon to minimize the constant factors are 10 and 0.0492, respectively.
+
+This makes the constant factor:
+
+```
+C = d * (k + (1 +6d/epsilon)^d)) = 2 * (10 + (1 +12/0.0492)^2)) = 119974.
+```
+
+But what makes this a truly galactical algorithm is that, as the dimension grows, the values of epsilon that we need get much smaller really fast. However, it's still a constant for any fixed dimension, so we can say that my algorithm runs in `O(n log n)` time for any fixed dimension.
+
+For higher dimensions, it wasn't easy to compute the exact values of k and epsilon that minimized the constant factors, so we just proved that they are constant for any dimension, which is enough to show that C is `O(1)` for any dimensions.
+
+## Computing the galactic constants
+
+Now I went back over our construction, and used it to actually compute our best upper bound on the constant C.
+
+The following computation gives an upper bound on the value of C with optimal parameters epsilon and k:
+
+**Definitions:**
+
+- Let B(r) be a d-dimensional ball with radius r.
+- Let B(r, c) be a d-dimensional ball with center c and radius r.
+- Let V(x) be the volume of shape x.
+
+**Computation:**
+
+```
+I = the volume of the intersection of B(1.5, origin) and a B(0.5, (1.5, 0, 0, ...0)).
+k = (V(B(1.5)) - V(B(1))) / I.
+epsilon = 1.5^(1/k) - 1
+C <= d * (k + (1 + 6d/epsilon)^d)
+```
+
+The hardest part of the computation is the intersection of high-dimensional balls. For this, I used a monte-carlo simulation, and waited for it to converge.
+
+Here are the results:
+
+```
+d   V(B(1.5))    V(B(1))      I            k      epsilon        C
+---------------------------------------------------------------------------
+2   7.068583     3.141593     0.364878     10.76  0.0383925845   1.97e+05
+3   14.137167    4.188790     0.229755     43.30  0.0094080904   2.10e+10
+4   24.982436    4.934802     0.128535     155.97 0.0026030163   2.89e+16
+5   39.971898    5.263789     0.065526     529.68 0.0007657766   4.61e+23
+6   58.863478    5.167713     0.030619     1753.67 0.0002312363  8.54e+31
+7   80.727056    4.724766     0.013466     5644.11 0.0000718412  1.63e+41
+8   104.020353   4.058712     0.005572     17940.13 0.0000226013 3.31e+51
+9   126.805763   3.298509     0.002201     56110.24 0.0000072262 6.54e+62
+10  147.055309   2.550164     0.000823     175667.25 0.0000023081 1.41e+75
+11  162.970386   1.884104     0.000294     548246.60 0.0000007396 3.15e+88
+12  173.245454   1.335263     0.000100     1725876.45 0.0000002349 8.24e+102
+13  177.226119   0.910629     0.000033     5335478.34 0.0000000760 1.82e+118
+14  174.942851   0.599265     0.000011     16410243.61 0.0000000247 3.86e+134
+15  167.031682   0.381443     0.000003     50777254.03 0.0000000080 9.03e+151
+```
+
+We can see that our epsilon computed using this method for d = 2 is not far off from the optimal one.
+
+As we can see, the intersection I gets smaller and smaller as the dimension grows (I believe it gets exponentially smaller, but not sure). In turn, this blows up the value of k, and epsilon gets tiny as a result. Plugging this large k and small epsilon in the data structure, we get galactic constants. Literally -- our upper bound for C crosses the number of atoms in the universe by d=11.
+
+But hey, it's O(n log n) time for any fixed dimension!
+
+_Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_) or reach out on social media.\_

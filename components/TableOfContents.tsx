@@ -56,7 +56,12 @@ export function TableOfContents({ className = "" }: TableOfContentsProps) {
       }
     });
 
-    setTocItems(items);
+    // De-duplicate by id to avoid duplicate keys/items when the same heading appears multiple times
+    const uniqueItems = items.filter(
+      (item, index, arr) => arr.findIndex((i) => i.id === item.id) === index
+    );
+
+    setTocItems(uniqueItems);
 
     // Set up intersection observer for active section highlighting
     const observerOptions = {
@@ -142,7 +147,7 @@ export function TableOfContents({ className = "" }: TableOfContentsProps) {
         Table of Contents
       </h4>
       <ul className="space-y-1 text-sm">
-        {tocItems.map((item) => {
+        {tocItems.map((item, index) => {
           const isActive = activeId === item.id;
           const getIndentClass = (level: number) => {
             switch (level) {
@@ -158,7 +163,10 @@ export function TableOfContents({ className = "" }: TableOfContentsProps) {
           };
 
           return (
-            <li key={item.id} className={getIndentClass(item.level)}>
+            <li
+              key={`${item.id}-${index}`}
+              className={getIndentClass(item.level)}
+            >
               <a
                 href={`#${item.id}`}
                 onClick={(e) => handleClick(e, item.id)}

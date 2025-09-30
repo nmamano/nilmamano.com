@@ -1,0 +1,371 @@
+---
+title: "Multi-Fragment TSP: The Hardest Problem I Solved in My PhD"
+date: "2025-09-30"
+excerpt: "How I optimized a classic TSP algorithm."
+coverImage: "/blog/multi-fragment-tour/tsp_example.png"
+categories: ["research", "wip"]
+---
+
+I thought it'd be fun to write two complementary posts: "The hardest problem I solved in my PhD" (this one) and [The easiest problem I couldn't solve in my PhD](/blog/two-list-stable-matching) (posted yesterday).
+
+I'll state the problem, start with the naive `O(n^2 log n)` algorithm, and then show how we[^1] improved the best known runtime at the time, `O(n^2)`, to `O(n log n)`.
+
+[^1]: Research is a collaborative process. This result was in the paper [Euclidean TSP, Motorcycle Graphs, and Other New Applications of Nearest-Neighbor Chains](https://arxiv.org/pdf/1902.06875), co-authored with Alon Efrat, David Eppstein, Daniel Frishberg, Michael T. Goodrich, Stephen Kobourov, Pedro Matias, and Valentin Polishchuk. Part of the credit goes to them. I chose this specific result for this post because I feel like I came up with the main breakthroughs.
+
+The problem was hard because a few disparate ideas had to come together: a proof technique borrowed from the world of cryptography, an algorithm adapted from hierarchical clustering, and a data-structure-design trick to turn an _approximate_ nearest-neighbor data structure into something that can be used in an exact algorithm.
+
+Everything discussed here is covered with rigor in my [dissertation](https://nilmamano.com/dissertation/nildissertation.pdf) (Sections 2.2, 3.2, and 3.3). Here, I want to focus more on the intuitions behind the result and my thought process approaching it.
+
+<Toc />
+
+## Problem Statement
+
+### The Problem: Geometric TSP
+
+Recall the classic [Travelling Salesperson Problem (TSP)](https://en.wikipedia.org/wiki/Travelling_salesman_problem). In particular, we'll talk about geometric (Euclidean) TSP:
+
+**Euclidean TSP:** Given a set of `n` points in the plane, find the shortest possible tour going through all the points and returning to the beginning.[^2]
+
+[^2]: My result generalizes to any constant dimension `d` and to various distance metrics. To keep it simple in this post, I'll focus on the 2D case and Euclidean distance.
+
+Here is an example:
+
+<BlogImage
+  src="/blog/multi-fragment-tour/tsp_example.png"
+  alt="Geometric TSP example"
+  width="80%"
+  caption="Source: en.wikipedia.org/wiki/Travelling_salesman_problem"
+/>
+
+### TSP Algorithms
+
+[TSP is NP-hard](https://en.wikipedia.org/wiki/Travelling_salesman_problem#Computational_complexity), which means that no polynomial-time algorithm is known for it.
+
+Since TSP is computationally hard, a myriad of heuristic approaches have been proposed, including greedy algorithms. For instance, we can start at a random city and always go to the nearest unvisited city.
+
+The elegant [Christofides' algorithm](https://en.wikipedia.org/wiki/Christofides_algorithm) has an approximation ratio of `1.5`, meaning that it finds a tour that is at most `50%` longer than the optimal tour. This is about as good of an approximation ratio as we know how to get for this problem.[^8]
+
+[^8]: In 2021, the paper "A (slightly) improved approximation algorithm for metric TSP" presented an algorithm with an approximation ratio slightly better than 1.5: `1.5 - 10^(−36)` (yes, `10^(-36)` is not a typo). This is the best approximation ratio currently known for Euclidean TSP.
+
+Another popular greedy algorithm, which will be our focus, is the _multi-fragment algorithm_.
+
+### The Multi-Fragment Algorithm
+
+The [multi-fragment algorithm](https://en.wikipedia.org/wiki/Multi-fragment_algorithm) is a classic TSP greedy algorithm. In the Euclidean case, it has an approximation ratio of `2 * log_2(n)`, meaning that it gets worse as the number of points increases (in the worst case).
+
+It's not as good as Christofides' algorithm on paper, but it is one of the most widely used TSP algorithms and performs well in practice (e.g., see this [experiment](https://dl.acm.org/doi/pdf/10.5555/320176.320186?utm_source=chatgpt.com)).
+
+It goes like this:
+
+Every point starts as a single-point "fragment" of the tour.
+Then, we repeatedly find the two closest fragments and connect them by adding a line between their closest endpoints, creating longer fragments.
+
+The _distance_ between two fragments, when they consist of more than one point, is the minimum distance between their endpoints.
+
+Here is a set of fragments and their nearest neighbors indicated with red arrows connecting the nearest endpoints:
+
+<BlogImage
+  src="/blog/multi-fragment-tour/fragments.png"
+  alt="Multi-fragment algorithm"
+  width="50%"
+/>
+
+At the end, there is a single path going through every node. Then, the two endpoints are connected, closing the cycle.
+
+In this animation, the gray nodes are those that are internal to a fragment and cannot be matched anymore. The closest pair of fragments at each step is highlighted in red:
+
+<BlogImage
+  src="/blog/greedy-algorithms/greedy_tsp.gif"
+  alt="Greedy for TSP"
+  width="50%"
+/>
+
+Here is a quick implementation (we omit the `UnionFind` class for brevity):[^4]
+
+[^4]: The algorithm is essentially the same as [Kruskal's MST algorithm](https://en.wikipedia.org/wiki/Kruskal%27s_algorithm), but for constructing a tour instead of a spanning tree. The only difference is tracking the degrees of the nodes so no node exceeds degree `2`.
+
+```python
+def multifragment_tour(points):
+    n = len(points)
+    # Create one possible edge for each pair of points
+    # Edge weights are Euclidean distances between the points
+    edges = []
+    for i in range(n):
+        xi, yi = points[i]
+        for j in range(i+1, n):
+            xj, yj = points[j]
+            edges.append((hypot(xi - xj, yi - yj), i, j))
+
+    # Process edges from shortest to longest
+    edges.sort()
+
+    chosen = []       # The tour edges
+    degrees = [0]*n   # Each point can have at most 2 tour edges
+    uf = UnionFind(n) # To track the fragment each point belongs to. Needed to avoid cycles.
+
+    # Choose edges that don't exceed degree 2 or create a cycle
+    for _, u, v in edges:
+        if degrees[u] == 2 or degrees[v] == 2:
+            continue
+        if uf.find(u) == uf.find(v):
+            continue
+        chosen.append((u,v))
+        degrees[u] += 1
+        degrees[v] += 1
+        uf.union(u, v)
+        if len(chosen) == n-1:
+            break
+
+    # Close the tour by linking the two remaining degree-1 endpoints
+    u, v = [i for i, d in enumerate(degrees) if d == 1]
+    chosen.append((u,v))
+    return chosen
+```
+
+The bottleneck of the algorithm is sorting the pairs of points. The number of pairs is `(n choose 2) = O(n^2)`. Under the default assumption that we can't use specialized sorts, sorting `k` elements takes `O(k log k)` time, so the runtime is:
+
+`O(n² * log n²) = O(n² * (2 log n)) = O(n² log n)`.
+
+### Our Goal
+
+We are interesting in the following question:
+
+Is it possible to find **the same tour** as the multi-fragment algorithm in less time?
+
+We'll call the tour computed by the multi-fragment algorithm the "multi-fragment tour".
+
+<Callout title="The research question:">
+  What's the fastest possible runtime to compute the multi-fragment tour?
+</Callout>
+
+### Prior Results
+
+In 2000, my advisor, [David Eppstein](https://ics.uci.edu/~eppstein/), came up with a way to find the same tour as the multi-fragment algorithm in just `O(n^2)` time, shaving off the `O(log n)` factor.[^5]
+
+[^5]: D. Eppstein. "Fast hierarchical clustering and other applications of dynamic closest pairs." J. Exp. Algorithmics, 5, 2000.
+
+That was the "state of the art" until our 2019 result.
+
+Our approach doesn't build upon his, so we won't get into it.
+
+### Our Result
+
+In this post, I'll explain how we found a way to compute the multi-fragment tour in `O(n log n)` time.
+
+<Callout title="Galactic algorithm">
+Going from `O(n^2)` to `O(n log n)` is a huge jump. However, our algorithm is what is known as a [galactic algorithm](https://en.wikipedia.org/wiki/Galactic_algorithm): The constant factors are massive, meaning that the result is only of theoretical interest and impractical for real-world use cases.
+
+To be fair to myself, we can swap certain data structures in our algorithm to get results that are practical while still asymptotically better. In particular, our new approach also yields a `O(n^1.5)` algorithm that is probably pretty fast in practice (we never benchmarked any of this!) It also yields a `O(n log^5 n)` algorithm where the constant factors are not horrible. It's only the `O(n log n)` result that is totally impractical.
+
+Ironically, the smaller the big O complexity, the less practical. It's one of the quirks of CS Theory and its fixation with big O analysis over everything else!
+
+</Callout>
+
+## Backstory
+
+Around 2017, with the US census drawing near, I was studying [algorithmic redistricting](/blog/gerrymandering.mdx) as a way to counter gerrymandering.
+Political districts should be compact, so we were trying to create "fair" districts by using clustering algorithms.
+
+[Hierarchical clustering](https://en.wikipedia.org/wiki/Hierarchical_clustering) deals with the organization of data into hierarchies.
+
+<BlogImage
+  src="/blog/greedy-algorithms/hc.png"
+  alt="Hierarchical Clustering instance"
+  width="50%"
+/>
+
+I was researching hierarchical clustering algorithms for the redistricting project when I learned about the [nearest-neighbor chain algorithm](https://en.wikipedia.org/wiki/Nearest-neighbor_chain_algorithm). We'll discuss it later, but it's essentially a way of finding _mutual nearest neighbors_ efficiently. In a collection of geometric objects (like points in the plane), mutual nearest neighbors are pairs of objects that are closer to each other than anyone else.
+
+The nearest-neighbor chain algorithm was proposed in the eighties as a way to speed up certain hierarchical clustering algorithms, but I started thinking about ways of using it to speed up other geometric and graph algorithms beyond clustering.
+
+I started looking for candidates. In order for the nearest-neighbor chain algorithm to make sense as a way to optimize a given algorithm, the algorithm needs to have a sort of hierarchical clustering "feel", where smaller things get grouped into bigger things. That's why we identified the construction of the multi-fragment tour as a good candidate: smaller fragments get grouped into bigger fragments. As we'll see, we had to overcome a few obstacles to make it work.
+
+Eventually, finding ways to use nearest-neighbor chains to speed up algorithms became the focus of my research. My [dissertation](https://nilmamano.com/dissertation/nildissertation.pdf) is called "New Applications of the Nearest-neighbor Chain Algorithm".
+
+## Our Approach
+
+As mentioned, we need to put together three main ideas:
+
+- The nearest-neighbor chain algorithm.
+- Global-local equivalence: a proof that shows that the nearest-neighbor chain algorithm works for the problem of constructing the multi-fragment tour.
+- A new data structure to speed up the nearest-neighbor chain algorithm.
+
+We'll dedicate a section to each one.
+
+## Global-Local Equivalence
+
+Recall the normal multi-fragment algorithm, which repeatedly connects the globally closest pair of fragments.
+
+The first key idea is that we can "relax" the order in which the fragments--if we can connect **any** pair of mutual nearest neighbors, we'll still get the same tour.
+
+We say that two fragments are mutual nearest neighbors if they are closer to each other than to any third fragment (recall that the distance between fragments is the minimum distance between their endpoints).
+
+This animation shows an example of merging mutually nearest neighbors.
+At each step, there can be multiple pairs of mutual nearest neighbors, so the dashed red loops highlight all the pairs that we _could_ connect at each step. One of them is chosen arbitrarily.
+
+<BlogImage
+  src="/blog/greedy-algorithms/local_greedy_tsp.gif"
+  alt="Local Greedy for TSP"
+  width="50%"
+/>
+
+We proved that, no matter which pair of mutual nearest neighbors you choose to connect at each step, the final tour is the same. In particular, the fragments in the globally closest pair are mutual nearest neighbors, so the normal multi-fragment algorithm produces the same tour as any algorithm that repeatedly connects mutual nearest neighbors:
+
+<BlogImage
+  src="/blog/greedy-algorithms/gle_tsp.png"
+  alt="Global-local equivalence for TSP"
+  width="66%"
+  caption="**Left:** the edges added by the multi-fragment algorithm and their order. **Right:** a possible order resulting from connecting mutual nearest neighbors."
+/>
+
+This result is what we call **global-local equivalence**, and it applies to other problems too. I talked about it in the post [Why Many Greedy Algorithms Are Pickier Than They Need To Be](/blog/greedy-algorithms).
+
+<Callout title="How did we prove global-local equivalence?">
+We used a technique known as a ["hybrid argument"](https://en.wikipedia.org/wiki/Hybrid_argument_(cryptography)), which is most commonly used in cryptography to show that two distributions are computationally indistinguishable. I learned it in a cryptography class I was taking around that time, and adapted it to our setting.
+
+The idea is to consider a sequence of `n` hybrid algorithms that progressively evolve from the normal multi-fragment algorithm to an algorithm that connects any mutual nearest neighbors:
+
+1. The normal multi-fragment algorithm.
+2. A hybrid that is like the normal multi-fragment algorithm, except for the first step, where it connects mutual nearest neighbors.
+3. A hybrid that is like the normal multi-fragment algorithm, except for the first two steps, where it connects mutual nearest neighbors.
+4. ...
+
+And so on, until we get to an algorithm that connects mutual nearest neighbors at every step.
+
+Instead of proving that the multi-fragment algorithm and an algorithm that connects mutual nearest neigbhors produce the same tour directly, we proved that any two consecutive hybrid algorithms produce the same tour. This is more manageable, as two consecutive hybrids only differ in one step.
+
+Even proving that two consecutive hybrids always produce the same tour was tricky, but once we were able to prove that, applying this result `n-1` times gives us the result we want. See Section 2.1 of my [dissertation](https://nilmamano.com/dissertation/nildissertation.pdf) for the details.
+
+</Callout>
+
+## Nearest-Neighbor Chain Algorithm
+
+Global-local equivalence means that we can focus on finding mutual nearest neighbors instead of the globally closest pair of fragments. That's exactly what the nearest-neighbor chain algorithm does.
+
+Here is how it works:
+
+Recall that the starting point is that each point is its own fragment.
+The idea in to start with any fragment, and follow a chain of nearest neighbors:
+
+- Take any fragment, `f1`.
+- Find the fragment `f2` that is closest to `f1`.
+- Find the fragment `f3` that is closest to `f2`.
+- ...
+
+At each step, the distance between the points gets smaller and smaller. This eventually ends when the chain reaches a pair of fragments that are mutual nearest neighbors:
+
+<BlogImage
+  src="/blog/multi-fragment-tour/nnc.png"
+  alt="Nearest-neighbor chain"
+  width="50%"
+/>
+
+Assuming that all distances are unique, the chain cannot have cycles of length more than `2` because that would imply a cycle of nearest neighbors where each link is shorter than the next, which is impossible (sort of like a Penrose staircase).
+
+Once we find the mutual nearest neighbor fragments, we remove them from the top of the chain (think of the chain as a stack) and connect them.
+
+Crucially, we don't discard the rest of the chain. We simply continue from the new top of the chain. The process continues until we have a single fragment left.
+
+I don't have an animation of the nearest-neighbor chain algorithm for Euclidean TSP, but here is one for a different problem: matching. It should give an idea of what a chain of nearest neighbors looks like.
+
+<BlogImage
+  src="/blog/multi-fragment-tour/nnc.gif"
+  alt="Nearest-neighbor chain algorithm for matching"
+  caption="Nearest-neighbor chain algorithm for matching (not TSP)"
+  width="50%"
+/>
+
+For TSP, the elements of the chain would be fragments, not points.
+
+If the chain ever becomes empty (because the first two fragments are mutual nearest neighbors), we simply start a new chain at any fragment.
+
+A chain of nearest neighbors may be long, even spanning every single fragment in the worst case. However, the entire algorithm takes `O(n)` steps, where a step means popping or pushing a fragment onto the chain. This is because every time we pop two fragments from the chain, we reduce the number of fragments by `1`. Thus, there can be at most `2(n-1)` pops. The chain ends empty, which means that the number of pushes and pops is the same.
+
+The analysis of the nearest-neighbor chain algorithm comes out to `O(n * T(n))`, where `T(n)` is the time to find the nearest neighbor of a fragment.
+
+### Plugging In a Nearest-Neighbor Data Structure
+
+If we just do a linear scan to find the nearest neighbor of the fragment at the top the chain, we get `T(n) = O(n)`, so the entire algorithm would be `O(n * T(n)) = O(n^2)`. This is not an improvement over previous results.
+
+Instead, what we need is a data structure that can find nearest neighbors efficiently.
+The data structure should be able to maintain a set of points in the plane, support point insertions and deletions, and support queries to find the nearest neighbor of a point among points in the set.
+
+We can start by initializing the data structure with all the input points. Finding the nearest neighbor of a single-point fragment is straightforward: we query the data structure with the point. For fragments with two endpoints, we need to query for the nearest neighbor of both endpoints. We also need to be careful in the case where the nearest neighbor of an endpoint is the other endpoint of the same fragment. If that happens, we can remove the other endpoint from the data structure, do our query, and then re-add it.
+
+Finally, when we connect two fragments, we need to remove the two connected endpoints from the data structure.
+
+Now that we know what we need from our data structure and how we are going to use it, we can search the literature for the fastest data structure that fits our requirements.
+
+As of 2019, the best known dynamic nearest-neighbor data structure that fit our requirements had a query and update time of `T(n) = O(log^5 n)` (dynamic means that it supports insertions and removals).
+
+Plugging that in in our `O(n * T(n))` formula, we get a runtime of `O(n log^5 n)` for finding the multi-fragment tour!
+
+We could leave it at that. But if we want to go all the way to `O(n log n)`, we cannot afford to spend `O(log^5)` time per nearest-neighbor query. We'll need to ditch the nearest-neighbor data structures and relax our concept of a nearest-neighbor chain.
+
+## Leveraging Approximate Data Structures
+
+Approximate data structures trade precision for speed.
+Instead of finding the exact nearest neighbor, they find a point that is at about the same distance.
+There are dynamic approximate nearest-neighbor data structures that can do this in `O(log n)` time per operation.
+
+If we could use those in our nearest-neighbor chain algorithm, we could go from `O(n log^5 n)` to `O(n log n)`.
+
+However, there is an obvious problem: if we can't find the exact nearest neighbor, we can't be sure that our two points at the end of the chain are actually mutual nearest neighbors. And if they aren't, our final tour might not be the multi-fragment tour.
+
+### Rethinking Nearest-Neighbor Chains
+
+The first key idea is that we don't actually care about the nearest neighbor of the fragment at the top of the chain. All we care about is making progress towards finding mutual nearest neighbors.
+
+So imagine a data structure that, when queried with a point `p`, it either returns the nearest neighbor of `p`, or it says: "Sorry, I couldn't find it, but here is a pair of other points that are closer to each other than `p` and its nearest neighbor."
+
+In my dissertation, I coined this a "soft nearest-neighbor data structure".
+
+At first, this data structure seems bizarre. But it actually serves our needs perfectly. It still allows us to create a "chain" where each link is shorter than the previous--even if the chain has "jumps". This allows us to narrow in on mutual nearest neighbors just as well as the normal nearest-neighbor chain algorithm.
+
+Here is an example of what this relaxed chain could look like. The chain has 5 "nodes", where each node is a pair of fragments, and each pair is closer than the previous pair.
+
+<BlogImage
+  src="/blog/multi-fragment-tour/softnnc.png"
+  alt="Soft nearest-neighbor chain"
+  width="50%"
+/>
+
+### Building the Soft Nearest-Neighbor Data Structure For Points
+
+I was driving up Hwy 395, around Pearsonville, when it suddenly clicked that I could use an approximate nearest-neighbor data structure to build a soft nearest-neighbor data structure.
+
+For simplicity, we'll discuss how to build a soft nearest-neighbor data structure for points, not fragments. Fragments make things yet a bit more complicated, but the core idea is the same.
+
+First, let's define the approximate data structures precisely.
+
+**epsilon-approximate k-nearest-neighbor data structure:** a data structure which receives a parameter `epsilon > 0` at construction time. We can add and remove points from it. It also supports queries: given a number `k` and a query point `q`, it returns a list of `k` of the stored points, where point `i` is within a factor of `(1+epsilon)` of the i-th closest point to `q`.
+
+At the time, the fastest such data structure had a query time of `O(log n * C)`, where `C = 2 * (k + (1 + 12/epsilon)^2)`. We can see that the dependency on `epsilon` is severe, meaning that if you want precision, you have to pay a huge penalty in query time.[^10]
+
+[^10]: Here is [the paper](https://dl.acm.org/doi/pdf/10.1145/293347.293348). I don't know if better results have come out since then.
+
+However, crucially for us, `C` is just a **constant** for any `epsilon` and `k`. So, we can use `epsilon = 0.00001` if we want, and it'd still be `O(log n)` time per operation.
+
+In our construction, we initialize the approximate data structure with `epsilon = 0.0492` (we'll see later why this number). When we query it with a point `p`, we ask for `10` approximate nearest neighbors. Then, something interesting happens: either we get lucky and find the nearest neighbor of `p`, or the `10` returned points will be so crowded around `p` that two of them will be closer to each other than `p` and its nearest neighbor.
+
+If we don't find the nearest neighbor of `p`, the first point Instead, we get a point that is a bit further away.
+
+---
+
+Say we start with two points `p` and `q`, which might or might not be mutual nearest neighbors. If we query our approximate data structure with `p` as the query point, we might get a point `r` that is closer than `q`. This is the happy case: `(p, r)` is a closer pair than `(p, q)`, so we are making progress. However, we may also get back `q`, or even a point further away than `q`, but that doesn't mean that `p` and `q` are mutual nearest neighbors. It seems that we are stuck in this case.
+
+We have to leverage that we can ask the approximate data structure for multiple approximate nearest neighbors. Instead of just asking for the approximate nearest neighbor of `p`, we'll ask for the `k = 10` approximate nearest neighbors of `p`. We'll also set `epsilon` to `0.0492`, for reasons that will become clear later.
+
+There are two cases:
+
+1. One of the returned points, `r`, is closer to `p` than `q`. In that case, we successfully found a closer pair than `p` and `q`: `p` and `r`.
+2. None of the returned points are closer to `p` than `q`. Let `d*` be the (unknown) distance between `p` and its closest point. In this case, we have 10 points, `p1, p2, ..., p10`, where:
+   - each `p_i` is within a factor of `1.0492` of the distance to the true `i`-th nearest neighbor of `p` (by the `(1 + epsilon)` guarantee), and
+   - `q` is at about the same distance as some `p_i`, so the approximate data structure cannot tell us which is closer.
+
+The basic idea goes like this:
+
+- Request `k = 10` approximate neighbors instead of a single one.
+- If any are closer than `q`, move to that closer pair; otherwise, use the approximation guarantees to continue from a comparable candidate or certify mutual nearest neighbors.
+
+Yes, the small epsilon means that the algorithm is impractical, but hey, it's `O(n log n)` time!
