@@ -26,9 +26,9 @@ I've been on both sides of the peer review process for computer science conferen
 
 This new development is a flare-up of a perennial dilemma in academia: **How can conference and journal editors get reviewers to do a good job?**
 
-To state the obvious: peer review is critical, not only to ensure the quality and integrity of research as a whole, but also at the personal level for the authors getting papers rejected.
+To state the obvious: peer review is critical, not only to ensure the quality and integrity of research as a whole, but also at the personal level for authors getting papers rejected.
 
-But despite the critical role of reviewers in academia, there's a lack of incentives. First, reviewing is volunteer work with no compensation, often done only because it's seen as an obligation. Second, there is no easy way to assess the quality and depth of a review. Finally, there's little accountability, given that reviews usually remain anonymous.
+Despite the critical role of reviewers in academia, there's a lack of incentives. First, reviewing is volunteer work with no compensation, often done only because it's seen as an obligation. Second, there is no easy way to assess the quality and depth of a review. Finally, there's little accountability, given that reviews usually remain anonymous.
 
 Picture an academic already overloaded with teaching and research, now tasked with reviewing a paper full of dense math proofs in a specialty outside their area. Just understanding the paper could take hours.
 
@@ -72,9 +72,9 @@ Author:
 
 > I can confirm that (at least one) major conference must be screening for these, \[...\] one of my very own submissions just got desk rejected for including such a prompt (in the pdf sent for review \[...\] they must have some system in place to scan for these and filter papers out before the reviewing process.
 
-In this case, the hidden prompt didn't explicitly violate the conference's policies. It was only when they got rejected due to "scientific misconduct" that they realized the prompt was an issue. They hadn't even consulted with their co-authors before adding it, and the co-authors were fine with this after the rejection came in.
+In this case, the hidden prompt didn't explicitly violate the conference policies. It was only when the paper got rejected due to "scientific misconduct" that the author realized the prompt was an issue. They hadn't even consulted with their co-authors before adding it, but the co-authors were fine with this after the rejection came in.
 
-Conferences will likely update their policies soon to explicitly ban hidden prompts. ICML [already has](https://icml.cc/Conferences/2025/PublicationEthics).
+Conferences will likely update their policies soon to explicitly ban hidden prompts. ICML, a top machine learning conference, [already has](https://icml.cc/Conferences/2025/PublicationEthics).
 
 ## Are the hidden prompts unethical?
 
@@ -84,7 +84,7 @@ Author:
 
 > it's like putting hot sauce in your lunch at work to try to catch a co-worker that has been stealing it: nothing happens if no one breaks the rules. And it is a small payback for what can be very detrimental to you
 
-On the other hand, ICML dismisses such arguments with an analogy: "For an analogous example, consider that an author who tries to bribe a reviewer for a favorable review is engaging in misconduct even though the reviewer is not supposed to accept bribes."
+On the other hand, ICML dismisses this argument: "For an analogous example, consider that an author who tries to bribe a reviewer for a favorable review is engaging in misconduct even though the reviewer is not supposed to accept bribes."
 
 Given the author's past experience with LLM reviews and the lack of support from the editors, the hidden prompt seemed like the only recourse against this type of unfair rejection. While the hidden prompts give an unfair advantage over other researchers, it's more understandable when seen as a reaction to a wrong committed against them first.
 
@@ -94,13 +94,19 @@ Author:
 
 > I didn't consider it at the time, but I've thought about it afterwards. In hindsight, I would do this since I might not risk rejection, but also this might make the prompt somewhat useless: the goal IS to be sneaky because if the infracting reviewer notices it, they can easily step around it
 
-That's a valid concern--if the prompt is detected, it can be circumvented. That's why there are now [methods](https://arxiv.org/abs/2503.15772) to add hidden prompts that instruct the LLM to output a covert _watermark_ that the reviewer would not suspect. This seems to be the most ethical defense against LLM reviews.
+That's a fair point: if the prompt is detected, it can be circumvented. That's why there are now [methods](https://arxiv.org/abs/2503.15772) to add hidden prompts that instruct the LLM to output a covert _watermark_ that the reviewer would not suspect--such as a made-up citation.
 
-Even ICML said that hidden prompts "intended to detect if LLMs are being used by reviewers" are acceptable.
+This might be the most ethical defense against LLM reviews. Even ICML acknowledges that hidden prompts "intended to detect if LLMs are being used by reviewers" are acceptable.
 
 ## Conclusion
 
-In my view, authors, reviewers, _and_ editors all share part of the blame. Ultimately, the "offending" author and I agree that the issue needs to be addressed at its source: by providing better support to reviewers and aligning their incentives. Otherwise, there may be an arms race of increasingly more sophisticated prompts and detection methods.
+In my view, authors, reviewers, _and_ editors all share part of the blame. Ultimately, the "offending" author and I agree that the issue needs to be addressed at its source: by providing better support to reviewers and aligning their incentives.
+
+Beyond the microcosm of computer science peer review, the same dynamic is likely to spread to any setting where a busy human evaluates written text by someone with a stake in the outcome. Needless to say, this encompasses much of what keeps modern society running.
+
+As the inventors of LLMs, computer scientists are naturally among the earliest to explore new applications, so their conferences may just be ground zero for this phenomenon. But they are not alone: people are already [hiding prompts in their résumés](https://www.entrepreneur.com/business-news/job-seekers-try-to-pass-ai-screening-with-white-text-prompts/498109?utm_source=chatgpt.com) to pass AI screenings, [in homework assignments](https://www.reddit.com/r/Professors/comments/1jk9tk7/hidden_text_to_trip_up_ai/?utm_source=chatgpt.com) to catch students using LLMs, and [in LinkedIn profiles](https://www.hindustantimes.com/trending/us/new-york-man-exposes-ai-recruiters-with-genius-linkedin-hack-i-didnt-think-this-would-actually-work-101758694255689.html?utm_source=chatgpt.com) to fool AI recruiters. Who knows? One day, we might even see someone convicted in court because the prosecution hid a prompt in the evidence. An arms race between increasingly sophisticated prompts and detection methods seems inevitable.
+
+LLMs have already created a low-trust environment, especially (but not only) online. You can never be sure if you are reading a human or a bot, as in the case of peer reviews. Yet, with "traditional" prompting, you can at least assume that the LLM is following the instructions of the human author. Hidden prompts inject--quite literally--another layer of mistrust into the system: now, you don't even know whose instructions the model followed.
 
 <BlogImage
   src="/blog/llms-in-peer-review/cover.png"
