@@ -14,7 +14,7 @@ So, should we use DFS or BFS? Counting connected components is a basic graph pro
 
 It's more contentious than you'd think.
 
-In this post, we'll use the different strengths of DFS and BFS to push the space complexity from `O(R*C)` to `O(min(R, C))` to `O(1)`.
+In this post, we'll use the different strengths of DFS and BFS to push the space complexity from `O(R*C)` to `O(n log n)`, where `n = min(R, C)`, to `O(1)`.
 
 <Toc />
 
@@ -79,34 +79,6 @@ On the one hand, DFS is recursive, and the call stack still counts as extra spac
 
 On the other hand, BFS explores the nodes layer by layer, sorted by distance (first the nodes at distance `1`, then the nodes at distance `2`, and so on). BFS includes nodes from at most two distance layers in the queue at any given time.
 
-In a grid without any 0's, each distance layer forms a diamond shape, which contains at most two nodes in any given row or column:
-
-<BlogImage
-  src="/blog/counting-islands/diamond.png"
-  alt="Diamond shape"
-  width="30%"
-/>
-
-Thus, `len(queue) <= 2 * max_layer_size <= 2 * min(2*R, 2*C) = O(min(R, C))`.
-
-<Callout title="Open problem">
-I believe that the `O(min(R, C))` bound still applies when there are 0's in the grid, but I don't have a proof.
-The challenge with proving it is that, with 0's in the grid, it is no longer true that there are at most two nodes in any given row or column at the same distance from the starting node.
-
-This counterexample shows four 1's at distance 8 from the circled 1:
-
-<BlogImage
-  src="/blog/counting-islands/row_of_ones.png"
-  alt="Row of ones"
-  width="30%"
-/>
-
-If you know how to prove it, please tell me!
-
-</Callout>
-
-So, DFS uses `O(rows * cols)` extra space, while BFS uses `O(min(rows, cols))`.
-
 Here is the optimized BFS solution:
 
 ```python
@@ -139,11 +111,73 @@ def count_islands(grid):
   return island_count
 ```
 
+### BFS extra space analysis
+
+Let's define `count(R, C)` as the maximum size of a "distance layer": the number of cells in an `RxC` binary grid (where 0's act as 'walls') that can be equidistant from a given cell.
+
+The extra space of BFS is `O(count(R, C))` because the BFS queue only contains cells from at most two distance layers at once, so `len(queue) <= 2 * count(R, C)`.
+
+Let's tackle this question, starting with an easier case:
+
+In a grid without any 'walls', each distance layer forms a diamond shape, which contains at most two nodes in any given row or column:
+
+<BlogImage
+  src="/blog/counting-islands/diamond.png"
+  alt="Diamond shape"
+  width="30%"
+/>
+
+Thus, `count(R, C) <= min(2*R, 2*C) = O(min(R, C))`.
+
+However, if we allow 'walls' (0's) in the grid, it is no longer true that there are at most two nodes in any given row or column at the same distance from the starting node:
+
+<BlogImage
+  src="/blog/counting-islands/row_of_ones.png"
+  alt="Row of ones"
+  width="30%"
+/>
+
+The grid above has four 1's at distance 8 from the circled 1.
+
+Even though I still don't know the asymptotic worst-case for `count(R, C)`, what we can prove is that it is _at least_ `O(n log n)`, where `n = min(R, C)`.
+[Timothy Johnson](https://www.linkedin.com/in/timothy-johnson-33659aa2/) sent me a grid arrangement with `Θ(n log n)` cells equidistant from the starting cell.
+
+The construction follows a fractal:
+
+<BlogImage
+  src="/blog/counting-islands/fractal.png"
+  alt="Fractal"
+  width="100%"
+/>
+
+- Gray is the 0's in the grid (the 'walls')
+- Every other cell is a 1 (blue, yellow, and white)
+- Blue is the starting cell
+- Yellow is a set of cells all at the same distance
+
+The construction works for square grids where the side is a power of 2 minus 1.
+
+Let `count(n)` be the number of cells at distance `d = (n-1)/2` when the grid side is `n`.
+
+- Base case: `count(7) = 12`
+- General case (`n = 15, 31, 63, ...`):
+
+`count(n) = 2 * count(n/2 - 0.5) + 2n - 18 = Θ(n log n)`
+
+The recurrence should look familiar to the one for merge sort: Two recursive terms that halve, and a linear non-recursive term. That's why we get `Θ(n log n)`.
+
+<Callout title="Open problem">
+  Conjecture: `O(n log n)` is the true extra space complexity of BFS. I don't
+  have a proof--if you know how to prove it, please let me know!
+</Callout>
+
+So, DFS uses `O(n^2)` extra space, while BFS uses `O(n log n)` (most likely, but not proven).
+
 ## Iterative DFS
 
 But this is not the end of the journey.
 
-We can reduce the extra space from `O(min(R, C))` to `O(1)`, but we have to **switch back to DFS**!
+We can push the extra space down all the way to `O(1)`, but we have to **switch back to DFS**!
 
 With `O(1)` extra space, we can't afford recursion at all, so we have to use iterative DFS.
 
