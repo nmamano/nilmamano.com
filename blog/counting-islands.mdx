@@ -14,7 +14,7 @@ So, should we use DFS or BFS? Counting connected components is a basic graph pro
 
 It's more contentious than you'd think.
 
-In this post, we'll use the different strengths of DFS and BFS to push the space complexity from `O(R*C)` to `O(n log n)`, where `n = min(R, C)`, to `O(1)`.
+In this post, we'll use the different strengths of DFS and BFS to push the space complexity from `O(R*C)` to `O(1)`.
 
 <Toc />
 
@@ -113,6 +113,8 @@ def count_islands(grid):
 
 ### BFS extra space analysis
 
+Surprisingly, analyzing the extra space complexity of BFS is the hardest part of this problem.
+
 Let's define `count(R, C)` as the maximum size of a "distance layer": the number of cells in an `RxC` binary grid (where 0's act as 'walls') that can be equidistant from a given cell.
 
 The extra space of BFS is `O(count(R, C))` because the BFS queue only contains cells from at most two distance layers at once, so `len(queue) <= 2 * count(R, C)`.
@@ -139,10 +141,25 @@ However, if we allow 'walls' (0's) in the grid, it is no longer true that there 
 
 The grid above has four 1's at distance 8 from the circled 1.
 
-Even though I still don't know the asymptotic worst-case for `count(R, C)`, what we can prove is that it is _at least_ `O(n log n)`, where `n = min(R, C)`.
-[Timothy Johnson](https://www.linkedin.com/in/timothy-johnson-33659aa2/) sent me a grid arrangement with `Θ(n log n)` cells equidistant from the starting cell.
+Surprisingly, it turns out that the BFS queue may grow to `Θ(min(R, C)^2)` in the worst case.
 
-The construction follows a fractal:
+To show this, we need to construct a very specific grid arrangement that maximizes the number of cells equidistant from the starting cell.
+The construction follows a recursive pattern.[^3]
+
+[^3]: Credit to [Timothy Johnson](https://www.linkedin.com/in/timothy-johnson-33659aa2/) for this idea.
+
+Here is the recursive construction for a `127x127` grid, which has `1588` cells (in yellow) at distance `63` from the starting cell (in blue).
+
+- Gray cells are 0's (the 'walls')
+- Every other cell is a 1 (blue, yellow, and white)
+
+<BlogImage
+  src="/blog/counting-islands/fractal127.png"
+  alt="Fractal"
+  width="100%"
+/>
+
+The construction works for square grids where the side `n` is a power of 2 minus 1:
 
 <BlogImage
   src="/blog/counting-islands/fractal.png"
@@ -150,28 +167,44 @@ The construction follows a fractal:
   width="100%"
 />
 
-- Gray is the 0's in the grid (the 'walls')
-- Every other cell is a 1 (blue, yellow, and white)
-- Blue is the starting cell
-- Yellow is a set of cells all at the same distance
+The following diagram illustrates the general case of the recursive construction:
 
-The construction works for square grids where the side is a power of 2 minus 1.
+<BlogImage
+  src="/blog/counting-islands/construction.png"
+  alt="Recursive construction"
+  width="60%"
+/>
 
-Let `count(n)` be the number of cells at distance `d = (n-1)/2` when the grid side is `n`.
+We can see how one corner of the grid gets split into four smaller corners.
 
-- Base case: `count(7) = 12`
-- General case (`n = 15, 31, 63, ...`):
+- Subcorners 1 and 2, start at distance `n/2` from the starting cell, and have dimensions `n/2 x n/2`.
+- Subcorners 3 and 4, start at distance `n/2 - 3` from the starting cell, and have dimensions `(n/2 - 3) x (n/2 - 3)`.
 
-`count(n) = 2 * count(n/2 - 0.5) + 2n - 18 = Θ(n log n)`
+Let `count(n)` be the maximum number of cells at distance `n-1` from the corner of a grid triangle with side length `n`.
 
-The recurrence should look familiar to the one for merge sort: Two recursive terms that halve, and a linear non-recursive term. That's why we get `Θ(n log n)`.
+Our recursive construction says:
 
-<Callout title="Open problem">
-  Conjecture: `O(n log n)` is the true extra space complexity of BFS. I don't
-  have a proof--if you know how to prove it, please let me know!
-</Callout>
+`count(n) = 2 * count(n/2) + 2 * count(n/2 - 3)`
 
-So, DFS uses `O(n^2)` extra space, while BFS uses `O(n log n)` (most likely, but not proven).
+Asymptotically, this is going to be equivalent to:
+
+`count(n) = 4 * count(n/2)`
+
+We also need a base case, of course, but since we are only interested in the asymptotic analysis, it suffices to say that `count(n)` is constant for values of `n` below some constant.
+
+Asymptotically, this recurrence simplifies to `count(n) = Θ(n^2)`.
+
+This is because the recurrence tree has `log_2(n)` levels, and at each level the number of terms is multiplied by 4, so the total number of terms is roughly `4^log_2(n)`.
+Now, doing a bit of logarithm arithmetic, we get:
+
+`4^log_2(n) = (2^2)^log_2(n) = 2^(2*log_2(n)) = 2^(log_2(n^2)) = n^2`
+
+We can now compare the extra space complexity of DFS and BFS in the worst case. DFS uses `O(R*C)` extra space (as exemplified by a zig-zag pattern over a grid with all 1's) while BFS uses `O(n^2)` (as exemplified by this recursive pattern).
+
+BFS is a slight improvement over DFS in two ways:
+
+1. If the grid is thin or tall (many more rows than columns or vice versa), `O(min(R, C)^2)` is better than `O(R*C)`.
+2. The worst-case for BFS is a lot more contrived, so BFS will use less space on _average_ or on _expectation_.
 
 ## Iterative DFS
 
