@@ -115,7 +115,7 @@ def count_islands(grid):
 
 Surprisingly, analyzing the extra space complexity of BFS is the hardest part of this problem.
 
-Let's define `count(R, C)` as the maximum size of a "distance layer": the number of cells in an `RxC` binary grid (where 0's act as 'walls') that can be equidistant from a given cell.
+Let's define `count(R, C)` as the maximum size of a "distance layer": the number of cells in an `RxC` binary grid (where 0's act as 'water') that can be equidistant from a given cell.
 
 The extra space of BFS is `O(count(R, C))` because the BFS queue only contains cells from at most two distance layers at once, so `len(queue) <= 2 * count(R, C)`.
 
@@ -123,7 +123,7 @@ So, what is `count(R, C)`?
 
 Let's tackle this question, starting with an easier case:
 
-In a grid without any 'walls', each distance layer forms a diamond shape, which contains at most two nodes in any given row or column:
+In a grid without any 'water', each distance layer forms a diamond shape, which contains at most two nodes in any given row or column:
 
 <BlogImage
   src="/blog/counting-islands/diamond.png"
@@ -133,7 +133,7 @@ In a grid without any 'walls', each distance layer forms a diamond shape, which 
 
 Thus, `count(R, C) <= min(2*R, 2*C) = O(min(R, C))`.
 
-However, if we allow 'walls' (0's) in the grid, it is no longer true that there are at most two nodes in any given row or column at the same distance from the starting node:
+However, if we allow 'water' (0's) in the grid, it is no longer true that there are at most two nodes in any given row or column at the same distance from the starting node:
 
 <BlogImage
   src="/blog/counting-islands/row_of_ones.png"
@@ -152,7 +152,7 @@ The construction follows a recursive pattern.[^3]
 
 Here is the recursive construction for a `127x127` grid, which has `1588` cells (in yellow) at distance `63` from the starting cell (in blue).
 
-- Gray cells are 0's (the 'walls')
+- Gray cells are 0's (the 'water')
 - Every other cell is a 1 (blue, yellow, and white)
 
 <BlogImage
@@ -177,7 +177,7 @@ The following diagram illustrates the general case of the recursive construction
   width="60%"
 />
 
-We can see how an 'L' shaped wall allows us to split one corner of the grid into four smaller corners.
+We can see how an 'L' shaped water wall allows us to split one corner of the grid into four smaller corners.
 
 - Subcorners 1 and 2, start at distance `n/2` from the starting cell, and have dimensions `n/2 x n/2`.
 - Subcorners 3 and 4, start at distance `n/2 - 3` from the starting cell, and have dimensions `(n/2 - 3) x (n/2 - 3)`.
