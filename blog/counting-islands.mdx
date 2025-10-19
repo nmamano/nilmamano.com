@@ -60,7 +60,7 @@ def count_islands(grid):
 ## Trick: modifying the input grid
 
 Linear time for this problem is already optimal.
-Where it gets interesting is if we are allowed to modify the input grid to save extra space.
+Where it gets interesting is if we are allow modifying the input grid to save extra space.
 
 Instead of tracking visited cells in a separate data structure, we can use a special value, like 2, directly in the input grid.
 
@@ -73,7 +73,7 @@ With this optimization, suddenly BFS is better than DFS.
 
 Why?
 
-On the one hand, DFS is recursive, and the call stack still counts as extra space. In the worst case, we could zig-zag through the entire grid with DFS, making `O(rows * cols)` nested calls.[^2]
+On the one hand, DFS is recursive, and the call stack still counts as extra space. In the worst case, we could zig-zag through the entire grid with DFS, making `O(R * C)` nested calls.[^2]
 
 [^2]: This is also the reason why, for DFS, we need to worry about stack overflow for large grids.
 
@@ -119,6 +119,8 @@ Let's define `count(R, C)` as the maximum size of a "distance layer": the number
 
 The extra space of BFS is `O(count(R, C))` because the BFS queue only contains cells from at most two distance layers at once, so `len(queue) <= 2 * count(R, C)`.
 
+So, what is `count(R, C)`?
+
 Let's tackle this question, starting with an easier case:
 
 In a grid without any 'walls', each distance layer forms a diamond shape, which contains at most two nodes in any given row or column:
@@ -139,9 +141,9 @@ However, if we allow 'walls' (0's) in the grid, it is no longer true that there 
   width="30%"
 />
 
-The grid above has four 1's at distance 8 from the circled 1.
+The grid above has four 1's in the same row at distance 8 from the circled 1.
 
-Surprisingly, it turns out that the BFS queue may grow to `Θ(min(R, C)^2)` in the worst case.
+Astonishingly, it turns out that the BFS queue may grow to `Θ(min(R, C)^2)` in the worst case.
 
 To show this, we need to construct a very specific grid arrangement that maximizes the number of cells equidistant from the starting cell.
 The construction follows a recursive pattern.[^3]
@@ -175,7 +177,7 @@ The following diagram illustrates the general case of the recursive construction
   width="60%"
 />
 
-We can see how one corner of the grid gets split into four smaller corners.
+We can see how an 'L' shaped wall allows us to split one corner of the grid into four smaller corners.
 
 - Subcorners 1 and 2, start at distance `n/2` from the starting cell, and have dimensions `n/2 x n/2`.
 - Subcorners 3 and 4, start at distance `n/2 - 3` from the starting cell, and have dimensions `(n/2 - 3) x (n/2 - 3)`.
