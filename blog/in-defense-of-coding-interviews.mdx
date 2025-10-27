@@ -19,13 +19,15 @@ Everyone, me included, agrees on the following:
 3. **They reward memorization.** It can feel like the only way to pass an interview is to already know the question. Engineers should build things, not memorize esoteric techniques like Kadane's algorithm.[^2]
 4. **They exclude engineers who don't do well under pressure.** Many strong developers struggle in artificial, high-stress settings.
 5. **When remote, they're easy to cheat with LLMs.** The standardized format makes them familiar to models trained on similar data.[^3]
-6. **Luck matters a lot.** With only 1-2 problems per interview, an unfamiliar or tricky one can ruin your chances. The binary format--you either get the optimal solution or you fail--doesn't capture the amount of prep you put in, which can be demoralizing.
+6. **Luck matters a lot.** With only 1-2 problems per interview, an unfamiliar or tricky one can ruin your chances. The binary format--you either get the optimal solution or you fail--doesn't capture the amount of prep you put in, which can be demoralizing.[^21]
 
 [^1]: This criticism was crystallized in the evergreen [invert a binary tree meme](https://x.com/mxcl/status/608682016205344768).
 
 [^2]: This is especially bad in companies like Meta, where you are expected to solve two problems in 45 minutes.
 
 [^3]: Take [Cluely](https://startupspells.com/p/leetcode-marketing-stunt-viral-interview-coder) for instance, a real-time cheating tool whose creator [claimed](https://www.linkedin.com/posts/roy-lee-goat_i-genuinely-just-killed-leetcode-youve-activity-7358663803548438528-4_Qh) to have killed LeetCode. Companies are slowly [reacting](https://interviewing.io/blog/how-is-ai-changing-interview-processes-not-much-and-a-whole-lot) to this by adding in-person rounds and pilotting new "AI-allowed" interview formats.
+
+[^21]: To be fair, most evaluation rubrics for DS&A interviews are not that binary. They usually also have scores for communication, coding style, verification, etc. But finding the optimal solution still carries most of the weight.
 
 The discourse about everything wrong with LeetCode interviews is extensive.[^4]
 
@@ -55,14 +57,77 @@ My claims:
 
 My thesis can be summarized in four points:
 
-1. All interview formats must live somewhere in a spectrum from high-context (situational) to low-context (standardized).
-2. There are intrinsic upsides and downsides to each end of the spectrum.
+1. All interview formats must live somewhere in a spectrum from high-context (situational) to low-context (standardized). By _context_ we mean, how much of the format (what's asked, how it's evaluated, etc.) is specific to the company, role, interviewer, and candidate.
+2. There are inherent trade-offs between the two ends of the spectrum.
+
    - **Situational interviews** give realism, nuance, and role-specific alignment.
    - **Standardized interviews** give a level playing field, reduced bias, and scalability.
-3. Big Tech's constraints (scale, decentralization) push it toward the standardized end.
-4. DS&A interviews are a good fit for this end of the spectrum.
 
-So, the thesis is that you **cannot** get both of those two sets of (largely positive) traits in the same interview format.
+   You **cannot** get both of those sets of (positive) traits in the same format.
+
+3. Big Tech's constraints (scale, decentralization) push it toward the standardized end.
+4. Among standardized formats, DS&A interviews are a good fit for evaluating the kind of problem-solving skills relevant to Big Tech.
+
+Let's look at some common interview formats and where they fall on this spectrum:[^24]
+
+[^24]: The scores are approximate, as they depend on how prearranged the questions are, and how rigid the evaluation rubric is, among other things.
+
+<BlogImage
+  src="/blog/in-defense-of-coding-interviews/context_spectrum.png"
+  alt="A spectrum showing different interview formats arranged from low context (standardized) to high context (situational). From left to right: Online Automated Test, Live DS&A, System Design, Take-Home Project, Pair Programming, and Past-Work Discussion."
+  width="90%"
+/>
+
+<BlogTable centered={true}>
+  <TableHeader>
+    <TableRow style={{ borderBottom: "1px solid" }}>
+      <TableHead style={{ textAlign: "left" }}>Interview Format</TableHead>
+      <TableHead style={{ textAlign: "center" }}>Context Score</TableHead>
+      <TableHead style={{ textAlign: "left" }}></TableHead>
+    </TableRow>
+  </TableHeader>
+  <TableBody>
+    <TableRow>
+      <TableCell>Online Automated Coding Test</TableCell>
+      <TableCell className="text-center">0</TableCell>
+      <TableCell>
+        Identical questions for everyone; no human input on the evaluation.
+      </TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Live DS&A</TableCell>
+      <TableCell className="text-center">1-2</TableCell>
+      <TableCell>Includes human interaction.</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>System Design</TableCell>
+      <TableCell className="text-center">3-5</TableCell>
+      <TableCell>More realistic and open-ended.</TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Take-Home Project</TableCell>
+      <TableCell className="text-center">5-7</TableCell>
+      <TableCell>
+        Subjective evaluation of code style and organization.
+      </TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Pair Programming</TableCell>
+      <TableCell className="text-center">7-9</TableCell>
+      <TableCell>
+        Depends on the chemistry between the candidate and the interviewer.
+      </TableCell>
+    </TableRow>
+    <TableRow>
+      <TableCell>Past-Work Discussion</TableCell>
+      <TableCell className="text-center">8-10</TableCell>
+      <TableCell>
+        Specific to the candidate's history and the interviewer's interests and
+        values.
+      </TableCell>
+    </TableRow>
+  </TableBody>
+</BlogTable>
 
 ### Traits of situational (high-context) interviews
 
@@ -212,6 +277,27 @@ The sad truth is we can't expect things to change unless it benefits the compani
 
 Yes, companies that use LeetCode interviews miss out on candidates who won't put up with LeetCode or who don't perform well under pressure. From personal experience, many great developers fall in this group; but with so many applicants, **rejecting good ones is more OK than accepting bad ones.**
 
+### LeetCode interviews and underrepresented groups
+
+DS&A interviews disadvantage candidates from underrepresented groups in some ways, but I'm not sure other formats are fairer.
+
+There's a lot to say on this topic (and I'm not probably the best person for it), but I want to acknowledge these issues:
+
+- DS&A is covered in many colleges' Computer Science curricula, so going to a college with a strong CS program is an advantage compared to, e.g., learning coding through a bootcamp.
+- DS&A prep can be expensive. LeetCode premium ($179/year) and a NeetCode subscription ($119/year) add up to $298.[^22] Plus, you may need other resources for system design, etc.
+- LeetCode grinding disadvantages people with limited free time--parents, caregivers, or anyone working multiple jobs.
+- The fear of confirming negative stereotypes ("people like me don't belong here") is an added pressure that stacks up with the time pressure of DS&A interviews.
+
+[^22]: One of our goals with BCtCI was to offer a resource below the $50 price point that's professional and self-contained (we built [a platform](https://bctci.co) where you can practice the book's problems).
+
+That said, other formats are subject to the same issues or different ones. For instance:
+
+- Situational interviews are more affected by the interviewer's style, empathy, and cultural norms.
+- Take-home assignments still disadvantage those with limited free time.
+- Past-work discussion interviews rely on having opportunities to build a portfolio _in the first place_.
+
+So, while DS&A interviews can amplify gaps in educational opportunities and available prep time, replacing them with current alternatives might simply shift the disadvantage elsewhere.
+
 ### What are the alternatives?
 
 For the unconvinced reader, I ask:
@@ -220,7 +306,7 @@ For the unconvinced reader, I ask:
 
 - AI-assisted coding interviews reduce signal on problem-solving skills, as mentioned above.
 - Take-home assignments are too susceptible to cheating (among [other issues](https://interviewing.io/blog/why-engineers-dont-like-take-homes-and-how-companies-can-fix-them)).
-- Previous experience interviews are too subjective.
+- Past-work discussion interviews are too subjective.
 - Trial periods are not scalable.
 
 One idea I like is going through a code review during the interview, but it's not clear that (1) it offers as much signal about problem-solving skills, and (2) it is as straightforward to evaluate impartially.
@@ -285,7 +371,9 @@ In our BCtCI [Reddit AMA](https://www.reddit.com/r/cscareerquestions/comments/1j
 
 I don't think that DS&A is the only thing that should be asked. [Mike's answer](https://www.reddit.com/r/cscareerquestions/comments/1j4zsjj/comment/mgdnpgi/?utm_source=share&utm_medium=web3x&utm_name=web3xcss&utm_term=1&utm_content=share_button) strikes a thoughtful balance between DS&A and more practical/situational stuff.
 
-My fear is that if we "kill" DS&A interviews without a good alternative, it seems inevitable that companies will give more weight to resumes and referrals, which is less meritocratic. LeetCode interviews give candidates from all backgrounds a chance at the top companies. The LeetCode grind sucks, but it is the same for everyone.
+My fear is that if we "kill" DS&A interviews without a good alternative, it seems inevitable that companies will give more weight to resumes and referrals, which is less meritocratic. LeetCode interviews give candidates from all backgrounds a chance at the top companies. The LeetCode grind sucks, but it is the same for everyone.[^23]
+
+[^23]: See the section [LeetCode interviews and underrepresented groups](#leetcode-interviews-and-underrepresented-groups) for more nuance.
 
 Moreover, I think a likely outcome of the push against DS&A interviews is an even worse compromise: coding interviews won't completely go away, so we'll still need to grind LeetCode, but we'll also have to prep a bunch of specialized stuff for each company on top of that.[^20] Interview prep time may decrease for any specific company, but massively increase overall. We take it for granted, but it is not a given that studying a single topic (DS&A) should prepare us for all of Big Tech at once. This could change, and we engineers will be the ones worse off.
 
