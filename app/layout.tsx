@@ -1,6 +1,5 @@
 import { ThemeProvider } from "@/components/theme-provider";
-import { HeaderWithActiveLink } from "@/app/components/header-with-active-link";
-import { SiteFooter } from "@/app/components/site-footer";
+import { LayoutShell } from "@/components/layout-shell";
 import { GoogleAnalytics } from "@/lib/analytics";
 import { AnalyticsProvider } from "@/components/analytics-provider";
 import { Toaster } from "@/components/ui/toaster";
@@ -88,13 +87,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AnalyticsProvider>
-            <div className="min-h-screen flex flex-col">
-              <HeaderWithActiveLink />
-              <main className="container mx-auto max-w-7xl px-4 md:px-6 flex-grow">
-                {children}
-              </main>
-              <SiteFooter />
-            </div>
+            <LayoutShell>{children}</LayoutShell>
             <Toaster />
           </AnalyticsProvider>
         </ThemeProvider>
