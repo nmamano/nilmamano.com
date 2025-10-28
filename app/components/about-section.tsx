@@ -140,7 +140,7 @@ export default function AboutSection() {
             <p>
               Are you looking for a short bio? See the{" "}
               <Link href="/media-kit" className="text-primary hover:underline">
-                media kit page
+                media kit
               </Link>
               .
             </p>
@@ -165,7 +165,7 @@ export default function AboutSection() {
                 >
                   UCI
                 </Link>
-                . I was fortunate to be advised by Professors{" "}
+                . I was fortunate to be advised by{" "}
                 <Link
                   href="https://www.ics.uci.edu/~eppstein/"
                   target="_blank"
@@ -182,7 +182,7 @@ export default function AboutSection() {
                   Michael Goodrich
                 </Link>
                 . Before that, I got a bachelor's degree in CS from UPC in my
-                hometown of Barcelona.
+                hometown, Barcelona.
               </p>
               <p className="mt-2">
                 My research spans computational geometry, greedy algorithms,
@@ -251,7 +251,7 @@ export default function AboutSection() {
                 >
                   paper
                 </Link>
-                ).
+                )).
               </p>
               <p className="mt-2">
                 See{" "}
