@@ -53,7 +53,7 @@ function LatestBlogPost() {
     <div className="mt-8 max-w-4xl mx-auto">
       <h2 className="text-lg md:text-xl font-bold mb-4 text-center">
         Latest{" "}
-        <Link href="/blog" className="hover:underline">
+        <Link href="/blog" className="text-primary hover:underline">
           blog
         </Link>{" "}
         post
@@ -319,7 +319,7 @@ export default function AboutSection() {
                 </Link>
                 .
               </p>
-              <p className="mt-2">Not yet sure what's next!</p>
+              <p className="mt-2">Not sure what's next yet, but lately I've been active on my <Link href="/blog" className="text-primary hover:underline">blog</Link>.</p>
               <p className="mt-2">
                 My passion project is{" "}
                 <Link
@@ -330,6 +330,9 @@ export default function AboutSection() {
                   wallwars.net
                 </Link>
                 , an online board game.
+                </p>
+                <p className="mt-2">
+                  Here's a little bit about <Link href="/personal" className="text-primary hover:underline">my hobbies</Link>.
               </p>
             </div>
           </div>

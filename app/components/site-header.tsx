@@ -56,14 +56,7 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
               >
                 Research
               </Link>
-              <Link
-                href="/#projects"
-                className={`transition-colors hover:text-foreground/80 ${
-                  currentRoute === "projects" ? "text-primary" : ""
-                }`}
-              >
-                Projects
-              </Link>
+              
               <Link
                 href="/#contact"
                 className={`transition-colors hover:text-foreground/80 ${
@@ -71,22 +64,6 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
                 }`}
               >
                 Contact
-              </Link>
-              <Link
-                href="/media-kit"
-                className={`transition-colors hover:text-foreground/80 ${
-                  currentRoute === "media-kit" ? "text-primary" : ""
-                }`}
-              >
-                Media Kit
-              </Link>
-              <Link
-                href="/personal"
-                className={`transition-colors hover:text-foreground/80 ${
-                  currentRoute === "personal" ? "text-primary" : ""
-                }`}
-              >
-                Personal
               </Link>
             </nav>
           )}
