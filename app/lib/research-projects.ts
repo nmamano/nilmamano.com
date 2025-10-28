@@ -97,21 +97,21 @@ export const PROJECTS: Project[] = [
   //     },
   //   ],
   // },
-  {
-    id: "bandwidth-enforcer",
-    title: "Bandwidth Enforcer Visualizer",
-    coverImage: "/projects/bwevisualizer.png",
-    links: {
-      demo: "http://nilmamano.com/bandwidth-enforcer-plotter/",
-      github: "https://github.com/nmamano/bandwidth-enforcer-plotter",
-    },
-    description: [
-      'One of the problems in software defined networking (SDN) is how to decide how much traffic each host should be allowed to send without overloading the network. "<a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43838.pdf" class="text-primary hover:underline" target="_blank" onClick="event.stopPropagation()">BwE: Flexible, Hierarchical Bandwidth Allocation for WAN Distributed Computing</a>" is a public research paper from Google which introduces the Bandwidth Enforcer (BwE) network allocation algorithm used in Google\'s internal WAN. Among other things, it introduces the notion of bandwidth functions and how to aggregate them in a fair way. Since this was related to the work I did at Google, I made an interactive app to recreate the examples from the paper and be able to explore how they would change with different parameters.',
-
-      "For more context on the problem of fair network allocation, check out the BwE paper.",
-    ],
-    additionalImages: [],
-  },
+  // {
+  //   id: "bandwidth-enforcer",
+  //   title: "Bandwidth Enforcer Visualizer",
+  //   coverImage: "/projects/bwevisualizer.png",
+  //   links: {
+  //     demo: "http://nilmamano.com/bandwidth-enforcer-plotter/",
+  //     github: "https://github.com/nmamano/bandwidth-enforcer-plotter",
+  //   },
+  //   description: [
+  //     'One of the problems in software defined networking (SDN) is how to decide how much traffic each host should be allowed to send without overloading the network. "<a href="https://static.googleusercontent.com/media/research.google.com/en//pubs/archive/43838.pdf" class="text-primary hover:underline" target="_blank" onClick="event.stopPropagation()">BwE: Flexible, Hierarchical Bandwidth Allocation for WAN Distributed Computing</a>" is a public research paper from Google which introduces the Bandwidth Enforcer (BwE) network allocation algorithm used in Google\'s internal WAN. Among other things, it introduces the notion of bandwidth functions and how to aggregate them in a fair way. Since this was related to the work I did at Google, I made an interactive app to recreate the examples from the paper and be able to explore how they would change with different parameters.',
+  //
+  //     "For more context on the problem of fair network allocation, check out the BwE paper.",
+  //   ],
+  //   additionalImages: [],
+  // },
   // {
   //   id: "stable-matching",
   //   title: "Two-list stable matching visualizer",
@@ -138,19 +138,19 @@ export const PROJECTS: Project[] = [
   //     "The online platform that goes along with the book 'Beyond Cracking the Coding Interview' (built by interviewing.io) allows you to try to solve all 200+ problems in the book and shows you solutions in your preferred language among Python, JS, Java, and C++. To make this possible, I built a script that, for each problem, takes the raw solutions in all four languages, runs their tests, and then parses the source code to detect top-level definitions. This allows us (the authors) to inject the corresponding snippets into the solution articles in a language-agnostic way (from a single source solution document, the script generates four different solution articles, one for each language, by injecting the appropriate code snippets). The repo is private.",
   //   ],
   // },
-  {
-    id: "ttlcache",
-    title: "LRU + TTL Cache",
-    coverImage: "/multiplicative_hashing.png",
-    links: {
-      github: "https://github.com/nmamano/ttlcache",
-    },
-    description: [
-      "An in-memory hash table that acts as a Cache for a Key-Value storage. It is inspired by Redis and Memcached. It has an LRU (least recently used) eviction mechanism, and it also supports timeouts: entries expire after a certain TTL (<q>time-to-live</q>). The project focuses on how to handle expired entries. They can be handled in two ways: 1) passively, when they are <q>discovered</q> through read/write operations. 2) actively, by searching for them.",
-
-      'Using only passive removal may result in the LRU mechanism evicting entries that are still <q>alive</q> while the cache is poluted by expired entries. Memcached uses a <a href="https://memcached.org/blog/modern-lru/" class="text-primary hover:underline" target="_blank" onClick="event.stopPropagation()">segmented LRU mechanism</a> which takes TTL\'s into account. It can be considered as a type of passive removal. In contrast, Redis implements an active <a href="https://redis.io/commands/expire" class="text-primary hover:underline" target="_blank" onClick="event.stopPropagation()">probabilistic algorithm</a> to keep the fraction of expired entries low, which I implemented in this project. In the future, this project may serve as a testbed for comparing different algorithms for handling expired entries.',
-    ],
-  },
+  // {
+  //   id: "ttlcache",
+  //   title: "LRU + TTL Cache",
+  //   coverImage: "/multiplicative_hashing.png",
+  //   links: {
+  //     github: "https://github.com/nmamano/ttlcache",
+  //   },
+  //   description: [
+  //     "An in-memory hash table that acts as a Cache for a Key-Value storage. It is inspired by Redis and Memcached. It has an LRU (least recently used) eviction mechanism, and it also supports timeouts: entries expire after a certain TTL (<q>time-to-live</q>). The project focuses on how to handle expired entries. They can be handled in two ways: 1) passively, when they are <q>discovered</q> through read/write operations. 2) actively, by searching for them.",
+  //
+  //     'Using only passive removal may result in the LRU mechanism evicting entries that are still <q>alive</q> while the cache is poluted by expired entries. Memcached uses a <a href="https://memcached.org/blog/modern-lru/" class="text-primary hover:underline" target="_blank" onClick="event.stopPropagation()">segmented LRU mechanism</a> which takes TTL\'s into account. It can be considered as a type of passive removal. In contrast, Redis implements an active <a href="https://redis.io/commands/expire" class="text-primary hover:underline" target="_blank" onClick="event.stopPropagation()">probabilistic algorithm</a> to keep the fraction of expired entries low, which I implemented in this project. In the future, this project may serve as a testbed for comparing different algorithms for handling expired entries.',
+  //   ],
+  // },
 ];
 
 // Helper function to get all projects
