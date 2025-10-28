@@ -202,14 +202,6 @@ export default function AboutSection() {
                 </Link>
                 ,{" "}
                 <Link
-                  href="/dissertation/nildissertationslides.pdf"
-                  className="text-primary hover:underline"
-                  target="_blank"
-                >
-                  defense slides
-                </Link>
-                ,{" "}
-                <Link
                   href="/blog/greedy-algorithms"
                   className="text-primary hover:underline"
                 >
@@ -222,6 +214,14 @@ export default function AboutSection() {
                   target="_blank"
                 >
                   advisor's blog post
+                </Link>
+                ,{" "}
+                <Link
+                  href="/dissertation/nildissertationslides.pdf"
+                  className="text-primary hover:underline"
+                  target="_blank"
+                >
+                  defense slides
                 </Link>
                 ) studies how to relax the "greedy choice" in certain greedy
                 algorithms without affecting the final solution. This idea,
