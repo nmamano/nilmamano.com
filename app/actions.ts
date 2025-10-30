@@ -20,6 +20,8 @@ const contactFormSchema = z.object({
     .string()
     .min(10, "Message must be at least 10 characters")
     .max(1000, "Message must be less than 1000 characters"),
+  // Honeypot field - should always be empty for legitimate users
+  website: z.string().optional(),
 });
 
 export type ContactFormData = z.infer<typeof contactFormSchema>;
@@ -35,6 +37,15 @@ export async function submitContactForm(data: ContactFormData) {
   try {
     // Validate the form data
     const validatedData = contactFormSchema.parse(data);
+
+    // Honeypot check - if the field is filled, it's likely a bot
+    if (validatedData.website && validatedData.website.trim() !== "") {
+      console.log("Honeypot triggered - potential bot submission");
+      return {
+        success: false,
+        error: "Failed to send message. Please try again.",
+      };
+    }
 
     // Send email using Resend
     const { data: emailData, error } = await resend.emails.send({

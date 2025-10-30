@@ -31,6 +31,7 @@ export default function ContactForm() {
     lastName: "",
     email: "",
     message: "",
+    website: "", // Honeypot field
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -55,6 +56,7 @@ export default function ContactForm() {
           lastName: "",
           email: "",
           message: "",
+          website: "", // Honeypot field
         });
       }
     });
@@ -179,6 +181,25 @@ export default function ContactForm() {
                 {result.fieldErrors.message?.[0]}
               </p>
             )}
+          </div>
+
+          {/* Honeypot Field - Hidden from humans, visible to bots */}
+          <div
+            className="absolute left-[-9999px] opacity-0 pointer-events-none"
+            aria-hidden="true"
+          >
+            <Label htmlFor="website">
+              Website (please leave this field empty)
+            </Label>
+            <Input
+              id="website"
+              type="text"
+              name="website"
+              value={formData.website || ""}
+              onChange={(e) => handleInputChange("website", e.target.value)}
+              tabIndex={-1}
+              autoComplete="off"
+            />
           </div>
 
           {/* Submit Button */}
