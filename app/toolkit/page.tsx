@@ -407,7 +407,7 @@ Format:
             </Button>
             <ThemeToggle />
           </div>
-          <div className="text-center">
+          <div className="text-center pt-12 md:pt-0">
             {/* Title */}
             <h1 className="text-3xl md:text-7xl font-black bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-800 dark:from-teal-400 dark:via-cyan-400 dark:to-teal-600 bg-clip-text text-transparent tracking-tight mb-2">
               TOOLKIT-{visibleTotalTools}
@@ -536,18 +536,18 @@ Format:
                   </div>
                   <AccordionTrigger className="flex flex-1 items-center justify-between p-0 pr-6 text-left hover:no-underline absolute inset-0 w-full h-full">
                     <div className="flex flex-1 items-center justify-between pl-[60px] pr-0 py-4">
-                      <h3 className="text-sm md:text-lg font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                      <h3 className="text-xs md:text-lg font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
                         {`${category.chapterNumber}. `}
                         {category.name}
                         {category.allExtraCredit && (
-                          <span className="text-xs bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded">
+                          <span className="text-[10px] bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-1.5 py-0.5 rounded">
                             Extra Credit
                           </span>
                         )}
                       </h3>
                       <div className="flex items-center gap-3 ml-3 mr-4">
                         <span
-                          className="text-sm text-gray-500 dark:text-gray-400"
+                          className="text-xs md:text-sm text-gray-500 dark:text-gray-400"
                           suppressHydrationWarning
                         >
                           {
@@ -557,7 +557,7 @@ Format:
                           }{" "}
                           / {category.tools.length}
                         </span>
-                        <div className="w-16 bg-gray-200 dark:bg-slate-700 rounded-full h-2">
+                        <div className="w-8 md:w-16 bg-gray-200 dark:bg-slate-700 rounded-full h-2">
                           <div
                             className="bg-green-500 dark:bg-green-400 h-2 rounded-full transition-all duration-300"
                             style={{
@@ -615,7 +615,7 @@ Format:
                           <div className="flex-1 min-w-0 flex items-center gap-2">
                             <label
                               htmlFor={tool.id}
-                              className={`font-medium cursor-pointer transition-all duration-300 text-sm ${
+                              className={`font-medium cursor-pointer transition-all duration-300 text-xs md:text-sm ${
                                 completedTools.has(tool.id)
                                   ? "text-green-800 dark:text-green-300"
                                   : "text-gray-900 dark:text-gray-100"
@@ -624,7 +624,7 @@ Format:
                               {tool.name}
                             </label>
                             {tool.extraCredit && (
-                              <span className="text-xs bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded flex-shrink-0">
+                              <span className="text-[10px] md:text-xs bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-1.5 md:px-2 py-0.5 rounded flex-shrink-0">
                                 Extra Credit
                               </span>
                             )}
@@ -644,7 +644,7 @@ Format:
                               asChild
                               variant="outline"
                               size="sm"
-                              className="text-xs px-2 py-1 h-7 bg-blue-50 dark:bg-blue-900/30 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/50"
+                              className="text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 h-6 md:h-7 bg-blue-50 dark:bg-blue-900/30 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/50"
                             >
                               <a
                                 href={getProblemUrl(tool.primaryProblem)}
@@ -664,7 +664,7 @@ Format:
                                 }}
                                 onMouseLeave={handleMouseLeave}
                               >
-                                <ExternalLink className="h-3 w-3 flex-shrink-0" />
+                                <ExternalLink className="h-2.5 w-2.5 md:h-3 md:w-3 flex-shrink-0" />
                                 Sample problem
                               </a>
                             </Button>
@@ -675,7 +675,7 @@ Format:
                               <Button
                                 variant="outline"
                                 size="sm"
-                                className="text-xs px-2 py-1 h-7 bg-orange-50 dark:bg-orange-900/30 border-orange-300 dark:border-orange-700 text-orange-700 dark:text-orange-300 hover:bg-orange-100 dark:hover:bg-orange-900/50"
+                                className="text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 h-6 md:h-7 bg-orange-50 dark:bg-orange-900/30 border-orange-300 dark:border-orange-700 text-orange-700 dark:text-orange-300 hover:bg-orange-100 dark:hover:bg-orange-900/50"
                                 onClick={() => setOpenModal(tool.id)}
                               >
                                 Extra problems
@@ -721,12 +721,12 @@ Format:
                           <Button
                             variant="outline"
                             size="sm"
-                            className="text-xs px-2 py-1 h-7 bg-green-50 dark:bg-green-900/30 border-green-300 dark:border-green-700 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/50 flex items-center gap-1"
+                            className="text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 h-6 md:h-7 bg-green-50 dark:bg-green-900/30 border-green-300 dark:border-green-700 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/50 flex items-center gap-1"
                             onClick={() =>
                               copyLearningPrompt(tool.name, tool.description)
                             }
                           >
-                            <Copy className="h-3 w-3 flex-shrink-0" />
+                            <Copy className="h-2.5 w-2.5 md:h-3 md:w-3 flex-shrink-0" />
                             Learning prompt
                           </Button>
                         </div>
