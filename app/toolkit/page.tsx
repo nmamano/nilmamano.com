@@ -394,14 +394,14 @@ Format:
         <div className="max-w-4xl mx-auto px-4 py-8">
           <div className="text-center">
             {/* Title */}
-            <h1 className="text-6xl md:text-7xl font-black bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-800 bg-clip-text text-transparent tracking-tight mb-2">
+            <h1 className="text-3xl md:text-7xl font-black bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-800 bg-clip-text text-transparent tracking-tight mb-2">
               TOOLKIT-{visibleTotalTools}
             </h1>
-            <p className="text-2xl italic font-medium bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-700 bg-clip-text text-transparent mb-6">
+            <p className="text-base md:text-2xl italic font-medium bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-700 bg-clip-text text-transparent mb-6">
               A new way to do coding interview prep
             </p>
 
-            <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-sm md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
               The essential DSA tools and techniques for interviews -
               <br />
               with problems from{" "}
@@ -430,11 +430,11 @@ Format:
                 </button>
                 <div className="flex flex-col items-center gap-0.5 mt-2">
                   <span
-                    className={`text-lg font-medium ${!isExtendedMode ? "text-gray-900" : "text-gray-500"}`}
+                    className={`text-sm md:text-lg font-medium ${!isExtendedMode ? "text-gray-900" : "text-gray-500"}`}
                   >
                     Core
                   </span>
-                  <span className="text-base italic text-gray-600">
+                  <span className="text-xs md:text-base italic text-gray-600">
                     (recommended)
                   </span>
                 </div>
@@ -465,7 +465,7 @@ Format:
                   />
                 </button>
                 <span
-                  className={`text-lg font-medium mt-2 ${isExtendedMode ? "text-gray-900" : "text-gray-500"}`}
+                  className={`text-sm md:text-lg font-medium mt-2 ${isExtendedMode ? "text-gray-900" : "text-gray-500"}`}
                 >
                   Expert
                 </span>
@@ -477,7 +477,7 @@ Format:
               <div className="flex items-center justify-center gap-2 mb-2">
                 <CheckCircle2 className="h-5 w-5 text-green-600" />
                 <span
-                  className="text-lg font-semibold text-gray-700"
+                  className="text-sm md:text-lg font-semibold text-gray-700"
                   suppressHydrationWarning
                 >
                   {visibleCompletedTools} / {visibleTotalTools} Tools Acquired
@@ -533,7 +533,7 @@ Format:
                   </div>
                   <AccordionTrigger className="flex flex-1 items-center justify-between p-0 text-left hover:no-underline absolute inset-0 w-full h-full">
                     <div className="flex flex-1 items-center justify-between px-6 py-4 pl-[60px]">
-                      <h3 className="text-lg font-semibold text-gray-900 flex items-center gap-2">
+                      <h3 className="text-base md:text-lg font-semibold text-gray-900 flex items-center gap-2">
                         {`${category.chapterNumber}. `}
                         {category.name}
                         {category.allExtraCredit && (
@@ -744,15 +744,17 @@ Format:
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
           <DialogHeader>
-            <DialogTitle className="text-gray-900">
+            <DialogTitle className="text-base md:text-lg text-gray-900">
               About / How to Use
             </DialogTitle>
           </DialogHeader>
           <div className="space-y-4 mt-4 text-gray-700">
             <div className="space-y-3">
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">Philosophy</h4>
-                <p className="text-sm">
+                <h4 className="text-sm md:text-base font-semibold text-gray-900 mb-1">
+                  Philosophy
+                </h4>
+                <p className="text-xs md:text-sm">
                   TOOLKIT-X shares BCtCI's philosophy: to be ready for
                   interviews, don't memorize problems - build a{" "}
                   <strong>toolkit</strong> of reusable techniques, recipes, and
@@ -770,10 +772,10 @@ Format:
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">
+                <h4 className="text-sm md:text-base font-semibold text-gray-900 mb-1">
                   Core vs Expert Mode
                 </h4>
-                <p className="text-sm">
+                <p className="text-xs md:text-sm">
                   The <strong>Core toolkit</strong> is well-rounded and designed
                   to get you interview-ready.
                   <br />
@@ -784,10 +786,10 @@ Format:
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">
+                <h4 className="text-sm md:text-base font-semibold text-gray-900 mb-1">
                   'Acquiring' a Tool
                 </h4>
-                <p className="text-sm">
+                <p className="text-xs md:text-sm">
                   Each tool has a <strong>Sample Problem</strong> from BCtCI
                   that demonstrates its use. Click to view the statement and
                   solution (explanation + code in multiple languages).
@@ -816,10 +818,10 @@ Format:
                 </p>
               </div>
               <div>
-                <h4 className="font-semibold text-gray-900 mb-1">
+                <h4 className="text-sm md:text-base font-semibold text-gray-900 mb-1">
                   Tracking Progress
                 </h4>
-                <p className="text-sm">
+                <p className="text-xs md:text-sm">
                   Mark tools as you learn them. Complete all tools in a category
                   to mark the category as done. Your progress is saved locally
                   in your browser - no login required.
@@ -838,7 +840,7 @@ Format:
               href="https://www.amazon.com/dp/195570600X"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-orange-600 hover:text-orange-700 font-bold"
+              className="text-sm md:text-base text-orange-600 hover:text-orange-700 font-bold"
             >
               Get the Book
             </a>
@@ -846,11 +848,11 @@ Format:
               href="https://bctci.co/discord"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-indigo-600 hover:text-indigo-700 font-semibold"
+              className="text-sm md:text-base text-indigo-600 hover:text-indigo-700 font-semibold"
             >
               Join Discord
             </a>
-            <span className="text-gray-600 font-medium">
+            <span className="text-xs md:text-sm text-gray-600 font-medium">
               Created by{" "}
               <a
                 href="https://nilmamano.com"
