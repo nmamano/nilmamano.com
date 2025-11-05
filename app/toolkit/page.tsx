@@ -1,7 +1,7 @@
 "use client";
 
 import type React from "react";
-import { useState, useEffect, useMemo } from "react";
+import { useState, useEffect, useMemo, useRef } from "react";
 import {
   Accordion,
   AccordionContent,
@@ -89,6 +89,13 @@ export default function Toolset() {
   const [openModal, setOpenModal] = useState<string | null>(null);
   const [isHowToUseOpen, setIsHowToUseOpen] = useState(false);
   const [isExtendedMode, setIsExtendedMode] = useState(true);
+  const confettiTriggeredRef = useRef<string | null>(null);
+  const previousCompletionCountRef = useRef<{ core: number; extended: number }>(
+    {
+      core: 0,
+      extended: 0,
+    }
+  );
   const { toast } = useToast();
 
   // Process tools from manifest
@@ -362,6 +369,81 @@ Format:
       sum + category.tools.filter((t) => completedTools.has(t.id)).length,
     0
   );
+
+  // Trigger confetti when progress reaches 100%
+  useEffect(() => {
+    const isComplete =
+      visibleTotalTools > 0 && visibleCompletedTools === visibleTotalTools;
+    const modeKey = isExtendedMode ? "extended" : "core";
+    const previousCount = previousCompletionCountRef.current[modeKey];
+    const completionIncreased =
+      visibleCompletedTools > previousCount &&
+      visibleCompletedTools === visibleTotalTools;
+
+    // Update previous completion count for this mode
+    previousCompletionCountRef.current[modeKey] = visibleCompletedTools;
+
+    // Reset trigger flag if progress drops below 100%
+    if (!isComplete) {
+      if (confettiTriggeredRef.current === modeKey) {
+        confettiTriggeredRef.current = null;
+      }
+      return;
+    }
+
+    // Only trigger confetti if:
+    // 1. Completion count actually increased in this mode (not just switching modes)
+    // 2. We reached 100% in this mode
+    // 3. We haven't celebrated for this mode yet
+    if (
+      completionIncreased &&
+      isComplete &&
+      confettiTriggeredRef.current !== modeKey
+    ) {
+      confettiTriggeredRef.current = modeKey;
+      // Create confetti pieces
+      const colors = [
+        "#3b82f6",
+        "#10b981",
+        "#f59e0b",
+        "#ef4444",
+        "#8b5cf6",
+        "#ec4899",
+      ];
+      const confettiCount = 50;
+
+      for (let i = 0; i < confettiCount; i++) {
+        setTimeout(() => {
+          const confetti = document.createElement("div");
+          confetti.className = "confetti-piece";
+          const color = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.setProperty("--color", color);
+          confetti.style.left = `${Math.random() * 100}%`;
+          confetti.style.top = "0";
+          confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+          confetti.style.animationDuration = `${2 + Math.random() * 2}s`;
+
+          // Add shoot animation for some pieces
+          if (Math.random() > 0.5) {
+            confetti.classList.add("shoot");
+            const angle = (Math.random() * 360 * Math.PI) / 180;
+            const velocity = 200 + Math.random() * 300;
+            const tx = Math.cos(angle) * velocity;
+            const ty = Math.sin(angle) * velocity;
+            confetti.style.setProperty("--tx", `${tx}px`);
+            confetti.style.setProperty("--ty", `${ty}px`);
+          }
+
+          document.body.appendChild(confetti);
+
+          // Remove after animation
+          setTimeout(() => {
+            confetti.remove();
+          }, 5000);
+        }, i * 20);
+      }
+    }
+  }, [visibleCompletedTools, visibleTotalTools, isExtendedMode]);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800">
