@@ -319,7 +319,7 @@ Format:
     navigator.clipboard.writeText(text);
     toast({
       title: "Copied!",
-      description: "Learning prompt copied to clipboard",
+      description: "Learning prompt copied to clipboard.",
     });
   };
 
@@ -747,7 +747,10 @@ Format:
                                 onMouseLeave={handleMouseLeave}
                               >
                                 <ExternalLink className="h-2.5 w-2.5 md:h-3 md:w-3 flex-shrink-0" />
-                                Sample problem
+                                <span className="hidden md:inline">
+                                  Sample problem
+                                </span>
+                                <span className="md:hidden">Problem</span>
                               </a>
                             </Button>
                           )}
