@@ -850,7 +850,7 @@ Format:
       {/* Footer */}
       <footer className="border-t border-white/20 dark:border-slate-700/50 mt-16">
         <div className="max-w-4xl mx-auto px-4 py-8 text-center">
-          <div className="flex justify-center gap-6 flex-wrap">
+          <div className="flex justify-center items-center gap-6 flex-wrap">
             <a
               href="https://www.amazon.com/dp/195570600X"
               target="_blank"
@@ -867,7 +867,7 @@ Format:
             >
               Join Discord
             </a>
-            <span className="text-xs md:text-sm text-gray-600 dark:text-gray-400 font-medium">
+            <span className="text-sm md:text-base text-gray-600 dark:text-gray-400 font-medium">
               Created by{" "}
               <a
                 href="https://nilmamano.com"
