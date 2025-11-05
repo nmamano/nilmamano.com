@@ -743,7 +743,7 @@ Format:
       {/* How to Use Modal */}
       <Dialog open={isHowToUseOpen} onOpenChange={setIsHowToUseOpen}>
         <DialogContent
-          className="max-w-2xl max-h-[80vh] overflow-y-auto bg-gradient-to-br from-blue-50 to-indigo-50 dark:bg-slate-800 border-gray-200 dark:border-slate-700 shadow-xl"
+          className="max-w-2xl max-h-[80vh] overflow-y-auto bg-gradient-to-br from-blue-50 to-indigo-50 dark:from-slate-800 dark:to-slate-800 border-gray-200 dark:border-slate-700"
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
           <DialogHeader>
