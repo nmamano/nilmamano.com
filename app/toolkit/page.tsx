@@ -396,8 +396,15 @@ Format:
       {/* Header */}
       <div className="shadow-sm border-b border-white/20 dark:border-slate-700/50 relative">
         <div className="max-w-4xl mx-auto px-4 py-8">
-          {/* Theme Toggle - Top Right */}
-          <div className="absolute top-4 right-4">
+          {/* Theme Toggle and About Button - Top Right */}
+          <div className="absolute top-4 right-4 flex items-center gap-2">
+            <Button
+              variant="outline"
+              onClick={() => setIsHowToUseOpen(true)}
+              className="rounded-full text-sm text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-100 border-gray-300 dark:border-slate-600 hover:border-gray-400 dark:hover:border-slate-500 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700"
+            >
+              About
+            </Button>
             <ThemeToggle />
           </div>
           <div className="text-center">
@@ -481,7 +488,7 @@ Format:
             </div>
 
             {/* Progress indicator */}
-            <div className="mb-8">
+            <div className="mb-6">
               <div className="flex items-center justify-center gap-2 mb-2">
                 <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
                 <span
@@ -500,18 +507,6 @@ Format:
                   suppressHydrationWarning
                 />
               </div>
-            </div>
-
-            {/* How to Use button */}
-            <div className="mt-6 flex justify-center">
-              <Button
-                variant="outline"
-                onClick={() => setIsHowToUseOpen(true)}
-                className="text-sm text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-100 border-gray-300 dark:border-slate-600 hover:border-gray-400 dark:hover:border-slate-500 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700"
-              >
-                <Info className="h-4 w-4 mr-2" />
-                About
-              </Button>
             </div>
           </div>
         </div>
@@ -748,7 +743,7 @@ Format:
       {/* How to Use Modal */}
       <Dialog open={isHowToUseOpen} onOpenChange={setIsHowToUseOpen}>
         <DialogContent
-          className="max-w-2xl max-h-[80vh] overflow-y-auto bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700"
+          className="max-w-2xl max-h-[80vh] overflow-y-auto bg-gradient-to-br from-blue-50 to-indigo-50 dark:bg-slate-800 border-gray-200 dark:border-slate-700 shadow-xl"
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
           <DialogHeader>
@@ -795,7 +790,7 @@ Format:
               </div>
               <div>
                 <h4 className="text-sm md:text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
-                  'Acquiring' a Tool
+                  'Acquiring' tools
                 </h4>
                 <p className="text-xs md:text-sm">
                   Each tool has a <strong>Sample Problem</strong> from BCtCI
@@ -812,8 +807,8 @@ Format:
                   <strong>all content and the AI interviewer are free</strong>.
                   <br />
                   <br />
-                  You should usually skip the <strong>Extra Problems</strong>.
-                  The goal isn't to solve them all -{" "}
+                  By default, skip the <strong>Extra Problems</strong>. The goal
+                  isn't to solve them all -{" "}
                   <strong>this is not a Problem List</strong> where you have to
                   solve all the problems to check off the tool (Completionists,
                   I'm looking at you!) But if one problem isn't enough, check
@@ -823,6 +818,18 @@ Format:
                   <strong>Learning prompt</strong> button to copy a prompt you
                   can paste directly into ChatGPT or other AIs asking it to
                   explain the concept.
+                  <br />
+                  <br />
+                  <strong>Tip:</strong> as you learn new tools, add them to your{" "}
+                  <a
+                    href="/blog/bctci-free-resources#practice-tools"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium underline"
+                  >
+                    cheat sheet
+                  </a>{" "}
+                  in your own words.
                 </p>
               </div>
               <div>
