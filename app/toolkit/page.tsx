@@ -536,7 +536,7 @@ Format:
                   </div>
                   <AccordionTrigger className="flex flex-1 items-center justify-between p-0 pr-6 text-left hover:no-underline absolute inset-0 w-full h-full">
                     <div className="flex flex-1 items-center justify-between pl-[60px] pr-0 py-4">
-                      <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
+                      <h3 className="text-sm md:text-lg font-bold text-gray-900 dark:text-gray-100 flex items-center gap-2">
                         {`${category.chapterNumber}. `}
                         {category.name}
                         {category.allExtraCredit && (
