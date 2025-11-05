@@ -592,46 +592,50 @@ Format:
                         <div className="absolute inset-0 bg-gradient-to-r from-green-200 via-green-300 to-green-100 animate-sweep"></div>
                       )}
 
-                      <div className="relative z-10 flex items-center gap-3 w-full">
-                        <div className="relative flex items-center">
-                          <Checkbox
-                            id={tool.id}
-                            checked={completedTools.has(tool.id)}
-                            onCheckedChange={() => toggleTool(tool.id)}
-                            onMouseEnter={(e) => handleMouseEnter(e, tool.id)}
-                            onMouseLeave={handleMouseLeave}
-                            className={`data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 transition-all duration-300 ${
-                              completedTools.has(tool.id) ? "animate-burst" : ""
-                            }`}
-                          />
+                      <div className="relative z-10 flex flex-col sm:flex-row sm:items-center gap-3 w-full">
+                        <div className="flex items-center gap-3 flex-1 min-w-0">
+                          <div className="relative flex items-center flex-shrink-0">
+                            <Checkbox
+                              id={tool.id}
+                              checked={completedTools.has(tool.id)}
+                              onCheckedChange={() => toggleTool(tool.id)}
+                              onMouseEnter={(e) => handleMouseEnter(e, tool.id)}
+                              onMouseLeave={handleMouseLeave}
+                              className={`data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 transition-all duration-300 ${
+                                completedTools.has(tool.id)
+                                  ? "animate-burst"
+                                  : ""
+                              }`}
+                            />
+                          </div>
+
+                          <div className="flex-1 min-w-0 flex items-center gap-2">
+                            <label
+                              htmlFor={tool.id}
+                              className={`font-medium cursor-pointer transition-all duration-300 text-sm ${
+                                completedTools.has(tool.id)
+                                  ? "text-green-800"
+                                  : "text-gray-900"
+                              }`}
+                            >
+                              {tool.name}
+                            </label>
+                            {tool.extraCredit && (
+                              <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded flex-shrink-0">
+                                Extra Credit
+                              </span>
+                            )}
+                            <Info
+                              className="h-4 w-4 text-gray-400 hover:text-gray-600 cursor-help flex-shrink-0"
+                              onMouseEnter={(e) =>
+                                handleInfoHover(e, tool.description)
+                              }
+                              onMouseLeave={handleMouseLeave}
+                            />
+                          </div>
                         </div>
 
-                        <div className="flex-1 min-w-0 flex items-center gap-2">
-                          <label
-                            htmlFor={tool.id}
-                            className={`font-medium cursor-pointer transition-all duration-300 text-sm ${
-                              completedTools.has(tool.id)
-                                ? "text-green-800"
-                                : "text-gray-900"
-                            }`}
-                          >
-                            {tool.name}
-                          </label>
-                          {tool.extraCredit && (
-                            <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">
-                              Extra Credit
-                            </span>
-                          )}
-                          <Info
-                            className="h-4 w-4 text-gray-400 hover:text-gray-600 cursor-help"
-                            onMouseEnter={(e) =>
-                              handleInfoHover(e, tool.description)
-                            }
-                            onMouseLeave={handleMouseLeave}
-                          />
-                        </div>
-
-                        <div className="flex gap-2 flex-shrink-0">
+                        <div className="flex flex-wrap gap-2 flex-shrink-0 sm:flex-nowrap">
                           {tool.primaryProblem && (
                             <Button
                               asChild
@@ -657,7 +661,7 @@ Format:
                                 }}
                                 onMouseLeave={handleMouseLeave}
                               >
-                                <ExternalLink className="h-3 w-3" />
+                                <ExternalLink className="h-3 w-3 flex-shrink-0" />
                                 Sample problem
                               </a>
                             </Button>
@@ -719,7 +723,7 @@ Format:
                               copyLearningPrompt(tool.name, tool.description)
                             }
                           >
-                            <Copy className="h-3 w-3" />
+                            <Copy className="h-3 w-3 flex-shrink-0" />
                             Learning prompt
                           </Button>
                         </div>
