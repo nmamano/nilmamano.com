@@ -22,6 +22,7 @@ import { Switch } from "@/components/ui/switch";
 import toolManifest from "./tool_manifest.json";
 import problemManifest from "./problem_manifest.json";
 import { useToast } from "@/hooks/use-toast";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 // Utility function to convert problem name to slug
 const slugify = (text: string) => {
@@ -363,7 +364,7 @@ Format:
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-slate-900 dark:to-slate-800">
       {/* Override dialog overlay for this page */}
       <style
         dangerouslySetInnerHTML={{
@@ -371,13 +372,16 @@ Format:
         [data-radix-dialog-overlay] {
           background-color: rgba(0, 0, 0, 0.4) !important;
         }
+        .dark [data-radix-dialog-overlay] {
+          background-color: rgba(0, 0, 0, 0.7) !important;
+        }
       `,
         }}
       />
       {/* Tooltip */}
       {tooltip.show && (
         <div
-          className="fixed z-50 px-3 py-2 bg-gray-900 text-white text-sm rounded-lg shadow-lg whitespace-normal max-w-md pointer-events-none"
+          className="fixed z-50 px-3 py-2 bg-gray-900 dark:bg-slate-800 text-white dark:text-gray-100 text-sm rounded-lg shadow-lg whitespace-normal max-w-md pointer-events-none border border-slate-700"
           style={{
             left: tooltip.x,
             top: tooltip.y,
@@ -385,23 +389,27 @@ Format:
           }}
         >
           {tooltip.content}
-          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900"></div>
+          <div className="absolute top-full left-1/2 transform -translate-x-1/2 w-0 h-0 border-l-4 border-r-4 border-t-4 border-transparent border-t-gray-900 dark:border-t-slate-800"></div>
         </div>
       )}
 
       {/* Header */}
-      <div className="shadow-sm border-b border-white/20">
+      <div className="shadow-sm border-b border-white/20 dark:border-slate-700/50 relative">
         <div className="max-w-4xl mx-auto px-4 py-8">
+          {/* Theme Toggle - Top Right */}
+          <div className="absolute top-4 right-4">
+            <ThemeToggle />
+          </div>
           <div className="text-center">
             {/* Title */}
-            <h1 className="text-3xl md:text-7xl font-black bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-800 bg-clip-text text-transparent tracking-tight mb-2">
+            <h1 className="text-3xl md:text-7xl font-black bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-800 dark:from-teal-400 dark:via-cyan-400 dark:to-teal-600 bg-clip-text text-transparent tracking-tight mb-2">
               TOOLKIT-{visibleTotalTools}
             </h1>
-            <p className="text-base md:text-2xl italic font-medium bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-700 bg-clip-text text-transparent mb-6">
+            <p className="text-base md:text-2xl italic font-medium bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-700 dark:from-teal-400 dark:via-cyan-400 dark:to-teal-500 bg-clip-text text-transparent mb-6">
               A new way to do coding interview prep
             </p>
 
-            <p className="text-sm md:text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+            <p className="text-sm md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">
               The essential DSA tools and techniques for interviews -
               <br />
               with problems from{" "}
@@ -430,11 +438,11 @@ Format:
                 </button>
                 <div className="flex flex-col items-center gap-0.5 mt-2">
                   <span
-                    className={`text-sm md:text-lg font-medium ${!isExtendedMode ? "text-gray-900" : "text-gray-500"}`}
+                    className={`text-sm md:text-lg font-medium ${!isExtendedMode ? "text-gray-900 dark:text-gray-100" : "text-gray-500 dark:text-gray-400"}`}
                   >
                     Core
                   </span>
-                  <span className="text-xs md:text-base italic text-gray-600">
+                  <span className="text-xs md:text-base italic text-gray-600 dark:text-gray-400">
                     (recommended)
                   </span>
                 </div>
@@ -465,7 +473,7 @@ Format:
                   />
                 </button>
                 <span
-                  className={`text-sm md:text-lg font-medium mt-2 ${isExtendedMode ? "text-gray-900" : "text-gray-500"}`}
+                  className={`text-sm md:text-lg font-medium mt-2 ${isExtendedMode ? "text-gray-900 dark:text-gray-100" : "text-gray-500 dark:text-gray-400"}`}
                 >
                   Expert
                 </span>
@@ -475,17 +483,17 @@ Format:
             {/* Progress indicator */}
             <div className="mb-8">
               <div className="flex items-center justify-center gap-2 mb-2">
-                <CheckCircle2 className="h-5 w-5 text-green-600" />
+                <CheckCircle2 className="h-5 w-5 text-green-600 dark:text-green-400" />
                 <span
-                  className="text-sm md:text-lg font-semibold text-gray-700"
+                  className="text-sm md:text-lg font-semibold text-gray-700 dark:text-gray-200"
                   suppressHydrationWarning
                 >
                   {visibleCompletedTools} / {visibleTotalTools} Tools Acquired
                 </span>
               </div>
-              <div className="w-full max-w-md mx-auto bg-gray-200 rounded-full h-3">
+              <div className="w-full max-w-md mx-auto bg-gray-200 dark:bg-slate-700 rounded-full h-3">
                 <div
-                  className="bg-gradient-to-r from-green-500 to-green-600 h-3 rounded-full transition-all duration-500 ease-out"
+                  className="bg-gradient-to-r from-green-500 to-green-600 dark:from-green-400 dark:to-green-500 h-3 rounded-full transition-all duration-500 ease-out"
                   style={{
                     width: `${visibleTotalTools > 0 ? (visibleCompletedTools / visibleTotalTools) * 100 : 0}%`,
                   }}
@@ -499,7 +507,7 @@ Format:
               <Button
                 variant="outline"
                 onClick={() => setIsHowToUseOpen(true)}
-                className="text-sm text-gray-700 hover:text-gray-900 border-gray-300 hover:border-gray-400 bg-white hover:bg-gray-50"
+                className="text-sm text-gray-700 dark:text-gray-200 hover:text-gray-900 dark:hover:text-gray-100 border-gray-300 dark:border-slate-600 hover:border-gray-400 dark:hover:border-slate-500 bg-white dark:bg-slate-800 hover:bg-gray-50 dark:hover:bg-slate-700"
               >
                 <Info className="h-4 w-4 mr-2" />
                 About
@@ -516,9 +524,9 @@ Format:
             <AccordionItem
               key={category.name}
               value={category.name}
-              className="bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden"
+              className="bg-white dark:bg-slate-800 rounded-lg shadow-md border border-gray-200 dark:border-slate-700 overflow-hidden"
             >
-              <div className="px-6 py-4 hover:bg-gray-50 relative">
+              <div className="px-6 py-4 hover:bg-gray-50 dark:hover:bg-slate-700/50 relative">
                 <div className="flex items-center gap-3 w-full">
                   <div
                     onClick={(e) => e.stopPropagation()}
@@ -533,18 +541,18 @@ Format:
                   </div>
                   <AccordionTrigger className="flex flex-1 items-center justify-between p-0 text-left hover:no-underline absolute inset-0 w-full h-full">
                     <div className="flex flex-1 items-center justify-between px-6 py-4 pl-[60px]">
-                      <h3 className="text-base md:text-lg font-semibold text-gray-900 flex items-center gap-2">
+                      <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
                         {`${category.chapterNumber}. `}
                         {category.name}
                         {category.allExtraCredit && (
-                          <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded">
+                          <span className="text-xs bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded">
                             Extra Credit
                           </span>
                         )}
                       </h3>
                       <div className="flex items-center gap-2 ml-3">
                         <span
-                          className="text-sm text-gray-500"
+                          className="text-sm text-gray-500 dark:text-gray-400"
                           suppressHydrationWarning
                         >
                           {
@@ -554,9 +562,9 @@ Format:
                           }{" "}
                           / {category.tools.length}
                         </span>
-                        <div className="w-16 bg-gray-200 rounded-full h-2">
+                        <div className="w-16 bg-gray-200 dark:bg-slate-700 rounded-full h-2">
                           <div
-                            className="bg-green-500 h-2 rounded-full transition-all duration-300"
+                            className="bg-green-500 dark:bg-green-400 h-2 rounded-full transition-all duration-300"
                             style={{
                               width: `${
                                 category.tools.length > 0
@@ -583,13 +591,13 @@ Format:
                       key={tool.id}
                       className={`flex items-center gap-3 p-2 rounded-md border transition-all duration-300 relative overflow-hidden ${
                         completedTools.has(tool.id)
-                          ? "bg-green-50 border-green-200"
-                          : "bg-gray-50 border-gray-200 hover:bg-gray-100 hover:shadow-sm"
+                          ? "bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-700"
+                          : "bg-gray-50 dark:bg-slate-800/50 border-gray-200 dark:border-slate-700 hover:bg-gray-100 dark:hover:bg-slate-700 hover:shadow-sm"
                       }`}
                     >
                       {/* Animated background sweep */}
                       {completedTools.has(tool.id) && (
-                        <div className="absolute inset-0 bg-gradient-to-r from-green-200 via-green-300 to-green-100 animate-sweep"></div>
+                        <div className="absolute inset-0 bg-gradient-to-r from-green-200 via-green-300 to-green-100 dark:from-green-900/30 dark:via-green-800/30 dark:to-green-900/20 animate-sweep"></div>
                       )}
 
                       <div className="relative z-10 flex flex-col sm:flex-row sm:items-center gap-3 w-full">
@@ -614,19 +622,19 @@ Format:
                               htmlFor={tool.id}
                               className={`font-medium cursor-pointer transition-all duration-300 text-sm ${
                                 completedTools.has(tool.id)
-                                  ? "text-green-800"
-                                  : "text-gray-900"
+                                  ? "text-green-800 dark:text-green-300"
+                                  : "text-gray-900 dark:text-gray-100"
                               }`}
                             >
                               {tool.name}
                             </label>
                             {tool.extraCredit && (
-                              <span className="text-xs bg-purple-100 text-purple-700 px-2 py-0.5 rounded flex-shrink-0">
+                              <span className="text-xs bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-2 py-0.5 rounded flex-shrink-0">
                                 Extra Credit
                               </span>
                             )}
                             <Info
-                              className="h-4 w-4 text-gray-400 hover:text-gray-600 cursor-help flex-shrink-0"
+                              className="h-4 w-4 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 cursor-help flex-shrink-0"
                               onMouseEnter={(e) =>
                                 handleInfoHover(e, tool.description)
                               }
@@ -641,7 +649,7 @@ Format:
                               asChild
                               variant="outline"
                               size="sm"
-                              className="text-xs px-2 py-1 h-7 bg-blue-50 border-blue-300 text-blue-700 hover:bg-blue-100"
+                              className="text-xs px-2 py-1 h-7 bg-blue-50 dark:bg-blue-900/30 border-blue-300 dark:border-blue-700 text-blue-700 dark:text-blue-300 hover:bg-blue-100 dark:hover:bg-blue-900/50"
                             >
                               <a
                                 href={getProblemUrl(tool.primaryProblem)}
@@ -672,7 +680,7 @@ Format:
                               <Button
                                 variant="outline"
                                 size="sm"
-                                className="text-xs px-2 py-1 h-7 bg-orange-50 border-orange-300 text-orange-700 hover:bg-orange-100"
+                                className="text-xs px-2 py-1 h-7 bg-orange-50 dark:bg-orange-900/30 border-orange-300 dark:border-orange-700 text-orange-700 dark:text-orange-300 hover:bg-orange-100 dark:hover:bg-orange-900/50"
                                 onClick={() => setOpenModal(tool.id)}
                               >
                                 Extra problems
@@ -684,11 +692,11 @@ Format:
                                 }
                               >
                                 <DialogContent
-                                  className="max-w-2xl max-h-[80vh] overflow-y-auto bg-white border-gray-200"
+                                  className="max-w-2xl max-h-[80vh] overflow-y-auto bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700"
                                   onOpenAutoFocus={(e) => e.preventDefault()}
                                 >
                                   <DialogHeader>
-                                    <DialogTitle className="text-gray-900">
+                                    <DialogTitle className="text-gray-900 dark:text-gray-100">
                                       Extra Problems for {tool.name}
                                     </DialogTitle>
                                   </DialogHeader>
@@ -699,13 +707,13 @@ Format:
                                         href={getProblemUrl(problemName)}
                                         target="_blank"
                                         rel="noopener noreferrer"
-                                        className="block p-3 rounded-md border border-gray-200 hover:bg-gray-50 hover:border-blue-300 transition-colors bg-white"
+                                        className="block p-3 rounded-md border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700 hover:border-blue-300 dark:hover:border-blue-600 transition-colors bg-white dark:bg-slate-800"
                                       >
                                         <div className="flex items-center justify-between">
-                                          <span className="text-sm font-medium text-gray-900">
+                                          <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
                                             {problemName}
                                           </span>
-                                          <ExternalLink className="h-4 w-4 text-gray-400" />
+                                          <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                                         </div>
                                       </a>
                                     ))}
@@ -718,7 +726,7 @@ Format:
                           <Button
                             variant="outline"
                             size="sm"
-                            className="text-xs px-2 py-1 h-7 bg-green-50 border-green-300 text-green-700 hover:bg-green-100 flex items-center gap-1"
+                            className="text-xs px-2 py-1 h-7 bg-green-50 dark:bg-green-900/30 border-green-300 dark:border-green-700 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/50 flex items-center gap-1"
                             onClick={() =>
                               copyLearningPrompt(tool.name, tool.description)
                             }
@@ -740,18 +748,18 @@ Format:
       {/* How to Use Modal */}
       <Dialog open={isHowToUseOpen} onOpenChange={setIsHowToUseOpen}>
         <DialogContent
-          className="max-w-2xl max-h-[80vh] overflow-y-auto bg-white border-gray-200"
+          className="max-w-2xl max-h-[80vh] overflow-y-auto bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700"
           onOpenAutoFocus={(e) => e.preventDefault()}
         >
           <DialogHeader>
-            <DialogTitle className="text-base md:text-lg text-gray-900">
+            <DialogTitle className="text-base md:text-lg text-gray-900 dark:text-gray-100">
               About / How to Use
             </DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 mt-4 text-gray-700">
+          <div className="space-y-4 mt-4 text-gray-700 dark:text-gray-300">
             <div className="space-y-3">
               <div>
-                <h4 className="text-sm md:text-base font-semibold text-gray-900 mb-1">
+                <h4 className="text-sm md:text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
                   Philosophy
                 </h4>
                 <p className="text-xs md:text-sm">
@@ -764,7 +772,7 @@ Format:
                   Read the{" "}
                   <a
                     href="/blog/toolkit-x"
-                    className="text-blue-600 hover:text-blue-700 font-medium no-underline"
+                    className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium no-underline"
                   >
                     Toolkit-X blog post
                   </a>{" "}
@@ -772,7 +780,7 @@ Format:
                 </p>
               </div>
               <div>
-                <h4 className="text-sm md:text-base font-semibold text-gray-900 mb-1">
+                <h4 className="text-sm md:text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
                   Core vs Expert Mode
                 </h4>
                 <p className="text-xs md:text-sm">
@@ -786,7 +794,7 @@ Format:
                 </p>
               </div>
               <div>
-                <h4 className="text-sm md:text-base font-semibold text-gray-900 mb-1">
+                <h4 className="text-sm md:text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
                   'Acquiring' a Tool
                 </h4>
                 <p className="text-xs md:text-sm">
@@ -818,7 +826,7 @@ Format:
                 </p>
               </div>
               <div>
-                <h4 className="text-sm md:text-base font-semibold text-gray-900 mb-1">
+                <h4 className="text-sm md:text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
                   Tracking Progress
                 </h4>
                 <p className="text-xs md:text-sm">
@@ -833,14 +841,14 @@ Format:
       </Dialog>
 
       {/* Footer */}
-      <footer className="border-t border-white/20 mt-16">
+      <footer className="border-t border-white/20 dark:border-slate-700/50 mt-16">
         <div className="max-w-4xl mx-auto px-4 py-8 text-center">
           <div className="flex justify-center gap-6 flex-wrap">
             <a
               href="https://www.amazon.com/dp/195570600X"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm md:text-base text-orange-600 hover:text-orange-700 font-bold"
+              className="text-sm md:text-base text-orange-600 dark:text-orange-400 hover:text-orange-700 dark:hover:text-orange-300 font-bold"
             >
               Get the Book
             </a>
@@ -848,17 +856,17 @@ Format:
               href="https://bctci.co/discord"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-sm md:text-base text-indigo-600 hover:text-indigo-700 font-semibold"
+              className="text-sm md:text-base text-indigo-600 dark:text-indigo-400 hover:text-indigo-700 dark:hover:text-indigo-300 font-semibold"
             >
               Join Discord
             </a>
-            <span className="text-xs md:text-sm text-gray-600 font-medium">
+            <span className="text-xs md:text-sm text-gray-600 dark:text-gray-400 font-medium">
               Created by{" "}
               <a
                 href="https://nilmamano.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-blue-600 hover:text-blue-700 font-medium no-underline"
+                className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium no-underline"
               >
                 Nil Mamano
               </a>
