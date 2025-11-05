@@ -417,7 +417,7 @@ Format:
                   type="button"
                 >
                   <Image
-                    src="/toolset/basic.png"
+                    src="/toolkit/basic.png"
                     alt="Basic mode"
                     width={72}
                     height={72}
@@ -453,7 +453,7 @@ Format:
                   type="button"
                 >
                   <Image
-                    src="/toolset/extended.png"
+                    src="/toolkit/extended.png"
                     alt="Extended mode"
                     width={72}
                     height={72}
