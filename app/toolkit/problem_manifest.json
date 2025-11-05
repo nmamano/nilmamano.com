@@ -1,0 +1,5790 @@
+{
+  "count-unique-submultisets-with-sum-zero": {
+    "name": "Count Unique Submultisets With Sum Zero",
+    "difficulty": "hard",
+    "topics": [
+      "backtracking"
+    ],
+    "classic": false,
+    "recipes": [
+      "Backtracking"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Frequency maps",
+      "Impose a canonical order"
+    ],
+    "other_tools": [
+      "Choosing better decision trees",
+      "Hash maps"
+    ],
+    "book_chapter": "Backtracking"
+  },
+  "escape-with-all-clues": {
+    "name": "Escape With All Clues",
+    "difficulty": "hard",
+    "topics": [
+      "backtracking"
+    ],
+    "classic": false,
+    "recipes": [
+      "Backtracking"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [
+      "Directions array to visit grid neighbors",
+      "Modify -> recurse -> undo",
+      "Path reconstruction",
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "Preventing cycles in backtracking",
+      "DFS/BFS tree",
+      "Grid graphs",
+      "Graph modeling"
+    ],
+    "book_chapter": "Backtracking"
+  },
+  "four-directional-max-sum-path": {
+    "name": "4-Directional Max-Sum Path",
+    "difficulty": "hard",
+    "topics": [
+      "backtracking"
+    ],
+    "classic": false,
+    "recipes": [
+      "Backtracking"
+    ],
+    "boosters": [
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [
+      "Directions array to visit grid neighbors",
+      "Modify -> recurse -> undo"
+    ],
+    "other_tools": [
+      "Preventing cycles in backtracking",
+      "Grid graphs",
+      "DFS/BFS tree",
+      "Recursion"
+    ],
+    "book_chapter": "Backtracking"
+  },
+  "four-directional-max-sum-path-reconstruction": {
+    "name": "4-Directional Max-Sum Path Reconstruction",
+    "difficulty": "hard",
+    "topics": [
+      "backtracking"
+    ],
+    "classic": false,
+    "recipes": [
+      "Backtracking"
+    ],
+    "boosters": [
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [
+      "Directions array to visit grid neighbors",
+      "Path reconstruction",
+      "Solution reconstruction",
+      "Modify -> recurse -> undo"
+    ],
+    "other_tools": [
+      "Preventing cycles in backtracking",
+      "Grid graphs",
+      "Recursion",
+      "Graph modeling"
+    ],
+    "book_chapter": null
+  },
+  "ikea-shopping": {
+    "name": "IKEA Shopping",
+    "difficulty": "hard",
+    "topics": [
+      "backtracking"
+    ],
+    "classic": false,
+    "recipes": [
+      "Backtracking"
+    ],
+    "boosters": [
+      "Brute force optimization: skip unnecessary work pattern"
+    ],
+    "reusable_ideas": [
+      "Modify -> recurse -> undo",
+      "Pass indices; not copies",
+      "Solution reconstruction"
+    ],
+    "other_tools": [
+      "Knapsack-type problems",
+      "Recursion",
+      "Choosing better decision trees"
+    ],
+    "book_chapter": "Backtracking"
+  },
+  "jumping-numbers": {
+    "name": "Jumping Numbers",
+    "difficulty": "medium",
+    "topics": [
+      "backtracking"
+    ],
+    "classic": false,
+    "recipes": [
+      "Backtracking"
+    ],
+    "boosters": [
+      "Brute force optimization: skip unnecessary work pattern"
+    ],
+    "reusable_ideas": [
+      "Extracting and adding digits"
+    ],
+    "other_tools": [
+      "Recursion"
+    ],
+    "book_chapter": "Backtracking"
+  },
+  "max-sum-path": {
+    "name": "Max-Sum Path",
+    "difficulty": "medium",
+    "topics": [
+      "backtracking",
+      "dynamic-programming"
+    ],
+    "classic": false,
+    "recipes": [
+      "Backtracking",
+      "Memoization"
+    ],
+    "boosters": [
+      "Brute force optimization: data structure pattern",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Pass indices; not copies"
+    ],
+    "other_tools": [
+      "Memoization/tabulation",
+      "2D DP",
+      "Grid graphs",
+      "Recursion",
+      "DFS/BFS tree"
+    ],
+    "book_chapter": "Backtracking"
+  },
+  "permutation-enumeration": {
+    "name": "Permutation Enumeration",
+    "difficulty": "medium",
+    "topics": [
+      "backtracking"
+    ],
+    "classic": true,
+    "recipes": [
+      "Backtracking"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Modify -> recurse -> undo",
+      "Impose a canonical order"
+    ],
+    "other_tools": [
+      "Listing permutations",
+      "Preventing cycles in backtracking",
+      "In-place modification",
+      "Recursion"
+    ],
+    "book_chapter": "Backtracking"
+  },
+  "subset-enumeration": {
+    "name": "Subset Enumeration",
+    "difficulty": "easy",
+    "topics": [
+      "backtracking"
+    ],
+    "classic": true,
+    "recipes": [
+      "Backtracking"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Modify -> recurse -> undo",
+      "Pass indices; not copies",
+      "Impose a canonical order"
+    ],
+    "other_tools": [
+      "Listing subsets",
+      "Recursion"
+    ],
+    "book_chapter": "Backtracking"
+  },
+  "thesaurusly": {
+    "name": "Thesaurusly",
+    "difficulty": "medium",
+    "topics": [
+      "backtracking"
+    ],
+    "classic": false,
+    "recipes": [
+      "Backtracking"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Building strings with dynamic arrays",
+      "Pass indices; not copies",
+      "Modify -> recurse -> undo"
+    ],
+    "other_tools": [
+      "Recursion",
+      "String fundamentals: join",
+      "Hash maps",
+      "String fundamentals: split"
+    ],
+    "book_chapter": "Backtracking"
+  },
+  "to-be-or-not-to-be": {
+    "name": "To Be or Not to Be",
+    "difficulty": "easy",
+    "topics": [
+      "backtracking"
+    ],
+    "classic": false,
+    "recipes": [
+      "Backtracking"
+    ],
+    "boosters": [
+      "Brute force optimization: preprocessing pattern",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Building strings with dynamic arrays",
+      "Pass indices; not copies",
+      "Modify -> recurse -> undo"
+    ],
+    "other_tools": [
+      "Listing subsets",
+      "String fundamentals: split",
+      "String fundamentals: join",
+      "Recursion"
+    ],
+    "book_chapter": "Backtracking"
+  },
+  "white-hat-hacker": {
+    "name": "White Hat Hacker",
+    "difficulty": "medium",
+    "topics": [
+      "backtracking"
+    ],
+    "classic": false,
+    "recipes": [
+      "Backtracking"
+    ],
+    "boosters": [
+      "Cycle through the catalog",
+      "Hunt for properties: sketch a diagram",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Modify -> recurse -> undo"
+    ],
+    "other_tools": [
+      "Listing permutations",
+      "Preventing cycles in backtracking",
+      "Recursion"
+    ],
+    "book_chapter": "Backtracking"
+  },
+  "cctv-footage": {
+    "name": "CCTV Footage",
+    "difficulty": "easy",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Hunt for properties",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Binary search for first and last",
+      "Guess-and-check technique"
+    ],
+    "book_chapter": "Binary Search"
+  },
+  "first-false-in-descending-boolean-array": {
+    "name": "First False In Descending Boolean Array",
+    "difficulty": "easy",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Binary search for first and last",
+      "Inward pointers"
+    ],
+    "book_chapter": null
+  },
+  "first-non-negative-number": {
+    "name": "First Non-Negative Number",
+    "difficulty": "easy",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Searching with inward pointers"
+    ],
+    "other_tools": [
+      "Binary search for first and last",
+      "Guess-and-check technique",
+      "Invariants"
+    ],
+    "book_chapter": null
+  },
+  "first-true-in-ascending-boolean-array": {
+    "name": "First True In Ascending Boolean Array",
+    "difficulty": "easy",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Binary search for first and last"
+    ],
+    "book_chapter": null
+  },
+  "last-true-in-descending-boolean-array": {
+    "name": "Last True In Descending Boolean Array",
+    "difficulty": "easy",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Searching with inward pointers"
+    ],
+    "other_tools": [
+      "Binary search for first and last"
+    ],
+    "book_chapter": null
+  },
+  "min-pages-per-day": {
+    "name": "Min Pages Per Day",
+    "difficulty": "medium",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Guess-and-check technique",
+      "Min-max optimization"
+    ],
+    "book_chapter": "Binary Search"
+  },
+  "min-subarray-sum-split": {
+    "name": "Min Subarray Sum Split",
+    "difficulty": "medium",
+    "topics": [
+      "binary-search",
+      "dynamic-programming"
+    ],
+    "classic": false,
+    "recipes": [
+      "Memoization",
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Min-max optimization",
+      "Guess-and-check technique",
+      "2D DP",
+      "DP with range of choices"
+    ],
+    "book_chapter": "Binary Search"
+  },
+  "monkey-eating-bananas": {
+    "name": "Monkey Eating Bananas",
+    "difficulty": "medium",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Guess-and-check technique",
+      "Min-max optimization",
+      "Invariants"
+    ],
+    "book_chapter": null
+  },
+  "race-overtaking": {
+    "name": "Race Overtaking",
+    "difficulty": "easy",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [],
+    "book_chapter": "Binary Search"
+  },
+  "search-in-huge-array": {
+    "name": "Search in Huge Array",
+    "difficulty": "medium",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Exponential search"
+    ],
+    "other_tools": [
+      "Guess-and-check technique"
+    ],
+    "book_chapter": "Binary Search"
+  },
+  "search-in-sorted-array": {
+    "name": "Search in Sorted Array",
+    "difficulty": "easy",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": true,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Searching with inward pointers"
+    ],
+    "other_tools": [
+      "Invariants",
+      "Divide and conquer"
+    ],
+    "book_chapter": "Binary Search"
+  },
+  "search-in-sorted-grid": {
+    "name": "Search in Sorted Grid",
+    "difficulty": "medium",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Grid flattening"
+    ],
+    "other_tools": [
+      "Guess-and-check technique"
+    ],
+    "book_chapter": "Binary Search"
+  },
+  "target-count-divisible-by-k": {
+    "name": "Target Count Divisible by K",
+    "difficulty": "medium",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Searching with inward pointers"
+    ],
+    "other_tools": [
+      "Binary search for first and last"
+    ],
+    "book_chapter": "Binary Search"
+  },
+  "tide-aerial-view": {
+    "name": "Tide Aerial View",
+    "difficulty": "medium",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Guess-and-check technique",
+      "Binary search for first and last",
+      "Grid graphs"
+    ],
+    "book_chapter": "Binary Search"
+  },
+  "tunnel-depth": {
+    "name": "Tunnel Depth",
+    "difficulty": "medium",
+    "topics": [
+      "binary-search",
+      "graphs",
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Directions array to visit grid neighbors"
+    ],
+    "other_tools": [
+      "Guess-and-check technique",
+      "Grid graphs",
+      "Graph modeling",
+      "Recursion"
+    ],
+    "book_chapter": "Boundary Thinking"
+  },
+  "two-array-two-sum": {
+    "name": "2-Array 2-Sum",
+    "difficulty": "easy",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Cycle through the catalog",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [],
+    "book_chapter": "Binary Search"
+  },
+  "valley-bottom": {
+    "name": "Valley Bottom",
+    "difficulty": "medium",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Hunt for properties",
+      "Hunt for properties: case analysis",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Guess-and-check technique",
+      "Invariants"
+    ],
+    "book_chapter": "Binary Search"
+  },
+  "water-refilling": {
+    "name": "Water Refilling",
+    "difficulty": "medium",
+    "topics": [
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Hunt for properties",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Exponential search"
+    ],
+    "other_tools": [
+      "Guess-and-check technique",
+      "Min-max optimization"
+    ],
+    "book_chapter": "Binary Search"
+  },
+  "company-launches": {
+    "name": "Company Launches",
+    "difficulty": "medium",
+    "topics": [
+      "prefix-sums"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: sketch a diagram",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements"
+    ],
+    "other_tools": [
+      "Line-sweep algorithm",
+      "Sorting preprocessing",
+      "Top k techniques (incl. quickselect)"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "count-substrings-without-letter": {
+    "name": "Count Substrings Without Letter",
+    "difficulty": "easy",
+    "topics": [
+      "string-manipulation"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Brute force optimization: skip unnecessary work pattern",
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Number of subarrays formula",
+      "String fundamentals: split"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "hiring-and-training": {
+    "name": "Hiring And Training",
+    "difficulty": "hard",
+    "topics": [
+      "recursion",
+      "dynamic-programming",
+      "greedy"
+    ],
+    "classic": false,
+    "recipes": [
+      "Memoization"
+    ],
+    "boosters": [
+      "Hunt for properties",
+      "Hunt for properties: reverse engineer the output pattern",
+      "Hunt for properties: DIY technique",
+      "Brute force optimization: skip unnecessary work pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Working with primes",
+      "Memoization/tabulation",
+      "Greedy choice and counterexamples",
+      "Recursion"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "interval-xor": {
+    "name": "Interval XOR",
+    "difficulty": "medium",
+    "topics": [],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: sketch a diagram",
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [
+      "Impose a canonical order"
+    ],
+    "other_tools": [
+      "Intervals"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "list-of-divisors": {
+    "name": "List of Divisors",
+    "difficulty": "easy",
+    "topics": [],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Brute force optimization: skip unnecessary work pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Working with primes"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "longest-alphabet-chain": {
+    "name": "Longest Alphabet Chain",
+    "difficulty": "medium",
+    "topics": [
+      "greedy",
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Frequency maps",
+      "Length-26 array",
+      "Transform the input"
+    ],
+    "other_tools": [],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "magic-balls": {
+    "name": "Magic Balls",
+    "difficulty": "medium",
+    "topics": [
+      "recursion"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: case analysis",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Invariants"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "matrix-rotation": {
+    "name": "Matrix Rotation",
+    "difficulty": "medium",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: sketch a diagram",
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "In-place modification",
+      "Basic matrix algebra",
+      "Subgrid traversals"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "most-ones-with-k-flips": {
+    "name": "Most Ones with K Flips",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Transform exactly-k/at-least-k counting to at-most-k counting"
+    ],
+    "other_tools": [
+      "Reframe choices as optimization",
+      "At-most-k subarray counting"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "multiplayer-video-game": {
+    "name": "Multiplayer Video Game",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [
+      "Connected-component loop"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Graph modeling",
+      "Sorting preprocessing",
+      "Hash maps"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "self-doubling-sequence": {
+    "name": "Self-Doubling Sequence",
+    "difficulty": "hard",
+    "topics": [
+      "recursion"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: sketch a diagram",
+      "Hunt for properties: reverse engineer the output pattern",
+      "Hunt for properties: case analysis",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Exponential search"
+    ],
+    "other_tools": [
+      "Recursion"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "sub-permutations": {
+    "name": "Sub Permutations",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Fixed-length window recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: DIY technique",
+      "Brute force optimization: skip unnecessary work pattern",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Hash sets",
+      "Hash maps"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "three-sum": {
+    "name": "3-Sum",
+    "difficulty": "medium",
+    "topics": [
+      "dynamic-arrays",
+      "sets-and-maps",
+      "sorting"
+    ],
+    "classic": true,
+    "recipes": [],
+    "boosters": [
+      "Brute force optimization: data structure pattern",
+      "Brute force optimization: preprocessing pattern",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Impose a canonical order"
+    ],
+    "other_tools": [
+      "Sorting preprocessing",
+      "Hash maps",
+      "Hash sets",
+      "Inward pointers"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "tree-diameter": {
+    "name": "Tree Diameter",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: case analysis",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "DFS/BFS tree",
+      "Pre/in/post-order traversals",
+      "Recursive data structure",
+      "Recursion",
+      "Memoization/tabulation",
+      "Divide and conquer",
+      "Distance computation"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "unrooted-tree-diameter": {
+    "name": "Unrooted Tree Diameter",
+    "difficulty": "hard",
+    "topics": [
+      "trees",
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Edge list to adjacency list"
+    ],
+    "other_tools": [
+      "DFS/BFS tree",
+      "Adjacency list properties",
+      "Recursion",
+      "Pre/in/post-order traversals",
+      "Passing info in trees"
+    ],
+    "book_chapter": "Problem-Solving Boosters"
+  },
+  "extra-dynamic-array-operations": {
+    "name": "Extra Dynamic Array Operations",
+    "difficulty": "medium",
+    "topics": [
+      "dynamic-arrays"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Dynamic array internals",
+      "Class implementation"
+    ],
+    "book_chapter": "Dynamic Arrays"
+  },
+  "implement-dynamic-array": {
+    "name": "Implement Dynamic Array",
+    "difficulty": "medium",
+    "topics": [
+      "dynamic-arrays"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Amortized analysis",
+      "Dynamic array internals",
+      "Class implementation"
+    ],
+    "book_chapter": "Dynamic Arrays"
+  },
+  "count-zero-sum-paths": {
+    "name": "Count 0-Sum Paths",
+    "difficulty": "medium",
+    "topics": [
+      "dynamic-programming"
+    ],
+    "classic": false,
+    "recipes": [
+      "Memoization"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Directions array to visit grid neighbors",
+      "Pass indices; not copies"
+    ],
+    "other_tools": [
+      "2D DP",
+      "Memoization/tabulation",
+      "Grid graphs"
+    ],
+    "book_chapter": "Dynamic Programming"
+  },
+  "longest-common-subsequence": {
+    "name": "Longest Common Subsequence",
+    "difficulty": "medium",
+    "topics": [
+      "dynamic-programming"
+    ],
+    "classic": true,
+    "recipes": [
+      "Memoization"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [
+      "Pass indices; not copies"
+    ],
+    "other_tools": [
+      "2D DP",
+      "Memoization/tabulation",
+      "DP with range of choices",
+      "Recursion",
+      "Reusing subproblems"
+    ],
+    "book_chapter": "Dynamic Programming"
+  },
+  "magic-blackjack": {
+    "name": "Magic Blackjack",
+    "difficulty": "medium",
+    "topics": [
+      "dynamic-programming"
+    ],
+    "classic": false,
+    "recipes": [
+      "Memoization"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "DP with range of choices",
+      "Memoization/tabulation",
+      "Recursion",
+      "Recurrence relations"
+    ],
+    "book_chapter": "Dynamic Programming"
+  },
+  "minimum-steps-to-one": {
+    "name": "Minimum Steps to One",
+    "difficulty": "medium",
+    "topics": [
+      "dynamic-programming"
+    ],
+    "classic": false,
+    "recipes": [
+      "Memoization"
+    ],
+    "boosters": [
+      "Hunt for properties: case analysis",
+      "Decrease the difficulty: start with an easier version",
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Memoization/tabulation",
+      "Recurrence relations",
+      "DP with range of choices",
+      "Min-max optimization"
+    ],
+    "book_chapter": "Dynamic Programming"
+  },
+  "minivan-road-trip": {
+    "name": "Minivan Road Trip",
+    "difficulty": "medium",
+    "topics": [
+      "dynamic-programming"
+    ],
+    "classic": false,
+    "recipes": [
+      "Memoization"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Pass indices; not copies"
+    ],
+    "other_tools": [
+      "DP with range of choices",
+      "Memoization/tabulation",
+      "Recurrence relations",
+      "Min-max optimization",
+      "Reframe choices as optimization"
+    ],
+    "book_chapter": "Dynamic Programming"
+  },
+  "reconstruct-longest-common-subsequence": {
+    "name": "Reconstruct Longest Common Subsequence",
+    "difficulty": "hard",
+    "topics": [
+      "dynamic-programming"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Solution reconstruction",
+      "Building strings with dynamic arrays"
+    ],
+    "other_tools": [
+      "2D DP",
+      "Memoization/tabulation",
+      "Recurrence relations"
+    ],
+    "book_chapter": "Dynamic Programming"
+  },
+  "restaurant-ratings": {
+    "name": "Restaurant Ratings",
+    "difficulty": "easy",
+    "topics": [
+      "dynamic-programming"
+    ],
+    "classic": false,
+    "recipes": [
+      "Memoization"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties",
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [
+      "Pass indices; not copies"
+    ],
+    "other_tools": [
+      "Memoization/tabulation",
+      "DP with range of choices",
+      "Recurrence relations",
+      "Reusing subproblems",
+      "Reframe choices as optimization"
+    ],
+    "book_chapter": "Dynamic Programming"
+  },
+  "road-trip": {
+    "name": "Road Trip",
+    "difficulty": "easy",
+    "topics": [
+      "dynamic-programming"
+    ],
+    "classic": false,
+    "recipes": [
+      "Memoization"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Decrease the difficulty: start with an easier version",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Pass indices; not copies"
+    ],
+    "other_tools": [
+      "Memoization/tabulation",
+      "Recurrence relations"
+    ],
+    "book_chapter": "Dynamic Programming"
+  },
+  "adjacency-list-validation": {
+    "name": "Adjacency List Validation",
+    "difficulty": "easy",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Factor out validation to a helper function",
+      "Impose a canonical order"
+    ],
+    "other_tools": [
+      "Adjacency list properties",
+      "Hash sets",
+      "Invariants"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "count-grid-islands": {
+    "name": "Count Grid Islands",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [
+      "Connected-component loop",
+      "Grid BFS",
+      "Grid DFS"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Directions array to visit grid neighbors"
+    ],
+    "other_tools": [
+      "Grid graphs",
+      "Graph modeling",
+      "DFS/BFS tree",
+      "Hash sets",
+      "In-place modification",
+      "Subgrid traversals"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "days-until-all-infected": {
+    "name": "Days Until All Infected",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [
+      "Multisource BFS"
+    ],
+    "boosters": [
+      "Hunt for properties",
+      "Hunt for properties: reframe the problem",
+      "Brute force optimization: skip unnecessary work pattern"
+    ],
+    "reusable_ideas": [
+      "Edge list to adjacency list"
+    ],
+    "other_tools": [
+      "Graph modeling",
+      "Distance computation",
+      "Adjacency list properties",
+      "Using queues for FIFO problems"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "first-time-all-connected": {
+    "name": "First Time All Connected",
+    "difficulty": "medium",
+    "topics": [
+      "graphs",
+      "binary-search",
+      "union-find"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe",
+      "Union-find implementation with path compression and union by size"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Edge list to adjacency list"
+    ],
+    "other_tools": [
+      "Guess-and-check technique",
+      "Graph modeling"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "graph-hangout": {
+    "name": "Graph Hangout",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Distance computation",
+      "Graph modeling",
+      "Adjacency list properties",
+      "Min-max optimization"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "graph-path": {
+    "name": "Graph Path",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Path reconstruction",
+      "Edge list to adjacency list"
+    ],
+    "other_tools": [
+      "DFS/BFS tree",
+      "Graph modeling",
+      "Adjacency list properties",
+      "Hash maps"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "highest-average-elevation-gain": {
+    "name": "Highest Average Elevation Gain",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [
+      "Connected-component loop"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Edge list to adjacency list",
+      "Computing averages"
+    ],
+    "other_tools": [
+      "Edge weights",
+      "Graph modeling",
+      "DFS/BFS tree"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "hilliest-connected-component": {
+    "name": "Hilliest Connected Component",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [
+      "Connected-component loop"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Computing averages"
+    ],
+    "other_tools": [
+      "Node weights",
+      "Edge weights",
+      "DFS/BFS tree",
+      "Graph modeling"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "multi-exit-maze": {
+    "name": "Multi-Exit Maze",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [
+      "Grid BFS",
+      "Multisource BFS"
+    ],
+    "boosters": [
+      "Brute force optimization: skip unnecessary work pattern",
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Directions array to visit grid neighbors"
+    ],
+    "other_tools": [
+      "Grid graphs",
+      "Graph modeling",
+      "Distance computation",
+      "Queue internals",
+      "Using queues for FIFO problems"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "reachability-queries": {
+    "name": "Reachability Queries",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [
+      "Connected-component loop"
+    ],
+    "boosters": [
+      "Brute force optimization: preprocessing pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash maps"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "rgb-distances": {
+    "name": "RGB Distances",
+    "difficulty": "hard",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [
+      "Grid BFS",
+      "Multisource BFS"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Directions array to visit grid neighbors"
+    ],
+    "other_tools": [
+      "Grid graphs",
+      "Distance computation",
+      "Distance formula",
+      "Using queues for FIFO problems"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "shortest-path-queries": {
+    "name": "Shortest Path Queries",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Brute force optimization: preprocessing pattern",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Path reconstruction"
+    ],
+    "other_tools": [
+      "DFS/BFS tree",
+      "Graph modeling",
+      "Adjacency list properties"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "spanning-tree": {
+    "name": "Spanning Tree",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Edge list to adjacency list",
+      "Path reconstruction"
+    ],
+    "other_tools": [
+      "DFS/BFS tree",
+      "Cycle detection (graphs)",
+      "Graph modeling",
+      "Adjacency list properties",
+      "Pre/in/post-order traversals"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "strongly-connected-graph": {
+    "name": "Strongly Connected Graph",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Edge list to adjacency list"
+    ],
+    "other_tools": [
+      "Strong connectivity check",
+      "DFS/BFS tree",
+      "Graph modeling"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "the-floor-is-lava": {
+    "name": "The Floor Is Lava",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Edge list to adjacency list"
+    ],
+    "other_tools": [
+      "Graph modeling",
+      "Distance computation",
+      "DFS/BFS tree"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "tree-check": {
+    "name": "Tree Check",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Edge list to adjacency list"
+    ],
+    "other_tools": [
+      "Cycle detection (graphs)",
+      "DFS/BFS tree",
+      "Graph modeling"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "word-ladder-game-variation": {
+    "name": "Word Ladder Game Variation",
+    "difficulty": "medium",
+    "topics": [
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [
+      "Edge list to adjacency list"
+    ],
+    "other_tools": [
+      "Graph modeling",
+      "Adjacency list properties"
+    ],
+    "book_chapter": "Graphs"
+  },
+  "center-assignment": {
+    "name": "Center Assignment",
+    "difficulty": "medium",
+    "topics": [
+      "greedy"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Hunt for properties: case analysis",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements"
+    ],
+    "other_tools": [
+      "Greedy choice and counterexamples",
+      "Custom sort",
+      "Distance computation",
+      "Distance formula"
+    ],
+    "book_chapter": "Greedy Algorithms"
+  },
+  "fewest-script-runs": {
+    "name": "Fewest Script Runs",
+    "difficulty": "medium",
+    "topics": [
+      "greedy"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Greedy choice and counterexamples",
+      "Intervals",
+      "Sorting preprocessing",
+      "Custom sort"
+    ],
+    "book_chapter": "Greedy Algorithms"
+  },
+  "minimum-triplet-medians": {
+    "name": "Minimum Triplet Medians",
+    "difficulty": "medium",
+    "topics": [
+      "greedy"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements",
+      "Impose a canonical order"
+    ],
+    "other_tools": [
+      "Greedy choice and counterexamples",
+      "Sorting preprocessing"
+    ],
+    "book_chapter": "Greedy Algorithms"
+  },
+  "most-non-overlapping-intervals": {
+    "name": "Most Non-Overlapping Intervals",
+    "difficulty": "medium",
+    "topics": [
+      "greedy"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: case analysis",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements",
+      "Impose a canonical order"
+    ],
+    "other_tools": [
+      "Greedy choice and counterexamples",
+      "Intervals",
+      "Custom sort",
+      "Sorting preprocessing",
+      "Reframe choices as optimization",
+      "Invariants"
+    ],
+    "book_chapter": "Greedy Algorithms"
+  },
+  "time-traveler": {
+    "name": "Time Traveler",
+    "difficulty": "medium",
+    "topics": [
+      "greedy"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements"
+    ],
+    "other_tools": [
+      "Greedy choice and counterexamples",
+      "Custom sort",
+      "Sorting preprocessing"
+    ],
+    "book_chapter": "Greedy Algorithms"
+  },
+  "time-traveler-max-year": {
+    "name": "Time Traveler Max Year",
+    "difficulty": "hard",
+    "topics": [
+      "greedy",
+      "binary-search"
+    ],
+    "classic": false,
+    "recipes": [
+      "Transition-point recipe"
+    ],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements",
+      "Heap size restriction"
+    ],
+    "other_tools": [
+      "Greedy choice and counterexamples",
+      "Guess-and-check technique",
+      "Binary search for first and last",
+      "Heap internals",
+      "Dynamic priorities in heaps",
+      "Sorting preprocessing",
+      "Top k techniques (incl. quickselect)"
+    ],
+    "book_chapter": "Greedy Algorithms"
+  },
+  "chess-moves": {
+    "name": "Chess Moves",
+    "difficulty": "medium",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Directions array to visit grid neighbors",
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "Grid graphs",
+      "Subgrid traversals"
+    ],
+    "book_chapter": "Grids & Matrices"
+  },
+  "image-filter": {
+    "name": "Image Filter",
+    "difficulty": "easy",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Directions array to visit grid neighbors",
+      "Factor out validation to a helper function",
+      "Computing averages"
+    ],
+    "other_tools": [
+      "Grid graphs",
+      "Subgrid traversals"
+    ],
+    "book_chapter": null
+  },
+  "matrix-multiplication": {
+    "name": "Matrix Multiplication",
+    "difficulty": "medium",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Basic matrix algebra"
+    ],
+    "book_chapter": null
+  },
+  "matrix-operations": {
+    "name": "Matrix Operations",
+    "difficulty": "medium",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Transform the input"
+    ],
+    "other_tools": [
+      "Basic matrix algebra",
+      "In-place modification",
+      "Class implementation"
+    ],
+    "book_chapter": "Grids & Matrices"
+  },
+  "queens-reach": {
+    "name": "Queen's Reach",
+    "difficulty": "medium",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Brute force optimization: preprocessing pattern"
+    ],
+    "reusable_ideas": [
+      "Directions array to visit grid neighbors",
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "Grid graphs",
+      "Graph modeling",
+      "Subgrid traversals"
+    ],
+    "book_chapter": "Grids & Matrices"
+  },
+  "snowprints": {
+    "name": "Snowprints",
+    "difficulty": "medium",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Directions array to visit grid neighbors"
+    ],
+    "other_tools": [
+      "Grid graphs",
+      "Selecting best iteration order"
+    ],
+    "book_chapter": "Grids & Matrices"
+  },
+  "spiral-order": {
+    "name": "Spiral Order",
+    "difficulty": "medium",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Handle wraparounds with mod",
+      "Directions array to visit grid neighbors",
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "Selecting best iteration order",
+      "Grid graphs"
+    ],
+    "book_chapter": "Grids & Matrices"
+  },
+  "subgrid-maximums": {
+    "name": "Subgrid Maximums",
+    "difficulty": "medium",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Reusing subproblems",
+      "2D DP",
+      "Subgrid traversals",
+      "Memoization/tabulation"
+    ],
+    "book_chapter": "Grids & Matrices"
+  },
+  "subgrid-sums": {
+    "name": "Subgrid Sums",
+    "difficulty": "medium",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Double counting",
+      "Reusing subproblems",
+      "2D DP",
+      "Memoization/tabulation",
+      "Subgrid traversals"
+    ],
+    "book_chapter": "Grids & Matrices"
+  },
+  "symmetric-matrix": {
+    "name": "Symmetric Matrix",
+    "difficulty": "easy",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Basic matrix algebra"
+    ],
+    "book_chapter": null
+  },
+  "tic-tac-toe-position": {
+    "name": "Tic-Tac-Toe Position",
+    "difficulty": "medium",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "Invariants",
+      "Grid graphs"
+    ],
+    "book_chapter": null
+  },
+  "valid-sudoku": {
+    "name": "Valid Sudoku",
+    "difficulty": "medium",
+    "topics": [
+      "grids-and-matrices"
+    ],
+    "classic": true,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "Subgrid traversals",
+      "Hash sets",
+      "Class implementation"
+    ],
+    "book_chapter": "Grids & Matrices"
+  },
+  "validate-matrix-rows-columns": {
+    "name": "Validate Matrix Rows and Columns",
+    "difficulty": "easy",
+    "topics": [
+      "grids-and-matrices",
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "Hash sets",
+      "Subgrid traversals"
+    ],
+    "book_chapter": null
+  },
+  "diminish-largest": {
+    "name": "Diminish Largest",
+    "difficulty": "medium",
+    "topics": [
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Heap internals",
+      "Dynamic priorities in heaps",
+      "Top k techniques (incl. quickselect)"
+    ],
+    "book_chapter": null
+  },
+  "implement-a-heap": {
+    "name": "Implement A Heap",
+    "difficulty": "medium",
+    "topics": [
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Heap internals",
+      "Dynamic array internals",
+      "Class implementation"
+    ],
+    "book_chapter": "Heaps"
+  },
+  "k-most-played": {
+    "name": "K Most Played",
+    "difficulty": "medium",
+    "topics": [
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Heap size restriction"
+    ],
+    "other_tools": [
+      "Top k techniques (incl. quickselect)",
+      "Custom sort",
+      "Heap internals"
+    ],
+    "book_chapter": "Heaps"
+  },
+  "k-pairs-with-smallest-sums": {
+    "name": "K Pairs with Smallest Sums",
+    "difficulty": "medium",
+    "topics": [
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [
+      "M-way merge",
+      "Sort to track the smallest/largest elements"
+    ],
+    "other_tools": [
+      "Top k techniques (incl. quickselect)",
+      "Hash sets",
+      "Heap internals",
+      "Greedy choice and counterexamples"
+    ],
+    "book_chapter": null
+  },
+  "k-smallest-elements-in-min-heap": {
+    "name": "K Smallest Elements in a Min-Heap",
+    "difficulty": "hard",
+    "topics": [
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Hunt for properties: reframe the problem",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Heap size restriction"
+    ],
+    "other_tools": [
+      "Heap internals",
+      "Dynamic priorities in heaps",
+      "Top k techniques (incl. quickselect)",
+      "DFS/BFS tree"
+    ],
+    "book_chapter": null
+  },
+  "make-playlist": {
+    "name": "Make Playlist",
+    "difficulty": "medium",
+    "topics": [
+      "heaps",
+      "greedy"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: DIY technique",
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [
+      "Frequency maps",
+      "Impose a canonical order"
+    ],
+    "other_tools": [
+      "Hash maps",
+      "Heap internals",
+      "Dynamic priorities in heaps",
+      "Sorting preprocessing",
+      "Greedy choice and counterexamples"
+    ],
+    "book_chapter": "Heaps"
+  },
+  "most-listened-across-genres": {
+    "name": "Most Listened Across Genres",
+    "difficulty": "medium",
+    "topics": [
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "M-way merge"
+    ],
+    "other_tools": [
+      "Top k techniques (incl. quickselect)",
+      "Heap internals"
+    ],
+    "book_chapter": "Heaps"
+  },
+  "popular-songs-class": {
+    "name": "Popular Songs Class",
+    "difficulty": "hard",
+    "topics": [
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: reframe the problem",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Two-heap median tracking",
+      "Computing averages",
+      "Heap size restriction"
+    ],
+    "other_tools": [
+      "Class implementation",
+      "Hash maps",
+      "Dynamic priorities in heaps",
+      "Heap internals"
+    ],
+    "book_chapter": "Heaps"
+  },
+  "sum-of-first-k-prime-powers": {
+    "name": "Sum Of First K Prime Powers",
+    "difficulty": "medium",
+    "topics": [
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Applying modulo at each step",
+      "M-way merge"
+    ],
+    "other_tools": [
+      "Working with primes",
+      "Heap internals",
+      "Dynamic priorities in heaps",
+      "Top k techniques (incl. quickselect)"
+    ],
+    "book_chapter": "Heaps"
+  },
+  "top-songs-class": {
+    "name": "Top Songs Class",
+    "difficulty": "medium",
+    "topics": [
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Heap size restriction"
+    ],
+    "other_tools": [
+      "Class implementation",
+      "Top k techniques (incl. quickselect)",
+      "Dynamic priorities in heaps",
+      "Heap internals"
+    ],
+    "book_chapter": "Heaps"
+  },
+  "top-songs-class-with-updates": {
+    "name": "Top Songs Class With Updates",
+    "difficulty": "medium",
+    "topics": [
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Heap size restriction",
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Dynamic priorities in heaps",
+      "Class implementation",
+      "Hash maps",
+      "Top k techniques (incl. quickselect)",
+      "Heap internals"
+    ],
+    "book_chapter": "Heaps"
+  },
+  "compare-two-linked-lists": {
+    "name": "Compare Two Linked Lists",
+    "difficulty": "easy",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Parallel pointers",
+      "Parallel pointers (linked lists)",
+      "Linked list internals"
+    ],
+    "book_chapter": null
+  },
+  "doubly-linked-list-design": {
+    "name": "Doubly Linked List Design",
+    "difficulty": "medium",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Linked list internals",
+      "Class implementation",
+      "Doubly-linked list",
+      "In-place modification (linked lists)"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "doubly-linked-list-to-array": {
+    "name": "Doubly Linked List To Array",
+    "difficulty": "easy",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Building strings with dynamic arrays"
+    ],
+    "other_tools": [
+      "Doubly-linked list",
+      "Linked list internals"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "duplicate-removal-in-sorted-linked-list": {
+    "name": "Duplicate Removal In Sorted Linked List",
+    "difficulty": "easy",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "In-place modification (linked lists)",
+      "Linked list internals"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "linked-list-based-queue": {
+    "name": "Linked-List-Based Queue",
+    "difficulty": "medium",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Queue internals",
+      "Class implementation",
+      "Linked list internals"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "linked-list-based-stack": {
+    "name": "Linked-List-Based Stack",
+    "difficulty": "easy",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Linked list internals",
+      "Class implementation"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "linked-list-block-reversal": {
+    "name": "Linked List Block Reversal",
+    "difficulty": "hard",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [
+      "Dummy node",
+      "Linked list reversal break down",
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "In-place modification (linked lists)",
+      "Linked list internals",
+      "Parallel pointers (linked lists)"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "linked-list-copy": {
+    "name": "Linked-List Copy",
+    "difficulty": "easy",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Dummy node"
+    ],
+    "other_tools": [
+      "Parallel pointers (linked lists)",
+      "Linked list internals",
+      "Recursive data structure"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "linked-list-cycle-detection": {
+    "name": "Linked-List Cycle Detection",
+    "difficulty": "medium",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": true,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Cycle detection (linked lists)",
+      "Fast and slow pointers (linked lists)",
+      "Fast and slow pointers",
+      "Hash sets",
+      "Linked list internals"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "linked-list-cycle-length": {
+    "name": "Linked-List Cycle Length",
+    "difficulty": "hard",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Decrease the difficulty: break down the problem",
+      "Articulate your blocker",
+      "Hunt for properties: sketch a diagram"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Cycle detection (linked lists)",
+      "Fast and slow pointers",
+      "Fast and slow pointers (linked lists)",
+      "Parallel pointers",
+      "Parallel pointers (linked lists)",
+      "Linked list internals",
+      "Hash sets"
+    ],
+    "book_chapter": null
+  },
+  "linked-list-cycle-start": {
+    "name": "Linked-List Cycle Start",
+    "difficulty": "hard",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Cycle detection (linked lists)",
+      "Fast and slow pointers (linked lists)",
+      "Linked list internals",
+      "Parallel pointers (linked lists)"
+    ],
+    "book_chapter": null
+  },
+  "linked-list-midpoint": {
+    "name": "Linked-List Midpoint",
+    "difficulty": "medium",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Fast and slow pointers (linked lists)",
+      "Parallel pointers (linked lists)",
+      "Linked list internals"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "linked-list-reversal": {
+    "name": "Linked-List Reversal",
+    "difficulty": "easy",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Linked list reversal break down"
+    ],
+    "other_tools": [
+      "In-place modification (linked lists)",
+      "Parallel pointers (linked lists)",
+      "Linked list internals"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "linked-list-zip": {
+    "name": "Linked-List Zip",
+    "difficulty": "easy",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Dummy node"
+    ],
+    "other_tools": [
+      "Parallel pointers (linked lists)",
+      "In-place modification (linked lists)",
+      "Linked list internals"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "remove-kth-node-from-the-end": {
+    "name": "Remove Kth Node From The End",
+    "difficulty": "medium",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Dummy node"
+    ],
+    "other_tools": [
+      "Fast and slow pointers (linked lists)",
+      "Parallel pointers (linked lists)",
+      "Linked list internals",
+      "In-place modification (linked lists)"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "singly-linked-list-design": {
+    "name": "Singly Linked List Design",
+    "difficulty": "medium",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Linked list internals",
+      "Class implementation",
+      "In-place modification (linked lists)"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "sublist-reversal": {
+    "name": "Sublist Reversal",
+    "difficulty": "hard",
+    "topics": [
+      "linked-lists"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Linked list reversal break down",
+      "Dummy node"
+    ],
+    "other_tools": [
+      "In-place modification (linked lists)",
+      "Linked list internals",
+      "Parallel pointers (linked lists)"
+    ],
+    "book_chapter": "Linked Lists"
+  },
+  "king-kong-vs-godzilla": {
+    "name": "King Kong Vs Godzilla",
+    "difficulty": "hard",
+    "topics": [
+      "monotonic-stacks-and-queues",
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Next greater element"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Transform the input"
+    ],
+    "other_tools": [
+      "Max queue",
+      "Using queues for FIFO problems",
+      "Using stacks for LIFO problems"
+    ],
+    "book_chapter": "Monotonic Stacks & Queues"
+  },
+  "king-kong-vs-godzilla-in-the-fog": {
+    "name": "King Kong Vs Godzilla In The Fog",
+    "difficulty": "hard",
+    "topics": [
+      "monotonic-stacks-and-queues",
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Next greater element"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Transform the input",
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "Max queue"
+    ],
+    "book_chapter": "Monotonic Stacks & Queues"
+  },
+  "largest-rectangle": {
+    "name": "Largest Rectangle",
+    "difficulty": "hard",
+    "topics": [
+      "monotonic-stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [
+      "Next greater element"
+    ],
+    "boosters": [
+      "Hunt for properties",
+      "Hunt for properties: reframe the problem",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Using stacks for LIFO problems"
+    ],
+    "book_chapter": "Monotonic Stacks & Queues"
+  },
+  "largest-temperature-change": {
+    "name": "Largest Temperature Change",
+    "difficulty": "hard",
+    "topics": [
+      "sliding-windows",
+      "monotonic-stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [
+      "Fixed-length window recipe"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties",
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Max queue",
+      "Amortized analysis",
+      "Using queues for FIFO problems"
+    ],
+    "book_chapter": "Monotonic Stacks & Queues"
+  },
+  "longest-stable-period": {
+    "name": "Longest Stable Period",
+    "difficulty": "hard",
+    "topics": [
+      "sliding-windows",
+      "monotonic-stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [
+      "Articulate your blocker"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Max queue"
+    ],
+    "book_chapter": "Monotonic Stacks & Queues"
+  },
+  "max-queue": {
+    "name": "Max Queue",
+    "difficulty": "hard",
+    "topics": [
+      "monotonic-stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version",
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Max queue",
+      "Amortized analysis",
+      "Class implementation",
+      "Queue internals",
+      "Using queues for FIFO problems"
+    ],
+    "book_chapter": "Monotonic Stacks & Queues"
+  },
+  "next-greater-element": {
+    "name": "Next Greater Element",
+    "difficulty": "hard",
+    "topics": [
+      "monotonic-stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [
+      "Next greater element"
+    ],
+    "boosters": [
+      "Brute force optimization: data structure pattern",
+      "Brute force optimization: preprocessing pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Using stacks for LIFO problems",
+      "Amortized analysis"
+    ],
+    "book_chapter": "Monotonic Stacks & Queues"
+  },
+  "sliding-window-max": {
+    "name": "Sliding Window Max",
+    "difficulty": "hard",
+    "topics": [
+      "sliding-windows",
+      "monotonic-stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [
+      "Fixed-length window recipe"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Max queue",
+      "Using queues for FIFO problems",
+      "Amortized analysis"
+    ],
+    "book_chapter": "Monotonic Stacks & Queues"
+  },
+  "all-overbooked-slots": {
+    "name": "All Overbooked Slots",
+    "difficulty": "medium",
+    "topics": [
+      "prefix-sums"
+    ],
+    "classic": false,
+    "recipes": [
+      "Range sum queries"
+    ],
+    "boosters": [
+      "Brute force optimization: preprocessing pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Difference array",
+      "Prefix-sum array"
+    ],
+    "book_chapter": "Prefix Sums"
+  },
+  "balance-point": {
+    "name": "Balance Point",
+    "difficulty": "easy",
+    "topics": [
+      "prefix-sums"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Custom prefix-sum array",
+      "Prefix-sum array"
+    ],
+    "book_chapter": "Prefix Sums"
+  },
+  "channel-views": {
+    "name": "Channel Views",
+    "difficulty": "easy",
+    "topics": [
+      "prefix-sums"
+    ],
+    "classic": false,
+    "recipes": [
+      "Range sum queries"
+    ],
+    "boosters": [
+      "Brute force optimization: preprocessing pattern",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Prefix-sum array"
+    ],
+    "book_chapter": "Prefix Sums"
+  },
+  "count-subarrays-with-sum-k": {
+    "name": "Count Subarrays With Sum K",
+    "difficulty": "medium",
+    "topics": [
+      "prefix-sums"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: reframe the problem",
+      "Brute force optimization: preprocessing pattern"
+    ],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Finding subarrays with sum k",
+      "Prefix-sum array",
+      "Hash maps",
+      "Custom prefix-sum array"
+    ],
+    "book_chapter": "Prefix Sums"
+  },
+  "exclusive-product": {
+    "name": "Exclusive Product",
+    "difficulty": "medium",
+    "topics": [
+      "prefix-sums"
+    ],
+    "classic": false,
+    "recipes": [
+      "Range sum queries"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Applying modulo at each step"
+    ],
+    "other_tools": [
+      "Custom prefix-sum array",
+      "Prefix-sum array"
+    ],
+    "book_chapter": "Prefix Sums"
+  },
+  "longest-subarray-with-sum-k": {
+    "name": "Longest Subarray With Sum K",
+    "difficulty": "hard",
+    "topics": [
+      "prefix-sums"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Finding subarrays with sum k",
+      "Prefix-sum array",
+      "Hash maps"
+    ],
+    "book_chapter": "Prefix Sums"
+  },
+  "most-booked-slot": {
+    "name": "Most Booked Slot",
+    "difficulty": "medium",
+    "topics": [
+      "prefix-sums"
+    ],
+    "classic": false,
+    "recipes": [
+      "Range sum queries"
+    ],
+    "boosters": [
+      "Brute force optimization: preprocessing pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Difference array",
+      "Prefix-sum array"
+    ],
+    "book_chapter": "Prefix Sums"
+  },
+  "segmented-video-votes": {
+    "name": "Segmented Video Votes",
+    "difficulty": "medium",
+    "topics": [
+      "prefix-sums"
+    ],
+    "classic": false,
+    "recipes": [
+      "Range sum queries"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Difference array",
+      "Prefix-sum array"
+    ],
+    "book_chapter": "Prefix Sums"
+  },
+  "youtube-video-reception": {
+    "name": "YouTube Video Reception",
+    "difficulty": "easy",
+    "topics": [
+      "prefix-sums"
+    ],
+    "classic": false,
+    "recipes": [
+      "Range sum queries"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Transform the input"
+    ],
+    "other_tools": [
+      "Prefix-sum array"
+    ],
+    "book_chapter": "Prefix Sums"
+  },
+  "youtube-video-unusual-days": {
+    "name": "YouTube Video Unusual Days",
+    "difficulty": "hard",
+    "topics": [
+      "prefix-sums"
+    ],
+    "classic": false,
+    "recipes": [
+      "Range sum queries"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: sketch a diagram"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements",
+      "Transform the input"
+    ],
+    "other_tools": [
+      "Prefix-sum array",
+      "Custom prefix-sum array",
+      "Sorting preprocessing"
+    ],
+    "book_chapter": "Prefix Sums"
+  },
+  "laminal-arrays": {
+    "name": "Laminal Arrays",
+    "difficulty": "hard",
+    "topics": [
+      "recursion"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Pass indices; not copies"
+    ],
+    "other_tools": [
+      "Divide and conquer",
+      "Recursion"
+    ],
+    "book_chapter": "Recursion"
+  },
+  "lego-castle": {
+    "name": "Lego Castle",
+    "difficulty": "medium",
+    "topics": [
+      "recursion"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Recurrence relations",
+      "Memoization/tabulation",
+      "Closed formula",
+      "Recursion"
+    ],
+    "book_chapter": "Recursion"
+  },
+  "nested-array-sum": {
+    "name": "Nested Array Sum",
+    "difficulty": "easy",
+    "topics": [
+      "recursion"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Recursive data structure"
+    ],
+    "book_chapter": "Recursion"
+  },
+  "powers-mod-m": {
+    "name": "Powers Mod M",
+    "difficulty": "medium",
+    "topics": [
+      "recursion"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Applying modulo at each step"
+    ],
+    "other_tools": [
+      "Recurrence relations",
+      "Recursion",
+      "Divide and conquer"
+    ],
+    "book_chapter": "Recursion"
+  },
+  "robot-instructions": {
+    "name": "Robot Instructions",
+    "difficulty": "medium",
+    "topics": [
+      "recursion"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Building strings with dynamic arrays",
+      "Pass indices; not copies"
+    ],
+    "other_tools": [
+      "Recursion",
+      "Parsing"
+    ],
+    "book_chapter": "Recursion"
+  },
+  "tridimensional-lego-castle": {
+    "name": "Tridimensional Lego Castle",
+    "difficulty": "medium",
+    "topics": [
+      "recursion"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties",
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Recursion",
+      "Memoization/tabulation",
+      "Recurrence relations",
+      "Closed formula",
+      "Reusing subproblems"
+    ],
+    "book_chapter": null
+  },
+  "hash-map-class": {
+    "name": "Hash Map Class",
+    "difficulty": "hard",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash map internals",
+      "Class implementation",
+      "Hash set internals",
+      "Dynamic array internals",
+      "Amortized analysis"
+    ],
+    "book_chapter": "Set & Map Implementations"
+  },
+  "hash-map-class-extensions": {
+    "name": "Hash Map Class Extensions",
+    "difficulty": "hard",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash map internals",
+      "Class implementation",
+      "Dynamic array internals",
+      "Amortized analysis",
+      "Hash maps"
+    ],
+    "book_chapter": "Set & Map Implementations"
+  },
+  "hash-set-class": {
+    "name": "Hash Set Class",
+    "difficulty": "hard",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash set internals",
+      "Class implementation",
+      "Dynamic array internals",
+      "Hash maps",
+      "Amortized analysis"
+    ],
+    "book_chapter": "Set & Map Implementations"
+  },
+  "hash-set-class-extensions": {
+    "name": "Hash Set Class Extensions",
+    "difficulty": "hard",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Building strings with dynamic arrays"
+    ],
+    "other_tools": [
+      "Hash set internals",
+      "Class implementation",
+      "Hash sets",
+      "Amortized analysis"
+    ],
+    "book_chapter": "Set & Map Implementations"
+  },
+  "multimap": {
+    "name": "Multimap",
+    "difficulty": "hard",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash map internals",
+      "Class implementation",
+      "Hash maps",
+      "Dynamic array internals"
+    ],
+    "book_chapter": "Set & Map Implementations"
+  },
+  "multiset": {
+    "name": "Multiset",
+    "difficulty": "hard",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Hash set internals",
+      "Class implementation",
+      "Hash maps",
+      "Hash sets"
+    ],
+    "book_chapter": "Set & Map Implementations"
+  },
+  "account-sharing-detection": {
+    "name": "Account Sharing Detection",
+    "difficulty": "easy",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash sets"
+    ],
+    "book_chapter": "Sets & Maps"
+  },
+  "action-log-anomalies": {
+    "name": "Action Log Anomalies",
+    "difficulty": "medium",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash maps",
+      "Hash sets"
+    ],
+    "book_chapter": "Sets & Maps"
+  },
+  "cheater-detection": {
+    "name": "Cheater Detection",
+    "difficulty": "medium",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Brute force optimization: preprocessing pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash maps",
+      "Grid graphs"
+    ],
+    "book_chapter": "Sets & Maps"
+  },
+  "domain-resolver": {
+    "name": "Domain Resolver",
+    "difficulty": "easy",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Class implementation",
+      "Hash maps",
+      "Hash sets"
+    ],
+    "book_chapter": "Sets & Maps"
+  },
+  "duplicate-file-contents": {
+    "name": "Duplicate File Contents",
+    "difficulty": "medium",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Hash maps",
+      "Parsing"
+    ],
+    "book_chapter": null
+  },
+  "find-all-squares": {
+    "name": "Find All Squares",
+    "difficulty": "easy",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Brute force optimization: preprocessing pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash maps"
+    ],
+    "book_chapter": "Sets & Maps"
+  },
+  "hangman-word-matching": {
+    "name": "Hangman Word Matching",
+    "difficulty": "medium",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash sets"
+    ],
+    "book_chapter": null
+  },
+  "has-duplicate": {
+    "name": "Has Duplicate",
+    "difficulty": "easy",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash sets",
+      "Hash set internals"
+    ],
+    "book_chapter": null
+  },
+  "largest-set-intersection": {
+    "name": "Largest Set Intersection",
+    "difficulty": "hard",
+    "topics": [
+      "sets-and-maps",
+      "prefix-sums"
+    ],
+    "classic": false,
+    "recipes": [
+      "Range sum queries"
+    ],
+    "boosters": [
+      "Hunt for properties",
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Custom prefix-sum array",
+      "Hash maps",
+      "Hash sets"
+    ],
+    "book_chapter": "Sets & Maps"
+  },
+  "longest-consecutive-sequence": {
+    "name": "Longest Consecutive Sequence",
+    "difficulty": "hard",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Decrease the difficulty: start with an easier version",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash sets"
+    ],
+    "book_chapter": null
+  },
+  "most-frequent-octet": {
+    "name": "Most Frequent Octet",
+    "difficulty": "easy",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Leverage the input range",
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Hash maps",
+      "String fundamentals: split"
+    ],
+    "book_chapter": "Sets & Maps"
+  },
+  "most-shared-account": {
+    "name": "Most Shared Account",
+    "difficulty": "easy",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Hash maps"
+    ],
+    "book_chapter": "Sets & Maps"
+  },
+  "multi-account-cheating": {
+    "name": "Multi-Account Cheating",
+    "difficulty": "easy",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Impose a canonical order"
+    ],
+    "other_tools": [
+      "Hashing lists",
+      "Hash sets",
+      "Custom sort",
+      "Sorting preprocessing"
+    ],
+    "book_chapter": "Sets & Maps"
+  },
+  "product-of-alphabetical-sums": {
+    "name": "Product of Alphabetical Sums",
+    "difficulty": "medium",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Leverage the input range",
+      "Transform the input"
+    ],
+    "other_tools": [
+      "Hash sets"
+    ],
+    "book_chapter": "Sets & Maps"
+  },
+  "scrabble-tiles": {
+    "name": "Scrabble Tiles",
+    "difficulty": "easy",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Hash maps"
+    ],
+    "book_chapter": null
+  },
+  "shortest-distance-number-repeated": {
+    "name": "Shortest Distance Number Repeated",
+    "difficulty": "easy",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash maps",
+      "Distance computation"
+    ],
+    "book_chapter": null
+  },
+  "shortest-distance-string-repeated": {
+    "name": "Shortest Distance String Repeated",
+    "difficulty": "easy",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash maps",
+      "Distance computation"
+    ],
+    "book_chapter": null
+  },
+  "unique-k-pairs": {
+    "name": "Unique K Pairs",
+    "difficulty": "medium",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Frequency maps",
+      "Impose a canonical order"
+    ],
+    "other_tools": [
+      "Hash maps",
+      "Hash sets",
+      "Hash map internals",
+      "Hash set internals"
+    ],
+    "book_chapter": null
+  },
+  "unique-movie-titles": {
+    "name": "Unique Movie Titles",
+    "difficulty": "easy",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash sets",
+      "String fundamentals: split"
+    ],
+    "book_chapter": null
+  },
+  "word-expansion-class": {
+    "name": "Word Expansion Class",
+    "difficulty": "easy",
+    "topics": [
+      "sets-and-maps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Frequency maps",
+      "Impose a canonical order",
+      "Leverage the input range"
+    ],
+    "other_tools": [
+      "Class implementation",
+      "Hash maps"
+    ],
+    "book_chapter": "Sets & Maps"
+  },
+  "ad-campaign-boost": {
+    "name": "Ad Campaign Boost",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Reframe choices as optimization",
+      "At-most-k subarray counting"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "ad-campaign-with-small-boosts": {
+    "name": "Ad Campaign With Small Boosts",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Transform exactly-k/at-least-k counting to at-most-k counting"
+    ],
+    "other_tools": [
+      "Reframe choices as optimization",
+      "At-most-k subarray counting"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "boosting-days-multiple-times": {
+    "name": "Boosting Days Multiple Times",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Transform the input"
+    ],
+    "other_tools": [
+      "Reframe choices as optimization"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "count-good-subarrays-with-at-least-k-sales": {
+    "name": "Count Good Subarrays With At Least K Sales",
+    "difficulty": "hard",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe",
+      "Resetting window recipe"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Transform exactly-k/at-least-k counting to at-most-k counting"
+    ],
+    "other_tools": [
+      "Number of subarrays formula",
+      "At-most-k subarray counting"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "count-subarrays-with-all-remainders": {
+    "name": "Count Subarrays With All Remainders",
+    "difficulty": "hard",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: reframe the problem",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Transform exactly-k/at-least-k counting to at-most-k counting",
+      "Applying modulo at each step",
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "At-most-k subarray counting",
+      "Number of subarrays formula",
+      "Hash maps"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "count-subarrays-with-at-least-k-bad-days": {
+    "name": "Count Subarrays With At Least K Bad Days",
+    "difficulty": "hard",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Transform exactly-k/at-least-k counting to at-most-k counting"
+    ],
+    "other_tools": [
+      "At-most-k subarray counting",
+      "Number of subarrays formula"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "count-subarrays-with-at-most-k-bad-days": {
+    "name": "Count Subarrays With At Most K Bad Days",
+    "difficulty": "hard",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Transform exactly-k/at-least-k counting to at-most-k counting"
+    ],
+    "other_tools": [
+      "At-most-k subarray counting"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "count-subarrays-with-bad-days-in-range": {
+    "name": "Count Subarrays With Bad Days In Range",
+    "difficulty": "hard",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Transform exactly-k/at-least-k counting to at-most-k counting"
+    ],
+    "other_tools": [
+      "At-most-k subarray counting"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "count-subarrays-with-drops": {
+    "name": "Count Subarrays With Drops",
+    "difficulty": "hard",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Transform exactly-k/at-least-k counting to at-most-k counting"
+    ],
+    "other_tools": [
+      "At-most-k subarray counting",
+      "Number of subarrays formula"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "count-subarrays-with-exactly-k-bad-days": {
+    "name": "Count Subarrays With Exactly K Bad Days",
+    "difficulty": "hard",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Transform exactly-k/at-least-k counting to at-most-k counting"
+    ],
+    "other_tools": [
+      "At-most-k subarray counting"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "count-subarrays-with-good-start-and-ending": {
+    "name": "Count Subarrays With Good Start And Ending",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Number of subarrays formula",
+      "Closed formula"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "enduring-best-seller-streak": {
+    "name": "Enduring Best Seller Streak",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Fixed-length window recipe",
+      "Resetting window recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Hash maps"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "longest-alternating-sequence": {
+    "name": "Longest Alternating Sequence",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Resetting window recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [],
+    "book_chapter": "Sliding Windows"
+  },
+  "longest-good-day-streak": {
+    "name": "Longest Good Day Streak",
+    "difficulty": "easy",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Resetting window recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Parallel pointers"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "longest-period-at-most-k-distinct": {
+    "name": "Longest Period At Most K Distinct",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Hash maps",
+      "At-most-k subarray counting"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "longest-repeated-substring": {
+    "name": "Longest Repeated Substring",
+    "difficulty": "hard",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Fixed-length window recipe",
+      "Maximum window recipe"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Leverage the input range",
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Guess-and-check technique",
+      "Rolling hash",
+      "Hash maps"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "max-subarray-sum": {
+    "name": "Max Subarray Sum",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": true,
+    "recipes": [
+      "Resetting window recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [],
+    "book_chapter": "Sliding Windows"
+  },
+  "maximum-with-at-most-3-bad-days": {
+    "name": "Maximum With At Most 3 Bad Days",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Maximum window recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "At-most-k subarray counting"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "most-sales-in-k-days": {
+    "name": "Most Sales In K Days",
+    "difficulty": "easy",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Fixed-length window recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Parallel pointers"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "most-weekly-sales": {
+    "name": "Most Weekly Sales",
+    "difficulty": "easy",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Fixed-length window recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Parallel pointers"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "shortest-period-with-over-20-sales": {
+    "name": "Shortest Period With Over 20 Sales",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Minimum window recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Finding subarrays with sum k"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "shortest-with-all-letters": {
+    "name": "Shortest With All Letters",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Minimum window recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Hash maps"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "smallest-range-with-k-elements": {
+    "name": "Smallest Range With K Elements",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Minimum window recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements",
+      "Transform the input"
+    ],
+    "other_tools": [
+      "Sorting preprocessing",
+      "Min-max optimization"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "strong-start-and-ending": {
+    "name": "Strong Start And Ending",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows",
+      "prefix-sums",
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [
+      "Minimum window recipe"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Custom prefix-sum array",
+      "Inward pointers",
+      "At-most-k subarray counting"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "unique-best-seller-streak": {
+    "name": "Unique Best Seller Streak",
+    "difficulty": "medium",
+    "topics": [
+      "sliding-windows"
+    ],
+    "classic": false,
+    "recipes": [
+      "Fixed-length window recipe"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Hash maps"
+    ],
+    "book_chapter": "Sliding Windows"
+  },
+  "delete-operations": {
+    "name": "Delete Operations",
+    "difficulty": "medium",
+    "topics": [
+      "sorting"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: reframe the problem",
+      "Brute force optimization: preprocessing pattern"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements",
+      "Pass indices; not copies"
+    ],
+    "other_tools": [
+      "Sorting preprocessing",
+      "Hash sets",
+      "Custom sort"
+    ],
+    "book_chapter": "Sorting"
+  },
+  "first-k": {
+    "name": "First K",
+    "difficulty": "hard",
+    "topics": [
+      "sorting",
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [
+      "Heap size restriction",
+      "Sort to track the smallest/largest elements"
+    ],
+    "other_tools": [
+      "Top k techniques (incl. quickselect)",
+      "Custom sort",
+      "Sorting preprocessing",
+      "Heap internals",
+      "Divide and conquer",
+      "In-place modification"
+    ],
+    "book_chapter": "Sorting"
+  },
+  "google-colors": {
+    "name": "Google Colors",
+    "difficulty": "medium",
+    "topics": [
+      "sorting"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties",
+      "Cycle through the catalog"
+    ],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Counting sort",
+      "Hash maps",
+      "Custom sort"
+    ],
+    "book_chapter": null
+  },
+  "implement-mergesort": {
+    "name": "Implement Mergesort",
+    "difficulty": "medium",
+    "topics": [
+      "sorting"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Divide and conquer",
+      "Recursion",
+      "Custom sort"
+    ],
+    "book_chapter": null
+  },
+  "implement-quicksort": {
+    "name": "Implement Quicksort",
+    "difficulty": "medium",
+    "topics": [
+      "sorting"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Recursion",
+      "Divide and conquer",
+      "Sorting preprocessing"
+    ],
+    "book_chapter": null
+  },
+  "k-sorted-array": {
+    "name": "k-Sorted Array",
+    "difficulty": "medium",
+    "topics": [
+      "sorting",
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements",
+      "Heap size restriction"
+    ],
+    "other_tools": [
+      "Top k techniques (incl. quickselect)",
+      "Sorting preprocessing",
+      "Dynamic priorities in heaps"
+    ],
+    "book_chapter": null
+  },
+  "nested-circles": {
+    "name": "Nested Circles",
+    "difficulty": "medium",
+    "topics": [
+      "sorting"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: sketch a diagram",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements",
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "Distance formula",
+      "Custom sort",
+      "Sorting preprocessing",
+      "Distance computation"
+    ],
+    "book_chapter": "Sorting"
+  },
+  "sort-by-publication-year": {
+    "name": "Sort By Publication Year",
+    "difficulty": "easy",
+    "topics": [
+      "sorting"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Leverage the input range"
+    ],
+    "other_tools": [
+      "Bucket sort",
+      "Custom sort",
+      "Class implementation"
+    ],
+    "book_chapter": "Sorting"
+  },
+  "sorting-by-frequency": {
+    "name": "Sorting By Frequency",
+    "difficulty": "easy",
+    "topics": [
+      "sorting"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Frequency maps",
+      "Leverage the input range"
+    ],
+    "other_tools": [
+      "Custom sort",
+      "Hash maps"
+    ],
+    "book_chapter": "Sorting"
+  },
+  "spreadsheet": {
+    "name": "Spreadsheet",
+    "difficulty": "medium",
+    "topics": [
+      "sorting"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements"
+    ],
+    "other_tools": [
+      "Custom sort",
+      "Class implementation",
+      "Sorting preprocessing",
+      "In-place modification"
+    ],
+    "book_chapter": "Sorting"
+  },
+  "balanced-partition": {
+    "name": "Balanced Partition",
+    "difficulty": "easy",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Reframe balanced parentheses as plot heights"
+    ],
+    "other_tools": [
+      "Greedy choice and counterexamples",
+      "Invariants",
+      "Parsing"
+    ],
+    "book_chapter": "Stacks & Queues"
+  },
+  "compress-array": {
+    "name": "Compress Array",
+    "difficulty": "easy",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Using stacks for LIFO problems"
+    ],
+    "book_chapter": "Stacks & Queues"
+  },
+  "compress-array-by-k": {
+    "name": "Compress Array By K",
+    "difficulty": "medium",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Piggybacking extra info"
+    ],
+    "other_tools": [
+      "Using stacks for LIFO problems",
+      "Recursion",
+      "Invariants"
+    ],
+    "book_chapter": "Stacks & Queues"
+  },
+  "current-url": {
+    "name": "Current URL",
+    "difficulty": "easy",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Using stacks for LIFO problems",
+      "Parsing"
+    ],
+    "book_chapter": "Stacks & Queues"
+  },
+  "current-url-with-forward": {
+    "name": "Current URL With Forward",
+    "difficulty": "medium",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Brute force optimization: data structure pattern"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Using stacks for LIFO problems",
+      "Dynamic array internals"
+    ],
+    "book_chapter": "Stacks & Queues"
+  },
+  "custom-brackets": {
+    "name": "Custom Brackets",
+    "difficulty": "medium",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [
+      "Dangling bracket stack"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Hash maps",
+      "Hash sets",
+      "Using stacks for LIFO problems",
+      "Parsing"
+    ],
+    "book_chapter": "Stacks & Queues"
+  },
+  "decode-a-string": {
+    "name": "Decode A String",
+    "difficulty": "hard",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Building strings with dynamic arrays",
+      "Extracting and adding digits"
+    ],
+    "other_tools": [
+      "Parsing",
+      "Using stacks for LIFO problems",
+      "String fundamentals: join"
+    ],
+    "book_chapter": null
+  },
+  "longest-balanced-subsequence": {
+    "name": "Longest Balanced Subsequence",
+    "difficulty": "medium",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: sketch a diagram",
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Reframe balanced parentheses as plot heights",
+      "Building strings with dynamic arrays"
+    ],
+    "other_tools": [
+      "Using stacks for LIFO problems"
+    ],
+    "book_chapter": "Stacks & Queues"
+  },
+  "os-paths": {
+    "name": "OS Paths",
+    "difficulty": "easy",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Using stacks for LIFO problems",
+      "String fundamentals: split",
+      "String fundamentals: join",
+      "Parsing"
+    ],
+    "book_chapter": null
+  },
+  "redundant-parentheses": {
+    "name": "Redundant Parentheses",
+    "difficulty": "medium",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [],
+    "book_chapter": null
+  },
+  "simple-text-editor": {
+    "name": "Simple Text Editor",
+    "difficulty": "medium",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Building strings with dynamic arrays"
+    ],
+    "other_tools": [
+      "Using stacks for LIFO problems",
+      "Class implementation",
+      "String fundamentals: join"
+    ],
+    "book_chapter": null
+  },
+  "validate-simple-html-strings": {
+    "name": "Validate Simple HTML Strings",
+    "difficulty": "easy",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "Parsing",
+      "Using stacks for LIFO problems"
+    ],
+    "book_chapter": null
+  },
+  "viewer-counter-class": {
+    "name": "Viewer Counter Class",
+    "difficulty": "medium",
+    "topics": [
+      "stacks-and-queues"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Piggybacking extra info"
+    ],
+    "other_tools": [
+      "Using queues for FIFO problems",
+      "Class implementation",
+      "Amortized analysis"
+    ],
+    "book_chapter": "Stacks & Queues"
+  },
+  "string-join": {
+    "name": "String Join",
+    "difficulty": "easy",
+    "topics": [
+      "string-manipulation"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Building strings with dynamic arrays"
+    ],
+    "other_tools": [
+      "String fundamentals: join",
+      "Dynamic array internals"
+    ],
+    "book_chapter": "String Manipulation"
+  },
+  "string-matching": {
+    "name": "String Matching",
+    "difficulty": "medium",
+    "topics": [
+      "string-manipulation"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version"
+    ],
+    "reusable_ideas": [
+      "Applying modulo at each step"
+    ],
+    "other_tools": [
+      "Rolling hash"
+    ],
+    "book_chapter": "String Manipulation"
+  },
+  "string-split": {
+    "name": "String Split",
+    "difficulty": "easy",
+    "topics": [
+      "string-manipulation"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Building strings with dynamic arrays"
+    ],
+    "other_tools": [
+      "String fundamentals: split",
+      "Parsing",
+      "Dynamic array internals"
+    ],
+    "book_chapter": "String Manipulation"
+  },
+  "counting-paths": {
+    "name": "Counting Paths",
+    "difficulty": "medium",
+    "topics": [
+      "topological-sort"
+    ],
+    "classic": false,
+    "recipes": [
+      "DAG problem recipe",
+      "Peel-off algorithm"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Memoization/tabulation",
+      "Graph modeling",
+      "Adjacency list properties",
+      "Reusing subproblems"
+    ],
+    "book_chapter": "Topological Sort"
+  },
+  "dag-distances": {
+    "name": "DAG Distances",
+    "difficulty": "medium",
+    "topics": [
+      "topological-sort"
+    ],
+    "classic": false,
+    "recipes": [
+      "DAG problem recipe",
+      "Peel-off algorithm"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Adjacency list properties",
+      "Edge weights",
+      "Distance computation",
+      "Memoization/tabulation",
+      "Graph modeling",
+      "Invariants"
+    ],
+    "book_chapter": "Topological Sort"
+  },
+  "dag-longest-path": {
+    "name": "DAG Longest Path",
+    "difficulty": "medium",
+    "topics": [
+      "topological-sort"
+    ],
+    "classic": false,
+    "recipes": [
+      "DAG problem recipe",
+      "Peel-off algorithm"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Edge list to adjacency list"
+    ],
+    "other_tools": [
+      "Memoization/tabulation",
+      "Edge weights",
+      "Graph modeling",
+      "Adjacency list properties",
+      "Distance computation"
+    ],
+    "book_chapter": "Topological Sort"
+  },
+  "dag-path-reconstruction": {
+    "name": "DAG Path Reconstruction",
+    "difficulty": "medium",
+    "topics": [
+      "topological-sort"
+    ],
+    "classic": false,
+    "recipes": [
+      "DAG problem recipe",
+      "Peel-off algorithm"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Path reconstruction"
+    ],
+    "other_tools": [
+      "Distance computation",
+      "Edge weights",
+      "Hash maps",
+      "Adjacency list properties"
+    ],
+    "book_chapter": "Topological Sort"
+  },
+  "longest-path-of-increasing-degrees": {
+    "name": "Longest Path Of Increasing Degrees",
+    "difficulty": "hard",
+    "topics": [
+      "topological-sort"
+    ],
+    "classic": false,
+    "recipes": [
+      "DAG problem recipe",
+      "Peel-off algorithm"
+    ],
+    "boosters": [
+      "Hunt for properties",
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Transform the input",
+      "Edge list to adjacency list"
+    ],
+    "other_tools": [
+      "Graph modeling",
+      "Adjacency list properties",
+      "Memoization/tabulation"
+    ],
+    "book_chapter": "Topological Sort"
+  },
+  "number-of-palindromic-splits": {
+    "name": "Number Of Palindromic Splits",
+    "difficulty": "hard",
+    "topics": [
+      "topological-sort",
+      "dynamic-programming"
+    ],
+    "classic": false,
+    "recipes": [
+      "DAG problem recipe",
+      "Memoization",
+      "Peel-off algorithm"
+    ],
+    "boosters": [
+      "Brute force optimization: preprocessing pattern"
+    ],
+    "reusable_ideas": [
+      "Solution reconstruction"
+    ],
+    "other_tools": [
+      "2D DP",
+      "Graph modeling",
+      "Memoization/tabulation",
+      "Recurrence relations",
+      "DP with range of choices",
+      "Inward pointers"
+    ],
+    "book_chapter": "Topological Sort"
+  },
+  "parallel-compilation": {
+    "name": "Parallel Compilation",
+    "difficulty": "medium",
+    "topics": [
+      "topological-sort"
+    ],
+    "classic": false,
+    "recipes": [
+      "DAG problem recipe",
+      "Peel-off algorithm"
+    ],
+    "boosters": [
+      "Hunt for properties",
+      "Hunt for properties: reframe the problem",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Edge list to adjacency list",
+      "Leverage the input range"
+    ],
+    "other_tools": [
+      "Graph modeling",
+      "Memoization/tabulation",
+      "Node weights",
+      "Invariants"
+    ],
+    "book_chapter": "Topological Sort"
+  },
+  "supersequence": {
+    "name": "Supersequence",
+    "difficulty": "hard",
+    "topics": [
+      "topological-sort"
+    ],
+    "classic": false,
+    "recipes": [
+      "Peel-off algorithm"
+    ],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Graph modeling",
+      "Cycle detection (graphs)",
+      "Adjacency list properties"
+    ],
+    "book_chapter": "Topological Sort"
+  },
+  "aligned-chain": {
+    "name": "Aligned Chain",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Pre/in/post-order traversals",
+      "DFS/BFS tree",
+      "Passing info in trees",
+      "Recursion"
+    ],
+    "book_chapter": "Trees"
+  },
+  "aligned-path": {
+    "name": "Aligned Path",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Finding the node in the path with minimum depth",
+      "Piggybacking extra info"
+    ],
+    "other_tools": [
+      "Passing info in trees",
+      "DFS/BFS tree",
+      "Pre/in/post-order traversals",
+      "Recursion",
+      "Recursive data structure"
+    ],
+    "book_chapter": "Trees"
+  },
+  "bst-duplicate-detection": {
+    "name": "BST Duplicate Detection",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "BST inorder traversal",
+      "Pre/in/post-order traversals",
+      "Recursion",
+      "Passing info in trees",
+      "DFS/BFS tree"
+    ],
+    "book_chapter": "Trees"
+  },
+  "bst-kth-element": {
+    "name": "BST Kth Element",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "BST inorder traversal",
+      "Recursion",
+      "Pre/in/post-order traversals"
+    ],
+    "book_chapter": "Trees"
+  },
+  "bst-merge-into-array": {
+    "name": "BST Merge Into Array",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "M-way merge"
+    ],
+    "other_tools": [
+      "BST inorder traversal",
+      "Parallel pointers",
+      "Pre/in/post-order traversals"
+    ],
+    "book_chapter": "Trees"
+  },
+  "bst-nearest-value": {
+    "name": "BST Nearest Value",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "BST search"
+    ],
+    "book_chapter": "Trees"
+  },
+  "bst-search": {
+    "name": "BST Search",
+    "difficulty": "easy",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "BST search",
+      "Recursive data structure",
+      "Recursion",
+      "DFS/BFS tree"
+    ],
+    "book_chapter": "Trees"
+  },
+  "bst-validation": {
+    "name": "BST Validation",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "BST inorder traversal",
+      "Passing info in trees",
+      "Recursive data structure",
+      "Recursion"
+    ],
+    "book_chapter": "Trees"
+  },
+  "evaluate-expression-tree": {
+    "name": "Evaluate Expression Tree",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Parsing",
+      "Passing info in trees",
+      "Recursive data structure",
+      "Recursion",
+      "Pre/in/post-order traversals",
+      "DFS/BFS tree"
+    ],
+    "book_chapter": "Trees"
+  },
+  "hidden-message": {
+    "name": "Hidden Message",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Building strings with dynamic arrays"
+    ],
+    "other_tools": [
+      "Pre/in/post-order traversals",
+      "DFS/BFS tree",
+      "Recursion",
+      "String fundamentals: join"
+    ],
+    "book_chapter": "Trees"
+  },
+  "invert-a-binary-tree": {
+    "name": "Invert a Binary Tree",
+    "difficulty": "easy",
+    "topics": [
+      "trees"
+    ],
+    "classic": true,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Recursion",
+      "DFS/BFS tree",
+      "Pre/in/post-order traversals",
+      "In-place modification"
+    ],
+    "book_chapter": "Trees"
+  },
+  "left-view": {
+    "name": "Left View",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [
+      "Node-depth queue recipe for level-order traversal"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "DFS/BFS tree",
+      "Using queues for FIFO problems",
+      "Queue internals",
+      "Passing info in trees"
+    ],
+    "book_chapter": "Trees"
+  },
+  "most-prolific-level": {
+    "name": "Most Prolific Level",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [
+      "Node-depth queue recipe for level-order traversal"
+    ],
+    "boosters": [
+      "Hunt for properties",
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Computing averages"
+    ],
+    "other_tools": [
+      "DFS/BFS tree",
+      "Queue internals",
+      "Using queues for FIFO problems",
+      "Recursive data structure"
+    ],
+    "book_chapter": "Trees"
+  },
+  "most-protected-node": {
+    "name": "Most Protected Node",
+    "difficulty": "hard",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [
+      "Node-depth queue recipe for level-order traversal"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Passing info in trees",
+      "DFS/BFS tree",
+      "Hash maps",
+      "Pre/in/post-order traversals",
+      "Recursion"
+    ],
+    "book_chapter": "Trees"
+  },
+  "tree-layout": {
+    "name": "Tree Layout",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: sketch a diagram",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Frequency maps"
+    ],
+    "other_tools": [
+      "Passing info in trees",
+      "Pre/in/post-order traversals",
+      "DFS/BFS tree",
+      "Hash maps"
+    ],
+    "book_chapter": "Trees"
+  },
+  "triangle-count": {
+    "name": "Triangle Count",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Piggybacking extra info"
+    ],
+    "other_tools": [
+      "Passing info in trees",
+      "DFS/BFS tree",
+      "Pre/in/post-order traversals",
+      "Recursive data structure",
+      "Recursion"
+    ],
+    "book_chapter": "Trees"
+  },
+  "zig-zag-order": {
+    "name": "Zig-Zag Order",
+    "difficulty": "medium",
+    "topics": [
+      "trees"
+    ],
+    "classic": false,
+    "recipes": [
+      "Node-depth queue recipe for level-order traversal"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "DFS/BFS tree",
+      "Using queues for FIFO problems",
+      "Queue internals"
+    ],
+    "book_chapter": "Trees"
+  },
+  "array-intersection": {
+    "name": "Array Intersection",
+    "difficulty": "easy",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "M-way merge"
+    ],
+    "other_tools": [
+      "Parallel pointers",
+      "Sorting preprocessing"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "array-reversal": {
+    "name": "Array Reversal",
+    "difficulty": "easy",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Parallel pointers",
+      "Inward pointers",
+      "In-place modification"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "count-pairs-with-sum-greater-than-target": {
+    "name": "Count Pairs with Sum Greater Than Target",
+    "difficulty": "easy",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Searching with inward pointers"
+    ],
+    "other_tools": [
+      "Inward pointers"
+    ],
+    "book_chapter": null
+  },
+  "duplicate-zeros-prefix": {
+    "name": "Duplicate Zeros Prefix",
+    "difficulty": "hard",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Parallel pointers",
+      "In-place modification"
+    ],
+    "book_chapter": null
+  },
+  "dutch-flag-problem": {
+    "name": "Dutch Flag Problem",
+    "difficulty": "easy",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Leverage the input range"
+    ],
+    "other_tools": [
+      "Counting sort",
+      "In-place modification",
+      "Inward pointers"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "in-place-duplicate-removal": {
+    "name": "In-Place Duplicate Removal",
+    "difficulty": "medium",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [
+      "Seeker and writer"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Pass indices; not copies"
+    ],
+    "other_tools": [
+      "In-place modification"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "interval-intersection": {
+    "name": "Interval Intersection",
+    "difficulty": "medium",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: case analysis",
+      "Hunt for properties: sketch a diagram"
+    ],
+    "reusable_ideas": [
+      "Factor out validation to a helper function"
+    ],
+    "other_tools": [
+      "Intervals",
+      "Parallel pointers"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "merge-two-sorted-arrays": {
+    "name": "Merge Two Sorted Arrays",
+    "difficulty": "easy",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": true,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Building strings with dynamic arrays",
+      "M-way merge"
+    ],
+    "other_tools": [
+      "Parallel pointers"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "missing-numbers-in-range": {
+    "name": "Missing Numbers in Range",
+    "difficulty": "medium",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "M-way merge"
+    ],
+    "other_tools": [
+      "Parallel pointers"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "move-subsequence-to-front": {
+    "name": "Move Subsequence to Front",
+    "difficulty": "hard",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [
+      "Seeker and writer"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Pass indices; not copies"
+    ],
+    "other_tools": [
+      "Parallel pointers",
+      "In-place modification"
+    ],
+    "book_chapter": null
+  },
+  "palindrome-check": {
+    "name": "Palindrome Check",
+    "difficulty": "easy",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Searching with inward pointers"
+    ],
+    "other_tools": [
+      "Inward pointers"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "palindromic-sentence": {
+    "name": "Palindromic Sentence",
+    "difficulty": "easy",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Searching with inward pointers"
+    ],
+    "other_tools": [
+      "Inward pointers",
+      "Parsing"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "parity-sorting": {
+    "name": "Parity Sorting",
+    "difficulty": "easy",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [
+      "Impose a canonical order",
+      "Applying modulo at each step"
+    ],
+    "other_tools": [
+      "In-place modification",
+      "Inward pointers",
+      "Invariants",
+      "Parallel pointers",
+      "Custom sort"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "prefix-suffix-swap": {
+    "name": "Prefix Suffix Swap",
+    "difficulty": "medium",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Prefix-suffix swap trick",
+      "In-place modification"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "quicksort-partition": {
+    "name": "Quicksort Partition",
+    "difficulty": "medium",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": true,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "In-place modification",
+      "Inward pointers"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "remove-sandwiched-negatives": {
+    "name": "Remove Sandwiched Negatives",
+    "difficulty": "easy",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [
+      "Seeker and writer"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "In-place modification"
+    ],
+    "book_chapter": null
+  },
+  "reverse-case-match": {
+    "name": "Reverse Case Match",
+    "difficulty": "medium",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: case analysis"
+    ],
+    "reusable_ideas": [
+      "Searching with inward pointers"
+    ],
+    "other_tools": [
+      "Invariants",
+      "Inward pointers"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "reverse-words-in-string": {
+    "name": "Reverse Words in String",
+    "difficulty": "medium",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [
+      "Seeker and writer"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Building strings with dynamic arrays"
+    ],
+    "other_tools": [
+      "Inward pointers",
+      "In-place modification",
+      "String fundamentals: join"
+    ],
+    "book_chapter": null
+  },
+  "same-binary-messages": {
+    "name": "Same Binary Messages",
+    "difficulty": "medium",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Parallel pointers",
+      "Inward pointers",
+      "Parsing",
+      "Using stacks for LIFO problems"
+    ],
+    "book_chapter": null
+  },
+  "shift-word-to-back": {
+    "name": "Shift Word to Back",
+    "difficulty": "medium",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [
+      "Seeker and writer"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [
+      "Pass indices; not copies",
+      "Impose a canonical order"
+    ],
+    "other_tools": [
+      "In-place modification",
+      "Parallel pointers"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "smaller-prefixes": {
+    "name": "Smaller Prefixes",
+    "difficulty": "easy",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Fast and slow pointers",
+      "Parallel pointers",
+      "Prefix-sum array"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "sort-valley-shaped-array": {
+    "name": "Sort Valley Shaped Array",
+    "difficulty": "medium",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Selecting best iteration order",
+      "Inward pointers",
+      "Parallel pointers"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "three-way-merge-without-duplicates": {
+    "name": "Three Way Merge Without Duplicates",
+    "difficulty": "medium",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "M-way merge"
+    ],
+    "other_tools": [
+      "Parallel pointers"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "two-sum": {
+    "name": "2-Sum",
+    "difficulty": "easy",
+    "topics": [
+      "two-pointers"
+    ],
+    "classic": true,
+    "recipes": [],
+    "boosters": [],
+    "reusable_ideas": [
+      "Searching with inward pointers"
+    ],
+    "other_tools": [
+      "Inward pointers",
+      "Parallel pointers",
+      "Sorting preprocessing"
+    ],
+    "book_chapter": "Two Pointers"
+  },
+  "edge-in-mst": {
+    "name": "Edge In MST",
+    "difficulty": "hard",
+    "topics": [
+      "union-find",
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [
+      "Union-find implementation with path compression and union by size"
+    ],
+    "boosters": [
+      "Decrease the difficulty: start with an easier version",
+      "Hunt for properties"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Minimum spanning tree",
+      "Greedy choice and counterexamples",
+      "Edge weights",
+      "Graph modeling",
+      "Sorting preprocessing"
+    ],
+    "book_chapter": "Union-Find"
+  },
+  "largest-connected-component-over-time": {
+    "name": "Largest Connected Component Over Time",
+    "difficulty": "medium",
+    "topics": [
+      "union-find",
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [
+      "Union-find implementation with path compression and union by size"
+    ],
+    "boosters": [],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Sorting preprocessing",
+      "Parallel pointers",
+      "Graph modeling"
+    ],
+    "book_chapter": "Union-Find"
+  },
+  "minimum-spanning-tree": {
+    "name": "Minimum Spanning Tree",
+    "difficulty": "medium",
+    "topics": [
+      "union-find",
+      "graphs"
+    ],
+    "classic": true,
+    "recipes": [
+      "Union-find implementation with path compression and union by size"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Minimum spanning tree",
+      "Sorting preprocessing",
+      "Greedy choice and counterexamples",
+      "Edge weights",
+      "Graph modeling",
+      "Cycle detection (graphs)"
+    ],
+    "book_chapter": "Union-Find"
+  },
+  "mst-reconstruction": {
+    "name": "MST Reconstruction",
+    "difficulty": "medium",
+    "topics": [
+      "union-find",
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [
+      "Union-find implementation with path compression and union by size"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Brute force optimization: preprocessing pattern"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements"
+    ],
+    "other_tools": [
+      "Minimum spanning tree",
+      "Custom sort",
+      "Graph modeling",
+      "Greedy choice and counterexamples",
+      "Sorting preprocessing"
+    ],
+    "book_chapter": "Union-Find"
+  },
+  "num-connected-components-over-time": {
+    "name": "Num Connected Components Over Time",
+    "difficulty": "medium",
+    "topics": [
+      "union-find",
+      "graphs"
+    ],
+    "classic": false,
+    "recipes": [
+      "Union-find implementation with path compression and union by size"
+    ],
+    "boosters": [
+      "Decrease the difficulty: break down the problem"
+    ],
+    "reusable_ideas": [],
+    "other_tools": [
+      "Sorting preprocessing",
+      "Parallel pointers",
+      "Graph modeling"
+    ],
+    "book_chapter": "Union-Find"
+  },
+  "num-groups-operation": {
+    "name": "Num Groups Operation",
+    "difficulty": "medium",
+    "topics": [
+      "union-find"
+    ],
+    "classic": false,
+    "recipes": [
+      "Union-find implementation with path compression and union by size"
+    ],
+    "boosters": [],
+    "reusable_ideas": [
+      "Piggybacking extra info"
+    ],
+    "other_tools": [
+      "Class implementation",
+      "Amortized analysis",
+      "Hash maps"
+    ],
+    "book_chapter": "Union-Find"
+  },
+  "presidential-election": {
+    "name": "Presidential Election",
+    "difficulty": "medium",
+    "topics": [
+      "heaps"
+    ],
+    "classic": false,
+    "recipes": [],
+    "boosters": [
+      "Decrease the difficulty: break down the problem",
+      "Hunt for properties",
+      "Hunt for properties: reframe the problem"
+    ],
+    "reusable_ideas": [
+      "Sort to track the smallest/largest elements"
+    ],
+    "other_tools": [
+      "Heap internals",
+      "Class implementation",
+      "Greedy choice and counterexamples",
+      "Custom sort"
+    ],
+    "book_chapter": "Union-Find"
+  }
+}
