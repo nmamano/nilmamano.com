@@ -57,6 +57,7 @@ interface Tool {
   otherProblems: string[];
   bookChapter: string | null;
   chapterNumber: number | null;
+  bookId: number | null;
   extraCredit: boolean;
 }
 
@@ -107,6 +108,7 @@ export default function Toolset() {
         otherProblems: toolData["Other Problems"] || [],
         bookChapter: toolData.book_chapter || null,
         chapterNumber: toolData.chapter_number || null,
+        bookId: toolData.book_id ?? null,
         extraCredit: toolData["Extra Credit"] || false,
       };
 
@@ -125,9 +127,21 @@ export default function Toolset() {
       toolMap.get(categoryName)!.tools.push(tool);
     }
 
-    // Sort tools within each category by name and check if all are extra credit
+    // Sort tools within each category by bookId, then by name, and check if all are extra credit
     for (const category of toolMap.values()) {
-      category.tools.sort((a, b) => a.name.localeCompare(b.name));
+      category.tools.sort((a, b) => {
+        // First sort by bookId (null values come last)
+        if (a.bookId === null && b.bookId === null) {
+          return a.name.localeCompare(b.name);
+        }
+        if (a.bookId === null) return 1;
+        if (b.bookId === null) return -1;
+        if (a.bookId !== b.bookId) {
+          return a.bookId - b.bookId;
+        }
+        // If bookIds are equal, sort by name
+        return a.name.localeCompare(b.name);
+      });
       // Check if all tools in this category are extra credit
       category.allExtraCredit =
         category.tools.length > 0 &&

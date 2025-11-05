@@ -89,7 +89,8 @@
     ],
     "Description": "Decomposing a hard problem into more manageable steps.",
     "book_chapter": "Problem-Solving Boosters",
-    "chapter_number": 24
+    "chapter_number": 24,
+    "book_id": 14
   },
   "hunt-for-properties": {
     "Name": "Hunt for properties",
@@ -165,7 +166,8 @@
     ],
     "Description": "A problem-solving approach where, instead of thinking of algorithms, we try to uncover new properties about the problem not mentioned in the statement, which could be useful in the design of algorithms.",
     "book_chapter": "Problem-Solving Boosters",
-    "chapter_number": 24
+    "chapter_number": 24,
+    "book_id": 3
   },
   "hunt-for-properties-case-analysis": {
     "Name": "Hunt for properties: case analysis",
@@ -196,7 +198,8 @@
     ],
     "Description": "Classifying the inputs into cases, and tackling each one separately.",
     "book_chapter": "Problem-Solving Boosters",
-    "chapter_number": 24
+    "chapter_number": 24,
+    "book_id": 5
   },
   "hunt-for-properties-diy-technique": {
     "Name": "Hunt for properties: DIY technique",
@@ -208,7 +211,8 @@
     ],
     "Description": "Taking a non-trivial example, solving it by hand without thinking about algorithms, and then trying to reverse engineer the shortcuts your brain followed.",
     "book_chapter": "Problem-Solving Boosters",
-    "chapter_number": 24
+    "chapter_number": 24,
+    "book_id": 4
   },
   "hunt-for-properties-reverse-engineer-the-output-pattern": {
     "Name": "Hunt for properties: reverse engineer the output pattern",
@@ -219,7 +223,8 @@
     ],
     "Description": "Computing the outputs for the few first inputs and trying to deduce the formula that yields those outputs.",
     "book_chapter": "Problem-Solving Boosters",
-    "chapter_number": 24
+    "chapter_number": 24,
+    "book_id": 6
   },
   "hunt-for-properties-sketch-a-diagram": {
     "Name": "Hunt for properties: sketch a diagram",
@@ -239,7 +244,8 @@
     ],
     "Description": "Visualizing the problem to uncover useful properties.",
     "book_chapter": "Problem-Solving Boosters",
-    "chapter_number": 24
+    "chapter_number": 24,
+    "book_id": 7
   },
   "line-sweep-algorithm": {
     "Name": "Line-sweep algorithm",
@@ -248,7 +254,8 @@
     "Other Problems": [],
     "Description": "Processing geometric elements in order by one coordinate.",
     "book_chapter": "Problem-Solving Boosters",
-    "chapter_number": 24
+    "chapter_number": 24,
+    "book_id": 9
   },
   "amortized-analysis": {
     "Name": "Amortized analysis",
@@ -268,7 +275,8 @@
     ],
     "Description": "An analysis technique for understanding the average time complexity of operations over a sequence.",
     "book_chapter": "Dynamic Arrays",
-    "chapter_number": 25
+    "chapter_number": 25,
+    "book_id": 1
   },
   "dynamic-array-internals": {
     "Name": "Dynamic array internals",
@@ -287,7 +295,8 @@
     ],
     "Description": "Understanding how dynamic arrays handle resizing internally; understanding amortized analysis.",
     "book_chapter": "Dynamic Arrays",
-    "chapter_number": 25
+    "chapter_number": 25,
+    "book_id": 2
   },
   "rolling-hash": {
     "Name": "Rolling hash",
@@ -298,7 +307,8 @@
     ],
     "Description": "A hash function that can be updated incrementally as a window slides through text.",
     "book_chapter": "String Manipulation",
-    "chapter_number": 26
+    "chapter_number": 26,
+    "book_id": 3
   },
   "string-fundamentals-join": {
     "Name": "String fundamentals: join",
@@ -315,7 +325,8 @@
     ],
     "Description": "Concatenating strings with a separator.",
     "book_chapter": "String Manipulation",
-    "chapter_number": 26
+    "chapter_number": 26,
+    "book_id": 2
   },
   "string-fundamentals-split": {
     "Name": "String fundamentals: split",
@@ -331,7 +342,8 @@
     ],
     "Description": "Splitting a string into parts based on a delimiter.",
     "book_chapter": "String Manipulation",
-    "chapter_number": 26
+    "chapter_number": 26,
+    "book_id": 1
   },
   "seeker-and-writer": {
     "Name": "Seeker and writer",
@@ -345,7 +357,8 @@
     ],
     "Description": "A two-pointer in-place modification technique where one pointer seeks elements to write and another writes them.",
     "book_chapter": "Two Pointers",
-    "chapter_number": 27
+    "chapter_number": 27,
+    "book_id": 14
   },
   "counting-sort": {
     "Name": "Counting sort",
@@ -356,7 +369,8 @@
     ],
     "Description": "A sorting algorithm for when the number of elements is larger than the range of values.",
     "book_chapter": "Two Pointers",
-    "chapter_number": 27
+    "chapter_number": 27,
+    "book_id": 16
   },
   "fast-and-slow-pointers": {
     "Name": "Fast and slow pointers",
@@ -368,7 +382,8 @@
     ],
     "Description": "Using two pointers moving at different speeds through an array.",
     "book_chapter": "Two Pointers",
-    "chapter_number": 27
+    "chapter_number": 27,
+    "book_id": 2
   },
   "in-place-modification": {
     "Name": "In-place modification",
@@ -395,7 +410,8 @@
     ],
     "Description": "Modifying arrays without using extra space.",
     "book_chapter": "Two Pointers",
-    "chapter_number": 27
+    "chapter_number": 27,
+    "book_id": 13
   },
   "intervals": {
     "Name": "Intervals",
@@ -408,7 +424,8 @@
     ],
     "Description": "Working with intervals.",
     "book_chapter": "Two Pointers",
-    "chapter_number": 27
+    "chapter_number": 27,
+    "book_id": 11
   },
   "invariants": {
     "Name": "Invariants",
@@ -431,7 +448,8 @@
     ],
     "Description": "Using invariants to guide tricky implementations.",
     "book_chapter": "Two Pointers",
-    "chapter_number": 27
+    "chapter_number": 27,
+    "book_id": 5
   },
   "inward-pointers": {
     "Name": "Inward pointers",
@@ -456,7 +474,8 @@
     ],
     "Description": "Two pointers starting at the ends and moving toward the center.",
     "book_chapter": "Two Pointers",
-    "chapter_number": 27
+    "chapter_number": 27,
+    "book_id": 4
   },
   "parallel-pointers": {
     "Name": "Parallel pointers",
@@ -487,7 +506,8 @@
     ],
     "Description": "Using two pointers through two separate arrays.",
     "book_chapter": "Two Pointers",
-    "chapter_number": 27
+    "chapter_number": 27,
+    "book_id": 3
   },
   "prefix-suffix-swap-trick": {
     "Name": "Prefix-suffix swap trick",
@@ -496,7 +516,8 @@
     "Other Problems": [],
     "Description": "A trick for swapping a prefix and a suffix in an array in place.",
     "book_chapter": "Two Pointers",
-    "chapter_number": 27
+    "chapter_number": 27,
+    "book_id": 17
   },
   "selecting-best-iteration-order": {
     "Name": "Selecting best iteration order",
@@ -508,7 +529,8 @@
     ],
     "Description": "Choosing the best order of iteration to simplify logic.",
     "book_chapter": "Two Pointers",
-    "chapter_number": 27
+    "chapter_number": 27,
+    "book_id": 9
   },
   "directions-array-to-visit-grid-neighbors": {
     "Name": "Directions array to visit grid neighbors",
@@ -530,7 +552,8 @@
     ],
     "Description": "Iterating through an array of direction vectors to visit neighbors in a grid.",
     "book_chapter": "Grids & Matrices",
-    "chapter_number": 28
+    "chapter_number": 28,
+    "book_id": 1
   },
   "handle-wraparounds-with-mod": {
     "Name": "Handle wraparounds with mod",
@@ -539,7 +562,8 @@
     "Other Problems": [],
     "Description": "Using modulo arithmetic to cycle through options.",
     "book_chapter": "Grids & Matrices",
-    "chapter_number": 28
+    "chapter_number": 28,
+    "book_id": 3
   },
   "basic-matrix-algebra": {
     "Name": "Basic matrix algebra",
@@ -552,7 +576,8 @@
     ],
     "Description": "Overview of matrix operations like rotation, transposition, and reflection.",
     "book_chapter": "Grids & Matrices",
-    "chapter_number": 28
+    "chapter_number": 28,
+    "book_id": 8
   },
   "double-counting": {
     "Name": "Double counting",
@@ -561,7 +586,8 @@
     "Other Problems": [],
     "Description": "Avoiding double counting when adding overlapping quantities.",
     "book_chapter": "Grids & Matrices",
-    "chapter_number": 28
+    "chapter_number": 28,
+    "book_id": 7
   },
   "reusing-subproblems": {
     "Name": "Reusing subproblems",
@@ -576,7 +602,8 @@
     ],
     "Description": "Identifying and reusing solutions to subproblems.",
     "book_chapter": "Grids & Matrices",
-    "chapter_number": 28
+    "chapter_number": 28,
+    "book_id": 6
   },
   "subgrid-traversals": {
     "Name": "Subgrid traversals",
@@ -594,7 +621,8 @@
     ],
     "Description": "Knowing how to iterate through arbitrary subgrids of a grid.",
     "book_chapter": "Grids & Matrices",
-    "chapter_number": 28
+    "chapter_number": 28,
+    "book_id": 5
   },
   "transition-point-recipe": {
     "Name": "Transition-point recipe",
@@ -623,7 +651,8 @@
     ],
     "Description": "A way of modeling any binary search as finding a point in the input range where a property transitions from false to true.",
     "book_chapter": "Binary Search",
-    "chapter_number": 29
+    "chapter_number": 29,
+    "book_id": 2
   },
   "exponential-search": {
     "Name": "Exponential search",
@@ -635,7 +664,8 @@
     ],
     "Description": "A way to find the upper bound for binary search when not explicitly given.",
     "book_chapter": "Binary Search",
-    "chapter_number": 29
+    "chapter_number": 29,
+    "book_id": 8
   },
   "grid-flattening": {
     "Name": "Grid flattening",
@@ -644,7 +674,8 @@
     "Other Problems": [],
     "Description": "An index mapping for visualizing 2D grids as 1D arrays.",
     "book_chapter": "Binary Search",
-    "chapter_number": 29
+    "chapter_number": 29,
+    "book_id": 7
   },
   "binary-search-for-first-and-last": {
     "Name": "Binary search for first and last",
@@ -661,7 +692,8 @@
     ],
     "Description": "Binary searching for the first and last matches in an array with duplicates.",
     "book_chapter": "Binary Search",
-    "chapter_number": 29
+    "chapter_number": 29,
+    "book_id": 5
   },
   "guess-and-check-technique": {
     "Name": "Guess-and-check technique",
@@ -684,7 +716,8 @@
     ],
     "Description": "A way of using binary search for optimization problems.",
     "book_chapter": "Binary Search",
-    "chapter_number": 29
+    "chapter_number": 29,
+    "book_id": 11
   },
   "min-max-optimization": {
     "Name": "Min-max optimization",
@@ -701,7 +734,8 @@
     ],
     "Description": "Dealing with problems about minimizing maximum values or vice versa.",
     "book_chapter": "Binary Search",
-    "chapter_number": 29
+    "chapter_number": 29,
+    "book_id": 9
   },
   "frequency-maps": {
     "Name": "Frequency maps",
@@ -734,7 +768,8 @@
     ],
     "Description": "Using hash maps to count occurrences.",
     "book_chapter": "Sets & Maps",
-    "chapter_number": 30
+    "chapter_number": 30,
+    "book_id": 2
   },
   "class-implementation": {
     "Name": "Class implementation",
@@ -770,7 +805,8 @@
     ],
     "Description": "Implementing a class with specified operations.",
     "book_chapter": "Sets & Maps",
-    "chapter_number": 30
+    "chapter_number": 30,
+    "book_id": 5
   },
   "hash-maps": {
     "Name": "Hash maps",
@@ -821,7 +857,8 @@
     ],
     "Description": "Storing key-value pairs with expected O(1) access time.",
     "book_chapter": "Sets & Maps",
-    "chapter_number": 30
+    "chapter_number": 30,
+    "book_id": 6
   },
   "hash-sets": {
     "Name": "Hash sets",
@@ -854,7 +891,8 @@
     ],
     "Description": "Storing unique elements with expected O(1) access time.",
     "book_chapter": "Sets & Maps",
-    "chapter_number": 30
+    "chapter_number": 30,
+    "book_id": 1
   },
   "hashing-lists": {
     "Name": "Hashing lists",
@@ -863,7 +901,8 @@
     "Other Problems": [],
     "Description": "How to use lists or mutable collections as hash table keys.",
     "book_chapter": "Sets & Maps",
-    "chapter_number": 30
+    "chapter_number": 30,
+    "book_id": 4
   },
   "sort-to-track-the-smallestlargest-elements": {
     "Name": "Sort to track the smallest/largest elements",
@@ -888,7 +927,8 @@
     ],
     "Description": "To visit array elements from largest to smallest or vice versa without modifying the array itself, we can sort the indices instead and iterate through them.",
     "book_chapter": "Sorting",
-    "chapter_number": 31
+    "chapter_number": 31,
+    "book_id": 3
   },
   "bucket-sort": {
     "Name": "Bucket sort",
@@ -897,7 +937,8 @@
     "Other Problems": [],
     "Description": "A sorting algorithm for sorting objects based on a field with a small range of values.",
     "book_chapter": "Sorting",
-    "chapter_number": 31
+    "chapter_number": 31,
+    "book_id": 5
   },
   "custom-sort": {
     "Name": "Custom sort",
@@ -923,7 +964,8 @@
     ],
     "Description": "Sorting based on our own rule rather than default order.",
     "book_chapter": "Sorting",
-    "chapter_number": 31
+    "chapter_number": 31,
+    "book_id": 1
   },
   "distance-formula": {
     "Name": "Distance formula",
@@ -935,7 +977,8 @@
     ],
     "Description": "Computing distances between points in the plane.",
     "book_chapter": "Sorting",
-    "chapter_number": 31
+    "chapter_number": 31,
+    "book_id": 2
   },
   "top-k-techniques-incl-quickselect": {
     "Name": "Top k techniques (incl. quickselect)",
@@ -956,7 +999,8 @@
     ],
     "Description": "Techniques for finding the top K elements, including sorting, heap-based, and quickselect approaches.",
     "book_chapter": "Sorting",
-    "chapter_number": 31
+    "chapter_number": 31,
+    "book_id": 6
   },
   "dangling-bracket-stack": {
     "Name": "Dangling bracket stack",
@@ -965,7 +1009,8 @@
     "Other Problems": [],
     "Description": "Using a stack to track unmatched opening brackets or parentheses.",
     "book_chapter": "Stacks & Queues",
-    "chapter_number": 32
+    "chapter_number": 32,
+    "book_id": 7
   },
   "piggybacking-extra-info": {
     "Name": "Piggybacking extra info",
@@ -979,7 +1024,8 @@
     ],
     "Description": "Storing additional fields alongside the primary data in a data structure to make future bookkeeping easier.",
     "book_chapter": "Stacks & Queues",
-    "chapter_number": 32
+    "chapter_number": 32,
+    "book_id": 2
   },
   "reframe-balanced-parentheses-as-plot-heights": {
     "Name": "Reframe balanced parentheses as plot heights",
@@ -990,7 +1036,8 @@
     ],
     "Description": "A visualization of balanced parentheses as a mountain range.",
     "book_chapter": "Stacks & Queues",
-    "chapter_number": 32
+    "chapter_number": 32,
+    "book_id": 6
   },
   "using-queues-for-fifo-problems": {
     "Name": "Using queues for FIFO problems",
@@ -1010,7 +1057,8 @@
     ],
     "Description": "Using queues for problems requiring FIFO (first-in-first-out) behavior.",
     "book_chapter": "Stacks & Queues",
-    "chapter_number": 32
+    "chapter_number": 32,
+    "book_id": 3
   },
   "using-stacks-for-lifo-problems": {
     "Name": "Using stacks for LIFO problems",
@@ -1033,7 +1081,8 @@
     ],
     "Description": "Using stacks for problems requiring LIFO (last-in-first-out) behavior.",
     "book_chapter": "Stacks & Queues",
-    "chapter_number": 32
+    "chapter_number": 32,
+    "book_id": 1
   },
   "applying-modulo-at-each-step": {
     "Name": "Applying modulo at each step",
@@ -1048,7 +1097,8 @@
     ],
     "Description": "Preventing integer overflow by applying modulo operations throughout computations.",
     "book_chapter": "Recursion",
-    "chapter_number": 33
+    "chapter_number": 33,
+    "book_id": 3
   },
   "divide-and-conquer": {
     "Name": "Divide and conquer",
@@ -1064,7 +1114,8 @@
     ],
     "Description": "Breaking down an input into smaller subproblems and combining the solutions.",
     "book_chapter": "Recursion",
-    "chapter_number": 33
+    "chapter_number": 33,
+    "book_id": 5
   },
   "recurrence-relations": {
     "Name": "Recurrence relations",
@@ -1083,7 +1134,8 @@
     ],
     "Description": "Finding a recursive formula for computing the solution.",
     "book_chapter": "Recursion",
-    "chapter_number": 33
+    "chapter_number": 33,
+    "book_id": 4
   },
   "recursive-data-structure": {
     "Name": "Recursive data structure",
@@ -1101,7 +1153,8 @@
     ],
     "Description": "Working with data structures that can contain fields of the same type as the data structure.",
     "book_chapter": "Recursion",
-    "chapter_number": 33
+    "chapter_number": 33,
+    "book_id": 2
   },
   "recursion": {
     "Name": "Recursion",
@@ -1146,7 +1199,8 @@
     ],
     "Description": "Knowing how to write code that calls itself.",
     "book_chapter": "Recursion",
-    "chapter_number": 33
+    "chapter_number": 33,
+    "book_id": 1
   },
   "dummy-node": {
     "Name": "Dummy node",
@@ -1160,7 +1214,8 @@
     ],
     "Description": "A dummy node added at the beginning of a linked list to simplify the empty-list edge case.",
     "book_chapter": "Linked Lists",
-    "chapter_number": 34
+    "chapter_number": 34,
+    "book_id": 5
   },
   "cycle-detection-linked-lists": {
     "Name": "Cycle detection (linked lists)",
@@ -1172,7 +1227,8 @@
     ],
     "Description": "Detecting cycles in linked lists using fast and slow pointers.",
     "book_chapter": "Linked Lists",
-    "chapter_number": 34
+    "chapter_number": 34,
+    "book_id": 8
   },
   "doubly-linked-list": {
     "Name": "Doubly-linked list",
@@ -1183,7 +1239,8 @@
     ],
     "Description": "A linked list where each node points to next and previous nodes.",
     "book_chapter": "Linked Lists",
-    "chapter_number": 34
+    "chapter_number": 34,
+    "book_id": 9
   },
   "fast-and-slow-pointers-linked-lists": {
     "Name": "Fast and slow pointers (linked lists)",
@@ -1197,7 +1254,8 @@
     ],
     "Description": "Using two pointers moving at different speeds through a linked list.",
     "book_chapter": "Linked Lists",
-    "chapter_number": 34
+    "chapter_number": 34,
+    "book_id": 10
   },
   "in-place-modification-linked-lists": {
     "Name": "In-place modification (linked lists)",
@@ -1214,7 +1272,8 @@
     ],
     "Description": "Modifying linked lists by rearranging pointers.",
     "book_chapter": "Linked Lists",
-    "chapter_number": 34
+    "chapter_number": 34,
+    "book_id": 13
   },
   "linked-list-internals": {
     "Name": "Linked list internals",
@@ -1240,7 +1299,8 @@
     ],
     "Description": "Implementing linked lists, working with pointers.",
     "book_chapter": "Linked Lists",
-    "chapter_number": 34
+    "chapter_number": 34,
+    "book_id": 1
   },
   "parallel-pointers-linked-lists": {
     "Name": "Parallel pointers (linked lists)",
@@ -1259,7 +1319,8 @@
     ],
     "Description": "Using two pointers through two separate linked lists.",
     "book_chapter": "Linked Lists",
-    "chapter_number": 34
+    "chapter_number": 34,
+    "book_id": 12
   },
   "queue-internals": {
     "Name": "Queue internals",
@@ -1274,7 +1335,8 @@
     ],
     "Description": "Understanding how to implement a queue.",
     "book_chapter": "Linked Lists",
-    "chapter_number": 34
+    "chapter_number": 34,
+    "book_id": 4
   },
   "node-depth-queue-recipe-for-level-order-traversal": {
     "Name": "Node-depth queue recipe for level-order traversal",
@@ -1287,7 +1349,8 @@
     ],
     "Description": "A recipe to visit all nodes in a tree by layers while tracking their depth.",
     "book_chapter": "Trees",
-    "chapter_number": 35
+    "chapter_number": 35,
+    "book_id": 9
   },
   "finding-the-node-in-the-path-with-minimum-depth": {
     "Name": "Finding the node in the path with minimum depth",
@@ -1296,7 +1359,8 @@
     "Other Problems": [],
     "Description": "Leveraging the fact that a path in a rooted tree has a single node with minimum depth.",
     "book_chapter": "Trees",
-    "chapter_number": 35
+    "chapter_number": 35,
+    "book_id": 3
   },
   "bst-inorder-traversal": {
     "Name": "BST inorder traversal",
@@ -1309,7 +1373,8 @@
     ],
     "Description": "Leveraging that an in-order traversal in a binary search tree visits nodes in sorted order.",
     "book_chapter": "Trees",
-    "chapter_number": 35
+    "chapter_number": 35,
+    "book_id": 16
   },
   "bst-search": {
     "Name": "BST search",
@@ -1320,7 +1385,8 @@
     ],
     "Description": "Efficient searching in a binary search tree.",
     "book_chapter": "Trees",
-    "chapter_number": 35
+    "chapter_number": 35,
+    "book_id": 12
   },
   "parsing": {
     "Name": "Parsing",
@@ -1341,7 +1407,8 @@
     ],
     "Description": "Parsing text into syntax trees and evaluating syntax trees.",
     "book_chapter": "Trees",
-    "chapter_number": 35
+    "chapter_number": 35,
+    "book_id": 7
   },
   "passing-info-in-trees": {
     "Name": "Passing info in trees",
@@ -1360,7 +1427,8 @@
     ],
     "Description": "In a tree DFS, deciding which information needs to flow down the tree, up the tree, or bypass the recursive flow.",
     "book_chapter": "Trees",
-    "chapter_number": 35
+    "chapter_number": 35,
+    "book_id": 1
   },
   "preinpost-order-traversals": {
     "Name": "Pre/in/post-order traversals",
@@ -1383,7 +1451,8 @@
     ],
     "Description": "A classification of DFS traversals in trees based on whether each node is visited before, in between, or after children.",
     "book_chapter": "Trees",
-    "chapter_number": 35
+    "chapter_number": 35,
+    "book_id": 2
   },
   "connected-component-loop": {
     "Name": "Connected-component loop",
@@ -1397,7 +1466,8 @@
     ],
     "Description": "Launching a BFS or DFS for each connected component, all sharing a visited set.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 5
   },
   "multisource-bfs": {
     "Name": "Multisource BFS",
@@ -1409,7 +1479,8 @@
     ],
     "Description": "A variant of BFS that starts from multiple source nodes simultaneously.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 12
   },
   "union-find-implementation-with-path-compression-and-union-by-size": {
     "Name": "Union-find implementation with path compression and union by size",
@@ -1425,7 +1496,8 @@
     ],
     "Description": "An efficient, standalone union-find implementation.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 9
   },
   "edge-list-to-adjacency-list": {
     "Name": "Edge list to adjacency list",
@@ -1447,7 +1519,8 @@
     ],
     "Description": "Converting a list of edges into an adjacency list; necessary for most graph problems.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 16
   },
   "path-reconstruction": {
     "Name": "Path reconstruction",
@@ -1462,7 +1535,8 @@
     ],
     "Description": "How to reconstruct the actual path through a graph rather than just finding the path length.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 10
   },
   "adjacency-list-properties": {
     "Name": "Adjacency list properties",
@@ -1485,7 +1559,8 @@
     ],
     "Description": "Understanding and leveraging the properties of adjacency list graph representations.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 1
   },
   "cycle-detection-graphs": {
     "Name": "Cycle detection (graphs)",
@@ -1498,7 +1573,8 @@
     ],
     "Description": "Detecting if a graph is acyclic using DFS or BFS.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 3
   },
   "dfsbfs-tree": {
     "Name": "DFS/BFS tree",
@@ -1535,7 +1611,8 @@
     ],
     "Description": "Using the tree defined by DFS or BFS.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 2
   },
   "distance-computation": {
     "Name": "Distance computation",
@@ -1557,7 +1634,8 @@
     ],
     "Description": "Computing distances between nodes in a graph.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 11
   },
   "edge-weights": {
     "Name": "Edge weights",
@@ -1573,7 +1651,8 @@
     ],
     "Description": "Working with weighted edges in graphs.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 8
   },
   "graph-modeling": {
     "Name": "Graph modeling",
@@ -1613,7 +1692,8 @@
     ],
     "Description": "Reframing problems where the input is not a graph as graph problems.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 17
   },
   "grid-graphs": {
     "Name": "Grid graphs",
@@ -1639,7 +1719,8 @@
     ],
     "Description": "Working with graphs where the nodes are grid cells and adjacent cells are neighbors.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 13
   },
   "node-weights": {
     "Name": "Node weights",
@@ -1650,7 +1731,8 @@
     ],
     "Description": "Working with weighted nodes in graphs.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 7
   },
   "strong-connectivity-check": {
     "Name": "Strong connectivity check",
@@ -1659,7 +1741,8 @@
     "Other Problems": [],
     "Description": "Determining if all nodes in a directed graph are mutually reachable.",
     "book_chapter": "Graphs",
-    "chapter_number": 36
+    "chapter_number": 36,
+    "book_id": 6
   },
   "heap-size-restriction": {
     "Name": "Heap size restriction",
@@ -1676,7 +1759,8 @@
     ],
     "Description": "Using a min-heap of max size k to track the largest k elements, or vice versa.",
     "book_chapter": "Heaps",
-    "chapter_number": 37
+    "chapter_number": 37,
+    "book_id": 2
   },
   "m-way-merge": {
     "Name": "M-way merge",
@@ -1693,7 +1777,8 @@
     ],
     "Description": "Merging M sorted lists efficiently using a heap.",
     "book_chapter": "Heaps",
-    "chapter_number": 37
+    "chapter_number": 37,
+    "book_id": 6
   },
   "two-heap-median-tracking": {
     "Name": "Two-heap median tracking",
@@ -1702,7 +1787,8 @@
     "Other Problems": [],
     "Description": "Using two heaps to efficiently track the median of a stream of numbers.",
     "book_chapter": "Heaps",
-    "chapter_number": 37
+    "chapter_number": 37,
+    "book_id": 5
   },
   "dynamic-priorities-in-heaps": {
     "Name": "Dynamic priorities in heaps",
@@ -1720,7 +1806,8 @@
     ],
     "Description": "Dealing with priority changes for elements already in the heap, often via lazy deletion.",
     "book_chapter": "Heaps",
-    "chapter_number": 37
+    "chapter_number": 37,
+    "book_id": 4
   },
   "heap-internals": {
     "Name": "Heap internals",
@@ -1743,7 +1830,8 @@
     ],
     "Description": "Understanding heaps, including the binary tree visualization, the heap property, the array-based representation, bubbling up and down, and linear-time heapify.",
     "book_chapter": "Heaps",
-    "chapter_number": 37
+    "chapter_number": 37,
+    "book_id": 1
   },
   "working-with-primes": {
     "Name": "Working with primes",
@@ -1755,7 +1843,8 @@
     ],
     "Description": "Using properties of prime numbers.",
     "book_chapter": "Heaps",
-    "chapter_number": 37
+    "chapter_number": 37,
+    "book_id": 8
   },
   "fixed-length-window-recipe": {
     "Name": "Fixed-length window recipe",
@@ -1772,7 +1861,8 @@
     ],
     "Description": "A recipe for sliding window problems where the window length is fixed.",
     "book_chapter": "Sliding Windows",
-    "chapter_number": 38
+    "chapter_number": 38,
+    "book_id": 1
   },
   "maximum-window-recipe": {
     "Name": "Maximum window recipe",
@@ -1796,7 +1886,8 @@
     ],
     "Description": "A sliding window recipe for maximization problems.",
     "book_chapter": "Sliding Windows",
-    "chapter_number": 38
+    "chapter_number": 38,
+    "book_id": 8
   },
   "minimum-window-recipe": {
     "Name": "Minimum window recipe",
@@ -1809,7 +1900,8 @@
     ],
     "Description": "A sliding window recipe for minimization problems.",
     "book_chapter": "Sliding Windows",
-    "chapter_number": 38
+    "chapter_number": 38,
+    "book_id": 14
   },
   "resetting-window-recipe": {
     "Name": "Resetting window recipe",
@@ -1823,7 +1915,8 @@
     ],
     "Description": "A sliding window recipe for maximization problems where a single element can make the entire window invalid.",
     "book_chapter": "Sliding Windows",
-    "chapter_number": 38
+    "chapter_number": 38,
+    "book_id": 5
   },
   "at-most-k-subarray-counting": {
     "Name": "At-most-k subarray counting",
@@ -1845,7 +1938,8 @@
     ],
     "Description": "Counting subarrays satisfying at-most-k conditions with a sliding window.",
     "book_chapter": "Sliding Windows",
-    "chapter_number": 38
+    "chapter_number": 38,
+    "book_id": 18
   },
   "number-of-subarrays-formula": {
     "Name": "Number of subarrays formula",
@@ -1860,7 +1954,8 @@
     ],
     "Description": "Using the formula for the number of subarrays in an array.",
     "book_chapter": "Sliding Windows",
-    "chapter_number": 38
+    "chapter_number": 38,
+    "book_id": 21
   },
   "reframe-choices-as-optimization": {
     "Name": "Reframe choices as optimization",
@@ -1876,7 +1971,8 @@
     ],
     "Description": "Reframing problems about making choices into optimization problems.",
     "book_chapter": "Sliding Windows",
-    "chapter_number": 38
+    "chapter_number": 38,
+    "book_id": 9
   },
   "choosing-better-decision-trees": {
     "Name": "Choosing better decision trees",
@@ -1887,7 +1983,8 @@
     ],
     "Description": "A backtracking design technique where we look for the smallest decision tree that models the problem.",
     "book_chapter": "Backtracking",
-    "chapter_number": 39
+    "chapter_number": 39,
+    "book_id": 9
   },
   "knapsack-type-problems": {
     "Name": "Knapsack-type problems",
@@ -1896,7 +1993,8 @@
     "Other Problems": [],
     "Description": "Solving knapsack-style problems with backtracking.",
     "book_chapter": "Backtracking",
-    "chapter_number": 39
+    "chapter_number": 39,
+    "book_id": 7
   },
   "listing-permutations": {
     "Name": "Listing permutations",
@@ -1907,7 +2005,8 @@
     ],
     "Description": "Using backtracking to list all orderings of a collection.",
     "book_chapter": "Backtracking",
-    "chapter_number": 39
+    "chapter_number": 39,
+    "book_id": 3
   },
   "listing-subsets": {
     "Name": "Listing subsets",
@@ -1918,7 +2017,8 @@
     ],
     "Description": "Using backtracking to list all subsets of a collection.",
     "book_chapter": "Backtracking",
-    "chapter_number": 39
+    "chapter_number": 39,
+    "book_id": 2
   },
   "solution-reconstruction": {
     "Name": "Solution reconstruction",
@@ -1931,7 +2031,8 @@
     ],
     "Description": "A DP extension for when we want to find the actual solution rather than just its value.",
     "book_chapter": "Dynamic Programming",
-    "chapter_number": 40
+    "chapter_number": 40,
+    "book_id": 8
   },
   "dp-with-range-of-choices": {
     "Name": "DP with range of choices",
@@ -1947,7 +2048,8 @@
     ],
     "Description": "DP where the number of options is not constant.",
     "book_chapter": "Dynamic Programming",
-    "chapter_number": 40
+    "chapter_number": 40,
+    "book_id": 2
   },
   "memoizationtabulation": {
     "Name": "Memoization/tabulation",
@@ -1977,7 +2079,8 @@
     ],
     "Description": "The two main approaches to dynamic programming (they're usually interchangeable, so you only need one).",
     "book_chapter": "Dynamic Programming",
-    "chapter_number": 40
+    "chapter_number": 40,
+    "book_id": 1
   },
   "greedy-choice-and-counterexamples": {
     "Name": "Greedy choice and counterexamples",
@@ -2000,7 +2103,8 @@
     ],
     "Description": "Developing a greedy algorithm by brainstorming for greedy choices, hunting for counterexamples, giving an intuitive explanation for why it works if you can't find any, and finally implementing it.",
     "book_chapter": "Greedy Algorithms",
-    "chapter_number": 41
+    "chapter_number": 41,
+    "book_id": 1
   },
   "dag-problem-recipe": {
     "Name": "DAG problem recipe",
@@ -2016,7 +2120,8 @@
     ],
     "Description": "Processing DAG nodes in a topological ordering while computing things like min distance, max distance, or path count.",
     "book_chapter": "Topological Sort",
-    "chapter_number": 42
+    "chapter_number": 42,
+    "book_id": 1
   },
   "range-sum-queries": {
     "Name": "Range sum queries",
@@ -2033,7 +2138,8 @@
     ],
     "Description": "Precomputing prefix sums to be able to quickly compute subarray sums.",
     "book_chapter": "Prefix Sums",
-    "chapter_number": 43
+    "chapter_number": 43,
+    "book_id": 2
   },
   "custom-prefix-sum-array": {
     "Name": "Custom prefix-sum array",
@@ -2048,7 +2154,8 @@
     ],
     "Description": "Precomputing a prefix-sum-style array where we incrementally compute something about each prefix other than the sum; it could also be about suffixes instead of prefixes.",
     "book_chapter": "Prefix Sums",
-    "chapter_number": 43
+    "chapter_number": 43,
+    "book_id": 3
   },
   "difference-array": {
     "Name": "Difference array",
@@ -2060,7 +2167,8 @@
     ],
     "Description": "Implementing subarray updates with a difference array.",
     "book_chapter": "Prefix Sums",
-    "chapter_number": 43
+    "chapter_number": 43,
+    "book_id": 8
   },
   "finding-subarrays-with-sum-k": {
     "Name": "Finding subarrays with sum k",
@@ -2072,7 +2180,8 @@
     ],
     "Description": "A prefix-sum technique for finding or counting subarrays (including negative values) that sum to a target value.",
     "book_chapter": "Prefix Sums",
-    "chapter_number": 43
+    "chapter_number": 43,
+    "book_id": 6
   },
   "prefix-sum-array": {
     "Name": "Prefix-sum array",
@@ -2092,7 +2201,8 @@
     ],
     "Description": "Precomputing an array with all the prefix sums of the input array; its most common application is to compute subarray sums.",
     "book_chapter": "Prefix Sums",
-    "chapter_number": 43
+    "chapter_number": 43,
+    "book_id": 1
   },
   "hash-map-internals": {
     "Name": "Hash map internals",
@@ -2105,7 +2215,8 @@
     ],
     "Description": "Understanding hash maps, including hashing, collision handling, dynamic resizing, and dealing with probabilities in big O analysis.",
     "book_chapter": "Set & Map Implementations",
-    "chapter_number": 44
+    "chapter_number": 44,
+    "book_id": 4
   },
   "hash-set-internals": {
     "Name": "Hash set internals",
@@ -2120,7 +2231,8 @@
     ],
     "Description": "Understanding hash sets, including hashing, collision handling, dynamic resizing, and dealing with probabilities in big O analysis.",
     "book_chapter": "Set & Map Implementations",
-    "chapter_number": 44
+    "chapter_number": 44,
+    "book_id": 1
   },
   "next-greater-element": {
     "Name": "Next greater element",
@@ -2133,7 +2245,8 @@
     ],
     "Description": "Using a monotonic stack to find the next element greater than each element in an array.",
     "book_chapter": "Monotonic Stacks & Queues",
-    "chapter_number": 45
+    "chapter_number": 45,
+    "book_id": 5
   },
   "max-queue": {
     "Name": "Max queue",
@@ -2148,7 +2261,8 @@
     ],
     "Description": "A data structure that supports queue operations and a max operation.",
     "book_chapter": "Monotonic Stacks & Queues",
-    "chapter_number": 45
+    "chapter_number": 45,
+    "book_id": 1
   },
   "minimum-spanning-tree": {
     "Name": "Minimum spanning tree",
@@ -2160,7 +2274,8 @@
     ],
     "Description": "Knowing the MST definition and how to compute it.",
     "book_chapter": "Union-Find",
-    "chapter_number": 46
+    "chapter_number": 46,
+    "book_id": 1
   },
   "backtracking": {
     "Name": "Backtracking",
@@ -2182,7 +2297,8 @@
     ],
     "Description": "Modeling a problem as a decision tree and traversing the implicit tree with DFS.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "graph-bfs": {
     "Name": "Graph BFS",
@@ -2191,7 +2307,8 @@
     "Other Problems": [],
     "Description": "A BFS recipe for graphs; it works for both connectivity-based and distance-based problems.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "graph-dfs": {
     "Name": "Graph DFS",
@@ -2200,7 +2317,8 @@
     "Other Problems": [],
     "Description": "A DFS recipe for graphs; it works for connectivity-based problems but not distance-based problems.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "grid-bfs": {
     "Name": "Grid BFS",
@@ -2213,7 +2331,8 @@
     ],
     "Description": "A BFS recipe for grid graphs; it works for both connectivity-based and distance-based problems.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "grid-dfs": {
     "Name": "Grid DFS",
@@ -2224,7 +2343,8 @@
     ],
     "Description": "A DFS recipe for grid graphs; it works for connectivity-based problems but not distance-based problems.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "memoization": {
     "Name": "Memoization",
@@ -2245,7 +2365,8 @@
     ],
     "Description": "One of the two main approaches for DP; it involves coming up with a recurrence, turning it into recursive code, and then adding a memo map to avoid recomputing subproblems.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "peel-off-algorithm": {
     "Name": "Peel-off algorithm",
@@ -2263,7 +2384,8 @@
     ],
     "Description": "Finding a topological order by peeling off nodes with in-degree zero; also known as Kahn's algorithm.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "building-strings-with-dynamic-arrays": {
     "Name": "Building strings with dynamic arrays",
@@ -2287,7 +2409,8 @@
     ],
     "Description": "Constructing strings by appending characters to a dynamic array; important for languages with immutable strings.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "computing-averages": {
     "Name": "Computing averages",
@@ -2302,7 +2425,8 @@
     ],
     "Description": "Computing averages by tracking the sum and count separately, and dividing only at the end.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "extracting-and-adding-digits": {
     "Name": "Extracting and adding digits",
@@ -2314,7 +2438,8 @@
     ],
     "Description": "Splitting a number into its individual digits or combining it back together.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "factor-out-validation-to-a-helper-function": {
     "Name": "Factor out validation to a helper function",
@@ -2339,7 +2464,8 @@
     ],
     "Description": "Simplifying the main logic by moving complex checks into helper functions.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "impose-a-canonical-order": {
     "Name": "Impose a canonical order",
@@ -2363,7 +2489,8 @@
     ],
     "Description": "A way to compare unsorted collections by sorting their elements first.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "length-26-array": {
     "Name": "Length-26 array",
@@ -2374,7 +2501,8 @@
     ],
     "Description": "An efficient hash map alternative for when the set of keys consists of lowercase English letters.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "leverage-the-input-range": {
     "Name": "Leverage the input range",
@@ -2392,7 +2520,8 @@
     ],
     "Description": "Using specialized sorts such as counting sort or bucket sort when the input range is small relative to the number of elements.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "linked-list-reversal-break-down": {
     "Name": "Linked list reversal break down",
@@ -2405,7 +2534,8 @@
     ],
     "Description": "A 4-step approach for advanced linked-list reversal problems.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "modify-recurse-undo": {
     "Name": "Modify -> recurse -> undo",
@@ -2424,7 +2554,8 @@
     ],
     "Description": "A backtracking optimization where we reuse state across partial solutions in the decision tree; the key is to do the modifications right before recursing and undoing them right after.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "pass-indices-not-copies": {
     "Name": "Pass indices; not copies",
@@ -2450,7 +2581,8 @@
     ],
     "Description": "An optimization where we need to pass subarrays to functions, and instead of passing a copy of the subarray, we pass indices to the underlying array.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "searching-with-inward-pointers": {
     "Name": "Searching with inward pointers",
@@ -2469,7 +2601,8 @@
     ],
     "Description": "A searching technique that can be used when we can discard the smallest element based on the largest one or vice versa.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "transform-exactly-kat-least-k-counting-to-at-most-k-counting": {
     "Name": "Transform exactly-k/at-least-k counting to at-most-k counting",
@@ -2488,7 +2621,8 @@
     ],
     "Description": "A way to reduce Exactly-K and At-Least-K subarray counting problems into the At-Most-K version, so we don't need to know all three versions.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "transform-the-input": {
     "Name": "Transform the input",
@@ -2508,7 +2642,8 @@
     ],
     "Description": "If it makes your life easier without increasing the big O complexity, put the input in a more convenient format in a preprocessing step.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "articulate-your-blocker": {
     "Name": "Articulate your blocker",
@@ -2520,7 +2655,8 @@
     ],
     "Description": "Asking for help by identifying and clearly stating the obstacle; this is the best way to get help from the interviewer.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "cycle-through-the-catalog": {
     "Name": "Cycle through the catalog",
@@ -2533,7 +2669,8 @@
     ],
     "Description": "Spend a few instants considering each main DS&A technique to see if it could be used.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "brute-force-optimization-data-structure-pattern": {
     "Name": "Brute force optimization: data structure pattern",
@@ -2559,7 +2696,8 @@
     ],
     "Description": "Identifying the key operations in the bottleneck and then asking which data structure is designed to speed up those operations.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "brute-force-optimization-preprocessing-pattern": {
     "Name": "Brute force optimization: preprocessing pattern",
@@ -2584,7 +2722,8 @@
     ],
     "Description": "Identifying what information is needed in the bottleneck and precomputing it in a preprocessing step.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "hunt-for-properties-reframe-the-problem": {
     "Name": "Hunt for properties: reframe the problem",
@@ -2633,7 +2772,8 @@
     ],
     "Description": "Reformulating the problem in an equivalent way where the right approach is more apparent.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "brute-force-optimization-skip-unnecessary-work-pattern": {
     "Name": "Brute force optimization: skip unnecessary work pattern",
@@ -2651,7 +2791,8 @@
     ],
     "Description": "Identifying and avoiding redundant work.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "decrease-the-difficulty-start-with-an-easier-version": {
     "Name": "Decrease the difficulty: start with an easier version",
@@ -2693,7 +2834,8 @@
     ],
     "Description": "Solving a simpler version first to get the ball rolling, and then trying to adapt the approach to the original problem.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "2d-dp": {
     "Name": "2D DP",
@@ -2711,7 +2853,8 @@
     ],
     "Description": "DP where the subproblems are identified by two (or more) parameters.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "closed-formula": {
     "Name": "Closed formula",
@@ -2724,7 +2867,8 @@
     ],
     "Description": "Coming up with a formula that directly computes the result.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "preventing-cycles-in-backtracking": {
     "Name": "Preventing cycles in backtracking",
@@ -2739,7 +2883,8 @@
     ],
     "Description": "Avoiding infinite loops in backtracking by tracking visited positions.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   },
   "sorting-preprocessing": {
     "Name": "Sorting preprocessing",
@@ -2774,6 +2919,7 @@
     ],
     "Description": "Sorting at the beginning to simplify the rest of the code or enable optimizations.",
     "book_chapter": null,
-    "chapter_number": null
+    "chapter_number": null,
+    "book_id": null
   }
 }

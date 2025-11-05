@@ -21,7 +21,8 @@
       "Choosing better decision trees",
       "Hash maps"
     ],
-    "book_chapter": "Backtracking"
+    "book_chapter": "Backtracking",
+    "book_id": 9
   },
   "escape-with-all-clues": {
     "name": "Escape With All Clues",
@@ -49,7 +50,8 @@
       "Grid graphs",
       "Graph modeling"
     ],
-    "book_chapter": "Backtracking"
+    "book_chapter": "Backtracking",
+    "book_id": 11
   },
   "four-directional-max-sum-path": {
     "name": "4-Directional Max-Sum Path",
@@ -74,7 +76,8 @@
       "DFS/BFS tree",
       "Recursion"
     ],
-    "book_chapter": "Backtracking"
+    "book_chapter": "Backtracking",
+    "book_id": 10
   },
   "four-directional-max-sum-path-reconstruction": {
     "name": "4-Directional Max-Sum Path Reconstruction",
@@ -101,7 +104,8 @@
       "Recursion",
       "Graph modeling"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "ikea-shopping": {
     "name": "IKEA Shopping",
@@ -126,7 +130,8 @@
       "Recursion",
       "Choosing better decision trees"
     ],
-    "book_chapter": "Backtracking"
+    "book_chapter": "Backtracking",
+    "book_id": 7
   },
   "jumping-numbers": {
     "name": "Jumping Numbers",
@@ -147,7 +152,8 @@
     "other_tools": [
       "Recursion"
     ],
-    "book_chapter": "Backtracking"
+    "book_chapter": "Backtracking",
+    "book_id": 6
   },
   "max-sum-path": {
     "name": "Max-Sum Path",
@@ -175,7 +181,8 @@
       "Recursion",
       "DFS/BFS tree"
     ],
-    "book_chapter": "Backtracking"
+    "book_chapter": "Backtracking",
+    "book_id": 1
   },
   "permutation-enumeration": {
     "name": "Permutation Enumeration",
@@ -201,7 +208,8 @@
       "In-place modification",
       "Recursion"
     ],
-    "book_chapter": "Backtracking"
+    "book_chapter": "Backtracking",
+    "book_id": 3
   },
   "subset-enumeration": {
     "name": "Subset Enumeration",
@@ -223,7 +231,8 @@
       "Listing subsets",
       "Recursion"
     ],
-    "book_chapter": "Backtracking"
+    "book_chapter": "Backtracking",
+    "book_id": 2
   },
   "thesaurusly": {
     "name": "Thesaurusly",
@@ -247,7 +256,8 @@
       "Hash maps",
       "String fundamentals: split"
     ],
-    "book_chapter": "Backtracking"
+    "book_chapter": "Backtracking",
+    "book_id": 5
   },
   "to-be-or-not-to-be": {
     "name": "To Be or Not to Be",
@@ -274,7 +284,8 @@
       "String fundamentals: join",
       "Recursion"
     ],
-    "book_chapter": "Backtracking"
+    "book_chapter": "Backtracking",
+    "book_id": 4
   },
   "white-hat-hacker": {
     "name": "White Hat Hacker",
@@ -299,7 +310,8 @@
       "Preventing cycles in backtracking",
       "Recursion"
     ],
-    "book_chapter": "Backtracking"
+    "book_chapter": "Backtracking",
+    "book_id": 8
   },
   "cctv-footage": {
     "name": "CCTV Footage",
@@ -320,7 +332,8 @@
       "Binary search for first and last",
       "Guess-and-check technique"
     ],
-    "book_chapter": "Binary Search"
+    "book_chapter": "Binary Search",
+    "book_id": 2
   },
   "first-false-in-descending-boolean-array": {
     "name": "First False In Descending Boolean Array",
@@ -338,7 +351,8 @@
       "Binary search for first and last",
       "Inward pointers"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "first-non-negative-number": {
     "name": "First Non-Negative Number",
@@ -359,7 +373,8 @@
       "Guess-and-check technique",
       "Invariants"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "first-true-in-ascending-boolean-array": {
     "name": "First True In Ascending Boolean Array",
@@ -378,7 +393,8 @@
     "other_tools": [
       "Binary search for first and last"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "last-true-in-descending-boolean-array": {
     "name": "Last True In Descending Boolean Array",
@@ -397,7 +413,8 @@
     "other_tools": [
       "Binary search for first and last"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "min-pages-per-day": {
     "name": "Min Pages Per Day",
@@ -418,7 +435,8 @@
       "Guess-and-check technique",
       "Min-max optimization"
     ],
-    "book_chapter": "Binary Search"
+    "book_chapter": "Binary Search",
+    "book_id": 11
   },
   "min-subarray-sum-split": {
     "name": "Min Subarray Sum Split",
@@ -443,7 +461,8 @@
       "2D DP",
       "DP with range of choices"
     ],
-    "book_chapter": "Binary Search"
+    "book_chapter": "Binary Search",
+    "book_id": 9
   },
   "monkey-eating-bananas": {
     "name": "Monkey Eating Bananas",
@@ -464,7 +483,8 @@
       "Min-max optimization",
       "Invariants"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "race-overtaking": {
     "name": "Race Overtaking",
@@ -481,7 +501,8 @@
     ],
     "reusable_ideas": [],
     "other_tools": [],
-    "book_chapter": "Binary Search"
+    "book_chapter": "Binary Search",
+    "book_id": 6
   },
   "search-in-huge-array": {
     "name": "Search in Huge Array",
@@ -502,7 +523,8 @@
     "other_tools": [
       "Guess-and-check technique"
     ],
-    "book_chapter": "Binary Search"
+    "book_chapter": "Binary Search",
+    "book_id": 8
   },
   "search-in-sorted-array": {
     "name": "Search in Sorted Array",
@@ -522,7 +544,8 @@
       "Invariants",
       "Divide and conquer"
     ],
-    "book_chapter": "Binary Search"
+    "book_chapter": "Binary Search",
+    "book_id": 1
   },
   "search-in-sorted-grid": {
     "name": "Search in Sorted Grid",
@@ -543,7 +566,8 @@
     "other_tools": [
       "Guess-and-check technique"
     ],
-    "book_chapter": "Binary Search"
+    "book_chapter": "Binary Search",
+    "book_id": 7
   },
   "target-count-divisible-by-k": {
     "name": "Target Count Divisible by K",
@@ -564,7 +588,8 @@
     "other_tools": [
       "Binary search for first and last"
     ],
-    "book_chapter": "Binary Search"
+    "book_chapter": "Binary Search",
+    "book_id": 5
   },
   "tide-aerial-view": {
     "name": "Tide Aerial View",
@@ -583,7 +608,8 @@
       "Binary search for first and last",
       "Grid graphs"
     ],
-    "book_chapter": "Binary Search"
+    "book_chapter": "Binary Search",
+    "book_id": 12
   },
   "tunnel-depth": {
     "name": "Tunnel Depth",
@@ -609,7 +635,8 @@
       "Graph modeling",
       "Recursion"
     ],
-    "book_chapter": "Boundary Thinking"
+    "book_chapter": "Boundary Thinking",
+    "book_id": 1
   },
   "two-array-two-sum": {
     "name": "2-Array 2-Sum",
@@ -627,7 +654,8 @@
     ],
     "reusable_ideas": [],
     "other_tools": [],
-    "book_chapter": "Binary Search"
+    "book_chapter": "Binary Search",
+    "book_id": 4
   },
   "valley-bottom": {
     "name": "Valley Bottom",
@@ -649,7 +677,8 @@
       "Guess-and-check technique",
       "Invariants"
     ],
-    "book_chapter": "Binary Search"
+    "book_chapter": "Binary Search",
+    "book_id": 3
   },
   "water-refilling": {
     "name": "Water Refilling",
@@ -672,7 +701,8 @@
       "Guess-and-check technique",
       "Min-max optimization"
     ],
-    "book_chapter": "Binary Search"
+    "book_chapter": "Binary Search",
+    "book_id": 10
   },
   "company-launches": {
     "name": "Company Launches",
@@ -694,7 +724,8 @@
       "Sorting preprocessing",
       "Top k techniques (incl. quickselect)"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 9
   },
   "count-substrings-without-letter": {
     "name": "Count Substrings Without Letter",
@@ -714,7 +745,8 @@
       "Number of subarrays formula",
       "String fundamentals: split"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 2
   },
   "hiring-and-training": {
     "name": "Hiring And Training",
@@ -741,7 +773,8 @@
       "Greedy choice and counterexamples",
       "Recursion"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 6
   },
   "interval-xor": {
     "name": "Interval XOR",
@@ -759,7 +792,8 @@
     "other_tools": [
       "Intervals"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 7
   },
   "list-of-divisors": {
     "name": "List of Divisors",
@@ -775,7 +809,8 @@
     "other_tools": [
       "Working with primes"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 3
   },
   "longest-alphabet-chain": {
     "name": "Longest Alphabet Chain",
@@ -797,7 +832,8 @@
       "Transform the input"
     ],
     "other_tools": [],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 14
   },
   "magic-balls": {
     "name": "Magic Balls",
@@ -815,7 +851,8 @@
     "other_tools": [
       "Invariants"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 5
   },
   "matrix-rotation": {
     "name": "Matrix Rotation",
@@ -835,7 +872,8 @@
       "Basic matrix algebra",
       "Subgrid traversals"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 8
   },
   "most-ones-with-k-flips": {
     "name": "Most Ones with K Flips",
@@ -857,7 +895,8 @@
       "Reframe choices as optimization",
       "At-most-k subarray counting"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 10
   },
   "multiplayer-video-game": {
     "name": "Multiplayer Video Game",
@@ -879,7 +918,8 @@
       "Sorting preprocessing",
       "Hash maps"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 11
   },
   "self-doubling-sequence": {
     "name": "Self-Doubling Sequence",
@@ -901,7 +941,8 @@
     "other_tools": [
       "Recursion"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 15
   },
   "sub-permutations": {
     "name": "Sub Permutations",
@@ -925,7 +966,8 @@
       "Hash sets",
       "Hash maps"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 4
   },
   "three-sum": {
     "name": "3-Sum",
@@ -951,7 +993,8 @@
       "Hash sets",
       "Inward pointers"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 1
   },
   "tree-diameter": {
     "name": "Tree Diameter",
@@ -977,7 +1020,8 @@
       "Divide and conquer",
       "Distance computation"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 12
   },
   "unrooted-tree-diameter": {
     "name": "Unrooted Tree Diameter",
@@ -1002,7 +1046,8 @@
       "Pre/in/post-order traversals",
       "Passing info in trees"
     ],
-    "book_chapter": "Problem-Solving Boosters"
+    "book_chapter": "Problem-Solving Boosters",
+    "book_id": 13
   },
   "extra-dynamic-array-operations": {
     "name": "Extra Dynamic Array Operations",
@@ -1021,7 +1066,8 @@
       "Dynamic array internals",
       "Class implementation"
     ],
-    "book_chapter": "Dynamic Arrays"
+    "book_chapter": "Dynamic Arrays",
+    "book_id": 2
   },
   "implement-dynamic-array": {
     "name": "Implement Dynamic Array",
@@ -1038,7 +1084,8 @@
       "Dynamic array internals",
       "Class implementation"
     ],
-    "book_chapter": "Dynamic Arrays"
+    "book_chapter": "Dynamic Arrays",
+    "book_id": 1
   },
   "count-zero-sum-paths": {
     "name": "Count 0-Sum Paths",
@@ -1060,7 +1107,8 @@
       "Memoization/tabulation",
       "Grid graphs"
     ],
-    "book_chapter": "Dynamic Programming"
+    "book_chapter": "Dynamic Programming",
+    "book_id": 4
   },
   "longest-common-subsequence": {
     "name": "Longest Common Subsequence",
@@ -1086,7 +1134,8 @@
       "Recursion",
       "Reusing subproblems"
     ],
-    "book_chapter": "Dynamic Programming"
+    "book_chapter": "Dynamic Programming",
+    "book_id": 7
   },
   "magic-blackjack": {
     "name": "Magic Blackjack",
@@ -1109,7 +1158,8 @@
       "Recursion",
       "Recurrence relations"
     ],
-    "book_chapter": "Dynamic Programming"
+    "book_chapter": "Dynamic Programming",
+    "book_id": 5
   },
   "minimum-steps-to-one": {
     "name": "Minimum Steps to One",
@@ -1133,7 +1183,8 @@
       "DP with range of choices",
       "Min-max optimization"
     ],
-    "book_chapter": "Dynamic Programming"
+    "book_chapter": "Dynamic Programming",
+    "book_id": 6
   },
   "minivan-road-trip": {
     "name": "Minivan Road Trip",
@@ -1159,7 +1210,8 @@
       "Min-max optimization",
       "Reframe choices as optimization"
     ],
-    "book_chapter": "Dynamic Programming"
+    "book_chapter": "Dynamic Programming",
+    "book_id": 2
   },
   "reconstruct-longest-common-subsequence": {
     "name": "Reconstruct Longest Common Subsequence",
@@ -1179,7 +1231,8 @@
       "Memoization/tabulation",
       "Recurrence relations"
     ],
-    "book_chapter": "Dynamic Programming"
+    "book_chapter": "Dynamic Programming",
+    "book_id": 8
   },
   "restaurant-ratings": {
     "name": "Restaurant Ratings",
@@ -1206,7 +1259,8 @@
       "Reusing subproblems",
       "Reframe choices as optimization"
     ],
-    "book_chapter": "Dynamic Programming"
+    "book_chapter": "Dynamic Programming",
+    "book_id": 3
   },
   "road-trip": {
     "name": "Road Trip",
@@ -1230,7 +1284,8 @@
       "Memoization/tabulation",
       "Recurrence relations"
     ],
-    "book_chapter": "Dynamic Programming"
+    "book_chapter": "Dynamic Programming",
+    "book_id": 1
   },
   "adjacency-list-validation": {
     "name": "Adjacency List Validation",
@@ -1250,7 +1305,8 @@
       "Hash sets",
       "Invariants"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 1
   },
   "count-grid-islands": {
     "name": "Count Grid Islands",
@@ -1276,7 +1332,8 @@
       "In-place modification",
       "Subgrid traversals"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 13
   },
   "days-until-all-infected": {
     "name": "Days Until All Infected",
@@ -1302,7 +1359,8 @@
       "Adjacency list properties",
       "Using queues for FIFO problems"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 12
   },
   "first-time-all-connected": {
     "name": "First Time All Connected",
@@ -1325,7 +1383,8 @@
       "Guess-and-check technique",
       "Graph modeling"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 9
   },
   "graph-hangout": {
     "name": "Graph Hangout",
@@ -1345,7 +1404,8 @@
       "Adjacency list properties",
       "Min-max optimization"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 11
   },
   "graph-path": {
     "name": "Graph Path",
@@ -1366,7 +1426,8 @@
       "Adjacency list properties",
       "Hash maps"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 2
   },
   "highest-average-elevation-gain": {
     "name": "Highest Average Elevation Gain",
@@ -1390,7 +1451,8 @@
       "Graph modeling",
       "DFS/BFS tree"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 8
   },
   "hilliest-connected-component": {
     "name": "Hilliest Connected Component",
@@ -1414,7 +1476,8 @@
       "DFS/BFS tree",
       "Graph modeling"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 7
   },
   "multi-exit-maze": {
     "name": "Multi-Exit Maze",
@@ -1441,7 +1504,8 @@
       "Queue internals",
       "Using queues for FIFO problems"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 14
   },
   "reachability-queries": {
     "name": "Reachability Queries",
@@ -1460,7 +1524,8 @@
     "other_tools": [
       "Hash maps"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 5
   },
   "rgb-distances": {
     "name": "RGB Distances",
@@ -1483,7 +1548,8 @@
       "Distance formula",
       "Using queues for FIFO problems"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 15
   },
   "shortest-path-queries": {
     "name": "Shortest Path Queries",
@@ -1505,7 +1571,8 @@
       "Graph modeling",
       "Adjacency list properties"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 10
   },
   "spanning-tree": {
     "name": "Spanning Tree",
@@ -1527,7 +1594,8 @@
       "Adjacency list properties",
       "Pre/in/post-order traversals"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 4
   },
   "strongly-connected-graph": {
     "name": "Strongly Connected Graph",
@@ -1549,7 +1617,8 @@
       "DFS/BFS tree",
       "Graph modeling"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 6
   },
   "the-floor-is-lava": {
     "name": "The Floor Is Lava",
@@ -1568,7 +1637,8 @@
       "Distance computation",
       "DFS/BFS tree"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 16
   },
   "tree-check": {
     "name": "Tree Check",
@@ -1589,7 +1659,8 @@
       "DFS/BFS tree",
       "Graph modeling"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 3
   },
   "word-ladder-game-variation": {
     "name": "Word Ladder Game Variation",
@@ -1610,7 +1681,8 @@
       "Graph modeling",
       "Adjacency list properties"
     ],
-    "book_chapter": "Graphs"
+    "book_chapter": "Graphs",
+    "book_id": 17
   },
   "center-assignment": {
     "name": "Center Assignment",
@@ -1634,7 +1706,8 @@
       "Distance computation",
       "Distance formula"
     ],
-    "book_chapter": "Greedy Algorithms"
+    "book_chapter": "Greedy Algorithms",
+    "book_id": 3
   },
   "fewest-script-runs": {
     "name": "Fewest Script Runs",
@@ -1654,7 +1727,8 @@
       "Sorting preprocessing",
       "Custom sort"
     ],
-    "book_chapter": "Greedy Algorithms"
+    "book_chapter": "Greedy Algorithms",
+    "book_id": 5
   },
   "minimum-triplet-medians": {
     "name": "Minimum Triplet Medians",
@@ -1675,7 +1749,8 @@
       "Greedy choice and counterexamples",
       "Sorting preprocessing"
     ],
-    "book_chapter": "Greedy Algorithms"
+    "book_chapter": "Greedy Algorithms",
+    "book_id": 4
   },
   "most-non-overlapping-intervals": {
     "name": "Most Non-Overlapping Intervals",
@@ -1701,7 +1776,8 @@
       "Reframe choices as optimization",
       "Invariants"
     ],
-    "book_chapter": "Greedy Algorithms"
+    "book_chapter": "Greedy Algorithms",
+    "book_id": 1
   },
   "time-traveler": {
     "name": "Time Traveler",
@@ -1722,7 +1798,8 @@
       "Custom sort",
       "Sorting preprocessing"
     ],
-    "book_chapter": "Greedy Algorithms"
+    "book_chapter": "Greedy Algorithms",
+    "book_id": 2
   },
   "time-traveler-max-year": {
     "name": "Time Traveler Max Year",
@@ -1752,7 +1829,8 @@
       "Sorting preprocessing",
       "Top k techniques (incl. quickselect)"
     ],
-    "book_chapter": "Greedy Algorithms"
+    "book_chapter": "Greedy Algorithms",
+    "book_id": 6
   },
   "chess-moves": {
     "name": "Chess Moves",
@@ -1771,7 +1849,8 @@
       "Grid graphs",
       "Subgrid traversals"
     ],
-    "book_chapter": "Grids & Matrices"
+    "book_chapter": "Grids & Matrices",
+    "book_id": 1
   },
   "image-filter": {
     "name": "Image Filter",
@@ -1791,7 +1870,8 @@
       "Grid graphs",
       "Subgrid traversals"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "matrix-multiplication": {
     "name": "Matrix Multiplication",
@@ -1806,7 +1886,8 @@
     "other_tools": [
       "Basic matrix algebra"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "matrix-operations": {
     "name": "Matrix Operations",
@@ -1827,7 +1908,8 @@
       "In-place modification",
       "Class implementation"
     ],
-    "book_chapter": "Grids & Matrices"
+    "book_chapter": "Grids & Matrices",
+    "book_id": 8
   },
   "queens-reach": {
     "name": "Queen's Reach",
@@ -1849,7 +1931,8 @@
       "Graph modeling",
       "Subgrid traversals"
     ],
-    "book_chapter": "Grids & Matrices"
+    "book_chapter": "Grids & Matrices",
+    "book_id": 2
   },
   "snowprints": {
     "name": "Snowprints",
@@ -1867,7 +1950,8 @@
       "Grid graphs",
       "Selecting best iteration order"
     ],
-    "book_chapter": "Grids & Matrices"
+    "book_chapter": "Grids & Matrices",
+    "book_id": 4
   },
   "spiral-order": {
     "name": "Spiral Order",
@@ -1889,7 +1973,8 @@
       "Selecting best iteration order",
       "Grid graphs"
     ],
-    "book_chapter": "Grids & Matrices"
+    "book_chapter": "Grids & Matrices",
+    "book_id": 3
   },
   "subgrid-maximums": {
     "name": "Subgrid Maximums",
@@ -1909,7 +1994,8 @@
       "Subgrid traversals",
       "Memoization/tabulation"
     ],
-    "book_chapter": "Grids & Matrices"
+    "book_chapter": "Grids & Matrices",
+    "book_id": 6
   },
   "subgrid-sums": {
     "name": "Subgrid Sums",
@@ -1930,7 +2016,8 @@
       "Memoization/tabulation",
       "Subgrid traversals"
     ],
-    "book_chapter": "Grids & Matrices"
+    "book_chapter": "Grids & Matrices",
+    "book_id": 7
   },
   "symmetric-matrix": {
     "name": "Symmetric Matrix",
@@ -1945,7 +2032,8 @@
     "other_tools": [
       "Basic matrix algebra"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "tic-tac-toe-position": {
     "name": "Tic-Tac-Toe Position",
@@ -1966,7 +2054,8 @@
       "Invariants",
       "Grid graphs"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "valid-sudoku": {
     "name": "Valid Sudoku",
@@ -1987,7 +2076,8 @@
       "Hash sets",
       "Class implementation"
     ],
-    "book_chapter": "Grids & Matrices"
+    "book_chapter": "Grids & Matrices",
+    "book_id": 5
   },
   "validate-matrix-rows-columns": {
     "name": "Validate Matrix Rows and Columns",
@@ -2006,7 +2096,8 @@
       "Hash sets",
       "Subgrid traversals"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "diminish-largest": {
     "name": "Diminish Largest",
@@ -2023,7 +2114,8 @@
       "Dynamic priorities in heaps",
       "Top k techniques (incl. quickselect)"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "implement-a-heap": {
     "name": "Implement A Heap",
@@ -2042,7 +2134,8 @@
       "Dynamic array internals",
       "Class implementation"
     ],
-    "book_chapter": "Heaps"
+    "book_chapter": "Heaps",
+    "book_id": 1
   },
   "k-most-played": {
     "name": "K Most Played",
@@ -2061,7 +2154,8 @@
       "Custom sort",
       "Heap internals"
     ],
-    "book_chapter": "Heaps"
+    "book_chapter": "Heaps",
+    "book_id": 2
   },
   "k-pairs-with-smallest-sums": {
     "name": "K Pairs with Smallest Sums",
@@ -2084,7 +2178,8 @@
       "Heap internals",
       "Greedy choice and counterexamples"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "k-smallest-elements-in-min-heap": {
     "name": "K Smallest Elements in a Min-Heap",
@@ -2108,7 +2203,8 @@
       "Top k techniques (incl. quickselect)",
       "DFS/BFS tree"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "make-playlist": {
     "name": "Make Playlist",
@@ -2134,7 +2230,8 @@
       "Sorting preprocessing",
       "Greedy choice and counterexamples"
     ],
-    "book_chapter": "Heaps"
+    "book_chapter": "Heaps",
+    "book_id": 7
   },
   "most-listened-across-genres": {
     "name": "Most Listened Across Genres",
@@ -2152,7 +2249,8 @@
       "Top k techniques (incl. quickselect)",
       "Heap internals"
     ],
-    "book_chapter": "Heaps"
+    "book_chapter": "Heaps",
+    "book_id": 6
   },
   "popular-songs-class": {
     "name": "Popular Songs Class",
@@ -2177,7 +2275,8 @@
       "Dynamic priorities in heaps",
       "Heap internals"
     ],
-    "book_chapter": "Heaps"
+    "book_chapter": "Heaps",
+    "book_id": 5
   },
   "sum-of-first-k-prime-powers": {
     "name": "Sum Of First K Prime Powers",
@@ -2200,7 +2299,8 @@
       "Dynamic priorities in heaps",
       "Top k techniques (incl. quickselect)"
     ],
-    "book_chapter": "Heaps"
+    "book_chapter": "Heaps",
+    "book_id": 8
   },
   "top-songs-class": {
     "name": "Top Songs Class",
@@ -2222,7 +2322,8 @@
       "Dynamic priorities in heaps",
       "Heap internals"
     ],
-    "book_chapter": "Heaps"
+    "book_chapter": "Heaps",
+    "book_id": 3
   },
   "top-songs-class-with-updates": {
     "name": "Top Songs Class With Updates",
@@ -2244,7 +2345,8 @@
       "Top k techniques (incl. quickselect)",
       "Heap internals"
     ],
-    "book_chapter": "Heaps"
+    "book_chapter": "Heaps",
+    "book_id": 4
   },
   "compare-two-linked-lists": {
     "name": "Compare Two Linked Lists",
@@ -2261,7 +2363,8 @@
       "Parallel pointers (linked lists)",
       "Linked list internals"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "doubly-linked-list-design": {
     "name": "Doubly Linked List Design",
@@ -2281,7 +2384,8 @@
       "Doubly-linked list",
       "In-place modification (linked lists)"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 2
   },
   "doubly-linked-list-to-array": {
     "name": "Doubly Linked List To Array",
@@ -2299,7 +2403,8 @@
       "Doubly-linked list",
       "Linked list internals"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 9
   },
   "duplicate-removal-in-sorted-linked-list": {
     "name": "Duplicate Removal In Sorted Linked List",
@@ -2315,7 +2420,8 @@
       "In-place modification (linked lists)",
       "Linked list internals"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 13
   },
   "linked-list-based-queue": {
     "name": "Linked-List-Based Queue",
@@ -2332,7 +2438,8 @@
       "Class implementation",
       "Linked list internals"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 4
   },
   "linked-list-based-stack": {
     "name": "Linked-List-Based Stack",
@@ -2348,7 +2455,8 @@
       "Linked list internals",
       "Class implementation"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 3
   },
   "linked-list-block-reversal": {
     "name": "Linked List Block Reversal",
@@ -2372,7 +2480,8 @@
       "Linked list internals",
       "Parallel pointers (linked lists)"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 14
   },
   "linked-list-copy": {
     "name": "Linked-List Copy",
@@ -2393,7 +2502,8 @@
       "Linked list internals",
       "Recursive data structure"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 5
   },
   "linked-list-cycle-detection": {
     "name": "Linked-List Cycle Detection",
@@ -2415,7 +2525,8 @@
       "Hash sets",
       "Linked list internals"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 8
   },
   "linked-list-cycle-length": {
     "name": "Linked-List Cycle Length",
@@ -2441,7 +2552,8 @@
       "Linked list internals",
       "Hash sets"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "linked-list-cycle-start": {
     "name": "Linked-List Cycle Start",
@@ -2462,7 +2574,8 @@
       "Linked list internals",
       "Parallel pointers (linked lists)"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "linked-list-midpoint": {
     "name": "Linked-List Midpoint",
@@ -2481,7 +2594,8 @@
       "Parallel pointers (linked lists)",
       "Linked list internals"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 10
   },
   "linked-list-reversal": {
     "name": "Linked-List Reversal",
@@ -2503,7 +2617,8 @@
       "Parallel pointers (linked lists)",
       "Linked list internals"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 6
   },
   "linked-list-zip": {
     "name": "Linked-List Zip",
@@ -2522,7 +2637,8 @@
       "In-place modification (linked lists)",
       "Linked list internals"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 12
   },
   "remove-kth-node-from-the-end": {
     "name": "Remove Kth Node From The End",
@@ -2544,7 +2660,8 @@
       "Linked list internals",
       "In-place modification (linked lists)"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 11
   },
   "singly-linked-list-design": {
     "name": "Singly Linked List Design",
@@ -2563,7 +2680,8 @@
       "Class implementation",
       "In-place modification (linked lists)"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 1
   },
   "sublist-reversal": {
     "name": "Sublist Reversal",
@@ -2585,7 +2703,8 @@
       "Linked list internals",
       "Parallel pointers (linked lists)"
     ],
-    "book_chapter": "Linked Lists"
+    "book_chapter": "Linked Lists",
+    "book_id": 7
   },
   "king-kong-vs-godzilla": {
     "name": "King Kong Vs Godzilla",
@@ -2610,7 +2729,8 @@
       "Using queues for FIFO problems",
       "Using stacks for LIFO problems"
     ],
-    "book_chapter": "Monotonic Stacks & Queues"
+    "book_chapter": "Monotonic Stacks & Queues",
+    "book_id": 7
   },
   "king-kong-vs-godzilla-in-the-fog": {
     "name": "King Kong Vs Godzilla In The Fog",
@@ -2633,7 +2753,8 @@
     "other_tools": [
       "Max queue"
     ],
-    "book_chapter": "Monotonic Stacks & Queues"
+    "book_chapter": "Monotonic Stacks & Queues",
+    "book_id": 8
   },
   "largest-rectangle": {
     "name": "Largest Rectangle",
@@ -2654,7 +2775,8 @@
     "other_tools": [
       "Using stacks for LIFO problems"
     ],
-    "book_chapter": "Monotonic Stacks & Queues"
+    "book_chapter": "Monotonic Stacks & Queues",
+    "book_id": 6
   },
   "largest-temperature-change": {
     "name": "Largest Temperature Change",
@@ -2678,7 +2800,8 @@
       "Amortized analysis",
       "Using queues for FIFO problems"
     ],
-    "book_chapter": "Monotonic Stacks & Queues"
+    "book_chapter": "Monotonic Stacks & Queues",
+    "book_id": 3
   },
   "longest-stable-period": {
     "name": "Longest Stable Period",
@@ -2698,7 +2821,8 @@
     "other_tools": [
       "Max queue"
     ],
-    "book_chapter": "Monotonic Stacks & Queues"
+    "book_chapter": "Monotonic Stacks & Queues",
+    "book_id": 4
   },
   "max-queue": {
     "name": "Max Queue",
@@ -2720,7 +2844,8 @@
       "Queue internals",
       "Using queues for FIFO problems"
     ],
-    "book_chapter": "Monotonic Stacks & Queues"
+    "book_chapter": "Monotonic Stacks & Queues",
+    "book_id": 1
   },
   "next-greater-element": {
     "name": "Next Greater Element",
@@ -2741,7 +2866,8 @@
       "Using stacks for LIFO problems",
       "Amortized analysis"
     ],
-    "book_chapter": "Monotonic Stacks & Queues"
+    "book_chapter": "Monotonic Stacks & Queues",
+    "book_id": 5
   },
   "sliding-window-max": {
     "name": "Sliding Window Max",
@@ -2764,7 +2890,8 @@
       "Using queues for FIFO problems",
       "Amortized analysis"
     ],
-    "book_chapter": "Monotonic Stacks & Queues"
+    "book_chapter": "Monotonic Stacks & Queues",
+    "book_id": 2
   },
   "all-overbooked-slots": {
     "name": "All Overbooked Slots",
@@ -2784,7 +2911,8 @@
       "Difference array",
       "Prefix-sum array"
     ],
-    "book_chapter": "Prefix Sums"
+    "book_chapter": "Prefix Sums",
+    "book_id": 10
   },
   "balance-point": {
     "name": "Balance Point",
@@ -2800,7 +2928,8 @@
       "Custom prefix-sum array",
       "Prefix-sum array"
     ],
-    "book_chapter": "Prefix Sums"
+    "book_chapter": "Prefix Sums",
+    "book_id": 4
   },
   "channel-views": {
     "name": "Channel Views",
@@ -2820,7 +2949,8 @@
     "other_tools": [
       "Prefix-sum array"
     ],
-    "book_chapter": "Prefix Sums"
+    "book_chapter": "Prefix Sums",
+    "book_id": 1
   },
   "count-subarrays-with-sum-k": {
     "name": "Count Subarrays With Sum K",
@@ -2843,7 +2973,8 @@
       "Hash maps",
       "Custom prefix-sum array"
     ],
-    "book_chapter": "Prefix Sums"
+    "book_chapter": "Prefix Sums",
+    "book_id": 6
   },
   "exclusive-product": {
     "name": "Exclusive Product",
@@ -2866,7 +2997,8 @@
       "Custom prefix-sum array",
       "Prefix-sum array"
     ],
-    "book_chapter": "Prefix Sums"
+    "book_chapter": "Prefix Sums",
+    "book_id": 3
   },
   "longest-subarray-with-sum-k": {
     "name": "Longest Subarray With Sum K",
@@ -2887,7 +3019,8 @@
       "Prefix-sum array",
       "Hash maps"
     ],
-    "book_chapter": "Prefix Sums"
+    "book_chapter": "Prefix Sums",
+    "book_id": 7
   },
   "most-booked-slot": {
     "name": "Most Booked Slot",
@@ -2907,7 +3040,8 @@
       "Difference array",
       "Prefix-sum array"
     ],
-    "book_chapter": "Prefix Sums"
+    "book_chapter": "Prefix Sums",
+    "book_id": 9
   },
   "segmented-video-votes": {
     "name": "Segmented Video Votes",
@@ -2925,7 +3059,8 @@
       "Difference array",
       "Prefix-sum array"
     ],
-    "book_chapter": "Prefix Sums"
+    "book_chapter": "Prefix Sums",
+    "book_id": 8
   },
   "youtube-video-reception": {
     "name": "YouTube Video Reception",
@@ -2944,7 +3079,8 @@
     "other_tools": [
       "Prefix-sum array"
     ],
-    "book_chapter": "Prefix Sums"
+    "book_chapter": "Prefix Sums",
+    "book_id": 2
   },
   "youtube-video-unusual-days": {
     "name": "YouTube Video Unusual Days",
@@ -2969,7 +3105,8 @@
       "Custom prefix-sum array",
       "Sorting preprocessing"
     ],
-    "book_chapter": "Prefix Sums"
+    "book_chapter": "Prefix Sums",
+    "book_id": 5
   },
   "laminal-arrays": {
     "name": "Laminal Arrays",
@@ -2989,7 +3126,8 @@
       "Divide and conquer",
       "Recursion"
     ],
-    "book_chapter": "Recursion"
+    "book_chapter": "Recursion",
+    "book_id": 5
   },
   "lego-castle": {
     "name": "Lego Castle",
@@ -3010,7 +3148,8 @@
       "Closed formula",
       "Recursion"
     ],
-    "book_chapter": "Recursion"
+    "book_chapter": "Recursion",
+    "book_id": 4
   },
   "nested-array-sum": {
     "name": "Nested Array Sum",
@@ -3025,7 +3164,8 @@
     "other_tools": [
       "Recursive data structure"
     ],
-    "book_chapter": "Recursion"
+    "book_chapter": "Recursion",
+    "book_id": 2
   },
   "powers-mod-m": {
     "name": "Powers Mod M",
@@ -3044,7 +3184,8 @@
       "Recursion",
       "Divide and conquer"
     ],
-    "book_chapter": "Recursion"
+    "book_chapter": "Recursion",
+    "book_id": 3
   },
   "robot-instructions": {
     "name": "Robot Instructions",
@@ -3065,7 +3206,8 @@
       "Recursion",
       "Parsing"
     ],
-    "book_chapter": "Recursion"
+    "book_chapter": "Recursion",
+    "book_id": 1
   },
   "tridimensional-lego-castle": {
     "name": "Tridimensional Lego Castle",
@@ -3088,7 +3230,8 @@
       "Closed formula",
       "Reusing subproblems"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "hash-map-class": {
     "name": "Hash Map Class",
@@ -3109,7 +3252,8 @@
       "Dynamic array internals",
       "Amortized analysis"
     ],
-    "book_chapter": "Set & Map Implementations"
+    "book_chapter": "Set & Map Implementations",
+    "book_id": 4
   },
   "hash-map-class-extensions": {
     "name": "Hash Map Class Extensions",
@@ -3128,7 +3272,8 @@
       "Amortized analysis",
       "Hash maps"
     ],
-    "book_chapter": "Set & Map Implementations"
+    "book_chapter": "Set & Map Implementations",
+    "book_id": 5
   },
   "hash-set-class": {
     "name": "Hash Set Class",
@@ -3149,7 +3294,8 @@
       "Hash maps",
       "Amortized analysis"
     ],
-    "book_chapter": "Set & Map Implementations"
+    "book_chapter": "Set & Map Implementations",
+    "book_id": 1
   },
   "hash-set-class-extensions": {
     "name": "Hash Set Class Extensions",
@@ -3171,7 +3317,8 @@
       "Hash sets",
       "Amortized analysis"
     ],
-    "book_chapter": "Set & Map Implementations"
+    "book_chapter": "Set & Map Implementations",
+    "book_id": 2
   },
   "multimap": {
     "name": "Multimap",
@@ -3189,7 +3336,8 @@
       "Hash maps",
       "Dynamic array internals"
     ],
-    "book_chapter": "Set & Map Implementations"
+    "book_chapter": "Set & Map Implementations",
+    "book_id": 6
   },
   "multiset": {
     "name": "Multiset",
@@ -3212,7 +3360,8 @@
       "Hash maps",
       "Hash sets"
     ],
-    "book_chapter": "Set & Map Implementations"
+    "book_chapter": "Set & Map Implementations",
+    "book_id": 3
   },
   "account-sharing-detection": {
     "name": "Account Sharing Detection",
@@ -3229,7 +3378,8 @@
     "other_tools": [
       "Hash sets"
     ],
-    "book_chapter": "Sets & Maps"
+    "book_chapter": "Sets & Maps",
+    "book_id": 1
   },
   "action-log-anomalies": {
     "name": "Action Log Anomalies",
@@ -3248,7 +3398,8 @@
       "Hash maps",
       "Hash sets"
     ],
-    "book_chapter": "Sets & Maps"
+    "book_chapter": "Sets & Maps",
+    "book_id": 10
   },
   "cheater-detection": {
     "name": "Cheater Detection",
@@ -3266,7 +3417,8 @@
       "Hash maps",
       "Grid graphs"
     ],
-    "book_chapter": "Sets & Maps"
+    "book_chapter": "Sets & Maps",
+    "book_id": 8
   },
   "domain-resolver": {
     "name": "Domain Resolver",
@@ -3285,7 +3437,8 @@
       "Hash maps",
       "Hash sets"
     ],
-    "book_chapter": "Sets & Maps"
+    "book_chapter": "Sets & Maps",
+    "book_id": 5
   },
   "duplicate-file-contents": {
     "name": "Duplicate File Contents",
@@ -3303,7 +3456,8 @@
       "Hash maps",
       "Parsing"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "find-all-squares": {
     "name": "Find All Squares",
@@ -3320,7 +3474,8 @@
     "other_tools": [
       "Hash maps"
     ],
-    "book_chapter": "Sets & Maps"
+    "book_chapter": "Sets & Maps",
+    "book_id": 6
   },
   "hangman-word-matching": {
     "name": "Hangman Word Matching",
@@ -3338,7 +3493,8 @@
     "other_tools": [
       "Hash sets"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "has-duplicate": {
     "name": "Has Duplicate",
@@ -3356,7 +3512,8 @@
       "Hash sets",
       "Hash set internals"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "largest-set-intersection": {
     "name": "Largest Set Intersection",
@@ -3381,7 +3538,8 @@
       "Hash maps",
       "Hash sets"
     ],
-    "book_chapter": "Sets & Maps"
+    "book_chapter": "Sets & Maps",
+    "book_id": 11
   },
   "longest-consecutive-sequence": {
     "name": "Longest Consecutive Sequence",
@@ -3400,7 +3558,8 @@
     "other_tools": [
       "Hash sets"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "most-frequent-octet": {
     "name": "Most Frequent Octet",
@@ -3419,7 +3578,8 @@
       "Hash maps",
       "String fundamentals: split"
     ],
-    "book_chapter": "Sets & Maps"
+    "book_chapter": "Sets & Maps",
+    "book_id": 3
   },
   "most-shared-account": {
     "name": "Most Shared Account",
@@ -3438,7 +3598,8 @@
     "other_tools": [
       "Hash maps"
     ],
-    "book_chapter": "Sets & Maps"
+    "book_chapter": "Sets & Maps",
+    "book_id": 2
   },
   "multi-account-cheating": {
     "name": "Multi-Account Cheating",
@@ -3458,7 +3619,8 @@
       "Custom sort",
       "Sorting preprocessing"
     ],
-    "book_chapter": "Sets & Maps"
+    "book_chapter": "Sets & Maps",
+    "book_id": 4
   },
   "product-of-alphabetical-sums": {
     "name": "Product of Alphabetical Sums",
@@ -3479,7 +3641,8 @@
     "other_tools": [
       "Hash sets"
     ],
-    "book_chapter": "Sets & Maps"
+    "book_chapter": "Sets & Maps",
+    "book_id": 9
   },
   "scrabble-tiles": {
     "name": "Scrabble Tiles",
@@ -3498,7 +3661,8 @@
     "other_tools": [
       "Hash maps"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "shortest-distance-number-repeated": {
     "name": "Shortest Distance Number Repeated",
@@ -3514,7 +3678,8 @@
       "Hash maps",
       "Distance computation"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "shortest-distance-string-repeated": {
     "name": "Shortest Distance String Repeated",
@@ -3530,7 +3695,8 @@
       "Hash maps",
       "Distance computation"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "unique-k-pairs": {
     "name": "Unique K Pairs",
@@ -3554,7 +3720,8 @@
       "Hash map internals",
       "Hash set internals"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "unique-movie-titles": {
     "name": "Unique Movie Titles",
@@ -3570,7 +3737,8 @@
       "Hash sets",
       "String fundamentals: split"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "word-expansion-class": {
     "name": "Word Expansion Class",
@@ -3590,7 +3758,8 @@
       "Class implementation",
       "Hash maps"
     ],
-    "book_chapter": "Sets & Maps"
+    "book_chapter": "Sets & Maps",
+    "book_id": 7
   },
   "ad-campaign-boost": {
     "name": "Ad Campaign Boost",
@@ -3610,7 +3779,8 @@
       "Reframe choices as optimization",
       "At-most-k subarray counting"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 9
   },
   "ad-campaign-with-small-boosts": {
     "name": "Ad Campaign With Small Boosts",
@@ -3632,7 +3802,8 @@
       "Reframe choices as optimization",
       "At-most-k subarray counting"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 10
   },
   "boosting-days-multiple-times": {
     "name": "Boosting Days Multiple Times",
@@ -3653,7 +3824,8 @@
     "other_tools": [
       "Reframe choices as optimization"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 11
   },
   "count-good-subarrays-with-at-least-k-sales": {
     "name": "Count Good Subarrays With At Least K Sales",
@@ -3676,7 +3848,8 @@
       "Number of subarrays formula",
       "At-most-k subarray counting"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 25
   },
   "count-subarrays-with-all-remainders": {
     "name": "Count Subarrays With All Remainders",
@@ -3703,7 +3876,8 @@
       "Number of subarrays formula",
       "Hash maps"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 24
   },
   "count-subarrays-with-at-least-k-bad-days": {
     "name": "Count Subarrays With At Least K Bad Days",
@@ -3726,7 +3900,8 @@
       "At-most-k subarray counting",
       "Number of subarrays formula"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 20
   },
   "count-subarrays-with-at-most-k-bad-days": {
     "name": "Count Subarrays With At Most K Bad Days",
@@ -3747,7 +3922,8 @@
     "other_tools": [
       "At-most-k subarray counting"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 18
   },
   "count-subarrays-with-bad-days-in-range": {
     "name": "Count Subarrays With Bad Days In Range",
@@ -3766,7 +3942,8 @@
     "other_tools": [
       "At-most-k subarray counting"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 23
   },
   "count-subarrays-with-drops": {
     "name": "Count Subarrays With Drops",
@@ -3789,7 +3966,8 @@
       "At-most-k subarray counting",
       "Number of subarrays formula"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 22
   },
   "count-subarrays-with-exactly-k-bad-days": {
     "name": "Count Subarrays With Exactly K Bad Days",
@@ -3808,7 +3986,8 @@
     "other_tools": [
       "At-most-k subarray counting"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 19
   },
   "count-subarrays-with-good-start-and-ending": {
     "name": "Count Subarrays With Good Start And Ending",
@@ -3826,7 +4005,8 @@
       "Number of subarrays formula",
       "Closed formula"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 21
   },
   "enduring-best-seller-streak": {
     "name": "Enduring Best Seller Streak",
@@ -3846,7 +4026,8 @@
     "other_tools": [
       "Hash maps"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 4
   },
   "longest-alternating-sequence": {
     "name": "Longest Alternating Sequence",
@@ -3863,7 +4044,8 @@
     ],
     "reusable_ideas": [],
     "other_tools": [],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 7
   },
   "longest-good-day-streak": {
     "name": "Longest Good Day Streak",
@@ -3880,7 +4062,8 @@
     "other_tools": [
       "Parallel pointers"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 5
   },
   "longest-period-at-most-k-distinct": {
     "name": "Longest Period At Most K Distinct",
@@ -3900,7 +4083,8 @@
       "Hash maps",
       "At-most-k subarray counting"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 12
   },
   "longest-repeated-substring": {
     "name": "Longest Repeated Substring",
@@ -3926,7 +4110,8 @@
       "Rolling hash",
       "Hash maps"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 13
   },
   "max-subarray-sum": {
     "name": "Max Subarray Sum",
@@ -3943,7 +4128,8 @@
     ],
     "reusable_ideas": [],
     "other_tools": [],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 6
   },
   "maximum-with-at-most-3-bad-days": {
     "name": "Maximum With At Most 3 Bad Days",
@@ -3960,7 +4146,8 @@
     "other_tools": [
       "At-most-k subarray counting"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 8
   },
   "most-sales-in-k-days": {
     "name": "Most Sales In K Days",
@@ -3977,7 +4164,8 @@
     "other_tools": [
       "Parallel pointers"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 2
   },
   "most-weekly-sales": {
     "name": "Most Weekly Sales",
@@ -3994,7 +4182,8 @@
     "other_tools": [
       "Parallel pointers"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 1
   },
   "shortest-period-with-over-20-sales": {
     "name": "Shortest Period With Over 20 Sales",
@@ -4011,7 +4200,8 @@
     "other_tools": [
       "Finding subarrays with sum k"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 14
   },
   "shortest-with-all-letters": {
     "name": "Shortest With All Letters",
@@ -4030,7 +4220,8 @@
     "other_tools": [
       "Hash maps"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 15
   },
   "smallest-range-with-k-elements": {
     "name": "Smallest Range With K Elements",
@@ -4053,7 +4244,8 @@
       "Sorting preprocessing",
       "Min-max optimization"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 16
   },
   "strong-start-and-ending": {
     "name": "Strong Start And Ending",
@@ -4077,7 +4269,8 @@
       "Inward pointers",
       "At-most-k subarray counting"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 17
   },
   "unique-best-seller-streak": {
     "name": "Unique Best Seller Streak",
@@ -4096,7 +4289,8 @@
     "other_tools": [
       "Hash maps"
     ],
-    "book_chapter": "Sliding Windows"
+    "book_chapter": "Sliding Windows",
+    "book_id": 3
   },
   "delete-operations": {
     "name": "Delete Operations",
@@ -4120,7 +4314,8 @@
       "Hash sets",
       "Custom sort"
     ],
-    "book_chapter": "Sorting"
+    "book_chapter": "Sorting",
+    "book_id": 3
   },
   "first-k": {
     "name": "First K",
@@ -4147,7 +4342,8 @@
       "Divide and conquer",
       "In-place modification"
     ],
-    "book_chapter": "Sorting"
+    "book_chapter": "Sorting",
+    "book_id": 6
   },
   "google-colors": {
     "name": "Google Colors",
@@ -4170,7 +4366,8 @@
       "Hash maps",
       "Custom sort"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "implement-mergesort": {
     "name": "Implement Mergesort",
@@ -4189,7 +4386,8 @@
       "Recursion",
       "Custom sort"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "implement-quicksort": {
     "name": "Implement Quicksort",
@@ -4208,7 +4406,8 @@
       "Divide and conquer",
       "Sorting preprocessing"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "k-sorted-array": {
     "name": "k-Sorted Array",
@@ -4232,7 +4431,8 @@
       "Sorting preprocessing",
       "Dynamic priorities in heaps"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "nested-circles": {
     "name": "Nested Circles",
@@ -4256,7 +4456,8 @@
       "Sorting preprocessing",
       "Distance computation"
     ],
-    "book_chapter": "Sorting"
+    "book_chapter": "Sorting",
+    "book_id": 2
   },
   "sort-by-publication-year": {
     "name": "Sort By Publication Year",
@@ -4275,7 +4476,8 @@
       "Custom sort",
       "Class implementation"
     ],
-    "book_chapter": "Sorting"
+    "book_chapter": "Sorting",
+    "book_id": 5
   },
   "sorting-by-frequency": {
     "name": "Sorting By Frequency",
@@ -4294,7 +4496,8 @@
       "Custom sort",
       "Hash maps"
     ],
-    "book_chapter": "Sorting"
+    "book_chapter": "Sorting",
+    "book_id": 1
   },
   "spreadsheet": {
     "name": "Spreadsheet",
@@ -4316,7 +4519,8 @@
       "Sorting preprocessing",
       "In-place modification"
     ],
-    "book_chapter": "Sorting"
+    "book_chapter": "Sorting",
+    "book_id": 4
   },
   "balanced-partition": {
     "name": "Balanced Partition",
@@ -4338,7 +4542,8 @@
       "Invariants",
       "Parsing"
     ],
-    "book_chapter": "Stacks & Queues"
+    "book_chapter": "Stacks & Queues",
+    "book_id": 6
   },
   "compress-array": {
     "name": "Compress Array",
@@ -4356,7 +4561,8 @@
     "other_tools": [
       "Using stacks for LIFO problems"
     ],
-    "book_chapter": "Stacks & Queues"
+    "book_chapter": "Stacks & Queues",
+    "book_id": 1
   },
   "compress-array-by-k": {
     "name": "Compress Array By K",
@@ -4377,7 +4583,8 @@
       "Recursion",
       "Invariants"
     ],
-    "book_chapter": "Stacks & Queues"
+    "book_chapter": "Stacks & Queues",
+    "book_id": 2
   },
   "current-url": {
     "name": "Current URL",
@@ -4393,7 +4600,8 @@
       "Using stacks for LIFO problems",
       "Parsing"
     ],
-    "book_chapter": "Stacks & Queues"
+    "book_chapter": "Stacks & Queues",
+    "book_id": 4
   },
   "current-url-with-forward": {
     "name": "Current URL With Forward",
@@ -4411,7 +4619,8 @@
       "Using stacks for LIFO problems",
       "Dynamic array internals"
     ],
-    "book_chapter": "Stacks & Queues"
+    "book_chapter": "Stacks & Queues",
+    "book_id": 5
   },
   "custom-brackets": {
     "name": "Custom Brackets",
@@ -4431,7 +4640,8 @@
       "Using stacks for LIFO problems",
       "Parsing"
     ],
-    "book_chapter": "Stacks & Queues"
+    "book_chapter": "Stacks & Queues",
+    "book_id": 7
   },
   "decode-a-string": {
     "name": "Decode A String",
@@ -4451,7 +4661,8 @@
       "Using stacks for LIFO problems",
       "String fundamentals: join"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "longest-balanced-subsequence": {
     "name": "Longest Balanced Subsequence",
@@ -4472,7 +4683,8 @@
     "other_tools": [
       "Using stacks for LIFO problems"
     ],
-    "book_chapter": "Stacks & Queues"
+    "book_chapter": "Stacks & Queues",
+    "book_id": 8
   },
   "os-paths": {
     "name": "OS Paths",
@@ -4490,7 +4702,8 @@
       "String fundamentals: join",
       "Parsing"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "redundant-parentheses": {
     "name": "Redundant Parentheses",
@@ -4503,7 +4716,8 @@
     "boosters": [],
     "reusable_ideas": [],
     "other_tools": [],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "simple-text-editor": {
     "name": "Simple Text Editor",
@@ -4522,7 +4736,8 @@
       "Class implementation",
       "String fundamentals: join"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "validate-simple-html-strings": {
     "name": "Validate Simple HTML Strings",
@@ -4540,7 +4755,8 @@
       "Parsing",
       "Using stacks for LIFO problems"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "viewer-counter-class": {
     "name": "Viewer Counter Class",
@@ -4559,7 +4775,8 @@
       "Class implementation",
       "Amortized analysis"
     ],
-    "book_chapter": "Stacks & Queues"
+    "book_chapter": "Stacks & Queues",
+    "book_id": 3
   },
   "string-join": {
     "name": "String Join",
@@ -4577,7 +4794,8 @@
       "String fundamentals: join",
       "Dynamic array internals"
     ],
-    "book_chapter": "String Manipulation"
+    "book_chapter": "String Manipulation",
+    "book_id": 2
   },
   "string-matching": {
     "name": "String Matching",
@@ -4596,7 +4814,8 @@
     "other_tools": [
       "Rolling hash"
     ],
-    "book_chapter": "String Manipulation"
+    "book_chapter": "String Manipulation",
+    "book_id": 3
   },
   "string-split": {
     "name": "String Split",
@@ -4615,7 +4834,8 @@
       "Parsing",
       "Dynamic array internals"
     ],
-    "book_chapter": "String Manipulation"
+    "book_chapter": "String Manipulation",
+    "book_id": 1
   },
   "counting-paths": {
     "name": "Counting Paths",
@@ -4636,7 +4856,8 @@
       "Adjacency list properties",
       "Reusing subproblems"
     ],
-    "book_chapter": "Topological Sort"
+    "book_chapter": "Topological Sort",
+    "book_id": 4
   },
   "dag-distances": {
     "name": "DAG Distances",
@@ -4659,7 +4880,8 @@
       "Graph modeling",
       "Invariants"
     ],
-    "book_chapter": "Topological Sort"
+    "book_chapter": "Topological Sort",
+    "book_id": 1
   },
   "dag-longest-path": {
     "name": "DAG Longest Path",
@@ -4683,7 +4905,8 @@
       "Adjacency list properties",
       "Distance computation"
     ],
-    "book_chapter": "Topological Sort"
+    "book_chapter": "Topological Sort",
+    "book_id": 3
   },
   "dag-path-reconstruction": {
     "name": "DAG Path Reconstruction",
@@ -4706,7 +4929,8 @@
       "Hash maps",
       "Adjacency list properties"
     ],
-    "book_chapter": "Topological Sort"
+    "book_chapter": "Topological Sort",
+    "book_id": 2
   },
   "longest-path-of-increasing-degrees": {
     "name": "Longest Path Of Increasing Degrees",
@@ -4732,7 +4956,8 @@
       "Adjacency list properties",
       "Memoization/tabulation"
     ],
-    "book_chapter": "Topological Sort"
+    "book_chapter": "Topological Sort",
+    "book_id": 6
   },
   "number-of-palindromic-splits": {
     "name": "Number Of Palindromic Splits",
@@ -4761,7 +4986,8 @@
       "DP with range of choices",
       "Inward pointers"
     ],
-    "book_chapter": "Topological Sort"
+    "book_chapter": "Topological Sort",
+    "book_id": 8
   },
   "parallel-compilation": {
     "name": "Parallel Compilation",
@@ -4789,7 +5015,8 @@
       "Node weights",
       "Invariants"
     ],
-    "book_chapter": "Topological Sort"
+    "book_chapter": "Topological Sort",
+    "book_id": 5
   },
   "supersequence": {
     "name": "Supersequence",
@@ -4810,7 +5037,8 @@
       "Cycle detection (graphs)",
       "Adjacency list properties"
     ],
-    "book_chapter": "Topological Sort"
+    "book_chapter": "Topological Sort",
+    "book_id": 7
   },
   "aligned-chain": {
     "name": "Aligned Chain",
@@ -4830,7 +5058,8 @@
       "Passing info in trees",
       "Recursion"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 1
   },
   "aligned-path": {
     "name": "Aligned Path",
@@ -4855,7 +5084,8 @@
       "Recursion",
       "Recursive data structure"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 3
   },
   "bst-duplicate-detection": {
     "name": "BST Duplicate Detection",
@@ -4876,7 +5106,8 @@
       "Passing info in trees",
       "DFS/BFS tree"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 15
   },
   "bst-kth-element": {
     "name": "BST Kth Element",
@@ -4893,7 +5124,8 @@
       "Recursion",
       "Pre/in/post-order traversals"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 16
   },
   "bst-merge-into-array": {
     "name": "BST Merge Into Array",
@@ -4914,7 +5146,8 @@
       "Parallel pointers",
       "Pre/in/post-order traversals"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 17
   },
   "bst-nearest-value": {
     "name": "BST Nearest Value",
@@ -4931,7 +5164,8 @@
     "other_tools": [
       "BST search"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 13
   },
   "bst-search": {
     "name": "BST Search",
@@ -4949,7 +5183,8 @@
       "Recursion",
       "DFS/BFS tree"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 12
   },
   "bst-validation": {
     "name": "BST Validation",
@@ -4969,7 +5204,8 @@
       "Recursive data structure",
       "Recursion"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 14
   },
   "evaluate-expression-tree": {
     "name": "Evaluate Expression Tree",
@@ -4989,7 +5225,8 @@
       "Pre/in/post-order traversals",
       "DFS/BFS tree"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 7
   },
   "hidden-message": {
     "name": "Hidden Message",
@@ -5009,7 +5246,8 @@
       "Recursion",
       "String fundamentals: join"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 2
   },
   "invert-a-binary-tree": {
     "name": "Invert a Binary Tree",
@@ -5029,7 +5267,8 @@
       "Pre/in/post-order traversals",
       "In-place modification"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 6
   },
   "left-view": {
     "name": "Left View",
@@ -5049,7 +5288,8 @@
       "Queue internals",
       "Passing info in trees"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 8
   },
   "most-prolific-level": {
     "name": "Most Prolific Level",
@@ -5074,7 +5314,8 @@
       "Using queues for FIFO problems",
       "Recursive data structure"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 9
   },
   "most-protected-node": {
     "name": "Most Protected Node",
@@ -5095,7 +5336,8 @@
       "Pre/in/post-order traversals",
       "Recursion"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 11
   },
   "tree-layout": {
     "name": "Tree Layout",
@@ -5118,7 +5360,8 @@
       "DFS/BFS tree",
       "Hash maps"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 4
   },
   "triangle-count": {
     "name": "Triangle Count",
@@ -5142,7 +5385,8 @@
       "Recursive data structure",
       "Recursion"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 5
   },
   "zig-zag-order": {
     "name": "Zig-Zag Order",
@@ -5161,7 +5405,8 @@
       "Using queues for FIFO problems",
       "Queue internals"
     ],
-    "book_chapter": "Trees"
+    "book_chapter": "Trees",
+    "book_id": 10
   },
   "array-intersection": {
     "name": "Array Intersection",
@@ -5181,7 +5426,8 @@
       "Parallel pointers",
       "Sorting preprocessing"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 3
   },
   "array-reversal": {
     "name": "Array Reversal",
@@ -5198,7 +5444,8 @@
       "Inward pointers",
       "In-place modification"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 12
   },
   "count-pairs-with-sum-greater-than-target": {
     "name": "Count Pairs with Sum Greater Than Target",
@@ -5215,7 +5462,8 @@
     "other_tools": [
       "Inward pointers"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "duplicate-zeros-prefix": {
     "name": "Duplicate Zeros Prefix",
@@ -5231,7 +5479,8 @@
       "Parallel pointers",
       "In-place modification"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "dutch-flag-problem": {
     "name": "Dutch Flag Problem",
@@ -5250,7 +5499,8 @@
       "In-place modification",
       "Inward pointers"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 16
   },
   "in-place-duplicate-removal": {
     "name": "In-Place Duplicate Removal",
@@ -5269,7 +5519,8 @@
     "other_tools": [
       "In-place modification"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 14
   },
   "interval-intersection": {
     "name": "Interval Intersection",
@@ -5290,7 +5541,8 @@
       "Intervals",
       "Parallel pointers"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 11
   },
   "merge-two-sorted-arrays": {
     "name": "Merge Two Sorted Arrays",
@@ -5308,7 +5560,8 @@
     "other_tools": [
       "Parallel pointers"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 6
   },
   "missing-numbers-in-range": {
     "name": "Missing Numbers in Range",
@@ -5327,7 +5580,8 @@
     "other_tools": [
       "Parallel pointers"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 10
   },
   "move-subsequence-to-front": {
     "name": "Move Subsequence to Front",
@@ -5349,7 +5603,8 @@
       "Parallel pointers",
       "In-place modification"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "palindrome-check": {
     "name": "Palindrome Check",
@@ -5366,7 +5621,8 @@
     "other_tools": [
       "Inward pointers"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 1
   },
   "palindromic-sentence": {
     "name": "Palindromic Sentence",
@@ -5384,7 +5640,8 @@
       "Inward pointers",
       "Parsing"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 4
   },
   "parity-sorting": {
     "name": "Parity Sorting",
@@ -5408,7 +5665,8 @@
       "Parallel pointers",
       "Custom sort"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 13
   },
   "prefix-suffix-swap": {
     "name": "Prefix Suffix Swap",
@@ -5426,7 +5684,8 @@
       "Prefix-suffix swap trick",
       "In-place modification"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 17
   },
   "quicksort-partition": {
     "name": "Quicksort Partition",
@@ -5444,7 +5703,8 @@
       "In-place modification",
       "Inward pointers"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 15
   },
   "remove-sandwiched-negatives": {
     "name": "Remove Sandwiched Negatives",
@@ -5461,7 +5721,8 @@
     "other_tools": [
       "In-place modification"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "reverse-case-match": {
     "name": "Reverse Case Match",
@@ -5481,7 +5742,8 @@
       "Invariants",
       "Inward pointers"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 5
   },
   "reverse-words-in-string": {
     "name": "Reverse Words in String",
@@ -5505,7 +5767,8 @@
       "In-place modification",
       "String fundamentals: join"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "same-binary-messages": {
     "name": "Same Binary Messages",
@@ -5526,7 +5789,8 @@
       "Parsing",
       "Using stacks for LIFO problems"
     ],
-    "book_chapter": null
+    "book_chapter": null,
+    "book_id": null
   },
   "shift-word-to-back": {
     "name": "Shift Word to Back",
@@ -5549,7 +5813,8 @@
       "In-place modification",
       "Parallel pointers"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 18
   },
   "smaller-prefixes": {
     "name": "Smaller Prefixes",
@@ -5566,7 +5831,8 @@
       "Parallel pointers",
       "Prefix-sum array"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 2
   },
   "sort-valley-shaped-array": {
     "name": "Sort Valley Shaped Array",
@@ -5585,7 +5851,8 @@
       "Inward pointers",
       "Parallel pointers"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 9
   },
   "three-way-merge-without-duplicates": {
     "name": "Three Way Merge Without Duplicates",
@@ -5602,7 +5869,8 @@
     "other_tools": [
       "Parallel pointers"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 8
   },
   "two-sum": {
     "name": "2-Sum",
@@ -5621,7 +5889,8 @@
       "Parallel pointers",
       "Sorting preprocessing"
     ],
-    "book_chapter": "Two Pointers"
+    "book_chapter": "Two Pointers",
+    "book_id": 7
   },
   "edge-in-mst": {
     "name": "Edge In MST",
@@ -5646,7 +5915,8 @@
       "Graph modeling",
       "Sorting preprocessing"
     ],
-    "book_chapter": "Union-Find"
+    "book_chapter": "Union-Find",
+    "book_id": 4
   },
   "largest-connected-component-over-time": {
     "name": "Largest Connected Component Over Time",
@@ -5666,7 +5936,8 @@
       "Parallel pointers",
       "Graph modeling"
     ],
-    "book_chapter": "Union-Find"
+    "book_chapter": "Union-Find",
+    "book_id": 6
   },
   "minimum-spanning-tree": {
     "name": "Minimum Spanning Tree",
@@ -5691,7 +5962,8 @@
       "Graph modeling",
       "Cycle detection (graphs)"
     ],
-    "book_chapter": "Union-Find"
+    "book_chapter": "Union-Find",
+    "book_id": 1
   },
   "mst-reconstruction": {
     "name": "MST Reconstruction",
@@ -5718,7 +5990,8 @@
       "Greedy choice and counterexamples",
       "Sorting preprocessing"
     ],
-    "book_chapter": "Union-Find"
+    "book_chapter": "Union-Find",
+    "book_id": 3
   },
   "num-connected-components-over-time": {
     "name": "Num Connected Components Over Time",
@@ -5740,7 +6013,8 @@
       "Parallel pointers",
       "Graph modeling"
     ],
-    "book_chapter": "Union-Find"
+    "book_chapter": "Union-Find",
+    "book_id": 5
   },
   "num-groups-operation": {
     "name": "Num Groups Operation",
@@ -5761,7 +6035,8 @@
       "Amortized analysis",
       "Hash maps"
     ],
-    "book_chapter": "Union-Find"
+    "book_chapter": "Union-Find",
+    "book_id": 2
   },
   "presidential-election": {
     "name": "Presidential Election",
@@ -5785,6 +6060,7 @@
       "Greedy choice and counterexamples",
       "Custom sort"
     ],
-    "book_chapter": "Union-Find"
+    "book_chapter": "Union-Find",
+    "book_id": 7
   }
 }
