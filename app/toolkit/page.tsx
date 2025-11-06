@@ -661,7 +661,7 @@ Format:
                   </AccordionTrigger>
                 </div>
               </div>
-              <AccordionContent className="px-6 pb-3">
+              <AccordionContent className="px-6 pt-3 pb-3">
                 <div className="space-y-2">
                   {category.tools.map((tool) => (
                     <div
@@ -694,7 +694,7 @@ Format:
                             />
                           </div>
 
-                          <div className="flex-1 min-w-0 flex items-center gap-2">
+                          <div className="flex-1 min-w-0 flex items-start gap-2 flex-wrap">
                             <label
                               htmlFor={tool.id}
                               className={`font-medium cursor-pointer transition-all duration-300 text-xs md:text-sm ${
@@ -706,12 +706,12 @@ Format:
                               {tool.name}
                             </label>
                             {tool.extraCredit && (
-                              <span className="text-[10px] md:text-xs bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-1.5 md:px-2 py-0.5 rounded flex-shrink-0">
+                              <span className="text-[10px] md:text-xs bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300 px-1.5 md:px-2 py-0.5 rounded flex-shrink-0 self-start">
                                 Extra Credit
                               </span>
                             )}
                             <Info
-                              className="h-4 w-4 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 cursor-help flex-shrink-0"
+                              className="h-4 w-4 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 cursor-help flex-shrink-0 self-start mt-0.5"
                               onMouseEnter={(e) =>
                                 handleInfoHover(e, tool.wantedOutcome)
                               }
