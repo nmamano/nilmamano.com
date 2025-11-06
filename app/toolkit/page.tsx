@@ -90,6 +90,7 @@ export default function Toolset() {
   const [isHowToUseOpen, setIsHowToUseOpen] = useState(false);
   const [isExtendedMode, setIsExtendedMode] = useState(true);
   const confettiTriggeredRef = useRef<string | null>(null);
+  const tooltipRef = useRef<HTMLDivElement | null>(null);
   const previousCompletionCountRef = useRef<{ core: number; extended: number }>(
     {
       core: 0,
@@ -370,6 +371,49 @@ Format:
     0
   );
 
+  // Adjust tooltip position to prevent offscreen clipping
+  useEffect(() => {
+    if (!tooltip.show || !tooltipRef.current) return;
+
+    // Use requestAnimationFrame to ensure DOM has rendered
+    const adjustPosition = () => {
+      if (!tooltipRef.current) return;
+
+      setTooltip((prev) => {
+        if (!tooltipRef.current) return prev;
+
+        const tooltipEl = tooltipRef.current;
+        const rect = tooltipEl.getBoundingClientRect();
+        const viewportWidth = window.innerWidth;
+        const padding = 8; // Minimum padding from viewport edges
+
+        // Calculate current left and right edges (accounting for translate(-50%))
+        const currentLeft = prev.x - rect.width / 2;
+        const currentRight = prev.x + rect.width / 2;
+
+        let adjustedX = prev.x;
+
+        // Check if tooltip is cut off on the left
+        if (currentLeft < padding) {
+          adjustedX = rect.width / 2 + padding;
+        }
+        // Check if tooltip is cut off on the right
+        else if (currentRight > viewportWidth - padding) {
+          adjustedX = viewportWidth - rect.width / 2 - padding;
+        }
+
+        // Only update if position needs adjustment
+        if (Math.abs(adjustedX - prev.x) > 0.1) {
+          return { ...prev, x: adjustedX };
+        }
+
+        return prev;
+      });
+    };
+
+    requestAnimationFrame(adjustPosition);
+  }, [tooltip.show, tooltip.content]);
+
   // Trigger confetti when progress reaches 100%
   useEffect(() => {
     const isComplete =
@@ -463,6 +507,7 @@ Format:
       {/* Tooltip */}
       {tooltip.show && (
         <div
+          ref={tooltipRef}
           className="fixed z-50 px-3 py-2 bg-gray-900 dark:bg-slate-800 text-white dark:text-gray-100 text-sm rounded-lg shadow-lg whitespace-normal max-w-md pointer-events-none border border-slate-700"
           style={{
             left: tooltip.x,
