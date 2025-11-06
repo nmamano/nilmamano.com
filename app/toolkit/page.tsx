@@ -53,7 +53,7 @@ const getProblemUrl = (problemName: string): string => {
 interface Tool {
   id: string;
   name: string;
-  description: string;
+  wantedOutcome: string;
   primaryProblem: string | null;
   otherProblems: string[];
   bookChapter: string | null;
@@ -103,21 +103,21 @@ export default function Toolset() {
     const toolMap = new Map<string, ToolCategory>();
 
     for (const [toolId, toolData] of Object.entries(toolManifest)) {
-      // Filter out tools without Primary Problem
-      if (!toolData["Primary Problem"]) {
+      // Filter out tools without primary_problem
+      if (!toolData.primary_problem) {
         continue;
       }
 
       const tool: Tool = {
         id: toolId,
-        name: toolData.Name,
-        description: toolData.Description,
-        primaryProblem: toolData["Primary Problem"],
-        otherProblems: toolData["Other Problems"] || [],
+        name: toolData.name,
+        wantedOutcome: toolData.wanted_outcome,
+        primaryProblem: toolData.primary_problem,
+        otherProblems: toolData.other_problems || [],
         bookChapter: toolData.book_chapter || null,
-        chapterNumber: toolData.chapter_number || null,
+        chapterNumber: toolData.chapter_number ?? null,
         bookId: toolData.book_id ?? null,
-        extraCredit: toolData["Extra Credit"] || false,
+        extraCredit: toolData.extra_credit || false,
       };
 
       const categoryName = tool.bookChapter || "Other";
@@ -294,20 +294,20 @@ export default function Toolset() {
     setTooltip({ show: false, x: 0, y: 0, content: "" });
   };
 
-  const handleInfoHover = (event: React.MouseEvent, description: string) => {
+  const handleInfoHover = (event: React.MouseEvent, wantedOutcome: string) => {
     const rect = event.currentTarget.getBoundingClientRect();
     setTooltip({
       show: true,
       x: rect.left + rect.width / 2,
       y: rect.top - 10,
-      content: description,
+      content: `Wanted outcome: ${wantedOutcome}`,
     });
   };
 
-  const copyLearningPrompt = (toolName: string, description: string) => {
+  const copyLearningPrompt = (toolName: string, wantedOutcome: string) => {
     const text = `Teach me this concept as it applies to DSA interviews: ${toolName}
 
-Wanted outcome: ${description}
+Wanted outcome: ${wantedOutcome}
 
 Format:
 
@@ -713,7 +713,7 @@ Format:
                             <Info
                               className="h-4 w-4 text-gray-400 dark:text-gray-500 hover:text-gray-600 dark:hover:text-gray-300 cursor-help flex-shrink-0"
                               onMouseEnter={(e) =>
-                                handleInfoHover(e, tool.description)
+                                handleInfoHover(e, tool.wantedOutcome)
                               }
                               onMouseLeave={handleMouseLeave}
                             />
@@ -808,7 +808,7 @@ Format:
                             size="sm"
                             className="text-[10px] md:text-xs px-1.5 md:px-2 py-0.5 md:py-1 h-6 md:h-7 bg-green-50 dark:bg-green-900/30 border-green-300 dark:border-green-700 text-green-700 dark:text-green-300 hover:bg-green-100 dark:hover:bg-green-900/50 flex items-center gap-1"
                             onClick={() =>
-                              copyLearningPrompt(tool.name, tool.description)
+                              copyLearningPrompt(tool.name, tool.wantedOutcome)
                             }
                           >
                             <Copy className="h-2.5 w-2.5 md:h-3 md:w-3 flex-shrink-0" />

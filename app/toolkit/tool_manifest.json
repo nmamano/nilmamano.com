@@ -1,9 +1,9 @@
 {
-  "decrease-the-difficulty-break-down-the-problem": {
-    "Name": "Decrease the difficulty: break down the problem",
-    "Extra Credit": false,
-    "Primary Problem": "Longest Alphabet Chain",
-    "Other Problems": [
+  "breaking-down-the-problem": {
+    "name": "Breaking down the problem",
+    "extra_credit": false,
+    "primary_problem": "Longest Alphabet Chain",
+    "other_problems": [
       "Action Log Anomalies",
       "Aligned Chain",
       "Aligned Path",
@@ -87,16 +87,16 @@
       "YouTube Video Unusual Days",
       "k-Sorted Array"
     ],
-    "Description": "Decomposing a hard problem into more manageable steps.",
+    "wanted_outcome": "Being able to decompose a hard problem into manageable steps (general problem-solving technique).",
     "book_chapter": "Problem-Solving Boosters",
     "chapter_number": 24,
     "book_id": 14
   },
-  "hunt-for-properties": {
-    "Name": "Hunt for properties",
-    "Extra Credit": false,
-    "Primary Problem": "List of Divisors",
-    "Other Problems": [
+  "hunting-for-properties": {
+    "name": "Hunting for properties",
+    "extra_credit": false,
+    "primary_problem": "List of Divisors",
+    "other_problems": [
       "2-Array 2-Sum",
       "Action Log Anomalies",
       "Aligned Path",
@@ -164,16 +164,16 @@
       "Word Ladder Game Variation",
       "k-Sorted Array"
     ],
-    "Description": "A problem-solving approach where, instead of thinking of algorithms, we try to uncover new properties about the problem not mentioned in the statement, which could be useful in the design of algorithms.",
+    "wanted_outcome": "Knowing when to stop to search for additional properties about the problem (instead of thinking about algorithms) that could be useful in the design of algorithms (general problem-solving technique).",
     "book_chapter": "Problem-Solving Boosters",
     "chapter_number": 24,
     "book_id": 3
   },
-  "hunt-for-properties-case-analysis": {
-    "Name": "Hunt for properties: case analysis",
-    "Extra Credit": false,
-    "Primary Problem": "Magic Balls",
-    "Other Problems": [
+  "case-analysis": {
+    "name": "Case analysis",
+    "extra_credit": false,
+    "primary_problem": "Magic Balls",
+    "other_problems": [
       "Center Assignment",
       "Escape With All Clues",
       "First K",
@@ -196,41 +196,41 @@
       "Valley Bottom",
       "Word Ladder Game Variation"
     ],
-    "Description": "Classifying the inputs into cases, and tackling each one separately.",
+    "wanted_outcome": "Knowing when to classify inputs into cases that are easier to handle separately (general problem-solving technique).",
     "book_chapter": "Problem-Solving Boosters",
     "chapter_number": 24,
     "book_id": 5
   },
-  "hunt-for-properties-diy-technique": {
-    "Name": "Hunt for properties: DIY technique",
-    "Extra Credit": false,
-    "Primary Problem": "Sub Permutations",
-    "Other Problems": [
+  "diy-technique": {
+    "name": "DIY technique",
+    "extra_credit": false,
+    "primary_problem": "Sub Permutations",
+    "other_problems": [
       "Hiring And Training",
       "Make Playlist"
     ],
-    "Description": "Taking a non-trivial example, solving it by hand without thinking about algorithms, and then trying to reverse engineer the shortcuts your brain followed.",
+    "wanted_outcome": "Being able to use the DIY technique to come up with new solutions: taking a non-trivial example, solving it by hand (without thinking about algorithms), and then trying to reverse engineer the shortcuts your brain followed (general problem-solving technique).",
     "book_chapter": "Problem-Solving Boosters",
     "chapter_number": 24,
     "book_id": 4
   },
-  "hunt-for-properties-reverse-engineer-the-output-pattern": {
-    "Name": "Hunt for properties: reverse engineer the output pattern",
-    "Extra Credit": false,
-    "Primary Problem": "Hiring And Training",
-    "Other Problems": [
+  "reverse-engineering-the-output-pattern": {
+    "name": "Reverse engineering the output pattern",
+    "extra_credit": false,
+    "primary_problem": "Hiring And Training",
+    "other_problems": [
       "Self-Doubling Sequence"
     ],
-    "Description": "Computing the outputs for the few first inputs and trying to deduce the formula that yields those outputs.",
+    "wanted_outcome": "Being able to compute the outputs for the few first inputs manually to deduce the formula that yields those outputs (general problem-solving technique).",
     "book_chapter": "Problem-Solving Boosters",
     "chapter_number": 24,
     "book_id": 6
   },
-  "hunt-for-properties-sketch-a-diagram": {
-    "Name": "Hunt for properties: sketch a diagram",
-    "Extra Credit": false,
-    "Primary Problem": "Interval XOR",
-    "Other Problems": [
+  "sketching-a-diagram": {
+    "name": "Sketching a diagram",
+    "extra_credit": false,
+    "primary_problem": "Interval XOR",
+    "other_problems": [
       "Company Launches",
       "Interval Intersection",
       "Linked-List Cycle Length",
@@ -242,26 +242,26 @@
       "White Hat Hacker",
       "YouTube Video Unusual Days"
     ],
-    "Description": "Visualizing the problem to uncover useful properties.",
+    "wanted_outcome": "Knowing how to visualize the problem to reveal useful properties (general problem-solving technique).",
     "book_chapter": "Problem-Solving Boosters",
     "chapter_number": 24,
     "book_id": 7
   },
   "line-sweep-algorithm": {
-    "Name": "Line-sweep algorithm",
-    "Extra Credit": true,
-    "Primary Problem": "Company Launches",
-    "Other Problems": [],
-    "Description": "Processing geometric elements in order by one coordinate.",
+    "name": "Line-sweep algorithm",
+    "extra_credit": true,
+    "primary_problem": "Company Launches",
+    "other_problems": [],
+    "wanted_outcome": "Being able to implement a line-sweep algorithm - sorting geometric elements by one coordinate and processing them in order.",
     "book_chapter": "Problem-Solving Boosters",
     "chapter_number": 24,
     "book_id": 9
   },
   "amortized-analysis": {
-    "Name": "Amortized analysis",
-    "Extra Credit": false,
-    "Primary Problem": "Implement Dynamic Array",
-    "Other Problems": [
+    "name": "Amortized analysis",
+    "extra_credit": false,
+    "primary_problem": "Implement Dynamic Array",
+    "other_problems": [
       "Hash Map Class",
       "Hash Map Class Extensions",
       "Hash Set Class",
@@ -273,16 +273,16 @@
       "Sliding Window Max",
       "Viewer Counter Class"
     ],
-    "Description": "An analysis technique for understanding the average time complexity of operations over a sequence.",
+    "wanted_outcome": "Being able to use amortized analysis to analyze the average time complexity of data structure operations.",
     "book_chapter": "Dynamic Arrays",
     "chapter_number": 25,
     "book_id": 1
   },
-  "dynamic-array-internals": {
-    "Name": "Dynamic array internals",
-    "Extra Credit": true,
-    "Primary Problem": "Extra Dynamic Array Operations",
-    "Other Problems": [
+  "tinkering-with-dynamic-array-internals": {
+    "name": "Tinkering with dynamic array internals",
+    "extra_credit": true,
+    "primary_problem": "Extra Dynamic Array Operations",
+    "other_problems": [
       "Current URL With Forward",
       "Hash Map Class",
       "Hash Map Class Extensions",
@@ -293,103 +293,90 @@
       "String Join",
       "String Split"
     ],
-    "Description": "Understanding how dynamic arrays handle resizing internally; understanding amortized analysis.",
+    "wanted_outcome": "Being able to understand how dynamic arrays handle resizing internally and apply amortized analysis.",
     "book_chapter": "Dynamic Arrays",
     "chapter_number": 25,
     "book_id": 2
   },
   "rolling-hash": {
-    "Name": "Rolling hash",
-    "Extra Credit": true,
-    "Primary Problem": "String Matching",
-    "Other Problems": [
+    "name": "Rolling hash",
+    "extra_credit": true,
+    "primary_problem": "String Matching",
+    "other_problems": [
       "Longest Repeated Substring"
     ],
-    "Description": "A hash function that can be updated incrementally as a window slides through text.",
+    "wanted_outcome": "Knowing how to implement a rolling hash - a hash function that is updated incrementally as a window slides through text.",
     "book_chapter": "String Manipulation",
     "chapter_number": 26,
     "book_id": 3
   },
-  "string-fundamentals-join": {
-    "Name": "String fundamentals: join",
-    "Extra Credit": false,
-    "Primary Problem": "String Join",
-    "Other Problems": [
+  "manipulating-strings": {
+    "name": "Manipulating strings",
+    "extra_credit": false,
+    "primary_problem": "String Join",
+    "other_problems": [
+      "Count Substrings Without Letter",
       "Decode A String",
       "Hidden Message",
+      "Most Frequent Octet",
       "OS Paths",
       "Reverse Words in String",
       "Simple Text Editor",
-      "Thesaurusly",
-      "To Be or Not to Be"
-    ],
-    "Description": "Concatenating strings with a separator.",
-    "book_chapter": "String Manipulation",
-    "chapter_number": 26,
-    "book_id": 2
-  },
-  "string-fundamentals-split": {
-    "Name": "String fundamentals: split",
-    "Extra Credit": false,
-    "Primary Problem": "String Split",
-    "Other Problems": [
-      "Count Substrings Without Letter",
-      "Most Frequent Octet",
-      "OS Paths",
+      "String Split",
       "Thesaurusly",
       "To Be or Not to Be",
       "Unique Movie Titles"
     ],
-    "Description": "Splitting a string into parts based on a delimiter.",
+    "wanted_outcome": "Being able to implement basic string operations like join and split manually.",
     "book_chapter": "String Manipulation",
     "chapter_number": 26,
-    "book_id": 1
+    "book_id": 2
   },
-  "seeker-and-writer": {
-    "Name": "Seeker and writer",
-    "Extra Credit": false,
-    "Primary Problem": "In-Place Duplicate Removal",
-    "Other Problems": [
+  "seeker-and-writer-pointers": {
+    "name": "Seeker and writer pointers",
+    "extra_credit": false,
+    "primary_problem": "In-Place Duplicate Removal",
+    "other_problems": [
       "Move Subsequence to Front",
       "Remove Sandwiched Negatives",
       "Reverse Words in String",
       "Shift Word to Back"
     ],
-    "Description": "A two-pointer in-place modification technique where one pointer seeks elements to write and another writes them.",
+    "wanted_outcome": "Knowing how to use two pointers for in-place array modification - one seeking elements to write and the other writing them.",
     "book_chapter": "Two Pointers",
     "chapter_number": 27,
     "book_id": 14
   },
   "counting-sort": {
-    "Name": "Counting sort",
-    "Extra Credit": true,
-    "Primary Problem": "Dutch Flag Problem",
-    "Other Problems": [
+    "name": "Counting sort",
+    "extra_credit": true,
+    "primary_problem": "Dutch Flag Problem",
+    "other_problems": [
       "Google Colors"
     ],
-    "Description": "A sorting algorithm for when the number of elements is larger than the range of values.",
+    "wanted_outcome": "Knowing counting sort - a sorting algorithm for when the number of elements is larger than the range of values.",
     "book_chapter": "Two Pointers",
     "chapter_number": 27,
     "book_id": 16
   },
   "fast-and-slow-pointers": {
-    "Name": "Fast and slow pointers",
-    "Extra Credit": false,
-    "Primary Problem": "Smaller Prefixes",
-    "Other Problems": [
+    "name": "Fast and slow pointers",
+    "extra_credit": false,
+    "primary_problem": "Smaller Prefixes",
+    "other_problems": [
       "Linked-List Cycle Detection",
       "Linked-List Cycle Length"
     ],
-    "Description": "Using two pointers moving at different speeds through an array.",
+    "wanted_outcome": "Being able to use two pointers moving at different speeds through an array.",
     "book_chapter": "Two Pointers",
     "chapter_number": 27,
     "book_id": 2
   },
   "in-place-modification": {
-    "Name": "In-place modification",
-    "Extra Credit": false,
-    "Primary Problem": "Parity Sorting",
-    "Other Problems": [
+    "name": "In-place modification",
+    "extra_credit": false,
+    "primary_problem": "Parity Sorting",
+    "other_problems": [
       "Array Reversal",
       "Count Grid Islands",
       "Duplicate Zeros Prefix",
@@ -408,30 +395,30 @@
       "Shift Word to Back",
       "Spreadsheet"
     ],
-    "Description": "Modifying arrays without using extra space.",
+    "wanted_outcome": "Being able to modify arrays in place without extra space.",
     "book_chapter": "Two Pointers",
     "chapter_number": 27,
     "book_id": 13
   },
-  "intervals": {
-    "Name": "Intervals",
-    "Extra Credit": false,
-    "Primary Problem": "Interval Intersection",
-    "Other Problems": [
+  "working-with-intervals": {
+    "name": "Working with intervals",
+    "extra_credit": false,
+    "primary_problem": "Interval Intersection",
+    "other_problems": [
       "Fewest Script Runs",
       "Interval XOR",
       "Most Non-Overlapping Intervals"
     ],
-    "Description": "Working with intervals.",
+    "wanted_outcome": "Being comfortable with problems where the input consists of intervals.",
     "book_chapter": "Two Pointers",
     "chapter_number": 27,
     "book_id": 11
   },
   "invariants": {
-    "Name": "Invariants",
-    "Extra Credit": false,
-    "Primary Problem": "Reverse Case Match",
-    "Other Problems": [
+    "name": "Invariants",
+    "extra_credit": false,
+    "primary_problem": "Reverse Case Match",
+    "other_problems": [
       "Adjacency List Validation",
       "Balanced Partition",
       "Compress Array By K",
@@ -446,16 +433,16 @@
       "Tic-Tac-Toe Position",
       "Valley Bottom"
     ],
-    "Description": "Using invariants to guide tricky implementations.",
+    "wanted_outcome": "Being able to define and maintain invariants to guide tricky implementations.",
     "book_chapter": "Two Pointers",
     "chapter_number": 27,
     "book_id": 5
   },
   "inward-pointers": {
-    "Name": "Inward pointers",
-    "Extra Credit": false,
-    "Primary Problem": "Palindromic Sentence",
-    "Other Problems": [
+    "name": "Inward pointers",
+    "extra_credit": false,
+    "primary_problem": "Palindromic Sentence",
+    "other_problems": [
       "2-Sum",
       "3-Sum",
       "Array Reversal",
@@ -472,16 +459,16 @@
       "Sort Valley Shaped Array",
       "Strong Start And Ending"
     ],
-    "Description": "Two pointers starting at the ends and moving toward the center.",
+    "wanted_outcome": "Being able to use two pointers that move inward from the ends toward the center.",
     "book_chapter": "Two Pointers",
     "chapter_number": 27,
     "book_id": 4
   },
   "parallel-pointers": {
-    "Name": "Parallel pointers",
-    "Extra Credit": false,
-    "Primary Problem": "Array Intersection",
-    "Other Problems": [
+    "name": "Parallel pointers",
+    "extra_credit": false,
+    "primary_problem": "Array Intersection",
+    "other_problems": [
       "2-Sum",
       "Array Reversal",
       "BST Merge Into Array",
@@ -504,39 +491,39 @@
       "Sort Valley Shaped Array",
       "Three Way Merge Without Duplicates"
     ],
-    "Description": "Using two pointers through two separate arrays.",
+    "wanted_outcome": "Being able to use two pointers across two arrays.",
     "book_chapter": "Two Pointers",
     "chapter_number": 27,
     "book_id": 3
   },
   "prefix-suffix-swap-trick": {
-    "Name": "Prefix-suffix swap trick",
-    "Extra Credit": true,
-    "Primary Problem": "Prefix Suffix Swap",
-    "Other Problems": [],
-    "Description": "A trick for swapping a prefix and a suffix in an array in place.",
+    "name": "Prefix-suffix swap trick",
+    "extra_credit": true,
+    "primary_problem": "Prefix Suffix Swap",
+    "other_problems": [],
+    "wanted_outcome": "Being able to swap a prefix and a suffix in place in an array - with the triple subarray reversal trick.",
     "book_chapter": "Two Pointers",
     "chapter_number": 27,
     "book_id": 17
   },
-  "selecting-best-iteration-order": {
-    "Name": "Selecting best iteration order",
-    "Extra Credit": true,
-    "Primary Problem": "Sort Valley Shaped Array",
-    "Other Problems": [
+  "selecting-the-best-iteration-order": {
+    "name": "Selecting the best iteration order",
+    "extra_credit": true,
+    "primary_problem": "Sort Valley Shaped Array",
+    "other_problems": [
       "Snowprints",
       "Spiral Order"
     ],
-    "Description": "Choosing the best order of iteration to simplify logic.",
+    "wanted_outcome": "Being able to choose the iteration order that simplifies the logic the most.",
     "book_chapter": "Two Pointers",
     "chapter_number": 27,
     "book_id": 9
   },
   "directions-array-to-visit-grid-neighbors": {
-    "Name": "Directions array to visit grid neighbors",
-    "Extra Credit": false,
-    "Primary Problem": "Chess Moves",
-    "Other Problems": [
+    "name": "Directions array to visit grid neighbors",
+    "extra_credit": false,
+    "primary_problem": "Chess Moves",
+    "other_problems": [
       "4-Directional Max-Sum Path",
       "4-Directional Max-Sum Path Reconstruction",
       "Count 0-Sum Paths",
@@ -550,66 +537,66 @@
       "Spiral Order",
       "Tunnel Depth"
     ],
-    "Description": "Iterating through an array of direction vectors to visit neighbors in a grid.",
+    "wanted_outcome": "Knowing how to write clean code to iterate over grid neighbors by using a directions array.",
     "book_chapter": "Grids & Matrices",
     "chapter_number": 28,
     "book_id": 1
   },
-  "handle-wraparounds-with-mod": {
-    "Name": "Handle wraparounds with mod",
-    "Extra Credit": false,
-    "Primary Problem": "Spiral Order",
-    "Other Problems": [],
-    "Description": "Using modulo arithmetic to cycle through options.",
+  "handling-wraparounds-with-mod": {
+    "name": "Handling wraparounds with mod",
+    "extra_credit": false,
+    "primary_problem": "Spiral Order",
+    "other_problems": [],
+    "wanted_outcome": "Knowing how to simplify code by using modulo arithmetic to cycle through options.",
     "book_chapter": "Grids & Matrices",
     "chapter_number": 28,
     "book_id": 3
   },
-  "basic-matrix-algebra": {
-    "Name": "Basic matrix algebra",
-    "Extra Credit": true,
-    "Primary Problem": "Matrix Operations",
-    "Other Problems": [
+  "manipulating-matrices": {
+    "name": "Manipulating matrices",
+    "extra_credit": true,
+    "primary_problem": "Matrix Operations",
+    "other_problems": [
       "Matrix Multiplication",
       "Matrix Rotation",
       "Symmetric Matrix"
     ],
-    "Description": "Overview of matrix operations like rotation, transposition, and reflection.",
+    "wanted_outcome": "Being able to do basic matrix operations - like rotate, transpose, and reflect.",
     "book_chapter": "Grids & Matrices",
     "chapter_number": 28,
     "book_id": 8
   },
-  "double-counting": {
-    "Name": "Double counting",
-    "Extra Credit": true,
-    "Primary Problem": "Subgrid Sums",
-    "Other Problems": [],
-    "Description": "Avoiding double counting when adding overlapping quantities.",
+  "rectifying-double-counting": {
+    "name": "Rectifying double counting",
+    "extra_credit": true,
+    "primary_problem": "Subgrid Sums",
+    "other_problems": [],
+    "wanted_outcome": "Being able to avoid or correct double counting when adding overlapping quantities.",
     "book_chapter": "Grids & Matrices",
     "chapter_number": 28,
     "book_id": 7
   },
   "reusing-subproblems": {
-    "Name": "Reusing subproblems",
-    "Extra Credit": false,
-    "Primary Problem": "Subgrid Maximums",
-    "Other Problems": [
+    "name": "Reusing subproblems",
+    "extra_credit": false,
+    "primary_problem": "Subgrid Maximums",
+    "other_problems": [
       "Counting Paths",
       "Longest Common Subsequence",
       "Restaurant Ratings",
       "Subgrid Sums",
       "Tridimensional Lego Castle"
     ],
-    "Description": "Identifying and reusing solutions to subproblems.",
+    "wanted_outcome": "Being able to identify overlapping subproblems and reuse their solutions.",
     "book_chapter": "Grids & Matrices",
     "chapter_number": 28,
     "book_id": 6
   },
-  "subgrid-traversals": {
-    "Name": "Subgrid traversals",
-    "Extra Credit": false,
-    "Primary Problem": "Valid Sudoku",
-    "Other Problems": [
+  "implementing-subgrid-traversals": {
+    "name": "Implementing subgrid traversals",
+    "extra_credit": false,
+    "primary_problem": "Valid Sudoku",
+    "other_problems": [
       "Chess Moves",
       "Count Grid Islands",
       "Image Filter",
@@ -619,16 +606,16 @@
       "Subgrid Sums",
       "Validate Matrix Rows and Columns"
     ],
-    "Description": "Knowing how to iterate through arbitrary subgrids of a grid.",
+    "wanted_outcome": "Being able to iterate cleanly over arbitrary subgrids.",
     "book_chapter": "Grids & Matrices",
     "chapter_number": 28,
     "book_id": 5
   },
   "transition-point-recipe": {
-    "Name": "Transition-point recipe",
-    "Extra Credit": false,
-    "Primary Problem": "CCTV Footage",
-    "Other Problems": [
+    "name": "Transition-point recipe",
+    "extra_credit": false,
+    "primary_problem": "CCTV Footage",
+    "other_problems": [
       "2-Array 2-Sum",
       "First False In Descending Boolean Array",
       "First Non-Negative Number",
@@ -649,39 +636,39 @@
       "Valley Bottom",
       "Water Refilling"
     ],
-    "Description": "A way of modeling any binary search as finding a point in the input range where a property transitions from false to true.",
+    "wanted_outcome": "Having a binary search recipe that works for any binary search problem; it works by modeling any binary search as finding a transition point from a 'before' range to an 'after' range.",
     "book_chapter": "Binary Search",
     "chapter_number": 29,
     "book_id": 2
   },
   "exponential-search": {
-    "Name": "Exponential search",
-    "Extra Credit": true,
-    "Primary Problem": "Search in Huge Array",
-    "Other Problems": [
+    "name": "Exponential search",
+    "extra_credit": true,
+    "primary_problem": "Search in Huge Array",
+    "other_problems": [
       "Self-Doubling Sequence",
       "Water Refilling"
     ],
-    "Description": "A way to find the upper bound for binary search when not explicitly given.",
+    "wanted_outcome": "Knowing how to find an upper bound for binary search via exponential search.",
     "book_chapter": "Binary Search",
     "chapter_number": 29,
     "book_id": 8
   },
   "grid-flattening": {
-    "Name": "Grid flattening",
-    "Extra Credit": true,
-    "Primary Problem": "Search in Sorted Grid",
-    "Other Problems": [],
-    "Description": "An index mapping for visualizing 2D grids as 1D arrays.",
+    "name": "Grid flattening",
+    "extra_credit": true,
+    "primary_problem": "Search in Sorted Grid",
+    "other_problems": [],
+    "wanted_outcome": "Knowing how to map between 2D grid coordinates and 1D indices.",
     "book_chapter": "Binary Search",
     "chapter_number": 29,
     "book_id": 7
   },
-  "binary-search-for-first-and-last": {
-    "Name": "Binary search for first and last",
-    "Extra Credit": true,
-    "Primary Problem": "Target Count Divisible by K",
-    "Other Problems": [
+  "binary-search-with-duplicates": {
+    "name": "Binary search with duplicates",
+    "extra_credit": true,
+    "primary_problem": "Target Count Divisible by K",
+    "other_problems": [
       "CCTV Footage",
       "First False In Descending Boolean Array",
       "First Non-Negative Number",
@@ -690,16 +677,16 @@
       "Tide Aerial View",
       "Time Traveler Max Year"
     ],
-    "Description": "Binary searching for the first and last matches in an array with duplicates.",
+    "wanted_outcome": "Being able to binary search for the first and last occurrences in arrays with duplicates.",
     "book_chapter": "Binary Search",
     "chapter_number": 29,
     "book_id": 5
   },
   "guess-and-check-technique": {
-    "Name": "Guess-and-check technique",
-    "Extra Credit": false,
-    "Primary Problem": "Min Pages Per Day",
-    "Other Problems": [
+    "name": "Guess-and-check technique",
+    "extra_credit": false,
+    "primary_problem": "Min Pages Per Day",
+    "other_problems": [
       "CCTV Footage",
       "First Non-Negative Number",
       "First Time All Connected",
@@ -714,16 +701,16 @@
       "Valley Bottom",
       "Water Refilling"
     ],
-    "Description": "A way of using binary search for optimization problems.",
+    "wanted_outcome": "Being able to binary search for the optimal value of optimization problems.",
     "book_chapter": "Binary Search",
     "chapter_number": 29,
     "book_id": 11
   },
   "min-max-optimization": {
-    "Name": "Min-max optimization",
-    "Extra Credit": true,
-    "Primary Problem": "Min Subarray Sum Split",
-    "Other Problems": [
+    "name": "Min-max optimization",
+    "extra_credit": true,
+    "primary_problem": "Min Subarray Sum Split",
+    "other_problems": [
       "Graph Hangout",
       "Min Pages Per Day",
       "Minimum Steps to One",
@@ -732,16 +719,16 @@
       "Smallest Range With K Elements",
       "Water Refilling"
     ],
-    "Description": "Dealing with problems about minimizing maximum values or vice versa.",
+    "wanted_outcome": "Being comfortable with problems about minimizing a maximum (or vice versa).",
     "book_chapter": "Binary Search",
     "chapter_number": 29,
     "book_id": 9
   },
-  "frequency-maps": {
-    "Name": "Frequency maps",
-    "Extra Credit": false,
-    "Primary Problem": "Most Shared Account",
-    "Other Problems": [
+  "frequency-map": {
+    "name": "Frequency map",
+    "extra_credit": false,
+    "primary_problem": "Most Shared Account",
+    "other_problems": [
       "Count Subarrays With All Remainders",
       "Count Subarrays With Sum K",
       "Count Unique Submultisets With Sum Zero",
@@ -766,16 +753,40 @@
       "Unique K Pairs",
       "Word Expansion Class"
     ],
-    "Description": "Using hash maps to count occurrences.",
+    "wanted_outcome": "Being able to count occurrences with hash maps.",
     "book_chapter": "Sets & Maps",
     "chapter_number": 30,
     "book_id": 2
   },
-  "class-implementation": {
-    "Name": "Class implementation",
-    "Extra Credit": false,
-    "Primary Problem": "Domain Resolver",
-    "Other Problems": [
+  "imposing-a-canonical-order": {
+    "name": "Imposing a canonical order",
+    "extra_credit": false,
+    "primary_problem": "Multi-Account Cheating",
+    "other_problems": [
+      "3-Sum",
+      "Adjacency List Validation",
+      "Count Unique Submultisets With Sum Zero",
+      "Interval XOR",
+      "Make Playlist",
+      "Minimum Triplet Medians",
+      "Most Non-Overlapping Intervals",
+      "Parity Sorting",
+      "Permutation Enumeration",
+      "Shift Word to Back",
+      "Subset Enumeration",
+      "Unique K Pairs",
+      "Word Expansion Class"
+    ],
+    "wanted_outcome": "Being able to compare (or hash) unsorted collections by first sorting elements into a canonical order.",
+    "book_chapter": "Sets & Maps",
+    "chapter_number": 30,
+    "book_id": 4
+  },
+  "implementing-classes": {
+    "name": "Implementing classes",
+    "extra_credit": false,
+    "primary_problem": "Domain Resolver",
+    "other_problems": [
       "Doubly Linked List Design",
       "Extra Dynamic Array Operations",
       "Hash Map Class",
@@ -803,16 +814,16 @@
       "Viewer Counter Class",
       "Word Expansion Class"
     ],
-    "Description": "Implementing a class with specified operations.",
+    "wanted_outcome": "Being able to implement a class that satisfies specified operations.",
     "book_chapter": "Sets & Maps",
     "chapter_number": 30,
     "book_id": 5
   },
   "hash-maps": {
-    "Name": "Hash maps",
-    "Extra Credit": false,
-    "Primary Problem": "Find All Squares",
-    "Other Problems": [
+    "name": "Hash maps",
+    "extra_credit": false,
+    "primary_problem": "Find All Squares",
+    "other_problems": [
       "3-Sum",
       "Action Log Anomalies",
       "Cheater Detection",
@@ -855,16 +866,16 @@
       "Unique K Pairs",
       "Word Expansion Class"
     ],
-    "Description": "Storing key-value pairs with expected O(1) access time.",
+    "wanted_outcome": "Knowing how to store key-value pairs with expected O(1) access time.",
     "book_chapter": "Sets & Maps",
     "chapter_number": 30,
     "book_id": 6
   },
   "hash-sets": {
-    "Name": "Hash sets",
-    "Extra Credit": false,
-    "Primary Problem": "Account Sharing Detection",
-    "Other Problems": [
+    "name": "Hash sets",
+    "extra_credit": false,
+    "primary_problem": "Account Sharing Detection",
+    "other_problems": [
       "3-Sum",
       "Action Log Anomalies",
       "Adjacency List Validation",
@@ -889,26 +900,16 @@
       "Valid Sudoku",
       "Validate Matrix Rows and Columns"
     ],
-    "Description": "Storing unique elements with expected O(1) access time.",
+    "wanted_outcome": "Knowing how to store unique elements with expected O(1) access time.",
     "book_chapter": "Sets & Maps",
     "chapter_number": 30,
     "book_id": 1
   },
-  "hashing-lists": {
-    "Name": "Hashing lists",
-    "Extra Credit": true,
-    "Primary Problem": "Multi-Account Cheating",
-    "Other Problems": [],
-    "Description": "How to use lists or mutable collections as hash table keys.",
-    "book_chapter": "Sets & Maps",
-    "chapter_number": 30,
-    "book_id": 4
-  },
-  "sort-to-track-the-smallestlargest-elements": {
-    "Name": "Sort to track the smallest/largest elements",
-    "Extra Credit": false,
-    "Primary Problem": "Delete Operations",
-    "Other Problems": [
+  "sorting-to-track-the-smallestlargest-elements": {
+    "name": "Sorting to track the smallest/largest elements",
+    "extra_credit": false,
+    "primary_problem": "Delete Operations",
+    "other_problems": [
       "Center Assignment",
       "Company Launches",
       "First K",
@@ -925,26 +926,26 @@
       "YouTube Video Unusual Days",
       "k-Sorted Array"
     ],
-    "Description": "To visit array elements from largest to smallest or vice versa without modifying the array itself, we can sort the indices instead and iterate through them.",
+    "wanted_outcome": "Knowing how to iterate through the elements of an array from largest to smallest or vice versa without sorting it - by sorting the indices instead.",
     "book_chapter": "Sorting",
     "chapter_number": 31,
     "book_id": 3
   },
   "bucket-sort": {
-    "Name": "Bucket sort",
-    "Extra Credit": true,
-    "Primary Problem": "Sort By Publication Year",
-    "Other Problems": [],
-    "Description": "A sorting algorithm for sorting objects based on a field with a small range of values.",
+    "name": "Bucket sort",
+    "extra_credit": true,
+    "primary_problem": "Sort By Publication Year",
+    "other_problems": [],
+    "wanted_outcome": "Knowing bucket sort - a sorting algorithm for sorting objects based on a field with a small range of values.",
     "book_chapter": "Sorting",
     "chapter_number": 31,
     "book_id": 5
   },
-  "custom-sort": {
-    "Name": "Custom sort",
-    "Extra Credit": false,
-    "Primary Problem": "Sorting By Frequency",
-    "Other Problems": [
+  "custom-sorting-logic": {
+    "name": "Custom sorting logic",
+    "extra_credit": false,
+    "primary_problem": "Sorting By Frequency",
+    "other_problems": [
       "Center Assignment",
       "Delete Operations",
       "Fewest Script Runs",
@@ -962,29 +963,29 @@
       "Spreadsheet",
       "Time Traveler"
     ],
-    "Description": "Sorting based on our own rule rather than default order.",
+    "wanted_outcome": "Being able to sort using custom comparators.",
     "book_chapter": "Sorting",
     "chapter_number": 31,
     "book_id": 1
   },
-  "distance-formula": {
-    "Name": "Distance formula",
-    "Extra Credit": false,
-    "Primary Problem": "Nested Circles",
-    "Other Problems": [
+  "distance-formula-geometry": {
+    "name": "Distance formula (geometry)",
+    "extra_credit": false,
+    "primary_problem": "Nested Circles",
+    "other_problems": [
       "Center Assignment",
       "RGB Distances"
     ],
-    "Description": "Computing distances between points in the plane.",
+    "wanted_outcome": "Being able to compute Euclidean distances between points in the plane.",
     "book_chapter": "Sorting",
     "chapter_number": 31,
     "book_id": 2
   },
   "top-k-techniques-incl-quickselect": {
-    "Name": "Top k techniques (incl. quickselect)",
-    "Extra Credit": false,
-    "Primary Problem": "First K",
-    "Other Problems": [
+    "name": "Top k techniques (incl. quickselect)",
+    "extra_credit": false,
+    "primary_problem": "First K",
+    "other_problems": [
       "Company Launches",
       "Diminish Largest",
       "K Most Played",
@@ -997,53 +998,53 @@
       "Top Songs Class With Updates",
       "k-Sorted Array"
     ],
-    "Description": "Techniques for finding the top K elements, including sorting, heap-based, and quickselect approaches.",
+    "wanted_outcome": "Being able to find the top K elements via sorting, heaps, or quickselect.",
     "book_chapter": "Sorting",
     "chapter_number": 31,
     "book_id": 6
   },
   "dangling-bracket-stack": {
-    "Name": "Dangling bracket stack",
-    "Extra Credit": false,
-    "Primary Problem": "Custom Brackets",
-    "Other Problems": [],
-    "Description": "Using a stack to track unmatched opening brackets or parentheses.",
+    "name": "Dangling bracket stack",
+    "extra_credit": false,
+    "primary_problem": "Custom Brackets",
+    "other_problems": [],
+    "wanted_outcome": "Knowing how to use a stack to track unmatched opening brackets or parentheses.",
     "book_chapter": "Stacks & Queues",
     "chapter_number": 32,
     "book_id": 7
   },
   "piggybacking-extra-info": {
-    "Name": "Piggybacking extra info",
-    "Extra Credit": false,
-    "Primary Problem": "Compress Array By K",
-    "Other Problems": [
+    "name": "Piggybacking extra info",
+    "extra_credit": false,
+    "primary_problem": "Compress Array By K",
+    "other_problems": [
       "Aligned Path",
       "Num Groups Operation",
       "Triangle Count",
       "Viewer Counter Class"
     ],
-    "Description": "Storing additional fields alongside the primary data in a data structure to make future bookkeeping easier.",
+    "wanted_outcome": "Knowing how to store auxiliary fields alongside the primary data in a data structure to simplify future bookkeeping.",
     "book_chapter": "Stacks & Queues",
     "chapter_number": 32,
     "book_id": 2
   },
-  "reframe-balanced-parentheses-as-plot-heights": {
-    "Name": "Reframe balanced parentheses as plot heights",
-    "Extra Credit": false,
-    "Primary Problem": "Balanced Partition",
-    "Other Problems": [
+  "reframing-balanced-parentheses-as-heights": {
+    "name": "Reframing balanced parentheses as heights",
+    "extra_credit": false,
+    "primary_problem": "Balanced Partition",
+    "other_problems": [
       "Longest Balanced Subsequence"
     ],
-    "Description": "A visualization of balanced parentheses as a mountain range.",
+    "wanted_outcome": "Being able to visualize balanced parentheses as a mountain range to unlock easier reasoning.",
     "book_chapter": "Stacks & Queues",
     "chapter_number": 32,
     "book_id": 6
   },
   "using-queues-for-fifo-problems": {
-    "Name": "Using queues for FIFO problems",
-    "Extra Credit": false,
-    "Primary Problem": "Viewer Counter Class",
-    "Other Problems": [
+    "name": "Using queues for FIFO problems",
+    "extra_credit": false,
+    "primary_problem": "Viewer Counter Class",
+    "other_problems": [
       "Days Until All Infected",
       "King Kong Vs Godzilla",
       "Largest Temperature Change",
@@ -1055,16 +1056,16 @@
       "Sliding Window Max",
       "Zig-Zag Order"
     ],
-    "Description": "Using queues for problems requiring FIFO (first-in-first-out) behavior.",
+    "wanted_outcome": "Being able to solve problems requiring FIFO (first-in-first-out) behavior by using a queue.",
     "book_chapter": "Stacks & Queues",
     "chapter_number": 32,
     "book_id": 3
   },
   "using-stacks-for-lifo-problems": {
-    "Name": "Using stacks for LIFO problems",
-    "Extra Credit": false,
-    "Primary Problem": "Compress Array",
-    "Other Problems": [
+    "name": "Using stacks for LIFO problems",
+    "extra_credit": false,
+    "primary_problem": "Compress Array",
+    "other_problems": [
       "Compress Array By K",
       "Current URL",
       "Current URL With Forward",
@@ -1079,32 +1080,32 @@
       "Simple Text Editor",
       "Validate Simple HTML Strings"
     ],
-    "Description": "Using stacks for problems requiring LIFO (last-in-first-out) behavior.",
+    "wanted_outcome": "Being able to solve problems requiring LIFO (last-in-first-out) behavior by using a stack.",
     "book_chapter": "Stacks & Queues",
     "chapter_number": 32,
     "book_id": 1
   },
   "applying-modulo-at-each-step": {
-    "Name": "Applying modulo at each step",
-    "Extra Credit": false,
-    "Primary Problem": "Powers Mod M",
-    "Other Problems": [
+    "name": "Applying modulo at each step",
+    "extra_credit": false,
+    "primary_problem": "Powers Mod M",
+    "other_problems": [
       "Count Subarrays With All Remainders",
       "Exclusive Product",
       "Parity Sorting",
       "String Matching",
       "Sum Of First K Prime Powers"
     ],
-    "Description": "Preventing integer overflow by applying modulo operations throughout computations.",
+    "wanted_outcome": "Knowing how to prevent overflow by applying modulo operations throughout computations.",
     "book_chapter": "Recursion",
     "chapter_number": 33,
     "book_id": 3
   },
   "divide-and-conquer": {
-    "Name": "Divide and conquer",
-    "Extra Credit": false,
-    "Primary Problem": "Laminal Arrays",
-    "Other Problems": [
+    "name": "Divide and conquer",
+    "extra_credit": false,
+    "primary_problem": "Laminal Arrays",
+    "other_problems": [
       "First K",
       "Implement Mergesort",
       "Implement Quicksort",
@@ -1112,16 +1113,16 @@
       "Search in Sorted Array",
       "Tree Diameter"
     ],
-    "Description": "Breaking down an input into smaller subproblems and combining the solutions.",
+    "wanted_outcome": "Being able to break problems into smaller subproblems, solve them recursively, and combine the results.",
     "book_chapter": "Recursion",
     "chapter_number": 33,
     "book_id": 5
   },
   "recurrence-relations": {
-    "Name": "Recurrence relations",
-    "Extra Credit": false,
-    "Primary Problem": "Lego Castle",
-    "Other Problems": [
+    "name": "Recurrence relations",
+    "extra_credit": false,
+    "primary_problem": "Lego Castle",
+    "other_problems": [
       "Magic Blackjack",
       "Minimum Steps to One",
       "Minivan Road Trip",
@@ -1132,16 +1133,16 @@
       "Road Trip",
       "Tridimensional Lego Castle"
     ],
-    "Description": "Finding a recursive formula for computing the solution.",
+    "wanted_outcome": "Being able to derive a recurrence (recursive formula) for computing the solution.",
     "book_chapter": "Recursion",
     "chapter_number": 33,
     "book_id": 4
   },
-  "recursive-data-structure": {
-    "Name": "Recursive data structure",
-    "Extra Credit": true,
-    "Primary Problem": "Nested Array Sum",
-    "Other Problems": [
+  "working-with-recursive-data-structures": {
+    "name": "Working with recursive data structures",
+    "extra_credit": true,
+    "primary_problem": "Nested Array Sum",
+    "other_problems": [
       "Aligned Path",
       "BST Search",
       "BST Validation",
@@ -1151,16 +1152,16 @@
       "Tree Diameter",
       "Triangle Count"
     ],
-    "Description": "Working with data structures that can contain fields of the same type as the data structure.",
+    "wanted_outcome": "Being comfortable with data structures that contain nested instances of themselves.",
     "book_chapter": "Recursion",
     "chapter_number": 33,
     "book_id": 2
   },
   "recursion": {
-    "Name": "Recursion",
-    "Extra Credit": false,
-    "Primary Problem": "Robot Instructions",
-    "Other Problems": [
+    "name": "Recursion",
+    "extra_credit": false,
+    "primary_problem": "Robot Instructions",
+    "other_problems": [
       "4-Directional Max-Sum Path",
       "4-Directional Max-Sum Path Reconstruction",
       "Aligned Chain",
@@ -1197,71 +1198,71 @@
       "Unrooted Tree Diameter",
       "White Hat Hacker"
     ],
-    "Description": "Knowing how to write code that calls itself.",
+    "wanted_outcome": "Being able to write and reason about recursive functions.",
     "book_chapter": "Recursion",
     "chapter_number": 33,
     "book_id": 1
   },
-  "dummy-node": {
-    "Name": "Dummy node",
-    "Extra Credit": false,
-    "Primary Problem": "Linked-List Copy",
-    "Other Problems": [
+  "linked-list-dummy-node": {
+    "name": "Linked-list dummy node",
+    "extra_credit": false,
+    "primary_problem": "Linked-List Copy",
+    "other_problems": [
       "Linked List Block Reversal",
       "Linked-List Zip",
       "Remove Kth Node From The End",
       "Sublist Reversal"
     ],
-    "Description": "A dummy node added at the beginning of a linked list to simplify the empty-list edge case.",
+    "wanted_outcome": "Knowing how to simplify linked-list edge cases by using a dummy head node.",
     "book_chapter": "Linked Lists",
     "chapter_number": 34,
     "book_id": 5
   },
   "cycle-detection-linked-lists": {
-    "Name": "Cycle detection (linked lists)",
-    "Extra Credit": true,
-    "Primary Problem": "Linked-List Cycle Detection",
-    "Other Problems": [
+    "name": "Cycle detection (linked lists)",
+    "extra_credit": true,
+    "primary_problem": "Linked-List Cycle Detection",
+    "other_problems": [
       "Linked-List Cycle Length",
       "Linked-List Cycle Start"
     ],
-    "Description": "Detecting cycles in linked lists using fast and slow pointers.",
+    "wanted_outcome": "Being able to detect cycles in linked lists using fast and slow pointers.",
     "book_chapter": "Linked Lists",
     "chapter_number": 34,
     "book_id": 8
   },
   "doubly-linked-list": {
-    "Name": "Doubly-linked list",
-    "Extra Credit": true,
-    "Primary Problem": "Doubly Linked List To Array",
-    "Other Problems": [
+    "name": "Doubly-linked list",
+    "extra_credit": true,
+    "primary_problem": "Doubly Linked List To Array",
+    "other_problems": [
       "Doubly Linked List Design"
     ],
-    "Description": "A linked list where each node points to next and previous nodes.",
+    "wanted_outcome": "Being able to work with and implement doubly linked lists.",
     "book_chapter": "Linked Lists",
     "chapter_number": 34,
     "book_id": 9
   },
   "fast-and-slow-pointers-linked-lists": {
-    "Name": "Fast and slow pointers (linked lists)",
-    "Extra Credit": false,
-    "Primary Problem": "Linked-List Midpoint",
-    "Other Problems": [
+    "name": "Fast and slow pointers (linked lists)",
+    "extra_credit": false,
+    "primary_problem": "Linked-List Midpoint",
+    "other_problems": [
       "Linked-List Cycle Detection",
       "Linked-List Cycle Length",
       "Linked-List Cycle Start",
       "Remove Kth Node From The End"
     ],
-    "Description": "Using two pointers moving at different speeds through a linked list.",
+    "wanted_outcome": "Being able to use two pointers moving at different speeds through a linked list.",
     "book_chapter": "Linked Lists",
     "chapter_number": 34,
     "book_id": 10
   },
   "in-place-modification-linked-lists": {
-    "Name": "In-place modification (linked lists)",
-    "Extra Credit": false,
-    "Primary Problem": "Duplicate Removal In Sorted Linked List",
-    "Other Problems": [
+    "name": "In-place modification (linked lists)",
+    "extra_credit": false,
+    "primary_problem": "Duplicate Removal In Sorted Linked List",
+    "other_problems": [
       "Doubly Linked List Design",
       "Linked List Block Reversal",
       "Linked-List Reversal",
@@ -1270,16 +1271,16 @@
       "Singly Linked List Design",
       "Sublist Reversal"
     ],
-    "Description": "Modifying linked lists by rearranging pointers.",
+    "wanted_outcome": "Being able to modify linked lists by rearranging pointers.",
     "book_chapter": "Linked Lists",
     "chapter_number": 34,
     "book_id": 13
   },
-  "linked-list-internals": {
-    "Name": "Linked list internals",
-    "Extra Credit": false,
-    "Primary Problem": "Singly Linked List Design",
-    "Other Problems": [
+  "tinkering-with-linked-list-internals": {
+    "name": "Tinkering with linked-list internals",
+    "extra_credit": false,
+    "primary_problem": "Singly Linked List Design",
+    "other_problems": [
       "Compare Two Linked Lists",
       "Doubly Linked List Design",
       "Doubly Linked List To Array",
@@ -1297,16 +1298,16 @@
       "Remove Kth Node From The End",
       "Sublist Reversal"
     ],
-    "Description": "Implementing linked lists, working with pointers.",
+    "wanted_outcome": "Being able to implement linked lists.",
     "book_chapter": "Linked Lists",
     "chapter_number": 34,
     "book_id": 1
   },
   "parallel-pointers-linked-lists": {
-    "Name": "Parallel pointers (linked lists)",
-    "Extra Credit": false,
-    "Primary Problem": "Linked-List Zip",
-    "Other Problems": [
+    "name": "Parallel pointers (linked lists)",
+    "extra_credit": false,
+    "primary_problem": "Linked-List Zip",
+    "other_problems": [
       "Compare Two Linked Lists",
       "Linked List Block Reversal",
       "Linked-List Copy",
@@ -1317,82 +1318,82 @@
       "Remove Kth Node From The End",
       "Sublist Reversal"
     ],
-    "Description": "Using two pointers through two separate linked lists.",
+    "wanted_outcome": "Being able to use two pointers across two linked lists.",
     "book_chapter": "Linked Lists",
     "chapter_number": 34,
     "book_id": 12
   },
-  "queue-internals": {
-    "Name": "Queue internals",
-    "Extra Credit": false,
-    "Primary Problem": "Linked-List-Based Queue",
-    "Other Problems": [
+  "implementing-queues": {
+    "name": "Implementing queues",
+    "extra_credit": false,
+    "primary_problem": "Linked-List-Based Queue",
+    "other_problems": [
       "Left View",
       "Max Queue",
       "Most Prolific Level",
       "Multi-Exit Maze",
       "Zig-Zag Order"
     ],
-    "Description": "Understanding how to implement a queue.",
+    "wanted_outcome": "Being able to implement a queue.",
     "book_chapter": "Linked Lists",
     "chapter_number": 34,
     "book_id": 4
   },
   "node-depth-queue-recipe-for-level-order-traversal": {
-    "Name": "Node-depth queue recipe for level-order traversal",
-    "Extra Credit": false,
-    "Primary Problem": "Most Prolific Level",
-    "Other Problems": [
+    "name": "Node-depth queue recipe for level-order traversal",
+    "extra_credit": false,
+    "primary_problem": "Most Prolific Level",
+    "other_problems": [
       "Left View",
       "Most Protected Node",
       "Zig-Zag Order"
     ],
-    "Description": "A recipe to visit all nodes in a tree by layers while tracking their depth.",
+    "wanted_outcome": "Being able to traverse a tree level by level while tracking node depths.",
     "book_chapter": "Trees",
     "chapter_number": 35,
     "book_id": 9
   },
   "finding-the-node-in-the-path-with-minimum-depth": {
-    "Name": "Finding the node in the path with minimum depth",
-    "Extra Credit": false,
-    "Primary Problem": "Aligned Path",
-    "Other Problems": [],
-    "Description": "Leveraging the fact that a path in a rooted tree has a single node with minimum depth.",
+    "name": "Finding the node in the path with minimum depth",
+    "extra_credit": false,
+    "primary_problem": "Aligned Path",
+    "other_problems": [],
+    "wanted_outcome": "Knowing when to use the fact that a path in a rooted tree has a single node with minimum depth.",
     "book_chapter": "Trees",
     "chapter_number": 35,
     "book_id": 3
   },
   "bst-inorder-traversal": {
-    "Name": "BST inorder traversal",
-    "Extra Credit": false,
-    "Primary Problem": "BST Kth Element",
-    "Other Problems": [
+    "name": "BST inorder traversal",
+    "extra_credit": false,
+    "primary_problem": "BST Kth Element",
+    "other_problems": [
       "BST Duplicate Detection",
       "BST Merge Into Array",
       "BST Validation"
     ],
-    "Description": "Leveraging that an in-order traversal in a binary search tree visits nodes in sorted order.",
+    "wanted_outcome": "Knowing how to visit BST nodes in sorted order - with an inorder traversal.",
     "book_chapter": "Trees",
     "chapter_number": 35,
     "book_id": 16
   },
   "bst-search": {
-    "Name": "BST search",
-    "Extra Credit": false,
-    "Primary Problem": "BST Search",
-    "Other Problems": [
+    "name": "BST search",
+    "extra_credit": false,
+    "primary_problem": "BST Search",
+    "other_problems": [
       "BST Nearest Value"
     ],
-    "Description": "Efficient searching in a binary search tree.",
+    "wanted_outcome": "Being able to search efficiently in a binary search tree.",
     "book_chapter": "Trees",
     "chapter_number": 35,
     "book_id": 12
   },
   "parsing": {
-    "Name": "Parsing",
-    "Extra Credit": false,
-    "Primary Problem": "Evaluate Expression Tree",
-    "Other Problems": [
+    "name": "Parsing",
+    "extra_credit": false,
+    "primary_problem": "Evaluate Expression Tree",
+    "other_problems": [
       "Balanced Partition",
       "Current URL",
       "Custom Brackets",
@@ -1405,16 +1406,16 @@
       "String Split",
       "Validate Simple HTML Strings"
     ],
-    "Description": "Parsing text into syntax trees and evaluating syntax trees.",
+    "wanted_outcome": "Being able to parse simple, structured text into syntax trees and evaluate those trees.",
     "book_chapter": "Trees",
     "chapter_number": 35,
     "book_id": 7
   },
-  "passing-info-in-trees": {
-    "Name": "Passing info in trees",
-    "Extra Credit": false,
-    "Primary Problem": "Aligned Chain",
-    "Other Problems": [
+  "passing-data-up-and-down-rooted-trees": {
+    "name": "Passing data up and down rooted trees",
+    "extra_credit": false,
+    "primary_problem": "Aligned Chain",
+    "other_problems": [
       "Aligned Path",
       "BST Duplicate Detection",
       "BST Validation",
@@ -1425,16 +1426,16 @@
       "Triangle Count",
       "Unrooted Tree Diameter"
     ],
-    "Description": "In a tree DFS, deciding which information needs to flow down the tree, up the tree, or bypass the recursive flow.",
+    "wanted_outcome": "Being able to decide what information should flow down the tree, up the tree, or bypass recursion in a tree DFS.",
     "book_chapter": "Trees",
     "chapter_number": 35,
     "book_id": 1
   },
   "preinpost-order-traversals": {
-    "Name": "Pre/in/post-order traversals",
-    "Extra Credit": false,
-    "Primary Problem": "Hidden Message",
-    "Other Problems": [
+    "name": "Pre/in/post-order traversals",
+    "extra_credit": false,
+    "primary_problem": "Hidden Message",
+    "other_problems": [
       "Aligned Chain",
       "Aligned Path",
       "BST Duplicate Detection",
@@ -1449,44 +1450,44 @@
       "Triangle Count",
       "Unrooted Tree Diameter"
     ],
-    "Description": "A classification of DFS traversals in trees based on whether each node is visited before, in between, or after children.",
+    "wanted_outcome": "Knowing preorder, inorder, and postorder traversals - a classification of tree DFS traversals based on whether each node is visited before, in between, or after the children.",
     "book_chapter": "Trees",
     "chapter_number": 35,
     "book_id": 2
   },
   "connected-component-loop": {
-    "Name": "Connected-component loop",
-    "Extra Credit": false,
-    "Primary Problem": "Reachability Queries",
-    "Other Problems": [
+    "name": "Connected-component loop",
+    "extra_credit": false,
+    "primary_problem": "Reachability Queries",
+    "other_problems": [
       "Count Grid Islands",
       "Highest Average Elevation Gain",
       "Hilliest Connected Component",
       "Multiplayer Video Game"
     ],
-    "Description": "Launching a BFS or DFS for each connected component, all sharing a visited set.",
+    "wanted_outcome": "Knowing how to launch a BFS or DFS for each connected component by using a shared visited set.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 5
   },
   "multisource-bfs": {
-    "Name": "Multisource BFS",
-    "Extra Credit": true,
-    "Primary Problem": "Days Until All Infected",
-    "Other Problems": [
+    "name": "Multisource BFS",
+    "extra_credit": true,
+    "primary_problem": "Days Until All Infected",
+    "other_problems": [
       "Multi-Exit Maze",
       "RGB Distances"
     ],
-    "Description": "A variant of BFS that starts from multiple source nodes simultaneously.",
+    "wanted_outcome": "Knowing how to run BFS from multiple sources simultaneously.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 12
   },
-  "union-find-implementation-with-path-compression-and-union-by-size": {
-    "Name": "Union-find implementation with path compression and union by size",
-    "Extra Credit": false,
-    "Primary Problem": "First Time All Connected",
-    "Other Problems": [
+  "union-find-path-compression-union-by-size": {
+    "name": "Union-find (path compression + union by size)",
+    "extra_credit": false,
+    "primary_problem": "First Time All Connected",
+    "other_problems": [
       "Edge In MST",
       "Largest Connected Component Over Time",
       "MST Reconstruction",
@@ -1494,16 +1495,16 @@
       "Num Connected Components Over Time",
       "Num Groups Operation"
     ],
-    "Description": "An efficient, standalone union-find implementation.",
+    "wanted_outcome": "Being able to implement an efficient union-find class with the path compression optimization, and - ideally - also union by size.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 9
   },
-  "edge-list-to-adjacency-list": {
-    "Name": "Edge list to adjacency list",
-    "Extra Credit": false,
-    "Primary Problem": "The Floor Is Lava",
-    "Other Problems": [
+  "edge-list-to-adjacency-list-conversion": {
+    "name": "Edge list to adjacency list conversion",
+    "extra_credit": false,
+    "primary_problem": "The Floor Is Lava",
+    "other_problems": [
       "DAG Longest Path",
       "Days Until All Infected",
       "First Time All Connected",
@@ -1517,32 +1518,32 @@
       "Unrooted Tree Diameter",
       "Word Ladder Game Variation"
     ],
-    "Description": "Converting a list of edges into an adjacency list; necessary for most graph problems.",
+    "wanted_outcome": "Being able to convert an edge list into an adjacency list for graph problems; necessary for most graph problems.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 16
   },
   "path-reconstruction": {
-    "Name": "Path reconstruction",
-    "Extra Credit": false,
-    "Primary Problem": "Shortest Path Queries",
-    "Other Problems": [
+    "name": "Path reconstruction",
+    "extra_credit": false,
+    "primary_problem": "Shortest Path Queries",
+    "other_problems": [
       "4-Directional Max-Sum Path Reconstruction",
       "DAG Path Reconstruction",
       "Escape With All Clues",
       "Graph Path",
       "Spanning Tree"
     ],
-    "Description": "How to reconstruct the actual path through a graph rather than just finding the path length.",
+    "wanted_outcome": "Being able to reconstruct the sequence of nodes in a path in a graph, rather than just finding its length.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 10
   },
-  "adjacency-list-properties": {
-    "Name": "Adjacency list properties",
-    "Extra Credit": false,
-    "Primary Problem": "Adjacency List Validation",
-    "Other Problems": [
+  "working-with-adjacency-lists": {
+    "name": "Working with adjacency lists",
+    "extra_credit": false,
+    "primary_problem": "Adjacency List Validation",
+    "other_problems": [
       "Counting Paths",
       "DAG Distances",
       "DAG Longest Path",
@@ -1557,30 +1558,30 @@
       "Unrooted Tree Diameter",
       "Word Ladder Game Variation"
     ],
-    "Description": "Understanding and leveraging the properties of adjacency list graph representations.",
+    "wanted_outcome": "Being able to use adjacency lists effectively and reason about their properties.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 1
   },
   "cycle-detection-graphs": {
-    "Name": "Cycle detection (graphs)",
-    "Extra Credit": false,
-    "Primary Problem": "Tree Check",
-    "Other Problems": [
+    "name": "Cycle detection (graphs)",
+    "extra_credit": false,
+    "primary_problem": "Tree Check",
+    "other_problems": [
       "Minimum Spanning Tree",
       "Spanning Tree",
       "Supersequence"
     ],
-    "Description": "Detecting if a graph is acyclic using DFS or BFS.",
+    "wanted_outcome": "Being able to detect cycles (or confirm acyclicity) in graphs using DFS or BFS.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 3
   },
   "dfsbfs-tree": {
-    "Name": "DFS/BFS tree",
-    "Extra Credit": false,
-    "Primary Problem": "Graph Path",
-    "Other Problems": [
+    "name": "DFS/BFS tree",
+    "extra_credit": false,
+    "primary_problem": "Graph Path",
+    "other_problems": [
       "4-Directional Max-Sum Path",
       "Aligned Chain",
       "Aligned Path",
@@ -1609,16 +1610,16 @@
       "Unrooted Tree Diameter",
       "Zig-Zag Order"
     ],
-    "Description": "Using the tree defined by DFS or BFS.",
+    "wanted_outcome": "Being able to compute and use a DFS or BFS tree.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 2
   },
-  "distance-computation": {
-    "Name": "Distance computation",
-    "Extra Credit": false,
-    "Primary Problem": "Graph Hangout",
-    "Other Problems": [
+  "computing-distances-graphs": {
+    "name": "Computing distances (graphs)",
+    "extra_credit": false,
+    "primary_problem": "Graph Hangout",
+    "other_problems": [
       "Center Assignment",
       "DAG Distances",
       "DAG Longest Path",
@@ -1632,16 +1633,16 @@
       "The Floor Is Lava",
       "Tree Diameter"
     ],
-    "Description": "Computing distances between nodes in a graph.",
+    "wanted_outcome": "Being able to compute distances between nodes in a graph.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 11
   },
-  "edge-weights": {
-    "Name": "Edge weights",
-    "Extra Credit": true,
-    "Primary Problem": "Highest Average Elevation Gain",
-    "Other Problems": [
+  "working-with-edge-weights": {
+    "name": "Working with edge weights",
+    "extra_credit": true,
+    "primary_problem": "Highest Average Elevation Gain",
+    "other_problems": [
       "DAG Distances",
       "DAG Longest Path",
       "DAG Path Reconstruction",
@@ -1649,16 +1650,16 @@
       "Hilliest Connected Component",
       "Minimum Spanning Tree"
     ],
-    "Description": "Working with weighted edges in graphs.",
+    "wanted_outcome": "Being comfortable working with weighted edges in graphs.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 8
   },
   "graph-modeling": {
-    "Name": "Graph modeling",
-    "Extra Credit": false,
-    "Primary Problem": "Word Ladder Game Variation",
-    "Other Problems": [
+    "name": "Graph modeling",
+    "extra_credit": false,
+    "primary_problem": "Word Ladder Game Variation",
+    "other_problems": [
       "4-Directional Max-Sum Path Reconstruction",
       "Count Grid Islands",
       "Counting Paths",
@@ -1690,16 +1691,16 @@
       "Tree Check",
       "Tunnel Depth"
     ],
-    "Description": "Reframing problems where the input is not a graph as graph problems.",
+    "wanted_outcome": "Being able to reframe problems where the input is not a graph as questions about an inherent graph.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 17
   },
-  "grid-graphs": {
-    "Name": "Grid graphs",
-    "Extra Credit": false,
-    "Primary Problem": "Count Grid Islands",
-    "Other Problems": [
+  "working-with-grid-graphs": {
+    "name": "Working with grid graphs",
+    "extra_credit": false,
+    "primary_problem": "Count Grid Islands",
+    "other_problems": [
       "4-Directional Max-Sum Path",
       "4-Directional Max-Sum Path Reconstruction",
       "Cheater Detection",
@@ -1717,38 +1718,38 @@
       "Tide Aerial View",
       "Tunnel Depth"
     ],
-    "Description": "Working with graphs where the nodes are grid cells and adjacent cells are neighbors.",
+    "wanted_outcome": "Being comfortable with problems where the input is a grid representing a graph, where the nodes are grid cells and adjacent cells are neighbors.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 13
   },
-  "node-weights": {
-    "Name": "Node weights",
-    "Extra Credit": true,
-    "Primary Problem": "Hilliest Connected Component",
-    "Other Problems": [
+  "working-with-node-weights": {
+    "name": "Working with node weights",
+    "extra_credit": true,
+    "primary_problem": "Hilliest Connected Component",
+    "other_problems": [
       "Parallel Compilation"
     ],
-    "Description": "Working with weighted nodes in graphs.",
+    "wanted_outcome": "Being comfortable working with weighted nodes in graphs.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 7
   },
   "strong-connectivity-check": {
-    "Name": "Strong connectivity check",
-    "Extra Credit": true,
-    "Primary Problem": "Strongly Connected Graph",
-    "Other Problems": [],
-    "Description": "Determining if all nodes in a directed graph are mutually reachable.",
+    "name": "Strong connectivity check",
+    "extra_credit": true,
+    "primary_problem": "Strongly Connected Graph",
+    "other_problems": [],
+    "wanted_outcome": "Being able to check strong connectivity in a directed graph.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
     "book_id": 6
   },
   "heap-size-restriction": {
-    "Name": "Heap size restriction",
-    "Extra Credit": false,
-    "Primary Problem": "K Most Played",
-    "Other Problems": [
+    "name": "Heap size restriction",
+    "extra_credit": false,
+    "primary_problem": "K Most Played",
+    "other_problems": [
       "First K",
       "K Smallest Elements in a Min-Heap",
       "Popular Songs Class",
@@ -1757,16 +1758,16 @@
       "Top Songs Class With Updates",
       "k-Sorted Array"
     ],
-    "Description": "Using a min-heap of max size k to track the largest k elements, or vice versa.",
+    "wanted_outcome": "Knowing how to track the largest k elements in a collection with a min-heap of max size k, or vice versa.",
     "book_chapter": "Heaps",
     "chapter_number": 37,
     "book_id": 2
   },
   "m-way-merge": {
-    "Name": "M-way merge",
-    "Extra Credit": true,
-    "Primary Problem": "Most Listened Across Genres",
-    "Other Problems": [
+    "name": "M-way merge",
+    "extra_credit": true,
+    "primary_problem": "Most Listened Across Genres",
+    "other_problems": [
       "Array Intersection",
       "BST Merge Into Array",
       "K Pairs with Smallest Sums",
@@ -1775,26 +1776,26 @@
       "Sum Of First K Prime Powers",
       "Three Way Merge Without Duplicates"
     ],
-    "Description": "Merging M sorted lists efficiently using a heap.",
+    "wanted_outcome": "Knowing how to merge M sorted lists efficiently with a heap.",
     "book_chapter": "Heaps",
     "chapter_number": 37,
     "book_id": 6
   },
   "two-heap-median-tracking": {
-    "Name": "Two-heap median tracking",
-    "Extra Credit": false,
-    "Primary Problem": "Popular Songs Class",
-    "Other Problems": [],
-    "Description": "Using two heaps to efficiently track the median of a stream of numbers.",
+    "name": "Two-heap median tracking",
+    "extra_credit": false,
+    "primary_problem": "Popular Songs Class",
+    "other_problems": [],
+    "wanted_outcome": "Being able to maintain the median of a stream using two heaps.",
     "book_chapter": "Heaps",
     "chapter_number": 37,
     "book_id": 5
   },
-  "dynamic-priorities-in-heaps": {
-    "Name": "Dynamic priorities in heaps",
-    "Extra Credit": true,
-    "Primary Problem": "Top Songs Class With Updates",
-    "Other Problems": [
+  "working-with-dynamic-priorities-in-heaps": {
+    "name": "Working with dynamic priorities in heaps",
+    "extra_credit": true,
+    "primary_problem": "Top Songs Class With Updates",
+    "other_problems": [
       "Diminish Largest",
       "K Smallest Elements in a Min-Heap",
       "Make Playlist",
@@ -1804,16 +1805,16 @@
       "Top Songs Class",
       "k-Sorted Array"
     ],
-    "Description": "Dealing with priority changes for elements already in the heap, often via lazy deletion.",
+    "wanted_outcome": "Being able to handle priority updates for elements already in the heap - usually via lazy deletion.",
     "book_chapter": "Heaps",
     "chapter_number": 37,
     "book_id": 4
   },
-  "heap-internals": {
-    "Name": "Heap internals",
-    "Extra Credit": false,
-    "Primary Problem": "Implement A Heap",
-    "Other Problems": [
+  "tinkering-with-heap-internals": {
+    "name": "Tinkering with heap internals",
+    "extra_credit": false,
+    "primary_problem": "Implement A Heap",
+    "other_problems": [
       "Diminish Largest",
       "First K",
       "K Most Played",
@@ -1828,29 +1829,29 @@
       "Top Songs Class",
       "Top Songs Class With Updates"
     ],
-    "Description": "Understanding heaps, including the binary tree visualization, the heap property, the array-based representation, bubbling up and down, and linear-time heapify.",
+    "wanted_outcome": "Understanding heaps: the binary tree visualization, the array-based representation, the heap property, bubbling up/down, and linear-time heapify.",
     "book_chapter": "Heaps",
     "chapter_number": 37,
     "book_id": 1
   },
   "working-with-primes": {
-    "Name": "Working with primes",
-    "Extra Credit": true,
-    "Primary Problem": "Sum Of First K Prime Powers",
-    "Other Problems": [
+    "name": "Working with primes",
+    "extra_credit": true,
+    "primary_problem": "Sum Of First K Prime Powers",
+    "other_problems": [
       "Hiring And Training",
       "List of Divisors"
     ],
-    "Description": "Using properties of prime numbers.",
+    "wanted_outcome": "Being able to use prime number properties in solutions.",
     "book_chapter": "Heaps",
     "chapter_number": 37,
     "book_id": 8
   },
   "fixed-length-window-recipe": {
-    "Name": "Fixed-length window recipe",
-    "Extra Credit": false,
-    "Primary Problem": "Most Weekly Sales",
-    "Other Problems": [
+    "name": "Fixed-length window recipe",
+    "extra_credit": false,
+    "primary_problem": "Most Weekly Sales",
+    "other_problems": [
       "Enduring Best Seller Streak",
       "Largest Temperature Change",
       "Longest Repeated Substring",
@@ -1859,16 +1860,16 @@
       "Sub Permutations",
       "Unique Best Seller Streak"
     ],
-    "Description": "A recipe for sliding window problems where the window length is fixed.",
+    "wanted_outcome": "Having a recipe for sliding window problems where the window length is fixed.",
     "book_chapter": "Sliding Windows",
     "chapter_number": 38,
     "book_id": 1
   },
   "maximum-window-recipe": {
-    "Name": "Maximum window recipe",
-    "Extra Credit": false,
-    "Primary Problem": "Maximum With At Most 3 Bad Days",
-    "Other Problems": [
+    "name": "Maximum window recipe",
+    "extra_credit": false,
+    "primary_problem": "Maximum With At Most 3 Bad Days",
+    "other_problems": [
       "Ad Campaign Boost",
       "Ad Campaign With Small Boosts",
       "Boosting Days Multiple Times",
@@ -1884,45 +1885,45 @@
       "Longest Stable Period",
       "Most Ones with K Flips"
     ],
-    "Description": "A sliding window recipe for maximization problems.",
+    "wanted_outcome": "Having a sliding-window recipe for maximization problems.",
     "book_chapter": "Sliding Windows",
     "chapter_number": 38,
     "book_id": 8
   },
   "minimum-window-recipe": {
-    "Name": "Minimum window recipe",
-    "Extra Credit": false,
-    "Primary Problem": "Shortest Period With Over 20 Sales",
-    "Other Problems": [
+    "name": "Minimum window recipe",
+    "extra_credit": false,
+    "primary_problem": "Shortest Period With Over 20 Sales",
+    "other_problems": [
       "Shortest With All Letters",
       "Smallest Range With K Elements",
       "Strong Start And Ending"
     ],
-    "Description": "A sliding window recipe for minimization problems.",
+    "wanted_outcome": "Having a sliding-window recipe for minimization problems.",
     "book_chapter": "Sliding Windows",
     "chapter_number": 38,
     "book_id": 14
   },
   "resetting-window-recipe": {
-    "Name": "Resetting window recipe",
-    "Extra Credit": false,
-    "Primary Problem": "Longest Good Day Streak",
-    "Other Problems": [
+    "name": "Resetting window recipe",
+    "extra_credit": false,
+    "primary_problem": "Longest Good Day Streak",
+    "other_problems": [
       "Count Good Subarrays With At Least K Sales",
       "Enduring Best Seller Streak",
       "Longest Alternating Sequence",
       "Max Subarray Sum"
     ],
-    "Description": "A sliding window recipe for maximization problems where a single element can make the entire window invalid.",
+    "wanted_outcome": "Having a sliding-window recipe for cases where a single element can invalidate the entire window.",
     "book_chapter": "Sliding Windows",
     "chapter_number": 38,
     "book_id": 5
   },
   "at-most-k-subarray-counting": {
-    "Name": "At-most-k subarray counting",
-    "Extra Credit": true,
-    "Primary Problem": "Count Subarrays With At Most K Bad Days",
-    "Other Problems": [
+    "name": "At-most-k subarray counting",
+    "extra_credit": true,
+    "primary_problem": "Count Subarrays With At Most K Bad Days",
+    "other_problems": [
       "Ad Campaign Boost",
       "Ad Campaign With Small Boosts",
       "Count Good Subarrays With At Least K Sales",
@@ -1936,32 +1937,32 @@
       "Most Ones with K Flips",
       "Strong Start And Ending"
     ],
-    "Description": "Counting subarrays satisfying at-most-k conditions with a sliding window.",
+    "wanted_outcome": "Being able to count subarrays that satisfy an at-most-K condition - by using a sliding window.",
     "book_chapter": "Sliding Windows",
     "chapter_number": 38,
     "book_id": 18
   },
   "number-of-subarrays-formula": {
-    "Name": "Number of subarrays formula",
-    "Extra Credit": false,
-    "Primary Problem": "Count Subarrays With Good Start And Ending",
-    "Other Problems": [
+    "name": "Number of subarrays formula",
+    "extra_credit": false,
+    "primary_problem": "Count Subarrays With Good Start And Ending",
+    "other_problems": [
       "Count Good Subarrays With At Least K Sales",
       "Count Subarrays With All Remainders",
       "Count Subarrays With At Least K Bad Days",
       "Count Subarrays With Drops",
       "Count Substrings Without Letter"
     ],
-    "Description": "Using the formula for the number of subarrays in an array.",
+    "wanted_outcome": "Being able to use the formula for the number of subarrays in an array.",
     "book_chapter": "Sliding Windows",
     "chapter_number": 38,
     "book_id": 21
   },
-  "reframe-choices-as-optimization": {
-    "Name": "Reframe choices as optimization",
-    "Extra Credit": false,
-    "Primary Problem": "Ad Campaign Boost",
-    "Other Problems": [
+  "reframing-choices-as-optimization": {
+    "name": "Reframing choices as optimization",
+    "extra_credit": false,
+    "primary_problem": "Ad Campaign Boost",
+    "other_problems": [
       "Ad Campaign With Small Boosts",
       "Boosting Days Multiple Times",
       "Minivan Road Trip",
@@ -1969,76 +1970,76 @@
       "Most Ones with K Flips",
       "Restaurant Ratings"
     ],
-    "Description": "Reframing problems about making choices into optimization problems.",
+    "wanted_outcome": "Being able to reframe problems about making choices as optimization problems (when possible).",
     "book_chapter": "Sliding Windows",
     "chapter_number": 38,
     "book_id": 9
   },
   "choosing-better-decision-trees": {
-    "Name": "Choosing better decision trees",
-    "Extra Credit": true,
-    "Primary Problem": "Count Unique Submultisets With Sum Zero",
-    "Other Problems": [
+    "name": "Choosing better decision trees",
+    "extra_credit": true,
+    "primary_problem": "Count Unique Submultisets With Sum Zero",
+    "other_problems": [
       "IKEA Shopping"
     ],
-    "Description": "A backtracking design technique where we look for the smallest decision tree that models the problem.",
+    "wanted_outcome": "When modeling a problem as a decision tree for backtracking, being able to look for the smallest one.",
     "book_chapter": "Backtracking",
     "chapter_number": 39,
     "book_id": 9
   },
-  "knapsack-type-problems": {
-    "Name": "Knapsack-type problems",
-    "Extra Credit": false,
-    "Primary Problem": "IKEA Shopping",
-    "Other Problems": [],
-    "Description": "Solving knapsack-style problems with backtracking.",
+  "identifying-knapsack-type-problems": {
+    "name": "Identifying knapsack-type problems",
+    "extra_credit": false,
+    "primary_problem": "IKEA Shopping",
+    "other_problems": [],
+    "wanted_outcome": "Being able to recognize and solve knapsack-style problems with backtracking.",
     "book_chapter": "Backtracking",
     "chapter_number": 39,
     "book_id": 7
   },
   "listing-permutations": {
-    "Name": "Listing permutations",
-    "Extra Credit": false,
-    "Primary Problem": "Permutation Enumeration",
-    "Other Problems": [
+    "name": "Listing permutations",
+    "extra_credit": false,
+    "primary_problem": "Permutation Enumeration",
+    "other_problems": [
       "White Hat Hacker"
     ],
-    "Description": "Using backtracking to list all orderings of a collection.",
+    "wanted_outcome": "Being able to generate all permutations via backtracking.",
     "book_chapter": "Backtracking",
     "chapter_number": 39,
     "book_id": 3
   },
   "listing-subsets": {
-    "Name": "Listing subsets",
-    "Extra Credit": false,
-    "Primary Problem": "Subset Enumeration",
-    "Other Problems": [
+    "name": "Listing subsets",
+    "extra_credit": false,
+    "primary_problem": "Subset Enumeration",
+    "other_problems": [
       "To Be or Not to Be"
     ],
-    "Description": "Using backtracking to list all subsets of a collection.",
+    "wanted_outcome": "Being able to generate all subsets via backtracking.",
     "book_chapter": "Backtracking",
     "chapter_number": 39,
     "book_id": 2
   },
   "solution-reconstruction": {
-    "Name": "Solution reconstruction",
-    "Extra Credit": true,
-    "Primary Problem": "Reconstruct Longest Common Subsequence",
-    "Other Problems": [
+    "name": "Solution reconstruction",
+    "extra_credit": true,
+    "primary_problem": "Reconstruct Longest Common Subsequence",
+    "other_problems": [
       "4-Directional Max-Sum Path Reconstruction",
       "IKEA Shopping",
       "Number Of Palindromic Splits"
     ],
-    "Description": "A DP extension for when we want to find the actual solution rather than just its value.",
+    "wanted_outcome": "Being able to reconstruct a DP solution, not just compute its value.",
     "book_chapter": "Dynamic Programming",
     "chapter_number": 40,
     "book_id": 8
   },
-  "dp-with-range-of-choices": {
-    "Name": "DP with range of choices",
-    "Extra Credit": false,
-    "Primary Problem": "Minivan Road Trip",
-    "Other Problems": [
+  "dp-with-a-non-constant-number-of-choices": {
+    "name": "DP with a non-constant number of choices",
+    "extra_credit": false,
+    "primary_problem": "Minivan Road Trip",
+    "other_problems": [
       "Longest Common Subsequence",
       "Magic Blackjack",
       "Min Subarray Sum Split",
@@ -2046,16 +2047,16 @@
       "Number Of Palindromic Splits",
       "Restaurant Ratings"
     ],
-    "Description": "DP where the number of options is not constant.",
+    "wanted_outcome": "Being able to formulate DP recurrences when the number of choices at each subproblem is not constant.",
     "book_chapter": "Dynamic Programming",
     "chapter_number": 40,
     "book_id": 2
   },
   "memoizationtabulation": {
-    "Name": "Memoization/tabulation",
-    "Extra Credit": false,
-    "Primary Problem": "Road Trip",
-    "Other Problems": [
+    "name": "Memoization/tabulation",
+    "extra_credit": false,
+    "primary_problem": "Road Trip",
+    "other_problems": [
       "Count 0-Sum Paths",
       "Counting Paths",
       "DAG Distances",
@@ -2077,16 +2078,16 @@
       "Tree Diameter",
       "Tridimensional Lego Castle"
     ],
-    "Description": "The two main approaches to dynamic programming (they're usually interchangeable, so you only need one).",
+    "wanted_outcome": "Being able to solve DP problems with either memoization or tabulation (they're usually interchangeable, so knowing one is usually enough).",
     "book_chapter": "Dynamic Programming",
     "chapter_number": 40,
     "book_id": 1
   },
-  "greedy-choice-and-counterexamples": {
-    "Name": "Greedy choice and counterexamples",
-    "Extra Credit": false,
-    "Primary Problem": "Most Non-Overlapping Intervals",
-    "Other Problems": [
+  "formulating-a-greedy-choice": {
+    "name": "Formulating a greedy choice",
+    "extra_credit": false,
+    "primary_problem": "Most Non-Overlapping Intervals",
+    "other_problems": [
       "Balanced Partition",
       "Center Assignment",
       "Edge In MST",
@@ -2101,16 +2102,16 @@
       "Time Traveler",
       "Time Traveler Max Year"
     ],
-    "Description": "Developing a greedy algorithm by brainstorming for greedy choices, hunting for counterexamples, giving an intuitive explanation for why it works if you can't find any, and finally implementing it.",
+    "wanted_outcome": "Being able to develop greedy algorithms by brainstorming for greedy choices, hunting for counterexamples to your greedy choice, giving an intuitive explanation for why it works if you can't find any, and finally implementing it.",
     "book_chapter": "Greedy Algorithms",
     "chapter_number": 41,
     "book_id": 1
   },
   "dag-problem-recipe": {
-    "Name": "DAG problem recipe",
-    "Extra Credit": false,
-    "Primary Problem": "DAG Distances",
-    "Other Problems": [
+    "name": "DAG problem recipe",
+    "extra_credit": false,
+    "primary_problem": "DAG Distances",
+    "other_problems": [
       "Counting Paths",
       "DAG Longest Path",
       "DAG Path Reconstruction",
@@ -2118,16 +2119,16 @@
       "Number Of Palindromic Splits",
       "Parallel Compilation"
     ],
-    "Description": "Processing DAG nodes in a topological ordering while computing things like min distance, max distance, or path count.",
+    "wanted_outcome": "Knowing how to solve typical DAG problems, like finding min distances, max distances, or path counts, by processing the nodes in topological order.",
     "book_chapter": "Topological Sort",
     "chapter_number": 42,
     "book_id": 1
   },
-  "range-sum-queries": {
-    "Name": "Range sum queries",
-    "Extra Credit": false,
-    "Primary Problem": "YouTube Video Reception",
-    "Other Problems": [
+  "prefix-sum-array-for-range-sum-queries": {
+    "name": "Prefix sum array for range sum queries",
+    "extra_credit": false,
+    "primary_problem": "YouTube Video Reception",
+    "other_problems": [
       "All Overbooked Slots",
       "Channel Views",
       "Exclusive Product",
@@ -2136,58 +2137,58 @@
       "Segmented Video Votes",
       "YouTube Video Unusual Days"
     ],
-    "Description": "Precomputing prefix sums to be able to quickly compute subarray sums.",
+    "wanted_outcome": "Being able to precompute prefix sums and then use that to quickly compute subarray sums.",
     "book_chapter": "Prefix Sums",
     "chapter_number": 43,
     "book_id": 2
   },
   "custom-prefix-sum-array": {
-    "Name": "Custom prefix-sum array",
-    "Extra Credit": false,
-    "Primary Problem": "Exclusive Product",
-    "Other Problems": [
+    "name": "Custom prefix-sum array",
+    "extra_credit": false,
+    "primary_problem": "Exclusive Product",
+    "other_problems": [
       "Balance Point",
       "Count Subarrays With Sum K",
       "Largest Set Intersection",
       "Strong Start And Ending",
       "YouTube Video Unusual Days"
     ],
-    "Description": "Precomputing a prefix-sum-style array where we incrementally compute something about each prefix other than the sum; it could also be about suffixes instead of prefixes.",
+    "wanted_outcome": "Being able to precompute a prefix-sum-style (or suffix) array that incrementally computes custom aggregates beyond sums.",
     "book_chapter": "Prefix Sums",
     "chapter_number": 43,
     "book_id": 3
   },
   "difference-array": {
-    "Name": "Difference array",
-    "Extra Credit": true,
-    "Primary Problem": "Segmented Video Votes",
-    "Other Problems": [
+    "name": "Difference array",
+    "extra_credit": true,
+    "primary_problem": "Segmented Video Votes",
+    "other_problems": [
       "All Overbooked Slots",
       "Most Booked Slot"
     ],
-    "Description": "Implementing subarray updates with a difference array.",
+    "wanted_outcome": "Knowing how to do range updates efficiently with a difference array.",
     "book_chapter": "Prefix Sums",
     "chapter_number": 43,
     "book_id": 8
   },
   "finding-subarrays-with-sum-k": {
-    "Name": "Finding subarrays with sum k",
-    "Extra Credit": true,
-    "Primary Problem": "Count Subarrays With Sum K",
-    "Other Problems": [
+    "name": "Finding subarrays with sum k",
+    "extra_credit": true,
+    "primary_problem": "Count Subarrays With Sum K",
+    "other_problems": [
       "Longest Subarray With Sum K",
       "Shortest Period With Over 20 Sales"
     ],
-    "Description": "A prefix-sum technique for finding or counting subarrays (including negative values) that sum to a target value.",
+    "wanted_outcome": "Being able to use prefix sums (and a hash map) to find or count subarrays that sum to k, including when negatives are present.",
     "book_chapter": "Prefix Sums",
     "chapter_number": 43,
     "book_id": 6
   },
   "prefix-sum-array": {
-    "Name": "Prefix-sum array",
-    "Extra Credit": false,
-    "Primary Problem": "Channel Views",
-    "Other Problems": [
+    "name": "Prefix-sum array",
+    "extra_credit": false,
+    "primary_problem": "Channel Views",
+    "other_problems": [
       "All Overbooked Slots",
       "Balance Point",
       "Count Subarrays With Sum K",
@@ -2199,89 +2200,89 @@
       "YouTube Video Reception",
       "YouTube Video Unusual Days"
     ],
-    "Description": "Precomputing an array with all the prefix sums of the input array; its most common application is to compute subarray sums.",
+    "wanted_outcome": "Being able to precompute prefix sums - usually to compute subarray sums quickly.",
     "book_chapter": "Prefix Sums",
     "chapter_number": 43,
     "book_id": 1
   },
-  "hash-map-internals": {
-    "Name": "Hash map internals",
-    "Extra Credit": true,
-    "Primary Problem": "Hash Map Class",
-    "Other Problems": [
+  "tinkering-with-hash-map-internals": {
+    "name": "Tinkering with hash map internals",
+    "extra_credit": true,
+    "primary_problem": "Hash Map Class",
+    "other_problems": [
       "Hash Map Class Extensions",
       "Multimap",
       "Unique K Pairs"
     ],
-    "Description": "Understanding hash maps, including hashing, collision handling, dynamic resizing, and dealing with probabilities in big O analysis.",
+    "wanted_outcome": "Understanding hashing, collision handling, dynamic resizing, and probabilistic big O analysis in hash maps.",
     "book_chapter": "Set & Map Implementations",
     "chapter_number": 44,
     "book_id": 4
   },
-  "hash-set-internals": {
-    "Name": "Hash set internals",
-    "Extra Credit": true,
-    "Primary Problem": "Hash Set Class",
-    "Other Problems": [
+  "tinkering-with-hash-set-internals": {
+    "name": "Tinkering with hash set internals",
+    "extra_credit": true,
+    "primary_problem": "Hash Set Class",
+    "other_problems": [
       "Has Duplicate",
       "Hash Map Class",
       "Hash Set Class Extensions",
       "Multiset",
       "Unique K Pairs"
     ],
-    "Description": "Understanding hash sets, including hashing, collision handling, dynamic resizing, and dealing with probabilities in big O analysis.",
+    "wanted_outcome": "Understanding hashing, collision handling, dynamic resizing, and probabilistic big O in hash sets.",
     "book_chapter": "Set & Map Implementations",
     "chapter_number": 44,
     "book_id": 1
   },
   "next-greater-element": {
-    "Name": "Next greater element",
-    "Extra Credit": true,
-    "Primary Problem": "Next Greater Element",
-    "Other Problems": [
+    "name": "Next greater element",
+    "extra_credit": true,
+    "primary_problem": "Next Greater Element",
+    "other_problems": [
       "King Kong Vs Godzilla",
       "King Kong Vs Godzilla In The Fog",
       "Largest Rectangle"
     ],
-    "Description": "Using a monotonic stack to find the next element greater than each element in an array.",
+    "wanted_outcome": "Knowing how to use a monotonic stack to find the next greater element for each array position.",
     "book_chapter": "Monotonic Stacks & Queues",
     "chapter_number": 45,
     "book_id": 5
   },
   "max-queue": {
-    "Name": "Max queue",
-    "Extra Credit": true,
-    "Primary Problem": "Max Queue",
-    "Other Problems": [
+    "name": "Max queue",
+    "extra_credit": true,
+    "primary_problem": "Max Queue",
+    "other_problems": [
       "King Kong Vs Godzilla",
       "King Kong Vs Godzilla In The Fog",
       "Largest Temperature Change",
       "Longest Stable Period",
       "Sliding Window Max"
     ],
-    "Description": "A data structure that supports queue operations and a max operation.",
+    "wanted_outcome": "Being able to implement and use a queue that also returns the current max in the queue.",
     "book_chapter": "Monotonic Stacks & Queues",
     "chapter_number": 45,
     "book_id": 1
   },
   "minimum-spanning-tree": {
-    "Name": "Minimum spanning tree",
-    "Extra Credit": false,
-    "Primary Problem": "Minimum Spanning Tree",
-    "Other Problems": [
+    "name": "Minimum spanning tree",
+    "extra_credit": false,
+    "primary_problem": "Minimum Spanning Tree",
+    "other_problems": [
       "Edge In MST",
       "MST Reconstruction"
     ],
-    "Description": "Knowing the MST definition and how to compute it.",
+    "wanted_outcome": "Knowing the MST definition and how to compute it.",
     "book_chapter": "Union-Find",
     "chapter_number": 46,
     "book_id": 1
   },
-  "backtracking": {
-    "Name": "Backtracking",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+  "backtracking-recipe": {
+    "name": "Backtracking recipe",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "4-Directional Max-Sum Path",
       "4-Directional Max-Sum Path Reconstruction",
       "Count Unique Submultisets With Sum Zero",
@@ -2295,62 +2296,62 @@
       "To Be or Not to Be",
       "White Hat Hacker"
     ],
-    "Description": "Modeling a problem as a decision tree and traversing the implicit tree with DFS.",
+    "wanted_outcome": "Being able to model problems as decision trees and traverse the implicit decision tree with DFS.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "graph-bfs": {
-    "Name": "Graph BFS",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [],
-    "Description": "A BFS recipe for graphs; it works for both connectivity-based and distance-based problems.",
+    "name": "Graph BFS",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [],
+    "wanted_outcome": "Knowing how to solve graph problems about connectivity or distances by using BFS.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "graph-dfs": {
-    "Name": "Graph DFS",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [],
-    "Description": "A DFS recipe for graphs; it works for connectivity-based problems but not distance-based problems.",
+    "name": "Graph DFS",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [],
+    "wanted_outcome": "Knowing how to solve graph connectivity problems by using DFS.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "grid-bfs": {
-    "Name": "Grid BFS",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Grid BFS",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Count Grid Islands",
       "Multi-Exit Maze",
       "RGB Distances"
     ],
-    "Description": "A BFS recipe for grid graphs; it works for both connectivity-based and distance-based problems.",
+    "wanted_outcome": "Knowing how to solve graph problems about connectivity or distances, when the graph is a grid graph, by using BFS.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "grid-dfs": {
-    "Name": "Grid DFS",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Grid DFS",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Count Grid Islands"
     ],
-    "Description": "A DFS recipe for grid graphs; it works for connectivity-based problems but not distance-based problems.",
+    "wanted_outcome": "Knowing how to solve grid-graph connectivity problems by using DFS.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
-  "memoization": {
-    "Name": "Memoization",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+  "memoization-recipe": {
+    "name": "Memoization recipe",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Count 0-Sum Paths",
       "Hiring And Training",
       "Longest Common Subsequence",
@@ -2363,16 +2364,16 @@
       "Restaurant Ratings",
       "Road Trip"
     ],
-    "Description": "One of the two main approaches for DP; it involves coming up with a recurrence, turning it into recursive code, and then adding a memo map to avoid recomputing subproblems.",
+    "wanted_outcome": "Being able to derive a recurrence, implement it recursively, and add memoization to avoid recomputation.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "peel-off-algorithm": {
-    "Name": "Peel-off algorithm",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Peel-off algorithm",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Counting Paths",
       "DAG Distances",
       "DAG Longest Path",
@@ -2382,16 +2383,16 @@
       "Parallel Compilation",
       "Supersequence"
     ],
-    "Description": "Finding a topological order by peeling off nodes with in-degree zero; also known as Kahn's algorithm.",
+    "wanted_outcome": "Knowing how to compute a topological order (or find a cycle) by repeatedly removing nodes with in-degree zero (Kahn's algorithm).",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "building-strings-with-dynamic-arrays": {
-    "Name": "Building strings with dynamic arrays",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Building strings with dynamic arrays",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Decode A String",
       "Doubly Linked List To Array",
       "Hash Set Class Extensions",
@@ -2407,45 +2408,45 @@
       "Thesaurusly",
       "To Be or Not to Be"
     ],
-    "Description": "Constructing strings by appending characters to a dynamic array; important for languages with immutable strings.",
+    "wanted_outcome": "Being able to build strings efficiently by appending characters to a dynamic array; important in languages with immutable strings.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "computing-averages": {
-    "Name": "Computing averages",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Computing averages",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Highest Average Elevation Gain",
       "Hilliest Connected Component",
       "Image Filter",
       "Most Prolific Level",
       "Popular Songs Class"
     ],
-    "Description": "Computing averages by tracking the sum and count separately, and dividing only at the end.",
+    "wanted_outcome": "Knowing how to simplify average computations by tracking the sum and count separately and dividing at the end.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
-  "extracting-and-adding-digits": {
-    "Name": "Extracting and adding digits",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+  "extracting-and-combining-digits": {
+    "name": "Extracting and combining digits",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Decode A String",
       "Jumping Numbers"
     ],
-    "Description": "Splitting a number into its individual digits or combining it back together.",
+    "wanted_outcome": "Being able to split a number into digits and combine digits back into a number.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "factor-out-validation-to-a-helper-function": {
-    "Name": "Factor out validation to a helper function",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Factor out validation to a helper function",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Adjacency List Validation",
       "BST Validation",
       "Chess Moves",
@@ -2462,53 +2463,28 @@
       "Validate Matrix Rows and Columns",
       "Validate Simple HTML Strings"
     ],
-    "Description": "Simplifying the main logic by moving complex checks into helper functions.",
-    "book_chapter": null,
-    "chapter_number": null,
-    "book_id": null
-  },
-  "impose-a-canonical-order": {
-    "Name": "Impose a canonical order",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
-      "3-Sum",
-      "Adjacency List Validation",
-      "Count Unique Submultisets With Sum Zero",
-      "Interval XOR",
-      "Make Playlist",
-      "Minimum Triplet Medians",
-      "Most Non-Overlapping Intervals",
-      "Multi-Account Cheating",
-      "Parity Sorting",
-      "Permutation Enumeration",
-      "Shift Word to Back",
-      "Subset Enumeration",
-      "Unique K Pairs",
-      "Word Expansion Class"
-    ],
-    "Description": "A way to compare unsorted collections by sorting their elements first.",
+    "wanted_outcome": "Knowing when to simplify the main logic by moving complex checks into helper functions.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "length-26-array": {
-    "Name": "Length-26 array",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Length-26 array",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Longest Alphabet Chain"
     ],
-    "Description": "An efficient hash map alternative for when the set of keys consists of lowercase English letters.",
+    "wanted_outcome": "Knowing how to use a fixed-size length-26 array as a hashmap alternative when the keys are lowercase letters.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
-  "leverage-the-input-range": {
-    "Name": "Leverage the input range",
-    "Extra Credit": true,
-    "Primary Problem": null,
-    "Other Problems": [
+  "leveraging-the-input-range": {
+    "name": "Leveraging the input range",
+    "extra_credit": true,
+    "primary_problem": null,
+    "other_problems": [
       "Dutch Flag Problem",
       "Longest Repeated Substring",
       "Most Frequent Octet",
@@ -2518,30 +2494,30 @@
       "Sorting By Frequency",
       "Word Expansion Class"
     ],
-    "Description": "Using specialized sorts such as counting sort or bucket sort when the input range is small relative to the number of elements.",
+    "wanted_outcome": "Being able to use specialized sorts such as counting sort or bucket sort when the value range is small relative to the number of elements.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "linked-list-reversal-break-down": {
-    "Name": "Linked list reversal break down",
-    "Extra Credit": true,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Linked list reversal break down",
+    "extra_credit": true,
+    "primary_problem": null,
+    "other_problems": [
       "Linked List Block Reversal",
       "Linked-List Reversal",
       "Sublist Reversal"
     ],
-    "Description": "A 4-step approach for advanced linked-list reversal problems.",
+    "wanted_outcome": "Being able to solve advanced linked-list reversal problems in 4 steps: (1) finding the ends of the section to reverse, (2) breaking out the section from the main list, (3) reversing the standalone section, and (4) re-attaching the reversed section.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "modify-recurse-undo": {
-    "Name": "Modify -> recurse -> undo",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Modify -> recurse -> undo",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "4-Directional Max-Sum Path",
       "4-Directional Max-Sum Path Reconstruction",
       "Escape With All Clues",
@@ -2552,16 +2528,16 @@
       "To Be or Not to Be",
       "White Hat Hacker"
     ],
-    "Description": "A backtracking optimization where we reuse state across partial solutions in the decision tree; the key is to do the modifications right before recursing and undoing them right after.",
+    "wanted_outcome": "Being able to optimize backtracking by reusing state across recursive calls - this involves modifying the state right before the recursive call and undoing the modification right after.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
-  "pass-indices-not-copies": {
-    "Name": "Pass indices; not copies",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+  "passing-indices-not-copies": {
+    "name": "Passing indices; not copies",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Count 0-Sum Paths",
       "Delete Operations",
       "IKEA Shopping",
@@ -2579,16 +2555,16 @@
       "Thesaurusly",
       "To Be or Not to Be"
     ],
-    "Description": "An optimization where we need to pass subarrays to functions, and instead of passing a copy of the subarray, we pass indices to the underlying array.",
+    "wanted_outcome": "Knowing how to pass subarrays to functions efficiently - by passing index ranges instead of copying the subarrays.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "searching-with-inward-pointers": {
-    "Name": "Searching with inward pointers",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Searching with inward pointers",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "2-Sum",
       "Count Pairs with Sum Greater Than Target",
       "First Non-Negative Number",
@@ -2599,16 +2575,16 @@
       "Search in Sorted Array",
       "Target Count Divisible by K"
     ],
-    "Description": "A searching technique that can be used when we can discard the smallest element based on the largest one or vice versa.",
+    "wanted_outcome": "Knowing how to search with two inward-moving pointers when the extremes inform each other - when we can discard the smallest element based on the largest one or vice versa.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "transform-exactly-kat-least-k-counting-to-at-most-k-counting": {
-    "Name": "Transform exactly-k/at-least-k counting to at-most-k counting",
-    "Extra Credit": true,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Transform exactly-k/at-least-k counting to at-most-k counting",
+    "extra_credit": true,
+    "primary_problem": null,
+    "other_problems": [
       "Ad Campaign With Small Boosts",
       "Count Good Subarrays With At Least K Sales",
       "Count Subarrays With All Remainders",
@@ -2619,16 +2595,16 @@
       "Count Subarrays With Exactly K Bad Days",
       "Most Ones with K Flips"
     ],
-    "Description": "A way to reduce Exactly-K and At-Least-K subarray counting problems into the At-Most-K version, so we don't need to know all three versions.",
+    "wanted_outcome": "Being able to solve Exactly-K and At-Least-K subarray counting problems - by reducing it to the At-Most-K version.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
-  "transform-the-input": {
-    "Name": "Transform the input",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+  "transforming-the-input": {
+    "name": "Transforming the input",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Boosting Days Multiple Times",
       "King Kong Vs Godzilla",
       "King Kong Vs Godzilla In The Fog",
@@ -2640,43 +2616,43 @@
       "YouTube Video Reception",
       "YouTube Video Unusual Days"
     ],
-    "Description": "If it makes your life easier without increasing the big O complexity, put the input in a more convenient format in a preprocessing step.",
+    "wanted_outcome": "Knowing when to preprocess the input into a more convenient format, as long as it doesn't change the big O analysis.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
-  "articulate-your-blocker": {
-    "Name": "Articulate your blocker",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+  "articulating-your-blocker": {
+    "name": "Articulating your blocker",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Linked-List Cycle Length",
       "Longest Stable Period"
     ],
-    "Description": "Asking for help by identifying and clearly stating the obstacle; this is the best way to get help from the interviewer.",
+    "wanted_outcome": "Being able to clearly state your blocker and what you've tried so far to get targeted help from the interviewer.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
-  "cycle-through-the-catalog": {
-    "Name": "Cycle through the catalog",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+  "cycling-through-the-dsa-catalog": {
+    "name": "Cycling through the DSA catalog",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "2-Array 2-Sum",
       "Google Colors",
       "White Hat Hacker"
     ],
-    "Description": "Spend a few instants considering each main DS&A technique to see if it could be used.",
+    "wanted_outcome": "When stuck, being able to quickly scan standard DS&A techniques to see what might apply (general problem-solving technique).",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "brute-force-optimization-data-structure-pattern": {
-    "Name": "Brute force optimization: data structure pattern",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Brute force optimization: data structure pattern",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "3-Sum",
       "4-Directional Max-Sum Path",
       "4-Directional Max-Sum Path Reconstruction",
@@ -2694,16 +2670,16 @@
       "Scrabble Tiles",
       "Sliding Window Max"
     ],
-    "Description": "Identifying the key operations in the bottleneck and then asking which data structure is designed to speed up those operations.",
+    "wanted_outcome": "Knowing how to speed up a brute-force solution by identifying the key operations in the bottleneck and then asking which data structure is designed to speed up those operations (general problem-solving technique).",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "brute-force-optimization-preprocessing-pattern": {
-    "Name": "Brute force optimization: preprocessing pattern",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Brute force optimization: preprocessing pattern",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "3-Sum",
       "All Overbooked Slots",
       "Channel Views",
@@ -2720,16 +2696,16 @@
       "Shortest Path Queries",
       "To Be or Not to Be"
     ],
-    "Description": "Identifying what information is needed in the bottleneck and precomputing it in a preprocessing step.",
+    "wanted_outcome": "Knowing how to speed up a brute-force solution by identifying what information is needed in the bottleneck and precomputing it in a preprocessing step (general problem-solving technique).",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
-  "hunt-for-properties-reframe-the-problem": {
-    "Name": "Hunt for properties: reframe the problem",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+  "reframing-the-problem": {
+    "name": "Reframing the problem",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Ad Campaign Boost",
       "Ad Campaign With Small Boosts",
       "Boosting Days Multiple Times",
@@ -2770,16 +2746,16 @@
       "Supersequence",
       "Tridimensional Lego Castle"
     ],
-    "Description": "Reformulating the problem in an equivalent way where the right approach is more apparent.",
+    "wanted_outcome": "Being able to reformulate the problem in an equivalent way where the right approach is more apparent (general problem-solving technique).",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
-  "brute-force-optimization-skip-unnecessary-work-pattern": {
-    "Name": "Brute force optimization: skip unnecessary work pattern",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+  "brute-force-optimization-skip-unnecessary-work": {
+    "name": "Brute force optimization: skip unnecessary work",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "Count Substrings Without Letter",
       "Days Until All Infected",
       "Hiring And Training",
@@ -2789,16 +2765,16 @@
       "Multi-Exit Maze",
       "Sub Permutations"
     ],
-    "Description": "Identifying and avoiding redundant work.",
+    "wanted_outcome": "Being able to identify and eliminate redundant work (general problem-solving technique).",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
-  "decrease-the-difficulty-start-with-an-easier-version": {
-    "Name": "Decrease the difficulty: start with an easier version",
-    "Extra Credit": false,
-    "Primary Problem": null,
-    "Other Problems": [
+  "starting-with-an-easier-version": {
+    "name": "Starting with an easier version",
+    "extra_credit": false,
+    "primary_problem": null,
+    "other_problems": [
       "3-Sum",
       "Balanced Partition",
       "Center Assignment",
@@ -2832,16 +2808,16 @@
       "Tunnel Depth",
       "Water Refilling"
     ],
-    "Description": "Solving a simpler version first to get the ball rolling, and then trying to adapt the approach to the original problem.",
+    "wanted_outcome": "Knowing when to take a step back, starting with a simpler version to get the ball rolling, and then trying to adapt the approach to the original problem (general problem-solving technique).",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "2d-dp": {
-    "Name": "2D DP",
-    "Extra Credit": false,
-    "Primary Problem": "Count 0-Sum Paths",
-    "Other Problems": [
+    "name": "2D DP",
+    "extra_credit": false,
+    "primary_problem": "Count 0-Sum Paths",
+    "other_problems": [
       "Count 0-Sum Paths",
       "Longest Common Subsequence",
       "Max-Sum Path",
@@ -2851,46 +2827,46 @@
       "Subgrid Maximums",
       "Subgrid Sums"
     ],
-    "Description": "DP where the subproblems are identified by two (or more) parameters.",
+    "wanted_outcome": "Being able to formulate and implement DP recurrences where the subproblems are identified by two (or more) parameters.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "closed-formula": {
-    "Name": "Closed formula",
-    "Extra Credit": true,
-    "Primary Problem": null,
-    "Other Problems": [
+    "name": "Closed formula",
+    "extra_credit": true,
+    "primary_problem": null,
+    "other_problems": [
       "Count Subarrays With Good Start And Ending",
       "Lego Castle",
       "Tridimensional Lego Castle"
     ],
-    "Description": "Coming up with a formula that directly computes the result.",
+    "wanted_outcome": "Being able to derive a closed-form formula that directly computes the result when one exists.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "preventing-cycles-in-backtracking": {
-    "Name": "Preventing cycles in backtracking",
-    "Extra Credit": true,
-    "Primary Problem": "4-Directional Max-Sum Path",
-    "Other Problems": [
+    "name": "Preventing cycles in backtracking",
+    "extra_credit": true,
+    "primary_problem": "4-Directional Max-Sum Path",
+    "other_problems": [
       "4-Directional Max-Sum Path",
       "4-Directional Max-Sum Path Reconstruction",
       "Escape With All Clues",
       "Permutation Enumeration",
       "White Hat Hacker"
     ],
-    "Description": "Avoiding infinite loops in backtracking by tracking visited positions.",
+    "wanted_outcome": "Being able to avoid infinite loops in backtracking by tracking visited positions.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
   },
   "sorting-preprocessing": {
-    "Name": "Sorting preprocessing",
-    "Extra Credit": true,
-    "Primary Problem": "3-Sum",
-    "Other Problems": [
+    "name": "Sorting preprocessing",
+    "extra_credit": true,
+    "primary_problem": "3-Sum",
+    "other_problems": [
       "2-Sum",
       "3-Sum",
       "Array Intersection",
@@ -2917,7 +2893,7 @@
       "YouTube Video Unusual Days",
       "k-Sorted Array"
     ],
-    "Description": "Sorting at the beginning to simplify the rest of the code or enable optimizations.",
+    "wanted_outcome": "Knowing when to sort up front to simplify or speed up the rest of the solution.",
     "book_chapter": null,
     "chapter_number": null,
     "book_id": null
