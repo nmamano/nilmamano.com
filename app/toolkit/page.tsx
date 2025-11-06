@@ -165,23 +165,35 @@ export default function Toolset() {
       return a.name.localeCompare(b.name);
     });
 
+    // Separate extra credit categories from non-extra credit categories
+    const nonExtraCreditCategories = sortedCategories.filter(
+      (c) => !c.allExtraCredit
+    );
+    const extraCreditCategories = sortedCategories.filter(
+      (c) => c.allExtraCredit
+    );
+
     // Move "Problem-Solving Boosters" to the end (before "Other")
-    const problemSolvingBoosters = sortedCategories.find(
+    const problemSolvingBoosters = nonExtraCreditCategories.find(
       (c) => c.name === "Problem-Solving Boosters"
     );
-    const otherCategory = sortedCategories.find((c) => c.name === "Other");
-    const restCategories = sortedCategories.filter(
+    const otherCategory = nonExtraCreditCategories.find(
+      (c) => c.name === "Other"
+    );
+    const restNonExtraCredit = nonExtraCreditCategories.filter(
       (c) => c.name !== "Problem-Solving Boosters" && c.name !== "Other"
     );
 
-    // Reassemble: rest categories + (Problem-Solving Boosters if exists) + (Other if exists)
-    sortedCategories = [...restCategories];
+    // Reassemble: rest non-extra credit + (Problem-Solving Boosters if exists) + (Other if exists) + extra credit categories
+    sortedCategories = [...restNonExtraCredit];
     if (problemSolvingBoosters) {
       sortedCategories.push(problemSolvingBoosters);
     }
     if (otherCategory) {
       sortedCategories.push(otherCategory);
     }
+    // Add extra credit categories at the end, preserving their relative order
+    sortedCategories.push(...extraCreditCategories);
 
     // Assign continuous display numbers starting at 1
     sortedCategories.forEach((category, index) => {
