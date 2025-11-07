@@ -205,10 +205,7 @@
     "name": "DIY technique",
     "extra_credit": false,
     "primary_problem": "Sub Permutations",
-    "other_problems": [
-      "Hiring And Training",
-      "Make Playlist"
-    ],
+    "other_problems": ["Hiring And Training", "Make Playlist"],
     "wanted_outcome": "Being able to use the DIY technique to come up with new solutions: taking a non-trivial example, solving it by hand (without thinking about algorithms), and then trying to reverse engineer the shortcuts your brain followed (general problem-solving technique).",
     "book_chapter": "Problem-Solving Boosters",
     "chapter_number": 24,
@@ -218,9 +215,7 @@
     "name": "Reverse engineering the output pattern",
     "extra_credit": false,
     "primary_problem": "Hiring And Training",
-    "other_problems": [
-      "Self-Doubling Sequence"
-    ],
+    "other_problems": ["Self-Doubling Sequence"],
     "wanted_outcome": "Being able to compute the outputs for the few first inputs manually to deduce the formula that yields those outputs (general problem-solving technique).",
     "book_chapter": "Problem-Solving Boosters",
     "chapter_number": 24,
@@ -303,9 +298,7 @@
     "name": "Rolling hash",
     "extra_credit": true,
     "primary_problem": "String Matching",
-    "other_problems": [
-      "Longest Repeated Substring"
-    ],
+    "other_problems": ["Longest Repeated Substring"],
     "wanted_outcome": "Knowing how to implement a rolling hash - a hash function that is updated incrementally as a window slides through text.",
     "book_chapter": "String Manipulation",
     "chapter_number": 26,
@@ -352,9 +345,7 @@
     "name": "Counting sort",
     "extra_credit": true,
     "primary_problem": "Dutch Flag Problem",
-    "other_problems": [
-      "Google Colors"
-    ],
+    "other_problems": ["Google Colors"],
     "wanted_outcome": "Knowing counting sort - a sorting algorithm for when the number of elements is larger than the range of values.",
     "book_chapter": "Two Pointers",
     "chapter_number": 27,
@@ -511,10 +502,7 @@
     "name": "Selecting the best iteration order",
     "extra_credit": true,
     "primary_problem": "Sort Valley Shaped Array",
-    "other_problems": [
-      "Snowprints",
-      "Spiral Order"
-    ],
+    "other_problems": ["Snowprints", "Spiral Order"],
     "wanted_outcome": "Being able to choose the iteration order that simplifies the logic the most.",
     "book_chapter": "Two Pointers",
     "chapter_number": 27,
@@ -646,10 +634,7 @@
     "name": "Exponential search",
     "extra_credit": true,
     "primary_problem": "Search in Huge Array",
-    "other_problems": [
-      "Self-Doubling Sequence",
-      "Water Refilling"
-    ],
+    "other_problems": ["Self-Doubling Sequence", "Water Refilling"],
     "wanted_outcome": "Knowing how to find an upper bound for binary search via exponential search.",
     "book_chapter": "Binary Search",
     "chapter_number": 29,
@@ -973,10 +958,7 @@
     "name": "Distance formula (geometry)",
     "extra_credit": false,
     "primary_problem": "Nested Circles",
-    "other_problems": [
-      "Center Assignment",
-      "RGB Distances"
-    ],
+    "other_problems": ["Center Assignment", "RGB Distances"],
     "wanted_outcome": "Being able to compute Euclidean distances between points in the plane.",
     "book_chapter": "Sorting",
     "chapter_number": 31,
@@ -1033,9 +1015,7 @@
     "name": "Reframing balanced parentheses as heights",
     "extra_credit": false,
     "primary_problem": "Balanced Partition",
-    "other_problems": [
-      "Longest Balanced Subsequence"
-    ],
+    "other_problems": ["Longest Balanced Subsequence"],
     "wanted_outcome": "Being able to visualize balanced parentheses as a mountain range to unlock easier reasoning.",
     "book_chapter": "Stacks & Queues",
     "chapter_number": 32,
@@ -1223,10 +1203,7 @@
     "name": "Cycle detection (linked lists)",
     "extra_credit": true,
     "primary_problem": "Linked-List Cycle Detection",
-    "other_problems": [
-      "Linked-List Cycle Length",
-      "Linked-List Cycle Start"
-    ],
+    "other_problems": ["Linked-List Cycle Length", "Linked-List Cycle Start"],
     "wanted_outcome": "Being able to detect cycles in linked lists using fast and slow pointers.",
     "book_chapter": "Linked Lists",
     "chapter_number": 34,
@@ -1236,9 +1213,7 @@
     "name": "Doubly-linked list",
     "extra_credit": true,
     "primary_problem": "Doubly Linked List To Array",
-    "other_problems": [
-      "Doubly Linked List Design"
-    ],
+    "other_problems": ["Doubly Linked List Design"],
     "wanted_outcome": "Being able to work with and implement doubly linked lists.",
     "book_chapter": "Linked Lists",
     "chapter_number": 34,
@@ -1344,11 +1319,7 @@
     "name": "Node-depth queue recipe for level-order traversal",
     "extra_credit": false,
     "primary_problem": "Most Prolific Level",
-    "other_problems": [
-      "Left View",
-      "Most Protected Node",
-      "Zig-Zag Order"
-    ],
+    "other_problems": ["Left View", "Most Protected Node", "Zig-Zag Order"],
     "wanted_outcome": "Being able to traverse a tree level by level while tracking node depths.",
     "book_chapter": "Trees",
     "chapter_number": 35,
@@ -1382,9 +1353,7 @@
     "name": "BST search",
     "extra_credit": false,
     "primary_problem": "BST Search",
-    "other_problems": [
-      "BST Nearest Value"
-    ],
+    "other_problems": ["BST Nearest Value"],
     "wanted_outcome": "Being able to search efficiently in a binary search tree.",
     "book_chapter": "Trees",
     "chapter_number": 35,
@@ -1475,10 +1444,7 @@
     "name": "Multisource BFS",
     "extra_credit": true,
     "primary_problem": "Days Until All Infected",
-    "other_problems": [
-      "Multi-Exit Maze",
-      "RGB Distances"
-    ],
+    "other_problems": ["Multi-Exit Maze", "RGB Distances"],
     "wanted_outcome": "Knowing how to run BFS from multiple sources simultaneously.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
@@ -1728,9 +1694,7 @@
     "name": "Working with node weights",
     "extra_credit": true,
     "primary_problem": "Hilliest Connected Component",
-    "other_problems": [
-      "Parallel Compilation"
-    ],
+    "other_problems": ["Parallel Compilation"],
     "wanted_outcome": "Being comfortable working with weighted nodes in graphs.",
     "book_chapter": "Graphs",
     "chapter_number": 36,
@@ -1839,10 +1803,7 @@
     "name": "Working with primes",
     "extra_credit": true,
     "primary_problem": "Sum Of First K Prime Powers",
-    "other_problems": [
-      "Hiring And Training",
-      "List of Divisors"
-    ],
+    "other_problems": ["Hiring And Training", "List of Divisors"],
     "wanted_outcome": "Being able to use prime number properties in solutions.",
     "book_chapter": "Heaps",
     "chapter_number": 37,
@@ -1980,9 +1941,7 @@
     "name": "Choosing better decision trees",
     "extra_credit": true,
     "primary_problem": "Count Unique Submultisets With Sum Zero",
-    "other_problems": [
-      "IKEA Shopping"
-    ],
+    "other_problems": ["IKEA Shopping"],
     "wanted_outcome": "When modeling a problem as a decision tree for backtracking, being able to look for the smallest one.",
     "book_chapter": "Backtracking",
     "chapter_number": 39,
@@ -2002,9 +1961,7 @@
     "name": "Listing permutations",
     "extra_credit": false,
     "primary_problem": "Permutation Enumeration",
-    "other_problems": [
-      "White Hat Hacker"
-    ],
+    "other_problems": ["White Hat Hacker"],
     "wanted_outcome": "Being able to generate all permutations via backtracking.",
     "book_chapter": "Backtracking",
     "chapter_number": 39,
@@ -2014,9 +1971,7 @@
     "name": "Listing subsets",
     "extra_credit": false,
     "primary_problem": "Subset Enumeration",
-    "other_problems": [
-      "To Be or Not to Be"
-    ],
+    "other_problems": ["To Be or Not to Be"],
     "wanted_outcome": "Being able to generate all subsets via backtracking.",
     "book_chapter": "Backtracking",
     "chapter_number": 39,
@@ -2163,10 +2118,7 @@
     "name": "Difference array",
     "extra_credit": true,
     "primary_problem": "Segmented Video Votes",
-    "other_problems": [
-      "All Overbooked Slots",
-      "Most Booked Slot"
-    ],
+    "other_problems": ["All Overbooked Slots", "Most Booked Slot"],
     "wanted_outcome": "Knowing how to do range updates efficiently with a difference array.",
     "book_chapter": "Prefix Sums",
     "chapter_number": 43,
@@ -2270,10 +2222,7 @@
     "name": "Minimum spanning tree",
     "extra_credit": false,
     "primary_problem": "Minimum Spanning Tree",
-    "other_problems": [
-      "Edge In MST",
-      "MST Reconstruction"
-    ],
+    "other_problems": ["Edge In MST", "MST Reconstruction"],
     "wanted_outcome": "Knowing the MST definition and how to compute it.",
     "book_chapter": "Union-Find",
     "chapter_number": 46,
@@ -2340,9 +2289,7 @@
     "name": "Grid DFS",
     "extra_credit": false,
     "primary_problem": null,
-    "other_problems": [
-      "Count Grid Islands"
-    ],
+    "other_problems": ["Count Grid Islands"],
     "wanted_outcome": "Knowing how to solve grid-graph connectivity problems by using DFS.",
     "book_chapter": null,
     "chapter_number": null,
@@ -2434,10 +2381,7 @@
     "name": "Extracting and combining digits",
     "extra_credit": false,
     "primary_problem": null,
-    "other_problems": [
-      "Decode A String",
-      "Jumping Numbers"
-    ],
+    "other_problems": ["Decode A String", "Jumping Numbers"],
     "wanted_outcome": "Being able to split a number into digits and combine digits back into a number.",
     "book_chapter": null,
     "chapter_number": null,
@@ -2473,9 +2417,7 @@
     "name": "Length-26 array",
     "extra_credit": false,
     "primary_problem": null,
-    "other_problems": [
-      "Longest Alphabet Chain"
-    ],
+    "other_problems": ["Longest Alphabet Chain"],
     "wanted_outcome": "Knowing how to use a fixed-size length-26 array as a hashmap alternative when the keys are lowercase letters.",
     "book_chapter": null,
     "chapter_number": null,
@@ -2626,10 +2568,7 @@
     "name": "Articulating your blocker",
     "extra_credit": false,
     "primary_problem": null,
-    "other_problems": [
-      "Linked-List Cycle Length",
-      "Longest Stable Period"
-    ],
+    "other_problems": ["Linked-List Cycle Length", "Longest Stable Period"],
     "wanted_outcome": "Being able to clearly state your blocker and what you've tried so far to get targeted help from the interviewer.",
     "book_chapter": null,
     "chapter_number": null,
@@ -2639,11 +2578,7 @@
     "name": "Cycling through the DSA catalog",
     "extra_credit": false,
     "primary_problem": null,
-    "other_problems": [
-      "2-Array 2-Sum",
-      "Google Colors",
-      "White Hat Hacker"
-    ],
+    "other_problems": ["2-Array 2-Sum", "Google Colors", "White Hat Hacker"],
     "wanted_outcome": "When stuck, being able to quickly scan standard DS&A techniques to see what might apply (general problem-solving technique).",
     "book_chapter": null,
     "chapter_number": null,
