@@ -262,6 +262,7 @@
     "extra_credit": false,
     "primary_problem": "Implement Dynamic Array",
     "other_problems": [
+      "Extra Dynamic Array Operations",
       "Hash Map Class",
       "Hash Map Class Extensions",
       "Hash Set Class",
@@ -274,7 +275,7 @@
       "Viewer Counter Class"
     ],
     "wanted_outcome": "Being able to use amortized analysis to analyze the average time complexity of data structure operations.",
-    "book_chapter": "Dynamic Arrays",
+    "book_chapter": "Dynamic Arrays Internals",
     "chapter_number": 25,
     "book_id": 1
   },
@@ -294,7 +295,7 @@
       "String Split"
     ],
     "wanted_outcome": "Being able to understand how dynamic arrays handle resizing internally and apply amortized analysis.",
-    "book_chapter": "Dynamic Arrays",
+    "book_chapter": "Dynamic Arrays Internals",
     "chapter_number": 25,
     "book_id": 2
   },

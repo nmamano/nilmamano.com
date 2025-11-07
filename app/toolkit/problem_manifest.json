@@ -1062,9 +1062,10 @@
     "reusable_ideas": [],
     "other_tools": [
       "Tinkering with dynamic array internals",
-      "Implementing classes"
+      "Implementing classes",
+      "Amortized analysis"
     ],
-    "book_chapter": "Dynamic Arrays",
+    "book_chapter": "Dynamic Arrays Internals",
     "book_id": 2
   },
   "implement-dynamic-array": {
@@ -1082,7 +1083,7 @@
       "Tinkering with dynamic array internals",
       "Implementing classes"
     ],
-    "book_chapter": "Dynamic Arrays",
+    "book_chapter": "Dynamic Arrays Internals",
     "book_id": 1
   },
   "count-zero-sum-paths": {
