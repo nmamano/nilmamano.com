@@ -56,9 +56,6 @@ interface Tool {
   wantedOutcome: string;
   primaryProblem: string | null;
   otherProblems: string[];
-  bookChapter: string | null;
-  chapterNumber: number | null;
-  bookId: number | null;
   extraCredit: boolean;
 }
 
@@ -99,113 +96,52 @@ export default function Toolset() {
   );
   const { toast } = useToast();
 
-  // Process tools from manifest
+  // Process tools from manifest (new topic -> tools list format)
   const categories: ToolCategory[] = useMemo(() => {
-    const toolMap = new Map<string, ToolCategory>();
+    // The manifest is an ordered array of topics; preserve that order
+    const topics = toolManifest as unknown as Array<{
+      name: string;
+      tools: Array<{
+        slug: string;
+        name: string;
+        extra_credit?: boolean;
+        primary_problem?: string;
+        other_problems?: string[];
+        wanted_outcome: string;
+      }>;
+    }>;
 
-    for (const [toolId, toolData] of Object.entries(toolManifest)) {
-      // Filter out tools without primary_problem
-      if (!toolData.primary_problem) {
-        continue;
-      }
+    const categoriesFromTopics: ToolCategory[] = topics.map((topic) => {
+      const tools: Tool[] = (topic.tools || [])
+        // Keep parity with previous behavior: only include tools with a primary problem
+        .filter((t) => Boolean(t.primary_problem))
+        // Preserve the tool order as defined in the manifest
+        .map((t) => ({
+          id: t.slug,
+          name: t.name,
+          wantedOutcome: t.wanted_outcome,
+          primaryProblem: t.primary_problem ?? null,
+          otherProblems: t.other_problems ?? [],
+          extraCredit: t.extra_credit ?? false,
+        }));
 
-      const tool: Tool = {
-        id: toolId,
-        name: toolData.name,
-        wantedOutcome: toolData.wanted_outcome,
-        primaryProblem: toolData.primary_problem,
-        otherProblems: toolData.other_problems || [],
-        bookChapter: toolData.book_chapter || null,
-        chapterNumber: toolData.chapter_number ?? null,
-        bookId: toolData.book_id ?? null,
-        extraCredit: toolData.extra_credit || false,
+      const allExtraCredit =
+        tools.length > 0 && tools.every((tool) => tool.extraCredit);
+
+      return {
+        name: topic.name,
+        tools,
+        allExtraCredit,
+        chapterNumber: 0, // assigned below based on order
       };
-
-      const categoryName = tool.bookChapter || "Other";
-      const chapterNum = tool.chapterNumber ?? 999;
-
-      if (!toolMap.has(categoryName)) {
-        toolMap.set(categoryName, {
-          name: categoryName,
-          chapterNumber: chapterNum,
-          tools: [],
-          allExtraCredit: true, // Will be recalculated later
-        });
-      }
-
-      toolMap.get(categoryName)!.tools.push(tool);
-    }
-
-    // Sort tools within each category: non-extra credit first, then extra credit
-    // Within each group, sort by bookId, then by name
-    for (const category of toolMap.values()) {
-      category.tools.sort((a, b) => {
-        // First, separate extra credit from non-extra credit
-        if (a.extraCredit !== b.extraCredit) {
-          return a.extraCredit ? 1 : -1; // Non-extra credit comes first
-        }
-        // If both have same extra credit status, sort by bookId (null values come last)
-        if (a.bookId === null && b.bookId === null) {
-          return a.name.localeCompare(b.name);
-        }
-        if (a.bookId === null) return 1;
-        if (b.bookId === null) return -1;
-        if (a.bookId !== b.bookId) {
-          return a.bookId - b.bookId;
-        }
-        // If bookIds are equal, sort by name
-        return a.name.localeCompare(b.name);
-      });
-      // Check if all tools in this category are extra credit
-      category.allExtraCredit =
-        category.tools.length > 0 &&
-        category.tools.every((tool) => tool.extraCredit);
-    }
-
-    // Convert to array and sort by chapter number
-    let sortedCategories = Array.from(toolMap.values()).sort((a, b) => {
-      if (a.chapterNumber !== b.chapterNumber) {
-        return a.chapterNumber - b.chapterNumber;
-      }
-      return a.name.localeCompare(b.name);
     });
 
-    // Separate extra credit categories from non-extra credit categories
-    const nonExtraCreditCategories = sortedCategories.filter(
-      (c) => !c.allExtraCredit
-    );
-    const extraCreditCategories = sortedCategories.filter(
-      (c) => c.allExtraCredit
-    );
-
-    // Move "Problem-Solving Boosters" to the end (before "Other")
-    const problemSolvingBoosters = nonExtraCreditCategories.find(
-      (c) => c.name === "Problem-Solving Boosters"
-    );
-    const otherCategory = nonExtraCreditCategories.find(
-      (c) => c.name === "Other"
-    );
-    const restNonExtraCredit = nonExtraCreditCategories.filter(
-      (c) => c.name !== "Problem-Solving Boosters" && c.name !== "Other"
-    );
-
-    // Reassemble: rest non-extra credit + (Problem-Solving Boosters if exists) + (Other if exists) + extra credit categories
-    sortedCategories = [...restNonExtraCredit];
-    if (problemSolvingBoosters) {
-      sortedCategories.push(problemSolvingBoosters);
-    }
-    if (otherCategory) {
-      sortedCategories.push(otherCategory);
-    }
-    // Add extra credit categories at the end, preserving their relative order
-    sortedCategories.push(...extraCreditCategories);
-
-    // Assign continuous display numbers starting at 1
-    sortedCategories.forEach((category, index) => {
+    // Assign continuous display numbers based on the given order
+    categoriesFromTopics.forEach((category, index) => {
       category.chapterNumber = index + 1;
     });
 
-    return sortedCategories;
+    return categoriesFromTopics;
   }, []);
 
   useEffect(() => {
