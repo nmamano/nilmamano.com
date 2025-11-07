@@ -318,7 +318,7 @@ export default function Toolset() {
       show: true,
       x: rect.left + rect.width / 2,
       y: rect.top - 10,
-      content: `Wanted outcome: ${wantedOutcome}`,
+      content: `${wantedOutcome}`,
     });
   };
 
