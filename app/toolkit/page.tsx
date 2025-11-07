@@ -136,10 +136,15 @@ export default function Toolset() {
       toolMap.get(categoryName)!.tools.push(tool);
     }
 
-    // Sort tools within each category by bookId, then by name, and check if all are extra credit
+    // Sort tools within each category: non-extra credit first, then extra credit
+    // Within each group, sort by bookId, then by name
     for (const category of toolMap.values()) {
       category.tools.sort((a, b) => {
-        // First sort by bookId (null values come last)
+        // First, separate extra credit from non-extra credit
+        if (a.extraCredit !== b.extraCredit) {
+          return a.extraCredit ? 1 : -1; // Non-extra credit comes first
+        }
+        // If both have same extra credit status, sort by bookId (null values come last)
         if (a.bookId === null && b.bookId === null) {
           return a.name.localeCompare(b.name);
         }
