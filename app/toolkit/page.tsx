@@ -50,6 +50,53 @@ const getProblemUrl = (problemName: string): string => {
   return `https://start.interviewing.io/beyond-ctci/solution/${slug}`;
 };
 
+// Get problem difficulty from problem manifest
+const getProblemDifficulty = (
+  problemName: string
+): "easy" | "medium" | "hard" | null => {
+  const slug = getProblemSlug(problemName);
+  if (!slug) return null;
+  const entry = (problemManifest as Record<string, { difficulty?: string }>)[
+    slug
+  ];
+  const difficulty = entry?.difficulty;
+  if (difficulty === "easy" || difficulty === "medium" || difficulty === "hard")
+    return difficulty;
+  return null;
+};
+
+// Map difficulty to card color classes
+const getDifficultyCardClasses = (
+  difficulty: "easy" | "medium" | "hard" | null
+): string => {
+  switch (difficulty) {
+    case "easy":
+      return "bg-emerald-50 dark:bg-emerald-900/30 border-emerald-200 dark:border-emerald-400/60 hover:bg-emerald-100 dark:hover:bg-emerald-900/45 dark:hover:border-emerald-300";
+    case "medium":
+      return "bg-amber-50 dark:bg-amber-900/30 border-amber-200 dark:border-amber-400/60 hover:bg-amber-100 dark:hover:bg-amber-900/45 dark:hover:border-amber-300";
+    case "hard":
+      return "bg-rose-50 dark:bg-rose-900/30 border-rose-200 dark:border-rose-400/60 hover:bg-rose-100 dark:hover:bg-rose-900/45 dark:hover:border-rose-300";
+    default:
+      return "bg-white dark:bg-slate-800 border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700";
+  }
+};
+
+// Difficulty rank for ordering (stable: preserve original order within same rank)
+const getDifficultyRank = (
+  difficulty: "easy" | "medium" | "hard" | null
+): number => {
+  switch (difficulty) {
+    case "easy":
+      return 0;
+    case "medium":
+      return 1;
+    case "hard":
+      return 2;
+    default:
+      return 3; // unknown/absent goes last
+  }
+};
+
 interface Tool {
   id: string;
   name: string;
@@ -269,7 +316,7 @@ Format:
 2. Explain the concept, keeping it practical to interviews.
 3. Show one or two small examples. Use pseudocode if relevant.
 4. End with a SHORT "Why this matters in interviews" section.
-5. Optional: link DIRECTLY relevant free LeetCode problems or NeetCode videos.`;
+5. Optional: link any free resources (like LeetCode problems or NeetCode videos) that are DIRECTLY RELEVANT, but only if they are free and directly relevant.`;
     navigator.clipboard.writeText(text);
     toast({
       title: "Copied!",
@@ -775,26 +822,42 @@ Format:
                                 >
                                   <DialogHeader>
                                     <DialogTitle className="text-gray-900 dark:text-gray-100">
-                                      Extra Problems for {tool.name}
+                                      {tool.name}: Extra Problems
                                     </DialogTitle>
                                   </DialogHeader>
                                   <div className="space-y-2 mt-4">
-                                    {tool.otherProblems.map((problemName) => (
-                                      <a
-                                        key={problemName}
-                                        href={getProblemUrl(problemName)}
-                                        target="_blank"
-                                        rel="noopener noreferrer"
-                                        className="block p-3 rounded-md border border-gray-200 dark:border-slate-700 hover:bg-gray-50 dark:hover:bg-slate-700 hover:border-blue-300 dark:hover:border-blue-600 transition-colors bg-white dark:bg-slate-800"
-                                      >
-                                        <div className="flex items-center justify-between">
-                                          <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                            {problemName}
-                                          </span>
-                                          <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
-                                        </div>
-                                      </a>
-                                    ))}
+                                    {[...tool.otherProblems]
+                                      .map((name, idx) => ({
+                                        name,
+                                        idx,
+                                        difficulty: getProblemDifficulty(name),
+                                      }))
+                                      .sort(
+                                        (a, b) =>
+                                          getDifficultyRank(a.difficulty) -
+                                            getDifficultyRank(b.difficulty) ||
+                                          a.idx - b.idx
+                                      )
+                                      .map(({ name, difficulty }) => {
+                                        const colorClasses =
+                                          getDifficultyCardClasses(difficulty);
+                                        return (
+                                          <a
+                                            key={name}
+                                            href={getProblemUrl(name)}
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className={`block p-3 rounded-md border transition-colors ${colorClasses}`}
+                                          >
+                                            <div className="flex items-center justify-between">
+                                              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                {name}
+                                              </span>
+                                              <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                                            </div>
+                                          </a>
+                                        );
+                                      })}
                                   </div>
                                 </DialogContent>
                               </Dialog>
@@ -895,7 +958,9 @@ Format:
                   <strong>this is not a Problem List</strong> where you have to
                   solve all the problems to check off the tool (Completionists,
                   I'm looking at you!) But if one problem isn't enough, check
-                  out these optional problems using the same tool. <br />
+                  out these optional problems using the same tool. Note: extra
+                  problems may require more advanced tools.
+                  <br />
                   <br />
                   To supplement our materials, click the{" "}
                   <strong>Learning prompt</strong> button to copy a prompt you
