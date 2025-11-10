@@ -1592,7 +1592,7 @@
     "book_id": null
   },
   "k-sorted-array": {
-    "name": "k-Sorted Array",
+    "name": "K-Sorted Array",
     "difficulty": "medium",
     "topics": ["sorting", "heaps"],
     "classic": false,

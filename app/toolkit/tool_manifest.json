@@ -986,7 +986,7 @@
         "name": "Heap size restriction",
         "extra_credit": false,
         "primary_problem": "K Most Played",
-        "other_problems": ["First K", "Top Songs Class", "k-Sorted Array"],
+        "other_problems": ["First K", "Top Songs Class", "K-Sorted Array"],
         "wanted_outcome": "Knowing how to track the largest k elements in a collection with a min-heap of max size k, or vice versa."
       },
       {
