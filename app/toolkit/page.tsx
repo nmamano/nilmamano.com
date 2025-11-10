@@ -826,38 +826,92 @@ Format:
                                     </DialogTitle>
                                   </DialogHeader>
                                   <div className="space-y-2 mt-4">
-                                    {[...tool.otherProblems]
-                                      .map((name, idx) => ({
-                                        name,
-                                        idx,
-                                        difficulty: getProblemDifficulty(name),
-                                      }))
-                                      .sort(
-                                        (a, b) =>
-                                          getDifficultyRank(a.difficulty) -
-                                            getDifficultyRank(b.difficulty) ||
-                                          a.idx - b.idx
-                                      )
-                                      .map(({ name, difficulty }) => {
-                                        const colorClasses =
-                                          getDifficultyCardClasses(difficulty);
-                                        return (
-                                          <a
-                                            key={name}
-                                            href={getProblemUrl(name)}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className={`block p-3 rounded-md border transition-colors ${colorClasses}`}
-                                          >
-                                            <div className="flex items-center justify-between">
-                                              <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                                {name}
-                                              </span>
-                                              <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
-                                            </div>
-                                          </a>
-                                        );
-                                      })}
+                                    {/* Primary Problem */}
+                                    {tool.primaryProblem && (
+                                      <>
+                                        <div className="mb-1">
+                                          <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                                            Primary Problem
+                                          </span>
+                                        </div>
+                                        {(() => {
+                                          const difficulty =
+                                            getProblemDifficulty(
+                                              tool.primaryProblem
+                                            );
+                                          const colorClasses =
+                                            getDifficultyCardClasses(
+                                              difficulty
+                                            );
+                                          return (
+                                            <a
+                                              href={getProblemUrl(
+                                                tool.primaryProblem
+                                              )}
+                                              target="_blank"
+                                              rel="noopener noreferrer"
+                                              className={`block p-3 rounded-md border transition-colors ${colorClasses}`}
+                                            >
+                                              <div className="flex items-center justify-between">
+                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                  {tool.primaryProblem}
+                                                </span>
+                                                <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                                              </div>
+                                            </a>
+                                          );
+                                        })()}
+                                        {tool.otherProblems.length > 0 && (
+                                          <div className="my-4 border-t border-gray-200 dark:border-slate-700"></div>
+                                        )}
+                                      </>
+                                    )}
+                                    {/* Extra Problems */}
+                                    {tool.otherProblems.length > 0 && (
+                                      <>
+                                        <div className="mb-1">
+                                          <span className="text-xs font-semibold text-gray-500 dark:text-gray-400 uppercase tracking-wide">
+                                            Extra Problems
+                                          </span>
+                                        </div>
+                                        {[...tool.otherProblems]
+                                          .map((name, idx) => ({
+                                            name,
+                                            idx,
+                                            difficulty:
+                                              getProblemDifficulty(name),
+                                          }))
+                                          .sort(
+                                            (a, b) =>
+                                              getDifficultyRank(a.difficulty) -
+                                                getDifficultyRank(
+                                                  b.difficulty
+                                                ) || a.idx - b.idx
+                                          )
+                                          .map(({ name, difficulty }) => {
+                                            const colorClasses =
+                                              getDifficultyCardClasses(
+                                                difficulty
+                                              );
+                                            return (
+                                              <a
+                                                key={name}
+                                                href={getProblemUrl(name)}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className={`block p-3 rounded-md border transition-colors ${colorClasses}`}
+                                              >
+                                                <div className="flex items-center justify-between">
+                                                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                    {name}
+                                                  </span>
+                                                  <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
+                                                </div>
+                                              </a>
+                                            );
+                                          })}
+                                      </>
+                                    )}
                                   </div>
                                 </DialogContent>
                               </Dialog>
