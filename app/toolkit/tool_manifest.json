@@ -1569,6 +1569,18 @@
         "wanted_outcome": "Being able to identify and eliminate redundant work (general problem-solving technique)."
       },
       {
+        "slug": "transforming-the-input",
+        "name": "Transforming the input",
+        "extra_credit": false,
+        "primary_problem": "YouTube Video Reception",
+        "other_problems": [
+          "Longest Alphabet Chain",
+          "Product of Alphabetical Sums",
+          "YouTube Video Unusual Days"
+        ],
+        "wanted_outcome": "Knowing when to preprocess the input into a more convenient format, as long as it doesn't change the big O analysis."
+      },
+      {
         "slug": "hunting-for-properties",
         "name": "Hunting for properties",
         "extra_credit": false,
@@ -1696,18 +1708,6 @@
         "primary_problem": "Tunnel Depth",
         "other_problems": ["Self-Doubling Sequence"],
         "wanted_outcome": "When stuck, being able to quickly scan standard DS&A techniques to see what might apply (general problem-solving technique)."
-      },
-      {
-        "slug": "transforming-the-input",
-        "name": "Transforming the input",
-        "extra_credit": false,
-        "primary_problem": "YouTube Video Reception",
-        "other_problems": [
-          "Longest Alphabet Chain",
-          "Product of Alphabetical Sums",
-          "YouTube Video Unusual Days"
-        ],
-        "wanted_outcome": "Knowing when to preprocess the input into a more convenient format, as long as it doesn't change the big O analysis."
       }
     ]
   }
