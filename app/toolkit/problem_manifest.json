@@ -4,10 +4,6 @@
     "difficulty": "hard",
     "topics": ["backtracking"],
     "classic": false,
-    "recipes": ["Backtracking recipe"],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": ["Frequency map", "Imposing a canonical order"],
-    "other_tools": ["Choosing better decision trees", "Hash maps"],
     "book_chapter": "Backtracking",
     "book_id": 9
   },
@@ -16,20 +12,6 @@
     "difficulty": "hard",
     "topics": ["backtracking"],
     "classic": false,
-    "recipes": ["Backtracking recipe"],
-    "boosters": ["Breaking down the problem", "Case analysis"],
-    "reusable_ideas": [
-      "Directions array to visit grid neighbors",
-      "Modify -> recurse -> undo",
-      "Path reconstruction",
-      "Factor out validation to a helper function"
-    ],
-    "other_tools": [
-      "Preventing cycles in backtracking",
-      "DFS/BFS tree",
-      "Working with grid graphs",
-      "Graph modeling"
-    ],
     "book_chapter": "Backtracking",
     "book_id": 11
   },
@@ -38,18 +20,6 @@
     "difficulty": "hard",
     "topics": ["backtracking"],
     "classic": false,
-    "recipes": ["Backtracking recipe"],
-    "boosters": [],
-    "reusable_ideas": [
-      "Directions array to visit grid neighbors",
-      "Modify -> recurse -> undo"
-    ],
-    "other_tools": [
-      "DFS/BFS tree",
-      "Preventing cycles in backtracking",
-      "Recursion",
-      "Working with grid graphs"
-    ],
     "book_chapter": "Backtracking",
     "book_id": 10
   },
@@ -58,20 +28,6 @@
     "difficulty": "hard",
     "topics": ["backtracking"],
     "classic": false,
-    "recipes": ["Backtracking recipe"],
-    "boosters": [],
-    "reusable_ideas": [
-      "Directions array to visit grid neighbors",
-      "Modify -> recurse -> undo",
-      "Path reconstruction",
-      "Solution reconstruction"
-    ],
-    "other_tools": [
-      "Graph modeling",
-      "Preventing cycles in backtracking",
-      "Recursion",
-      "Working with grid graphs"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -80,18 +36,6 @@
     "difficulty": "hard",
     "topics": ["backtracking"],
     "classic": false,
-    "recipes": ["Backtracking recipe"],
-    "boosters": ["Brute force optimization: skip unnecessary work"],
-    "reusable_ideas": [
-      "Modify -> recurse -> undo",
-      "Passing indices; not copies",
-      "Solution reconstruction"
-    ],
-    "other_tools": [
-      "Identifying knapsack-type problems",
-      "Recursion",
-      "Choosing better decision trees"
-    ],
     "book_chapter": "Backtracking",
     "book_id": 7
   },
@@ -100,10 +44,6 @@
     "difficulty": "medium",
     "topics": ["backtracking"],
     "classic": false,
-    "recipes": ["Backtracking recipe"],
-    "boosters": ["Brute force optimization: skip unnecessary work"],
-    "reusable_ideas": ["Extracting and combining digits"],
-    "other_tools": ["Recursion"],
     "book_chapter": "Backtracking",
     "book_id": 6
   },
@@ -112,19 +52,6 @@
     "difficulty": "medium",
     "topics": ["backtracking", "dynamic-programming"],
     "classic": false,
-    "recipes": ["Backtracking recipe", "Memoization recipe"],
-    "boosters": [
-      "Brute force optimization: data structure pattern",
-      "Starting with an easier version"
-    ],
-    "reusable_ideas": ["Passing indices; not copies"],
-    "other_tools": [
-      "Memoization/tabulation",
-      "2D DP",
-      "Working with grid graphs",
-      "Recursion",
-      "DFS/BFS tree"
-    ],
     "book_chapter": "Backtracking",
     "book_id": 1
   },
@@ -133,17 +60,6 @@
     "difficulty": "medium",
     "topics": ["backtracking"],
     "classic": true,
-    "recipes": ["Backtracking recipe"],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": [
-      "Imposing a canonical order",
-      "Modify -> recurse -> undo"
-    ],
-    "other_tools": [
-      "Listing permutations",
-      "Preventing cycles in backtracking",
-      "Recursion"
-    ],
     "book_chapter": "Backtracking",
     "book_id": 3
   },
@@ -152,14 +68,6 @@
     "difficulty": "easy",
     "topics": ["backtracking"],
     "classic": true,
-    "recipes": ["Backtracking recipe"],
-    "boosters": [],
-    "reusable_ideas": [
-      "Modify -> recurse -> undo",
-      "Passing indices; not copies",
-      "Imposing a canonical order"
-    ],
-    "other_tools": ["Listing subsets", "Recursion"],
     "book_chapter": "Backtracking",
     "book_id": 2
   },
@@ -168,13 +76,6 @@
     "difficulty": "medium",
     "topics": ["backtracking"],
     "classic": false,
-    "recipes": ["Backtracking recipe"],
-    "boosters": [],
-    "reusable_ideas": [
-      "Modify -> recurse -> undo",
-      "Passing indices; not copies"
-    ],
-    "other_tools": ["Hash maps", "Recursion"],
     "book_chapter": "Backtracking",
     "book_id": 5
   },
@@ -183,16 +84,6 @@
     "difficulty": "easy",
     "topics": ["backtracking"],
     "classic": false,
-    "recipes": ["Backtracking recipe"],
-    "boosters": [
-      "Breaking down the problem",
-      "Brute force optimization: preprocessing pattern"
-    ],
-    "reusable_ideas": [
-      "Modify -> recurse -> undo",
-      "Passing indices; not copies"
-    ],
-    "other_tools": ["Listing subsets", "Recursion"],
     "book_chapter": "Backtracking",
     "book_id": 4
   },
@@ -201,14 +92,6 @@
     "difficulty": "medium",
     "topics": ["backtracking"],
     "classic": false,
-    "recipes": ["Backtracking recipe"],
-    "boosters": ["Breaking down the problem", "Sketching a diagram"],
-    "reusable_ideas": ["Modify -> recurse -> undo"],
-    "other_tools": [
-      "Listing permutations",
-      "Preventing cycles in backtracking",
-      "Recursion"
-    ],
     "book_chapter": "Backtracking",
     "book_id": 8
   },
@@ -217,13 +100,6 @@
     "difficulty": "easy",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": ["Hunting for properties", "Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Binary search with duplicates",
-      "Guess-and-check technique"
-    ],
     "book_chapter": "Binary Search",
     "book_id": 2
   },
@@ -232,10 +108,6 @@
     "difficulty": "easy",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Binary search with duplicates"],
     "book_chapter": null,
     "book_id": null
   },
@@ -244,13 +116,6 @@
     "difficulty": "easy",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Binary search with duplicates",
-      "Guess-and-check technique"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -259,10 +124,6 @@
     "difficulty": "easy",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": ["Binary search with duplicates"],
     "book_chapter": null,
     "book_id": null
   },
@@ -271,10 +132,6 @@
     "difficulty": "easy",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Binary search with duplicates"],
     "book_chapter": null,
     "book_id": null
   },
@@ -283,10 +140,6 @@
     "difficulty": "medium",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": ["Breaking down the problem", "Reframing the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["Guess-and-check technique", "Min-max optimization"],
     "book_chapter": "Binary Search",
     "book_id": 11
   },
@@ -295,15 +148,6 @@
     "difficulty": "medium",
     "topics": ["binary-search", "dynamic-programming"],
     "classic": false,
-    "recipes": ["Memoization recipe", "Transition-point recipe"],
-    "boosters": ["Reframing the problem", "Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Min-max optimization",
-      "Guess-and-check technique",
-      "2D DP",
-      "DP with a non-constant number of choices"
-    ],
     "book_chapter": "Binary Search",
     "book_id": 9
   },
@@ -312,10 +156,6 @@
     "difficulty": "medium",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["Guess-and-check technique", "Min-max optimization"],
     "book_chapter": null,
     "book_id": null
   },
@@ -324,10 +164,6 @@
     "difficulty": "easy",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": [],
     "book_chapter": "Binary Search",
     "book_id": 6
   },
@@ -336,10 +172,6 @@
     "difficulty": "medium",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": ["Exponential search"],
-    "other_tools": ["Guess-and-check technique"],
     "book_chapter": "Binary Search",
     "book_id": 8
   },
@@ -348,10 +180,6 @@
     "difficulty": "easy",
     "topics": ["binary-search"],
     "classic": true,
-    "recipes": ["Transition-point recipe"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Divide and conquer"],
     "book_chapter": "Binary Search",
     "book_id": 1
   },
@@ -360,10 +188,6 @@
     "difficulty": "medium",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": ["Grid flattening"],
-    "other_tools": ["Guess-and-check technique"],
     "book_chapter": "Binary Search",
     "book_id": 7
   },
@@ -372,10 +196,6 @@
     "difficulty": "medium",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["Binary search with duplicates"],
     "book_chapter": "Binary Search",
     "book_id": 5
   },
@@ -384,14 +204,6 @@
     "difficulty": "medium",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Guess-and-check technique",
-      "Binary search with duplicates",
-      "Working with grid graphs"
-    ],
     "book_chapter": "Binary Search",
     "book_id": 12
   },
@@ -400,18 +212,6 @@
     "difficulty": "medium",
     "topics": ["binary-search", "graphs", "grids-and-matrices"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": [
-      "Starting with an easier version",
-      "Cycling through the DSA catalog"
-    ],
-    "reusable_ideas": ["Directions array to visit grid neighbors"],
-    "other_tools": [
-      "Graph modeling",
-      "Guess-and-check technique",
-      "Recursion",
-      "Working with grid graphs"
-    ],
     "book_chapter": "Boundary Thinking",
     "book_id": 1
   },
@@ -420,10 +220,6 @@
     "difficulty": "easy",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": [],
     "book_chapter": "Binary Search",
     "book_id": 4
   },
@@ -432,14 +228,6 @@
     "difficulty": "medium",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": [
-      "Breaking down the problem",
-      "Case analysis",
-      "Hunting for properties"
-    ],
-    "reusable_ideas": [],
-    "other_tools": ["Guess-and-check technique"],
     "book_chapter": "Binary Search",
     "book_id": 3
   },
@@ -448,10 +236,6 @@
     "difficulty": "medium",
     "topics": ["binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": ["Hunting for properties", "Starting with an easier version"],
-    "reusable_ideas": ["Exponential search"],
-    "other_tools": ["Guess-and-check technique", "Min-max optimization"],
     "book_chapter": "Binary Search",
     "book_id": 10
   },
@@ -460,14 +244,6 @@
     "difficulty": "medium",
     "topics": ["prefix-sums"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Sketching a diagram", "Hunting for properties"],
-    "reusable_ideas": ["Sorting to track the smallest/largest elements"],
-    "other_tools": [
-      "Line-sweep algorithm",
-      "Sorting preprocessing",
-      "Top k techniques (incl. quickselect)"
-    ],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 9
   },
@@ -476,14 +252,6 @@
     "difficulty": "easy",
     "topics": ["string-manipulation"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Breaking down the problem",
-      "Brute force optimization: skip unnecessary work",
-      "Reframing the problem"
-    ],
-    "reusable_ideas": [],
-    "other_tools": ["Number of subarrays formula"],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 2
   },
@@ -492,20 +260,6 @@
     "difficulty": "hard",
     "topics": ["recursion", "dynamic-programming", "greedy"],
     "classic": false,
-    "recipes": ["Memoization recipe"],
-    "boosters": [
-      "Hunting for properties",
-      "Reverse engineering the output pattern",
-      "DIY technique",
-      "Brute force optimization: skip unnecessary work"
-    ],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Working with primes",
-      "Memoization/tabulation",
-      "Formulating a greedy choice",
-      "Recursion"
-    ],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 6
   },
@@ -514,10 +268,6 @@
     "difficulty": "medium",
     "topics": [],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Sketching a diagram", "Case analysis"],
-    "reusable_ideas": ["Imposing a canonical order"],
-    "other_tools": ["Working with intervals"],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 7
   },
@@ -526,13 +276,6 @@
     "difficulty": "easy",
     "topics": [],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Hunting for properties",
-      "Brute force optimization: skip unnecessary work"
-    ],
-    "reusable_ideas": [],
-    "other_tools": ["Working with primes"],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 3
   },
@@ -541,18 +284,6 @@
     "difficulty": "medium",
     "topics": ["greedy", "sliding-windows"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Hunting for properties",
-      "Breaking down the problem",
-      "Reframing the problem"
-    ],
-    "reusable_ideas": [
-      "Frequency map",
-      "Length-26 array",
-      "Transforming the input"
-    ],
-    "other_tools": [],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 14
   },
@@ -561,10 +292,6 @@
     "difficulty": "medium",
     "topics": ["recursion"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Case analysis"],
-    "reusable_ideas": [],
-    "other_tools": [],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 5
   },
@@ -573,10 +300,6 @@
     "difficulty": "medium",
     "topics": ["grids-and-matrices"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Reframing the problem", "Sketching a diagram"],
-    "reusable_ideas": [],
-    "other_tools": ["Implementing subgrid traversals", "Manipulating matrices"],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 8
   },
@@ -585,13 +308,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "At-most-k subarray counting",
-      "Reframing choices as optimization"
-    ],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 10
   },
@@ -600,10 +316,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": ["Connected-component loop"],
-    "boosters": ["Reframing the problem", "Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["Graph modeling", "Sorting preprocessing", "Hash maps"],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 11
   },
@@ -612,17 +324,6 @@
     "difficulty": "hard",
     "topics": ["recursion"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Cycling through the DSA catalog",
-      "Articulating your blocker",
-      "Breaking down the problem",
-      "Case analysis",
-      "Reverse engineering the output pattern",
-      "Sketching a diagram"
-    ],
-    "reusable_ideas": ["Exponential search"],
-    "other_tools": ["Recursion"],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 15
   },
@@ -631,14 +332,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Fixed-length window recipe"],
-    "boosters": [
-      "DIY technique",
-      "Brute force optimization: skip unnecessary work",
-      "Starting with an easier version"
-    ],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": ["Hash sets", "Hash maps"],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 4
   },
@@ -647,14 +340,6 @@
     "difficulty": "medium",
     "topics": ["dynamic-arrays", "sets-and-maps", "sorting"],
     "classic": true,
-    "recipes": [],
-    "boosters": [
-      "Brute force optimization: data structure pattern",
-      "Brute force optimization: preprocessing pattern",
-      "Starting with an easier version"
-    ],
-    "reusable_ideas": ["Imposing a canonical order"],
-    "other_tools": ["Hash maps", "Hash sets", "Sorting preprocessing"],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 1
   },
@@ -663,23 +348,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Hunting for properties",
-      "Breaking down the problem",
-      "Case analysis",
-      "Starting with an easier version"
-    ],
-    "reusable_ideas": [],
-    "other_tools": [
-      "DFS/BFS tree",
-      "Pre/in/post-order traversals",
-      "Working with recursive data structures",
-      "Recursion",
-      "Memoization/tabulation",
-      "Divide and conquer",
-      "Computing distances (graphs)"
-    ],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 12
   },
@@ -688,16 +356,6 @@
     "difficulty": "hard",
     "topics": ["trees", "graphs"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": ["Edge list to adjacency list conversion"],
-    "other_tools": [
-      "DFS/BFS tree",
-      "Working with adjacency lists",
-      "Recursion",
-      "Pre/in/post-order traversals",
-      "Passing data up and down rooted trees"
-    ],
     "book_chapter": "Problem-Solving Boosters",
     "book_id": 13
   },
@@ -706,17 +364,6 @@
     "difficulty": "medium",
     "topics": ["dynamic-arrays"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Breaking down the problem",
-      "Starting with an easier version"
-    ],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Tinkering with dynamic array internals",
-      "Implementing classes",
-      "Amortized analysis"
-    ],
     "book_chapter": "Dynamic Arrays Internals",
     "book_id": 2
   },
@@ -725,14 +372,6 @@
     "difficulty": "medium",
     "topics": ["dynamic-arrays"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Amortized analysis",
-      "Tinkering with dynamic array internals",
-      "Implementing classes"
-    ],
     "book_chapter": "Dynamic Arrays Internals",
     "book_id": 1
   },
@@ -741,17 +380,6 @@
     "difficulty": "medium",
     "topics": ["dynamic-programming"],
     "classic": false,
-    "recipes": ["Memoization recipe"],
-    "boosters": [],
-    "reusable_ideas": [
-      "Directions array to visit grid neighbors",
-      "Passing indices; not copies"
-    ],
-    "other_tools": [
-      "2D DP",
-      "Memoization/tabulation",
-      "Working with grid graphs"
-    ],
     "book_chapter": "Dynamic Programming",
     "book_id": 4
   },
@@ -760,16 +388,6 @@
     "difficulty": "medium",
     "topics": ["dynamic-programming"],
     "classic": true,
-    "recipes": ["Memoization recipe"],
-    "boosters": ["Breaking down the problem", "Case analysis"],
-    "reusable_ideas": ["Passing indices; not copies"],
-    "other_tools": [
-      "2D DP",
-      "Memoization/tabulation",
-      "DP with a non-constant number of choices",
-      "Recursion",
-      "Reusing subproblems"
-    ],
     "book_chapter": "Dynamic Programming",
     "book_id": 7
   },
@@ -778,15 +396,6 @@
     "difficulty": "medium",
     "topics": ["dynamic-programming"],
     "classic": false,
-    "recipes": ["Memoization recipe"],
-    "boosters": ["Reframing the problem", "Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "DP with a non-constant number of choices",
-      "Memoization/tabulation",
-      "Recursion",
-      "Recurrence relations"
-    ],
     "book_chapter": "Dynamic Programming",
     "book_id": 5
   },
@@ -795,19 +404,6 @@
     "difficulty": "medium",
     "topics": ["dynamic-programming"],
     "classic": false,
-    "recipes": ["Memoization recipe"],
-    "boosters": [
-      "Case analysis",
-      "Starting with an easier version",
-      "Brute force optimization: data structure pattern"
-    ],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Memoization/tabulation",
-      "Recurrence relations",
-      "DP with a non-constant number of choices",
-      "Min-max optimization"
-    ],
     "book_chapter": "Dynamic Programming",
     "book_id": 6
   },
@@ -816,16 +412,6 @@
     "difficulty": "medium",
     "topics": ["dynamic-programming"],
     "classic": false,
-    "recipes": ["Memoization recipe"],
-    "boosters": ["Breaking down the problem", "Reframing the problem"],
-    "reusable_ideas": ["Passing indices; not copies"],
-    "other_tools": [
-      "DP with a non-constant number of choices",
-      "Memoization/tabulation",
-      "Recurrence relations",
-      "Min-max optimization",
-      "Reframing choices as optimization"
-    ],
     "book_chapter": "Dynamic Programming",
     "book_id": 2
   },
@@ -834,10 +420,6 @@
     "difficulty": "hard",
     "topics": ["dynamic-programming"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Solution reconstruction"],
-    "other_tools": ["2D DP", "Memoization/tabulation", "Recurrence relations"],
     "book_chapter": "Dynamic Programming",
     "book_id": 8
   },
@@ -846,20 +428,6 @@
     "difficulty": "easy",
     "topics": ["dynamic-programming"],
     "classic": false,
-    "recipes": ["Memoization recipe"],
-    "boosters": [
-      "Breaking down the problem",
-      "Hunting for properties",
-      "Case analysis"
-    ],
-    "reusable_ideas": ["Passing indices; not copies"],
-    "other_tools": [
-      "Memoization/tabulation",
-      "DP with a non-constant number of choices",
-      "Recurrence relations",
-      "Reusing subproblems",
-      "Reframing choices as optimization"
-    ],
     "book_chapter": "Dynamic Programming",
     "book_id": 3
   },
@@ -868,14 +436,6 @@
     "difficulty": "easy",
     "topics": ["dynamic-programming"],
     "classic": false,
-    "recipes": ["Memoization recipe"],
-    "boosters": [
-      "Breaking down the problem",
-      "Starting with an easier version",
-      "Hunting for properties"
-    ],
-    "reusable_ideas": ["Passing indices; not copies"],
-    "other_tools": ["Memoization/tabulation", "Recurrence relations"],
     "book_chapter": "Dynamic Programming",
     "book_id": 1
   },
@@ -884,13 +444,6 @@
     "difficulty": "easy",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [
-      "Factor out validation to a helper function",
-      "Imposing a canonical order"
-    ],
-    "other_tools": ["Hash sets", "Working with adjacency lists"],
     "book_chapter": "Graphs",
     "book_id": 1
   },
@@ -899,16 +452,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": ["Connected-component loop", "Grid BFS", "Grid DFS"],
-    "boosters": [],
-    "reusable_ideas": ["Directions array to visit grid neighbors"],
-    "other_tools": [
-      "DFS/BFS tree",
-      "Graph modeling",
-      "Hash sets",
-      "Implementing subgrid traversals",
-      "Working with grid graphs"
-    ],
     "book_chapter": "Graphs",
     "book_id": 13
   },
@@ -917,19 +460,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": ["Multisource BFS"],
-    "boosters": [
-      "Hunting for properties",
-      "Reframing the problem",
-      "Brute force optimization: skip unnecessary work"
-    ],
-    "reusable_ideas": ["Edge list to adjacency list conversion"],
-    "other_tools": [
-      "Graph modeling",
-      "Computing distances (graphs)",
-      "Working with adjacency lists",
-      "Using queues for FIFO problems"
-    ],
     "book_chapter": "Graphs",
     "book_id": 12
   },
@@ -938,13 +468,6 @@
     "difficulty": "medium",
     "topics": ["graphs", "binary-search", "union-find"],
     "classic": false,
-    "recipes": [
-      "Transition-point recipe",
-      "Union-find (path compression + union by size)"
-    ],
-    "boosters": [],
-    "reusable_ideas": ["Edge list to adjacency list conversion"],
-    "other_tools": ["Guess-and-check technique", "Graph modeling"],
     "book_chapter": "Graphs",
     "book_id": 9
   },
@@ -953,15 +476,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Starting with an easier version"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Computing distances (graphs)",
-      "Graph modeling",
-      "Working with adjacency lists",
-      "Min-max optimization"
-    ],
     "book_chapter": "Graphs",
     "book_id": 11
   },
@@ -970,18 +484,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": ["Graph DFS"],
-    "boosters": [],
-    "reusable_ideas": [
-      "Edge list to adjacency list conversion",
-      "Path reconstruction"
-    ],
-    "other_tools": [
-      "DFS/BFS tree",
-      "Graph modeling",
-      "Hash maps",
-      "Working with adjacency lists"
-    ],
     "book_chapter": "Graphs",
     "book_id": 2
   },
@@ -990,17 +492,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": ["Connected-component loop"],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [
-      "Edge list to adjacency list conversion",
-      "Computing averages"
-    ],
-    "other_tools": [
-      "Working with edge weights",
-      "Graph modeling",
-      "DFS/BFS tree"
-    ],
     "book_chapter": "Graphs",
     "book_id": 8
   },
@@ -1009,15 +500,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": ["Connected-component loop"],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": ["Computing averages"],
-    "other_tools": [
-      "Working with node weights",
-      "Working with edge weights",
-      "DFS/BFS tree",
-      "Graph modeling"
-    ],
     "book_chapter": "Graphs",
     "book_id": 7
   },
@@ -1026,19 +508,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": ["Grid BFS", "Multisource BFS"],
-    "boosters": [
-      "Brute force optimization: skip unnecessary work",
-      "Reframing the problem"
-    ],
-    "reusable_ideas": ["Directions array to visit grid neighbors"],
-    "other_tools": [
-      "Working with grid graphs",
-      "Graph modeling",
-      "Computing distances (graphs)",
-      "Implementing queues",
-      "Using queues for FIFO problems"
-    ],
     "book_chapter": "Graphs",
     "book_id": 14
   },
@@ -1047,10 +516,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": ["Connected-component loop"],
-    "boosters": ["Brute force optimization: preprocessing pattern"],
-    "reusable_ideas": [],
-    "other_tools": ["Hash maps"],
     "book_chapter": "Graphs",
     "book_id": 5
   },
@@ -1059,15 +524,6 @@
     "difficulty": "hard",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": ["Grid BFS", "Multisource BFS"],
-    "boosters": [],
-    "reusable_ideas": ["Directions array to visit grid neighbors"],
-    "other_tools": [
-      "Working with grid graphs",
-      "Computing distances (graphs)",
-      "Distance formula (geometry)",
-      "Using queues for FIFO problems"
-    ],
     "book_chapter": "Graphs",
     "book_id": 15
   },
@@ -1076,17 +532,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": ["Graph BFS"],
-    "boosters": [
-      "Breaking down the problem",
-      "Brute force optimization: preprocessing pattern"
-    ],
-    "reusable_ideas": ["Path reconstruction"],
-    "other_tools": [
-      "DFS/BFS tree",
-      "Graph modeling",
-      "Working with adjacency lists"
-    ],
     "book_chapter": "Graphs",
     "book_id": 10
   },
@@ -1095,19 +540,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [
-      "Edge list to adjacency list conversion",
-      "Path reconstruction"
-    ],
-    "other_tools": [
-      "DFS/BFS tree",
-      "Cycle detection (graphs)",
-      "Graph modeling",
-      "Working with adjacency lists",
-      "Pre/in/post-order traversals"
-    ],
     "book_chapter": "Graphs",
     "book_id": 4
   },
@@ -1116,14 +548,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties", "Breaking down the problem"],
-    "reusable_ideas": ["Edge list to adjacency list conversion"],
-    "other_tools": [
-      "Strong connectivity check",
-      "DFS/BFS tree",
-      "Graph modeling"
-    ],
     "book_chapter": "Graphs",
     "book_id": 6
   },
@@ -1132,14 +556,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Edge list to adjacency list conversion"],
-    "other_tools": [
-      "Graph modeling",
-      "Computing distances (graphs)",
-      "DFS/BFS tree"
-    ],
     "book_chapter": "Graphs",
     "book_id": 16
   },
@@ -1148,14 +564,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": ["Edge list to adjacency list conversion"],
-    "other_tools": [
-      "Cycle detection (graphs)",
-      "DFS/BFS tree",
-      "Graph modeling"
-    ],
     "book_chapter": "Graphs",
     "book_id": 3
   },
@@ -1164,10 +572,6 @@
     "difficulty": "medium",
     "topics": ["graphs"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties", "Case analysis"],
-    "reusable_ideas": ["Edge list to adjacency list conversion"],
-    "other_tools": ["Graph modeling", "Working with adjacency lists"],
     "book_chapter": "Graphs",
     "book_id": 17
   },
@@ -1176,19 +580,6 @@
     "difficulty": "medium",
     "topics": ["greedy"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Hunting for properties",
-      "Case analysis",
-      "Starting with an easier version"
-    ],
-    "reusable_ideas": ["Sorting to track the smallest/largest elements"],
-    "other_tools": [
-      "Formulating a greedy choice",
-      "Custom sorting logic",
-      "Computing distances (graphs)",
-      "Distance formula (geometry)"
-    ],
     "book_chapter": "Greedy Algorithms",
     "book_id": 3
   },
@@ -1197,15 +588,6 @@
     "difficulty": "medium",
     "topics": ["greedy"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Formulating a greedy choice",
-      "Working with intervals",
-      "Sorting preprocessing",
-      "Custom sorting logic"
-    ],
     "book_chapter": "Greedy Algorithms",
     "book_id": 5
   },
@@ -1214,13 +596,6 @@
     "difficulty": "medium",
     "topics": ["greedy"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": [
-      "Sorting to track the smallest/largest elements",
-      "Imposing a canonical order"
-    ],
-    "other_tools": ["Formulating a greedy choice", "Sorting preprocessing"],
     "book_chapter": "Greedy Algorithms",
     "book_id": 4
   },
@@ -1229,19 +604,6 @@
     "difficulty": "medium",
     "topics": ["greedy"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Case analysis", "Hunting for properties"],
-    "reusable_ideas": [
-      "Imposing a canonical order",
-      "Sorting to track the smallest/largest elements"
-    ],
-    "other_tools": [
-      "Custom sorting logic",
-      "Formulating a greedy choice",
-      "Reframing choices as optimization",
-      "Sorting preprocessing",
-      "Working with intervals"
-    ],
     "book_chapter": "Greedy Algorithms",
     "book_id": 1
   },
@@ -1250,14 +612,6 @@
     "difficulty": "medium",
     "topics": ["greedy"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": ["Sorting to track the smallest/largest elements"],
-    "other_tools": [
-      "Formulating a greedy choice",
-      "Custom sorting logic",
-      "Sorting preprocessing"
-    ],
     "book_chapter": "Greedy Algorithms",
     "book_id": 2
   },
@@ -1266,21 +620,6 @@
     "difficulty": "hard",
     "topics": ["greedy", "binary-search"],
     "classic": false,
-    "recipes": ["Transition-point recipe"],
-    "boosters": ["Starting with an easier version", "Hunting for properties"],
-    "reusable_ideas": [
-      "Sorting to track the smallest/largest elements",
-      "Heap size restriction"
-    ],
-    "other_tools": [
-      "Formulating a greedy choice",
-      "Guess-and-check technique",
-      "Binary search with duplicates",
-      "Tinkering with heap internals",
-      "Working with dynamic priorities in heaps",
-      "Sorting preprocessing",
-      "Top k techniques (incl. quickselect)"
-    ],
     "book_chapter": "Greedy Algorithms",
     "book_id": 6
   },
@@ -1289,16 +628,6 @@
     "difficulty": "medium",
     "topics": ["grids-and-matrices"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [
-      "Directions array to visit grid neighbors",
-      "Factor out validation to a helper function"
-    ],
-    "other_tools": [
-      "Working with grid graphs",
-      "Implementing subgrid traversals"
-    ],
     "book_chapter": "Grids & Matrices",
     "book_id": 1
   },
@@ -1307,17 +636,6 @@
     "difficulty": "easy",
     "topics": ["grids-and-matrices"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [
-      "Directions array to visit grid neighbors",
-      "Factor out validation to a helper function",
-      "Computing averages"
-    ],
-    "other_tools": [
-      "Working with grid graphs",
-      "Implementing subgrid traversals"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -1326,10 +644,6 @@
     "difficulty": "medium",
     "topics": ["grids-and-matrices"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Manipulating matrices"],
     "book_chapter": null,
     "book_id": null
   },
@@ -1338,10 +652,6 @@
     "difficulty": "medium",
     "topics": ["grids-and-matrices"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": ["Transforming the input"],
-    "other_tools": ["Implementing classes", "Manipulating matrices"],
     "book_chapter": "Grids & Matrices",
     "book_id": 8
   },
@@ -1350,17 +660,6 @@
     "difficulty": "medium",
     "topics": ["grids-and-matrices"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Brute force optimization: preprocessing pattern"],
-    "reusable_ideas": [
-      "Directions array to visit grid neighbors",
-      "Factor out validation to a helper function"
-    ],
-    "other_tools": [
-      "Working with grid graphs",
-      "Graph modeling",
-      "Implementing subgrid traversals"
-    ],
     "book_chapter": "Grids & Matrices",
     "book_id": 2
   },
@@ -1369,10 +668,6 @@
     "difficulty": "medium",
     "topics": ["grids-and-matrices"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Directions array to visit grid neighbors"],
-    "other_tools": ["Working with grid graphs"],
     "book_chapter": "Grids & Matrices",
     "book_id": 4
   },
@@ -1381,17 +676,6 @@
     "difficulty": "medium",
     "topics": ["grids-and-matrices"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": [
-      "Handling wraparounds with mod",
-      "Directions array to visit grid neighbors",
-      "Factor out validation to a helper function"
-    ],
-    "other_tools": [
-      "Selecting the best iteration order",
-      "Working with grid graphs"
-    ],
     "book_chapter": "Grids & Matrices",
     "book_id": 3
   },
@@ -1400,15 +684,6 @@
     "difficulty": "medium",
     "topics": ["grids-and-matrices"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Reusing subproblems",
-      "2D DP",
-      "Implementing subgrid traversals",
-      "Memoization/tabulation"
-    ],
     "book_chapter": "Grids & Matrices",
     "book_id": 6
   },
@@ -1417,16 +692,6 @@
     "difficulty": "medium",
     "topics": ["grids-and-matrices"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Rectifying double counting",
-      "Reusing subproblems",
-      "2D DP",
-      "Memoization/tabulation",
-      "Implementing subgrid traversals"
-    ],
     "book_chapter": "Grids & Matrices",
     "book_id": 7
   },
@@ -1435,10 +700,6 @@
     "difficulty": "easy",
     "topics": ["grids-and-matrices"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Manipulating matrices"],
     "book_chapter": null,
     "book_id": null
   },
@@ -1447,10 +708,6 @@
     "difficulty": "medium",
     "topics": ["grids-and-matrices"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Case analysis", "Hunting for properties"],
-    "reusable_ideas": ["Factor out validation to a helper function"],
-    "other_tools": ["Working with grid graphs"],
     "book_chapter": null,
     "book_id": null
   },
@@ -1459,14 +716,6 @@
     "difficulty": "medium",
     "topics": ["grids-and-matrices"],
     "classic": true,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": ["Factor out validation to a helper function"],
-    "other_tools": [
-      "Implementing subgrid traversals",
-      "Hash sets",
-      "Implementing classes"
-    ],
     "book_chapter": "Grids & Matrices",
     "book_id": 5
   },
@@ -1475,10 +724,6 @@
     "difficulty": "easy",
     "topics": ["grids-and-matrices", "sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Factor out validation to a helper function"],
-    "other_tools": ["Hash sets", "Implementing subgrid traversals"],
     "book_chapter": null,
     "book_id": null
   },
@@ -1487,14 +732,6 @@
     "difficulty": "medium",
     "topics": ["heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Tinkering with heap internals",
-      "Working with dynamic priorities in heaps",
-      "Top k techniques (incl. quickselect)"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -1503,10 +740,6 @@
     "difficulty": "medium",
     "topics": ["heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["Implementing classes", "Tinkering with heap internals"],
     "book_chapter": "Heaps",
     "book_id": 1
   },
@@ -1515,14 +748,6 @@
     "difficulty": "medium",
     "topics": ["heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Heap size restriction"],
-    "other_tools": [
-      "Top k techniques (incl. quickselect)",
-      "Custom sorting logic",
-      "Tinkering with heap internals"
-    ],
     "book_chapter": "Heaps",
     "book_id": 2
   },
@@ -1531,18 +756,6 @@
     "difficulty": "medium",
     "topics": ["heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Brute force optimization: data structure pattern"],
-    "reusable_ideas": [
-      "M-way merge",
-      "Sorting to track the smallest/largest elements"
-    ],
-    "other_tools": [
-      "Top k techniques (incl. quickselect)",
-      "Hash sets",
-      "Tinkering with heap internals",
-      "Formulating a greedy choice"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -1551,19 +764,6 @@
     "difficulty": "hard",
     "topics": ["heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Hunting for properties",
-      "Reframing the problem",
-      "Starting with an easier version"
-    ],
-    "reusable_ideas": ["Heap size restriction"],
-    "other_tools": [
-      "Tinkering with heap internals",
-      "Working with dynamic priorities in heaps",
-      "Top k techniques (incl. quickselect)",
-      "DFS/BFS tree"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -1572,16 +772,6 @@
     "difficulty": "medium",
     "topics": ["heaps", "greedy"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["DIY technique", "Case analysis"],
-    "reusable_ideas": ["Frequency map", "Imposing a canonical order"],
-    "other_tools": [
-      "Hash maps",
-      "Tinkering with heap internals",
-      "Working with dynamic priorities in heaps",
-      "Sorting preprocessing",
-      "Formulating a greedy choice"
-    ],
     "book_chapter": "Heaps",
     "book_id": 7
   },
@@ -1590,13 +780,6 @@
     "difficulty": "medium",
     "topics": ["heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["M-way merge"],
-    "other_tools": [
-      "Top k techniques (incl. quickselect)",
-      "Tinkering with heap internals"
-    ],
     "book_chapter": "Heaps",
     "book_id": 6
   },
@@ -1605,15 +788,6 @@
     "difficulty": "hard",
     "topics": ["heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Reframing the problem"],
-    "reusable_ideas": ["Heap size restriction", "Two-heap median tracking"],
-    "other_tools": [
-      "Hash maps",
-      "Implementing classes",
-      "Tinkering with heap internals",
-      "Working with dynamic priorities in heaps"
-    ],
     "book_chapter": "Heaps",
     "book_id": 5
   },
@@ -1622,15 +796,6 @@
     "difficulty": "medium",
     "topics": ["heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": ["Applying modulo at each step", "M-way merge"],
-    "other_tools": [
-      "Working with primes",
-      "Tinkering with heap internals",
-      "Working with dynamic priorities in heaps",
-      "Top k techniques (incl. quickselect)"
-    ],
     "book_chapter": "Heaps",
     "book_id": 8
   },
@@ -1639,15 +804,6 @@
     "difficulty": "medium",
     "topics": ["heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": ["Heap size restriction"],
-    "other_tools": [
-      "Implementing classes",
-      "Top k techniques (incl. quickselect)",
-      "Working with dynamic priorities in heaps",
-      "Tinkering with heap internals"
-    ],
     "book_chapter": "Heaps",
     "book_id": 3
   },
@@ -1656,16 +812,6 @@
     "difficulty": "medium",
     "topics": ["heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Heap size restriction", "Frequency map"],
-    "other_tools": [
-      "Working with dynamic priorities in heaps",
-      "Implementing classes",
-      "Hash maps",
-      "Top k techniques (incl. quickselect)",
-      "Tinkering with heap internals"
-    ],
     "book_chapter": "Heaps",
     "book_id": 4
   },
@@ -1674,13 +820,6 @@
     "difficulty": "easy",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Parallel pointers (linked lists)",
-      "Tinkering with linked-list internals"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -1689,15 +828,6 @@
     "difficulty": "medium",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Tinkering with linked-list internals",
-      "Implementing classes",
-      "Doubly-linked list",
-      "In-place modification (linked lists)"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 2
   },
@@ -1706,13 +836,6 @@
     "difficulty": "easy",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Doubly-linked list",
-      "Tinkering with linked-list internals"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 9
   },
@@ -1721,13 +844,6 @@
     "difficulty": "easy",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "In-place modification (linked lists)",
-      "Tinkering with linked-list internals"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 13
   },
@@ -1736,14 +852,6 @@
     "difficulty": "medium",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Implementing queues",
-      "Implementing classes",
-      "Tinkering with linked-list internals"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 4
   },
@@ -1752,33 +860,14 @@
     "difficulty": "easy",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Tinkering with linked-list internals",
-      "Implementing classes"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 3
   },
   "linked-list-block-reversal": {
-    "name": "Linked List Block Reversal",
+    "name": "Linked-List Block Reversal",
     "difficulty": "hard",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Case analysis"],
-    "reusable_ideas": [
-      "Linked-list dummy node",
-      "Linked list reversal break down",
-      "Factor out validation to a helper function"
-    ],
-    "other_tools": [
-      "In-place modification (linked lists)",
-      "Tinkering with linked-list internals",
-      "Parallel pointers (linked lists)"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 14
   },
@@ -1787,14 +876,6 @@
     "difficulty": "easy",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Starting with an easier version"],
-    "reusable_ideas": ["Linked-list dummy node"],
-    "other_tools": [
-      "Parallel pointers (linked lists)",
-      "Tinkering with linked-list internals",
-      "Working with recursive data structures"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 5
   },
@@ -1803,15 +884,6 @@
     "difficulty": "medium",
     "topics": ["linked-lists"],
     "classic": true,
-    "recipes": [],
-    "boosters": ["Hunting for properties", "Starting with an easier version"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Cycle detection (linked lists)",
-      "Fast and slow pointers (linked lists)",
-      "Hash sets",
-      "Tinkering with linked-list internals"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 8
   },
@@ -1820,20 +892,6 @@
     "difficulty": "hard",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Breaking down the problem",
-      "Hunting for properties",
-      "Sketching a diagram"
-    ],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Cycle detection (linked lists)",
-      "Fast and slow pointers (linked lists)",
-      "Hash sets",
-      "Parallel pointers (linked lists)",
-      "Tinkering with linked-list internals"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -1842,15 +900,6 @@
     "difficulty": "hard",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties", "Case analysis"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Cycle detection (linked lists)",
-      "Fast and slow pointers (linked lists)",
-      "Tinkering with linked-list internals",
-      "Parallel pointers (linked lists)"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -1859,14 +908,6 @@
     "difficulty": "medium",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Starting with an easier version"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Fast and slow pointers (linked lists)",
-      "Parallel pointers (linked lists)",
-      "Tinkering with linked-list internals"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 10
   },
@@ -1875,14 +916,6 @@
     "difficulty": "easy",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": ["Linked list reversal break down"],
-    "other_tools": [
-      "In-place modification (linked lists)",
-      "Parallel pointers (linked lists)",
-      "Tinkering with linked-list internals"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 6
   },
@@ -1891,14 +924,6 @@
     "difficulty": "easy",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Linked-list dummy node"],
-    "other_tools": [
-      "Parallel pointers (linked lists)",
-      "In-place modification (linked lists)",
-      "Tinkering with linked-list internals"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 12
   },
@@ -1907,15 +932,6 @@
     "difficulty": "medium",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Starting with an easier version"],
-    "reusable_ideas": ["Linked-list dummy node"],
-    "other_tools": [
-      "Fast and slow pointers (linked lists)",
-      "Parallel pointers (linked lists)",
-      "Tinkering with linked-list internals",
-      "In-place modification (linked lists)"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 11
   },
@@ -1924,14 +940,6 @@
     "difficulty": "medium",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Starting with an easier version"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Tinkering with linked-list internals",
-      "Implementing classes",
-      "In-place modification (linked lists)"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 1
   },
@@ -1940,17 +948,6 @@
     "difficulty": "hard",
     "topics": ["linked-lists"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [
-      "Linked list reversal break down",
-      "Linked-list dummy node"
-    ],
-    "other_tools": [
-      "In-place modification (linked lists)",
-      "Tinkering with linked-list internals",
-      "Parallel pointers (linked lists)"
-    ],
     "book_chapter": "Linked Lists",
     "book_id": 7
   },
@@ -1959,14 +956,6 @@
     "difficulty": "hard",
     "topics": ["monotonic-stacks-and-queues", "sliding-windows"],
     "classic": false,
-    "recipes": ["Next greater element"],
-    "boosters": ["Breaking down the problem", "Reframing the problem"],
-    "reusable_ideas": ["Transforming the input"],
-    "other_tools": [
-      "Max queue",
-      "Using queues for FIFO problems",
-      "Using stacks for LIFO problems"
-    ],
     "book_chapter": "Monotonic Stacks & Queues",
     "book_id": 7
   },
@@ -1975,13 +964,6 @@
     "difficulty": "hard",
     "topics": ["monotonic-stacks-and-queues", "sliding-windows"],
     "classic": false,
-    "recipes": ["Next greater element"],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [
-      "Transforming the input",
-      "Factor out validation to a helper function"
-    ],
-    "other_tools": ["Max queue"],
     "book_chapter": "Monotonic Stacks & Queues",
     "book_id": 8
   },
@@ -1990,14 +972,6 @@
     "difficulty": "hard",
     "topics": ["monotonic-stacks-and-queues"],
     "classic": false,
-    "recipes": ["Next greater element"],
-    "boosters": [
-      "Hunting for properties",
-      "Reframing the problem",
-      "Breaking down the problem"
-    ],
-    "reusable_ideas": [],
-    "other_tools": ["Using stacks for LIFO problems"],
     "book_chapter": "Monotonic Stacks & Queues",
     "book_id": 6
   },
@@ -2006,14 +980,6 @@
     "difficulty": "hard",
     "topics": ["sliding-windows", "monotonic-stacks-and-queues"],
     "classic": false,
-    "recipes": ["Fixed-length window recipe"],
-    "boosters": [
-      "Breaking down the problem",
-      "Brute force optimization: data structure pattern",
-      "Hunting for properties"
-    ],
-    "reusable_ideas": [],
-    "other_tools": ["Max queue", "Using queues for FIFO problems"],
     "book_chapter": "Monotonic Stacks & Queues",
     "book_id": 3
   },
@@ -2022,10 +988,6 @@
     "difficulty": "hard",
     "topics": ["sliding-windows", "monotonic-stacks-and-queues"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Max queue"],
     "book_chapter": "Monotonic Stacks & Queues",
     "book_id": 4
   },
@@ -2034,19 +996,6 @@
     "difficulty": "hard",
     "topics": ["monotonic-stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Starting with an easier version",
-      "Brute force optimization: data structure pattern"
-    ],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Max queue",
-      "Amortized analysis",
-      "Implementing classes",
-      "Implementing queues",
-      "Using queues for FIFO problems"
-    ],
     "book_chapter": "Monotonic Stacks & Queues",
     "book_id": 1
   },
@@ -2055,17 +1004,6 @@
     "difficulty": "hard",
     "topics": ["monotonic-stacks-and-queues"],
     "classic": false,
-    "recipes": ["Next greater element"],
-    "boosters": [
-      "Brute force optimization: data structure pattern",
-      "Brute force optimization: preprocessing pattern"
-    ],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Amortized analysis",
-      "Selecting the best iteration order",
-      "Using stacks for LIFO problems"
-    ],
     "book_chapter": "Monotonic Stacks & Queues",
     "book_id": 5
   },
@@ -2074,13 +1012,6 @@
     "difficulty": "hard",
     "topics": ["sliding-windows", "monotonic-stacks-and-queues"],
     "classic": false,
-    "recipes": ["Fixed-length window recipe"],
-    "boosters": [
-      "Breaking down the problem",
-      "Brute force optimization: data structure pattern"
-    ],
-    "reusable_ideas": [],
-    "other_tools": ["Max queue", "Using queues for FIFO problems"],
     "book_chapter": "Monotonic Stacks & Queues",
     "book_id": 2
   },
@@ -2089,10 +1020,6 @@
     "difficulty": "medium",
     "topics": ["prefix-sums"],
     "classic": false,
-    "recipes": ["Prefix sum array for range sum queries"],
-    "boosters": ["Brute force optimization: preprocessing pattern"],
-    "reusable_ideas": [],
-    "other_tools": ["Difference array", "Prefix-sum array"],
     "book_chapter": "Prefix Sums",
     "book_id": 10
   },
@@ -2101,10 +1028,6 @@
     "difficulty": "easy",
     "topics": ["prefix-sums"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Custom prefix-sum array", "Prefix-sum array"],
     "book_chapter": "Prefix Sums",
     "book_id": 4
   },
@@ -2113,13 +1036,6 @@
     "difficulty": "easy",
     "topics": ["prefix-sums"],
     "classic": false,
-    "recipes": ["Prefix sum array for range sum queries"],
-    "boosters": [
-      "Brute force optimization: preprocessing pattern",
-      "Starting with an easier version"
-    ],
-    "reusable_ideas": [],
-    "other_tools": ["Prefix-sum array"],
     "book_chapter": "Prefix Sums",
     "book_id": 1
   },
@@ -2128,18 +1044,6 @@
     "difficulty": "medium",
     "topics": ["prefix-sums"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Reframing the problem",
-      "Brute force optimization: preprocessing pattern"
-    ],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": [
-      "Finding subarrays with sum k",
-      "Prefix-sum array",
-      "Hash maps",
-      "Custom prefix-sum array"
-    ],
     "book_chapter": "Prefix Sums",
     "book_id": 6
   },
@@ -2148,10 +1052,6 @@
     "difficulty": "medium",
     "topics": ["prefix-sums"],
     "classic": false,
-    "recipes": ["Prefix sum array for range sum queries"],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": ["Applying modulo at each step"],
-    "other_tools": ["Custom prefix-sum array", "Prefix-sum array"],
     "book_chapter": "Prefix Sums",
     "book_id": 3
   },
@@ -2160,14 +1060,6 @@
     "difficulty": "hard",
     "topics": ["prefix-sums"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": [
-      "Finding subarrays with sum k",
-      "Prefix-sum array",
-      "Hash maps"
-    ],
     "book_chapter": "Prefix Sums",
     "book_id": 7
   },
@@ -2176,10 +1068,6 @@
     "difficulty": "medium",
     "topics": ["prefix-sums"],
     "classic": false,
-    "recipes": ["Prefix sum array for range sum queries"],
-    "boosters": ["Brute force optimization: preprocessing pattern"],
-    "reusable_ideas": [],
-    "other_tools": ["Difference array", "Prefix-sum array"],
     "book_chapter": "Prefix Sums",
     "book_id": 9
   },
@@ -2188,10 +1076,6 @@
     "difficulty": "medium",
     "topics": ["prefix-sums"],
     "classic": false,
-    "recipes": ["Prefix sum array for range sum queries"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Difference array", "Prefix-sum array"],
     "book_chapter": "Prefix Sums",
     "book_id": 8
   },
@@ -2200,10 +1084,6 @@
     "difficulty": "easy",
     "topics": ["prefix-sums"],
     "classic": false,
-    "recipes": ["Prefix sum array for range sum queries"],
-    "boosters": [],
-    "reusable_ideas": ["Transforming the input"],
-    "other_tools": ["Prefix-sum array"],
     "book_chapter": "Prefix Sums",
     "book_id": 2
   },
@@ -2212,17 +1092,6 @@
     "difficulty": "hard",
     "topics": ["prefix-sums"],
     "classic": false,
-    "recipes": ["Prefix sum array for range sum queries"],
-    "boosters": ["Breaking down the problem", "Sketching a diagram"],
-    "reusable_ideas": [
-      "Sorting to track the smallest/largest elements",
-      "Transforming the input"
-    ],
-    "other_tools": [
-      "Prefix-sum array",
-      "Custom prefix-sum array",
-      "Sorting preprocessing"
-    ],
     "book_chapter": "Prefix Sums",
     "book_id": 5
   },
@@ -2231,10 +1100,6 @@
     "difficulty": "medium",
     "topics": ["recursion"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": ["Passing indices; not copies"],
-    "other_tools": ["Divide and conquer", "Recursion"],
     "book_chapter": "Recursion",
     "book_id": 5
   },
@@ -2243,15 +1108,6 @@
     "difficulty": "medium",
     "topics": ["recursion"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Recurrence relations",
-      "Memoization/tabulation",
-      "Closed formula",
-      "Recursion"
-    ],
     "book_chapter": "Recursion",
     "book_id": 4
   },
@@ -2260,10 +1116,6 @@
     "difficulty": "easy",
     "topics": ["recursion"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Working with recursive data structures"],
     "book_chapter": "Recursion",
     "book_id": 2
   },
@@ -2272,10 +1124,6 @@
     "difficulty": "medium",
     "topics": ["recursion"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Applying modulo at each step"],
-    "other_tools": ["Recurrence relations", "Recursion", "Divide and conquer"],
     "book_chapter": "Recursion",
     "book_id": 3
   },
@@ -2284,13 +1132,6 @@
     "difficulty": "easy",
     "topics": ["recursion"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [
-      "Building strings with dynamic arrays",
-      "Passing indices; not copies"
-    ],
-    "other_tools": ["Recursion", "Parsing"],
     "book_chapter": "Recursion",
     "book_id": 1
   },
@@ -2299,20 +1140,6 @@
     "difficulty": "medium",
     "topics": ["recursion"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Breaking down the problem",
-      "Hunting for properties",
-      "Reframing the problem"
-    ],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Recursion",
-      "Memoization/tabulation",
-      "Recurrence relations",
-      "Closed formula",
-      "Reusing subproblems"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -2321,15 +1148,6 @@
     "difficulty": "hard",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Starting with an easier version"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Amortized analysis",
-      "Implementing classes",
-      "Tinkering with hash map internals",
-      "Tinkering with hash set internals"
-    ],
     "book_chapter": "Set & Map Implementations",
     "book_id": 4
   },
@@ -2338,14 +1156,6 @@
     "difficulty": "hard",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Hash maps",
-      "Implementing classes",
-      "Tinkering with hash map internals"
-    ],
     "book_chapter": "Set & Map Implementations",
     "book_id": 5
   },
@@ -2354,15 +1164,6 @@
     "difficulty": "hard",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Starting with an easier version"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Amortized analysis",
-      "Hash maps",
-      "Implementing classes",
-      "Tinkering with hash set internals"
-    ],
     "book_chapter": "Set & Map Implementations",
     "book_id": 1
   },
@@ -2371,14 +1172,6 @@
     "difficulty": "hard",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Starting with an easier version"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Hash sets",
-      "Implementing classes",
-      "Tinkering with hash set internals"
-    ],
     "book_chapter": "Set & Map Implementations",
     "book_id": 2
   },
@@ -2387,14 +1180,6 @@
     "difficulty": "hard",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Hash maps",
-      "Implementing classes",
-      "Tinkering with hash map internals"
-    ],
     "book_chapter": "Set & Map Implementations",
     "book_id": 6
   },
@@ -2403,18 +1188,6 @@
     "difficulty": "hard",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Breaking down the problem",
-      "Starting with an easier version"
-    ],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": [
-      "Tinkering with hash set internals",
-      "Implementing classes",
-      "Hash maps",
-      "Hash sets"
-    ],
     "book_chapter": "Set & Map Implementations",
     "book_id": 3
   },
@@ -2423,10 +1196,6 @@
     "difficulty": "easy",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Brute force optimization: data structure pattern"],
-    "reusable_ideas": [],
-    "other_tools": ["Hash sets"],
     "book_chapter": "Sets & Maps",
     "book_id": 1
   },
@@ -2435,10 +1204,6 @@
     "difficulty": "medium",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": ["Hash maps", "Hash sets"],
     "book_chapter": "Sets & Maps",
     "book_id": 10
   },
@@ -2447,10 +1212,6 @@
     "difficulty": "medium",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Brute force optimization: preprocessing pattern"],
-    "reusable_ideas": [],
-    "other_tools": ["Hash maps", "Working with grid graphs"],
     "book_chapter": "Sets & Maps",
     "book_id": 8
   },
@@ -2459,10 +1220,6 @@
     "difficulty": "easy",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": ["Implementing classes", "Hash maps", "Hash sets"],
     "book_chapter": "Sets & Maps",
     "book_id": 5
   },
@@ -2471,10 +1228,6 @@
     "difficulty": "medium",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": ["Hash maps", "Parsing"],
     "book_chapter": null,
     "book_id": null
   },
@@ -2483,10 +1236,6 @@
     "difficulty": "easy",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Brute force optimization: preprocessing pattern"],
-    "reusable_ideas": [],
-    "other_tools": ["Hash maps"],
     "book_chapter": "Sets & Maps",
     "book_id": 6
   },
@@ -2495,13 +1244,6 @@
     "difficulty": "medium",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Breaking down the problem",
-      "Brute force optimization: data structure pattern"
-    ],
-    "reusable_ideas": [],
-    "other_tools": ["Hash sets"],
     "book_chapter": null,
     "book_id": null
   },
@@ -2510,10 +1252,6 @@
     "difficulty": "easy",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Brute force optimization: data structure pattern"],
-    "reusable_ideas": [],
-    "other_tools": ["Hash sets", "Tinkering with hash set internals"],
     "book_chapter": null,
     "book_id": null
   },
@@ -2522,10 +1260,6 @@
     "difficulty": "hard",
     "topics": ["sets-and-maps", "prefix-sums"],
     "classic": false,
-    "recipes": ["Prefix sum array for range sum queries"],
-    "boosters": ["Hunting for properties", "Case analysis"],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": ["Custom prefix-sum array", "Hash maps", "Hash sets"],
     "book_chapter": "Sets & Maps",
     "book_id": 11
   },
@@ -2534,14 +1268,6 @@
     "difficulty": "hard",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Breaking down the problem",
-      "Starting with an easier version",
-      "Hunting for properties"
-    ],
-    "reusable_ideas": [],
-    "other_tools": ["Hash sets"],
     "book_chapter": null,
     "book_id": null
   },
@@ -2550,10 +1276,6 @@
     "difficulty": "easy",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Frequency map", "Leveraging the input range"],
-    "other_tools": ["Hash maps"],
     "book_chapter": "Sets & Maps",
     "book_id": 3
   },
@@ -2562,10 +1284,6 @@
     "difficulty": "easy",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Brute force optimization: data structure pattern"],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": ["Hash maps"],
     "book_chapter": "Sets & Maps",
     "book_id": 2
   },
@@ -2574,14 +1292,6 @@
     "difficulty": "easy",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Imposing a canonical order"],
-    "other_tools": [
-      "Hash sets",
-      "Custom sorting logic",
-      "Sorting preprocessing"
-    ],
     "book_chapter": "Sets & Maps",
     "book_id": 4
   },
@@ -2590,10 +1300,6 @@
     "difficulty": "medium",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Starting with an easier version", "Hunting for properties"],
-    "reusable_ideas": ["Leveraging the input range", "Transforming the input"],
-    "other_tools": ["Hash sets"],
     "book_chapter": "Sets & Maps",
     "book_id": 9
   },
@@ -2602,10 +1308,6 @@
     "difficulty": "easy",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Brute force optimization: data structure pattern"],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": ["Hash maps"],
     "book_chapter": null,
     "book_id": null
   },
@@ -2614,10 +1316,6 @@
     "difficulty": "easy",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Hash maps", "Computing distances (graphs)"],
     "book_chapter": null,
     "book_id": null
   },
@@ -2626,10 +1324,6 @@
     "difficulty": "easy",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Hash maps", "Computing distances (graphs)"],
     "book_chapter": null,
     "book_id": null
   },
@@ -2638,15 +1332,6 @@
     "difficulty": "medium",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": ["Frequency map", "Imposing a canonical order"],
-    "other_tools": [
-      "Hash maps",
-      "Hash sets",
-      "Tinkering with hash map internals",
-      "Tinkering with hash set internals"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -2655,10 +1340,6 @@
     "difficulty": "easy",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Hash sets"],
     "book_chapter": null,
     "book_id": null
   },
@@ -2667,14 +1348,6 @@
     "difficulty": "easy",
     "topics": ["sets-and-maps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [
-      "Frequency map",
-      "Imposing a canonical order",
-      "Leveraging the input range"
-    ],
-    "other_tools": ["Implementing classes", "Hash maps"],
     "book_chapter": "Sets & Maps",
     "book_id": 7
   },
@@ -2683,13 +1356,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Reframing choices as optimization",
-      "At-most-k subarray counting"
-    ],
     "book_chapter": "Sliding Windows",
     "book_id": 9
   },
@@ -2698,13 +1364,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "At-most-k subarray counting",
-      "Reframing choices as optimization"
-    ],
     "book_chapter": "Sliding Windows",
     "book_id": 10
   },
@@ -2713,10 +1372,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": ["Transforming the input"],
-    "other_tools": ["Reframing choices as optimization"],
     "book_chapter": "Sliding Windows",
     "book_id": 11
   },
@@ -2725,15 +1380,6 @@
     "difficulty": "hard",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe", "Resetting window recipe"],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [
-      "Transform exactly-k/at-least-k counting to at-most-k counting"
-    ],
-    "other_tools": [
-      "Number of subarrays formula",
-      "At-most-k subarray counting"
-    ],
     "book_chapter": "Sliding Windows",
     "book_id": 25
   },
@@ -2742,22 +1388,6 @@
     "difficulty": "hard",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": [
-      "Breaking down the problem",
-      "Reframing the problem",
-      "Starting with an easier version"
-    ],
-    "reusable_ideas": [
-      "Transform exactly-k/at-least-k counting to at-most-k counting",
-      "Applying modulo at each step",
-      "Frequency map"
-    ],
-    "other_tools": [
-      "At-most-k subarray counting",
-      "Number of subarrays formula",
-      "Hash maps"
-    ],
     "book_chapter": "Sliding Windows",
     "book_id": 24
   },
@@ -2766,15 +1396,6 @@
     "difficulty": "hard",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": ["Reframing the problem", "Starting with an easier version"],
-    "reusable_ideas": [
-      "Transform exactly-k/at-least-k counting to at-most-k counting"
-    ],
-    "other_tools": [
-      "At-most-k subarray counting",
-      "Number of subarrays formula"
-    ],
     "book_chapter": "Sliding Windows",
     "book_id": 20
   },
@@ -2783,10 +1404,6 @@
     "difficulty": "hard",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["At-most-k subarray counting"],
     "book_chapter": "Sliding Windows",
     "book_id": 18
   },
@@ -2795,12 +1412,6 @@
     "difficulty": "hard",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": [],
-    "reusable_ideas": [
-      "Transform exactly-k/at-least-k counting to at-most-k counting"
-    ],
-    "other_tools": ["At-most-k subarray counting"],
     "book_chapter": "Sliding Windows",
     "book_id": 23
   },
@@ -2809,15 +1420,6 @@
     "difficulty": "hard",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": [
-      "Transform exactly-k/at-least-k counting to at-most-k counting"
-    ],
-    "other_tools": [
-      "At-most-k subarray counting",
-      "Number of subarrays formula"
-    ],
     "book_chapter": "Sliding Windows",
     "book_id": 22
   },
@@ -2826,12 +1428,6 @@
     "difficulty": "hard",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": [],
-    "reusable_ideas": [
-      "Transform exactly-k/at-least-k counting to at-most-k counting"
-    ],
-    "other_tools": ["At-most-k subarray counting"],
     "book_chapter": "Sliding Windows",
     "book_id": 19
   },
@@ -2840,10 +1436,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": ["Number of subarrays formula", "Closed formula"],
     "book_chapter": "Sliding Windows",
     "book_id": 21
   },
@@ -2852,10 +1444,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Fixed-length window recipe", "Resetting window recipe"],
-    "boosters": [],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": ["Hash maps"],
     "book_chapter": "Sliding Windows",
     "book_id": 4
   },
@@ -2864,10 +1452,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Resetting window recipe"],
-    "boosters": ["Case analysis"],
-    "reusable_ideas": [],
-    "other_tools": [],
     "book_chapter": "Sliding Windows",
     "book_id": 7
   },
@@ -2876,10 +1460,6 @@
     "difficulty": "easy",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Resetting window recipe"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [],
     "book_chapter": "Sliding Windows",
     "book_id": 5
   },
@@ -2888,10 +1468,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": [],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": ["Hash maps", "At-most-k subarray counting"],
     "book_chapter": "Sliding Windows",
     "book_id": 12
   },
@@ -2900,13 +1476,6 @@
     "difficulty": "hard",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Fixed-length window recipe", "Maximum window recipe"],
-    "boosters": [
-      "Breaking down the problem",
-      "Starting with an easier version"
-    ],
-    "reusable_ideas": ["Leveraging the input range", "Frequency map"],
-    "other_tools": ["Guess-and-check technique", "Rolling hash", "Hash maps"],
     "book_chapter": "Sliding Windows",
     "book_id": 13
   },
@@ -2915,10 +1484,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": true,
-    "recipes": ["Resetting window recipe"],
-    "boosters": ["Case analysis"],
-    "reusable_ideas": [],
-    "other_tools": [],
     "book_chapter": "Sliding Windows",
     "book_id": 6
   },
@@ -2927,10 +1492,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Maximum window recipe"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["At-most-k subarray counting"],
     "book_chapter": "Sliding Windows",
     "book_id": 8
   },
@@ -2939,10 +1500,6 @@
     "difficulty": "easy",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Fixed-length window recipe"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [],
     "book_chapter": "Sliding Windows",
     "book_id": 2
   },
@@ -2951,10 +1508,6 @@
     "difficulty": "easy",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Fixed-length window recipe"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [],
     "book_chapter": "Sliding Windows",
     "book_id": 1
   },
@@ -2963,10 +1516,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Minimum window recipe"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Finding subarrays with sum k"],
     "book_chapter": "Sliding Windows",
     "book_id": 14
   },
@@ -2975,10 +1524,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Minimum window recipe"],
-    "boosters": [],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": ["Hash maps"],
     "book_chapter": "Sliding Windows",
     "book_id": 15
   },
@@ -2987,13 +1532,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Minimum window recipe"],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": [
-      "Sorting to track the smallest/largest elements",
-      "Transforming the input"
-    ],
-    "other_tools": ["Sorting preprocessing", "Min-max optimization"],
     "book_chapter": "Sliding Windows",
     "book_id": 16
   },
@@ -3002,10 +1540,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows", "prefix-sums", "two-pointers"],
     "classic": false,
-    "recipes": ["Minimum window recipe"],
-    "boosters": ["Breaking down the problem", "Reframing the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["At-most-k subarray counting", "Custom prefix-sum array"],
     "book_chapter": "Sliding Windows",
     "book_id": 17
   },
@@ -3014,10 +1548,6 @@
     "difficulty": "medium",
     "topics": ["sliding-windows"],
     "classic": false,
-    "recipes": ["Fixed-length window recipe"],
-    "boosters": ["Brute force optimization: data structure pattern"],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": ["Hash maps"],
     "book_chapter": "Sliding Windows",
     "book_id": 3
   },
@@ -3026,21 +1556,6 @@
     "difficulty": "medium",
     "topics": ["sorting"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Breaking down the problem",
-      "Reframing the problem",
-      "Brute force optimization: preprocessing pattern"
-    ],
-    "reusable_ideas": [
-      "Sorting to track the smallest/largest elements",
-      "Passing indices; not copies"
-    ],
-    "other_tools": [
-      "Sorting preprocessing",
-      "Hash sets",
-      "Custom sorting logic"
-    ],
     "book_chapter": "Sorting",
     "book_id": 3
   },
@@ -3049,19 +1564,6 @@
     "difficulty": "hard",
     "topics": ["sorting", "heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Case analysis"],
-    "reusable_ideas": [
-      "Heap size restriction",
-      "Sorting to track the smallest/largest elements"
-    ],
-    "other_tools": [
-      "Custom sorting logic",
-      "Divide and conquer",
-      "Sorting preprocessing",
-      "Tinkering with heap internals",
-      "Top k techniques (incl. quickselect)"
-    ],
     "book_chapter": "Sorting",
     "book_id": 6
   },
@@ -3070,10 +1572,6 @@
     "difficulty": "medium",
     "topics": ["sorting"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": ["Counting sort", "Custom sorting logic", "Hash maps"],
     "book_chapter": null,
     "book_id": null
   },
@@ -3082,10 +1580,6 @@
     "difficulty": "medium",
     "topics": ["sorting"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["Divide and conquer", "Recursion", "Custom sorting logic"],
     "book_chapter": null,
     "book_id": null
   },
@@ -3094,10 +1588,6 @@
     "difficulty": "medium",
     "topics": ["sorting"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["Recursion", "Divide and conquer", "Sorting preprocessing"],
     "book_chapter": null,
     "book_id": null
   },
@@ -3106,17 +1596,6 @@
     "difficulty": "medium",
     "topics": ["sorting", "heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties", "Breaking down the problem"],
-    "reusable_ideas": [
-      "Sorting to track the smallest/largest elements",
-      "Heap size restriction"
-    ],
-    "other_tools": [
-      "Top k techniques (incl. quickselect)",
-      "Sorting preprocessing",
-      "Working with dynamic priorities in heaps"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -3125,18 +1604,6 @@
     "difficulty": "medium",
     "topics": ["sorting"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Sketching a diagram", "Hunting for properties"],
-    "reusable_ideas": [
-      "Sorting to track the smallest/largest elements",
-      "Factor out validation to a helper function"
-    ],
-    "other_tools": [
-      "Distance formula (geometry)",
-      "Custom sorting logic",
-      "Sorting preprocessing",
-      "Computing distances (graphs)"
-    ],
     "book_chapter": "Sorting",
     "book_id": 2
   },
@@ -3145,14 +1612,6 @@
     "difficulty": "easy",
     "topics": ["sorting"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Leveraging the input range"],
-    "other_tools": [
-      "Bucket sort",
-      "Custom sorting logic",
-      "Implementing classes"
-    ],
     "book_chapter": "Sorting",
     "book_id": 5
   },
@@ -3161,10 +1620,6 @@
     "difficulty": "easy",
     "topics": ["sorting"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Frequency map", "Leveraging the input range"],
-    "other_tools": ["Custom sorting logic", "Hash maps"],
     "book_chapter": "Sorting",
     "book_id": 1
   },
@@ -3173,14 +1628,6 @@
     "difficulty": "medium",
     "topics": ["sorting"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": ["Sorting to track the smallest/largest elements"],
-    "other_tools": [
-      "Custom sorting logic",
-      "Implementing classes",
-      "Sorting preprocessing"
-    ],
     "book_chapter": "Sorting",
     "book_id": 4
   },
@@ -3189,10 +1636,6 @@
     "difficulty": "medium",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties", "Starting with an easier version"],
-    "reusable_ideas": ["Reframing balanced parentheses as heights"],
-    "other_tools": ["Formulating a greedy choice", "Parsing"],
     "book_chapter": "Stacks & Queues",
     "book_id": 6
   },
@@ -3201,10 +1644,6 @@
     "difficulty": "easy",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties", "Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["Using stacks for LIFO problems"],
     "book_chapter": "Stacks & Queues",
     "book_id": 1
   },
@@ -3213,10 +1652,6 @@
     "difficulty": "medium",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": ["Piggybacking extra info"],
-    "other_tools": ["Recursion", "Using stacks for LIFO problems"],
     "book_chapter": "Stacks & Queues",
     "book_id": 2
   },
@@ -3225,10 +1660,6 @@
     "difficulty": "easy",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Using stacks for LIFO problems", "Parsing"],
     "book_chapter": "Stacks & Queues",
     "book_id": 4
   },
@@ -3237,10 +1668,6 @@
     "difficulty": "medium",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Brute force optimization: data structure pattern"],
-    "reusable_ideas": [],
-    "other_tools": ["Using stacks for LIFO problems"],
     "book_chapter": "Stacks & Queues",
     "book_id": 5
   },
@@ -3249,15 +1676,6 @@
     "difficulty": "medium",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": ["Dangling bracket stack"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Hash maps",
-      "Hash sets",
-      "Using stacks for LIFO problems",
-      "Parsing"
-    ],
     "book_chapter": "Stacks & Queues",
     "book_id": 7
   },
@@ -3266,10 +1684,6 @@
     "difficulty": "hard",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Building strings with dynamic arrays"],
-    "other_tools": ["Parsing", "Using stacks for LIFO problems"],
     "book_chapter": null,
     "book_id": null
   },
@@ -3278,10 +1692,6 @@
     "difficulty": "medium",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Reframing the problem", "Sketching a diagram"],
-    "reusable_ideas": ["Reframing balanced parentheses as heights"],
-    "other_tools": ["Using stacks for LIFO problems"],
     "book_chapter": "Stacks & Queues",
     "book_id": 8
   },
@@ -3290,10 +1700,6 @@
     "difficulty": "medium",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Parsing", "Using stacks for LIFO problems"],
     "book_chapter": null,
     "book_id": null
   },
@@ -3302,10 +1708,6 @@
     "difficulty": "medium",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [],
     "book_chapter": null,
     "book_id": null
   },
@@ -3314,10 +1716,6 @@
     "difficulty": "medium",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Implementing classes", "Using stacks for LIFO problems"],
     "book_chapter": null,
     "book_id": null
   },
@@ -3326,10 +1724,6 @@
     "difficulty": "medium",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Factor out validation to a helper function"],
-    "other_tools": ["Parsing", "Using stacks for LIFO problems"],
     "book_chapter": null,
     "book_id": null
   },
@@ -3338,14 +1732,6 @@
     "difficulty": "medium",
     "topics": ["stacks-and-queues"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Piggybacking extra info"],
-    "other_tools": [
-      "Using queues for FIFO problems",
-      "Implementing classes",
-      "Amortized analysis"
-    ],
     "book_chapter": "Stacks & Queues",
     "book_id": 3
   },
@@ -3354,10 +1740,6 @@
     "difficulty": "easy",
     "topics": ["string-manipulation"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Building strings with dynamic arrays"],
-    "other_tools": ["Manipulating strings"],
     "book_chapter": "String Manipulation",
     "book_id": 2
   },
@@ -3366,10 +1748,6 @@
     "difficulty": "medium",
     "topics": ["string-manipulation"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Starting with an easier version"],
-    "reusable_ideas": ["Applying modulo at each step"],
-    "other_tools": ["Rolling hash"],
     "book_chapter": "String Manipulation",
     "book_id": 3
   },
@@ -3378,10 +1756,6 @@
     "difficulty": "easy",
     "topics": ["string-manipulation"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Manipulating strings", "Parsing"],
     "book_chapter": "String Manipulation",
     "book_id": 1
   },
@@ -3390,15 +1764,6 @@
     "difficulty": "medium",
     "topics": ["topological-sort"],
     "classic": false,
-    "recipes": ["DAG problem recipe", "Peel-off algorithm"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Memoization/tabulation",
-      "Graph modeling",
-      "Working with adjacency lists",
-      "Reusing subproblems"
-    ],
     "book_chapter": "Topological Sort",
     "book_id": 4
   },
@@ -3407,16 +1772,6 @@
     "difficulty": "medium",
     "topics": ["topological-sort"],
     "classic": false,
-    "recipes": ["DAG problem recipe", "Peel-off algorithm"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Computing distances (graphs)",
-      "Graph modeling",
-      "Memoization/tabulation",
-      "Working with adjacency lists",
-      "Working with edge weights"
-    ],
     "book_chapter": "Topological Sort",
     "book_id": 1
   },
@@ -3425,16 +1780,6 @@
     "difficulty": "medium",
     "topics": ["topological-sort"],
     "classic": false,
-    "recipes": ["DAG problem recipe", "Peel-off algorithm"],
-    "boosters": [],
-    "reusable_ideas": ["Edge list to adjacency list conversion"],
-    "other_tools": [
-      "Memoization/tabulation",
-      "Working with edge weights",
-      "Graph modeling",
-      "Working with adjacency lists",
-      "Computing distances (graphs)"
-    ],
     "book_chapter": "Topological Sort",
     "book_id": 3
   },
@@ -3443,15 +1788,6 @@
     "difficulty": "medium",
     "topics": ["topological-sort"],
     "classic": false,
-    "recipes": ["DAG problem recipe", "Peel-off algorithm"],
-    "boosters": [],
-    "reusable_ideas": ["Path reconstruction"],
-    "other_tools": [
-      "Computing distances (graphs)",
-      "Working with edge weights",
-      "Hash maps",
-      "Working with adjacency lists"
-    ],
     "book_chapter": "Topological Sort",
     "book_id": 2
   },
@@ -3460,17 +1796,6 @@
     "difficulty": "hard",
     "topics": ["topological-sort"],
     "classic": false,
-    "recipes": ["DAG problem recipe", "Peel-off algorithm"],
-    "boosters": ["Hunting for properties", "Reframing the problem"],
-    "reusable_ideas": [
-      "Transforming the input",
-      "Edge list to adjacency list conversion"
-    ],
-    "other_tools": [
-      "Graph modeling",
-      "Working with adjacency lists",
-      "Memoization/tabulation"
-    ],
     "book_chapter": "Topological Sort",
     "book_id": 6
   },
@@ -3479,20 +1804,6 @@
     "difficulty": "hard",
     "topics": ["topological-sort", "dynamic-programming"],
     "classic": false,
-    "recipes": [
-      "DAG problem recipe",
-      "Memoization recipe",
-      "Peel-off algorithm"
-    ],
-    "boosters": ["Brute force optimization: preprocessing pattern"],
-    "reusable_ideas": ["Solution reconstruction"],
-    "other_tools": [
-      "2D DP",
-      "DP with a non-constant number of choices",
-      "Graph modeling",
-      "Memoization/tabulation",
-      "Recurrence relations"
-    ],
     "book_chapter": "Topological Sort",
     "book_id": 8
   },
@@ -3501,21 +1812,6 @@
     "difficulty": "medium",
     "topics": ["topological-sort"],
     "classic": false,
-    "recipes": ["DAG problem recipe", "Peel-off algorithm"],
-    "boosters": [
-      "Breaking down the problem",
-      "Hunting for properties",
-      "Reframing the problem"
-    ],
-    "reusable_ideas": [
-      "Edge list to adjacency list conversion",
-      "Leveraging the input range"
-    ],
-    "other_tools": [
-      "Graph modeling",
-      "Memoization/tabulation",
-      "Working with node weights"
-    ],
     "book_chapter": "Topological Sort",
     "book_id": 5
   },
@@ -3524,14 +1820,6 @@
     "difficulty": "hard",
     "topics": ["topological-sort"],
     "classic": false,
-    "recipes": ["Peel-off algorithm"],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Graph modeling",
-      "Cycle detection (graphs)",
-      "Working with adjacency lists"
-    ],
     "book_chapter": "Topological Sort",
     "book_id": 7
   },
@@ -3540,15 +1828,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Pre/in/post-order traversals",
-      "DFS/BFS tree",
-      "Passing data up and down rooted trees",
-      "Recursion"
-    ],
     "book_chapter": "Trees",
     "book_id": 1
   },
@@ -3557,19 +1836,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": [
-      "Finding the node in the path with minimum depth",
-      "Piggybacking extra info"
-    ],
-    "other_tools": [
-      "Passing data up and down rooted trees",
-      "DFS/BFS tree",
-      "Pre/in/post-order traversals",
-      "Recursion",
-      "Working with recursive data structures"
-    ],
     "book_chapter": "Trees",
     "book_id": 3
   },
@@ -3578,16 +1844,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "BST inorder traversal",
-      "Pre/in/post-order traversals",
-      "Recursion",
-      "Passing data up and down rooted trees",
-      "DFS/BFS tree"
-    ],
     "book_chapter": "Trees",
     "book_id": 15
   },
@@ -3596,14 +1852,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "BST inorder traversal",
-      "Recursion",
-      "Pre/in/post-order traversals"
-    ],
     "book_chapter": "Trees",
     "book_id": 16
   },
@@ -3612,10 +1860,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": ["M-way merge"],
-    "other_tools": ["BST inorder traversal", "Pre/in/post-order traversals"],
     "book_chapter": "Trees",
     "book_id": 17
   },
@@ -3624,10 +1868,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": ["BST search"],
     "book_chapter": "Trees",
     "book_id": 13
   },
@@ -3636,15 +1876,6 @@
     "difficulty": "easy",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "BST search",
-      "Working with recursive data structures",
-      "Recursion",
-      "DFS/BFS tree"
-    ],
     "book_chapter": "Trees",
     "book_id": 12
   },
@@ -3653,15 +1884,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Factor out validation to a helper function"],
-    "other_tools": [
-      "BST inorder traversal",
-      "Passing data up and down rooted trees",
-      "Working with recursive data structures",
-      "Recursion"
-    ],
     "book_chapter": "Trees",
     "book_id": 14
   },
@@ -3670,17 +1892,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Parsing",
-      "Passing data up and down rooted trees",
-      "Working with recursive data structures",
-      "Recursion",
-      "Pre/in/post-order traversals",
-      "DFS/BFS tree"
-    ],
     "book_chapter": "Trees",
     "book_id": 7
   },
@@ -3689,14 +1900,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Building strings with dynamic arrays"],
-    "other_tools": [
-      "DFS/BFS tree",
-      "Pre/in/post-order traversals",
-      "Recursion"
-    ],
     "book_chapter": "Trees",
     "book_id": 2
   },
@@ -3705,14 +1908,6 @@
     "difficulty": "easy",
     "topics": ["trees"],
     "classic": true,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "DFS/BFS tree",
-      "Pre/in/post-order traversals",
-      "Recursion"
-    ],
     "book_chapter": "Trees",
     "book_id": 6
   },
@@ -3721,15 +1916,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": ["Node-depth queue recipe for level-order traversal"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "DFS/BFS tree",
-      "Using queues for FIFO problems",
-      "Implementing queues",
-      "Passing data up and down rooted trees"
-    ],
     "book_chapter": "Trees",
     "book_id": 8
   },
@@ -3738,15 +1924,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": ["Node-depth queue recipe for level-order traversal"],
-    "boosters": ["Hunting for properties", "Breaking down the problem"],
-    "reusable_ideas": ["Computing averages"],
-    "other_tools": [
-      "DFS/BFS tree",
-      "Implementing queues",
-      "Using queues for FIFO problems",
-      "Working with recursive data structures"
-    ],
     "book_chapter": "Trees",
     "book_id": 9
   },
@@ -3755,16 +1932,6 @@
     "difficulty": "hard",
     "topics": ["trees"],
     "classic": false,
-    "recipes": ["Node-depth queue recipe for level-order traversal"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Passing data up and down rooted trees",
-      "DFS/BFS tree",
-      "Hash maps",
-      "Pre/in/post-order traversals",
-      "Recursion"
-    ],
     "book_chapter": "Trees",
     "book_id": 11
   },
@@ -3773,15 +1940,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Sketching a diagram", "Hunting for properties"],
-    "reusable_ideas": ["Frequency map"],
-    "other_tools": [
-      "Passing data up and down rooted trees",
-      "Pre/in/post-order traversals",
-      "DFS/BFS tree",
-      "Hash maps"
-    ],
     "book_chapter": "Trees",
     "book_id": 4
   },
@@ -3790,16 +1948,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": ["Piggybacking extra info"],
-    "other_tools": [
-      "Passing data up and down rooted trees",
-      "DFS/BFS tree",
-      "Pre/in/post-order traversals",
-      "Working with recursive data structures",
-      "Recursion"
-    ],
     "book_chapter": "Trees",
     "book_id": 5
   },
@@ -3808,14 +1956,6 @@
     "difficulty": "medium",
     "topics": ["trees"],
     "classic": false,
-    "recipes": ["Node-depth queue recipe for level-order traversal"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [
-      "DFS/BFS tree",
-      "Using queues for FIFO problems",
-      "Implementing queues"
-    ],
     "book_chapter": "Trees",
     "book_id": 10
   },
@@ -3824,10 +1964,6 @@
     "difficulty": "easy",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": ["M-way merge"],
-    "other_tools": ["Parallel pointers", "Sorting preprocessing"],
     "book_chapter": "Two Pointers",
     "book_id": 3
   },
@@ -3836,10 +1972,6 @@
     "difficulty": "easy",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["In-place modification", "Inward pointers"],
     "book_chapter": "Two Pointers",
     "book_id": 12
   },
@@ -3848,10 +1980,6 @@
     "difficulty": "easy",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Searching with inward pointers"],
-    "other_tools": [],
     "book_chapter": null,
     "book_id": null
   },
@@ -3860,10 +1988,6 @@
     "difficulty": "hard",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": ["Seeker and writer pointers"],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": [],
     "book_chapter": null,
     "book_id": null
   },
@@ -3872,10 +1996,6 @@
     "difficulty": "easy",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Leveraging the input range"],
-    "other_tools": ["Counting sort", "In-place modification"],
     "book_chapter": "Two Pointers",
     "book_id": 16
   },
@@ -3884,10 +2004,6 @@
     "difficulty": "medium",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": ["Seeker and writer pointers"],
-    "boosters": [],
-    "reusable_ideas": ["Passing indices; not copies"],
-    "other_tools": ["Fast and slow pointers", "In-place modification"],
     "book_chapter": "Two Pointers",
     "book_id": 14
   },
@@ -3896,10 +2012,6 @@
     "difficulty": "medium",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Case analysis", "Sketching a diagram"],
-    "reusable_ideas": ["Factor out validation to a helper function"],
-    "other_tools": ["Working with intervals", "Parallel pointers"],
     "book_chapter": "Two Pointers",
     "book_id": 11
   },
@@ -3908,10 +2020,6 @@
     "difficulty": "easy",
     "topics": ["two-pointers"],
     "classic": true,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["M-way merge"],
-    "other_tools": ["Parallel pointers"],
     "book_chapter": "Two Pointers",
     "book_id": 6
   },
@@ -3920,10 +2028,6 @@
     "difficulty": "medium",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": ["M-way merge"],
-    "other_tools": [],
     "book_chapter": "Two Pointers",
     "book_id": 10
   },
@@ -3932,10 +2036,6 @@
     "difficulty": "hard",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": ["Seeker and writer pointers"],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": ["Passing indices; not copies"],
-    "other_tools": ["Selecting the best iteration order"],
     "book_chapter": null,
     "book_id": null
   },
@@ -3944,10 +2044,6 @@
     "difficulty": "easy",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Inward pointers"],
     "book_chapter": "Two Pointers",
     "book_id": 1
   },
@@ -3956,10 +2052,6 @@
     "difficulty": "easy",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Inward pointers", "Parsing"],
     "book_chapter": "Two Pointers",
     "book_id": 4
   },
@@ -3968,18 +2060,6 @@
     "difficulty": "easy",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Hunting for properties"],
-    "reusable_ideas": [
-      "Applying modulo at each step",
-      "Imposing a canonical order"
-    ],
-    "other_tools": [
-      "Custom sorting logic",
-      "In-place modification",
-      "Invariants",
-      "Inward pointers"
-    ],
     "book_chapter": "Two Pointers",
     "book_id": 13
   },
@@ -3988,10 +2068,6 @@
     "difficulty": "medium",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["Prefix-suffix swap trick", "In-place modification"],
     "book_chapter": "Two Pointers",
     "book_id": 17
   },
@@ -4000,10 +2076,6 @@
     "difficulty": "medium",
     "topics": ["two-pointers"],
     "classic": true,
-    "recipes": [],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["In-place modification"],
     "book_chapter": "Two Pointers",
     "book_id": 15
   },
@@ -4012,10 +2084,6 @@
     "difficulty": "easy",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": ["Seeker and writer pointers"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": [],
     "book_chapter": null,
     "book_id": null
   },
@@ -4024,10 +2092,6 @@
     "difficulty": "medium",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Case analysis"],
-    "reusable_ideas": [],
-    "other_tools": ["Invariants", "Inward pointers"],
     "book_chapter": "Two Pointers",
     "book_id": 5
   },
@@ -4036,10 +2100,6 @@
     "difficulty": "medium",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": ["Seeker and writer pointers"],
-    "boosters": ["Breaking down the problem", "Reframing the problem"],
-    "reusable_ideas": [],
-    "other_tools": ["Manipulating strings"],
     "book_chapter": null,
     "book_id": null
   },
@@ -4048,14 +2108,6 @@
     "difficulty": "medium",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Breaking down the problem", "Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Parsing",
-      "Selecting the best iteration order",
-      "Using stacks for LIFO problems"
-    ],
     "book_chapter": null,
     "book_id": null
   },
@@ -4064,13 +2116,6 @@
     "difficulty": "medium",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": ["Seeker and writer pointers"],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [
-      "Imposing a canonical order",
-      "Passing indices; not copies"
-    ],
-    "other_tools": [],
     "book_chapter": "Two Pointers",
     "book_id": 18
   },
@@ -4079,10 +2124,6 @@
     "difficulty": "easy",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Fast and slow pointers", "Prefix-sum array"],
     "book_chapter": "Two Pointers",
     "book_id": 2
   },
@@ -4091,14 +2132,6 @@
     "difficulty": "medium",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": ["Reframing the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Invariants",
-      "Inward pointers",
-      "Selecting the best iteration order"
-    ],
     "book_chapter": "Two Pointers",
     "book_id": 9
   },
@@ -4107,10 +2140,6 @@
     "difficulty": "medium",
     "topics": ["two-pointers"],
     "classic": false,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["M-way merge"],
-    "other_tools": ["Parallel pointers"],
     "book_chapter": "Two Pointers",
     "book_id": 8
   },
@@ -4119,10 +2148,6 @@
     "difficulty": "easy",
     "topics": ["two-pointers"],
     "classic": true,
-    "recipes": [],
-    "boosters": [],
-    "reusable_ideas": ["Searching with inward pointers"],
-    "other_tools": ["Inward pointers", "Sorting preprocessing"],
     "book_chapter": "Two Pointers",
     "book_id": 7
   },
@@ -4131,16 +2156,6 @@
     "difficulty": "hard",
     "topics": ["union-find", "graphs"],
     "classic": false,
-    "recipes": ["Union-find (path compression + union by size)"],
-    "boosters": ["Starting with an easier version", "Hunting for properties"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Minimum spanning tree",
-      "Formulating a greedy choice",
-      "Working with edge weights",
-      "Graph modeling",
-      "Sorting preprocessing"
-    ],
     "book_chapter": "Union-Find",
     "book_id": 4
   },
@@ -4149,10 +2164,6 @@
     "difficulty": "medium",
     "topics": ["union-find", "graphs"],
     "classic": false,
-    "recipes": ["Union-find (path compression + union by size)"],
-    "boosters": [],
-    "reusable_ideas": [],
-    "other_tools": ["Graph modeling", "Sorting preprocessing"],
     "book_chapter": "Union-Find",
     "book_id": 6
   },
@@ -4161,17 +2172,6 @@
     "difficulty": "medium",
     "topics": ["union-find", "graphs"],
     "classic": true,
-    "recipes": ["Union-find (path compression + union by size)"],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Minimum spanning tree",
-      "Sorting preprocessing",
-      "Formulating a greedy choice",
-      "Working with edge weights",
-      "Graph modeling",
-      "Cycle detection (graphs)"
-    ],
     "book_chapter": "Union-Find",
     "book_id": 1
   },
@@ -4180,19 +2180,6 @@
     "difficulty": "medium",
     "topics": ["union-find", "graphs"],
     "classic": false,
-    "recipes": ["Union-find (path compression + union by size)"],
-    "boosters": [
-      "Breaking down the problem",
-      "Brute force optimization: preprocessing pattern"
-    ],
-    "reusable_ideas": ["Sorting to track the smallest/largest elements"],
-    "other_tools": [
-      "Minimum spanning tree",
-      "Custom sorting logic",
-      "Graph modeling",
-      "Formulating a greedy choice",
-      "Sorting preprocessing"
-    ],
     "book_chapter": "Union-Find",
     "book_id": 3
   },
@@ -4201,14 +2188,6 @@
     "difficulty": "medium",
     "topics": ["union-find", "graphs"],
     "classic": false,
-    "recipes": ["Union-find (path compression + union by size)"],
-    "boosters": ["Breaking down the problem"],
-    "reusable_ideas": [],
-    "other_tools": [
-      "Sorting preprocessing",
-      "Parallel pointers",
-      "Graph modeling"
-    ],
     "book_chapter": "Union-Find",
     "book_id": 5
   },
@@ -4217,10 +2196,6 @@
     "difficulty": "medium",
     "topics": ["union-find"],
     "classic": false,
-    "recipes": ["Union-find (path compression + union by size)"],
-    "boosters": [],
-    "reusable_ideas": ["Piggybacking extra info"],
-    "other_tools": ["Hash maps", "Implementing classes"],
     "book_chapter": "Union-Find",
     "book_id": 2
   },
@@ -4229,19 +2204,6 @@
     "difficulty": "medium",
     "topics": ["heaps"],
     "classic": false,
-    "recipes": [],
-    "boosters": [
-      "Breaking down the problem",
-      "Hunting for properties",
-      "Reframing the problem"
-    ],
-    "reusable_ideas": ["Sorting to track the smallest/largest elements"],
-    "other_tools": [
-      "Tinkering with heap internals",
-      "Implementing classes",
-      "Formulating a greedy choice",
-      "Custom sorting logic"
-    ],
     "book_chapter": "Union-Find",
     "book_id": 7
   }

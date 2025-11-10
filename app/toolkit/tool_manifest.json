@@ -22,14 +22,15 @@
           "Max Queue",
           "Next Greater Element",
           "Simple Text Editor",
-          "Viewer Counter Class"
+          "Viewer Counter Class",
+          "Current URL With Forward"
         ],
         "wanted_outcome": "Being able to use amortized analysis to analyze the average time complexity of data structure operations."
       }
     ]
   },
   {
-    "name": "String Manipulation",
+    "name": "String Operations",
     "tools": [
       {
         "slug": "manipulating-strings",
@@ -206,7 +207,7 @@
         "extra_credit": false,
         "primary_problem": "Queen's Reach",
         "other_problems": [
-          "Chess moves",
+          "Chess Moves",
           "Spiral Order",
           "Snowprints",
           "Count Grid Islands",
@@ -563,7 +564,10 @@
         "name": "Dangling bracket stack",
         "extra_credit": false,
         "primary_problem": "Custom Brackets",
-        "other_problems": ["Validate Simple HTML Strings"],
+        "other_problems": [
+          "Validate Simple HTML Strings",
+          "Redundant Parentheses"
+        ],
         "wanted_outcome": "Knowing how to use a stack to track unmatched opening brackets or parentheses."
       }
     ]
@@ -651,7 +655,7 @@
           "Linked-List Zip",
           "Remove Kth Node From The End",
           "Sublist Reversal",
-          "Linked List Block Reversal"
+          "Linked-List Block Reversal"
         ],
         "wanted_outcome": "Knowing how to simplify linked-list edge cases by using a dummy head node."
       },
@@ -685,7 +689,7 @@
           "Linked-List Reversal",
           "Remove Kth Node From The End",
           "Sublist Reversal",
-          "Linked List Block Reversal"
+          "Linked-List Block Reversal"
         ],
         "wanted_outcome": "Being able to modify linked lists by rearranging pointers."
       },
@@ -718,12 +722,12 @@
       },
       {
         "slug": "linked-list-reversal-break-down",
-        "name": "Linked list reversal break down",
+        "name": "Linked-list reversal break down",
         "extra_credit": true,
         "primary_problem": "Sublist Reversal",
         "other_problems": [
           "Linked-List Reversal",
-          "Linked List Block Reversal"
+          "Linked-List Block Reversal"
         ],
         "wanted_outcome": "Being able to solve advanced linked-list reversal problems - by breaking them down into 4 steps: (1) finding the ends of the section to reverse, (2) breaking out the section from the main list, (3) reversing the standalone section, and (4) re-attaching the reversed section."
       }
@@ -859,7 +863,7 @@
         "name": "DFS/BFS tree",
         "extra_credit": false,
         "primary_problem": "Spanning Tree",
-        "other_problems": ["Graph path", "Shortest Path Queries"],
+        "other_problems": ["Graph Path", "Shortest Path Queries"],
         "wanted_outcome": "Being able to compute and use a DFS or BFS tree."
       },
       {
@@ -1592,7 +1596,7 @@
           "Hiring And Training",
           "Interval XOR",
           "Longest Alphabet Chain",
-          "MAtrix Rotation",
+          "Matrix Rotation",
           "Multiplayer Video Game",
           "Self-Doubling Sequence",
           "K Most Played"
@@ -1652,6 +1656,7 @@
         "primary_problem": "Most Ones with K Flips",
         "other_problems": [
           "Multiplayer Video Game",
+          "Missing Numbers In Range",
           "Ad Campaign Boost",
           "Ad Campaign With Small Boosts",
           "Boosting Days Multiple Times",
@@ -1695,7 +1700,7 @@
           "Aligned Path",
           "BST Merge Into Array",
           "Duplicate Zeros Prefix",
-          "Shift Word To Back",
+          "Shift Word to Back",
           "Move Subsequence to Front",
           "Quicksort Partition"
         ],
