@@ -9,23 +9,6 @@
         "primary_problem": "Implement Dynamic Array",
         "other_problems": ["Extra Dynamic Array Operations"],
         "wanted_outcome": "Being able to understand how dynamic arrays handle resizing internally and apply amortized analysis."
-      },
-      {
-        "slug": "amortized-analysis",
-        "name": "Amortized analysis",
-        "extra_credit": true,
-        "primary_problem": "Implement Dynamic Array",
-        "other_problems": [
-          "Extra Dynamic Array Operations",
-          "Hash Map Class",
-          "Hash Set Class",
-          "Max Queue",
-          "Next Greater Element",
-          "Simple Text Editor",
-          "Viewer Counter Class",
-          "Current URL With Forward"
-        ],
-        "wanted_outcome": "Being able to use amortized analysis to analyze the average time complexity of data structure operations."
       }
     ]
   },
@@ -163,7 +146,7 @@
         "name": "Searching with inward pointers",
         "extra_credit": false,
         "primary_problem": "2-Sum",
-        "other_problems": ["2-Sum", "Count Pairs with Sum Greater Than Target"],
+        "other_problems": ["Count Pairs with Sum Greater Than Target"],
         "wanted_outcome": "Knowing how to search with two inward-moving pointers when the extremes inform each other - when we can discard the smallest element based on the largest one or vice versa."
       },
       {
@@ -369,12 +352,11 @@
         "wanted_outcome": "Knowing how to store key-value pairs with expected O(1) access time."
       },
       {
-        "slug": "frequency-map",
-        "name": "Frequency map",
+        "slug": "frequency-maps",
+        "name": "Frequency maps",
         "extra_credit": false,
         "primary_problem": "Most Shared Account",
         "other_problems": [
-          "Most Shared Account",
           "Most Frequent Octet",
           "Largest Set Intersection",
           "Scrabble Tiles",
@@ -397,6 +379,19 @@
         "other_problems": ["Adjacency List Validation", "Unique K Pairs"],
         "wanted_outcome": "Being able to compare (or hash) unsorted collections by first sorting elements into a canonical order."
       },
+      {
+        "slug": "length-26-arrays",
+        "name": "Length-26 arrays",
+        "extra_credit": true,
+        "primary_problem": "Longest Alphabet Chain",
+        "other_problems": ["Hangman Word Matching"],
+        "wanted_outcome": "Knowing how to use a fixed-size length-26 array as a hashmap alternative when the keys are lowercase letters."
+      }
+    ]
+  },
+  {
+    "name": "Classes",
+    "tools": [
       {
         "slug": "implementing-classes",
         "name": "Implementing classes",
@@ -427,12 +422,21 @@
         "wanted_outcome": "Being able to implement a class that satisfies specified operations."
       },
       {
-        "slug": "length-26-array",
-        "name": "Length-26 array",
+        "slug": "amortized-analysis",
+        "name": "Amortized analysis",
         "extra_credit": true,
-        "primary_problem": "Longest Alphabet Chain",
-        "other_problems": ["Hangman Word Matching"],
-        "wanted_outcome": "Knowing how to use a fixed-size length-26 array as a hashmap alternative when the keys are lowercase letters."
+        "primary_problem": "Implement Dynamic Array",
+        "other_problems": [
+          "Extra Dynamic Array Operations",
+          "Hash Map Class",
+          "Hash Set Class",
+          "Max Queue",
+          "Next Greater Element",
+          "Simple Text Editor",
+          "Viewer Counter Class",
+          "Current URL With Forward"
+        ],
+        "wanted_outcome": "Being able to use amortized analysis to analyze the average time complexity of data structure operations."
       }
     ]
   },

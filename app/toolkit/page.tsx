@@ -194,6 +194,62 @@ export default function Toolset() {
     return categoriesFromTopics;
   }, []);
 
+  // Build mapping from problem names to tools that use them (as primary or extra)
+  // This includes ALL tools regardless of mode
+  const problemToToolsMap = useMemo(() => {
+    const map = new Map<
+      string,
+      Array<{
+        tool: Tool;
+        category: ToolCategory;
+        isPrimary: boolean;
+        toolIndex: number;
+      }>
+    >();
+
+    categories.forEach((category) => {
+      category.tools.forEach((tool, toolIndex) => {
+        // Add primary problem
+        if (tool.primaryProblem) {
+          if (!map.has(tool.primaryProblem)) {
+            map.set(tool.primaryProblem, []);
+          }
+          map.get(tool.primaryProblem)!.push({
+            tool,
+            category,
+            isPrimary: true,
+            toolIndex,
+          });
+        }
+
+        // Add extra problems
+        tool.otherProblems.forEach((problemName) => {
+          if (!map.has(problemName)) {
+            map.set(problemName, []);
+          }
+          map.get(problemName)!.push({
+            tool,
+            category,
+            isPrimary: false,
+            toolIndex,
+          });
+        });
+      });
+    });
+
+    // Sort each array by category chapter number, then by tool index
+    map.forEach((tools) => {
+      tools.sort((a, b) => {
+        if (a.category.chapterNumber !== b.category.chapterNumber) {
+          return a.category.chapterNumber - b.category.chapterNumber;
+        }
+        return a.toolIndex - b.toolIndex;
+      });
+    });
+
+    return map;
+  }, [categories]);
+
   useEffect(() => {
     // Load completed tools from localStorage
     const saved = localStorage.getItem("toolset-completed");
@@ -871,36 +927,71 @@ Format:
                                           const isClicked = clickedProblems.has(
                                             tool.primaryProblem
                                           );
+                                          const toolsUsingProblem =
+                                            problemToToolsMap.get(
+                                              tool.primaryProblem
+                                            ) || [];
                                           return (
-                                            <a
-                                              href={getProblemUrl(
-                                                tool.primaryProblem
-                                              )}
-                                              target="_blank"
-                                              rel="noopener noreferrer"
-                                              onClick={() =>
-                                                handleProblemClick(
-                                                  tool.primaryProblem!
-                                                )
-                                              }
-                                              className={`block p-3 rounded-md border transition-colors ${colorClasses} ${
-                                                isClicked
-                                                  ? "opacity-75 ring-2 ring-blue-300 dark:ring-blue-600"
-                                                  : ""
-                                              }`}
-                                            >
-                                              <div className="flex items-center justify-between">
-                                                <div className="flex items-center gap-2">
-                                                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                                    {tool.primaryProblem}
-                                                  </span>
-                                                  {isClicked && (
-                                                    <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
-                                                  )}
+                                            <div>
+                                              <a
+                                                href={getProblemUrl(
+                                                  tool.primaryProblem
+                                                )}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                onClick={() =>
+                                                  handleProblemClick(
+                                                    tool.primaryProblem!
+                                                  )
+                                                }
+                                                className={`block p-3 rounded-md border transition-colors ${colorClasses} ${
+                                                  isClicked
+                                                    ? "opacity-75 ring-2 ring-blue-300 dark:ring-blue-600"
+                                                    : ""
+                                                }`}
+                                              >
+                                                <div className="flex items-center justify-between">
+                                                  <div className="flex items-center gap-2">
+                                                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                      {tool.primaryProblem}
+                                                    </span>
+                                                    {isClicked && (
+                                                      <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                                                    )}
+                                                  </div>
+                                                  <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                                                 </div>
-                                                <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
-                                              </div>
-                                            </a>
+                                              </a>
+                                              {toolsUsingProblem.length > 1 && (
+                                                <div className="pl-3 mt-1 mb-3 text-xs text-gray-600 dark:text-gray-400">
+                                                  <span className="font-bold">
+                                                    Also uses:
+                                                  </span>{" "}
+                                                  {toolsUsingProblem
+                                                    .filter(
+                                                      (entry) =>
+                                                        entry.tool.id !==
+                                                        tool.id
+                                                    )
+                                                    .map((entry, idx) => (
+                                                      <span
+                                                        key={`${entry.category.chapterNumber}-${entry.tool.id}`}
+                                                      >
+                                                        {idx > 0 && ", "}
+                                                        <span className="font-medium">
+                                                          {
+                                                            entry.category
+                                                              .chapterNumber
+                                                          }
+                                                          .{" "}
+                                                          {entry.category.name}
+                                                        </span>{" "}
+                                                        → {entry.tool.name}
+                                                      </span>
+                                                    ))}
+                                                </div>
+                                              )}
+                                            </div>
                                           );
                                         })()}
                                         {tool.otherProblems.length > 0 && (
@@ -937,33 +1028,71 @@ Format:
                                               );
                                             const isClicked =
                                               clickedProblems.has(name);
+                                            const toolsUsingProblem =
+                                              problemToToolsMap.get(name) || [];
                                             return (
-                                              <a
-                                                key={name}
-                                                href={getProblemUrl(name)}
-                                                target="_blank"
-                                                rel="noopener noreferrer"
-                                                onClick={() =>
-                                                  handleProblemClick(name)
-                                                }
-                                                className={`block p-3 rounded-md border transition-colors ${colorClasses} ${
-                                                  isClicked
-                                                    ? "opacity-75 ring-2 ring-blue-300 dark:ring-blue-600"
-                                                    : ""
-                                                }`}
-                                              >
-                                                <div className="flex items-center justify-between">
-                                                  <div className="flex items-center gap-2">
-                                                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                                      {name}
-                                                    </span>
-                                                    {isClicked && (
-                                                      <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
-                                                    )}
+                                              <div key={name}>
+                                                <a
+                                                  href={getProblemUrl(name)}
+                                                  target="_blank"
+                                                  rel="noopener noreferrer"
+                                                  onClick={() =>
+                                                    handleProblemClick(name)
+                                                  }
+                                                  className={`block p-3 rounded-md border transition-colors ${colorClasses} ${
+                                                    isClicked
+                                                      ? "opacity-75 ring-2 ring-blue-300 dark:ring-blue-600"
+                                                      : ""
+                                                  }`}
+                                                >
+                                                  <div className="flex items-center justify-between">
+                                                    <div className="flex items-center gap-2">
+                                                      <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                        {name}
+                                                      </span>
+                                                      {isClicked && (
+                                                        <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                                                      )}
+                                                    </div>
+                                                    <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                                                   </div>
-                                                  <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
-                                                </div>
-                                              </a>
+                                                </a>
+                                                {toolsUsingProblem.filter(
+                                                  (entry) =>
+                                                    entry.tool.id !== tool.id
+                                                ).length > 0 && (
+                                                  <div className="pl-3 mt-1 mb-3 text-xs text-gray-600 dark:text-gray-400">
+                                                    <span className="font-bold">
+                                                      Also uses:
+                                                    </span>{" "}
+                                                    {toolsUsingProblem
+                                                      .filter(
+                                                        (entry) =>
+                                                          entry.tool.id !==
+                                                          tool.id
+                                                      )
+                                                      .map((entry, idx) => (
+                                                        <span
+                                                          key={`${entry.category.chapterNumber}-${entry.tool.id}`}
+                                                        >
+                                                          {idx > 0 && ", "}
+                                                          <span className="font-medium">
+                                                            {
+                                                              entry.category
+                                                                .chapterNumber
+                                                            }
+                                                            .{" "}
+                                                            {
+                                                              entry.category
+                                                                .name
+                                                            }
+                                                          </span>{" "}
+                                                          → {entry.tool.name}
+                                                        </span>
+                                                      ))}
+                                                  </div>
+                                                )}
+                                              </div>
                                             );
                                           })}
                                       </>
