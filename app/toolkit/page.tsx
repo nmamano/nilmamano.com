@@ -136,6 +136,9 @@ export default function Toolset() {
   const [clickedProblems, setClickedProblems] = useState<Set<string>>(
     new Set()
   );
+  const [completedProblems, setCompletedProblems] = useState<Set<string>>(
+    new Set()
+  );
   const confettiTriggeredRef = useRef<string | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const previousCompletionCountRef = useRef<{ core: number; extended: number }>(
@@ -277,6 +280,13 @@ export default function Toolset() {
       const parsed: string[] = JSON.parse(savedClicked);
       setClickedProblems(new Set<string>(parsed));
     }
+
+    // Load completed problems from localStorage
+    const savedCompleted = localStorage.getItem("toolset-completed-problems");
+    if (savedCompleted) {
+      const parsed: string[] = JSON.parse(savedCompleted);
+      setCompletedProblems(new Set<string>(parsed));
+    }
   }, []);
 
   // Save mode preference to localStorage whenever it changes
@@ -400,6 +410,20 @@ Format:
         JSON.stringify([...newClicked])
       );
     }
+  };
+
+  const toggleProblemCompletion = (problemName: string) => {
+    const newCompleted = new Set(completedProblems);
+    if (newCompleted.has(problemName)) {
+      newCompleted.delete(problemName);
+    } else {
+      newCompleted.add(problemName);
+    }
+    setCompletedProblems(newCompleted);
+    localStorage.setItem(
+      "toolset-completed-problems",
+      JSON.stringify([...newCompleted])
+    );
   };
 
   // Filter categories and tools based on mode
@@ -927,6 +951,10 @@ Format:
                                           const isClicked = clickedProblems.has(
                                             tool.primaryProblem
                                           );
+                                          const isCompleted =
+                                            completedProblems.has(
+                                              tool.primaryProblem
+                                            );
                                           const toolsUsingProblem =
                                             problemToToolsMap.get(
                                               tool.primaryProblem
@@ -952,11 +980,35 @@ Format:
                                               >
                                                 <div className="flex items-center justify-between">
                                                   <div className="flex items-center gap-2">
-                                                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100 flex items-center">
                                                       {tool.primaryProblem}
                                                     </span>
                                                     {isClicked && (
-                                                      <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                                                      <>
+                                                        <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0 flex items-center" />
+                                                        <div
+                                                          onClick={(e) => {
+                                                            e.preventDefault();
+                                                            e.stopPropagation();
+                                                            toggleProblemCompletion(
+                                                              tool.primaryProblem!
+                                                            );
+                                                          }}
+                                                          className="flex items-center justify-center"
+                                                        >
+                                                          <Checkbox
+                                                            checked={
+                                                              isCompleted
+                                                            }
+                                                            onCheckedChange={() =>
+                                                              toggleProblemCompletion(
+                                                                tool.primaryProblem!
+                                                              )
+                                                            }
+                                                            className="h-3.5 w-3.5 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 [&>span>svg]:h-3 [&>span>svg]:w-3"
+                                                          />
+                                                        </div>
+                                                      </>
                                                     )}
                                                   </div>
                                                   <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
@@ -1028,6 +1080,8 @@ Format:
                                               );
                                             const isClicked =
                                               clickedProblems.has(name);
+                                            const isCompleted =
+                                              completedProblems.has(name);
                                             const toolsUsingProblem =
                                               problemToToolsMap.get(name) || [];
                                             return (
@@ -1047,11 +1101,35 @@ Format:
                                                 >
                                                   <div className="flex items-center justify-between">
                                                     <div className="flex items-center gap-2">
-                                                      <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                      <span className="text-sm font-medium text-gray-900 dark:text-gray-100 flex items-center">
                                                         {name}
                                                       </span>
                                                       {isClicked && (
-                                                        <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                                                        <>
+                                                          <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0 flex items-center" />
+                                                          <div
+                                                            onClick={(e) => {
+                                                              e.preventDefault();
+                                                              e.stopPropagation();
+                                                              toggleProblemCompletion(
+                                                                name
+                                                              );
+                                                            }}
+                                                            className="flex items-center justify-center"
+                                                          >
+                                                            <Checkbox
+                                                              checked={
+                                                                isCompleted
+                                                              }
+                                                              onCheckedChange={() =>
+                                                                toggleProblemCompletion(
+                                                                  name
+                                                                )
+                                                              }
+                                                              className="h-3.5 w-3.5 data-[state=checked]:bg-green-600 data-[state=checked]:border-green-600 [&>span>svg]:h-3 [&>span>svg]:w-3"
+                                                            />
+                                                          </div>
+                                                        </>
                                                       )}
                                                     </div>
                                                     <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
