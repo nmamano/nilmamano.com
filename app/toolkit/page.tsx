@@ -16,7 +16,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { CheckCircle2, Info, Copy, ExternalLink } from "lucide-react";
+import { CheckCircle2, Info, Copy, ExternalLink, Eye } from "lucide-react";
 import Image from "next/image";
 import { Switch } from "@/components/ui/switch";
 import toolManifest from "./tool_manifest.json";
@@ -133,6 +133,9 @@ export default function Toolset() {
   const [openModal, setOpenModal] = useState<string | null>(null);
   const [isHowToUseOpen, setIsHowToUseOpen] = useState(false);
   const [isExtendedMode, setIsExtendedMode] = useState(true);
+  const [clickedProblems, setClickedProblems] = useState<Set<string>>(
+    new Set()
+  );
   const confettiTriggeredRef = useRef<string | null>(null);
   const tooltipRef = useRef<HTMLDivElement | null>(null);
   const previousCompletionCountRef = useRef<{ core: number; extended: number }>(
@@ -210,6 +213,13 @@ export default function Toolset() {
     const savedMode = localStorage.getItem("toolset-mode");
     if (savedMode !== null) {
       setIsExtendedMode(savedMode === "extended");
+    }
+
+    // Load clicked problems from localStorage
+    const savedClicked = localStorage.getItem("toolset-clicked-problems");
+    if (savedClicked) {
+      const parsed: string[] = JSON.parse(savedClicked);
+      setClickedProblems(new Set<string>(parsed));
     }
   }, []);
 
@@ -322,6 +332,18 @@ Format:
       title: "Copied!",
       description: "Learning prompt copied to clipboard.",
     });
+  };
+
+  const handleProblemClick = (problemName: string) => {
+    const newClicked = new Set(clickedProblems);
+    if (!newClicked.has(problemName)) {
+      newClicked.add(problemName);
+      setClickedProblems(newClicked);
+      localStorage.setItem(
+        "toolset-clicked-problems",
+        JSON.stringify([...newClicked])
+      );
+    }
   };
 
   // Filter categories and tools based on mode
@@ -778,6 +800,9 @@ Format:
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 className="flex items-center gap-1"
+                                onClick={() =>
+                                  handleProblemClick(tool.primaryProblem!)
+                                }
                                 onMouseEnter={(e) => {
                                   if (!tool.primaryProblem) return;
                                   const rect =
@@ -843,6 +868,9 @@ Format:
                                             getDifficultyCardClasses(
                                               difficulty
                                             );
+                                          const isClicked = clickedProblems.has(
+                                            tool.primaryProblem
+                                          );
                                           return (
                                             <a
                                               href={getProblemUrl(
@@ -850,12 +878,26 @@ Format:
                                               )}
                                               target="_blank"
                                               rel="noopener noreferrer"
-                                              className={`block p-3 rounded-md border transition-colors ${colorClasses}`}
+                                              onClick={() =>
+                                                handleProblemClick(
+                                                  tool.primaryProblem!
+                                                )
+                                              }
+                                              className={`block p-3 rounded-md border transition-colors ${colorClasses} ${
+                                                isClicked
+                                                  ? "opacity-75 ring-2 ring-blue-300 dark:ring-blue-600"
+                                                  : ""
+                                              }`}
                                             >
                                               <div className="flex items-center justify-between">
-                                                <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                                  {tool.primaryProblem}
-                                                </span>
+                                                <div className="flex items-center gap-2">
+                                                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                    {tool.primaryProblem}
+                                                  </span>
+                                                  {isClicked && (
+                                                    <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                                                  )}
+                                                </div>
                                                 <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                                               </div>
                                             </a>
@@ -893,18 +935,32 @@ Format:
                                               getDifficultyCardClasses(
                                                 difficulty
                                               );
+                                            const isClicked =
+                                              clickedProblems.has(name);
                                             return (
                                               <a
                                                 key={name}
                                                 href={getProblemUrl(name)}
                                                 target="_blank"
                                                 rel="noopener noreferrer"
-                                                className={`block p-3 rounded-md border transition-colors ${colorClasses}`}
+                                                onClick={() =>
+                                                  handleProblemClick(name)
+                                                }
+                                                className={`block p-3 rounded-md border transition-colors ${colorClasses} ${
+                                                  isClicked
+                                                    ? "opacity-75 ring-2 ring-blue-300 dark:ring-blue-600"
+                                                    : ""
+                                                }`}
                                               >
                                                 <div className="flex items-center justify-between">
-                                                  <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
-                                                    {name}
-                                                  </span>
+                                                  <div className="flex items-center gap-2">
+                                                    <span className="text-sm font-medium text-gray-900 dark:text-gray-100">
+                                                      {name}
+                                                    </span>
+                                                    {isClicked && (
+                                                      <Eye className="h-4 w-4 text-blue-600 dark:text-blue-400 flex-shrink-0" />
+                                                    )}
+                                                  </div>
                                                   <ExternalLink className="h-4 w-4 text-gray-400 dark:text-gray-500" />
                                                 </div>
                                               </a>
