@@ -619,6 +619,8 @@
         "extra_credit": false,
         "primary_problem": "Lego Castle",
         "other_problems": [
+          "Tiling Floor",
+          "Tiling Wide Floor",
           "Self-Doubling Sequence",
           "Powers Mod M",
           "Tridimensional Lego Castle"
@@ -757,8 +759,8 @@
         "slug": "preinpost-order-traversals",
         "name": "Pre/in/post-order traversals",
         "extra_credit": false,
-        "primary_problem": "Hidden Message",
-        "other_problems": [],
+        "primary_problem": "Traversal Order",
+        "other_problems": ["Hidden Message"],
         "wanted_outcome": "Knowing preorder, inorder, and postorder traversals - a classification of tree DFS traversals based on whether each node is visited before, in between, or after the children."
       },
       {
@@ -822,7 +824,7 @@
         "slug": "edge-list-to-adjacency-list-conversion",
         "name": "Edge list to adjacency list conversion",
         "extra_credit": false,
-        "primary_problem": "Adjacency List Validation",
+        "primary_problem": "Edge List Conversion",
         "other_problems": ["Highest Average Elevation Gain"],
         "wanted_outcome": "Being able to convert an edge list into an adjacency list for graph problems; necessary for most graph problems."
       },
@@ -830,8 +832,9 @@
         "slug": "graph-dfs",
         "name": "Graph DFS",
         "extra_credit": false,
-        "primary_problem": "Graph Path",
+        "primary_problem": "Is Reachable",
         "other_problems": [
+          "Graph Path",
           "Tree Check",
           "Spanning Tree",
           "Reachability Queries"
@@ -944,20 +947,34 @@
         "wanted_outcome": "Being able to check strong connectivity in a directed graph."
       },
       {
-        "slug": "working-with-node-weights",
-        "name": "Working with node weights",
-        "extra_credit": true,
-        "primary_problem": "Hilliest Connected Component",
-        "other_problems": ["Parallel Compilation"],
-        "wanted_outcome": "Being comfortable working with weighted nodes in graphs."
-      },
-      {
-        "slug": "working-with-edge-weights",
-        "name": "Working with edge weights",
+        "slug": "working-with-weighted-graphs",
+        "name": "Working with weighted graphs",
         "extra_credit": true,
         "primary_problem": "Highest Average Elevation Gain",
-        "other_problems": ["DAG Distances", "Minimum Spanning Tree"],
-        "wanted_outcome": "Being comfortable working with weighted edges in graphs."
+        "other_problems": [
+          "Hilliest Connected Component",
+          "Parallel Compilation",
+          "Distance In Weighted Graph",
+          "DAG Distances",
+          "Minimum Spanning Tree"
+        ],
+        "wanted_outcome": "Being comfortable working with graphs that have weighted nodes or edges."
+      },
+      {
+        "slug": "dijkstras-algorithm",
+        "name": "Dijkstra's Algorithm",
+        "extra_credit": true,
+        "primary_problem": "Distance In Weighted Graph",
+        "other_problems": [],
+        "wanted_outcome": "Knowing how to use Dijkstra's algorithm to find the shortest path in a weighted graph."
+      },
+      {
+        "slug": "minimum-spanning-tree",
+        "name": "Minimum spanning tree",
+        "extra_credit": true,
+        "primary_problem": "Minimum Spanning Tree",
+        "other_problems": ["Edge In MST", "MST Reconstruction"],
+        "wanted_outcome": "Knowing the MST definition and how to compute it using either Kruskal's or Prim's algorithm."
       }
     ]
   },
@@ -1194,8 +1211,8 @@
         "slug": "choosing-better-decision-trees",
         "name": "Choosing better decision trees",
         "extra_credit": true,
-        "primary_problem": "Count Unique Submultisets With Sum Zero",
-        "other_problems": [],
+        "primary_problem": "N-Queens Puzzle",
+        "other_problems": ["Count Unique Submultisets With Sum Zero"],
         "wanted_outcome": "When modeling a problem as a decision tree for backtracking, being able to look for the smallest one."
       }
     ]
@@ -1281,8 +1298,8 @@
         "slug": "peel-off-algorithm",
         "name": "Peel-off algorithm",
         "extra_credit": false,
-        "primary_problem": "DAG Distances",
-        "other_problems": [],
+        "primary_problem": "Topological Ordering",
+        "other_problems": ["DAG Distances"],
         "wanted_outcome": "Knowing how to compute a topological order (or find a cycle) by repeatedly removing nodes with in-degree zero (Kahn's algorithm)."
       },
       {
@@ -1420,8 +1437,9 @@
         "slug": "tinkering-with-union-find-internals",
         "name": "Tinkering with union-find internals",
         "extra_credit": false,
-        "primary_problem": "Num Groups Operation",
+        "primary_problem": "Union-Find Class",
         "other_problems": [
+          "Num Groups Operation",
           "Num Connected Components Over Time",
           "Largest Connected Component Over Time"
         ],
@@ -1437,14 +1455,27 @@
           "Largest Connected Component Over Time"
         ],
         "wanted_outcome": "Being able to solve problems about graphs where edges are added over time - usually by using union-find to track the connected components."
+      }
+    ]
+  },
+  {
+    "name": "Tries",
+    "tools": [
+      {
+        "slug": "implementing-tries",
+        "name": "Implementing tries",
+        "extra_credit": false,
+        "primary_problem": "Trie Class",
+        "other_problems": ["Autocomplete Class"],
+        "wanted_outcome": "Being able to implement a trie class that supports insert, search, and delete operations."
       },
       {
-        "slug": "minimum-spanning-tree",
-        "name": "Minimum spanning tree",
-        "extra_credit": true,
-        "primary_problem": "Minimum Spanning Tree",
-        "other_problems": ["Edge In MST", "MST Reconstruction"],
-        "wanted_outcome": "Knowing the MST definition and how to compute it."
+        "slug": "trie-traversals",
+        "name": "Trie traversals",
+        "extra_credit": false,
+        "primary_problem": "Word Match",
+        "other_problems": ["Autocomplete Class"],
+        "wanted_outcome": "Being able to traverse a trie to find words matching a given pattern."
       }
     ]
   },

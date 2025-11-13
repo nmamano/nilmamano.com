@@ -40,7 +40,7 @@
     "difficulty": "easy"
   },
   "auto-complete-class": {
-    "name": "Auto Complete Class",
+    "name": "Autocomplete Class",
     "difficulty": "hard"
   },
   "balance-point": {
@@ -1080,7 +1080,7 @@
     "difficulty": "easy"
   },
   "union-find-class": {
-    "name": "Union Find Class",
+    "name": "Union-Find Class",
     "difficulty": "medium"
   },
   "unique-best-seller-streak": {
