@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     siteName: "Toolkit-X",
     images: [
       {
-        url: "/toolkit/thumbnail.png",
+        url: "https://nilmamano.com/toolkit/thumbnail.png",
         width: 1200,
         height: 630,
         alt: "TOOLKIT-X - A new way to do coding interview prep",
@@ -39,7 +39,7 @@ export const metadata: Metadata = {
     title: "TOOLKIT-X | A new way to do coding interview prep",
     description:
       "The essential DSA tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
-    images: ["/toolkit/thumbnail.png"],
+    images: ["https://nilmamano.com/toolkit/thumbnail.png"],
   },
 };
 
