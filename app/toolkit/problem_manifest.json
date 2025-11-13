@@ -1,2018 +1,1154 @@
 {
   "account-sharing-detection": {
     "name": "Account Sharing Detection",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Sets & Maps",
-    "book_id": 1
+    "difficulty": "easy"
   },
   "action-log-anomalies": {
     "name": "Action Log Anomalies",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sets & Maps",
-    "book_id": 10
+    "difficulty": "medium"
   },
   "ad-campaign-boost": {
     "name": "Ad Campaign Boost",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 9
+    "difficulty": "medium"
   },
   "ad-campaign-with-small-boosts": {
     "name": "Ad Campaign With Small Boosts",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 10
+    "difficulty": "medium"
   },
   "adjacency-list-validation": {
     "name": "Adjacency List Validation",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 1
+    "difficulty": "easy"
   },
   "aligned-chain": {
     "name": "Aligned Chain",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 1
+    "difficulty": "medium"
   },
   "aligned-path": {
     "name": "Aligned Path",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "all-overbooked-slots": {
     "name": "All Overbooked Slots",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Prefix Sums",
-    "book_id": 10
+    "difficulty": "medium"
   },
   "array-intersection": {
     "name": "Array Intersection",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 3
+    "difficulty": "easy"
   },
   "array-reversal": {
     "name": "Array Reversal",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 12
+    "difficulty": "easy"
   },
   "auto-complete-class": {
     "name": "Auto Complete Class",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "hard"
   },
   "balance-point": {
     "name": "Balance Point",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Prefix Sums",
-    "book_id": 4
+    "difficulty": "easy"
   },
   "balanced-partition": {
     "name": "Balanced Partition",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Stacks & Queues",
-    "book_id": 6
+    "difficulty": "medium"
   },
   "boosting-days-multiple-times": {
     "name": "Boosting Days Multiple Times",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 11
+    "difficulty": "medium"
   },
   "bst-duplicate-detection": {
     "name": "BST Duplicate Detection",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 15
+    "difficulty": "medium"
   },
   "bst-kth-element": {
     "name": "BST Kth Element",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 16
+    "difficulty": "medium"
   },
   "bst-merge-into-array": {
     "name": "BST Merge Into Array",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 17
+    "difficulty": "medium"
   },
   "bst-nearest-value": {
     "name": "BST Nearest Value",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 13
+    "difficulty": "medium"
   },
   "bst-search": {
     "name": "BST Search",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 12
+    "difficulty": "easy"
   },
   "bst-validation": {
     "name": "BST Validation",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 14
+    "difficulty": "medium"
   },
   "cctv-footage": {
     "name": "CCTV Footage",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Binary Search",
-    "book_id": 2
+    "difficulty": "easy"
   },
   "center-assignment": {
     "name": "Center Assignment",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Greedy Algorithms",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "channel-views": {
     "name": "Channel Views",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Prefix Sums",
-    "book_id": 1
+    "difficulty": "easy"
   },
   "cheater-detection": {
     "name": "Cheater Detection",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sets & Maps",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "chess-moves": {
     "name": "Chess Moves",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Grids & Matrices",
-    "book_id": 1
+    "difficulty": "medium"
   },
   "company-launches": {
     "name": "Company Launches",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 9
+    "difficulty": "medium"
   },
   "compare-two-linked-lists": {
     "name": "Compare Two Linked Lists",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "compress-array": {
     "name": "Compress Array",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Stacks & Queues",
-    "book_id": 1
+    "difficulty": "easy"
   },
   "compress-array-by-k": {
     "name": "Compress Array By K",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Stacks & Queues",
-    "book_id": 2
+    "difficulty": "medium"
   },
   "count-good-subarrays-with-at-least-k-sales": {
     "name": "Count Good Subarrays With At Least K Sales",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 25
+    "difficulty": "hard"
   },
   "count-grid-islands": {
     "name": "Count Grid Islands",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 13
+    "difficulty": "medium"
   },
   "count-pairs-with-sum-greater-than-target": {
     "name": "Count Pairs with Sum Greater Than Target",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "count-subarrays-with-all-remainders": {
     "name": "Count Subarrays With All Remainders",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 24
+    "difficulty": "hard"
   },
   "count-subarrays-with-at-least-k-bad-days": {
     "name": "Count Subarrays With At Least K Bad Days",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 20
+    "difficulty": "hard"
   },
   "count-subarrays-with-at-most-k-bad-days": {
     "name": "Count Subarrays With At Most K Bad Days",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 18
+    "difficulty": "hard"
   },
   "count-subarrays-with-bad-days-in-range": {
     "name": "Count Subarrays With Bad Days In Range",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 23
+    "difficulty": "hard"
   },
   "count-subarrays-with-drops": {
     "name": "Count Subarrays With Drops",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 22
+    "difficulty": "hard"
   },
   "count-subarrays-with-exactly-k-bad-days": {
     "name": "Count Subarrays With Exactly K Bad Days",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 19
+    "difficulty": "hard"
   },
   "count-subarrays-with-good-start-and-ending": {
     "name": "Count Subarrays With Good Start And Ending",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 21
+    "difficulty": "medium"
   },
   "count-subarrays-with-sum-k": {
     "name": "Count Subarrays With Sum K",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Prefix Sums",
-    "book_id": 6
+    "difficulty": "medium"
   },
   "count-substrings-without-letter": {
     "name": "Count Substrings Without Letter",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 2
+    "difficulty": "easy"
   },
   "count-unique-submultisets-with-sum-zero": {
     "name": "Count Unique Submultisets With Sum Zero",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Backtracking",
-    "book_id": 9
+    "difficulty": "hard"
   },
   "count-zero-sum-paths": {
     "name": "Count 0-Sum Paths",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Dynamic Programming",
-    "book_id": 4
+    "difficulty": "medium"
   },
   "counting-paths": {
     "name": "Counting Paths",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Topological Sort",
-    "book_id": 4
+    "difficulty": "medium"
   },
   "current-url": {
     "name": "Current URL",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Stacks & Queues",
-    "book_id": 4
+    "difficulty": "easy"
   },
   "current-url-with-forward": {
     "name": "Current URL With Forward",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Stacks & Queues",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "custom-brackets": {
     "name": "Custom Brackets",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Stacks & Queues",
-    "book_id": 7
+    "difficulty": "medium"
   },
   "dag-distances": {
     "name": "DAG Distances",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Topological Sort",
-    "book_id": 1
+    "difficulty": "medium"
   },
   "dag-longest-path": {
     "name": "DAG Longest Path",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Topological Sort",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "dag-path-reconstruction": {
     "name": "DAG Path Reconstruction",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Topological Sort",
-    "book_id": 2
+    "difficulty": "medium"
   },
   "days-until-all-infected": {
     "name": "Days Until All Infected",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 12
+    "difficulty": "medium"
   },
   "decode-a-string": {
     "name": "Decode A String",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "hard"
   },
   "delete-operations": {
     "name": "Delete Operations",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sorting",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "diminish-largest": {
     "name": "Diminish Largest",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "distance-in-weighted-graph": {
     "name": "Distance in Weighted Graph",
-    "difficulty": "hard",
-    "classic": true,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "hard"
   },
   "domain-resolver": {
     "name": "Domain Resolver",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Sets & Maps",
-    "book_id": 5
+    "difficulty": "easy"
   },
   "doubly-linked-list-design": {
     "name": "Doubly Linked List Design",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 2
+    "difficulty": "medium"
   },
   "doubly-linked-list-to-array": {
     "name": "Doubly Linked List To Array",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 9
+    "difficulty": "easy"
   },
   "duplicate-file-contents": {
     "name": "Duplicate File Contents",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "duplicate-removal-in-sorted-linked-list": {
     "name": "Duplicate Removal In Sorted Linked List",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 13
+    "difficulty": "easy"
   },
   "duplicate-zeros-prefix": {
     "name": "Duplicate Zeros Prefix",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "hard"
   },
   "dutch-flag-problem": {
     "name": "Dutch Flag Problem",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 16
+    "difficulty": "easy"
   },
   "edge-in-mst": {
     "name": "Edge In MST",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Union-Find",
-    "book_id": 4
+    "difficulty": "hard"
   },
   "edge-list-conversion": {
     "name": "Edge List Conversion",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "enduring-best-seller-streak": {
     "name": "Enduring Best Seller Streak",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 4
+    "difficulty": "medium"
   },
   "escape-with-all-clues": {
     "name": "Escape With All Clues",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Backtracking",
-    "book_id": 11
+    "difficulty": "hard"
   },
   "evaluate-expression-tree": {
     "name": "Evaluate Expression Tree",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 7
+    "difficulty": "medium"
   },
   "exclusive-product": {
     "name": "Exclusive Product",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Prefix Sums",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "extra-dynamic-array-operations": {
     "name": "Extra Dynamic Array Operations",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Dynamic Arrays Internals",
-    "book_id": 2
+    "difficulty": "medium"
   },
   "fewest-script-runs": {
     "name": "Fewest Script Runs",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Greedy Algorithms",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "find-all-squares": {
     "name": "Find All Squares",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Sets & Maps",
-    "book_id": 6
+    "difficulty": "easy"
   },
   "first-false-in-descending-boolean-array": {
     "name": "First False In Descending Boolean Array",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "first-k": {
     "name": "First K",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Sorting",
-    "book_id": 6
+    "difficulty": "hard"
   },
   "first-non-negative-number": {
     "name": "First Non-Negative Number",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "first-time-all-connected": {
     "name": "First Time All Connected",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 9
+    "difficulty": "medium"
   },
   "first-true-in-ascending-boolean-array": {
     "name": "First True In Ascending Boolean Array",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "four-directional-max-sum-path": {
     "name": "4-Directional Max-Sum Path",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Backtracking",
-    "book_id": 10
+    "difficulty": "hard"
   },
   "four-directional-max-sum-path-reconstruction": {
     "name": "4-Directional Max-Sum Path Reconstruction",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "hard"
   },
   "google-colors": {
     "name": "Google Colors",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "graph-hangout": {
     "name": "Graph Hangout",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 11
+    "difficulty": "medium"
   },
   "graph-path": {
     "name": "Graph Path",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 2
+    "difficulty": "medium"
   },
   "hangman-word-matching": {
     "name": "Hangman Word Matching",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "has-duplicate": {
     "name": "Has Duplicate",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "hash-map-class": {
     "name": "Hash Map Class",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Set & Map Implementations",
-    "book_id": 4
+    "difficulty": "hard"
   },
   "hash-map-class-extensions": {
     "name": "Hash Map Class Extensions",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Set & Map Implementations",
-    "book_id": 5
+    "difficulty": "hard"
   },
   "hash-set-class": {
     "name": "Hash Set Class",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Set & Map Implementations",
-    "book_id": 1
+    "difficulty": "hard"
   },
   "hash-set-class-extensions": {
     "name": "Hash Set Class Extensions",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Set & Map Implementations",
-    "book_id": 2
+    "difficulty": "hard"
   },
   "hidden-message": {
     "name": "Hidden Message",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 2
+    "difficulty": "medium"
   },
   "highest-average-elevation-gain": {
     "name": "Highest Average Elevation Gain",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "hilliest-connected-component": {
     "name": "Hilliest Connected Component",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 7
+    "difficulty": "medium"
   },
   "hiring-and-training": {
     "name": "Hiring And Training",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 6
+    "difficulty": "hard"
   },
   "ikea-shopping": {
     "name": "IKEA Shopping",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Backtracking",
-    "book_id": 7
+    "difficulty": "hard"
   },
   "image-filter": {
     "name": "Image Filter",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "implement-a-heap": {
     "name": "Implement A Heap",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Heaps",
-    "book_id": 1
+    "difficulty": "medium"
   },
   "implement-dynamic-array": {
     "name": "Implement Dynamic Array",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Dynamic Arrays Internals",
-    "book_id": 1
+    "difficulty": "medium"
   },
   "implement-mergesort": {
     "name": "Implement Mergesort",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "implement-quicksort": {
     "name": "Implement Quicksort",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "in-place-duplicate-removal": {
     "name": "In-Place Duplicate Removal",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 14
+    "difficulty": "medium"
   },
   "interval-intersection": {
     "name": "Interval Intersection",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 11
+    "difficulty": "medium"
   },
   "interval-xor": {
     "name": "Interval XOR",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 7
+    "difficulty": "medium"
   },
   "invert-a-binary-tree": {
     "name": "Invert a Binary Tree",
-    "difficulty": "easy",
-    "classic": true,
-    "book_chapter": "Trees",
-    "book_id": 6
+    "difficulty": "easy"
   },
   "is-reachable": {
     "name": "Is Reachable",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "jumping-numbers": {
     "name": "Jumping Numbers",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Backtracking",
-    "book_id": 6
+    "difficulty": "medium"
   },
   "k-most-played": {
     "name": "K Most Played",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Heaps",
-    "book_id": 2
+    "difficulty": "medium"
   },
   "k-pairs-with-smallest-sums": {
     "name": "K Pairs with Smallest Sums",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "k-smallest-elements-in-min-heap": {
     "name": "K Smallest Elements in a Min-Heap",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "hard"
   },
   "k-sorted-array": {
     "name": "K-Sorted Array",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "king-kong-vs-godzilla": {
     "name": "King Kong Vs Godzilla",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Monotonic Stacks & Queues",
-    "book_id": 7
+    "difficulty": "hard"
   },
   "king-kong-vs-godzilla-in-the-fog": {
     "name": "King Kong Vs Godzilla In The Fog",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Monotonic Stacks & Queues",
-    "book_id": 8
+    "difficulty": "hard"
   },
   "laminal-arrays": {
     "name": "Laminal Arrays",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Recursion",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "largest-connected-component-over-time": {
     "name": "Largest Connected Component Over Time",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Union-Find",
-    "book_id": 6
+    "difficulty": "medium"
   },
   "largest-rectangle": {
     "name": "Largest Rectangle",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Monotonic Stacks & Queues",
-    "book_id": 6
+    "difficulty": "hard"
   },
   "largest-set-intersection": {
     "name": "Largest Set Intersection",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Sets & Maps",
-    "book_id": 11
+    "difficulty": "hard"
   },
   "largest-temperature-change": {
     "name": "Largest Temperature Change",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Monotonic Stacks & Queues",
-    "book_id": 3
+    "difficulty": "hard"
   },
   "last-true-in-descending-boolean-array": {
     "name": "Last True In Descending Boolean Array",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "left-view": {
     "name": "Left View",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "lego-castle": {
     "name": "Lego Castle",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Recursion",
-    "book_id": 4
+    "difficulty": "medium"
   },
   "linked-list-based-queue": {
     "name": "Linked-List-Based Queue",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 4
+    "difficulty": "medium"
   },
   "linked-list-based-stack": {
     "name": "Linked-List-Based Stack",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 3
+    "difficulty": "easy"
   },
   "linked-list-block-reversal": {
     "name": "Linked-List Block Reversal",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 14
+    "difficulty": "hard"
   },
   "linked-list-copy": {
     "name": "Linked-List Copy",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 5
+    "difficulty": "easy"
   },
   "linked-list-cycle-detection": {
     "name": "Linked-List Cycle Detection",
-    "difficulty": "medium",
-    "classic": true,
-    "book_chapter": "Linked Lists",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "linked-list-cycle-length": {
     "name": "Linked-List Cycle Length",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "hard"
   },
   "linked-list-cycle-start": {
     "name": "Linked-List Cycle Start",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "hard"
   },
   "linked-list-midpoint": {
     "name": "Linked-List Midpoint",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 10
+    "difficulty": "medium"
   },
   "linked-list-reversal": {
     "name": "Linked-List Reversal",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 6
+    "difficulty": "easy"
   },
   "linked-list-zip": {
     "name": "Linked-List Zip",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 12
+    "difficulty": "easy"
   },
   "list-of-divisors": {
     "name": "List of Divisors",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 3
+    "difficulty": "easy"
   },
   "longest-alphabet-chain": {
     "name": "Longest Alphabet Chain",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 14
+    "difficulty": "medium"
   },
   "longest-alternating-sequence": {
     "name": "Longest Alternating Sequence",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 7
+    "difficulty": "medium"
   },
   "longest-balanced-subsequence": {
     "name": "Longest Balanced Subsequence",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Stacks & Queues",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "longest-common-subsequence": {
     "name": "Longest Common Subsequence",
-    "difficulty": "medium",
-    "classic": true,
-    "book_chapter": "Dynamic Programming",
-    "book_id": 7
+    "difficulty": "medium"
   },
   "longest-consecutive-sequence": {
     "name": "Longest Consecutive Sequence",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "hard"
   },
   "longest-good-day-streak": {
     "name": "Longest Good Day Streak",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 5
+    "difficulty": "easy"
   },
   "longest-path-of-increasing-degrees": {
     "name": "Longest Path Of Increasing Degrees",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Topological Sort",
-    "book_id": 6
+    "difficulty": "hard"
   },
   "longest-period-at-most-k-distinct": {
     "name": "Longest Period At Most K Distinct",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 12
+    "difficulty": "medium"
   },
   "longest-repeated-substring": {
     "name": "Longest Repeated Substring",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 13
+    "difficulty": "hard"
   },
   "longest-stable-period": {
     "name": "Longest Stable Period",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Monotonic Stacks & Queues",
-    "book_id": 4
+    "difficulty": "hard"
   },
   "longest-subarray-with-sum-k": {
     "name": "Longest Subarray With Sum K",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Prefix Sums",
-    "book_id": 7
+    "difficulty": "hard"
   },
   "magic-balls": {
     "name": "Magic Balls",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "magic-blackjack": {
     "name": "Magic Blackjack",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Dynamic Programming",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "make-playlist": {
     "name": "Make Playlist",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Heaps",
-    "book_id": 7
+    "difficulty": "medium"
   },
   "matrix-multiplication": {
     "name": "Matrix Multiplication",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "matrix-operations": {
     "name": "Matrix Operations",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Grids & Matrices",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "matrix-rotation": {
     "name": "Matrix Rotation",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "max-queue": {
     "name": "Max Queue",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Monotonic Stacks & Queues",
-    "book_id": 1
+    "difficulty": "hard"
   },
   "max-subarray-sum": {
     "name": "Max Subarray Sum",
-    "difficulty": "medium",
-    "classic": true,
-    "book_chapter": "Sliding Windows",
-    "book_id": 6
+    "difficulty": "medium"
   },
   "max-sum-path": {
     "name": "Max-Sum Path",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Backtracking",
-    "book_id": 1
+    "difficulty": "medium"
   },
   "maximum-with-at-most-3-bad-days": {
     "name": "Maximum With At Most 3 Bad Days",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "merge-two-sorted-arrays": {
     "name": "Merge Two Sorted Arrays",
-    "difficulty": "easy",
-    "classic": true,
-    "book_chapter": "Two Pointers",
-    "book_id": 6
+    "difficulty": "easy"
   },
   "min-pages-per-day": {
     "name": "Min Pages Per Day",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Binary Search",
-    "book_id": 11
+    "difficulty": "medium"
   },
   "min-subarray-sum-split": {
     "name": "Min Subarray Sum Split",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Binary Search",
-    "book_id": 9
+    "difficulty": "medium"
   },
   "minimum-spanning-tree": {
     "name": "Minimum Spanning Tree",
-    "difficulty": "medium",
-    "classic": true,
-    "book_chapter": "Union-Find",
-    "book_id": 1
+    "difficulty": "medium"
   },
   "minimum-steps-to-one": {
     "name": "Minimum Steps to One",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Dynamic Programming",
-    "book_id": 6
+    "difficulty": "medium"
   },
   "minimum-triplet-medians": {
     "name": "Minimum Triplet Medians",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Greedy Algorithms",
-    "book_id": 4
+    "difficulty": "medium"
   },
   "minivan-road-trip": {
     "name": "Minivan Road Trip",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Dynamic Programming",
-    "book_id": 2
+    "difficulty": "medium"
   },
   "missing-numbers-in-range": {
     "name": "Missing Numbers in Range",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 10
+    "difficulty": "medium"
   },
   "monkey-eating-bananas": {
     "name": "Monkey Eating Bananas",
-    "difficulty": "medium",
-    "classic": true,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "most-booked-slot": {
     "name": "Most Booked Slot",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Prefix Sums",
-    "book_id": 9
+    "difficulty": "medium"
   },
   "most-frequent-octet": {
     "name": "Most Frequent Octet",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Sets & Maps",
-    "book_id": 3
+    "difficulty": "easy"
   },
   "most-listened-across-genres": {
     "name": "Most Listened Across Genres",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Heaps",
-    "book_id": 6
+    "difficulty": "medium"
   },
   "most-non-overlapping-intervals": {
     "name": "Most Non-Overlapping Intervals",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Greedy Algorithms",
-    "book_id": 1
+    "difficulty": "medium"
   },
   "most-ones-with-k-flips": {
     "name": "Most Ones with K Flips",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 10
+    "difficulty": "medium"
   },
   "most-prolific-level": {
     "name": "Most Prolific Level",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 9
+    "difficulty": "medium"
   },
   "most-protected-node": {
     "name": "Most Protected Node",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 11
+    "difficulty": "hard"
   },
   "most-sales-in-k-days": {
     "name": "Most Sales In K Days",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 2
+    "difficulty": "easy"
   },
   "most-shared-account": {
     "name": "Most Shared Account",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Sets & Maps",
-    "book_id": 2
+    "difficulty": "easy"
   },
   "most-weekly-sales": {
     "name": "Most Weekly Sales",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 1
+    "difficulty": "easy"
   },
   "move-subsequence-to-front": {
     "name": "Move Subsequence to Front",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "hard"
   },
   "mst-reconstruction": {
     "name": "MST Reconstruction",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Union-Find",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "multi-account-cheating": {
     "name": "Multi-Account Cheating",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Sets & Maps",
-    "book_id": 4
+    "difficulty": "easy"
   },
   "multi-exit-maze": {
     "name": "Multi-Exit Maze",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 14
+    "difficulty": "medium"
   },
   "multimap": {
     "name": "Multimap",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Set & Map Implementations",
-    "book_id": 6
+    "difficulty": "hard"
   },
   "multiplayer-video-game": {
     "name": "Multiplayer Video Game",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 11
+    "difficulty": "medium"
   },
   "multiset": {
     "name": "Multiset",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Set & Map Implementations",
-    "book_id": 3
+    "difficulty": "hard"
   },
   "n-queens": {
     "name": "N-Queens Puzzle",
-    "difficulty": "medium",
-    "classic": true,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "nested-array-sum": {
     "name": "Nested Array Sum",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Recursion",
-    "book_id": 2
+    "difficulty": "easy"
   },
   "nested-circles": {
     "name": "Nested Circles",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sorting",
-    "book_id": 2
+    "difficulty": "medium"
   },
   "next-greater-element": {
     "name": "Next Greater Element",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Monotonic Stacks & Queues",
-    "book_id": 5
+    "difficulty": "hard"
   },
   "num-connected-components-over-time": {
     "name": "Num Connected Components Over Time",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Union-Find",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "num-groups-operation": {
     "name": "Num Groups Operation",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Union-Find",
-    "book_id": 2
+    "difficulty": "medium"
   },
   "number-of-palindromic-splits": {
     "name": "Number Of Palindromic Splits",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Topological Sort",
-    "book_id": 8
+    "difficulty": "hard"
   },
   "os-paths": {
     "name": "OS Paths",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "palindrome-check": {
     "name": "Palindrome Check",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 1
+    "difficulty": "easy"
   },
   "palindromic-sentence": {
     "name": "Palindromic Sentence",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 4
+    "difficulty": "easy"
   },
   "parallel-compilation": {
     "name": "Parallel Compilation",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Topological Sort",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "parity-sorting": {
     "name": "Parity Sorting",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 13
+    "difficulty": "easy"
   },
   "permutation-enumeration": {
     "name": "Permutation Enumeration",
-    "difficulty": "medium",
-    "classic": true,
-    "book_chapter": "Backtracking",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "popular-songs-class": {
     "name": "Popular Songs Class",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Heaps",
-    "book_id": 5
+    "difficulty": "hard"
   },
   "powers-mod-m": {
     "name": "Powers Mod M",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Recursion",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "prefix-suffix-swap": {
     "name": "Prefix Suffix Swap",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 17
+    "difficulty": "medium"
   },
   "presidential-election": {
     "name": "Presidential Election",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Union-Find",
-    "book_id": 7
+    "difficulty": "medium"
   },
   "product-of-alphabetical-sums": {
     "name": "Product of Alphabetical Sums",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sets & Maps",
-    "book_id": 9
+    "difficulty": "medium"
   },
   "queens-reach": {
     "name": "Queen's Reach",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Grids & Matrices",
-    "book_id": 2
+    "difficulty": "medium"
   },
   "quicksort-partition": {
     "name": "Quicksort Partition",
-    "difficulty": "medium",
-    "classic": true,
-    "book_chapter": "Two Pointers",
-    "book_id": 15
+    "difficulty": "medium"
   },
   "race-overtaking": {
     "name": "Race Overtaking",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Binary Search",
-    "book_id": 6
+    "difficulty": "easy"
   },
   "reachability-queries": {
     "name": "Reachability Queries",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "reconstruct-longest-common-subsequence": {
     "name": "Reconstruct Longest Common Subsequence",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Dynamic Programming",
-    "book_id": 8
+    "difficulty": "hard"
   },
   "redundant-parentheses": {
     "name": "Redundant Parentheses",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "remove-kth-node-from-the-end": {
     "name": "Remove Kth Node From The End",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 11
+    "difficulty": "medium"
   },
   "remove-sandwiched-negatives": {
     "name": "Remove Sandwiched Negatives",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "restaurant-ratings": {
     "name": "Restaurant Ratings",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Dynamic Programming",
-    "book_id": 3
+    "difficulty": "easy"
   },
   "reverse-case-match": {
     "name": "Reverse Case Match",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "reverse-words-in-string": {
     "name": "Reverse Words in String",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "rgb-distances": {
     "name": "RGB Distances",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 15
+    "difficulty": "hard"
   },
   "road-trip": {
     "name": "Road Trip",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Dynamic Programming",
-    "book_id": 1
+    "difficulty": "easy"
   },
   "robot-instructions": {
     "name": "Robot Instructions",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Recursion",
-    "book_id": 1
+    "difficulty": "easy"
   },
   "same-binary-messages": {
     "name": "Same Binary Messages",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "scrabble-tiles": {
     "name": "Scrabble Tiles",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "search-in-huge-array": {
     "name": "Search in Huge Array",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Binary Search",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "search-in-sorted-array": {
     "name": "Search in Sorted Array",
-    "difficulty": "easy",
-    "classic": true,
-    "book_chapter": "Binary Search",
-    "book_id": 1
+    "difficulty": "easy"
   },
   "search-in-sorted-grid": {
     "name": "Search in Sorted Grid",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Binary Search",
-    "book_id": 7
+    "difficulty": "medium"
   },
   "segmented-video-votes": {
     "name": "Segmented Video Votes",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Prefix Sums",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "self-doubling-sequence": {
     "name": "Self-Doubling Sequence",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 15
+    "difficulty": "hard"
   },
   "shift-word-to-back": {
     "name": "Shift Word to Back",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 18
+    "difficulty": "medium"
   },
   "shortest-distance-number-repeated": {
     "name": "Shortest Distance Number Repeated",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "shortest-distance-string-repeated": {
     "name": "Shortest Distance String Repeated",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "shortest-path-queries": {
     "name": "Shortest Path Queries",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 10
+    "difficulty": "medium"
   },
   "shortest-period-with-over-20-sales": {
     "name": "Shortest Period With Over 20 Sales",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 14
+    "difficulty": "medium"
   },
   "shortest-with-all-letters": {
     "name": "Shortest With All Letters",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 15
+    "difficulty": "medium"
   },
   "simple-text-editor": {
     "name": "Simple Text Editor",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "singly-linked-list-design": {
     "name": "Singly Linked List Design",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 1
+    "difficulty": "medium"
   },
   "sliding-window-max": {
     "name": "Sliding Window Max",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Monotonic Stacks & Queues",
-    "book_id": 2
+    "difficulty": "hard"
   },
   "smaller-prefixes": {
     "name": "Smaller Prefixes",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 2
+    "difficulty": "easy"
   },
   "smallest-range-with-k-elements": {
     "name": "Smallest Range With K Elements",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 16
+    "difficulty": "medium"
   },
   "snowprints": {
     "name": "Snowprints",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Grids & Matrices",
-    "book_id": 4
+    "difficulty": "medium"
   },
   "sort-by-publication-year": {
     "name": "Sort By Publication Year",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Sorting",
-    "book_id": 5
+    "difficulty": "easy"
   },
   "sort-valley-shaped-array": {
     "name": "Sort Valley Shaped Array",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 9
+    "difficulty": "medium"
   },
   "sorting-by-frequency": {
     "name": "Sorting By Frequency",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Sorting",
-    "book_id": 1
+    "difficulty": "easy"
   },
   "spanning-tree": {
     "name": "Spanning Tree",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 4
+    "difficulty": "medium"
   },
   "spiral-order": {
     "name": "Spiral Order",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Grids & Matrices",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "spreadsheet": {
     "name": "Spreadsheet",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sorting",
-    "book_id": 4
+    "difficulty": "medium"
   },
   "string-join": {
     "name": "String Join",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "String Manipulation",
-    "book_id": 2
+    "difficulty": "easy"
   },
   "string-matching": {
     "name": "String Matching",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "String Manipulation",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "string-split": {
     "name": "String Split",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "String Manipulation",
-    "book_id": 1
+    "difficulty": "easy"
   },
   "strong-start-and-ending": {
     "name": "Strong Start And Ending",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 17
+    "difficulty": "medium"
   },
   "strongly-connected-graph": {
     "name": "Strongly Connected Graph",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 6
+    "difficulty": "medium"
   },
   "sub-permutations": {
     "name": "Sub Permutations",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 4
+    "difficulty": "medium"
   },
   "subgrid-maximums": {
     "name": "Subgrid Maximums",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Grids & Matrices",
-    "book_id": 6
+    "difficulty": "medium"
   },
   "subgrid-sums": {
     "name": "Subgrid Sums",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Grids & Matrices",
-    "book_id": 7
+    "difficulty": "medium"
   },
   "sublist-reversal": {
     "name": "Sublist Reversal",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Linked Lists",
-    "book_id": 7
+    "difficulty": "hard"
   },
   "subset-enumeration": {
     "name": "Subset Enumeration",
-    "difficulty": "easy",
-    "classic": true,
-    "book_chapter": "Backtracking",
-    "book_id": 2
+    "difficulty": "easy"
   },
   "sum-of-first-k-prime-powers": {
     "name": "Sum Of First K Prime Powers",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Heaps",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "supersequence": {
     "name": "Supersequence",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Topological Sort",
-    "book_id": 7
+    "difficulty": "hard"
   },
   "symmetric-matrix": {
     "name": "Symmetric Matrix",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "target-count-divisible-by-k": {
     "name": "Target Count Divisible by K",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Binary Search",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "the-floor-is-lava": {
     "name": "The Floor Is Lava",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 16
+    "difficulty": "medium"
   },
   "thesaurusly": {
     "name": "Thesaurusly",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Backtracking",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "three-sum": {
     "name": "3-Sum",
-    "difficulty": "medium",
-    "classic": true,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 1
+    "difficulty": "medium"
   },
   "three-way-merge-without-duplicates": {
     "name": "Three Way Merge Without Duplicates",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Two Pointers",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "tic-tac-toe-position": {
     "name": "Tic-Tac-Toe Position",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "tide-aerial-view": {
     "name": "Tide Aerial View",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Binary Search",
-    "book_id": 12
+    "difficulty": "medium"
   },
   "tiling-floor": {
     "name": "Tiling Floor",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "tiling-wide-floor": {
     "name": "Tiling Wide Floor",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "time-traveler": {
     "name": "Time Traveler",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Greedy Algorithms",
-    "book_id": 2
+    "difficulty": "medium"
   },
   "time-traveler-max-year": {
     "name": "Time Traveler Max Year",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Greedy Algorithms",
-    "book_id": 6
+    "difficulty": "hard"
   },
   "to-be-or-not-to-be": {
     "name": "To Be or Not to Be",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Backtracking",
-    "book_id": 4
+    "difficulty": "easy"
   },
   "top-songs-class": {
     "name": "Top Songs Class",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Heaps",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "top-songs-class-with-updates": {
     "name": "Top Songs Class With Updates",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Heaps",
-    "book_id": 4
+    "difficulty": "medium"
   },
   "topological-ordering": {
     "name": "Topological Ordering",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "traversal-order": {
     "name": "Traversal Order",
-    "difficulty": "easy",
-    "classic": true,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "tree-check": {
     "name": "Tree Check",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "tree-diameter": {
     "name": "Tree Diameter",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 12
+    "difficulty": "medium"
   },
   "tree-layout": {
     "name": "Tree Layout",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 4
+    "difficulty": "medium"
   },
   "triangle-count": {
     "name": "Triangle Count",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "tridimensional-lego-castle": {
     "name": "Tridimensional Lego Castle",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "trie-class": {
     "name": "Trie Class",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "tunnel-depth": {
     "name": "Tunnel Depth",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Boundary Thinking",
-    "book_id": 1
+    "difficulty": "medium"
   },
   "two-array-two-sum": {
     "name": "2-Array 2-Sum",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Binary Search",
-    "book_id": 4
+    "difficulty": "easy"
   },
   "two-sum": {
     "name": "2-Sum",
-    "difficulty": "easy",
-    "classic": true,
-    "book_chapter": "Two Pointers",
-    "book_id": 7
+    "difficulty": "easy"
   },
   "union-find-class": {
     "name": "Union Find Class",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "unique-best-seller-streak": {
     "name": "Unique Best Seller Streak",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Sliding Windows",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "unique-k-pairs": {
     "name": "Unique K Pairs",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "unique-movie-titles": {
     "name": "Unique Movie Titles",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "unrooted-tree-diameter": {
     "name": "Unrooted Tree Diameter",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Problem-Solving Boosters",
-    "book_id": 13
+    "difficulty": "hard"
   },
   "valid-sudoku": {
     "name": "Valid Sudoku",
-    "difficulty": "medium",
-    "classic": true,
-    "book_chapter": "Grids & Matrices",
-    "book_id": 5
+    "difficulty": "medium"
   },
   "validate-matrix-rows-columns": {
     "name": "Validate Matrix Rows and Columns",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "easy"
   },
   "validate-simple-html-strings": {
     "name": "Validate Simple HTML Strings",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "valley-bottom": {
     "name": "Valley Bottom",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Binary Search",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "viewer-counter-class": {
     "name": "Viewer Counter Class",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Stacks & Queues",
-    "book_id": 3
+    "difficulty": "medium"
   },
   "water-refilling": {
     "name": "Water Refilling",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Binary Search",
-    "book_id": 10
+    "difficulty": "medium"
   },
   "white-hat-hacker": {
     "name": "White Hat Hacker",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Backtracking",
-    "book_id": 8
+    "difficulty": "medium"
   },
   "word-expansion-class": {
     "name": "Word Expansion Class",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Sets & Maps",
-    "book_id": 7
+    "difficulty": "easy"
   },
   "word-ladder-game-variation": {
     "name": "Word Ladder Game Variation",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Graphs",
-    "book_id": 17
+    "difficulty": "medium"
   },
   "word-match": {
     "name": "Word Match",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": null,
-    "book_id": null
+    "difficulty": "medium"
   },
   "youtube-video-reception": {
     "name": "YouTube Video Reception",
-    "difficulty": "easy",
-    "classic": false,
-    "book_chapter": "Prefix Sums",
-    "book_id": 2
+    "difficulty": "easy"
   },
   "youtube-video-unusual-days": {
     "name": "YouTube Video Unusual Days",
-    "difficulty": "hard",
-    "classic": false,
-    "book_chapter": "Prefix Sums",
-    "book_id": 5
+    "difficulty": "hard"
   },
   "zig-zag-order": {
     "name": "Zig-Zag Order",
-    "difficulty": "medium",
-    "classic": false,
-    "book_chapter": "Trees",
-    "book_id": 10
+    "difficulty": "medium"
   }
 }
