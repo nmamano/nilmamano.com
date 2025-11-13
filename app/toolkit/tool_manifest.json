@@ -81,56 +81,6 @@
     ]
   },
   {
-    "name": "Dynamic Arrays Internals",
-    "tools": [
-      {
-        "slug": "tinkering-with-dynamic-array-internals",
-        "name": "Tinkering with dynamic array internals",
-        "extra_credit": false,
-        "primary_problem": "Implement Dynamic Array",
-        "other_problems": ["Extra Dynamic Array Operations"],
-        "wanted_outcome": "Being able to understand how dynamic arrays handle resizing internally and apply amortized analysis."
-      }
-    ]
-  },
-  {
-    "name": "String Operations",
-    "tools": [
-      {
-        "slug": "manipulating-strings",
-        "name": "Manipulating strings",
-        "extra_credit": false,
-        "primary_problem": "String Join",
-        "other_problems": [
-          "String Split",
-          "Reverse Words in String",
-          "Unique Movie Titles"
-        ],
-        "wanted_outcome": "Being able to implement basic string operations like join and split manually."
-      },
-      {
-        "slug": "building-strings-with-dynamic-arrays",
-        "name": "Building strings with dynamic arrays",
-        "extra_credit": false,
-        "primary_problem": "String Join",
-        "other_problems": [
-          "Decode A String",
-          "Hidden Message",
-          "Robot Instructions"
-        ],
-        "wanted_outcome": "Being able to build strings efficiently by appending characters to a dynamic array; important in languages with immutable strings."
-      },
-      {
-        "slug": "rolling-hash",
-        "name": "Rolling hash",
-        "extra_credit": true,
-        "primary_problem": "String Matching",
-        "other_problems": ["Longest Repeated Substring"],
-        "wanted_outcome": "Knowing how to implement a rolling hash - a hash function that is updated incrementally as a window slides through text."
-      }
-    ]
-  },
-  {
     "name": "Two Pointers",
     "tools": [
       {
@@ -316,6 +266,56 @@
         "primary_problem": "Min Subarray Sum Split",
         "other_problems": [],
         "wanted_outcome": "Being comfortable with problems about minimizing a maximum (or vice versa)."
+      }
+    ]
+  },
+  {
+    "name": "Dynamic Array Internals",
+    "tools": [
+      {
+        "slug": "tinkering-with-dynamic-array-internals",
+        "name": "Tinkering with dynamic array internals",
+        "extra_credit": false,
+        "primary_problem": "Implement Dynamic Array",
+        "other_problems": ["Extra Dynamic Array Operations"],
+        "wanted_outcome": "Being able to understand how dynamic arrays handle resizing internally and apply amortized analysis."
+      }
+    ]
+  },
+  {
+    "name": "String Operations",
+    "tools": [
+      {
+        "slug": "manipulating-strings",
+        "name": "Manipulating strings",
+        "extra_credit": false,
+        "primary_problem": "String Join",
+        "other_problems": [
+          "String Split",
+          "Reverse Words in String",
+          "Unique Movie Titles"
+        ],
+        "wanted_outcome": "Being able to implement basic string operations like join and split manually."
+      },
+      {
+        "slug": "building-strings-with-dynamic-arrays",
+        "name": "Building strings with dynamic arrays",
+        "extra_credit": false,
+        "primary_problem": "String Join",
+        "other_problems": [
+          "Decode A String",
+          "Hidden Message",
+          "Robot Instructions"
+        ],
+        "wanted_outcome": "Being able to build strings efficiently by appending characters to a dynamic array; important in languages with immutable strings."
+      },
+      {
+        "slug": "rolling-hash",
+        "name": "Rolling hash",
+        "extra_credit": true,
+        "primary_problem": "String Matching",
+        "other_problems": ["Longest Repeated Substring"],
+        "wanted_outcome": "Knowing how to implement a rolling hash - a hash function that is updated incrementally as a window slides through text."
       }
     ]
   },
