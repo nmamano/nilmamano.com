@@ -78,7 +78,7 @@ export function getLatestPost(): BlogPost | null {
   return allPosts[0] || null; // getAllPosts already filters WIP and sorts by date
 }
 
-// Get a specific post by slug
+// Get a specific post by slug (including WIP posts for direct access)
 export function getPostBySlug(slug: string): BlogPost | null {
   try {
     const fullPath = path.join(postsDirectory, `${slug}.mdx`);
@@ -94,11 +94,6 @@ export function getPostBySlug(slug: string): BlogPost | null {
       ...data,
     } as BlogPost;
 
-    // Return null if this is a WIP post (making them inaccessible)
-    if (post.categories?.some((category) => category.toLowerCase() === "wip")) {
-      return null;
-    }
-
     return post;
   } catch (error) {
     console.error(`Error reading post: ${slug}`, error);
@@ -106,10 +101,13 @@ export function getPostBySlug(slug: string): BlogPost | null {
   }
 }
 
-// Get all available post slugs (excluding WIP posts)
+// Get all available post slugs (including WIP posts for static generation)
 export function getAllPostSlugs(): string[] {
-  const allPosts = getAllPosts();
-  return allPosts.map((post) => post.slug);
+  // Read all .mdx files directly to include WIP posts for static generation
+  const fileNames = fs.readdirSync(postsDirectory);
+  return fileNames
+    .filter((fileName) => fileName.endsWith(".mdx"))
+    .map((fileName) => fileName.replace(/\.mdx$/, ""));
 }
 
 // Get 3 random posts (excluding the current post if provided)
