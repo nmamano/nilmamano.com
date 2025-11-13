@@ -7,7 +7,11 @@ export const metadata: Metadata = {
   icons: {
     icon: [
       { url: "/toolkit/favicon/favicon.ico" },
-      { url: "/toolkit/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      {
+        url: "/toolkit/favicon/favicon-96x96.png",
+        sizes: "96x96",
+        type: "image/png",
+      },
       { url: "/toolkit/favicon/favicon.svg", type: "image/svg+xml" },
     ],
     apple: [{ url: "/toolkit/favicon/apple-touch-icon.png" }],

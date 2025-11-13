@@ -41,6 +41,9 @@ const getProblemSlug = (problemName: string): string | null => {
     }
   }
   // Fallback to slugifying the name
+  console.error(
+    `Problem slug not found for "${problemName}" in manifest. Falling back to slugified name.`
+  );
   return slugify(problemName);
 };
 
@@ -1229,7 +1232,7 @@ Format:
                   <br />
                   Read the{" "}
                   <a
-                    href="/blog/toolkit-x"
+                    href="/blog/toolkit"
                     className="text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium no-underline"
                   >
                     Toolkit-X blog post
@@ -1255,6 +1258,15 @@ Format:
                 <h4 className="text-sm md:text-base font-semibold text-gray-900 dark:text-gray-100 mb-1">
                   'Acquiring' tools
                 </h4>
+                <div className="my-3">
+                  <Image
+                    src="/blog/toolkit/tool.png"
+                    alt="Tool UI component explanation"
+                    width={800}
+                    height={400}
+                    className="rounded-lg border border-gray-200 dark:border-slate-700 w-full h-auto"
+                  />
+                </div>
                 <p className="text-xs md:text-sm">
                   Each tool has a <strong>Sample Problem</strong> from BCtCI
                   that demonstrates its use. Click to view the statement and
@@ -1264,8 +1276,17 @@ Format:
                   Before reading the solution, launch our{" "}
                   <strong>AI interviewer to try the question yourself</strong> -
                   and then compare your approach. Active learning is key!
-                  <br />
-                  <br />
+                </p>
+                <div className="my-3">
+                  <Image
+                    src="/blog/toolkit/ai-interviewer.png"
+                    alt="AI Interviewer prompt"
+                    width={800}
+                    height={400}
+                    className="rounded-lg border border-gray-200 dark:border-slate-700 w-full h-auto"
+                  />
+                </div>
+                <p className="text-xs md:text-sm">
                   The BCtCI platform requires an account, but{" "}
                   <strong>all content and the AI interviewer are free</strong>.
                   <br />
