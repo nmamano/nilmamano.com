@@ -4,6 +4,15 @@ export const metadata: Metadata = {
   title: "TOOLKIT-X | A new way to do coding interview prep",
   description:
     "The essential DSA tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
+  icons: {
+    icon: [
+      { url: "/toolkit/favicon/favicon.ico" },
+      { url: "/toolkit/favicon/favicon-96x96.png", sizes: "96x96", type: "image/png" },
+      { url: "/toolkit/favicon/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/toolkit/favicon/apple-touch-icon.png" }],
+  },
+  manifest: "/toolkit/favicon/site.webmanifest",
   openGraph: {
     title: "TOOLKIT-X | A new way to do coding interview prep",
     description:
