@@ -1,5 +1,86 @@
 [
   {
+    "name": "Grids & Matrices",
+    "tools": [
+      {
+        "slug": "directions-array-to-visit-grid-neighbors",
+        "name": "Directions array to visit grid neighbors",
+        "extra_credit": false,
+        "primary_problem": "Chess Moves",
+        "other_problems": [
+          "Queen's Reach",
+          "Spiral Order",
+          "Snowprints",
+          "Count Grid Islands",
+          "Image Filter"
+        ],
+        "wanted_outcome": "Knowing how to write clean code to iterate over grid neighbors by using a directions array."
+      },
+      {
+        "slug": "factoring-out-validation-to-helper-functions",
+        "name": "Factoring out validation to helper functions",
+        "extra_credit": false,
+        "primary_problem": "Queen's Reach",
+        "other_problems": [
+          "Chess Moves",
+          "Spiral Order",
+          "Snowprints",
+          "Count Grid Islands",
+          "Image Filter"
+        ],
+        "wanted_outcome": "Knowing when to simplify the main logic by moving complex checks into helper functions - like boundary checks in grids."
+      },
+      {
+        "slug": "implementing-subgrid-traversals",
+        "name": "Implementing subgrid traversals",
+        "extra_credit": false,
+        "primary_problem": "Valid Sudoku",
+        "other_problems": [
+          "Image Filter",
+          "Matrix Rotation",
+          "Validate Matrix Rows and Columns"
+        ],
+        "wanted_outcome": "Being able to iterate cleanly over arbitrary subgrids."
+      },
+      {
+        "slug": "handling-wraparounds-with-mod",
+        "name": "Handling wraparounds with mod",
+        "extra_credit": false,
+        "primary_problem": "Spiral Order",
+        "other_problems": [],
+        "wanted_outcome": "Knowing how to simplify code by using modulo arithmetic to cycle through options."
+      },
+      {
+        "slug": "reusing-subproblems",
+        "name": "Reusing subproblems",
+        "extra_credit": false,
+        "primary_problem": "Subgrid Maximums",
+        "other_problems": ["Subgrid Sums"],
+        "wanted_outcome": "Being able to identify overlapping subproblems and reuse their solutions."
+      },
+      {
+        "slug": "rectifying-double-counting",
+        "name": "Rectifying double counting",
+        "extra_credit": true,
+        "primary_problem": "Subgrid Sums",
+        "other_problems": [],
+        "wanted_outcome": "Being able to avoid or correct double counting when adding overlapping quantities."
+      },
+      {
+        "slug": "manipulating-matrices",
+        "name": "Manipulating matrices",
+        "extra_credit": true,
+        "primary_problem": "Matrix Operations",
+        "other_problems": [
+          "Matrix Multiplication",
+          "Matrix Rotation",
+          "Symmetric Matrix"
+        ],
+        "wanted_outcome": "Being able to do basic matrix operations - like rotate, transpose, and reflect."
+      }
+    ]
+  },
+  {
     "name": "Dynamic Arrays Internals",
     "tools": [
       {
@@ -164,87 +245,6 @@
         "primary_problem": "Prefix Suffix Swap",
         "other_problems": [],
         "wanted_outcome": "Being able to swap a prefix and a suffix in place in an array - with the triple subarray reversal trick."
-      }
-    ]
-  },
-  {
-    "name": "Grids & Matrices",
-    "tools": [
-      {
-        "slug": "directions-array-to-visit-grid-neighbors",
-        "name": "Directions array to visit grid neighbors",
-        "extra_credit": false,
-        "primary_problem": "Chess Moves",
-        "other_problems": [
-          "Queen's Reach",
-          "Spiral Order",
-          "Snowprints",
-          "Count Grid Islands",
-          "Image Filter"
-        ],
-        "wanted_outcome": "Knowing how to write clean code to iterate over grid neighbors by using a directions array."
-      },
-      {
-        "slug": "factor-out-validation-to-a-helper-function",
-        "name": "Factor out validation to a helper function",
-        "extra_credit": false,
-        "primary_problem": "Queen's Reach",
-        "other_problems": [
-          "Chess Moves",
-          "Spiral Order",
-          "Snowprints",
-          "Count Grid Islands",
-          "Image Filter"
-        ],
-        "wanted_outcome": "Knowing when to simplify the main logic by moving complex checks into helper functions - like boundary checks in grids."
-      },
-      {
-        "slug": "implementing-subgrid-traversals",
-        "name": "Implementing subgrid traversals",
-        "extra_credit": false,
-        "primary_problem": "Valid Sudoku",
-        "other_problems": [
-          "Image Filter",
-          "Matrix Rotation",
-          "Validate Matrix Rows and Columns"
-        ],
-        "wanted_outcome": "Being able to iterate cleanly over arbitrary subgrids."
-      },
-      {
-        "slug": "handling-wraparounds-with-mod",
-        "name": "Handling wraparounds with mod",
-        "extra_credit": false,
-        "primary_problem": "Spiral Order",
-        "other_problems": [],
-        "wanted_outcome": "Knowing how to simplify code by using modulo arithmetic to cycle through options."
-      },
-      {
-        "slug": "reusing-subproblems",
-        "name": "Reusing subproblems",
-        "extra_credit": false,
-        "primary_problem": "Subgrid Maximums",
-        "other_problems": ["Subgrid Sums"],
-        "wanted_outcome": "Being able to identify overlapping subproblems and reuse their solutions."
-      },
-      {
-        "slug": "rectifying-double-counting",
-        "name": "Rectifying double counting",
-        "extra_credit": true,
-        "primary_problem": "Subgrid Sums",
-        "other_problems": [],
-        "wanted_outcome": "Being able to avoid or correct double counting when adding overlapping quantities."
-      },
-      {
-        "slug": "manipulating-matrices",
-        "name": "Manipulating matrices",
-        "extra_credit": true,
-        "primary_problem": "Matrix Operations",
-        "other_problems": [
-          "Matrix Multiplication",
-          "Matrix Rotation",
-          "Symmetric Matrix"
-        ],
-        "wanted_outcome": "Being able to do basic matrix operations - like rotate, transpose, and reflect."
       }
     ]
   },
