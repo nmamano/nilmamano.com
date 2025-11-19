@@ -45,8 +45,7 @@ function MediaKitSection() {
                   graph algorithms, computational geometry, computational
                   biology, and recreational mathematics. He previously worked as
                   a senior software engineer at Google, working on scaling the
-                  networking infrastructure. Additionally, he developed the
-                  technical curriculum for coding interview prep at Pathrise.
+                  networking infrastructure.
                 </p>
               </div>
             </div>
