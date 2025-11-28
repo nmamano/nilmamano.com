@@ -1,0 +1,318 @@
+---
+title: "Building automatic puzzle generators for board games"
+date: "2025-11-28"
+excerpt: "How to automatically detect interesting tactical moments in Wall Game and turn them into puzzles."
+categories: ["wallgame", "ai", "wip"]
+---
+
+I am building the Wall Game at [wallgame.io](https://wallgame.io), and one of the features is puzzles.
+
+A puzzle is a prepared board position where you have to find the best move, which should be hard to find and significantly better than other moves.
+
+Coming up with puzzles manually is hard -- the setter must be not only creative, but also a strong player that can assess move quality accurately and not miss moves. This is especially hard in the Wall Game because the branching factor is much higher than chess.
+
+Thankfully, we have an AI, _Deep WallWars_, that is stronger than humans. So, how can we leverage it?
+
+A first idea is to still let the human do the creative part of coming up with interesting positions, and then using the AI to check that the intended solution actually works and is unique (more on that latter).
+
+However, coming up with positions is still hard. Is it possible to automate the puzzle generation entirely?
+
+This post walks through the entire system end-to-end, including the technical decisions we made along the way.
+
+## Lichess case study
+
+Lichess.org has automated puzzle generation. Their key insight is scanning human games for interesting, puzzle-like positions. An intrinsic bonus is that the positions will automatically be "human-like", as they come from real games.
+
+They use a program that runs from time to time and:
+
+1. Downloads all the games played since the last run (or perhaps a subset of games, based on things like player ELO).
+2. Scans each game for puzzle-like positions.
+3. Uploads the best finds to the puzzle database.
+
+The central question is:
+
+> What makes a position puzzle-like and how can we tell if one is?
+
+The first part is intrinsically subjective, so it is unavoidable to produce _false positives_: puzzles that are not interesting or fun.
+
+A nice touch that Lichess added is letting users upvote/downvote puzzles. By hiding heavily disliked puzzles, false positives are less of an issue.
+
+For the Wall Game, I plan to follow the same approach.
+As we'll see, the Wall Game has some extra complications over chess.
+
+## Wall Game complications
+
+1. Alternative moves.
+
+In chess, it is rare that two different moves achieve exactly the same effect. This can happen, e.g., in an endgame, where a bishop is guarding a critical square; if the bishop is threatened, it can move to any position along the same diagonal as that square.
+
+In the Wall Game, this happens a lot. E.g., if there is a long 'tunnel' that is one row wide, putting _any_ wall along the tunnel has the exact same effect of blocking it. There can be 100's of equally good moves in (and common) situations.
+
+2. Two-action turns.
+
+Imagine a variant of chess where each player makes two moves in a row. That's essentially what happens in the Wall Game.
+Players can place two walls, or place a wall and move, or move twice (we call those 'actions').
+
+This has two consequences:
+
+1. The branching factor blows up. A typical 10x12 board has around 240 possible walls, so the branching factor is about (240 choose 2) ~= 27,000.
+2. The _Deep WallWars_ engine finds one action at a time, so there isn't a one-to-one mapping between engine answers and moves.
+
+3. Long sequence payoffs.
+
+Sometimes, there may be a sequence of intermediate moves before a tactic pays off. Chimneys are a good example: sometimes, you can force the opponent into a _chute_, at which point both players are "forced" to keep building it out to the other edge of the board. The move that makes the chute _good_ may not come until after all those intermediate moves.
+
+## What even is a 'Puzzle-like' position?
+
+Instinctively, a puzzle-like position is one where there is a short tactical sequence that yields a decisive advantage.
+
+The tactic must also be non-obvious: in chess, capturing the opponent's queen with no repercussion wouldn't make for an interesting puzzle.
+
+A good heuristic for whether a move is non-obvious is that the human player in the actual game didn't find it (depending on their ELO).
+
+Here's an example of an interesting tactical pattern in the Wall Game:
+
+You place a wall that leaves the opponent with two paths such that if they move toward one, you can close it, forcing them to backtrack. And if they proactively close one of them, then you can make their path to the other longer with follow-up walls."
+
+To operationalize this, we lean on the engine.
+
+## MCTS difficulty as a measure of obviousness
+
+_Deep WallWars_ is an AlphaZero-style engine that uses MCTS (Monte Carlo Tree Search) to find the best move. As most engines, the longer it thinks, the bigger and more accurate the search tree becomes.
+
+Imagine that you feed a position to the engine. At first, the evaluation is erratic, which is common, but then it settles around +0 (neutral position). After 10 seconds, however, the evaluation jumps to 80% winning for the player to move. That's an indication that the engine found a non-obvious good move.
+
+
+
+---
+
+During puzzle generation, we run **very long MCTS searches** (100k–1M visits) and log the evaluation at regular intervals.
+
+We look for an **evaluation jump**:
+- At the start of the turn, the eval might be ~0.1 (unclear / balanced).
+- At some simulation count N_jump, the eval jumps to ~0.8 (winning).
+- The longer the search takes before finding this jump, the less “obvious” the tactic is.
+
+This gives us a **quantitative difficulty metric**:
+
+difficulty = N_jump / N_max
+
+And this is perfect for puzzles:
+- If the engine finds the tactic in 200 visits → too trivial.
+- If it finds it in 50k visits → interesting.
+- If it never finds it → too deep, discard.
+
+This single metric drives the entire system.
+
+---
+
+# 3. Candidate Extraction From Real Games
+
+Every day/week, a batch process fetches all games played since the last run.
+
+For each game:
+1. Iterate through every **start-of-turn position**.
+2. Run a shallow MCTS to get a **baseline eval**.
+3. If baseline is near-equal, consider it a candidate.
+4. Run a deep MCTS and log eval trajectory.
+5. Look for evaluation jumps.
+
+Positions that show a large, stable jump become puzzle candidates.
+
+We also record:
+- The eval before the tactic.
+- The eval after the tactic.
+- The depth at which the tactic becomes stable.
+- Which moves the human played.
+- Whether the human missed the winning idea.
+
+This lets us classify puzzles (winning shot, save-a-loss, punish-a-blunder, etc.).
+
+---
+
+# 4. Wall Game Complication: Moves Are *Two* Actions
+
+Wall Game turns consist of **two actions** — usually order-independent.
+
+But our engine’s search unit is **one action**.
+
+This seems like a mismatch, but it actually works out cleanly.
+
+In MCTS:
+- The root is the start of the turn.
+- A “move” (a full turn) corresponds to a **sequence of two plies in the tree**.
+- Root Q-values inherently represent:  
+  “If I take first action a, and then the engine finds the best second action b, what is the resulting position worth?”
+
+We treat the **start-of-turn state as the puzzle root**, and let MCTS reason through the two-action structure internally.
+
+When generating puzzles, we always evaluate:
+- The eval *after the full two-action turn*, possibly including the opponent’s best reply.
+
+This way, puzzle generation works exactly the same as in a single-action game — we just interpret the engine’s output at turn boundaries.
+
+---
+
+# 5. Wall Game Complication: Many Equivalent Moves
+
+In Wall Game, it is extremely common that:
+- 6–12 different walls produce the same strategic effect.
+- Several paths converge to identical positions after the second action.
+- Order of the two actions often does not matter.
+
+This means:
+
+> You cannot require a *unique best move.*  
+> You must require a *small solution set relative to all moves.*
+
+So instead of counting “best move,” we use the **solution density**:
+
+good_moves = {a : Q(a) >= Q_best - δ}
+solution_density = |good_moves| / |all_moves|
+
+If the density is low (e.g., 4 good actions out of 80), that’s a tactical idea.
+
+If density is high (e.g., 30 good actions out of 50), the position is too loose → discard.
+
+This allows puzzles like:
+- “Block any of these 7 tunnel walls — all equivalent.”
+- “Play any of these 5 chase routes — each wins.”
+
+And the puzzle will accept them all.
+
+---
+
+# 6. Puzzle Metadata (The Stored Representation)
+
+Each puzzle is stored as a JSON record like:
+
+```json
+{
+  "initial_state": "...",
+  "side_to_move": "white",
+  "target_eval_after_turn": 0.72,
+  "success_threshold": 0.62,
+  "fail_threshold": 0.20,
+  "difficulty": 0.34,
+  "reference_line": [
+    {"action": "e4>", "eval": 0.82},
+    {"action": "e5",  "eval": 0.95}
+  ],
+  "tags": ["winning-shot", "tunnel-block", "2-action"],
+  "source_game_id": "...",
+  "human_missed_tactic": true
+}
+```
+
+We deliberately store **thresholds**, not absolute exact evals.
+
+This is critical for solving.
+
+---
+
+# 7. Solving Puzzles: Engine-Based Validation
+
+When a user attempts a puzzle:
+
+1. Start at the puzzle’s initial state.
+2. User selects two actions (or stops after one).
+3. Apply both actions to get the post-turn state.
+4. Run a **short MCTS** (500–2000 visits).
+5. Get eval_user.
+
+We do **not** require that eval matches the deep-search value exactly.
+
+We only check:
+
+eval_user >= success_threshold → correct  
+eval_user <= fail_threshold → wrong  
+otherwise → wrong (ambiguous)
+
+This gives the system:
+- Robustness to shallow search noise.
+- Ability to accept *any* of the many equivalent tactical moves.
+- Freedom from needing giant precomputed solution trees.
+
+This is exactly how modern chess sites validate puzzles (though using depth instead of MCTS visits).
+
+---
+
+# 8. Why the Checker Does *Not* Need Long Search
+
+The puzzle generator uses long MCTS (100k+ visits) to find precise evals.
+
+The puzzle solver only uses short MCTS (500–2000 visits).
+
+Why this works:
+- Big blunders collapse eval instantly — even in shallow search.
+- Good tactical moves stabilize eval above the threshold even with limited search.
+- Thresholds bake in cushion for small evaluation drift.
+- “Deep tactic” positions are filtered out during generation — the solver never sees them.
+
+So the solver never needs to reach the same eval accuracy as the generator.
+
+It only needs to classify “good vs bad,” not “find exact value.”
+
+---
+
+# 9. The Full Pipeline
+
+Here is the full puzzle generation pipeline end-to-end:
+
+### 1. Daily/weekly batch run:
+- Fetch all games since last run.
+
+### 2. For each start-of-turn position:
+- Run shallow MCTS → baseline eval.
+- Run deep MCTS → eval trajectory.
+- Detect eval jumps → potential tactic.
+
+### 3. Filter by:
+- Large eval swing.
+- Narrow solution density.
+- High difficulty.
+- Human-in-game missed the tactic.
+
+### 4. Store puzzle metadata:
+- Initial state, thresholds, reference line.
+- Category and difficulty rating.
+
+### 5. In-game solver:
+- User plays 1–2 actions.
+- Apply to reach post-turn state.
+- Short MCTS.
+- Compare eval to thresholds.
+- Accept/reject accordingly.
+
+### 6. Post-launch:
+- Players rate puzzles.
+- Easy/boring ones are auto-demoted.
+- Future generator thresholds are tuned using real player data.
+
+---
+
+# 10. Final Thoughts
+
+Designing a puzzle generator for Wall Game was far more challenging than simply “run an engine, find tactics.”
+
+The two-action structure, large branching factor, and equivalence classes of wall placements force you to rethink what a “tactic” even means.
+
+But the combination of:
+- **MCTS evaluation jumps**  
+- **Solution density**  
+- **Turn-level interpretation**  
+- **Eval-band validation**  
+
+creates a system that:
+- Finds genuinely human-interesting tactical moments,  
+- Accepts all correct ideas (not just one move),  
+- Requires no hand-coded heuristics about tunnels or chase patterns,  
+- And scales to thousands of games automatically.
+
+The result is a pipeline that mirrors how human tactics work:
+- Ideas, not moves.  
+- Insights, not lines.
+
+This is exactly what puzzles are supposed to teach.
+
+More soon — in the next post, we’ll dive into how puzzle difficulty is calibrated using real user solve data and how that loops back into future training runs of the engine.
