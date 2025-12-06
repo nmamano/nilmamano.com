@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "TOOLKIT-X | A new way to do coding interview prep",
   description:
-    "The essential DSA tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
+    "The essential DS&A tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
   icons: {
     icon: [
       { url: "/toolkit/favicon/favicon.ico" },
@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "TOOLKIT-X | A new way to do coding interview prep",
     description:
-      "The essential DSA tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
+      "The essential DS&A tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
     url: "https://nilmamano.com/toolkit",
     siteName: "Toolkit-X",
     images: [
@@ -38,7 +38,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "TOOLKIT-X | A new way to do coding interview prep",
     description:
-      "The essential DSA tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
+      "The essential DS&A tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
     images: ["https://nilmamano.com/toolkit/thumbnail.png"],
   },
 };
