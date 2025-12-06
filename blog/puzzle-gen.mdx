@@ -3,6 +3,7 @@ title: "Building automatic puzzle generators for board games"
 date: "2025-11-28"
 excerpt: "How to automatically detect interesting tactical moments in Wall Game and turn them into puzzles."
 categories: ["wallgame", "ai", "wip"]
+coverImage: "/blog/work_in_progress.png"
 ---
 
 I am building the Wall Game at [wallgame.io](https://wallgame.io), and one of the features is puzzles.
@@ -82,13 +83,12 @@ _Deep WallWars_ is an AlphaZero-style engine that uses MCTS (Monte Carlo Tree Se
 
 Imagine that you feed a position to the engine. At first, the evaluation is erratic, which is common, but then it settles around +0 (neutral position). After 10 seconds, however, the evaluation jumps to 80% winning for the player to move. That's an indication that the engine found a non-obvious good move.
 
-
-
 ---
 
 During puzzle generation, we run **very long MCTS searches** (100k–1M visits) and log the evaluation at regular intervals.
 
 We look for an **evaluation jump**:
+
 - At the start of the turn, the eval might be ~0.1 (unclear / balanced).
 - At some simulation count N_jump, the eval jumps to ~0.8 (winning).
 - The longer the search takes before finding this jump, the less “obvious” the tactic is.
@@ -98,6 +98,7 @@ This gives us a **quantitative difficulty metric**:
 difficulty = N_jump / N_max
 
 And this is perfect for puzzles:
+
 - If the engine finds the tactic in 200 visits → too trivial.
 - If it finds it in 50k visits → interesting.
 - If it never finds it → too deep, discard.
@@ -111,6 +112,7 @@ This single metric drives the entire system.
 Every day/week, a batch process fetches all games played since the last run.
 
 For each game:
+
 1. Iterate through every **start-of-turn position**.
 2. Run a shallow MCTS to get a **baseline eval**.
 3. If baseline is near-equal, consider it a candidate.
@@ -120,6 +122,7 @@ For each game:
 Positions that show a large, stable jump become puzzle candidates.
 
 We also record:
+
 - The eval before the tactic.
 - The eval after the tactic.
 - The depth at which the tactic becomes stable.
@@ -130,7 +133,7 @@ This lets us classify puzzles (winning shot, save-a-loss, punish-a-blunder, etc.
 
 ---
 
-# 4. Wall Game Complication: Moves Are *Two* Actions
+# 4. Wall Game Complication: Moves Are _Two_ Actions
 
 Wall Game turns consist of **two actions** — usually order-independent.
 
@@ -139,6 +142,7 @@ But our engine’s search unit is **one action**.
 This seems like a mismatch, but it actually works out cleanly.
 
 In MCTS:
+
 - The root is the start of the turn.
 - A “move” (a full turn) corresponds to a **sequence of two plies in the tree**.
 - Root Q-values inherently represent:  
@@ -147,7 +151,8 @@ In MCTS:
 We treat the **start-of-turn state as the puzzle root**, and let MCTS reason through the two-action structure internally.
 
 When generating puzzles, we always evaluate:
-- The eval *after the full two-action turn*, possibly including the opponent’s best reply.
+
+- The eval _after the full two-action turn_, possibly including the opponent’s best reply.
 
 This way, puzzle generation works exactly the same as in a single-action game — we just interpret the engine’s output at turn boundaries.
 
@@ -156,14 +161,15 @@ This way, puzzle generation works exactly the same as in a single-action game �
 # 5. Wall Game Complication: Many Equivalent Moves
 
 In Wall Game, it is extremely common that:
+
 - 6–12 different walls produce the same strategic effect.
 - Several paths converge to identical positions after the second action.
 - Order of the two actions often does not matter.
 
 This means:
 
-> You cannot require a *unique best move.*  
-> You must require a *small solution set relative to all moves.*
+> You cannot require a _unique best move._  
+> You must require a _small solution set relative to all moves._
 
 So instead of counting “best move,” we use the **solution density**:
 
@@ -175,6 +181,7 @@ If the density is low (e.g., 4 good actions out of 80), that’s a tactical idea
 If density is high (e.g., 30 good actions out of 50), the position is too loose → discard.
 
 This allows puzzles like:
+
 - “Block any of these 7 tunnel walls — all equivalent.”
 - “Play any of these 5 chase routes — each wins.”
 
@@ -192,11 +199,11 @@ Each puzzle is stored as a JSON record like:
   "side_to_move": "white",
   "target_eval_after_turn": 0.72,
   "success_threshold": 0.62,
-  "fail_threshold": 0.20,
+  "fail_threshold": 0.2,
   "difficulty": 0.34,
   "reference_line": [
-    {"action": "e4>", "eval": 0.82},
-    {"action": "e5",  "eval": 0.95}
+    { "action": "e4>", "eval": 0.82 },
+    { "action": "e5", "eval": 0.95 }
   ],
   "tags": ["winning-shot", "tunnel-block", "2-action"],
   "source_game_id": "...",
@@ -229,21 +236,23 @@ eval_user <= fail_threshold → wrong
 otherwise → wrong (ambiguous)
 
 This gives the system:
+
 - Robustness to shallow search noise.
-- Ability to accept *any* of the many equivalent tactical moves.
+- Ability to accept _any_ of the many equivalent tactical moves.
 - Freedom from needing giant precomputed solution trees.
 
 This is exactly how modern chess sites validate puzzles (though using depth instead of MCTS visits).
 
 ---
 
-# 8. Why the Checker Does *Not* Need Long Search
+# 8. Why the Checker Does _Not_ Need Long Search
 
 The puzzle generator uses long MCTS (100k+ visits) to find precise evals.
 
 The puzzle solver only uses short MCTS (500–2000 visits).
 
 Why this works:
+
 - Big blunders collapse eval instantly — even in shallow search.
 - Good tactical moves stabilize eval above the threshold even with limited search.
 - Thresholds bake in cushion for small evaluation drift.
@@ -260,24 +269,29 @@ It only needs to classify “good vs bad,” not “find exact value.”
 Here is the full puzzle generation pipeline end-to-end:
 
 ### 1. Daily/weekly batch run:
+
 - Fetch all games since last run.
 
 ### 2. For each start-of-turn position:
+
 - Run shallow MCTS → baseline eval.
 - Run deep MCTS → eval trajectory.
 - Detect eval jumps → potential tactic.
 
 ### 3. Filter by:
+
 - Large eval swing.
 - Narrow solution density.
 - High difficulty.
 - Human-in-game missed the tactic.
 
 ### 4. Store puzzle metadata:
+
 - Initial state, thresholds, reference line.
 - Category and difficulty rating.
 
 ### 5. In-game solver:
+
 - User plays 1–2 actions.
 - Apply to reach post-turn state.
 - Short MCTS.
@@ -285,6 +299,7 @@ Here is the full puzzle generation pipeline end-to-end:
 - Accept/reject accordingly.
 
 ### 6. Post-launch:
+
 - Players rate puzzles.
 - Easy/boring ones are auto-demoted.
 - Future generator thresholds are tuned using real player data.
@@ -298,19 +313,22 @@ Designing a puzzle generator for Wall Game was far more challenging than simply 
 The two-action structure, large branching factor, and equivalence classes of wall placements force you to rethink what a “tactic” even means.
 
 But the combination of:
-- **MCTS evaluation jumps**  
-- **Solution density**  
-- **Turn-level interpretation**  
-- **Eval-band validation**  
+
+- **MCTS evaluation jumps**
+- **Solution density**
+- **Turn-level interpretation**
+- **Eval-band validation**
 
 creates a system that:
-- Finds genuinely human-interesting tactical moments,  
-- Accepts all correct ideas (not just one move),  
-- Requires no hand-coded heuristics about tunnels or chase patterns,  
+
+- Finds genuinely human-interesting tactical moments,
+- Accepts all correct ideas (not just one move),
+- Requires no hand-coded heuristics about tunnels or chase patterns,
 - And scales to thousands of games automatically.
 
 The result is a pipeline that mirrors how human tactics work:
-- Ideas, not moves.  
+
+- Ideas, not moves.
 - Insights, not lines.
 
 This is exactly what puzzles are supposed to teach.
