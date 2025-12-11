@@ -70,6 +70,12 @@ export default function RootLayout({
           sizes="16x16"
           href="/favicon/favicon-16x16.png"
         />
+        <link
+          rel="alternate"
+          type="application/rss+xml"
+          title="Nil Mamano RSS feed"
+          href="/rss.xml"
+        />
         <link rel="manifest" href="/favicon/site.webmanifest" />
         <meta name="theme-color" content="#ffffff" />
       </head>
