@@ -17,6 +17,16 @@ export function SiteFooter() {
           <Link className="text-xs hover:underline underline-offset-4" href="/">
             Home
           </Link>
+          <Link
+            className="text-xs hover:underline underline-offset-4 flex items-center gap-1"
+            href="/rss.xml"
+            aria-label="RSS feed"
+          >
+            <span role="img" aria-hidden="true">
+              🟧
+            </span>
+            RSS
+          </Link>
         </nav>
       </div>
     </footer>

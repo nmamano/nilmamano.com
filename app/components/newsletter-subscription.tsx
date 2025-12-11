@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useState, useTransition } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -91,6 +92,19 @@ export function NewsletterSubscription() {
               </p>
             )}
           </form>
+          <p className="text-sm text-muted-foreground">
+            Prefer RSS? Subscribe via{" "}
+            <Link
+              href="/rss.xml"
+              className="font-medium text-primary hover:text-primary/80 underline-offset-4 hover:underline"
+            >
+              <span role="img" aria-hidden="true">
+                🟧
+              </span>{" "}
+              rss.xml
+            </Link>
+            .
+          </p>
         </div>
       </CardContent>
     </Card>
