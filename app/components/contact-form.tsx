@@ -93,6 +93,27 @@ export default function ContactForm() {
         </CardDescription>
       </CardHeader>
       <CardContent>
+        <p className="mb-4 text-sm text-muted-foreground">
+          You can also reach me on{" "}
+          <a
+            href="https://linkedin.com/in/nilmamano/"
+            className="text-primary underline underline-offset-4"
+            target="_blank"
+            rel="noreferrer"
+          >
+            LinkedIn
+          </a>{" "}
+          or{" "}
+          <a
+            href="https://x.com/Nil053"
+            className="text-primary underline underline-offset-4"
+            target="_blank"
+            rel="noreferrer"
+          >
+            X
+          </a>
+          .
+        </p>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Name Fields */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
