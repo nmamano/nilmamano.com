@@ -6,33 +6,31 @@ import { SiGooglescholar } from "react-icons/si";
 import { getLatestPost } from "../lib/blog";
 import { BlogPostCard } from "./blog-post-card";
 
-const bookAnnouncement = (
+const toolkitAnnouncement = (
   <div className="mt-12 p-4 md:p-6 rounded-lg card-border bg-card text-card-foreground shadow-sm max-w-4xl mx-auto">
     <div className="flex flex-col md:flex-row gap-4 items-center">
       <div className="md:w-1/4 flex justify-center">
-        <Link href="https://www.amazon.com/dp/195570600X" target="_blank">
+        <Link href="/toolkit">
           <Image
-            src="/book-cover.png"
-            alt="BCtCI Book Cover"
-            width={160}
-            height={240}
+            src="/toolkit/thumbnail.png"
+            alt="Toolkit-X preview"
+            width={200}
+            height={200}
             className="rounded-md shadow-lg cursor-pointer"
             priority
           />
         </Link>
       </div>
       <div className="md:w-3/4 space-y-2">
-        <h2 className="text-xl md:text-2xl font-bold">
-          Beyond Cracking the Coding Interview is out now!
-        </h2>
+        <h2 className="text-xl md:text-2xl font-bold">Toolkit-X is live!</h2>
         <p className="text-sm text-muted-foreground">
-          I co-wrote the sequel to CtCI with Gayle McDowell, Aline Lerner, and
-          Mike Mroczka.
+          A free DS&A toolkit with curated BCtCI problems that can be used like
+          a traditional problem list.
         </p>
         <div className="pt-1">
-          <Link href="https://www.amazon.com/dp/195570600X" target="_blank">
+          <Link href="/toolkit">
             <Button size="sm" className="font-medium">
-              Get Your Copy
+              Explore Toolkit-X
             </Button>
           </Link>
         </div>
@@ -115,7 +113,7 @@ export default function AboutSection() {
         </div>
       </div>
 
-      {bookAnnouncement}
+      {toolkitAnnouncement}
 
       <LatestBlogPost />
 
@@ -319,7 +317,13 @@ export default function AboutSection() {
                 </Link>
                 .
               </p>
-              <p className="mt-2">Not sure what's next yet, but lately I've been active on my <Link href="/blog" className="text-primary hover:underline">blog</Link>.</p>
+              <p className="mt-2">
+                Not sure what's next yet, but lately I've been active on my{" "}
+                <Link href="/blog" className="text-primary hover:underline">
+                  blog
+                </Link>
+                .
+              </p>
               <p className="mt-2">
                 My passion project is{" "}
                 <Link
@@ -330,9 +334,13 @@ export default function AboutSection() {
                   wallwars.net
                 </Link>
                 , an online board game.
-                </p>
-                <p className="mt-2">
-                  Here's a little bit about <Link href="/personal" className="text-primary hover:underline">my hobbies</Link>.
+              </p>
+              <p className="mt-2">
+                Here's a little bit about{" "}
+                <Link href="/personal" className="text-primary hover:underline">
+                  my hobbies
+                </Link>
+                .
               </p>
             </div>
           </div>
