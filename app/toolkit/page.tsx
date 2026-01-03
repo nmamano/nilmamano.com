@@ -663,7 +663,7 @@ Format:
               TOOLKIT-{visibleTotalTools}
             </h1>
             <p className="text-base md:text-2xl italic font-medium bg-gradient-to-r from-teal-600 via-cyan-600 to-teal-700 dark:from-teal-400 dark:via-cyan-400 dark:to-teal-500 bg-clip-text text-transparent mb-6">
-              A new way to do coding interview prep
+              Like a problem list, but for reusable techniques
             </p>
 
             <p className="text-sm md:text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-2xl mx-auto">

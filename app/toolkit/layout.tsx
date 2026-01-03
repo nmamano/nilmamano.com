@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "TOOLKIT-X | A new way to do coding interview prep",
+  title: "TOOLKIT-X | Like a problem list, but for reusable techniques",
   description:
     "The essential DS&A tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
   icons: {
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   },
   manifest: "/toolkit/favicon/site.webmanifest",
   openGraph: {
-    title: "TOOLKIT-X | A new way to do coding interview prep",
+    title: "TOOLKIT-X | Like a problem list, but for reusable techniques",
     description:
       "The essential DS&A tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
     url: "https://nilmamano.com/toolkit",
@@ -28,7 +28,7 @@ export const metadata: Metadata = {
         url: "https://nilmamano.com/toolkit/thumbnail.png",
         width: 1200,
         height: 630,
-        alt: "TOOLKIT-X - A new way to do coding interview prep",
+        alt: "TOOLKIT-X - Like a problem list, but for reusable techniques",
       },
     ],
     locale: "en_US",
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "TOOLKIT-X | A new way to do coding interview prep",
+    title: "TOOLKIT-X | Like a problem list, but for reusable techniques",
     description:
       "The essential DS&A tools and techniques for interviews - with problems from Beyond Cracking the Coding Interview.",
     images: ["https://nilmamano.com/toolkit/thumbnail.png"],
