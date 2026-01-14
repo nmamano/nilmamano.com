@@ -19,6 +19,15 @@ const nextConfig = {
     // parallelServerCompiles: true,
   },
   pageExtensions: ["ts", "tsx", "js", "jsx", "md", "mdx"],
+  async redirects() {
+    return [
+      {
+        source: "/toolkit",
+        destination: "https://dsatoolkit.com",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 export default nextConfig;
