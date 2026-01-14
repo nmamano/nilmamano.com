@@ -10,9 +10,9 @@ const toolkitAnnouncement = (
   <div className="mt-12 p-4 md:p-6 rounded-lg card-border bg-card text-card-foreground shadow-sm max-w-4xl mx-auto">
     <div className="flex flex-col md:flex-row gap-4 items-center">
       <div className="md:w-1/4 flex justify-center">
-        <Link href="/toolkit">
+        <Link href="https://dsatoolkit.com" target="_blank">
           <Image
-            src="/toolkit/thumbnail.png"
+            src="https://dsatoolkit.com/thumbnail.png"
             alt="Toolkit-X preview"
             width={200}
             height={200}
@@ -28,7 +28,7 @@ const toolkitAnnouncement = (
           a traditional problem list.
         </p>
         <div className="pt-1">
-          <Link href="/toolkit">
+          <Link href="https://dsatoolkit.com" target="_blank">
             <Button size="sm" className="font-medium">
               Explore Toolkit-X
             </Button>
