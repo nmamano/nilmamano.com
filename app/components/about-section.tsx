@@ -54,7 +54,7 @@ function LatestBlogPost() {
         <Link href="/blog" className="text-primary hover:underline">
           blog
         </Link>{" "}
-        post
+        post:
       </h2>
       <BlogPostCard post={latestPost} />
     </div>
@@ -185,20 +185,15 @@ export default function AboutSection() {
               <p className="mt-2">
                 My research spans computational geometry, greedy algorithms,
                 graph data structures, computational biology, and recreational
-                mathematics. My dissertation,
-                <em>
-                  {" "}
-                  New Applications of the Nearest-neighbor Chain Algorithm{" "}
-                </em>
-                (
+                mathematics. My dissertation,{" "}
                 <Link
                   href="/dissertation/nildissertation.pdf"
                   className="text-primary hover:underline"
                   target="_blank"
                 >
-                  pdf
-                </Link>
-                ,{" "}
+                  <em>New Applications of the Nearest-neighbor Chain Algorithm</em>
+                </Link>{" "}
+                (see also:{" "}
                 <Link
                   href="/blog/greedy-algorithms"
                   className="text-primary hover:underline"
