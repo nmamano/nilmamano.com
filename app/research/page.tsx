@@ -1,25 +1,33 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
-import { getAllPublications } from "@/app/lib/publications";
-import { PublicationCard } from "@/app/components/publication-card";
+import { getAllPublications, Publication } from "@/app/lib/publications";
+import {
+  PublicationCardPreview,
+  PublicationExpandedContent,
+} from "@/app/components/publication-card";
+import { ExpandableCardGrid } from "@/app/components/expandable-card-grid";
+
+function PublicationGrid({ publications }: { publications: Publication[] }) {
+  return (
+    <ExpandableCardGrid
+      items={publications}
+      getItemKey={(pub) => pub.id}
+      renderCard={(publication, index, isExpanded) => (
+        <PublicationCardPreview
+          publication={publication}
+          isExpanded={isExpanded}
+          showExpandIcon={true}
+        />
+      )}
+      renderExpandedContent={(publication) => (
+        <PublicationExpandedContent publication={publication} />
+      )}
+    />
+  );
+}
 
 function ResearchSection() {
-  // Change from single expanded card to a Set of expanded cards
-  const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
-
-  // Create a toggle function that adds/removes cards from the set
-  const toggleExpanded = (index: number) => {
-    const newExpandedCards = new Set(expandedCards);
-    if (newExpandedCards.has(index)) {
-      newExpandedCards.delete(index);
-    } else {
-      newExpandedCards.add(index);
-    }
-    setExpandedCards(newExpandedCards);
-  };
-
   // Full list of publications
   const publications = getAllPublications();
 
@@ -79,18 +87,7 @@ function ResearchSection() {
             Conference Publications
           </h3>
           {conferencePublications.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {conferencePublications.map((publication, index) => (
-                <PublicationCard
-                  key={publication.id}
-                  publication={publication}
-                  index={index}
-                  expandedCards={expandedCards}
-                  toggleExpanded={toggleExpanded}
-                  showExpansion={true}
-                />
-              ))}
-            </div>
+            <PublicationGrid publications={conferencePublications} />
           ) : (
             <p className="text-muted-foreground italic">Coming soon</p>
           )}
@@ -102,18 +99,7 @@ function ResearchSection() {
             Journal Publications
           </h3>
           {journalPublications.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {journalPublications.map((publication, index) => (
-                <PublicationCard
-                  key={publication.id}
-                  publication={publication}
-                  index={conferencePublications.length + index}
-                  expandedCards={expandedCards}
-                  toggleExpanded={toggleExpanded}
-                  showExpansion={true}
-                />
-              ))}
-            </div>
+            <PublicationGrid publications={journalPublications} />
           ) : (
             <p className="text-muted-foreground italic">Coming soon</p>
           )}
@@ -124,22 +110,7 @@ function ResearchSection() {
           <h3 className="text-3xl font-semibold mb-12 text-center">
             PhD Dissertation
           </h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {dissertations.map((publication, index) => (
-              <PublicationCard
-                key={publication.id}
-                publication={publication}
-                index={
-                  conferencePublications.length +
-                  journalPublications.length +
-                  index
-                }
-                expandedCards={expandedCards}
-                toggleExpanded={toggleExpanded}
-                showExpansion={true}
-              />
-            ))}
-          </div>
+          <PublicationGrid publications={dissertations} />
         </div>
       </div>
     </section>

@@ -5,6 +5,7 @@ export interface Project {
   links?: {
     demo?: string;
     github?: string;
+    blog?: string;
   };
   description: string[]; // Array of paragraphs
   additionalImages?: Array<{
@@ -18,12 +19,27 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    id: "toolkit-x",
+    title: "Toolkit-X: DS&A Interview Prep",
+    coverImage: "https://dsatoolkit.com/thumbnail.png",
+    links: {
+      demo: "https://dsatoolkit.com",
+      blog: "/blog/toolkit",
+    },
+    description: [
+      "Toolkit-X is a free DS&A toolkit for coding interview prep. Unlike traditional problem lists (NeetCode-150, Blind-75, etc.), it focuses on acquiring reusable tools rather than checking off solved problems.",
+
+      "For each tool, I include a curated problem from Beyond Cracking the Coding Interview that demonstrates its use. The problems and solutions are hosted on the BCtCI platform with an AI interviewer where you can practice.",
+    ],
+  },
+  {
     id: "wallwars",
     title: "WallWars online board game",
     coverImage: "/projects/wallwarsgame.gif",
     links: {
       demo: "https://www.wallwars.net/",
       github: "https://github.com/nmamano/wallwars",
+      blog: "/blog/wall-game-intro",
     },
     description: [
       "Wallwars is an online 2-player strategy board game. The player who gets to their goal before first wins. You can place walls to reshape the terrain to your advantage. WallWars is inspired by board games like Blockade and Quoridor. I built it to learn the MERN stack. Over 400 games have been played. I'm now <a href='/blog/wall-game-intro' class='text-primary hover:underline' onClick='event.stopPropagation()'>rebuilding it in public</a>.",

@@ -1,22 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 import { getSelectedPublications } from "@/app/lib/publications";
-import { PublicationCard } from "./publication-card";
+import {
+  PublicationCardPreview,
+  PublicationExpandedContent,
+} from "./publication-card";
+import { ExpandableCardGrid } from "./expandable-card-grid";
 
 export default function SelectedPublications() {
-  const [expandedCards, setExpandedCards] = useState<Set<number>>(new Set());
-
-  const toggleExpanded = (index: number) => {
-    const newExpandedCards = new Set(expandedCards);
-    if (newExpandedCards.has(index)) {
-      newExpandedCards.delete(index);
-    } else {
-      newExpandedCards.add(index);
-    }
-    setExpandedCards(newExpandedCards);
-  };
+  const publications = getSelectedPublications();
 
   return (
     <section
@@ -35,18 +28,20 @@ export default function SelectedPublications() {
           for the complete list.
         </p>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {getSelectedPublications().map((publication, index) => (
-            <PublicationCard
-              key={publication.id}
+        <ExpandableCardGrid
+          items={publications}
+          getItemKey={(pub) => pub.id}
+          renderCard={(publication, index, isExpanded) => (
+            <PublicationCardPreview
               publication={publication}
-              index={index}
-              expandedCards={expandedCards}
-              toggleExpanded={toggleExpanded}
-              showExpansion={true}
+              isExpanded={isExpanded}
+              showExpandIcon={true}
             />
-          ))}
-        </div>
+          )}
+          renderExpandedContent={(publication) => (
+            <PublicationExpandedContent publication={publication} />
+          )}
+        />
       </div>
     </section>
   );

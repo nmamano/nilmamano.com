@@ -2,7 +2,11 @@
   "permissions": {
     "allow": [
       "Bash(touch:*)",
-      "Bash(mkdir:*)"
+      "Bash(mkdir:*)",
+      "Bash(git add:*)",
+      "Bash(git commit:*)",
+      "Bash(bun run build:*)",
+      "Bash(npx tsc:*)"
     ],
     "deny": []
   }

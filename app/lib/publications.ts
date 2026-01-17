@@ -10,6 +10,7 @@ export interface Publication {
     demo?: string;
     github?: string;
     pdf?: string;
+    blog?: string;
   };
   description: string[]; // Array of paragraphs
   additionalImages?: Array<{
@@ -32,6 +33,7 @@ export const PUBLICATIONS: Publication[] = [
     coverImage: "/blog/greedy-algorithms/local_greedy_tsp_crop.gif",
     links: {
       pdf: "/thesis/nilthesis.pdf",
+      blog: "/blog/greedy-algorithms",
     },
     description: [
       "The nearest-neighbor chain algorithm was proposed in the eighties as a way to speed up certain clustering algorithms. We show that its application is not limited to clustering: we adapt it to speed up several greedy algorithms for geometric and combinatorial problems.",
@@ -77,6 +79,7 @@ export const PUBLICATIONS: Publication[] = [
       demo: "https://nmamano.github.io/MinCrossingsKnightsTour/index.html",
       github: "https://github.com/nmamano/MinCrossingsKnightsTour",
       pdf: "https://arxiv.org/pdf/1904.02824.pdf",
+      blog: "/blog/knights-tour",
     },
     description: [
       "In the knight's tour puzzle, a knight starts in the top-left corner of a chess board. The challenge is to visit every square, without repetition, using only knight moves. This puzzle becomes an interesting computational problem when generalized to n x n boards for any n. In particular, sequential heuristics such as Warnsdorff's algorithm quickly reveal their exponential nature.",
@@ -207,6 +210,7 @@ export const PUBLICATIONS: Publication[] = [
     links: {
       github: "https://github.com/nmamano/StableDistricting",
       pdf: "https://arxiv.org/pdf/1706.09593.pdf",
+      blog: "/blog/gerrymandering",
     },
     description: [
       "In theory, political districts should be balanced in population and should have compact shapes. Partisan gerrymandering is the manipulation of district boundaries for political advantage. A potential solution is to use geometric 'politically-agnostic' algorithms to draw fair districts. In this paper, we consider the use of stable matching, a concept from market design, to assign districts to district centers. Depending on the center locations, we found that the resulting districts from stable matching may be concave or not even connected. This solution can be seen as a network-based variant of the stable-matching Voronoi diagrams studied in the ICALP'18 paper. See <a href='https://11011110.github.io/blog/2017/06/29/stable-redistricting-in.html' class='text-primary hover:underline' target='_blank' onClick='event.stopPropagation()'>David's blog</a>.",
@@ -297,6 +301,7 @@ export const PUBLICATIONS: Publication[] = [
       demo: "https://nmamano.github.io/MinCrossingsKnightsTour/index.html",
       github: "https://github.com/nmamano/MinCrossingsKnightsTour",
       pdf: "https://arxiv.org/pdf/1904.02824.pdf",
+      blog: "/blog/knights-tour",
     },
     description: [
       "This is a journal version of paper of the FUN'20 paper. We incorporated a contribution by a new author, Parker Williams, who improved the number of crossings from 13n+O(1) to 12n+O(1) and the number of turns from 9.5n+O(1) to 9.25n+O(1).",
