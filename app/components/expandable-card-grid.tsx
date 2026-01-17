@@ -31,18 +31,28 @@ export function ExpandableCardGrid<T>({
     }
   };
 
-  // Calculate content height for animation
+  // Calculate content height for animation, with ResizeObserver to handle image loading
   useEffect(() => {
     if (expandedIndex !== null && contentRef.current) {
-      // Small delay to allow content to render
-      const timer = setTimeout(() => {
+      const updateHeight = () => {
         if (contentRef.current) {
           // Add 4px buffer for border (2px top + 2px bottom)
           const height = contentRef.current.scrollHeight + 4;
           setContentHeight(`${height}px`);
         }
-      }, 50);
-      return () => clearTimeout(timer);
+      };
+
+      // Initial calculation with small delay
+      const timer = setTimeout(updateHeight, 50);
+
+      // Watch for size changes (e.g., when images load)
+      const resizeObserver = new ResizeObserver(updateHeight);
+      resizeObserver.observe(contentRef.current);
+
+      return () => {
+        clearTimeout(timer);
+        resizeObserver.disconnect();
+      };
     } else {
       setContentHeight("0px");
     }
