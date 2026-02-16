@@ -1,0 +1,62 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 320" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arrow-r" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#64748b" />
+    </marker>
+    <marker id="arrow-l" markerWidth="8" markerHeight="6" refX="7" refY="3" orient="auto">
+      <polygon points="0 0, 8 3, 0 6" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Cloud region label -->
+  <rect x="10" y="10" width="370" height="300" rx="16" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="6 4" />
+  <text x="195" y="36" text-anchor="middle" fill="#475569" font-size="12" font-weight="500">CLOUD (Fly.io)</text>
+
+  <!-- Home machine region label -->
+  <rect x="420" y="10" width="370" height="300" rx="16" fill="none" stroke="#334155" stroke-width="1" stroke-dasharray="6 4" />
+  <text x="605" y="36" text-anchor="middle" fill="#475569" font-size="12" font-weight="500">HOME MACHINE</text>
+
+  <!-- Box 1: Browser -->
+  <rect x="40" y="120" width="140" height="80" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="110" y="153" text-anchor="middle" fill="#f8fafc" font-size="15" font-weight="600">Browser</text>
+  <text x="110" y="175" text-anchor="middle" fill="#94a3b8" font-size="11">React frontend</text>
+
+  <!-- Box 2: Game Server -->
+  <rect x="230" y="90" width="140" height="140" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="300" y="130" text-anchor="middle" fill="#f8fafc" font-size="15" font-weight="600">Game Server</text>
+  <text x="300" y="150" text-anchor="middle" fill="#94a3b8" font-size="11">Hono / Bun</text>
+  <line x1="250" y1="168" x2="350" y2="168" stroke="#334155" stroke-width="0.5" />
+  <text x="300" y="187" text-anchor="middle" fill="#94a3b8" font-size="10">game logic</text>
+  <text x="300" y="202" text-anchor="middle" fill="#94a3b8" font-size="10">matchmaking</text>
+  <text x="300" y="217" text-anchor="middle" fill="#94a3b8" font-size="10">BGS routing</text>
+
+  <!-- Box 3: Bot Client -->
+  <rect x="450" y="90" width="140" height="140" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="520" y="130" text-anchor="middle" fill="#f8fafc" font-size="15" font-weight="600">Bot Client</text>
+  <text x="520" y="150" text-anchor="middle" fill="#94a3b8" font-size="11">TypeScript</text>
+  <line x1="470" y1="168" x2="570" y2="168" stroke="#334155" stroke-width="0.5" />
+  <text x="520" y="187" text-anchor="middle" fill="#94a3b8" font-size="10">reconnection</text>
+  <text x="520" y="202" text-anchor="middle" fill="#94a3b8" font-size="10">session mux</text>
+  <text x="520" y="217" text-anchor="middle" fill="#94a3b8" font-size="10">engine lifecycle</text>
+
+  <!-- Box 4: Engine -->
+  <rect x="640" y="120" width="140" height="80" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="710" y="148" text-anchor="middle" fill="#f8fafc" font-size="15" font-weight="600">Engine</text>
+  <text x="710" y="168" text-anchor="middle" fill="#94a3b8" font-size="11">C++ / TensorRT</text>
+
+  <!-- Arrow: Browser <-> Server -->
+  <line x1="180" y1="152" x2="228" y2="152" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow-r)" />
+  <line x1="228" y1="168" x2="180" y2="168" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow-l)" />
+  <text x="204" y="142" text-anchor="middle" fill="#94a3b8" font-size="9">WebSocket</text>
+
+  <!-- Arrow: Server <-> Bot Client -->
+  <line x1="370" y1="152" x2="448" y2="152" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow-r)" />
+  <line x1="448" y1="168" x2="370" y2="168" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow-l)" />
+  <text x="409" y="142" text-anchor="middle" fill="#94a3b8" font-size="9">WebSocket</text>
+
+  <!-- Arrow: Bot Client <-> Engine -->
+  <line x1="590" y1="152" x2="638" y2="152" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow-r)" />
+  <line x1="638" y1="168" x2="590" y2="168" stroke="#64748b" stroke-width="1.5" marker-end="url(#arrow-l)" />
+  <text x="614" y="142" text-anchor="middle" fill="#94a3b8" font-size="9">stdin/stdout</text>
+
+</svg>

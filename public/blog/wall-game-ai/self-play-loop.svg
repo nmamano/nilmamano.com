@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 400" font-family="system-ui, -apple-system, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#64748b" />
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="600" height="400" fill="none" />
+
+  <!-- Box 1: Self-Play (top) -->
+  <rect x="185" y="30" width="230" height="70" rx="12" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="300" y="60" text-anchor="middle" fill="#f8fafc" font-size="17" font-weight="600">Self-Play</text>
+  <text x="300" y="82" text-anchor="middle" fill="#94a3b8" font-size="13">MCTS guided by neural network</text>
+
+  <!-- Box 2: Game Data (right) -->
+  <rect x="400" y="165" width="170" height="70" rx="12" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="485" y="195" text-anchor="middle" fill="#f8fafc" font-size="17" font-weight="600">Game Data</text>
+  <text x="485" y="217" text-anchor="middle" fill="#94a3b8" font-size="13">moves + outcomes</text>
+
+  <!-- Box 3: Train Network (bottom) -->
+  <rect x="185" y="300" width="230" height="70" rx="12" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="300" y="330" text-anchor="middle" fill="#f8fafc" font-size="17" font-weight="600">Train Network</text>
+  <text x="300" y="352" text-anchor="middle" fill="#94a3b8" font-size="13">predict MCTS moves + winner</text>
+
+  <!-- Box 4: Updated NN (left) -->
+  <rect x="30" y="165" width="170" height="70" rx="12" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="115" y="195" text-anchor="middle" fill="#f8fafc" font-size="17" font-weight="600">Updated NN</text>
+  <text x="115" y="217" text-anchor="middle" fill="#94a3b8" font-size="13">better evaluation</text>
+
+  <!-- Arrow 1: Self-Play → Game Data (top-right curve) -->
+  <path d="M 415 100 Q 490 120, 485 165" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Arrow 2: Game Data → Train Network (bottom-right curve) -->
+  <path d="M 485 235 Q 490 280, 415 300" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Arrow 3: Train Network → Updated NN (bottom-left curve) -->
+  <path d="M 185 300 Q 110 280, 115 235" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+
+  <!-- Arrow 4: Updated NN → Self-Play (top-left curve) -->
+  <path d="M 115 165 Q 110 120, 185 100" fill="none" stroke="#64748b" stroke-width="2" marker-end="url(#arrow)" />
+</svg>

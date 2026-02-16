@@ -6,7 +6,11 @@
       "Bash(git add:*)",
       "Bash(git commit:*)",
       "Bash(bun run build:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(identify:*)",
+      "Bash(convert:*)",
+      "Bash(magick \\\\\\( start-pos.png -resize x1600 \\\\\\) \\\\\\( final-pos.png -resize x1600 \\\\\\) -gravity North \\\\\\( -clone 0 -font Helvetica -pointsize 48 -gravity North -splice 0x90 -annotate +0+30 \"Starting position\" \\\\\\) \\\\\\( -clone 1 -font Helvetica -pointsize 48 -gravity North -splice 0x90 -annotate +0+30 \"Final position\" \\\\\\) -delete 0,1 -splice 40x0+0+0 +append -bordercolor white -border 10x10 start-and-final-pos.png)",
+      "Bash(magick \\\\\\( start-pos.png -resize x1600 -font Helvetica -pointsize 48 -gravity North -splice 0x90 -annotate +0+30 \"Starting position\" \\\\\\) \\\\\\( -size 60x1 xc:white \\\\\\) \\\\\\( final-pos.png -resize x1600 -font Helvetica -pointsize 48 -gravity North -splice 0x90 -annotate +0+30 \"Final position\" \\\\\\) +append -bordercolor white -border 10x10 start-and-final-pos.png)"
     ],
     "deny": []
   }
