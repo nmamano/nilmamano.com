@@ -33,16 +33,16 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
-    id: "wallwars",
-    title: "WallWars online board game",
+    id: "wallgame",
+    title: "Wall Game: online board game with AI",
     coverImage: "/projects/wallwarsgame.gif",
     links: {
-      demo: "https://www.wallwars.net/",
-      github: "https://github.com/nmamano/wallwars",
+      demo: "https://wallgame.io",
+      github: "https://github.com/nmamano/wallgame",
       blog: "/blog/wall-game-intro",
     },
     description: [
-      "Wallwars is an online 2-player strategy board game. The player who gets to their goal before first wins. You can place walls to reshape the terrain to your advantage. WallWars is inspired by board games like Blockade and Quoridor. I built it to learn the MERN stack. Over 400 games have been played. I'm now <a href='/blog/wall-game-intro' class='text-primary hover:underline' onClick='event.stopPropagation()'>rebuilding it in public</a>.",
+      "The Wall Game is an online 2-player strategy board game. Each player controls a cat and a mouse, and the goal is to catch the opponent's mouse before they catch yours. You can place walls to reshape the terrain to your advantage. It features a <a href='/blog/wall-game-ai' class='text-primary hover:underline' onClick='event.stopPropagation()'>superhuman AlphaZero-style AI</a> trained through self-play.",
     ],
   },
   {

@@ -36,7 +36,15 @@ export default function PersonalSection() {
           </p>
 
           <p>
-            Of course, I also like playing WallWars with friends, the game I'm{" "}
+            Of course, I also like playing the{" "}
+            <Link
+              href="https://wallgame.io"
+              className="text-primary hover:underline"
+              target="_blank"
+            >
+              Wall Game
+            </Link>
+            {" "}with friends, the game I'm{" "}
             <Link
               href="/blog/wall-game-intro"
               className="text-primary hover:underline"

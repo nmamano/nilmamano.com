@@ -322,13 +322,20 @@ export default function AboutSection() {
               <p className="mt-2">
                 My passion project is{" "}
                 <Link
-                  href="https://wallwars.net"
+                  href="https://wallgame.io"
                   className="text-primary hover:underline"
                   target="_blank"
                 >
-                  wallwars.net
+                  wallgame.io
                 </Link>
-                , an online board game.
+                , an online board game with an{" "}
+                <Link
+                  href="/blog/wall-game-ai"
+                  className="text-primary hover:underline"
+                >
+                  AlphaZero-style AI
+                </Link>
+                .
               </p>
               <p className="mt-2">
                 Here's a little bit about{" "}
