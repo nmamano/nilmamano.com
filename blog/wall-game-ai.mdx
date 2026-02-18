@@ -87,7 +87,7 @@ The basic MCTS loop starts with an empty tree where the root represents the curr
 
 Each sample walks down the tree, using UCB to choose moves, until it reaches a position that has not been evaluated yet. The neural network evaluates it and the result is backpropagated: for each ancestor position, we update the visit count and the average evaluation. This information refines the UCB of all ancestors.
 
-## The Neural Network
+### The Neural Network
 
 The neural network takes a board position as input and produces two outputs:
 
@@ -122,7 +122,7 @@ For the first generation, we used a simple bootstrap policy: cats walked toward 
   width="60%"
 />
 
-## The Neural Network
+## Neural Network Architecture
 
 Our network follows the AlphaZero architecture: a ResNet core with 20 residual blocks and 128 hidden channels, totaling about 2.3 million parameters. Small by modern deep learning standards, but large enough to capture the strategic complexity of an 8x8 board game.
 
