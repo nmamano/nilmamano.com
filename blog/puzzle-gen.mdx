@@ -173,7 +173,7 @@ This means:
 
 So instead of counting “best move,” we use the **solution density**:
 
-good_moves = {a : Q(a) >= Q_best - δ}
+good_moves = \{a : Q(a) >= Q_best - δ\}
 solution_density = |good_moves| / |all_moves|
 
 If the density is low (e.g., 4 good actions out of 80), that’s a tactical idea.
