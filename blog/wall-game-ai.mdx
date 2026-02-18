@@ -87,7 +87,7 @@ The basic MCTS loop starts with an empty tree where the root represents the curr
 
 Each sample walks down the tree, using UCB to choose moves, until it reaches a position that has not been evaluated yet. The neural network evaluates it and the result is backpropagated: for each ancestor position, we update the visit count and the average evaluation. This information refines the UCB of all ancestors.
 
-### The Neural Network
+## The Neural Network
 
 The neural network takes a board position as input and produces two outputs:
 
