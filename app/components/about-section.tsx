@@ -4,62 +4,7 @@ import { Button } from "@/components/ui/button";
 import { FaXTwitter, FaLinkedin, FaGithub, FaFilePdf } from "react-icons/fa6";
 import { SiGooglescholar } from "react-icons/si";
 import { getLatestPost } from "../lib/blog";
-import { BlogPostCard } from "./blog-post-card";
-
-const toolkitAnnouncement = (
-  <div className="mt-12 p-4 md:p-6 rounded-lg card-border bg-card text-card-foreground shadow-sm max-w-4xl mx-auto">
-    <div className="flex flex-col md:flex-row gap-4 items-center">
-      <div className="md:w-1/4 flex justify-center">
-        <Link href="https://dsatoolkit.com" target="_blank">
-          <Image
-            src="https://dsatoolkit.com/thumbnail.png"
-            alt="Toolkit-X preview"
-            width={200}
-            height={200}
-            className="rounded-md shadow-lg cursor-pointer"
-            priority
-          />
-        </Link>
-      </div>
-      <div className="md:w-3/4 space-y-2">
-        <h2 className="text-xl md:text-2xl font-bold">Toolkit-X is live!</h2>
-        <p className="text-sm text-muted-foreground">
-          A free DS&A toolkit with curated BCtCI problems that can be used like
-          a traditional problem list.
-        </p>
-        <div className="pt-1">
-          <Link href="https://dsatoolkit.com" target="_blank">
-            <Button size="sm" className="font-medium">
-              Explore Toolkit-X
-            </Button>
-          </Link>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
-// Latest blog post component
-function LatestBlogPost() {
-  const latestPost = getLatestPost();
-
-  if (!latestPost) {
-    return null;
-  }
-
-  return (
-    <div className="mt-8 max-w-4xl mx-auto">
-      <h2 className="text-lg md:text-xl font-bold mb-4 text-center">
-        Latest{" "}
-        <Link href="/blog" className="text-primary hover:underline">
-          blog
-        </Link>{" "}
-        post:
-      </h2>
-      <BlogPostCard post={latestPost} />
-    </div>
-  );
-}
+import { FeaturedProjectsCarousel } from "./featured-projects-carousel";
 
 export default function AboutSection() {
   return (
@@ -113,9 +58,7 @@ export default function AboutSection() {
         </div>
       </div>
 
-      {toolkitAnnouncement}
-
-      <LatestBlogPost />
+      <FeaturedProjectsCarousel latestPost={getLatestPost()} />
 
       {/* Biographical Information Section */}
       <div className="mt-16 max-w-4xl mx-auto">
