@@ -10,7 +10,11 @@
       "Bash(identify:*)",
       "Bash(convert:*)",
       "WebSearch",
-      "Bash(ls:*)"
+      "Bash(ls:*)",
+      "Bash(gh api:*)",
+      "WebFetch(domain:github.com)",
+      "WebFetch(domain:scholar.google.com)",
+      "WebFetch(domain:api.github.com)"
     ],
     "deny": []
   }
