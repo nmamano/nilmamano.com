@@ -29,20 +29,20 @@ const projects = [
     id: "bctci",
     title: "Beyond Cracking the Coding Interview",
     tagline:
-      "Sequel of the DS&A bible, co-authored with Gayle McDowell, Aline Lerner, and Mike Mroczka.",
+      "The official sequel to Cracking the Coding Interview, co-authored with Gayle McDowell et al. #1 Best Seller in Data Structures & Algorithms on Amazon.",
     image: "/projects/bctci-cover.png",
-    href: "https://bctci.co",
-    cta: "Learn more",
+    href: "https://www.amazon.com/dp/195570600X",
+    cta: "Buy on Amazon",
     external: true,
   },
   {
     id: "toolkit",
     title: "Toolkit-X: DS&A Interview Prep",
     tagline:
-      "A DS&A toolkit so you can learn reusable techniques instead of memorizing problems.",
+      "An AI-first DS&A toolkit so you can learn reusable techniques instead of memorizing problems.",
     image: "https://dsatoolkit.com/thumbnail.png",
     href: "https://dsatoolkit.com",
-    cta: "Explore Toolkit-X",
+    cta: "Start learning",
     external: true,
   },
   {
@@ -87,7 +87,7 @@ export function FeaturedProjectsCarousel({
           {projects.map((project) => (
             <CarouselItem key={project.id}>
               <div className="h-full p-4 md:p-6 rounded-lg card-border bg-card text-card-foreground shadow-sm">
-                <div className="flex flex-col md:flex-row gap-4 items-center">
+                <div className="flex flex-col md:flex-row gap-4 items-center md:items-start">
                   <div className="md:w-1/4 flex justify-center">
                     <Link
                       href={project.href}
@@ -129,7 +129,7 @@ export function FeaturedProjectsCarousel({
           {latestPost && (
             <CarouselItem>
               <div className="h-full p-4 md:p-6 rounded-lg card-border bg-card text-card-foreground shadow-sm">
-                <div className="flex flex-col md:flex-row gap-4 items-center">
+                <div className="flex flex-col md:flex-row gap-4 items-center md:items-start">
                   <div className="md:w-1/4 flex justify-center">
                     <Link href={`/blog/${latestPost.slug}`}>
                       <Image
@@ -154,11 +154,6 @@ export function FeaturedProjectsCarousel({
                       post
                     </h2>
                     <p className="font-semibold">{latestPost.title}</p>
-                    {latestPost.excerpt && (
-                      <p className="text-sm text-muted-foreground">
-                        {latestPost.excerpt}
-                      </p>
-                    )}
                     <div className="pt-1">
                       <Link href={`/blog/${latestPost.slug}`}>
                         <Button size="sm" className="font-medium">
