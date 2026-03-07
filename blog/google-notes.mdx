@@ -1,0 +1,39 @@
+---
+title: "Google Notes"
+date: "2025-01-01"
+excerpt: "Personal reference notes from my time at Google."
+coverImage: "/og-image.jpg"
+categories: ["wip"]
+---
+
+## Input
+
+Coming from (internal) clients (Google products):
+
+`(client, src campus, dst campus) → bandwidth demand (time series with daily resolution)`
+
+- **Intent:** how much they want
+- **Commitment:** how much we've promised them
+
+## Global Allocation Tool
+
+Expensive MIP solver:
+
+`(src campus, dst campus) → bandwidth allocation (discrete value per quarter)`
+
+## Deconfliction
+
+- Quarterly resolution → daily resolution
+- Client-aggregated allocation → per-client allocation
+
+## Need to Balance
+
+- Network utilization
+- **Fairness**
+  - Max-min fairness
+- **Prioritization**
+  - Service classes
+  - Business-critical traffic
+- **Business rules**
+  - Business continuity: "If we commit to a certain amount, we must give it for as long as it's needed"
+  - "If we committed something, and then we took it away because capacity changed, we must prioritize it over allocating new intent"
