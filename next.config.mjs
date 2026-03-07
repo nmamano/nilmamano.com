@@ -26,6 +26,11 @@ const nextConfig = {
         destination: "https://dsatoolkit.com",
         permanent: true,
       },
+      {
+        source: "/resume",
+        destination: "/resume/resume_nilmamano.pdf",
+        permanent: false,
+      },
     ];
   },
 };
