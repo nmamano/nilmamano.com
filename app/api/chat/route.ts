@@ -9,13 +9,6 @@ const anthropic = createAnthropic({
 });
 
 export async function POST(req: Request) {
-  if (!process.env.ANTHROPIC_API_KEY) {
-    const envKeys = Object.keys(process.env).filter(k => k.includes("ANTHROPIC") || k.includes("anthropic"));
-    return new Response(
-      JSON.stringify({ error: `API key not found. Env keys matching anthropic: [${envKeys.join(", ")}]. Total env keys: ${Object.keys(process.env).length}` }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
-  }
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
   const { allowed, retryAfterSeconds } = rateLimit(ip);
   if (!allowed) {
