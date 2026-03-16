@@ -4,7 +4,9 @@ import { getHomepageSystemPrompt, getBlogPostSystemPrompt } from "../../lib/chat
 import { getPostBySlug } from "../../lib/blog";
 import { rateLimit } from "../../lib/rate-limit";
 
-const anthropic = createAnthropic();
+const anthropic = createAnthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY,
+});
 
 export async function POST(req: Request) {
   const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
