@@ -2,6 +2,7 @@ import AboutSection from "./components/about-section";
 import SelectedPublications from "./components/selected-publications";
 import ProjectsSection from "./components/projects-section";
 import ContactForm from "./components/contact-form";
+import ChatWidget from "@/components/chat-widget";
 
 export default function Page() {
   return (
@@ -14,6 +15,7 @@ export default function Page() {
           <ContactForm />
         </div>
       </section>
+      <ChatWidget context="homepage" />
     </>
   );
 }

@@ -10,6 +10,7 @@ import { Metadata } from "next";
 import BlogFooter from "../../components/blog-footer";
 import remarkGfm from "remark-gfm";
 import CopyLinkButton from "@/components/CopyLinkButton";
+import ChatWidget from "@/components/chat-widget";
 
 // Generate metadata for each blog post
 export async function generateMetadata({
@@ -153,6 +154,7 @@ export default async function BlogPost({
 
       {/* Add the footer component */}
       <BlogFooter currentPostSlug={post.slug} />
+      <ChatWidget context="blog" slug={slug} />
     </div>
   );
 }

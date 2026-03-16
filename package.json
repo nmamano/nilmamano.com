@@ -12,6 +12,8 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ai-sdk/anthropic": "^3.0.58",
+    "@ai-sdk/react": "^3.0.118",
     "@hookform/resolvers": "^3.9.1",
     "@mdx-js/loader": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
@@ -45,6 +47,7 @@
     "@radix-ui/react-tooltip": "^1.1.6",
     "@tailwindcss/typography": "^0.5.16",
     "@types/prismjs": "^1.26.5",
+    "ai": "^6.0.116",
     "autoprefixer": "^10.4.20",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
