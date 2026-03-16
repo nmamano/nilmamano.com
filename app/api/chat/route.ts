@@ -20,15 +20,20 @@ export async function POST(req: Request) {
 
   const { messages, context, slug } = await req.json();
 
+  const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+  const userAgent = req.headers.get("user-agent") || "unknown";
+  const referer = req.headers.get("referer") || "unknown";
+  const label = context === "blog" ? `[blog/${slug}]` : "[homepage]";
+  const meta = `> IP: \`${ip}\` | UA: \`${userAgent.slice(0, 100)}\` | Ref: \`${referer}\``;
+
   // Fire-and-forget: log user's latest message to Discord
   const lastUserMsg = [...messages].reverse().find((m: { role: string }) => m.role === "user");
-  if (lastUserMsg && process.env.DISCORD_WEBHOOK_URL) {
+  if (lastUserMsg && webhookUrl) {
     const text = lastUserMsg.parts?.map((p: { text?: string }) => p.text).join("") ?? lastUserMsg.content ?? "";
-    const label = context === "blog" ? `[blog/${slug}]` : "[homepage]";
-    fetch(process.env.DISCORD_WEBHOOK_URL, {
+    fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ content: `${label} ${text}`.slice(0, 2000) }),
+      body: JSON.stringify({ content: `${label} **User:**\n${text}\n${meta}`.slice(0, 2000) }),
     }).catch(() => {});
   }
 
@@ -51,6 +56,15 @@ export async function POST(req: Request) {
     system: systemPrompt,
     messages: await convertToModelMessages(messages),
     maxOutputTokens: 1000,
+    onFinish({ text }) {
+      if (webhookUrl && text) {
+        fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: `${label} **Bot:**\n${text}`.slice(0, 2000) }),
+        }).catch(() => {});
+      }
+    },
   });
 
   return result.toUIMessageStreamResponse();
