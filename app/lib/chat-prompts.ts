@@ -35,35 +35,50 @@ Tech Interview Consultant. Designed and taught the DS&A curriculum for coding in
 - **RACSO Online Judge** (racso.cs.upc.edu): Teaching tool for Theory of Computation and compilers courses at UPC Barcelona. Nil contributed auto-evaluated exercises for SAT reductions and built a SAT reduction language interpreter (github.com/nmamano/SATReductionLang).
 
 ## Blog Posts
-Nil's blog is at nilmamano.com/blog. Notable posts by category:
+Nil's blog is at nilmamano.com/blog. Posts by category:
 
 ### DS&A / Interview Prep
-- "Get Binary Search Right Every Time" (nilmamano.com/blog/binary-search) -- a recipe that works for every problem
-- "Breaking Down Dynamic Programming" (nilmamano.com/blog/breaking-down-dynamic-programming) -- step-by-step DP guide
-- "Actually Implementing Dijkstra's Algorithm" (nilmamano.com/blog/implementing-dijkstra) -- comprehensive implementation guide with code
-- "Iterative Tree Traversals" (nilmamano.com/blog/iterativetreetraversal) -- practical guide to iterative preorder, inorder, postorder
-- "Monotonic Stacks & Queues" (nilmamano.com/blog/monotonic-stacks-and-queues) -- BCtCI chapter preview
-- "Union-Find" (nilmamano.com/blog/union-find) -- BCtCI chapter preview
-- "Set & Map Implementations" (nilmamano.com/blog/set-and-map-implementations) -- BCtCI chapter preview
-- "Top-K Problems: Sorting vs Heaps vs Quickselect" (nilmamano.com/blog/top-k-problems)
-- "Counting Islands: DFS or BFS?" (nilmamano.com/blog/counting-islands) -- with unexpected fractals
-- "In Defense of Coding Interviews" (nilmamano.com/blog/in-defense-of-coding-interviews)
+- "Get Binary Search Right Every Time" (nilmamano.com/blog/binary-search) -- a recipe that works for every problem, explained without code
+- "Breaking Down Dynamic Programming" (nilmamano.com/blog/breaking-down-dynamic-programming) -- step-by-step guide to understanding and implementing DP
+- "Actually Implementing Dijkstra's Algorithm" (nilmamano.com/blog/implementing-dijkstra) -- comprehensive guide to different implementations, with code
+- "Iterative Tree Traversals: A Practical Guide" (nilmamano.com/blog/iterativetreetraversal) -- iterative preorder, inorder, and postorder
+- "Reachability Problems and DFS" (nilmamano.com/blog/reachability-problems-and-dfs) -- extensive list of questions solvable with DFS
+- "Monotonic Stacks & Queues" (nilmamano.com/blog/monotonic-stacks-and-queues) -- BCtCI chapter: two sides of the same idea
+- "Union-Find" (nilmamano.com/blog/union-find) -- BCtCI chapter: how this data structure speeds up graph operations
+- "Set & Map Implementations" (nilmamano.com/blog/set-and-map-implementations) -- BCtCI chapter: building sets and maps from scratch, hashing
+- "Top-K Problems: Sorting vs Heaps vs Quickselect" (nilmamano.com/blog/top-k-problems) -- comparing approaches for finding k smallest/largest elements
+- "Counting Islands: DFS or BFS?" (nilmamano.com/blog/counting-islands) -- classic grid problem with unexpected fractals in BFS analysis
+- "Heapify Analysis Without Math" (nilmamano.com/blog/heapify-analysis) -- proof that heapify takes linear time without complex equations
+- "Lazy vs Eager Algorithms" (nilmamano.com/blog/lazy-vs-eager) -- tradeoffs between lazy and eager implementations
+- "Building Lego Castles with Recurrences, Memoization, and Math" (nilmamano.com/blog/recurrences-memoization-math) -- walkthrough via Lego castles
+- "Decision Trees: Backtracking, DP, and Greedy" (nilmamano.com/blog/decision-trees) -- relationship between these three techniques (WIP)
+- "In Defense of Coding Interviews" (nilmamano.com/blog/in-defense-of-coding-interviews) -- an argument in favor of DS&A interviews
 - "Problem Solving BCtCI Style" (nilmamano.com/blog/problem-solving-bctci-style) -- walkthrough using book concepts
 - "Queues in JS Interviews" (nilmamano.com/blog/js-queues) -- workarounds for JS lacking built-in queues
-- "BCtCI Free Resources" (nilmamano.com/blog/bctci-free-resources) -- list of free content from the book
+- "BCtCI Free Resources" (nilmamano.com/blog/bctci-free-resources) -- comprehensive list of free content from the book
 - "Toolkit-X: A Better Way to Do DS&A Problem Lists" (nilmamano.com/blog/toolkit) -- introducing the DSA Toolkit
 
 ### Research
 - "Lifecycle of a CS Research Paper: My Knight's Tour Paper" (nilmamano.com/blog/knights-tour) -- backstory of a fun PhD paper (cited by Knuth)
-- "Why Many Greedy Algorithms Are Pickier Than They Need To Be" (nilmamano.com/blog/greedy-algorithms) -- research insight on local vs global greedy choices
-- "Computational Aspects of Gerrymandering" (nilmamano.com/blog/gerrymandering) -- lessons from automating redistricting
-- "2-List Stable Matching" (nilmamano.com/blog/two-list-stable-matching) -- open challenge for reasoning LLMs
-- "LLM Usage and Manipulation in Peer Review" (nilmamano.com/blog/llms-in-peer-review)
+- "Why Many Greedy Algorithms Are Pickier Than They Need To Be" (nilmamano.com/blog/greedy-algorithms) -- greedy algorithms can make local rather than global choices and still produce the same solutions
+- "Computational Aspects of Gerrymandering" (nilmamano.com/blog/gerrymandering) -- lessons from trying to automate redistricting
+- "2-List Stable Matching: The Easiest Problem I Couldn't Solve in My PhD" (nilmamano.com/blog/two-list-stable-matching) -- open challenge for reasoning LLMs
+- "Multi-Fragment TSP: The Hardest Problem I Solved in My PhD" (nilmamano.com/blog/multi-fragment-tour) -- optimizing a classic TSP algorithm (WIP)
+- "My Own Galactic Algorithm!" (nilmamano.com/blog/galactic-algorithm) -- how galactic algorithms happen, with a research example (WIP)
+- "A Topology/Geometry Puzzle" (nilmamano.com/blog/merging-geometry) -- exploring the geometry of merging faces
+- "Negative Binary Search and Choir Rehearsal" (nilmamano.com/blog/negative-binary-search) -- a curious application of binary search
+- "LLM Usage and Manipulation in Peer Review" (nilmamano.com/blog/llms-in-peer-review) -- how LLMs are being used to manipulate peer review
+- "Double-Edge Cut Problem" (nilmamano.com/blog/double-edge-cut-problem) -- optimal solution for a graph problem from the Wall Game
+- "Single-Edge Cut Problem" (nilmamano.com/blog/single-edge-cut-problem) -- linear-time algorithm for a graph problem from the Wall Game
 
 ### Wall Game
 - "The Wall Game Project" (nilmamano.com/blog/wall-game-intro) -- introduction to the game
 - "Training an AlphaZero-Style AI for a New Board Game" (nilmamano.com/blog/wall-game-ai) -- full playbook for AlphaZero-style training
-- "Choosing a Tech Stack in 2025" (nilmamano.com/blog/2025-stack) -- building a Lichess clone
+- "Choosing a Tech Stack in 2025" (nilmamano.com/blog/2025-stack) -- how would you build a Lichess clone?
+- "Wall Game DB Design" (nilmamano.com/blog/wall-game-db) -- designing the database
+- "Wall Game UI Design (+ Frontend Generators)" (nilmamano.com/blog/wall-game-ui) -- UI specs and AI-generated renders
+- "Building Automatic Puzzle Generators for Board Games" (nilmamano.com/blog/puzzle-gen) -- detecting interesting tactical moments (WIP)
+- "Timers in Online Games" (nilmamano.com/blog/timers-in-online-games) -- guide to using timers in online games (WIP)
 
 ### AI / Software Engineering
 - "What Vibe Coding Actually Looks Like" (nilmamano.com/blog/what-vibe-coding-actually-looks-like) -- exact prompts included
@@ -73,20 +88,28 @@ Nil's blog is at nilmamano.com/blog. Notable posts by category:
 ### Personal / Other
 - "My Family During the Spanish Civil War" (nilmamano.com/blog/spanish-civil-war) -- Nil's grandparents' story
 - "The Dormant Lighthouse" (nilmamano.com/blog/the-dormant-lighthouse) -- draft of first act of a novel
+- "Google Notes" (nilmamano.com/blog/google-notes) -- personal reference notes from Google (WIP)
 
 ## Publications
-Nil has 9 peer-reviewed papers and a PhD dissertation. Key publications:
+Nil has 7 conference papers, 4 journal papers, and a PhD dissertation. Full list with links at nilmamano.com/research.
 
-- "Taming the Knight's Tour: Minimizing Turns and Crossings" -- FUN'20, TCS'22. First non-divide-and-conquer algorithm for knight's tours. Algorithm cited by Knuth.
-- "Euclidean TSP, Motorcycle Graphs, and Other New Applications of Nearest-Neighbor Chains" -- ISAAC'19. Improves multi-fragment TSP from O(n^2) to O(n log n).
-- "Stable-Matching Voronoi Diagrams: Combinatorial Complexity and Algorithms" -- ICALP'18, JoCG'20. Generalizes Voronoi diagrams using stable matching.
-- "Reactive Proximity Data Structures for Graphs" -- LATIN'18. Finding nearest drivers in road networks (Uber/Lyft-inspired).
-- "Defining Equitable Geographic Districts in Road Networks via Stable Matching" -- SIGSPATIAL'17. Addresses gerrymandering using stable matching.
-- "Models and Algorithms for Graph Watermarking" -- ISC'16 (Best Student Paper Award). Hidden watermarking for graphs.
-- "SANA NetGO" and "SANA" -- Bioinformatics, 2017-2018. Network alignment tools for biological networks. 100+ citations.
-- PhD Dissertation: "New Applications of the Nearest-neighbor Chain Algorithm" -- extends the algorithm beyond clustering.
+### Conference Papers
+- "Taming the Knight's Tour: Minimizing Turns and Crossings" (FUN'20). All prior efficient algorithms for the generalized knight's tour used divide-and-conquer. This paper proposes the first algorithm following a completely new approach, where the knight crosses the board in long directional lines. Proves existence of tours with only O(n) crossings vs O(n^2) for all prior algorithms. Extended to 3D boards and giraffe tours. Algorithm later cited by Knuth.
+- "Euclidean TSP, Motorcycle Graphs, and Other New Applications of Nearest-Neighbor Chains" (ISAAC'19). Core results from Nil's thesis. The nearest-neighbor chain algorithm was originally for clustering; this paper adapts it to speed up greedy algorithms for geometric and combinatorial problems. Key result: improves the multi-fragment algorithm for Euclidean TSP from O(n^2) to O(n log n) by weakening the selection rule to make locally-optimal rather than globally-optimal choices, then using NNC to navigate to those choices faster.
+- "Stable-Matching Voronoi Diagrams: Combinatorial Complexity and Algorithms" (ICALP'18). Generalizes Voronoi diagrams using stable matching from market design: assigns service regions to facilities that are both close and equal-sized. Models facilities and the plane as two sides of a market. Gives an algorithm to construct these diagrams and shows they may have a quadratic number of faces.
+- "Reactive Proximity Data Structures for Graphs" (LATIN'18). Inspired by Uber/Lyft: maintains a set of drivers in a road network subject to location updates and nearest-driver queries. Uses graph separators to balance update and query costs -- if the closest driver is in the other partition, it must pass through a small number of separator nodes.
+- "Defining Equitable Geographic Districts in Road Networks via Stable Matching" (SIGSPATIAL'17). Addresses partisan gerrymandering using stable matching on road networks. Uses a "politically-agnostic" geometric algorithm to draw fair districts, but finds the resulting districts may be concave or disconnected depending on center placement.
+- "Algorithms for Stable Matching and Clustering in a Grid" (IWCIA'17). Pixelated version of stable-matching Voronoi diagrams. Shows they can cluster data into compact, equal-sized clusters, unlike k-means which optimizes compactness but ignores cluster sizes.
+- "Models and Algorithms for Graph Watermarking" (ISC'16, Best Student Paper Award). Hidden watermarking for graphs with power-law degree distributions (like social networks). Embeds small subgraphs as watermarks among high/medium-degree nodes. Even if the leaker scrambles node labels, the watermark can be recovered by identifying nodes via their degree distribution.
 
-Full publication list with links: nilmamano.com/research
+### Journal Papers
+- "Taming the Knight's Tour" (TCS'22). Journal version of FUN'20. Added contribution by Parker Williams improving crossings from 13n to 12n and turns from 9.5n to 9.25n.
+- "Stable-Matching Voronoi Diagrams" (JoCG'20). Journal version of ICALP'18. Extended the algorithm to other distance metrics (Manhattan, Chebyshev).
+- "SANA NetGO: using Gene Ontology terms to score network alignments" (Bioinformatics, 2018). Proposes a GO-centric (vs protein-centric) objective function for aligning protein-protein interaction networks. Distributes score by GO term frequency rather than protein pairs, so rare GO terms contribute more, allowing more precise protein identification.
+- "SANA: Simulated Annealing far outperforms many other search algorithms for biological network alignment" (Bioinformatics, 2017). Uses simulated annealing to align PPI networks of different species, transferring knowledge about proteins across species via topological similarity. Outperformed all existing network aligners on both topology and biology metrics. 100+ citations.
+
+### PhD Dissertation
+- "New Applications of the Nearest-neighbor Chain Algorithm" (UC Irvine, 2019). Extends the NNC algorithm beyond its original clustering application. Shows how to weaken the selection rules of greedy algorithms so they make locally-optimal choices while producing the same final solution, then uses NNC-based algorithms to find those choices faster. Also covers stable-matching Voronoi diagrams.
 
 ## Technical Skills
 Languages: C++, C, Python, Go, Java, JavaScript, TypeScript, SQL, HTML, CSS.
