@@ -30,8 +30,63 @@ Tech Interview Consultant. Designed and taught the DS&A curriculum for coding in
 ## Projects
 - **DSA Toolkit** (dsatoolkit.com, 2025): Companion web app for Beyond Cracking the Coding Interview. An interactive checklist of all 100+ DS&A techniques from the book, with progress tracking, learning resources, and links to practice problems. Under the hood, Nil built automated pipelines to parse, test, and generate articles for all 1,440 code solutions across 5 languages, and LLM orchestration pipelines for large-scale code translation (e.g., 288 solutions from Python to Go with few-shot prompting and test-driven retry loops). He also co-designed an AI interviewer for the book's problems with tens of thousands of interviews completed (bctci.co/ai). (Next.js, TypeScript, Python)
 - **Wall Game** (wallgame.io, 2025): An original 2-player strategy board game Nil invented, where each player controls a cat and a mouse -- catch your opponent's mouse before yours is caught. Players take turns moving pieces or placing walls to block paths. Simple enough to play with pen and paper, but with deep strategy. Nil built a full-stack online version supporting multiplayer and AIs as first-class citizens via an AI integration protocol. He trained multiple AlphaZero-style models for different board sizes and rule sets via self-play on consumer GPUs. Read more at nilmamano.com/blog/wall-game-intro. (React, TypeScript, Tailwind, PostgreSQL, MongoDB, WebSocket, C++, PyTorch, TensorRT, ONNX, WebAssembly)
-- **Technical Blog** (nilmamano.com/blog, 2025): 30+ articles on algorithms, data structures, AI, CS research, and software engineering.
-- **SANA** (github.com/nmamano/SANA): C++ biological network alignment tool. 100+ citations, actively maintained for 10+ years.
+- **Technical Blog** (nilmamano.com/blog, 2025): 40+ articles on algorithms, data structures, AI, CS research, and software engineering. See "Blog Posts" section below.
+- **SANA** (github.com/nmamano/SANA): C++ biological network alignment tool using simulated annealing. 100+ citations, actively maintained for 10+ years by 50+ collaborators.
+- **RACSO Online Judge** (racso.cs.upc.edu): Teaching tool for Theory of Computation and compilers courses at UPC Barcelona. Nil contributed auto-evaluated exercises for SAT reductions and built a SAT reduction language interpreter (github.com/nmamano/SATReductionLang).
+
+## Blog Posts
+Nil's blog is at nilmamano.com/blog. Notable posts by category:
+
+### DS&A / Interview Prep
+- "Get Binary Search Right Every Time" (nilmamano.com/blog/binary-search) -- a recipe that works for every problem
+- "Breaking Down Dynamic Programming" (nilmamano.com/blog/breaking-down-dynamic-programming) -- step-by-step DP guide
+- "Actually Implementing Dijkstra's Algorithm" (nilmamano.com/blog/implementing-dijkstra) -- comprehensive implementation guide with code
+- "Iterative Tree Traversals" (nilmamano.com/blog/iterativetreetraversal) -- practical guide to iterative preorder, inorder, postorder
+- "Monotonic Stacks & Queues" (nilmamano.com/blog/monotonic-stacks-and-queues) -- BCtCI chapter preview
+- "Union-Find" (nilmamano.com/blog/union-find) -- BCtCI chapter preview
+- "Set & Map Implementations" (nilmamano.com/blog/set-and-map-implementations) -- BCtCI chapter preview
+- "Top-K Problems: Sorting vs Heaps vs Quickselect" (nilmamano.com/blog/top-k-problems)
+- "Counting Islands: DFS or BFS?" (nilmamano.com/blog/counting-islands) -- with unexpected fractals
+- "In Defense of Coding Interviews" (nilmamano.com/blog/in-defense-of-coding-interviews)
+- "Problem Solving BCtCI Style" (nilmamano.com/blog/problem-solving-bctci-style) -- walkthrough using book concepts
+- "Queues in JS Interviews" (nilmamano.com/blog/js-queues) -- workarounds for JS lacking built-in queues
+- "BCtCI Free Resources" (nilmamano.com/blog/bctci-free-resources) -- list of free content from the book
+- "Toolkit-X: A Better Way to Do DS&A Problem Lists" (nilmamano.com/blog/toolkit) -- introducing the DSA Toolkit
+
+### Research
+- "Lifecycle of a CS Research Paper: My Knight's Tour Paper" (nilmamano.com/blog/knights-tour) -- backstory of a fun PhD paper (cited by Knuth)
+- "Why Many Greedy Algorithms Are Pickier Than They Need To Be" (nilmamano.com/blog/greedy-algorithms) -- research insight on local vs global greedy choices
+- "Computational Aspects of Gerrymandering" (nilmamano.com/blog/gerrymandering) -- lessons from automating redistricting
+- "2-List Stable Matching" (nilmamano.com/blog/two-list-stable-matching) -- open challenge for reasoning LLMs
+- "LLM Usage and Manipulation in Peer Review" (nilmamano.com/blog/llms-in-peer-review)
+
+### Wall Game
+- "The Wall Game Project" (nilmamano.com/blog/wall-game-intro) -- introduction to the game
+- "Training an AlphaZero-Style AI for a New Board Game" (nilmamano.com/blog/wall-game-ai) -- full playbook for AlphaZero-style training
+- "Choosing a Tech Stack in 2025" (nilmamano.com/blog/2025-stack) -- building a Lichess clone
+
+### AI / Software Engineering
+- "What Vibe Coding Actually Looks Like" (nilmamano.com/blog/what-vibe-coding-actually-looks-like) -- exact prompts included
+- "What is Context Engineering?" (nilmamano.com/blog/context-engineering) -- why it matters for AI apps
+- "Herding 1440 Programs" (nilmamano.com/blog/herding-1440-programs) -- automating large-scale codebase changes for BCtCI
+
+### Personal / Other
+- "My Family During the Spanish Civil War" (nilmamano.com/blog/spanish-civil-war) -- Nil's grandparents' story
+- "The Dormant Lighthouse" (nilmamano.com/blog/the-dormant-lighthouse) -- draft of first act of a novel
+
+## Publications
+Nil has 9 peer-reviewed papers and a PhD dissertation. Key publications:
+
+- "Taming the Knight's Tour: Minimizing Turns and Crossings" -- FUN'20, TCS'22. First non-divide-and-conquer algorithm for knight's tours. Algorithm cited by Knuth.
+- "Euclidean TSP, Motorcycle Graphs, and Other New Applications of Nearest-Neighbor Chains" -- ISAAC'19. Improves multi-fragment TSP from O(n^2) to O(n log n).
+- "Stable-Matching Voronoi Diagrams: Combinatorial Complexity and Algorithms" -- ICALP'18, JoCG'20. Generalizes Voronoi diagrams using stable matching.
+- "Reactive Proximity Data Structures for Graphs" -- LATIN'18. Finding nearest drivers in road networks (Uber/Lyft-inspired).
+- "Defining Equitable Geographic Districts in Road Networks via Stable Matching" -- SIGSPATIAL'17. Addresses gerrymandering using stable matching.
+- "Models and Algorithms for Graph Watermarking" -- ISC'16 (Best Student Paper Award). Hidden watermarking for graphs.
+- "SANA NetGO" and "SANA" -- Bioinformatics, 2017-2018. Network alignment tools for biological networks. 100+ citations.
+- PhD Dissertation: "New Applications of the Nearest-neighbor Chain Algorithm" -- extends the algorithm beyond clustering.
+
+Full publication list with links: nilmamano.com/research
 
 ## Technical Skills
 Languages: C++, C, Python, Go, Java, JavaScript, TypeScript, SQL, HTML, CSS.
