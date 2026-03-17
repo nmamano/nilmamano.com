@@ -5,7 +5,7 @@ export function getHomepageSystemPrompt(): string {
 Nil Mamano, PhD, is a computer scientist, software engineer, and author based in the San Francisco Bay Area, originally from Barcelona, Spain.
 
 ## Book: Beyond Cracking the Coding Interview
-Nil co-wrote the official sequel to Cracking the Coding Interview with Gayle L. McDowell et al. (2025). It is the #1 Best Seller in Data Structures & Algorithms on Amazon (amazon.com/dp/195570600X). The book covers DS&A techniques for coding interviews, with 288 problems and solutions in multiple languages. Nil also built the companion DSA Toolkit (dsatoolkit.com) and co-designed an AI interviewer for the book problems (bctci.co/ai).
+Nil co-wrote the official sequel to Cracking the Coding Interview with Gayle Laakmann McDowell, Mike Mroczka, and Aline Lerner (2025). It is the #1 Best Seller in Data Structures & Algorithms on Amazon (amazon.com/dp/195570600X). The book covers DS&A techniques for coding interviews, with 200+ problems and solutions in multiple languages. Nil also built the companion DSA Toolkit (dsatoolkit.com) and co-designed an AI interviewer for the book problems (bctci.co/ai).
 
 ## Professional Experience
 
@@ -21,14 +21,14 @@ Tech Interview Consultant. Designed and taught the DS&A curriculum for coding in
 
 ## Education
 - PhD + Master's in Computer Science, University of California Irvine (Sep 2015 - Dec 2019), GPA 3.83/4. Advisors: David Eppstein, Michael Goodrich.
-  - Co-authored 9 peer-reviewed papers on algorithm design, including as main author in tier A conferences like ICALP and ISAAC. Papers describe new algorithmic improvements in graph theory (routing), computational geometry (clustering, matching, TSP), and computational biology (network alignment).
+  - His research spans computational geometry, greedy algorithms, graph data structures, computational biology, and recreational mathematics. Co-authored 9 peer-reviewed papers, including as main author in tier A conferences like ICALP and ISAAC.
   - Led a research project from inception to publication: came up with an original problem, engaged 3 colleagues to work on it, and collaborated with them to solve it and write a paper. Invented an algorithm for the knight's tour problem (cited by Knuth).
   - Led 100+ teaching sessions and guest lectures with 50+ students.
 - B.E. in Computer Science, Polytechnic University of Catalonia (Sep 2011 - Jul 2015), GPA 3.8/4 (99th percentile).
   - Created SANA, a C++ biological network alignment tool using simulated annealing. 100+ citations, maintained for 10+ years by 50+ collaborators, 2,000+ commits (github.com/nmamano/SANA).
 
 ## Projects
-- **DSA Toolkit** (dsatoolkit.com, 2025): Companion web app for Beyond Cracking the Coding Interview. An interactive checklist of all 100+ DS&A techniques from the book, with progress tracking, learning resources, and links to practice problems. Under the hood, Nil built automated pipelines to parse, test, and generate articles for all 1,440 code solutions across 5 languages, and LLM orchestration pipelines for large-scale code translation (e.g., 288 solutions from Python to Go with few-shot prompting and test-driven retry loops). He also co-designed an AI interviewer for the book's problems with tens of thousands of interviews completed (bctci.co/ai). (Next.js, TypeScript, Python)
+- **DSA Toolkit** (dsatoolkit.com, 2025): Companion web app for Beyond Cracking the Coding Interview. An interactive checklist of all 100+ DS&A techniques from the book, with progress tracking, learning resources, and links to practice problems. Under the hood, Nil built automated pipelines to parse, test, and generate articles for all code solutions across 5 languages, and LLM orchestration pipelines for large-scale code translation (few-shot prompting and test-driven retry loops). He also co-designed an AI interviewer for the book's problems with tens of thousands of interviews completed (bctci.co/ai).
 - **Wall Game** (wallgame.io, 2025): An original 2-player strategy board game Nil invented, where each player controls a cat and a mouse -- catch your opponent's mouse before yours is caught. Players take turns moving pieces or placing walls to block paths. Simple enough to play with pen and paper, but with deep strategy. Nil built a full-stack online version supporting multiplayer and AIs as first-class citizens via an AI integration protocol. He trained multiple AlphaZero-style models for different board sizes and rule sets via self-play on consumer GPUs. Read more at nilmamano.com/blog/wall-game-intro. (React, TypeScript, Tailwind, PostgreSQL, MongoDB, WebSocket, C++, PyTorch, TensorRT, ONNX, WebAssembly)
 - **Technical Blog** (nilmamano.com/blog, 2025): 40+ articles on algorithms, data structures, AI, CS research, and software engineering. See "Blog Posts" section below.
 - **SANA** (github.com/nmamano/SANA): C++ biological network alignment tool using simulated annealing. 100+ citations, actively maintained for 10+ years by 50+ collaborators.

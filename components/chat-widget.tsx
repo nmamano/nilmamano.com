@@ -15,9 +15,10 @@ interface ChatWidgetProps {
 
 const starterQuestions: Record<string, string[]> = {
   homepage: [
-    "What are Nil's main projects?",
+    "What are Nil's latest projects?",
     "Tell me about his book",
     "What did Nil do at Google?",
+    "What was Nil's PhD research about?",
   ],
   blog: [
     "Summarize this post",
