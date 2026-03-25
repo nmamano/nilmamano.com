@@ -8,7 +8,7 @@ categories: ["wallgame", "ai", "swe"]
 
 In a [previous post](/blog/wall-game-ai), I described the AlphaZero-style AI behind [wallgame.io](https://wallgame.io) at the architectural level: MCTS, the neural network, training via self-play, and inference batching.
 
-This post zooms in the inference piece. We'll trace the path a single inference request takes through the codebase, from the moment an MCTS coroutine needs a position evaluated to the moment the GPU result arrives back.
+This post zooms in on the inference piece. We'll trace the path a single inference request takes through the codebase, from the moment an MCTS coroutine needs a position evaluated to the moment the GPU result arrives back.
 
 The inference pipeline is shared between training (self-play) and production (users playing vs the AI). During self-play, requests from hundreds of parallel games are batched together; in production, requests from concurrent games with different users do the same.
 
@@ -33,7 +33,7 @@ A coroutine looks mostly like a normal function, but it has access to a special 
 - `co_await expr`: suspends the coroutine until `expr` produces a result. The coroutine's state (local variables, where it left off) is saved to the heap, and the thread it was running on is freed to do other work. When the result is ready, the coroutine resumes right after the `co_await`.
 
 <Callout title="Key design principle">
-For AlphaZero-style AIs, the main loop consists of traversing the MCTS tree down to a leaf, running a model inference to evaluate the leaf position, and backpropagating the result up the tree. This can be encapsulated as a co-routine that `co_await`'s at the inference step.
+For AlphaZero-style AIs, the main loop consists of traversing the MCTS tree down to a leaf, running a model inference to evaluate the leaf position, and backpropagating the result up the tree. This can be encapsulated as a coroutine that suspends (via `co_await`) at the inference step.
 
 The tree traversals and updates are computationally cheap relative to the GPU inference, so a small pool of 10-20 CPU threads is enough to keep hundreds of coroutines in flight and produce enough inference requests to sustain ~100% utilization on a GPU such as an RTX5090. Each suspended coroutine only consumes a bit of heap memory.
 </Callout>
@@ -64,12 +64,6 @@ Our inference pipeline uses the following:
     - **`MPMCQueue`**: A bounded, lock-free multi-producer multi-consumer queue. Used to pass inference requests from coroutines to the GPU worker without mutex contention.
     - **`EvictingCacheMap`**: An LRU cache. Used to cache position evaluations so repeated positions skip the GPU.
 
-<Callout>
-In our pipeline, `collectAllWindowed` is used to bound how many coroutines work in parallel in the same MCTS tree. For example, we may want to collect 1000 MCTS samples to build the MCTS tree at a given position (i.e., launch 1000 coroutines), but only run up to 4 at a time **even though technically all 1000 could run concurrently with just a few threads**. This is because each sample refines the tree, so each sample benefits from previous ones. Launching all 1000 concurrently would result in some of them trying to explore the same leaves, resulting in wasted (duplicated) inferences and thus a weaker evaluation of the position.
-
-During self-play, we can play 256+ games in parallel, which fills the inference batches without needing parallel samples for the same game.
-</Callout>
-
 - **[TensorRT](https://developer.nvidia.com/tensorrt)** is NVIDIA's inference optimizer. It takes a trained neural network (exported from PyTorch as ONNX) and compiles it into a GPU-optimized execution plan: fusing layers, choosing the fastest kernel implementations for the specific GPU, and optimizing memory layout. We use TensorRT rather than running PyTorch directly because inference latency matters - TensorRT is typically 2-5x faster for our model size.
 
 - **CUDA** is NVIDIA's GPU programming toolkit. We don't write custom CUDA kernels - TensorRT handles that - but we use CUDA's memory management APIs to move data between CPU and GPU efficiently. A few CUDA concepts that come up later:
@@ -77,7 +71,13 @@ During self-play, we can play 256+ games in parallel, which fills the inference 
     - **CUDA stream**: A sequence of GPU operations (memory transfers, kernel launches) that execute in order. Operations on the same stream are guaranteed to run sequentially; the CPU queues them without waiting.
     - **Synchronize**: Block the CPU thread until all operations on a CUDA stream have completed.
 
-## The Pipeline in Five Steps
+<Callout>
+In our pipeline, `collectAllWindowed` is used to bound how many coroutines work in parallel in the same MCTS tree. For example, we may want to collect 1000 MCTS samples to build the MCTS tree at a given position (i.e., launch 1000 coroutines), but only run up to 4 at a time **even though technically all 1000 could run concurrently with just a few threads**. This is because each sample refines the tree, so each sample benefits from previous ones. Launching all 1000 concurrently would result in some of them trying to explore the same leaves, resulting in wasted (duplicated) inferences and thus a weaker evaluation of the position.
+
+During self-play, we can play 256+ games in parallel, which fills the inference batches without needing parallel samples for the same game.
+</Callout>
+
+## Pipeline Steps
 
 Here's the full lifecycle of a single inference request:
 
