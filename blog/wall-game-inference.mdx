@@ -8,11 +8,36 @@ categories: ["wallgame", "ai", "swe"]
 
 In a [previous post](/blog/wall-game-ai), I described the AlphaZero-style AI behind [wallgame.io](https://wallgame.io) at the architectural level: MCTS, the neural network, training via self-play, and inference batching.
 
-This post zooms in on batching. We'll trace the path a single inference request takes through the codebase, from the moment an MCTS coroutine needs a position evaluated to the moment the GPU result arrives back.
+This post zooms in the inference piece. We'll trace the path a single inference request takes through the codebase, from the moment an MCTS coroutine needs a position evaluated to the moment the GPU result arrives back.
 
-The inference pipeline is shared between training (self-play) and production (users playing vs the AI). During self-play, requests from hundreds of parallel games are batched together; in production, requests from concurrent games with different users do the same. More on the differences later.
+The inference pipeline is shared between training (self-play) and production (users playing vs the AI). During self-play, requests from hundreds of parallel games are batched together; in production, requests from concurrent games with different users do the same.
+
+<Callout>
+Credits to [Thorben](https://github.com/t-troebst) for implementing the AlphaZero-style AI for the Wall Game ([repo](https://github.com/t-troebst/Deep-Wallwars)), including the inference pipeline described in this post.
+</Callout>
 
 <Toc />
+
+## Prerequisites
+
+### Libraries
+
+- **[Folly](https://github.com/facebook/folly)** (Facebook Open-source Library) is Meta's C++ foundation library. We use it for three things: coroutines, concurrent data structures, and thread pool executors. We chose Folly because C++20 coroutines are bare-bones - the language provides `co_await` and `co_return`, but no scheduler, no thread pool integration, and no combinators like "run N tasks with bounded parallelism." Folly fills all of those gaps with production-tested implementations. Alternatives like [cppcoro](https://github.com/lewissbaker/cppcoro) exist but are less actively maintained and lack the concurrent data structures we also need.
+
+- **[TensorRT](https://developer.nvidia.com/tensorrt)** is NVIDIA's inference optimizer. It takes a trained neural network (exported from PyTorch as ONNX) and compiles it into a GPU-optimized execution plan: fusing layers, choosing the fastest kernel implementations for the specific GPU, and optimizing memory layout. We use TensorRT rather than running PyTorch directly because inference latency matters - TensorRT is typically 2-5x faster for our model size.
+
+- **CUDA** is NVIDIA's GPU programming toolkit. We don't write custom CUDA kernels - TensorRT handles that - but we use CUDA's memory management APIs (pinned memory, async transfers) to move data between CPU and GPU efficiently.
+
+### Promises, Futures, and Coroutines
+
+The pipeline uses Folly's `Promise`/`SemiFuture` pair as a one-shot communication channel between threads:
+
+- A **`Promise<T>`** is the write end. Calling `promise.setValue(result)` delivers the result.
+- A **`SemiFuture<T>`** is the read end. It represents a value that will arrive later.
+
+You create them together (`auto future = promise.getSemiFuture()`), then hand the `Promise` to whoever will produce the result and the `SemiFuture` to whoever needs it. It's like a single-use mailbox.
+
+The key integration with C++ coroutines: when you `co_await` a `SemiFuture`, the coroutine **suspends** without blocking a thread. Its stack frame is saved to the heap, and the thread is freed to run other coroutines. When `setValue()` is called on the corresponding `Promise` (potentially from a different thread), Folly reschedules the suspended coroutine on its executor. This is the mechanism that lets thousands of MCTS samples share a small thread pool.
 
 ## The Pipeline in Five Steps
 
@@ -25,6 +50,19 @@ Here's the full lifecycle of a single inference request:
 5. Folly reschedules the suspended coroutines back onto the thread pool.
 
 Let's walk through each step with the actual code.
+
+## CPU Overview
+
+Before diving in, it helps to know what threads are running and who does what. The engine has three kinds of threads:
+
+- **Thread pool** (`folly::CPUThreadPoolExecutor`): A pool of 10-20 general-purpose worker threads that run MCTS coroutines: they traverse down an MCTS tree until they reach a leaf that needs evaluation, suspend (`co_await`) until inference finishes, and then backpropagate the outcome up the tree. These threads are interchangeable; any thread can resume any coroutine. When a coroutine suspends on `co_await`, the thread is immediately available for other coroutines.
+- **GPU worker thread(s)** (`std::jthread`): Dedicated threads that own the GPU. Each GPU worker runs a tight loop: drain requests from the queue, copy states into a pinned memory buffer, call TensorRT, and fulfill the promises with results.
+- **Main thread**: Sets everything up and kicks off the work. What it does after that depends on the mode:
+    - **Training:** Blocks on `folly::coro::blockingWait` until all self-play games finish. Then the program ends and the training script (which uses PyTorch) picks up the data from the self-play games for training. 
+    - **Production:** Runs a `folly::EventBase` event loop, reading JSON requests from stdin and dispatching them to the live-game session manager.
+
+
+Why a dedicated GPU worker thread rather than having coroutines call TensorRT directly? Two reasons. First, batching: the GPU is most efficient processing many positions at once, but each coroutine only has one position. The worker thread collects positions from many coroutines into a single batch. Second, isolation: TensorRT calls block until the GPU finishes, and we don't want to tie up thread pool threads with GPU waits.
 
 ## Step 1: The Coroutine Calls inference() and Suspends
 
@@ -40,17 +78,24 @@ The `m_evaluate` function is a coroutine-returning callable:
 std::function<folly::coro::Task<Evaluation>(...)>
 ```
 
-In both training and production, it's a stack of policy layers:
+In both training and production, it's a stack of four layers:
 
 ```
-CachedPolicy       →  Check LRU cache of position evals; on miss, forward to:
-  BatchedModelPolicy  →  Convert board to tensor, then:
-    BatchedModel        →  Queue the request, return SemiFuture
+CachedPolicy         →  Check LRU cache; on miss, forward to:
+  BatchedModelPolicy   →  Convert board to tensor, then:
+    BatchedModel         →  Queue the request, return SemiFuture
+      TensorRTModel        →  Run the GPU kernel
 ```
 
 ### Cache Layer
 
-The `CachedPolicy` uses sharded `folly::EvictingCacheMap` instances to avoid redundant GPU evaluations. The number of shards roughly matches the thread pool size, and each shard has its own lock:
+MCTS frequently revisits the same positions. Parallel samples from the same game can reach the same leaf, and across self-play games, common openings repeat constantly. Without caching, these would all become redundant GPU evaluations.
+
+The `CachedPolicy` uses sharded `folly::EvictingCacheMap` instances to avoid this.
+
+<Callout>
+**Why sharded?** A single cache with one lock would serialize all lookups across all threads in the thread pool. Instead, we hash each position and route it to one of `N` shards (roughly matching the thread pool size), each with its own lock. This way, threads accessing different shards never contend.
+</Callout>
 
 ```cpp
 // cached_policy.cpp
@@ -96,7 +141,7 @@ folly::coro::Task<Evaluation> BatchedModelPolicy::operator()(
 
 ### The Handoff: Promise and SemiFuture
 
-Here's where the coroutine actually suspends. `BatchedModel::inference()` is *not* a coroutine - it's a regular function that creates a `Promise`/`SemiFuture` pair, enqueues the request, and returns immediately:
+Here's where the coroutine actually suspends. `BatchedModel::inference()` is *not* a coroutine - it's a regular function. Its job is to drop a request in the queue and hand back a `SemiFuture` so the *caller* can wait. It creates a `Promise`/`SemiFuture` pair, enqueues the request, and returns immediately:
 
 ```cpp
 // batched_model.cpp
@@ -135,7 +180,9 @@ The `InferenceTask` is now sitting in `m_tasks`, a `folly::MPMCQueue<InferenceTa
 folly::MPMCQueue<InferenceTask> m_tasks;
 ```
 
-This queue handles thousands of concurrent coroutines (producers) writing inference requests, while one or more GPU worker threads (consumers) drain them into batches. The lock-free design avoids mutex contention. `blockingWrite` only blocks when the queue is full (default capacity: 4,096 slots), providing natural backpressure if the GPU can't keep up.
+This queue is the bridge between the MCTS world (many coroutines producing one request each) and the GPU world (one worker consuming them in batches).
+
+We need a queue that handles tens of concurrent writers without serializing them behind a mutex. Folly's `MPMCQueue` is lock-free: writers and readers use atomic operations rather than locks, so concurrent writes don't block each other. It's also bounded (default capacity: 4,096 slots), which provides natural backpressure - `blockingWrite` only blocks if the queue is full, which means the GPU can't keep up. This prevents unbounded memory growth if requests arrive faster than the GPU can process them.
 
 ## Step 3: The GPU Worker Pulls a Batch and Runs Inference
 
@@ -191,9 +238,15 @@ There's a lot going on here. Let's break it down.
 
 The first task blocks the thread (`blockingRead`). Once one arrives, the worker greedily tries to grab more via non-blocking `read()` calls, up to `batch_size`. This means the batch size is dynamic: if 200 requests are queued, the worker fills the whole batch; if only 3 are available, it runs a batch of 3. No artificial delays.
 
+We don't wait for a full batch because latency matters. If only 3 requests are in the queue and we wait for 253 more, those 3 coroutines stall. The GPU is less efficient with small batches, but the throughput lost is small compared to the latency saved. During self-play the queue is rarely empty.
+
 ### Pinned Memory Buffers
 
-The `PinnedBuffer<float>` arrays are allocated with `cudaMallocHost`, which pins the memory in physical RAM, preventing the OS from paging it out. This enables faster DMA transfers over PCIe between CPU and GPU. The pinned buffers are allocated once when the worker starts and reused across batches.
+The `PinnedBuffer<float>` arrays are allocated with `cudaMallocHost`, which pins the memory in physical RAM, preventing the OS from paging it out to disk.
+
+<Callout>
+Normal (pageable) memory requires CUDA to first copy data to an internal pinned staging buffer before initiating the DMA transfer to the GPU - an extra copy on every batch. Pinned memory eliminates this step, enabling direct DMA transfers over PCIe. The pinned buffers are allocated once when the worker starts and reused across batches, so we pay the allocation cost only once.
+</Callout>
 
 ```cpp
 // cuda_wrappers.hpp:37-38
@@ -216,7 +269,7 @@ void TensorRTModel::inference(std::span<float> states, Output const& out) {
 }
 ```
 
-All four operations are enqueued on the same CUDA stream, so they execute sequentially on the GPU. The `synchronize()` call blocks the worker thread until the GPU is done with the whole sequence. Meanwhile, the MCTS coroutines continue running on the CPU thread pool - only the GPU worker thread is blocked.
+All four operations are enqueued on the same CUDA stream, so they execute sequentially on the GPU without requiring synchronization between each step. The CPU-side calls return almost instantly - they just queue work. Only `synchronize()` blocks the worker thread, waiting for the entire upload-compute-download sequence to finish. Meanwhile, the MCTS coroutines continue running on the CPU thread pool - only the GPU worker thread is blocked.
 
 The `CudaBuffer` class wraps `cudaMemcpyAsync` for the transfers:
 
@@ -304,7 +357,7 @@ This creates `samples` coroutines (e.g., 1,200) but only allows `max_parallelism
 
 ## Training vs Production
 
-Both training and production construct the same policy stack:
+Both training and production construct the same four-layer policy stack:
 
 ```
 CachedPolicy → BatchedModelPolicy → BatchedModel → TensorRTModel
@@ -341,7 +394,7 @@ eval_fn = CachedPolicy(std::move(batched_model_policy), FLAGS_cache_size);
 
 | | Training | Production |
 |---|---|---|
-| **TensorRT model instances** | 2 (each gets its own worker thread, doubling GPU throughput) | 1 (sufficient for live games) |
+| **TensorRT model instances** | 2 (each gets its own worker thread; while one waits on `synchronize()`, the other can enqueue work, keeping the GPU busier) | 1 (sufficient for live games) |
 | **Concurrent games** | Hundreds of self-play games on a thread pool | Concurrent BGS sessions against human players |
 | **What happens with results** | MCTS visit counts become training data (exported to CSV) | MCTS picks the best move and sends it to the game server |
 
