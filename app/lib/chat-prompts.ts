@@ -74,6 +74,7 @@ Nil's blog is at nilmamano.com/blog. Posts by category:
 ### Wall Game
 - "The Wall Game Project" (nilmamano.com/blog/wall-game-intro) -- introduction to the game
 - "Training an AlphaZero-Style AI for a New Board Game" (nilmamano.com/blog/wall-game-ai) -- full playbook for AlphaZero-style training
+- "Inference Batching for Self-Play" (nilmamano.com/blog/wall-game-inference) -- code-level deep dive into the inference pipeline (coroutines, batching, GPU pipelining)
 - "Choosing a Tech Stack in 2025" (nilmamano.com/blog/2025-stack) -- how would you build a Lichess clone?
 - "Wall Game DB Design" (nilmamano.com/blog/wall-game-db) -- designing the database
 - "Wall Game UI Design (+ Frontend Generators)" (nilmamano.com/blog/wall-game-ui) -- UI specs and AI-generated renders
