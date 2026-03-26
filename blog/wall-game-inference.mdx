@@ -6,7 +6,7 @@ coverImage: "/blog/wall-game-inference/cover.png"
 categories: ["wallgame", "ai", "swe"]
 ---
 
-In a [previous post](/blog/wall-game-ai), I described the AlphaZero-style AI behind the Wall Game ([wallgame.io](https://wallgame.io)) at the architectural level: Monte Carlo Tree Search (MCTS), the neural network, training via self-play, inference, deployment, etc.
+In a [previous post](/blog/wall-game-ai), I described the AlphaZero-style AI behind the Wall Game ([wallgame.io](https://wallgame.io)) at the architectural level: Monte Carlo Tree Search (MCTS), the neural network, training via self-play, inference, and deployment.
 
 This post zooms in on the inference piece.
 
@@ -42,6 +42,8 @@ A coroutine looks mostly like a normal function, but it has access to a special 
 
 - `co_await expr`: suspends the coroutine until `expr` produces a result. The coroutine's state (local variables, where it left off) is saved to the heap, and the thread it was running on is freed to do other work. When the result is ready, the coroutine resumes right after the `co_await`.
 
+We use [Folly](https://github.com/facebook/folly) (Meta's C++ foundation library) for the coroutine runtime. Coroutines return `folly::coro::Task<T>`, which wraps the heap-allocated state and integrates with a `CPUThreadPoolExecutor` (thread pool): when a coroutine is ready to run or resume, it gets posted to the pool's work queue.
+
 ### Coroutines in MCTS
 
 When an AlphaZero-style AI needs to make a move, it iteratively grows and refines an _MCTS tree_: a tree of potential future positions with tentative evaluations.
@@ -62,15 +64,6 @@ A `Promise` and its corresponding `SemiFuture` are like a single-use queue for p
 - the producer writes a result to the `Promise` via `setValue()`.
 
 Under the hood, `co_await` registers a callback so that when `setValue()` is called, the coroutine's resumption is marked ready.
-
-### Folly
-
-**[Folly](https://github.com/facebook/folly)** (Facebook Open-source Library) is Meta's C++ foundation library. C++'s coroutine support is barebones, so we rely on Folly for the runtime. Here's what we use from it:
-    - **`CPUThreadPoolExecutor`**: A thread pool. Coroutines are bound to an executor and resume on whichever thread is free.
-    - **`folly::coro::Task<T>`**: The return type for coroutines. It wraps the heap-allocated coroutine state and integrates with the executor, so when the coroutine is ready to run (or resume), it gets posted to the thread pool's work queue.
-    - **`collectAllWindowed(tasks, maxConcurrency)`**: A utility that runs a collection of tasks (coroutines) with a bounded concurrency - start up to `maxConcurrency`, and as each one completes, start the next.
-    - **`folly::Promise` and `folly::SemiFuture`**: See [above](#promises-and-futures).
-    - **`MPMCQueue`** and **`EvictingCacheMap`**: A lock-free queue and an LRU cache, respectively. Both explained at point of use below.
 
 ### TensorRT
 
@@ -167,7 +160,7 @@ folly::coro::Task<Evaluation> BatchedModelPolicy::operator()(
 
 Here's where the coroutine actually suspends.
 
-`BatchedModel::inference()` creates an `InferenceTask`, which bundles the input state with a promise, enqueues the task, and returns the `SemiFuture` for that promise. It is _not_ a coroutine - it's a regular function that hand back the `SemiFuture` so the *caller* can wait.
+`BatchedModel::inference()` creates an `InferenceTask`, which bundles the input state with a promise, enqueues the task, and returns the `SemiFuture` for that promise. It is _not_ a coroutine - it's a regular function that hands back the `SemiFuture` so the *caller* can wait.
 
 ```cpp
 // batched_model.hpp
@@ -303,46 +296,48 @@ The result flows back through the cache layer (which stores it for future lookup
 
 ## Parallel Samples
 
-A single MCTS sample produces one inference request. To fill GPU batches, we need many concurrent requests. Here's how they're generated:
+Building out an MCTS tree from a given position requires many samples (e.g., 1000), each of which produces one inference request.
+
+To fill GPU batches, we need many concurrent requests. At any given moment, many coroutines should be suspended waiting for GPU results, which is what fills the inference batch.
+
+These coroutines can happen across parallel games, or they can happen within a game, collaborating to grow out the MCTS tree faster.
+
+The MCTS tree data structure is designed to support multiple threads updating it at the same time, with node-level concurrency control. However, having many parallel samples within a game is not ideal because they are not independent - each one refines the tree, so later samples benefit from earlier ones. In addition, too many in parallel leads to redundant inferences exploring the same leaves (though we use a mechanism known as 'virtual loss' to mitigate this).
+
+In the extreme, if all 1000 samples start at the same time, then we won't reach any node at depth more than 1, because we can't reach a node at depth 2 until the sample for its parent has finished.
+
+During self-play, we can spawn many games in parallel, so we can keep per-game parallelism low. In production, we can use parallel samples to grow one MCTS faster in the same amount of time, making the AI stronger even if individual samples sometimes interfere.
+
+The samples to evaluate the current position are launched like this:
 
 ```cpp
 // mcts.cpp
-folly::coro::Task<float> MCTS::sample(int samples) {
-    m_samples_done = 0;
-    auto* executor = co_await folly::coro::co_current_executor;
-    auto sample_tasks = views::iota(0, samples) |
+
+    // Create `num_samples` coroutines (lazily - nothing runs until collectAllWindowed)
+    auto sample_tasks = views::iota(0, num_samples) |
         views::transform([&](int) { return single_sample().scheduleOn(executor); });
-
-    co_await folly::coro::collectAllWindowed(sample_tasks, m_opts.max_parallelism);
-
-    TreeNode::Value val = m_root->value;
-    co_return val.total_weight / val.total_samples;
-}
+    co_await folly::coro::collectAllWindowed(sample_tasks, max_parallelism);
 ```
 
-This creates `samples` coroutines (e.g., 1,200) but `collectAllWindowed` only allows `max_parallelism` to be active at a time. Each active coroutine traverses the tree, reaches a leaf, and suspends on `co_await` for GPU evaluation - at which point `collectAllWindowed` starts the next one. At any given moment, many coroutines are suspended waiting for GPU results, which is what fills the inference batch.
-
-The concurrency cap exists because MCTS samples aren't independent - each one refines the tree, so later samples benefit from earlier ones. To prevent parallel samples from going down the same branch, each sample temporarily increments an `active_samples` counter on the edges it traverses. The UCB formula penalizes edges with active samples, steering concurrent samples toward less-explored branches (a technique known as _virtual loss_). Despite this, too many parallel samples still interfere with each other, leading to redundant inferences.
-
-During self-play, the GPU batch is primarily filled by requests from hundreds of parallel games, so per-game parallelism can be kept low. In production, where fewer games run concurrently, more parallel samples per game are needed to keep the GPU utilized.
+`collectAllWindowed` runs all 1000 coroutines, but only allows `max_parallelism` (e.g., 32) to be active at a time so they don't step on each other. Note that this is independent of whether there are threads available in the thread pool or not.
 
 ## Final Thoughts
 
-It's 2026 and _model inference_ is, quite literally, a significant chunk of the economy. When we think of models like GPT-5, we often focus on the months-long training run; but it is at _inference time_ when AI companies actually make money. That's why it's so important and only becoming more relevant.
+_Inference_ as a topic is only becoming more relevant: it's at inference time when AI companies actually make money.
 
-Understanding the inference pipeline for our ResNet-style model is a great starting point. It introduces many important concepts and optimizations: pinned memory, pipelining, etc. - see the feature list at the top of the post.
+Understanding the inference pipeline for our ResNet-style model is a great starting point. It introduces many important concepts and optimizations: batching, pinned memory, pipelining, etc. - see the feature list at the top of the post.
 
-LLM inference, however, is another beast:
+However, LLMs are the most prominent model type now, and LLM inference is another beast:
 
-- our model only has 2.3M parameters, while LLMs can have many billions; models may not even fit in a single GPU.
+- Our model only has 2.3M parameters, while LLMs can have many billions; models may not even fit in a single GPU;
 - LLM output lengths are unpredictable, making batching not work as neatly (you need continuous batching instead);
 - You have to deal with the KV Cache memory bottleneck. 
 
 Training the Wall Game AI with this inference pipeline on a consumer GPU was a total success: it became superhuman in a couple of days.
 
-In contrast, I found that trying to run local LLMs on that very same hardware is useless. The models that fit in it are bad, and inference is slow.
+In contrast, I found that trying to run local LLMs on that very same hardware is painful. The models that fit in it are underwhelming, and inference is slow.
 
-The experiment only left me with a deep appreciation for the speed and volume at which the frontier AI labs are capable of running inference with much larger models. I think some really interesting engineering work must be happening there.
+The experiment left me with a deep appreciation for the speed and volume at which the frontier AI labs are capable of running inference with much larger models. Some really interesting engineering work must be happening there.
 
 ---
 
