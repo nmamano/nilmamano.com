@@ -1,7 +1,7 @@
 ---
 title: "Deep Dive: Inference Pipeline for Self-Play"
 date: "2026-03-24"
-excerpt: "A low-level walkthrough of how batching keeps GPU utilization high when training the Wall Game AI via self-play."
+excerpt: "A detailed walkthrough of the inference pipeline powering self-play for the AlphaZero-style AI behind the Wall Game."
 coverImage: "/blog/wall-game-inference/cover.png"
 categories: ["wallgame", "ai", "swe"]
 ---
@@ -21,6 +21,8 @@ We'll trace the path of a single inference request, from the moment an MCTS coro
 - TensorRT for optimized GPU inference.
 
 The inference pipeline is shared between training (self-play) and production (website users playing vs the AI). During self-play, requests from hundreds of parallel games are batched together; in production, requests from concurrent games with different users are also batched.
+
+During self-play, this pipeline sustains over 1 billion inferences per hour on a single RTX5090, hovering 100% utilization.
 
 <Callout>
 Credits to [Thorben](https://github.com/t-troebst) for implementing the AlphaZero-style AI for the Wall Game ([repo](https://github.com/t-troebst/Deep-Wallwars)), including the inference pipeline described in this post.
