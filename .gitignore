@@ -47,3 +47,5 @@ _source_assets/resume_nilmamano.out
 _source_assets/resume_nilmamano.synctex.gz
 _source_assets/*.autosave.ipe
 .DS_Store
+
+.claude/worktrees
