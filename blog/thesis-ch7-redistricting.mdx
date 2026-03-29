@@ -1,0 +1,159 @@
+---
+title: "Drawing Fair Districts: Can Stable Matching Fix Gerrymandering?"
+date: "2026-03-18"
+excerpt: "Stable matching offers a geometry-based approach to redistricting: assign voters to district centers by proximity stability, guaranteeing equal-population districts with no room for algorithmic manipulation."
+coverImage: "/blog/thesis-ch7-redistricting/cover.png"
+categories: ["research", "algorithms", "math", "wip"]
+---
+
+## The Gerrymandering Problem
+
+Every ten years, after the U.S. Census, state legislatures redraw congressional district boundaries. In a system where each district elects a single representative by majority vote, *who draws the lines matters enormously*.
+
+Gerrymandering — drawing district boundaries to give one party a systematic advantage — is achieved through two complementary tactics:
+- **Cracking**: splitting a party's supporters across multiple districts so they're always a minority.
+- **Packing**: concentrating the opposing party's supporters into a small number of districts so they "waste" votes.
+
+Courts have struggled to define when a district map crosses the line from aggressive line-drawing to illegal gerrymandering. One standard that's emerged: districts should be *compact*. Extremely elongated or bizarrely shaped districts are a red flag.
+
+But "compact" is surprisingly hard to define rigorously. Is it the ratio of perimeter to area? The ratio of area to the smallest enclosing circle? There are many competing measures, and advocates can game any specific metric.
+
+<Toc />
+
+## Stability as Compactness
+
+This chapter proposes a new approach: use **stability** — in the stable matching sense — as the definition of compactness.
+
+The setup:
+- The territory to be districted is represented as a graph (road network) or a grid.
+- Each district has a **center** (a fixed representative location) and a **quota** (the number of voters it should serve).
+- Voters and district centers have preferences based on proximity: each voter prefers the nearest center, and each center prefers the nearest voters.
+- We compute the **unique stable matching** between voters and centers.
+
+<Callout>The stability condition says: there should be no voter-center pair that both prefer each other over their current assignment. This is a mutual agreement condition — it prevents any local "what if I had drawn the line slightly differently?" renegotiation.</Callout>
+
+Since preferences are based purely on distance (and are therefore symmetric, as shown in [Chapter 4](/blog/thesis-ch4-ssm)), the stable matching is **unique**. This is a key advantage over other gerrymandering-resistant approaches: there's no room for manipulation in choosing among multiple stable solutions.
+
+## Two Settings
+
+The chapter develops the framework in two geometric settings:
+
+**Geographic setting:** The territory is a road network — a weighted graph where nodes are road intersections and edges are road segments. Distance is shortest-path distance.
+
+**Grid setting:** The territory is a pixel grid. Each pixel is a "voter" and k center points must be placed. Distance is an L_p metric (Euclidean, Manhattan, or Chebyshev).
+
+Both are special cases of the symmetric stable matching models developed in Chapter 4.
+
+## Geographic Redistricting: Real Road Networks
+
+For the road network setting, three algorithms are compared:
+
+**1. Gale-Shapley (GS):** The classical deferred-acceptance algorithm. Preprocessing requires computing all shortest paths from centers to nodes — O(kn log n) with Dijkstra's algorithm. Then the matching runs in O(kn log n). Works well for small k, but requires O(nk) memory — impractical for large numbers of districts.
+
+**2. Circle-growing (CG):** Run k simultaneous Dijkstra instances, one from each center. Match each node to the first instance that reaches it, and halt each instance when its center has filled its quota. This mimics the circle-growing process for stable-matching Voronoi diagrams (Chapter 6). Runtime: O(kn log n), with a much smaller memory footprint than GS.
+
+**3. First-choice chain (FCC) with reactive NN:** The nearest-neighbor chain algorithm paired with the separator hierarchy data structure from Chapter 5. Runtime: **O(n^{1.5} log n)**, independent of k.
+
+<!-- TODO: add Figure 7.1 — four colored maps of Texas, Michigan, Washington DC, and Illinois road networks with 6 random districts each -->
+
+<!-- TODO: add Figure 7.2 and Table 7.1 — runtime comparison plots for DC and Delaware road networks -->
+
+**Experimental results (Delaware road network, 48,812 nodes):**
+
+- CG is the fastest in practice for small and moderate k. On the Texas road network (2 million nodes), CG finishes in 3 seconds with k = 6 centers.
+- GS runs out of memory at k ≈ 256 due to its O(nk) storage requirement.
+- CG runs out of memory at k ≈ 8192.
+- FCC has nearly **flat runtime as k increases** — its O(n^{1.5} log n) bound is truly independent of k. It's the only algorithm that runs for the full range of k values on all tested networks.
+
+The tradeoff: CG wins for small k, FCC wins for large k (many small districts).
+
+## Grid Redistricting: Pixels and Centers
+
+For the grid setting, an n × n grid of pixels must be matched to k center points with equal quotas. This is identical to computing a stable-matching Voronoi diagram in a discretized plane (from Chapter 6).
+
+Two practical algorithms are developed:
+
+### Circle-Growing Algorithm
+
+Adapt the simultaneous Dijkstra idea to a grid. Sort all lattice points by distance to the origin, forming a template list. For each template point, check if the corresponding shifted pixel (relative to each center) is unmatched and within the grid; if so, match it to that center.
+
+For integer-aligned centers, this runs in **O(n²k)** time. For real-valued centers, a chunking approach handles tie-breaking carefully, in **O(n²k log n)**.
+
+### Distance-Sorting Algorithm (Pair Sort and Pair Heap)
+
+When circles start overlapping heavily, the circle-growing algorithm wastes time scanning nearby pixels that are already matched. The distance-sorting algorithm is more efficient in this late phase:
+
+- **Pair Sort:** List all center-pixel pairs, sort by distance, then greedily add available pairs. O(mk) time and space.
+- **Pair Heap:** Maintain a min-heap of closest available pairs, updating lazily or eagerly when a center fills up.
+
+<Callout>The key insight: switch from circle-growing to pair heap at a cutoff point. Circle-growing is faster when regions are mostly disjoint (early phase). Pair heap is faster when many regions overlap and most nearby pixels are already matched (late phase). Any small cutoff (around 0.15) substantially reduces total runtime. The optimal cutoff is relatively insensitive to k, n, or the choice of metric.</Callout>
+
+<!-- TODO: add Figure 7.3 — colorful 900×900 grid with 100 random center districts -->
+
+<!-- TODO: add Figure 7.5 — execution time comparison of all grid algorithms -->
+
+<!-- TODO: add Figure 7.6 — cutoff optimization plots -->
+
+## Center Location: Stable k-Means
+
+All of the above assumed district centers are given as input. But where should the centers be placed?
+
+**Standard k-means** (Lloyd's algorithm) iterates:
+1. *Assignment step*: assign each point to its nearest center.
+2. *Update step*: move each center to the centroid of its assigned points.
+
+This converges, but gives no guarantee on equal-sized regions.
+
+**Stable k-means** replaces the assignment step with a stable matching:
+1. *Assignment step*: compute the stable matching between points and centers (with equal quotas).
+2. *Update step*: move each center to the centroid of its matched points.
+
+This guarantees equal-sized regions at every iteration. The resulting algorithm converges to a partition that is both stable and approximately compact.
+
+<!-- TODO: add Figure 7.8 — before/after comparison: random centers (left, fragmented regions) vs stable k-means (right, more compact regions) for Euclidean, Manhattan, Chebyshev metrics -->
+
+### Weighted Centroids
+
+Vanilla stable k-means sometimes stalls: centers stop moving before their regions fully connect. The centroid is insensitive to outlying pixels — if a region has a few far-flung pixels, the centroid barely shifts.
+
+The fix: use **weighted centroids**, where each pixel p is weighted by d(p, c)^q for a parameter q. Higher q gives more weight to outlying pixels, pulling the center toward them.
+
+The best results come from **-0.8 < q < 0.4**. At q = -1, the algorithm recovers Weiszfeld's method for the geometric median.
+
+<!-- TODO: add Figure 7.9 — plot of average pixel-center distance vs exponent q for stable k-means -->
+
+<!-- TODO: add Figure 7.10 — visual results of stable k-means with various exponents q = -2, -1, 0.1, 0.2, 0.5 -->
+
+## The Fundamental Tension
+
+There's an honest limitation to acknowledge: **stable districts are generally not connected**.
+
+Because stability is based purely on distance, a center's district can consist of disconnected patches — the center's "nearest" voters might not form a geographically contiguous region. This is the same non-connectivity issue seen in stable-matching Voronoi diagrams (Chapter 6).
+
+Stable k-means substantially reduces this problem, but doesn't eliminate it. Some post-processing would likely still be required for real-world use.
+
+As the thesis puts it:
+
+> "A challenge for algorithmic redistricting is that there is no definitive answer to what algorithm to use or what compactness measure to optimize, so meddling parties might fight over the algorithm that benefits them the most."
+
+The unique stable matching property mitigates this: once center locations are fixed, there's no room for manipulation. But center placement itself remains a free parameter.
+
+## Why This Approach Is Interesting
+
+**Uniqueness.** With distance-based preferences, the stable matching is unique (Chapter 4). Unlike other algorithmic approaches, there's a single correct answer for any given set of center locations.
+
+**Population balance by construction.** Setting equal quotas guarantees equal-sized districts. Standard Voronoi diagrams famously fail at this.
+
+**Neutrality.** The algorithm is purely geometric — it takes no input about party affiliation, voter turnout, or any politically sensitive data. Districts are determined by geography alone.
+
+**Scalability.** The circle-growing algorithm runs on the Texas road network (2 million nodes) in 3 seconds. The FCC algorithm scales to thousands of districts.
+
+## Connection to the Thesis
+
+This chapter is where the theory pays off in practice. The nearest-neighbor chain framework from [Chapter 3](/blog/thesis-ch3-nnc), the symmetric stable matching results from [Chapter 4](/blog/thesis-ch4-ssm), the reactive NN data structure from [Chapter 5](/blog/thesis-ch5-graphs), and the Voronoi theory from [Chapter 6](/blog/thesis-ch6-voronoi) all converge in a single real-world application.
+
+The redistricting problem also motivates revisiting Chapter 6's discretized algorithm: the grid matching algorithm in this chapter is a direct implementation of the discretized stable-matching Voronoi diagram construction, validated at scale.
+
+---
+
+*This is the final chapter of the thesis. The full dissertation is available as a [PDF](/dissertation/nildissertation.pdf).*

@@ -1,0 +1,104 @@
+---
+title: "When Local Is Just as Good as Global: An Introduction to the Local Greedy Framework"
+date: "2026-03-17"
+excerpt: "An introduction to the Global-Local Equivalence framework, which identifies when greedy algorithms making only local comparisons produce the same solution as algorithms with full global knowledge."
+coverImage: "/blog/thesis-ch1-intro/cover.png"
+categories: ["research", "algorithms", "wip"]
+---
+
+## The Greedy Temptation
+
+Greedy algorithms are among the most intuitive tools in computer science: at each step, pick the best available option and commit to it. This simple strategy works surprisingly well for a wide range of problems, from scheduling to spanning trees to Huffman coding.
+
+But there's a catch. "The best option" can mean different things.
+
+**Global greedy** scans all remaining possibilities every round and picks the single best one overall. It's the idealized version — rigorous and unambiguous, but potentially slow.
+
+**Local greedy** picks any option that is *locally dominant*: better than all the other choices it directly "interacts" with. It doesn't have to be the globally best. It just has to win in its neighborhood.
+
+These two strategies might produce very different solutions. Or they might not. A central question of this thesis is:
+
+<Callout>When do local greedy and global greedy always produce the same solution?</Callout>
+
+The formal answer — the *Global-Local Equivalence* (GLE) theorem — turns out to be elegant, broadly applicable, and connected to a family of beautiful algorithms.
+
+<Toc />
+
+## Two Running Examples
+
+To ground the ideas, it helps to have concrete problems in mind. The thesis uses two throughout.
+
+### Maximum-Weight Matching
+
+You have a set of objects, and some pairs of objects have an associated weight (benefit). You want to find a *matching* — a set of pairs where no object appears twice — that maximizes total weight.
+
+- **Global greedy**: Sort all pairs by weight. Pick the heaviest pair that doesn't conflict with already-chosen pairs. Repeat.
+- **Local greedy**: Pick any pair that is heavier than all other pairs that share an object with it. In other words, pick any pair that both of its endpoints mutually prefer to all their other options.
+
+Both approaches find a maximal matching, but do they find the same one? And does either find the *optimal* one?
+
+### Hierarchical Clustering
+
+You have a set of data points and want to hierarchically group them. Start with each point as its own cluster, and repeatedly merge the two "closest" clusters (by some measure of inter-cluster distance) until all points are one big cluster. The result is a dendrogram — a tree of nested groupings.
+
+- **Global greedy**: Always merge the closest pair of clusters.
+- **Local greedy**: Merge any two clusters that are each other's nearest neighbors — *mutual nearest neighbors* (MNN).
+
+The fact that these produce the same result isn't obvious. Why should it be okay to merge a non-globally-closest pair just because they're each other's nearest neighbors?
+
+## The Nearest-Neighbor Chain Idea
+
+For hierarchical clustering, the equivalence of local and global greedy is captured by the classical **nearest-neighbor chain (NNC) algorithm**, a key piece of background for this thesis.
+
+The NNC algorithm works by maintaining a stack (a "chain") of clusters. It greedily extends the chain by always appending the nearest neighbor of the top of the stack. When the top two elements of the chain are mutual nearest neighbors — each other's closest cluster — they are merged and both removed from the stack.
+
+This is local greedy: the algorithm doesn't know or care whether the merged pair is the globally closest pair. It just merges whenever it finds mutual nearest neighbors.
+
+Yet the NNC algorithm computes the *same* hierarchical clustering as global greedy. This is the core of the GLE phenomenon.
+
+The efficiency of the NNC algorithm is remarkable: if you can compute nearest-neighbor queries in time T(n), the whole clustering runs in O(n · T(n)) time. Since each step either extends the chain by 1 or removes 2 elements (a merge), the total number of steps is at most 2n − 1. You never revisit work.
+
+## The Structural Question
+
+Why does local greedy work so well? The thesis pins down a clean sufficient condition:
+
+<Callout>A problem admits GLE when its evaluation function is **deteriorating**: the value of adding a new element to the solution can only decrease as more elements are selected.</Callout>
+
+Think of it this way. In max-weight matching, once you start committing to pairs, the remaining "best available pair" can only be as good as, or worse than, the global best you haven't taken yet. A pair that's locally dominant among its neighbors — heavier than all competitors touching its endpoints — can never be "skipped" in a sensible order. Global greedy would eventually have to pick it anyway, or something even better. But if it's locally dominant, nothing better involving those endpoints exists.
+
+This deteriorating property shows up in many classic combinatorial optimization problems: set cover, matching, shortest common superstring, and more. The thesis develops a unified proof technique — the **hybrid method** — that formalizes this intuition and handles all of them under a common framework.
+
+## What This Thesis Does
+
+The thesis unfolds in seven chapters, each attacking a different dimension of the local greedy framework:
+
+1. **Chapter 2** proves GLE rigorously for several classic problems. The main proof tool is the hybrid method: construct an imaginary algorithm that starts acting like local greedy and gradually transitions to global greedy, showing the transition never changes the output.
+
+2. **Chapter 3** develops new algorithms that use the NNC structure — the nearest-neighbor chain — to efficiently solve geometric problems. A new *soft nearest-neighbor* data structure enables an O(n log n) algorithm for geometric TSP.
+
+3. **Chapter 4** applies the GLE framework to *symmetric stable matching* — a variant where preferences are mutually consistent. The result is a "soul-mate algorithm" that finds the unique stable solution by repeatedly matching soul mates (mutual first choices).
+
+4. **Chapter 5** builds proximity data structures on graphs — reactive nearest-neighbor structures using separator hierarchies — enabling efficient stable matching on road networks.
+
+<!-- TODO: Consider KaTeX for this equation -->
+5. **Chapter 6** studies *stable-matching Voronoi diagrams*, where Voronoi cells are constrained to have prescribed areas (appetites). The combinatorial complexity turns out to be Θ(n²), and an algorithm running in O(n³ log n) is developed.
+
+6. **Chapter 7** applies stable matching to political redistricting, where the stability notion becomes a new definition of compactness that automatically balances population across districts.
+
+## Why This Framework Matters
+
+The GLE framework is not just a theoretical curiosity. It tells you:
+
+- **When you can use simple, local algorithms** and trust that they compute the globally correct answer.
+- **Why the NNC algorithm is correct** and how to extend it to new problems.
+- **When approximation is unavoidable** — if GLE doesn't hold, local greedy may give wrong answers, and you need to work harder.
+
+The framework also offers a conceptual unification: despite their surface differences, hierarchical clustering, matching, TSP, superstring assembly, and stable matching all share the same underlying structure. Understanding one gives insight into all.
+
+## The Big Picture
+
+There's a philosophical dimension here too. Local agents — whether they're organisms, markets, or algorithms — often act on local information. The GLE theorem is a kind of reassurance: in many situations, acting locally on available information leads to the same outcome as having full global knowledge. The world sometimes cooperates with the decentralized agent.
+
+But not always. Knowing when the world cooperates — and when it doesn't — is what separates a good algorithm designer from a naive one.
+
+The rest of this thesis is about understanding that line precisely.

@@ -1,0 +1,128 @@
+---
+title: "Global-Local Equivalence: When Greedy Doesn't Have to Think Globally"
+date: "2026-03-17"
+excerpt: "The GLE theorem establishes that for problems with deteriorating evaluation functions, a greedy algorithm making only local comparisons always produces the same solution as one with full global knowledge."
+coverImage: "/blog/thesis-ch2-gle/cover.png"
+categories: ["research", "algorithms", "math", "wip"]
+---
+
+## The Promise of Local Greedy
+
+In Chapter 1, we met the central question: when does a *local* greedy algorithm — one that picks any locally dominant option, not necessarily the globally best — produce the same result as *global* greedy?
+
+Chapter 2 delivers the answer in the form of the **Global-Local Equivalence (GLE)** theorem, proved for a wide variety of classic problems. The key insight turns out to be both elegant and surprisingly general.
+
+<Toc />
+
+## What Local Greedy Actually Means
+
+Before proving anything, we need to be precise about the setting.
+
+The thesis works in the framework of **combinatorial optimization problems (COPs)**. We have a ground set of *elements* (candidate choices) and we want to select a subset that maximizes some objective function, subject to feasibility constraints. The greedy algorithm builds the solution one element at a time.
+
+Two elements *interact* if choosing one of them affects the availability or value of the other. In a matching, two edges interact if they share a vertex. In set cover, two sets interact if one makes the other redundant.
+
+**Global greedy**: at each step, pick the element with the highest evaluation (value) among all remaining feasible elements.
+
+**Local greedy**: at each step, pick any element that has strictly higher evaluation than all feasible elements it interacts with. Such an element is called *locally dominant*.
+
+The question is: starting from the same instance, do these two strategies always produce the same solution?
+
+## The Key Condition: Deteriorating Evaluation Functions
+
+The thesis identifies a clean sufficient condition for GLE:
+
+<Callout>**Definition**: An evaluation function is *deteriorating* if, for any element e and any set S of previously chosen elements, the evaluation of e with respect to S is at most the evaluation of e with respect to any proper subset of S. In other words, as more elements are chosen, the "value" of any remaining element can only stay the same or decrease — it never gets better.</Callout>
+
+This captures a fundamental monotonicity. In maximum-weight matching, the evaluation of an edge is just its weight (a constant), but its *feasibility* degrades as more edges are chosen. If we define "evaluation of a feasible element" as its benefit and "evaluation of an infeasible element" as −∞, then evaluations can only drop. In set cover, where the evaluation of a set is the number of new elements it covers, choosing more sets means each remaining set covers fewer new elements. Classic deterioration.
+
+**Theorem (GLE)**: For any COP whose evaluation function is deteriorating, local greedy and global greedy produce the same solution.
+
+## The Hybrid Method: A Proof Technique
+
+The proof uses an elegant technique the thesis calls the **hybrid method**. The idea:
+
+1. Imagine a sequence of algorithms H₀, H₁, ..., Hₖ where H₀ is local greedy and Hₖ is global greedy.
+2. Each Hᵢ₊₁ differs from Hᵢ in exactly one step: at step i, Hᵢ makes a local greedy choice, but Hᵢ₊₁ makes a global greedy choice instead.
+3. Show that each transition Hᵢ → Hᵢ₊₁ produces the same solution.
+4. By induction, H₀ (local greedy) and Hₖ (global greedy) produce the same solution.
+
+The key step is showing that swapping a local greedy choice for a global greedy choice at step i doesn't change the output. This is where the deteriorating property does its work.
+
+At step i, suppose local greedy has chosen element ℓ (locally dominant, but perhaps not globally best), while global greedy would choose g (the globally best). Since ℓ is locally dominant, it outperforms all elements it interacts with — including, potentially, g. But since evaluations are deteriorating, g's evaluation can only drop as future elements are chosen. So global greedy will eventually be "forced" to include ℓ anyway, or choose something even worse. The precise argument shows the final solutions are identical.
+
+## Applications: Classic Problems That Satisfy GLE
+
+### Maximum-Weight Matching
+
+The setting: given a graph where each edge has a weight, find a maximum-weight matching.
+
+**Is greedy optimal?** Not in general — greedy matching is famously suboptimal. But here, GLE isn't claiming greedy finds the *optimal* solution. It's claiming that *local greedy and global greedy find the same (greedy) solution*.
+
+**Why GLE holds**: The evaluation of an edge is its weight, which never changes. The feasibility of an edge can only decrease (once neighboring edges are chosen, it may become infeasible). Thus evaluations are deteriorating. Local greedy and global greedy produce the same matching.
+
+This has a practical implication: you can implement matching greedily using a *local* scan rather than a global sort, and still get the same result. In distributed or parallel settings, this matters enormously.
+
+### Weighted Set Cover
+
+The setting: given a universe of elements and a collection of weighted sets, find a minimum-weight collection of sets that covers all elements.
+
+The evaluation of a set is typically the number of new elements it covers divided by its cost (a "bang per buck" measure). As more sets are chosen, each remaining set covers fewer new elements — the classic deteriorating property.
+
+**GLE holds**: local greedy and global greedy compute the same approximate cover. Moreover, this greedy cover achieves the famous (1 + ln n) approximation ratio.
+
+### Multi-Fragment TSP
+
+The Traveling Salesman Problem (TSP) asks for the shortest tour through a set of cities. The *multi-fragment* heuristic is a greedy approach that works on *path fragments*:
+
+- Start with all cities as isolated fragments (length-0 paths).
+- Repeatedly merge two fragments by connecting their endpoints, choosing the cheapest such connection.
+- Stop when you have a single Hamiltonian cycle.
+
+This is global greedy on a specific evaluation function. The thesis proves GLE holds: local greedy multi-fragment — where you connect any pair of fragment endpoints that is locally cheapest among all endpoints they interact with — gives the same tour.
+
+<!-- TODO: add figure showing multi-fragment TSP construction -->
+
+The deteriorating property here is subtle: as fragments grow, the feasibility constraints become more complex (you can't create a premature cycle, and each endpoint can be used at most once). But evaluations (edge lengths) are fixed, and feasibility can only restrict further. GLE applies.
+
+### Shortest Common Superstring
+
+The setting: given a collection of strings, find the shortest string that contains all of them as substrings. This is NP-complete in general, but the greedy heuristic — repeatedly merge the two strings with the largest overlap — is the best known polynomial-time approximation.
+
+**GLE holds**: the thesis proves that local greedy (merge any pair with locally maximal overlap) produces the same superstring as global greedy (always merge the globally most overlapping pair).
+
+The proof requires more care here because overlap values can *change* as strings are merged. However, they can only decrease — merging strings never creates new, larger overlaps between remaining strings. The deteriorating condition is satisfied.
+
+## The Limits of GLE
+
+GLE does not hold universally. The thesis gives counterexamples: problems where local greedy and global greedy diverge.
+
+A simple example is minimum spanning tree with a different tie-breaking rule than lexicographic. Or weighted independent set, where a locally dominant vertex can block a globally better choice that doesn't interact with it.
+
+The deteriorating condition is *sufficient* but not necessary. Some problems satisfy GLE for other reasons. Identifying the exact boundary is an open problem.
+
+## Why This Matters in Practice
+
+GLE has two practical payoffs:
+
+1. **Algorithmic simplicity**: if GLE holds, you can replace a global priority queue (expensive) with a local comparison (cheap). In distributed systems, agents only need to communicate with their neighbors.
+
+2. **Theoretical unification**: instead of proving correctness for each problem separately, GLE gives a single theorem that covers all deteriorating COPs. New problems that fit the template get GLE for free.
+
+3. **Insight into existing algorithms**: the NNC algorithm for hierarchical clustering, the soul-mate algorithm for stable matching, and many others can be understood as instances of local greedy operating under GLE. Their correctness follows from a common principle.
+
+## A Taste of the Hybrid Method in Action
+
+Here's an informal sketch for max-weight matching. Suppose local greedy picks edge ℓ = (u, v) with weight w_ℓ, but global greedy would pick g = (a, b) with weight w_g ≥ w_ℓ.
+
+Case 1: g and ℓ don't interact (share no vertex). Then both can be included. Global greedy will eventually pick ℓ as well. Both algorithms include both edges — no difference.
+
+Case 2: g and ℓ share a vertex, say u = a. Then ℓ and g interact, and ℓ is locally dominant, so w_ℓ > w_g. But we assumed w_g ≥ w_ℓ — contradiction! This case is impossible.
+
+So in all cases, the transition from local to global at this step doesn't change the final solution. Induction completes the proof.
+
+The same argument, formalized appropriately for each evaluation function, works for set cover, multi-fragment TSP, and superstring.
+
+## Looking Ahead
+
+GLE tells us *when* local greedy works. The next question is *how fast* it can work. Chapter 3 takes the NNC structure — the nearest-neighbor chain technique underlying local greedy for hierarchical clustering — and pushes it into new geometric territory, achieving O(n log n) algorithms for problems that previously required O(n²).

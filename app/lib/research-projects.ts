@@ -19,6 +19,20 @@ export interface Project {
 
 export const PROJECTS: Project[] = [
   {
+    id: "isomux",
+    title: "Isomux: Your Agent Office",
+    coverImage: "/projects/isomux.png",
+    links: {
+      demo: "https://isomux.com",
+      github: "https://github.com/nmamano/isomux",
+    },
+    description: [
+      "Friction going from 1 Claude Code to 4+? Isomux is your agent office. Cute in a useful way. Free & open source — works with your Claude subscription, runs locally, no cloud, no account.",
+
+      "A tmux alternative with a visual office metaphor — see what every agent is doing at a glance. Works locally or as a persistent server (Mac Mini style): run at home, access from any device in your Tailscale network, with real-time sync and first-class mobile UI.",
+    ],
+  },
+  {
     id: "toolkit-x",
     title: "Toolkit-X: DS&A Interview Prep",
     coverImage: "https://dsatoolkit.com/thumbnail.png",

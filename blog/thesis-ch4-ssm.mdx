@@ -1,0 +1,142 @@
+---
+title: "Symmetric Stable Matching: When Everyone Has a Soul Mate"
+date: "2026-03-17"
+excerpt: "When stable matching preferences are symmetric — each agent scores their partners the same way they are scored — the stable matching is unique and can be found by a simple soul-mate algorithm analogous to the nearest-neighbor chain."
+coverImage: "/blog/thesis-ch4-ssm/cover.png"
+categories: ["research", "algorithms", "math", "wip"]
+---
+
+## The Stable Matching Problem
+
+One of the most celebrated results in algorithmic game theory is the Gale-Shapley algorithm for stable matching. The setting: n men and n women each have a ranked preference list over the other group. A *stable matching* is a perfect matching (everyone matched) where no man-woman pair both prefer each other to their current partners — no "blocking pair" exists.
+
+Gale-Shapley solves this in O(n²) time and is simple to describe: men propose to their top choice, women tentatively accept the best proposal they've received, and rejected men move down their list. Repeat until stable.
+
+The standard stable matching problem is **asymmetric**: men and women have separate roles, and the algorithm is biased toward men (the men-proposing version gives the men-optimal stable matching). There can be many stable matchings, and different algorithms find different ones.
+
+But what happens when preferences are **symmetric** — when the two groups have the same kind of preferences, and in particular when the score each person assigns to a partner is the same score that partner assigns to them?
+
+This is the setting Chapter 4 explores, and it turns out to be dramatically nicer.
+
+<Toc />
+
+## Symmetric Stable Matching
+
+**Definition**: A stable matching instance is *symmetric* if the preference scores are symmetric: the score agent x assigns to agent y equals the score y assigns to x. Formally, score_x(y) = score_y(x) for all x, y.
+
+In a symmetric instance, preferences are mutual. If Alice thinks Bob is great (score 9 out of 10), then Bob also thinks Alice is great (score 9 out of 10). This might seem restrictive, but it models several natural scenarios:
+
+- **Geographic matching**: both agents are points in a metric space and each prefers proximity. Alice and Bob both prefer whoever is geographically closer.
+- **Narcissistic k-attribute model**: each agent has k attributes (think dating profile categories — appearance, intelligence, humor, ...) and weights attributes proportionally to their own values. If Alice values intelligence highly (because she's smart), she seeks intelligence in a partner. The resulting scores turn out to be symmetric.
+
+<Callout>**Theorem**: Every symmetric stable matching instance has a **unique** stable matching. This eliminates the fundamental ambiguity of general stable matching. No matter which algorithm you use (that produces a stable matching), you get the same answer.</Callout>
+
+## Soul Mates and the Soul-Mate Algorithm
+
+The uniqueness of the stable matching in the symmetric case enables an especially clean algorithm.
+
+**Definition**: Agents x and y are *soul mates* if each is the other's top-ranked feasible partner. That is, x prefers y to everyone else, and y prefers x to everyone else.
+
+In a symmetric instance, soul mates must be matched to each other in any stable matching. Why? Suppose x and y are soul mates but matched to x' ≠ y and y' ≠ x. Then x prefers y over x', and y prefers x over y'. This is a blocking pair — a contradiction with stability.
+
+This gives us an algorithm:
+
+**Soul-Mate Algorithm (local greedy for symmetric stable matching)**:
+1. Find any soul-mate pair (x, y) — a pair that are each other's top choices.
+2. Match them and remove them from the instance.
+3. Repeat until everyone is matched.
+
+This is local greedy: match any locally dominant pair (soul mates), not necessarily the globally highest-scored pair.
+
+By GLE — the thesis proves GLE holds for symmetric stable matching — this gives the same (unique) stable matching as global greedy (always matching the pair with the globally highest mutual score).
+
+The algorithm runs in O(n²) time naively (finding soul mates requires scanning preference lists). The thesis also shows how to speed this up using the NNC approach.
+
+## The First-Choice Chain Algorithm
+
+Inspired by the NNC algorithm for hierarchical clustering, the thesis introduces the **first-choice chain (FCC) algorithm** for symmetric stable matching.
+
+The FCC algorithm maintains a "chain" of agents (analogous to the NNC's stack of clusters):
+
+1. Start with an arbitrary agent.
+2. Extend the chain: the current tail adds the agent it most prefers (its first choice).
+3. If the last two agents in the chain are mutual first choices (soul mates), match them. Remove both from the chain and instance. The chain now ends at the previous agent.
+4. Repeat until everyone is matched.
+
+This is the NNC algorithm, adapted to stable matching. The chain explores preference relationships rather than geometric distances, but the structure is identical.
+
+**Correctness**: follows from GLE — soul mates are a local greedy choice, and GLE guarantees they're chosen by global greedy too.
+
+**Efficiency**: by the same analysis as the NNC algorithm, each agent joins and leaves the chain at most twice, so the total work is O(n · Q(n)), where Q(n) is the time to answer a "first choice" query. If preferences are stored as sorted lists, Q(n) = O(1) amortized (just walk down the list), giving O(n) total time to find all soul-mate pairs once the lists are built.
+
+Building the preference lists takes O(n² log n) in general (sort all pairwise scores). But in geometric settings, as we see next, this can be much faster.
+
+## Geometric Stable Matching
+
+In the **geometric stable matching** setting:
+
+- Both agent sets are point sets in a metric space (e.g., the Euclidean plane).
+- Each agent prefers closer agents: agent x prefers y over z if d(x, y) < d(x, z).
+- Preferences are symmetric: both x and y prefer proximity, so their scores are mutually determined by their distance.
+
+This is a natural model for, say, matching homes to schools (both want to be close to each other), or assigning locations to facilities.
+
+**The geographic matching result from Chapter 4**:
+
+For geometric stable matching, the soul-mate algorithm runs in O(n log n) time using the SNNC approach from Chapter 3.
+
+Here's why: soul mates in geometric stable matching are *mutual nearest neighbors* — the closest pair of points overall (or at least, the closest feasible pair given prior matchings). The FCC/SNNC algorithm finds MNNs efficiently using the soft nearest-neighbor data structure, giving O(log n) per query and O(n log n) total.
+
+This is optimal: any algorithm must at least compute all n/2 matched pairs, and computing the minimum distance pair requires Ω(n log n) comparisons.
+
+<!-- TODO: add figure showing geometric stable matching on point sets -->
+
+## Geographic Stable Matching on Road Networks
+
+Chapter 7 later applies this to real road networks (we'll see that in detail there), but Chapter 4 lays the theoretical groundwork.
+
+In the **geographic model**, agents are nodes in a graph (road network), and preferences are based on shortest-path distances. The graph model makes preferences symmetric (road distances are symmetric for undirected graphs).
+
+The soul-mate algorithm applies: find mutual nearest neighbors (nodes whose shortest-path distance to each other is less than their distance to any other unmatched node), match them, and repeat.
+
+The FCC algorithm with the reactive nearest-neighbor data structure from Chapter 5 gives an efficient implementation on road networks.
+
+## The Narcissistic k-Attribute Model
+
+A more abstract model with real-world flavor:
+
+- Each agent has k numerical attributes (a₁, ..., aₖ).
+- Agent x uses its own attribute values as weights when evaluating others: x scores y as Σᵢ xᵢ · yᵢ (dot product).
+- This means x, who values attribute i highly (large xᵢ), seeks that attribute in a partner.
+
+The key observation: score_x(y) = x · y = y · x = score_y(x). The scoring is symmetric!
+
+So the narcissistic k-attribute model always has a unique stable matching, findable by the soul-mate / FCC algorithm.
+
+This model has connections to economic models of preference and to psychological theories of assortative mating (people tend to partner with others similar to themselves). The uniqueness result gives a clean prediction: given agents' attribute vectors, there's exactly one stable assignment.
+
+**Geometric interpretation**: agent attributes are vectors in ℝᵏ. The score is the dot product, which is related to the cosine of the angle between vectors (times their magnitudes). Agents prefer others with similar attribute profiles and high magnitudes. The stable matching corresponds to matching agents with the most similar profiles, where "similar" is measured by dot product.
+
+## Comparison with Gale-Shapley
+
+|  | General Stable Matching | Symmetric Stable Matching |
+|--|--|--|
+| Number of stable matchings | Can be exponential | Exactly 1 |
+| Algorithm | Gale-Shapley (biased) | Soul-mate / FCC (unbiased) |
+| Time complexity (general) | O(n²) | O(n²) → O(n log n) geometrically |
+| Geometric case | Gale-Shapley still works | O(n log n) via SNNC |
+| Nature of output | Men-optimal or women-optimal | The unique stable matching |
+
+The symmetric case is strictly easier: uniqueness means no choices to make, and the soul-mate structure allows the NNC-style algorithm that's both simpler and potentially faster.
+
+## Why Uniqueness Is Deep
+
+The uniqueness of the stable matching in symmetric instances has a beautiful proof. Suppose two stable matchings M₁ and M₂ exist. Consider the "rotation" between them: the set of agents who are matched differently. One can show that in a symmetric instance, any rotation leads to a contradiction — either a blocking pair in M₁ or M₂. Therefore no rotation exists and M₁ = M₂.
+
+This proof technique (analyzing rotations in the lattice of stable matchings) is classical for general stable matching. The symmetric case makes the lattice collapse to a single element.
+
+## Looking Forward
+
+The soul-mate algorithm and FCC algorithm are elegant in the abstract. But efficiency depends on answering nearest-neighbor queries quickly. Chapter 5 builds the proximity data structures needed to make this work on graphs (road networks), and Chapter 7 applies the whole framework to real redistricting problems.
+
+The symmetry in the geometric setting also inspires Chapter 6: what happens when the two agent sets are a point set and the entire plane? This leads to stable-matching Voronoi diagrams.
