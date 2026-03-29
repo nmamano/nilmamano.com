@@ -1,0 +1,161 @@
+---
+title: "Proximity Data Structures in Graphs: Nearest Neighbors on Road Networks"
+date: "2026-03-17"
+excerpt: "Using separator hierarchies for planar and sparse-crossing graphs, this chapter builds a reactive nearest-neighbor data structure that enables efficient stable matching on road networks in O(n^1.5 log n) time."
+coverImage: "/blog/thesis-ch5-graphs/cover.png"
+categories: ["research", "algorithms", "dsa", "wip"]
+---
+
+## The Gap Between Theory and Practice
+
+The algorithms in Chapters 3 and 4 are beautiful in the Euclidean plane. The soft nearest-neighbor data structure gives O(log n) per query; geometric matching and TSP run in O(n log n). These bounds rely on the geometric structure of Euclidean space — in particular, on tools like well-separated pair decompositions (WSPD) and range trees that exploit spatial locality.
+
+But many real-world problems don't live in Euclidean space. They live on *graphs*.
+
+Road networks, subway maps, social networks — the relevant distance is *shortest-path distance*, not Euclidean distance. And shortest-path distances don't have the same nice geometric structure. You can't just build a range tree on a graph.
+
+Chapter 5 asks: can we build efficient nearest-neighbor data structures for graphs, specifically to support the soul-mate / FCC algorithm for stable matching on road networks?
+
+<Toc />
+
+## The Reactive Nearest-Neighbor Problem
+
+The FCC algorithm for stable matching needs to answer queries of the form:
+
+> "Among all currently unmatched agents (the *active set*), who is the nearest neighbor of agent x?"
+
+What makes this hard is the word "currently." The active set changes dynamically as agents are matched and removed. We need a data structure that handles both:
+
+- **Nearest-neighbor queries**: given x, return the closest active agent.
+- **Deletions**: remove an agent from the active set when they're matched.
+
+In Euclidean space, there are dynamic data structures for this. In graphs, the problem is harder because shortest-path computations are expensive.
+
+<Callout>**Definition** (Reactive nearest-neighbor, or reactive NN): a data structure for a fixed graph G and a dynamically changing subset P ⊆ V(G) of *sites*, supporting `nearest(v)` (return the site in P nearest to v by shortest-path distance) and `delete(s)` (remove site s from P). The structure *reacts* to deletions, updating its internal state so future queries remain correct.</Callout>
+
+## Separator Hierarchies: The Key Tool
+
+The key to efficient reactive NN on graphs is **separator hierarchies**, a classical tool in graph algorithms.
+
+**Definition**: A *separator* of a graph G is a small set of vertices whose removal disconnects G into two or more components. For planar graphs, the famous planar separator theorem guarantees a separator of size O(√n). Graphs with sparse crossing structures (a generalization that better models road networks) have separators of size O(n^0.5) computable in linear time.
+
+A **separator hierarchy** is a recursive decomposition:
+1. Find a separator S of G.
+2. Remove S; recursively decompose each component.
+3. Represent the result as a tree where each node is a subgraph and children are the components after separator removal.
+
+The tree has O(log n) levels (each level reduces the size by a constant factor), and the separators at each level have total size O(√n) ... let me be more careful.
+
+For a planar graph:
+- Level 0 separator: O(√n) vertices.
+- Level 1 separators: O(√(n/2)) + O(√(n/2)) = O(√n) vertices total.
+- Level k separators: O(√n) total.
+- Total separator vertices across all O(log n) levels: O(√n log n).
+
+This decomposition is the backbone of many efficient graph algorithms — including the reactive NN data structure in Chapter 5.
+
+## The Reactive NN Data Structure
+
+Here's the high-level idea of how the separator hierarchy supports reactive NN:
+
+**Preprocessing**:
+- Build the separator hierarchy for G.
+- For each separator vertex s and each node v in the same or adjacent component, precompute d(s, v) — the shortest-path distance. This takes O(n · |S|) time per level, and O(n^{1.5}) total for planar graphs.
+- For each node v, maintain a list of "closest sites" organized by the hierarchy.
+
+**Query `nearest(v)`**:
+- A site s can only be the nearest to v if s and v are in the same component at some level of the hierarchy, or connected through a separator.
+- Traverse the hierarchy from top to bottom. At each level, check if any site in the current component is closer than the current best.
+- The separator structure limits the search to O(√n) candidates per query.
+
+**Deletion `delete(s)`**:
+- Mark s as deleted.
+- Update the relevant parts of the hierarchy.
+- Future queries skip deleted sites.
+
+<!-- TODO: Consider KaTeX for this equation -->
+**Theorem (Chapter 5)**: For a graph G with a separator hierarchy of total size T(n), the reactive NN data structure supports:
+- Preprocessing in O(T(n)) time.
+- Each `nearest` query in O(√n · log n) time (for planar / sparse-crossing graphs).
+- Each `delete` in O(√n) time.
+
+<!-- TODO: Consider KaTeX for this equation -->
+For n-node graphs with sparse crossing structure (which includes road networks), T(n) = O(n^{1.5}), giving O(n^{1.5} log n) total time for n queries and deletions.
+
+<!-- TODO: add figure showing separator hierarchy decomposition -->
+
+## The Full Algorithm for Geographic Stable Matching
+
+Combining the FCC algorithm (Chapter 4) with the reactive NN data structure (Chapter 5):
+
+**Input**: An n-node graph G (road network), a subset P ⊆ V(G) of k "centers" (district representatives), and a partition problem where each center should be assigned n/k nodes.
+
+**Algorithm**:
+1. Build the separator hierarchy for G. Precompute distances from all separator vertices.
+2. Initialize the reactive NN data structure with all n nodes as sites.
+3. Run the FCC algorithm: maintain a chain; extend by querying the reactive NN for the current chain tail's nearest neighbor; merge when mutual nearest neighbors are found.
+4. After each match, delete the matched pair from the reactive NN structure.
+
+<!-- TODO: Consider KaTeX for this equation -->
+**Total time**: O(n^{1.5} log n) for graphs with sparse crossing structure.
+
+This is the key result of Chapter 5:
+
+<Callout>**Theorem 5.4**: Geographic stable matching on an n-node graph with a sparse crossing graph can be solved in O(n^{1.5} log n) time — substantially better than the O(n²) of Gale-Shapley or naive FCC for large n.</Callout>
+
+## Experimental Validation: Delaware Road Network
+
+The thesis validates the reactive NN approach with experiments on the **Delaware road network** from the DIMACS database — a graph with 48,812 nodes and 60,027 edges.
+
+The experiment compares three algorithms for geographic stable districting:
+1. **Gale-Shapley (GS)**: classical algorithm with precomputed shortest paths.
+2. **Circle-growing (CG)**: a practical heuristic based on growing BFS frontiers simultaneously from all centers.
+3. **FCC with reactive NN**: the theoretically efficient algorithm from this chapter.
+
+Key findings:
+- For small numbers of centers k, Gale-Shapley is fastest (low overhead).
+- For large k (hundreds to thousands of centers), Gale-Shapley runs out of memory (O(nk) space).
+- Circle-growing is the fastest practical algorithm but also runs out of memory for very large k.
+- FCC with reactive NN has nearly flat runtime as k increases — independent of k — making it uniquely suited to instances with many centers.
+
+The FCC algorithm's runtime independence from k is the key advantage: because the reactive NN structure handles deletions efficiently, the algorithm doesn't slow down as more centers fill up.
+
+<!-- TODO: add figure showing experimental runtime comparison -->
+
+## Road Networks as Graphs with Sparse Crossing Structure
+
+A technical point worth explaining: why do road networks have sparse crossing structure?
+
+The **crossing graph** of an embedded graph G is a graph where each edge of G is a node, and two nodes are connected if the corresponding edges cross in the embedding. A graph has *sparse crossing structure* if its crossing graph has bounded degeneracy — informally, if the embedding has few crossing events locally.
+
+Road networks, being roughly planar (roads don't cross often outside of overpasses/underpasses), have sparse crossing structure. The separator theorem for such graphs — giving O(√n)-size separators — was proved by Dujmovic, Eppstein, and Wood.
+
+This is a better model than planar graphs for road networks, because real road networks are *almost* planar but not quite (overpasses exist). The sparse crossing structure assumption accommodates this.
+
+## Closest-Pair Data Structures
+
+Chapter 5 also develops **bichromatic closest-pair** data structures for graphs, supporting:
+- `closest_pair()`: return the pair (u, v) where u is in set A, v is in set B, minimizing d(u, v).
+- `delete(u)` or `delete(v)`: remove an element from A or B.
+
+This is useful for the stable matching setting where we're matching two separate groups (e.g., clients to servers) rather than finding mutual nearest neighbors within a single set.
+
+The bichromatic version follows the same separator hierarchy approach, with preprocessing time O(n^{1.5}) and query time O(√n log n) for planar / sparse-crossing graphs.
+
+## Connection to the Broader Framework
+
+Chapter 5 is the "data structures chapter" — it provides the computational tools that make the theoretical algorithms from Chapters 3 and 4 practical on graphs.
+
+The reactive NN data structure is reused in Chapter 7 (stable redistricting on road networks), where the same algorithm is applied to real geographic data for Texas, Michigan, DC, and Illinois road networks.
+
+The separator hierarchy approach is a general technique, not specific to stable matching. Any algorithm that needs dynamic nearest-neighbor queries on graphs can benefit from this structure, provided the graph has small separators.
+
+## Open Questions
+
+The thesis notes several open problems:
+
+1. Can the O(√n log n) per-query bound be improved? For planar graphs, O(√n) is conjectured to be tight in the worst case.
+2. Can the data structure support insertions as well as deletions? This would enable more general applications.
+3. Can the approach be extended to other graph metrics (e.g., weighted graphs with non-unit edge lengths)?
+
+The current construction handles weighted graphs (shortest-path distances) via Dijkstra preprocessing, but the per-query time might increase with edge weight variance.

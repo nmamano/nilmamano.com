@@ -1,0 +1,152 @@
+---
+title: "Nearest-Neighbor Chain Algorithms: Efficient Geometry via Local Choices"
+date: "2026-03-17"
+excerpt: "By exploiting the nearest-neighbor chain structure and a new soft nearest-neighbor data structure, a suite of geometric problems including TSP can be solved in optimal O(n log n) time."
+coverImage: "/blog/thesis-ch3-nnc/cover.png"
+categories: ["research", "algorithms", "dsa", "wip"]
+---
+
+## The NNC Recipe
+
+Chapter 2 established that local greedy and global greedy produce the same output for problems with deteriorating evaluation functions. Chapter 3 asks the natural follow-up: if they produce the same output, can we use local greedy to build *faster* algorithms?
+
+The answer is yes — dramatically so for geometric problems — and the key is the **nearest-neighbor chain (NNC) algorithm**.
+
+Here's the classical NNC algorithm for hierarchical clustering:
+
+1. Maintain a stack (the "chain") of clusters.
+2. Push an arbitrary cluster onto the stack.
+3. Repeatedly: push the nearest neighbor of the top cluster onto the stack.
+4. If the top two clusters are *mutual nearest neighbors* (MNN) — each is the other's nearest neighbor — merge them. Pop both, push the merged cluster.
+5. Repeat until one cluster remains.
+
+By GLE, this produces the same hierarchical clustering as global greedy (always merging the globally closest pair). And it's efficient: each element is pushed and popped at most twice, so the total number of nearest-neighbor queries is O(n). If each query takes time T(n), the whole clustering runs in O(n · T(n)).
+
+The thesis extends this recipe to a suite of new geometric problems.
+
+<Toc />
+
+## The Soft Nearest-Neighbor Data Structure
+
+The key technical innovation enabling Chapter 3's geometric algorithms is a new data structure: the **soft nearest-neighbor (SNN)**.
+
+A standard nearest-neighbor query is: "given a query point q and a set P of points, return the point in P closest to q."
+
+The soft nearest-neighbor relaxes this:
+
+<Callout>Given a query point q and a point set P, return either: (a) the exact nearest neighbor of q in P, **or** (b) any pair of points (p, p') in P such that d(p, p') &lt; d(q, nearest neighbor of q in P).</Callout>
+
+In other words, the SNN either answers your query correctly, or it "cheats" by pointing out two points in P that are closer to each other than you are to your nearest neighbor.
+
+**Why is this useful?** In the NNC algorithm, we're looking for mutual nearest neighbors to merge. If the SNN reports a pair (p, p') that are very close to each other, those might themselves be MNNs — or at least candidates for early merging. The algorithm can process these pairs and make progress.
+
+**Performance**: The SNN data structure supports queries in O(log n) time in any fixed dimension d, using a data structure based on well-separated pair decomposition (WSPD) and range trees. This is much faster than exact nearest-neighbor in high dimensions.
+
+<!-- TODO: add figure showing SNN data structure operation -->
+
+## Geometric TSP in O(n log n)
+
+The flagship result of Chapter 3 is an **O(n log n) algorithm for geometric TSP** — specifically, for the multi-fragment TSP heuristic on point sets in fixed-dimensional Euclidean space.
+
+Recall from Chapter 2 that multi-fragment TSP is a greedy heuristic that repeatedly merges path fragments by connecting endpoints with the shortest possible edge, until a Hamiltonian cycle is formed. GLE tells us local greedy multi-fragment gives the same tour as global greedy.
+
+The naive implementation sorts all O(n²) possible edges by length and processes them, taking O(n² log n) time. Can we do better?
+
+The thesis introduces the **soft nearest-neighbor chain (SNNC) algorithm**:
+
+1. Maintain a set of path fragments and a stack (the chain).
+2. To extend the chain, query the SNN for the current top fragment endpoint.
+3. If the SNN returns a true nearest neighbor, push it onto the chain. If the top two are mutual nearest neighbors (fragment endpoints that each prefer each other), merge.
+4. If the SNN returns a closer pair (p, p'), merge those — they're an even better choice that GLE lets us take.
+
+The SNNC algorithm runs in O(n log n) time using the SNN data structure. This matches the lower bound of O(n log n) comparisons needed to compute any tour.
+
+This is a significant improvement over O(n²) for large point sets.
+
+<!-- TODO: add figure showing SNNC algorithm progress -->
+
+## Steiner TSP
+
+The **Steiner TSP problem** asks for the shortest tour that visits a set of *required* vertices in a graph (a road network, say), where the tour is allowed to traverse other vertices as shortcuts.
+
+The multi-fragment heuristic extends to this setting: instead of Euclidean distances, use shortest-path distances in the graph.
+
+The NNC algorithm applies here as well. The key challenge is computing nearest-neighbor queries in a graph metric rather than Euclidean space. Chapter 3 shows that, with appropriate graph data structures, the SNNC approach gives an efficient algorithm for Steiner TSP on planar graphs and graphs with sparse crossing structure.
+
+## Motorcycle Graphs
+
+A **motorcycle graph** is a beautiful geometric problem with a physics flavor.
+
+Imagine a set of motorcycles on a plane, each starting at a different point and moving in a fixed direction at a fixed speed. Each motorcycle leaves a *trace* (tire track) behind it. When a motorcycle's path crosses an existing trace, it crashes and stops.
+
+The problem: compute the final set of traces.
+
+<!-- TODO: add figure showing motorcycle graph construction -->
+
+This problem is a key subroutine in computing **straight skeletons** of polygons — a generalization of medial axes used in architectural geometry, roof construction, and font design.
+
+The state-of-the-art algorithm for motorcycle graphs relies on a sweep-line approach. The thesis shows that the motorcycle graph problem can be cast as an instance of the NNC framework:
+
+- Motorcycles interact when one's trace crosses another's path.
+- The "merging" operation corresponds to a crash event.
+- The NNC approach finds these events efficiently.
+
+Using the SNN data structure, the algorithm achieves near-optimal time complexity.
+
+## Server Cover
+
+The **server cover problem** is a geometric covering problem:
+
+- You have a set of *servers*, each with a *capacity* (how many clients it can serve).
+- You have a set of *clients*, each of which must be assigned to a server.
+- A client prefers a closer server. The goal is an assignment where each client is served by a nearby server.
+
+This is essentially a one-sided version of stable matching: only clients have preferences (they prefer closer servers), while servers are indifferent.
+
+The greedy algorithm — repeatedly assign the closest unmatched client-server pair — is efficient when implemented with the NNC approach. The SNN data structure gives O(n log n) total time for the assignment.
+
+## Greedy Shortest Common Superstring
+
+In Chapter 2, the thesis proved GLE for shortest common superstring (SCS): local greedy (merge any pair with locally maximal overlap) gives the same superstring as global greedy.
+
+Chapter 3 gives an efficient *implementation* of this greedy SCS algorithm.
+
+The challenge: computing overlap between all pairs of strings takes O(n² · L) time naively, where L is the maximum string length. Using suffix arrays and the NNC framework, the thesis achieves a more efficient implementation:
+
+- Build a suffix array for all strings concatenated together.
+- Use the NNC to find maximal overlaps without computing all pairwise overlaps explicitly.
+
+The details involve careful use of suffix array techniques, but the NNC structure keeps the algorithm efficient.
+
+## Geometric Matching
+
+**Geometric matching** asks: given n points in the plane (n even), pair them up to minimize the total length of matched pairs.
+
+Again, the NNC framework applies. The mutual nearest-neighbor pairs form the natural candidates for matching. The SNNC approach, with the SNN data structure, gives an efficient greedy matching algorithm.
+
+The thesis also studies bichromatic geometric matching (match red points to blue points) and shows similar efficiency improvements using the SNN data structure.
+
+## The NNC Recipe Summarized
+
+Chapter 3 ends with a useful meta-theorem: an informal "recipe" for when the NNC approach works and how to apply it.
+
+The recipe requires:
+1. **A GLE result**: local greedy equals global greedy for your problem (from Chapter 2).
+2. **An NNC structure**: the problem can be cast as repeatedly merging mutual nearest neighbors.
+3. **A nearest-neighbor data structure**: ideally the SNN, giving O(log n) per query.
+4. **Reducibility**: merging a pair of mutual nearest neighbors doesn't disturb other MNN relationships. This is the key property ensuring the chain-based approach is correct.
+
+<Callout>The **reducibility** property is essential: if clusters A and B are mutual nearest neighbors and we merge them into AB, then for any other cluster C, the distance from C to AB is at most d(C, A) or d(C, B). Merging doesn't create new "surprise neighbors." Reducibility holds for a wide class of cluster-distance metrics and for geometric problems where distances satisfy the triangle inequality.</Callout>
+
+When reducibility holds, the NNC algorithm's chain can grow and shrink efficiently without ever needing to restart from scratch.
+
+## Impact and Context
+
+The O(n log n) geometric TSP result is particularly striking because:
+
+1. It matches the comparison-based lower bound.
+2. It applies to the multi-fragment heuristic, which is used in practice.
+3. It works in any fixed dimension, not just 2D.
+4. The SNN data structure is reusable for other problems.
+
+More broadly, Chapter 3 demonstrates that GLE isn't just a theoretical curiosity — it's a tool for algorithm design. Recognizing that a problem satisfies GLE lets you replace expensive global comparisons with local ones, often leading to asymptotically faster algorithms.

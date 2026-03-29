@@ -1,0 +1,132 @@
+---
+title: "Voronoi Diagrams with Appetites: When Regions Have a Prescribed Size"
+date: "2026-03-17"
+excerpt: "Stable-matching Voronoi diagrams extend the classic Voronoi construction to sites with prescribed area quotas, resulting in cells that can be non-convex and disconnected, with worst-case quadratic combinatorial complexity."
+coverImage: "/blog/thesis-ch6-voronoi/cover.png"
+categories: ["research", "algorithms", "math", "wip"]
+---
+
+## The Classic Voronoi Diagram
+
+The Voronoi diagram is one of the most elegant structures in computational geometry. Given a set of *sites* (points in the plane), it partitions the plane into regions: every point belongs to the region of its nearest site.
+
+This is the mathematical version of the *post office problem* — if you have a set of post offices scattered around a city, the Voronoi diagram tells you which post office is closest to any given address.
+
+Voronoi cells have beautiful properties: they're convex, they tile the plane cleanly, and they can be computed efficiently in O(n log n) time. They've been used in everything from ecology to urban planning to computer graphics.
+
+But there's a catch. In the real world, post offices have capacity limits.
+
+<Toc />
+
+## Adding Appetites
+
+What if each post office can only serve a fixed number of addresses? The standard Voronoi diagram doesn't respect this: it might assign ten thousand addresses to one post office and ten to another.
+
+This is where **stable-matching Voronoi diagrams** come in. The idea was introduced by Hoffman, Holroyd, and Peres: give each site an *appetite* — a prescribed area it should cover — and find a partition of the plane that:
+
+1. Assigns each site a region with area equal to its appetite.
+2. Is *stable*: there is no site-point pair that would both prefer each other over their current assignment.
+
+Stability here means the same thing as in Chapter 4: a site s and a point p form a *blocking pair* if p isn't assigned to s, but p is closer to s than some points s is serving, *and* s is closer to p than whichever site p is assigned to (or p is unmatched). If no such pair exists, the assignment is stable.
+
+The resulting diagram is called the **stable-matching Voronoi diagram** of (S, A), where S is the set of sites and A gives each site its appetite.
+
+<!-- TODO: Add figure - side-by-side colorful diagrams showing SMVD with appetite=1 (left, overlapping disks) and appetite=2 (right, larger cells) for 25 sites -->
+
+## How It Looks
+
+The first thing to notice is that stable-matching Voronoi cells are *not* convex. They're not even necessarily connected. A single site's region can be scattered across disconnected pieces of the plane, looking nothing like the clean polygonal cells of a standard Voronoi diagram.
+
+This happens because the circle-growing process — which we'll describe shortly — can be blocked and rerouted by other sites' regions, leaving isolated fragments that eventually get assigned to a site that "grew past" them.
+
+<!-- TODO: Add figure - comparison of SMVD (left, colorful irregular cells) vs standard Voronoi (right, clean polygons) for same 25 sites -->
+
+There's a nice limiting relationship: as all appetites grow to infinity, the stable-matching Voronoi diagram converges to the standard Voronoi diagram. The standard Voronoi diagram is just the special case where each site has unlimited appetite.
+
+## The Circle-Growing Interpretation
+
+There's a beautiful way to visualize how a stable-matching Voronoi diagram forms, due to Hoffman et al.:
+
+<Callout>Start growing circles from all sites simultaneously, at the same rate. Match each point to the first circle that reaches it. When a site's circle has enclosed area equal to its appetite, that circle stops growing. The process is a continuous analogue of the deferred-acceptance (Gale-Shapley) algorithm: sites propose to points in order of proximity, and points accept their first proposal.</Callout>
+
+Geometrically, this process can be modeled as growing **cones** in 3D. Embed the sites in the plane z = 0 and grow an upward cone from each site. The stable-matching Voronoi diagram is the *lower envelope* of these cones — but unlike in the standard Voronoi case, the cones are cut off at finite height (each cone stops when its footprint reaches the site's appetite). The height at which each cone is cut varies by site.
+
+<!-- TODO: Add figure - 3D view of truncated cones forming the SMVD of 3 sites (green, purple, tan wedge shapes) -->
+
+## The Structure of the Diagram
+
+A stable-matching Voronoi diagram has three types of elements:
+
+**Faces** — maximal connected regions assigned to a single site. Because cells can be disconnected, a site may have multiple faces. There are also *empty faces* — regions not assigned to any site (present when total appetite is less than total area).
+
+**Edges** — boundaries between faces. They come in two flavors:
+- *Straight edges* lie along perpendicular bisectors between two sites (same as standard Voronoi).
+- *Curved edges* lie along the boundary of a site's *bounding disk* — the smallest disk centered at a site that contains its entire stable cell.
+
+**Vertices** — points where three or more edges meet.
+
+The presence of curved edges is the key structural difference from standard Voronoi diagrams, and is what makes the cells potentially non-convex and disconnected.
+
+## Combinatorial Complexity: How Complicated Can These Diagrams Be?
+
+In a standard Voronoi diagram for n sites, the number of faces, edges, and vertices is O(n) — linear. This follows from Euler's formula applied to the planar subdivision.
+
+For stable-matching Voronoi diagrams, things are much worse.
+
+<!-- TODO: Consider KaTeX for this equation -->
+**Upper bound (Theorem 6.11):** A stable-matching Voronoi diagram for n sites has O(n^{2+ε}) faces, edges, and vertices, for any ε > 0.
+
+The proof uses the fact that the diagram is the lower envelope of n truncated cones. A classical result by Sharir and Agarwal on lower envelopes of algebraic surfaces gives the O(n^{2+ε}) bound.
+
+<!-- TODO: Consider KaTeX for this equation -->
+**Lower bound (Theorem 6.14):** The worst-case complexity is Ω(n²), even when all sites have the same appetite.
+
+<Callout>The lower bound construction is elegant: arrange n/2 sites in a tight ring (the "X sites") and n/2 sites evenly spaced around a larger circle (the "Y sites"). Each Y site fills its appetite with a disk-shaped region, while each X site ends up with long thin wedge-shaped regions that get cut by the Y disks into many separate pieces, yielding Θ(n²) faces total. Stable-matching Voronoi diagrams can be quadratically more complex than standard Voronoi diagrams.</Callout>
+
+## Computing the Diagram
+
+There's an algorithmic obstacle: **the bounding disk radii generally can't be computed exactly in an algebraic model of computation.** The radius of a site's bounding disk satisfies a transcendental equation (involving inverse cosines), so no exact algebraic formula exists.
+
+The thesis addresses this in three ways:
+
+**1. Discrete algorithm with a geometric primitive (O(n³ log n))**
+
+The main algorithm builds the diagram incrementally, processing sites in order of increasing bounding disk radius (a "proper ordering"). At each step, it:
+1. Computes the *estimate radius* of each remaining site (using a black-box geometric primitive that can be numerically approximated).
+2. Selects the site with the smallest estimate radius.
+3. Computes its stable cell from the current standard Voronoi diagram of remaining sites and already-processed bounding disks.
+
+The geometric primitive — given a convex polygon, a point, an appetite, and a set of already-placed disks, find the radius of the disk that fills the appetite within the polygon minus the disks — can be approximated numerically by binary search.
+
+Total runtime: **O(n³ log n)** plus O(n²) calls to the geometric primitive.
+
+**2. Polygonal convex distance functions (exact, O(n³ log n))**
+
+For distances defined by convex polygons (such as the L₁ "Manhattan" or L∞ "Chebyshev" metrics), the bounding disk radii *can* be computed exactly. In this setting, the bounding disks become *bounding balls* (polygonal shapes), all edges are straight, and the algorithm runs in exact arithmetic.
+
+This includes a binary search procedure on a triangulation of the feasible region, which finds the exact scaling factor.
+
+**3. Discretized plane**
+
+<!-- TODO: Consider KaTeX for this equation -->
+Discretize the plane into an m × m grid and match pixels to sites. This reduces to the geometric stable matching problem from Chapter 4, which can be solved using the first-choice chain algorithm in O(m² log⁴ m) time.
+
+## Why It Matters
+
+The standard Voronoi diagram solves the post office problem without capacity constraints. Add capacity constraints and you get a stable-matching Voronoi diagram — a more realistic model for many real applications:
+
+- **Redistricting**: sites are polling stations or district centers; appetites represent equal population quotas.
+- **Service area design**: hospitals, fire stations, or delivery hubs with limited throughput.
+- **Load balancing**: routing requests to servers where each server has a capacity.
+
+Chapter 7 develops the redistricting application in detail.
+
+The key theoretical takeaway: allowing prescribed region sizes comes at a steep price. Cells can be non-convex, disconnected, and O(n²) in total complexity — far more complex than standard Voronoi cells. The standard Voronoi diagram is the comfortable special case; once you add capacities, the geometry gets messy.
+
+## What's Next
+
+With the theory of stable-matching Voronoi diagrams in hand, Chapter 7 applies this framework to a real-world problem: **political redistricting**.
+
+The idea: model a territory as a graph or grid, set district centers as sites, and use stable matching to assign voters to districts with equal population. Stability becomes the new notion of compactness — fair districts where neither voters nor district centers would prefer to be matched differently.
+
+<!-- TODO: flag: the figure references in this post (6.1–6.3) are images from the thesis PDF and need to be recreated or adapted for web display -->

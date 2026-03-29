@@ -46,6 +46,16 @@ const projects = [
     external: true,
   },
   {
+    id: "isomux",
+    title: "Isomux: Your Agent Office",
+    tagline:
+      "Friction going from 1 Claude Code to 4+? Isomux is your agent office. Free & open source, runs locally, works with your Claude subscription.",
+    image: "/projects/isomux.png",
+    href: "https://isomux.com",
+    cta: "Try it",
+    external: true,
+  },
+  {
     id: "wallgame",
     title: "Wall Game: Online Board Game with AI",
     tagline:
