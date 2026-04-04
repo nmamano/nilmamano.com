@@ -1,50 +1,69 @@
 ---
-title: "Isomux Architecture"
+title: "Isomux Design and Architecture"
 date: "2026-04-03"
 excerpt: "A detailed walkthrough of how Isomux manages multiple concurrent Claude Code agents from a single Bun process, using the Claude Agent SDK, WebSockets, and an isometric office UI."
-coverImage: "/blog/isomux/cover.png"
-categories: ["ai", "swe", "wip"]
+coverImage: "/blog/isomux/cover.jpeg"
+categories: ["ai", "swe"]
 ---
-
-I've been using [Claude Code](https://docs.anthropic.com/en/docs/claude-code) as my primary coding tool. The main friction? Terminal management, especially when some tasks can only be done remotely via ssh (like [model training](/blog/wall-game-ai)).
-
-Tmux helped; cmux was a clear improvement. For reference, this is my cmux setup: one horizontal tab per main project, with multiple vertical panes (and tabs) per project:
-
-<BlogImage src="/blog/isomux/cmux-setup.png" alt="cmux setup with multiple panes and tabs" />
-
-Skill issue, I know, but trying to keep good uptime on multiple agents felt a bit claustrophobic.
-
-Isomux is my solution: an office metaphor for agents, with isometric graphics for the nostalgia hit.
-
-Please see it in action at [isomux.com/demo](https://isomux.com/demo) before reading on.
-
-<BlogImage src="/blog/isomux/cover.png" alt="Isomux office view with agents at desks" />
-
-Each agent sits at a desk. You see who is working, who's idle (sleeping), and who needs you (hand raised) at a glance.
-
-The thesis is that by anthropomorphizing agents, we reduce cognitive load; we're more used to coordinating humans than terminals.
-
-This post dives into the architecture. We'll trace how isomux:
-
-- bootstraps a Claude Code session from the Agent SDK,
-- injects per-agent identity and working directory via launcher scripts,
-- multiplexes all agent events over a single WebSocket,
-- derives agent state from SDK stream events,
-- handles abort and session recovery for a tricky race condition,
-- enforces safety hooks as pre-tool-call middleware, and
-- keeps the browser in sync with a Redux-like store.
-
-The full source is on [GitHub](https://github.com/nmamano/isomux). It's free, open source, and designed with self-hosting in mind.
-
-<Callout>
-Isomux was built by Claude Code agents running inside isomux since the first version was working, a few commits in. Developing a dev tool from itself is fun!
-</Callout>
 
 <Toc />
 
+## Introduction
+
+I have finally reached Level 6 in [Steve Yegge's hierarchy](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04)!
+
+<BlogImage src="/blog/isomux/steve_hierarchy.jpeg" alt="Steve Yegge's hierarchy of software engineering needs"/>
+
+I was at Level 5 for about 5 months, using Claude Code as my primary coding tool.
+
+The main friction with getting to Level 6 was terminal management - especially for tasks that can only be done remotely, like [model training](/blog/wall-game-ai).
+
+Tmux - recommended by Yegge in his post about the hierarchy - helped; cmux was even better. For reference, this is my cmux setup: one horizontal "tab" per main project, with multiple vertical panes and tabs per project:
+
+<BlogImage src="/blog/isomux/cmux-setup.png" alt="cmux setup with multiple panes and tabs" />
+
+But trying to keep good uptime on multiple agents felt... cramped (skill issue, I know).
+
+What actually did it for me was:
+
+1. Building my own browser-based agent orchestration.
+2. Running said layer in a home server inside a Tailscale network with my laptop and phone.
+
+This simplifies the two ends of my workflow:
+
+- What device I'm on: all devices see the same agents and conversations.
+- Claude's environment: all agents run on the same machine.
+
+Two great things not to have to worry about!
+
+But my custom-made orchestration, _Isomux_ (Isometric Multiplexer), has something extra: it's cute.
+
+<BlogImage src="/blog/isomux/cover.jpeg" alt="Isomux office view with agents at desks" />
+
+I spend all day in the agent management layer. It had to be cute.
+
+The idea is to create an office metaphor for agents - with isometric graphics for the nostalgia hit. Each agent sits at a desk. You see who is working, who's sleeping, and who has their hand raised at a glance.
+
+The thesis is that **by anthropomorphizing agents, we reduce cognitive load**; we're more used to coordinating humans than terminals. It's working for me.
+
+Please play with it at [isomux.com/demo](https://isomux.com/demo) before reading on. The source is on [GitHub](https://github.com/nmamano/isomux). It's designed with self-hosting in mind.
+
+<Callout>
+Isomux is being built by Claude Code agents running inside isomux since 3h after the project was started. Developing a dev tool from itself is fun!
+</Callout>
+
 ## Architecture Overview
 
-Isomux is a **single Bun process** that serves the UI, manages agents in-process via the SDK, and talks to browsers over WebSocket. There's no database - just in-memory state backed by flat files.
+Isomux is a **single [Bun](https://bun.com/) process** that serves the browser frontend, manages agent lifecycles, and talks to browsers over WebSocket.
+
+This post dives into the architecture. We'll trace how isomux:
+
+- runs Claude Code sessions with the Claude SDK,
+- handles agent identity and persistence,
+- multiplexes all agent events over WebSocket,
+- derives agent state from SDK stream events,
+- enforces safety hooks as pre-tool-call middleware, and
+- keeps the browser in sync with a Redux-like store.
 
 | Component | Role |
 |---|---|
@@ -55,13 +74,39 @@ Isomux is a **single Bun process** that serves the UI, manages agents in-process
 | **React UI** | Isometric office view (SVG), conversation view, embedded terminal |
 | **Landing page** | [isomux.com](https://isomux.com) - project homepage with interactive demo |
 
-The server process is the single source of truth. Browsers are stateless relays - when one connects, the WebSocket `open` handler sends it a `full_state` snapshot, and from there incremental events keep it in sync. Multiple browsers (laptop, phone, another tab) all see the same thing in real time.
+Browsers are stateless relays - when one connects, the WebSocket `open` handler sends it a `full_state` snapshot, and from there incremental events keep it in sync.
 
 ```
 Browser A  ──┐                      ┌── Agent 1 (SDK session)
 Browser B  ──┼── WebSocket ── Bun ──┼── Agent 2 (SDK session)
 Phone      ──┘              server  └── Agent 3 (SDK session)
 ```
+
+The file system is the source of truth. If the server crashes, nothing is lost (I constantly ask the agents to restart their own server while building isomux, and pick conversations right back up).
+
+## How the Claude Agent SDK Works
+
+The [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) lets you run Claude Code sessions programmatically from JavaScript. You create a session, send messages, and get responses.
+
+But unlike a simple request/response API, the SDK gives you a **stream of events**.
+
+When you send a message, you don't get a single response back. You get events over time: "assistant started thinking," "assistant wants to use a tool," "tool produced output," "assistant is done."
+
+A single user message can trigger a stream that last minutes. The SDK exposes this as an async iterator you read in a loop.
+
+Sessions have an ID. If your application crashes or restarts, you can resume a session by its ID and the conversation history carries over.
+
+### V1 vs V2
+
+As of April 2026, the SDK has two versions. V1 (`query()`) is a fire-and-forget async call: you send a message and it runs to completion. There's no handle to grab, so there's no way to interrupt it.
+
+V2 (`unstable_v2_createSession`) gives you a persistent session object with `send()`, `stream()`, and `close()`.
+
+This makes abort possible: call `close()` to kill the stream, then `resumeSession(sessionId)` to resume that same stream again, perhaps with a new user message at the end. In contrast, V1's `query()` always runs to completion.
+
+Isomux needs the ability to abort agents (e.g., the user does Ctrl+C to add, "Sorry, I meant..."), so we chose V2 even though it's in alpha.
+
+For now, V2 seems a bit buggy. Sometimes, the message order gets fumbled. [Here](https://github.com/nmamano/isomux/blob/62953229195fc50781eea1f384322c64953ecf28/docs/sdk-investigation.md) is an example of the kind of bugs I ran into.
 
 ## The Agent Lifecycle
 
@@ -117,10 +162,6 @@ function createSession(managed: ManagedAgent, resumeSessionId?: string) {
 
 This is admittedly a hack - it relies on the SDK spawning the launcher as a subprocess - but works reliably.
 
-<Callout>
-The SDK's V2 API (`unstable_v2_createSession`) is in alpha, which means working around missing features, undocumented behavior (the abort race condition mentioned below), and likely breaking changes. But full Claude Code sessions with tools, MCP servers, and project context, managed programmatically, made it worthwhile.
-</Callout>
-
 ### Agent identity
 
 The system prompt looks like this, but with the parameters expanded:
@@ -160,6 +201,8 @@ Further, through the `logDir` paths, it has access to the current conversation o
 
 This means you can ask an agent, _"What do you think of OTHER_AGENT's approach?"_ and it just works - but we are getting ahead of ourselves.
 
+<BlogImage src="/blog/isomux/inter-agent.jpeg" alt="Inter-agent communication via shared logs" />
+
 ### Agent persistence
 
 The `~/.isomux/` folder contains:
@@ -182,109 +225,22 @@ Past conversations can be resumed from the JSONL logs with `/resume` or by right
 
 Isomux persists every conversation forever by design. My `~/.isomux/` is 22MB. You never know when it could be useful.
 
-## The WebSocket Multiplexer
+### The SDK stream event loop
+
+Isomux reads each agent's event stream in an async loop, converting SDK events into two things browsers care about: **log entries** for the conversation view, and **agent state** for the character animations and notifications (thinking, tool calling, waiting, etc.).
+
+## The WebSocket Layer
 
 The server talks to connected browsers via web sockets.
 
 - The server notifies all browsers of state updates via a single `broadcast` function.
 - The clients give commands to the server, which are handled in `handleCommand()`:
 
-```typescript
-// server/index.ts
-
-async function handleCommand(cmd: ClientCommand) {
-  switch (cmd.type) {
-    case "send_message":
-      // Don't await — let it stream in the background
-      AgentManager.sendMessage(cmd.agentId, cmd.text, cmd.username);
-      break;
-    case "spawn":
-      await AgentManager.spawn(cmd.name, cmd.cwd, cmd.permissionMode, cmd.desk, ...);
-      break;
-    // ...
-  }
-}
-```
-
 The `send_message` command - where a user sends a message to the LLM - is deliberately not awaited. Calling it without `await` kicks off the async work and returns immediately, so the event loop stays free to process other commands (spawns, aborts, messages to other agents, etc.) while the SDK streams the response in the background. Most other command types are handled synchronously.
 
-## Streaming and State Derivation
+## QoL features
 
-### Consuming the SDK Stream
-
-When a message is sent to an agent, `consumeStream` enters an async loop that reads SDK events and converts them into log entries:
-
-```typescript
-// agent-manager.ts
-async function consumeStream(agentId: string, managed: ManagedAgent) {
-  const gen = managed.streamGeneration;
-  managed.streaming = true;
-  try {
-    for await (const msg of managed.session.stream()) {
-      if (!agents.has(agentId) || gen !== managed.streamGeneration) break;
-      processMessage(agentId, msg);
-    }
-  } catch (err: any) {
-    // ... error handling (see abort recovery below) ...
-  } finally {
-    if (managed.streamGeneration === gen) {
-      managed.streaming = false;
-      managed.aborting = false;
-    }
-  }
-}
-```
-
-The `streamGeneration` counter is the key to correctness here. When an abort happens mid-stream, a new `consumeStream` may start before the old one's `finally` block runs. Without the generation check, the old stream's cleanup would clobber the new stream's flags.
-
-### State Machine
-
-The isometric characters animate based on agent state: sleeping when idle, typing when thinking, waving when waiting for input. State is **derived from SDK events**, not explicitly tracked by the SDK:
-
-```typescript
-function deriveState(msg: SDKMessage): AgentState | null {
-  switch (msg.type) {
-    case "assistant": {
-      const content = msg.message?.content;
-      if (content.some((b: any) => b.type === "tool_use")) {
-        return "tool_executing";
-      }
-      return "thinking";
-    }
-    case "tool_progress":
-      return "tool_executing";
-    case "result":
-      return "waiting_for_response";
-    default:
-      return null;
-  }
-}
-```
-
-State transitions drive both the UI animations and the attention system: when an agent moves from a "working" state (`thinking`, `tool_executing`) to an "attention" state (`idle`, `error`, `waiting_for_response`) while you're looking at a different agent, it gets flagged with a notification dot.
-
-### Abort and Session Recovery
-
-There's a subtle race condition in the Agent SDK. When you abort a stream and then send a new message, the SDK can throw an "aborted by user" error on the *new* stream - a ghost from the previous abort. Worse, it may have internally buffered the `send()` call, causing an off-by-one: the response you get is for the *previous* message, not the one you just sent.
-
-Isomux handles this by detecting the stale abort error and recreating the session:
-
-```typescript
-// Inside consumeStream's catch block
-const isAbortError = /abort/i.test(err.message || "");
-if (isAbortError) {
-  console.warn(`Agent ${agentId}: post-abort stream error, recreating session`);
-  try { managed.session?.close(); } catch {}
-  managed.session = sessionId
-    ? createSession(managed, sessionId)
-    : createSession(managed);
-  updateState(agentId, "waiting_for_response");
-}
-```
-
-Recreating the session with the same `sessionId` preserves the conversation history while clearing the SDK's internal buffering state.
-
-## Safety Hooks
+### Safety Hooks
 
 I run all my agents in `bypassPermissions` mode. Isomux injects `PreToolUse` hooks into every SDK session that block dangerous commands before they execute.
 
@@ -292,7 +248,60 @@ I run all my agents in `bypassPermissions` mode. Isomux injects `PreToolUse` hoo
 2. **Filesystem safety**: blocks `rm -rf` on root/home paths while allowing it on temp directories.
 3. **Isomux config protection**: blocks all writes to `~/.isomux/`, since that directory is managed by the server. Read operations are allowed (agents need to read `agents-summary.json` to discover each other).
 
+The embedded terminal is very handy when you need to run one of the blocked commands.
+
+<BlogImage src="/blog/isomux/embedded-terminal.jpeg" alt="Embedded terminal in Isomux" />
+
+### Skills
+
+In Claude code, skills can come from a few places, some hardcoded and some discovered dynamically.
+
+There is a hierarchy that determines which one you see if there's a name clash. From highest to lowest priority:[^1]
+
+[^1]: MCP skills and commands live in their own namespace so they never collide with skills (e.g. `/mcp__github__list_prs`).
+
+1. **Hardcoded commands**: `/clear`, `/resume`, etc. These are not actually skills because they are not a prompt - the logic is hardcoded in the CLI tool.
+2. **Enterprise skills**.
+3. **User skills** (`~/.claude/skills/`).
+4. **Project skills** (`.claude/skills/`). They are based on Claude Code's cwd.
+5. **Claude code bundled skills**: `/review`, `/simplify`, `/loop`, etc.
+
+In addition to dynamically fetching all these skills (except Enterprise), I have added my own tier of **isomux-bundled skills**, which have priority 4.5.
+
+I added skills like:
+
+- `/isomux-peer-review`: tells the agent to read the ongoing conversation with another agent and give feedback.
+- `/isomux-all-hands`: shows what everyone is working on.
+
+### Voice to speech
+
+One advantage of the frontend being browser-based is that we can leverage the existing voice-to-text APIs.
+
+The only issue with this is that Chrome won't let you use it if over HTTP unless it is in localhost. This is fine when running isomux locally, as you access it on localhost:4000, but has an annoying interaction with Tailscale.
+
+With Tailscale, I access isomux at port 4000 of my server's localhost instead of my own, which is inside the Tailscale network. However, Chrome doesn't care about that and still blocks it.
+
+The workaround is to get a TLS certificate for your server, and connecting through it. This is a common issue, so there are established workarounds for it.
+
 ## The Frontend
+
+I've been having fun leaning into the skeuomorphic elements:
+
+- Click the moon through the window to toggle dark mode.
+- Click the corkboard to open the todo list.
+- Click the framed sign on the wall to edit the "office rules" (the office-wide system prompt).
+- Click the neon sign to visit [isomux.com](https://isomux.com).
+- Opus agents have a book; Haiku agents have crayons.
+
+### SVG graphics
+
+Claude's SVG skills and understanding of isometric geometry is genuinely good.
+
+The entire scene was written by Claude - ~1,600 lines of raw coordinates, bezier curves, and animate tags. I didn't use any libraries, assets, or tools.
+
+For me, the highlight is the neon sign. It one-shotted the skewed font, the light "diffusion", and the atmospheric flickering. Then, I asked it to add ligaments between letters for realism, and, even though it took some iterations, its first intuition for their location and shape was already spot on.
+
+That said, Claude's SVG capabilities are a lot more spiky than coding. It sometimes fails and thrash at trivial tasks, like moving the window a few pixels over. It's like if Claude sometimes got wrong the Fizz Buzz test.
 
 ### Redux-Like Store
 
@@ -334,10 +343,16 @@ Ergonomics are important. The keyboard shortcuts I use the most are:
 
 - Tab and Shift+Tab to rotate conversations between agents in the room.
 - Hold Ctrl+Space for voice-to-text prompting.
+- Ctrl+C to interrupt the agent.
 
 On mobile, left and right swipe gestures replace Tab and Shift+Tab.
 
 ## Final Thoughts
 
+Even if nobody else uses Isomux - do so at your own peril, it's not tested beyond my setup - it provides a ton of value just to myself. There's no feature pulling me back to raw Claude Code.
 
-If you want to try it: [isomux.com](https://isomux.com).
+We'll all be working with agents, and it feels great to have my own malleable launching point. I don't care if I don't like Anthropic's implementation of, say, cron-based agentic tasks. I just implement my version here.
+
+That said, I think Isomux - and Tailscale - _can_ provide real value to people going from Level 5 to 6.
+
+To try: [isomux.com](https://isomux.com).
