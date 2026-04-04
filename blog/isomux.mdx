@@ -71,7 +71,7 @@ But unlike a simple request/response API, the SDK gives you a **stream of events
 
 When you send a message, you don't get a single response back. You get events over time: "assistant started thinking," "assistant wants to use a tool," "tool produced output," "assistant is done."
 
-A single user message can trigger a stream that last minutes. The SDK exposes this as an async iterator you read in a loop.
+A single user message can trigger a stream that lasts minutes. The SDK exposes this as an async iterator you read in a loop.
 
 Sessions have an ID. If your application crashes or restarts, you can resume a session by its ID and the conversation history carries over.
 
@@ -198,7 +198,7 @@ The `~/.isomux/` folder contains:
 
 These files are kept consistent with the state sent to the clients.
 
-When a browser first connects, it receives a full snapshot of the office containing every the settings of every agent, their logs, and office-wide settings.
+When a browser first connects, it receives a full snapshot of the office containing the settings of every agent, their logs, and office-wide settings.
 
 On server restart, agents are restored from `agents.json` and their SDK sessions are recreated.
 
@@ -221,7 +221,51 @@ The server talks to connected browsers via web sockets.
 
 The `send_message` command - where a user sends a message to the LLM - is deliberately not awaited. Calling it without `await` kicks off the async work and returns immediately, so the event loop stays free to process other commands (spawns, aborts, messages to other agents, etc.) while the SDK streams the response in the background. Most other command types are handled synchronously.
 
-## QoL features
+## The Frontend
+
+I've been having fun leaning into the skeuomorphic elements:
+
+- Click the moon through the window to toggle dark mode.
+- Click the corkboard to open the todo list.
+- Click the framed sign on the wall to edit the "office rules" (the office-wide system prompt).
+- Click the neon sign to visit [isomux.com](https://isomux.com).
+- Opus agents have a book; Haiku agents have crayons.
+
+### SVG graphics
+
+Claude's SVG skills and understanding of isometric geometry is genuinely good.
+
+The entire scene was written by Claude - ~1,600 lines of raw coordinates, bezier curves, and animate tags. I didn't use any libraries, assets, or tools.
+
+For me, the highlight is the neon sign. It one-shotted the skewed font, the light "diffusion", and the atmospheric flickering. Then, I asked it to add ligaments between letters for realism, and, even though it took some iterations, its first intuition for their location and shape was already spot on.
+
+That said, Claude's SVG capabilities are a lot more spiky than coding. It sometimes fails and thrashes at trivial tasks, like moving the window a few pixels over. It's like if Claude sometimes got wrong the Fizz Buzz test.
+
+### Redux-Like Store
+
+The React frontend uses a `useReducer` store where **server messages are actions**. The same `ServerMessage` types that flow over the WebSocket are dispatched directly into the reducer.
+
+This eliminates the usual action-creator boilerplate. Adding a new server event type automatically works end-to-end: define the message on the server, add a case to the reducer, done.
+
+The store also manages local-only state: input drafts (preserved when switching between agents), attention tracking, and the focused agent.
+
+### Mobile app
+
+I am optimizing the office layout for phone screens.
+
+For example, in the browser, you can use Tab and Shift+Tab to rotate conversations between agents in the room. On mobile, Tab and Shift+Tab are replaced by left and right swipe gestures.
+
+There's no native app yet, but I use an Iphone/safari feature that gets 80% of the way there:
+
+Go to the frontend on your browser, then in the browser menu, find the option "Add to home screen." This turns the website into a "Web App". Here is a [demo](https://x.com/Nil053/status/2039996579965542516/video/1) of what it looks like.
+
+## QoL Features
+
+So far, we described a working architecture, but that's only half of the work; the other half is making it a place you actually want to spend 8 hours a day.
+
+Things like autocomplete on slash commands or an embedded terminal start to matter a lot.
+
+Here are some of the features I added for my own convenience.
 
 ### Safety Hooks
 
@@ -256,7 +300,7 @@ I added skills like:
 - `/isomux-peer-review`: tells the agent to read the ongoing conversation with another agent and give feedback.
 - `/isomux-all-hands`: shows what everyone is working on.
 
-### Voice to speech
+### Voice prompting
 
 One advantage of the frontend being browser-based is that we can leverage the existing voice-to-text APIs.
 
@@ -266,85 +310,19 @@ With Tailscale, I access isomux at port 4000 of my server's localhost instead of
 
 The workaround is to get a TLS certificate for your server, and connecting through it. This is a common issue, so there are established workarounds for it.
 
-More details on [isomux.com](https://isomux.com).
-
-## The Frontend
-
-I've been having fun leaning into the skeuomorphic elements:
-
-- Click the moon through the window to toggle dark mode.
-- Click the corkboard to open the todo list.
-- Click the framed sign on the wall to edit the "office rules" (the office-wide system prompt).
-- Click the neon sign to visit [isomux.com](https://isomux.com).
-- Opus agents have a book; Haiku agents have crayons.
-
-### SVG graphics
-
-Claude's SVG skills and understanding of isometric geometry is genuinely good.
-
-The entire scene was written by Claude - ~1,600 lines of raw coordinates, bezier curves, and animate tags. I didn't use any libraries, assets, or tools.
-
-For me, the highlight is the neon sign. It one-shotted the skewed font, the light "diffusion", and the atmospheric flickering. Then, I asked it to add ligaments between letters for realism, and, even though it took some iterations, its first intuition for their location and shape was already spot on.
-
-That said, Claude's SVG capabilities are a lot more spiky than coding. It sometimes fails and thrash at trivial tasks, like moving the window a few pixels over. It's like if Claude sometimes got wrong the Fizz Buzz test.
-
-### Redux-Like Store
-
-The React frontend uses a `useReducer` store where **server messages are actions**. The same `ServerMessage` types that flow over the WebSocket are dispatched directly into the reducer:
-
-```typescript
-// store.tsx
-export function StoreProvider({ children }: { children: ReactNode }) {
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-  useEffect(() => {
-    connect((msg: ServerMessage) => {
-      dispatch(msg as Action);  // Server messages are actions
-    });
-  }, []);
-}
-```
-
-This eliminates the usual action-creator boilerplate. The reducer handles `agent_added`, `agent_updated`, `log_entry`, `full_state`, and other server events directly.
-
-The store also manages local-only state: input drafts (preserved when switching between agents), attention tracking, and the focused agent.
+More details on the Tailscale setup, including https, on [isomux.com](https://isomux.com).
 
 ### Attention tracking and notifications
 
-The attention system is simple but effective. An agent "needs attention" when it transitions from a working state to a terminal state while the user is looking at a different agent:
-
-```typescript
-// In the reducer
-if (wasWorking && state.focusedAgentId !== action.agentId) {
-  needsAttention.add(action.agentId);
-}
-```
+The attention system is simple but effective. An agent "needs attention" when it transitions from a working state to a terminal state while the user is looking at a different agent.
 
 On the office view, agents needing attention get a pulsing indicator. Combined with sound notifications (when the browser tab is hidden), you never miss when an agent finishes or gets stuck.
-
-### Ergonomics
-
-Given how much I use isomux, common interactions should be easy. The keyboard shortcuts I use the most are:
-
-- Hold Ctrl+Space for voice-to-text prompting.
-- Ctrl+C to interrupt the agent.
-
-
-### Mobile app
-
-I am optimizing the office layout for phone screens.
-
-For example, in the browser, you can use Tab and Shift+Tab to rotate conversations between agents in the room. On mobile, Tab and Shift+Tab are replaced by left and right swipe gestures.
-
-There's no native app yet, but I use an Iphone/safari feature that gets 80% of the way there:
-
-Go to the frontend on your browser, then in the browser menu, find the option "Add to home screen." This turns the website into a "Web App". Here is a [demo](https://x.com/Nil053/status/2039996579965542516/video/1) of what it looks like.
 
 ## Final Thoughts
 
 It's great to have my own malleable orchestration tool. Oh, I don't like Claude Code's plan mode? No problem, I can roll out my own vision.
 
-Even if nobody else uses Isomux (do so at your own peril, it's not tested beyond my setup) it provides a ton of value to myself. There's no feature pulling me back to raw Claude Code.
+Even if nobody else uses Isomux, it provides a ton of value to myself. There's no feature pulling me back to raw Claude Code.
 
 That said, I think Isomux - especially with Tailscale - _can_ provide real value to people going from Level 5 to 6.
 
@@ -352,4 +330,4 @@ The gap going from Level 1 to Level 5 was mostly about models getting smarter. B
 
 We'll all be working with agents, so it's important to really like your orchestration tool. The orchestration layer is the new editor.
 
-To try: [isomux.com](https://isomux.com).
+To try: [isomux.com](https://isomux.com). (Do so at your own peril, it's not tested beyond my setup.)
