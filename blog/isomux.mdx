@@ -1,5 +1,5 @@
 ---
-title: "Deep Dive: Isomux Architecture"
+title: "Isomux Architecture"
 date: "2026-04-03"
 excerpt: "A detailed walkthrough of how Isomux manages multiple concurrent Claude Code agents from a single Bun process, using the Claude Agent SDK, WebSockets, and an isometric office UI."
 coverImage: "/blog/isomux/cover.png"
@@ -14,7 +14,9 @@ Tmux helped; cmux was a clear improvement. For reference, this is my cmux setup:
 
 Skill issue, I know, but trying to keep good uptime on multiple agents felt a bit claustrophobic.
 
-[Isomux](https://isomux.com) is my solution: an office metaphor for agents, with isometric graphics for the nostalgia hit. Please see it in action at [isomux.com/demo](https://isomux.com/demo) before reading on.
+Isomux is my solution: an office metaphor for agents, with isometric graphics for the nostalgia hit.
+
+Please see it in action at [isomux.com/demo](https://isomux.com/demo) before reading on.
 
 <BlogImage src="/blog/isomux/cover.png" alt="Isomux office view with agents at desks" />
 
@@ -35,7 +37,7 @@ This post dives into the architecture. We'll trace how isomux:
 The full source is on [GitHub](https://github.com/nmamano/isomux). It's free, open source, and designed with self-hosting in mind.
 
 <Callout>
-Isomux was built by Claude Code agents running inside isomux since the first version was working, a few commits in. Developing a dev tool from itself is cool!
+Isomux was built by Claude Code agents running inside isomux since the first version was working, a few commits in. Developing a dev tool from itself is fun!
 </Callout>
 
 <Toc />
@@ -56,78 +58,50 @@ Isomux is a **single Bun process** that serves the UI, manages agents in-process
 The server process is the single source of truth. Browsers are stateless relays - when one connects, the WebSocket `open` handler sends it a `full_state` snapshot, and from there incremental events keep it in sync. Multiple browsers (laptop, phone, another tab) all see the same thing in real time.
 
 ```
-Browser A  ──┐                    ┌── Agent 1 (SDK session)
-Browser B  ──┼── WebSocket ── Bun ─┼── Agent 2 (SDK session)
-Phone      ──┘     server         └── Agent 3 (SDK session)
+Browser A  ──┐                      ┌── Agent 1 (SDK session)
+Browser B  ──┼── WebSocket ── Bun ──┼── Agent 2 (SDK session)
+Phone      ──┘              server  └── Agent 3 (SDK session)
 ```
 
 ## The Agent Lifecycle
 
-### Spawning
+### Spawning agents
 
-When you click an empty desk and fill in a name and working directory, the browser sends a `spawn` command. The server:
+When you click an empty desk to spawn an agent, you can provide:
 
-1. Validates the name is unique and finds a free desk (0-7),
-2. Creates a **launcher script** (more on this below),
-3. Initializes the SDK session,
-4. Emits an `agent_added` event to all browsers.
+- a name,
+- a working directory (`cwd`), which is important for things like `CLAUDE.md`, git context, and MCP servers defined in that directory.
+- a model,
+- an agent-specific system prompt
 
-```typescript
-// agent-manager.ts
-export async function spawn(
-  name: string, cwd: string,
-  permissionMode: AgentInfo["permissionMode"],
-  desk?: number, customInstructions?: string,
-  room?: number, outfit?: AgentOutfit, model?: ClaudeModel,
-): Promise<AgentInfo | null> {
+The browser sends a `spawn` command to the server, which:
 
-  // ... validate name uniqueness, find free desk ...
+1. Creates a **launcher script**,
+2. Initializes the SDK session,
+3. Emits an `agent_added` event to all browsers.
 
-  const launcherPath = createLauncher(id, resolvedCwd, name, officePrompt, customInstructions);
+There's a problem: Claude SDK's `SDKSessionOptions` doesn't expose fields for `cwd` or `appendSystemPrompt` - those are CLI flags. Isomux works around this by generating a per-agent `.mjs` launcher script.
 
-  const managed: ManagedAgent = {
-    info,
-    session: null,
-    sessionId: null,        // discovered on first SDK message
-    streaming: false,
-    aborting: false,
-    streamGeneration: 0,    // invalidation token for concurrent streams
-    launcherPath,
-    // ...
-  };
-  agents.set(id, managed);
-  emit({ type: "agent_added", agent: info });
-
-  managed.session = createSession(managed);
-}
-```
-
-### The Launcher Script Workaround
-
-Each agent needs its own working directory and system prompt. The Agent SDK's `SDKSessionOptions` doesn't expose fields for `cwd` or `appendSystemPrompt` - those are CLI flags. Isomux works around this by generating a per-agent `.mjs` launcher script:
+A `.mjs` file is a JavaScript file using ES module syntax, which is needed here for the top-level await:
 
 ```typescript
-// agent-manager.ts
-function createLauncher(
-  agentId: string, cwd: string, agentName: string,
-  officePrompt?: string, customInstructions?: string | null,
-): string {
-  const launcherPath = join(LAUNCHERS_DIR, `${agentId}.mjs`);
-  let systemPrompt = `You are ${agentName}, one of the agents in the Isomux office...`;
-  // ... append office prompt and custom instructions ...
+// ~/.isomux/launchers/AGENT_ID.mjs
 
-  writeFileSync(launcherPath,
-    `process.chdir(${JSON.stringify(cwd)});\n` +
-    `process.argv.push("--append-system-prompt", ${JSON.stringify(systemPrompt)});\n` +
-    `await import(${JSON.stringify(CLI_PATH)});\n`
-  );
-  return launcherPath;
-}
+// sets the working directory
+process.chdir(...)
+
+// injects the agent identity, office context, office prompt, and custom
+// instructions
+process.argv.push("--append-system-prompt", ...)
+
+// boots the Claude Code CLI, which picks up the modified cwd and argv
+await import("isomux/node_modules/@anthropic-ai/claude-agent-sdk/cli.js")
 ```
 
 The launcher changes `process.cwd()` and injects `--append-system-prompt` into `process.argv` before importing the Claude Code CLI entry point. This is passed to `createSession` as `pathToClaudeCodeExecutable`:
 
 ```typescript
+// server/agent-manager.ts
 function createSession(managed: ManagedAgent, resumeSessionId?: string) {
   const opts = {
     model: managed.info.model,
@@ -141,7 +115,98 @@ function createSession(managed: ManagedAgent, resumeSessionId?: string) {
 }
 ```
 
-This is admittedly a hack - it relies on the SDK spawning the launcher as a subprocess. But it works reliably and means each agent gets full access to project-level `CLAUDE.md` files, git context, and MCP servers defined in the working directory.
+This is admittedly a hack - it relies on the SDK spawning the launcher as a subprocess - but works reliably.
+
+<Callout>
+The SDK's V2 API (`unstable_v2_createSession`) is in alpha, which means working around missing features, undocumented behavior (the abort race condition mentioned below), and likely breaking changes. But full Claude Code sessions with tools, MCP servers, and project context, managed programmatically, made it worthwhile.
+</Callout>
+
+### Agent identity
+
+The system prompt looks like this, but with the parameters expanded:
+
+```
+You are AGENT_NAME, one of the agents in the Isomux office. Your goal is to help
+the office boss, who talks to you in this chat.
+
+To discover other office agents and their conversation logs, read
+~/.isomux/agents-summary.json.
+
+USER_DEFINED_OFFICE_WIDE_SYSTEM_PROMPT
+
+USER_DEFINED_AGENT_SPECIFIC_SYSTEM_PROMPT
+```
+
+The system prompt is designed to be brief, but leaves breadcrumbs so the agent can load in more state if it needs to.
+
+In the mentioned agent summary doc, the agent can find metadata about itself and every other agent:
+
+```
+// ~/.isomux/agents-summary.json.
+
+{
+  "id": "agent-1774819851476-qmpf",
+  "name": "PersonalSiteAgent",
+  "desk": 7,
+  "room": 1,
+  "topic": "Write technical blog post about isomux",
+  "cwd": "~/nilmamano.com",
+  "model": "claude-opus-4-6",
+  "logDir": "~/.isomux/logs/agent-1774819851476-qmpf"
+},
+```
+
+Further, through the `logDir` paths, it has access to the current conversation of every agent (i.e., since the last `/clear`, which works per-agent).
+
+This means you can ask an agent, _"What do you think of OTHER_AGENT's approach?"_ and it just works - but we are getting ahead of ourselves.
+
+### Agent persistence
+
+The `~/.isomux/` folder contains:
+
+- `agents.json`: full agent config, including things like the outfit choices and the agent-specific system prompt.
+- `agents-summary.json`: a lightweight version linked to all agents in their system prompt, so they can discover each other.
+- `logs/{agentId}/{sessionId}.jsonl`: append-only JSONL files for conversation history. Each line is a `LogEntry`.
+- `office-prompt.txt`: user-defined office-wide system prompt injected into all agents.
+- `todos.json`: shared office todo list.
+- `launchers/`: the per-agent .mjs launcher scripts discussed above.
+- `recent-cwds.json`: recently used working directories (for autocomplete in the spawn dialog)
+
+These files are kept consistent with the state sent to the clients.
+
+When a browser first connects, it receives a `full_state` snapshot containing every agent, their logs, slash commands, and office-wide settings. From there, incremental events keep it in sync.
+
+On server restart, agents are restored from `agents.json` and their SDK sessions are recreated.
+
+Past conversations can be resumed from the JSONL logs with `/resume` or by right-clicking an agent. This makes the `/resume` interaction per-agent, unlike in Claude Code.
+
+Isomux persists every conversation forever by design. My `~/.isomux/` is 22MB. You never know when it could be useful.
+
+## The WebSocket Multiplexer
+
+The server talks to connected browsers via web sockets.
+
+- The server notifies all browsers of state updates via a single `broadcast` function.
+- The clients give commands to the server, which are handled in `handleCommand()`:
+
+```typescript
+// server/index.ts
+
+async function handleCommand(cmd: ClientCommand) {
+  switch (cmd.type) {
+    case "send_message":
+      // Don't await — let it stream in the background
+      AgentManager.sendMessage(cmd.agentId, cmd.text, cmd.username);
+      break;
+    case "spawn":
+      await AgentManager.spawn(cmd.name, cmd.cwd, cmd.permissionMode, cmd.desk, ...);
+      break;
+    // ...
+  }
+}
+```
+
+The `send_message` command - where a user sends a message to the LLM - is deliberately not awaited. Calling it without `await` kicks off the async work and returns immediately, so the event loop stays free to process other commands (spawns, aborts, messages to other agents, etc.) while the SDK streams the response in the background. Most other command types are handled synchronously.
 
 ## Streaming and State Derivation
 
@@ -219,87 +284,13 @@ if (isAbortError) {
 
 Recreating the session with the same `sessionId` preserves the conversation history while clearing the SDK's internal buffering state.
 
-## The WebSocket Multiplexer
-
-The server is a thin dispatcher. Every agent event flows through a single `broadcast` function to all connected browsers:
-
-```typescript
-// index.ts
-const browsers = new Set<ServerWebSocket<unknown>>();
-
-function broadcast(msg: ServerMessage) {
-  const data = JSON.stringify(msg);
-  for (const ws of browsers) {
-    ws.send(data);
-  }
-}
-
-AgentManager.onEvent((event) => {
-  broadcast(event as ServerMessage);
-});
-```
-
-Commands flow the other direction. Note that `send_message` is deliberately *not* awaited - it streams responses in the background:
-
-```typescript
-async function handleCommand(cmd: ClientCommand) {
-  switch (cmd.type) {
-    case "send_message":
-      // Don't await — let it stream in the background
-      AgentManager.sendMessage(cmd.agentId, cmd.text, cmd.username);
-      break;
-    case "spawn":
-      await AgentManager.spawn(cmd.name, cmd.cwd, cmd.permissionMode, cmd.desk, ...);
-      break;
-    // ...
-  }
-}
-```
-
-When a browser first connects, it receives a `full_state` snapshot containing every agent, their logs, slash commands, and office-wide settings. From there, incremental events keep it in sync.
-
 ## Safety Hooks
 
-With multiple agents running potentially in `bypassPermissions` mode, safety is critical. Isomux injects `PreToolUse` hooks into every SDK session that block dangerous commands before they execute.
+I run all my agents in `bypassPermissions` mode. Isomux injects `PreToolUse` hooks into every SDK session that block dangerous commands before they execute.
 
-The hook system has three layers:
-
-**1. Git safety** - blocks destructive git commands:
-
-```typescript
-const DESTRUCTIVE_PATTERNS: [RegExp, string][] = [
-  [/git\s+checkout\s+--\s+/, "git checkout -- discards uncommitted changes"],
-  [/git\s+reset\s+--hard/, "git reset --hard destroys uncommitted changes"],
-  [/git\s+push\s+.*--force(?![-a-z])/, "Force push can destroy remote history"],
-  [/git\s+clean\s+-[a-z]*f/, "git clean -f removes untracked files permanently"],
-  // ...
-];
-```
-
-Note the negative lookahead `(?![-a-z])` on `--force` - this ensures `--force-with-lease` (the safer alternative) isn't blocked.
-
-**2. Filesystem safety** - blocks `rm -rf` on root/home paths while allowing it on temp directories.
-
-**3. Isomux config protection** - blocks all writes to `~/.isomux/`, since that directory is managed by the server. Read operations are allowed (agents need to read `agents-summary.json` to discover each other).
-
-A key subtlety: before pattern matching, the hook **strips quoted strings** from the command. Without this, a pattern like `/git\s+reset\s+--hard/` would false-positive on a commit message that contains the words "git reset --hard":
-
-```typescript
-function stripQuotedStrings(cmd: string): string {
-  let result = cmd;
-  // Remove heredoc bodies
-  result = result.replace(/<<-?\s*'([^']+)'\s*\n[\s\S]*?\n\s*\1/g, "");
-  // Remove double-quoted strings (handling escaped quotes)
-  result = result.replace(/"(?:[^"\\]|\\.)*"/g, '""');
-  // Remove single-quoted strings
-  result = result.replace(/'[^']*'/g, "''");
-  // Remove $'...' ANSI-C quoting
-  result = result.replace(/\$'(?:[^'\\]|\\.)*'/g, "''");
-  return result;
-}
-```
-
-Safe patterns are checked first (allowlist), then destructive patterns (blocklist). This ordering means `git checkout -b new-branch` is allowed even though it partially matches the `git checkout` blocklist pattern.
+1. **Git safety**: blocks destructive git commands.
+2. **Filesystem safety**: blocks `rm -rf` on root/home paths while allowing it on temp directories.
+3. **Isomux config protection**: blocks all writes to `~/.isomux/`, since that directory is managed by the server. Read operations are allowed (agents need to read `agents-summary.json` to discover each other).
 
 ## The Frontend
 
@@ -324,7 +315,7 @@ This eliminates the usual action-creator boilerplate. The reducer handles `agent
 
 The store also manages local-only state: input drafts (preserved when switching between agents), attention tracking, and the focused agent.
 
-### Attention Tracking
+### Attention tracking and notifications
 
 The attention system is simple but effective. An agent "needs attention" when it transitions from a working state to a terminal state while the user is looking at a different agent:
 
@@ -335,29 +326,18 @@ if (wasWorking && state.focusedAgentId !== action.agentId) {
 }
 ```
 
-On the office view, agents needing attention get a pulsing indicator and their desk monitor changes color. Combined with sound notifications (when the browser tab is hidden), you never miss when an agent finishes or gets stuck.
+On the office view, agents needing attention get a pulsing indicator. Combined with sound notifications (when the browser tab is hidden), you never miss when an agent finishes or gets stuck.
 
-### Keyboard Navigation
+### Keyboard navigation
 
-The office view responds to number keys 1-8 to jump to an agent by desk position. Tab cycles between agents, prioritizing those that are actively working or have unsent drafts. Escape returns to the office view. On mobile, swipe gestures replace keyboard shortcuts.
+Ergonomics are important. The keyboard shortcuts I use the most are:
 
-## Persistence
+- Tab and Shift+Tab to rotate conversations between agents in the room.
+- Hold Ctrl+Space for voice-to-text prompting.
 
-Isomux persists just enough to survive restarts without a database:
-
-- **`agents.json`** - agent config (name, desk, room, outfit, cwd, permissions). Nested arrays for multi-room support, with backward-compatible migration from the original flat format.
-- **`logs/{agentId}/{sessionId}.jsonl`** - append-only JSONL files for conversation history. Each line is a `LogEntry`.
-- **`agents-summary.json`** - a lightweight manifest of all agents (id, name, desk, room, topic, cwd, model). This is the file agents read to discover each other.
-- **`office-prompt.txt`** - office-wide system prompt injected into all agents.
-
-On server restart, agents are restored from `agents.json` and their SDK sessions are recreated. Past conversations can be resumed from the JSONL logs.
+On mobile, left and right swipe gestures replace Tab and Shift+Tab.
 
 ## Final Thoughts
 
-Building isomux was a bet on a specific workflow: that running multiple specialized agents concurrently - one on the frontend, one on the backend, one writing tests - would be more productive than running one agent at a time. That bet paid off. Even with the overhead of context-switching between agents, the parallelism is a clear win.
 
-The office metaphor started as a visual gimmick but turned out to solve real UX problems. Glancing at the office view tells you instantly what every agent is doing. The animated characters are surprisingly effective - you develop an intuition for the rhythm of "typing, typing, sleeping, waving" that maps directly to "working, working, done, needs you."
-
-The biggest technical challenge was the Agent SDK integration. The SDK's V2 API (`unstable_v2_createSession`) is alpha-quality, which meant working around missing features (the launcher script hack), undocumented behavior (the abort race condition), and breaking changes between releases. But the payoff - full Claude Code sessions with tools, MCP servers, and project context, managed programmatically - made it worthwhile.
-
-If you want to try it: `git clone`, `bun install`, `bun run dev`. Eight desks, zero cloud dependencies, your existing subscription.
+If you want to try it: [isomux.com](https://isomux.com).
