@@ -18,12 +18,12 @@ I was at Level 5 for about 5 months, using Claude Code as my primary coding tool
 
 The main friction with getting to Level 6 was terminal management, especially for tasks that can only be done remotely, like [model training](/blog/wall-game-ai).
 
-Tmux helped; cmux was even better. But trying to keep good uptime on multiple agents felt... cramped.
+[Tmux](https://github.com/tmux/tmux/wiki) helped; [cmux](https://cmux.com/) was even better. But trying to keep good uptime on multiple agents felt... cramped.
 
 What actually did it for me was:
 
 1. Building my own browser-based agent orchestration.
-2. Running said layer in a home server inside a Tailscale network with my laptop and phone.
+2. Running said tool in a home server inside a Tailscale network with my laptop and phone.
 
 This simplifies the two ends of my workflow:
 
@@ -36,7 +36,7 @@ But my custom-made orchestration, [Isomux](https://isomux.com) (Isometric Multip
 
 <BlogImage src="/blog/isomux/cover.jpeg" alt="Isomux office view with agents at desks" />
 
-I spend all day in the agent management layer. It had to be cute.
+I spend all day in the agent management tool. It had to be cute.
 
 The idea is to create an office metaphor for agents, with isometric graphics for the nostalgia hit. Each agent has a customizable name and look and sits at a desk. You see who is working, who's sleeping, and who has their hand raised at a glance.
 
@@ -223,23 +223,37 @@ The `send_message` command - where a user sends a message to the LLM - is delibe
 
 ## The Frontend
 
-I've been having fun leaning into the skeuomorphic elements:
+### Office rooms
 
-- Click the moon through the window to toggle dark mode.
+The office groups agents into groups of at most 8; extra agents have to go in different rooms. It's designed so Tab and Shift+Tab for agent cycling stays within a room, as cycling through more than 8 conversations would be overwhelming.
+
+In the first room, I keep 3-5 agents for my main project (isomux right now), as well as 1 agent for each of my other projects I touch often (like this site). If an agent has no active conversation (it's been `/clear`ed), it's skipped from cycling.
+
+I also have agents for non-coding things, like my job search.
+
+If I know I'm not going to touch a project for a while, I move the agent(s) to a different room, so they are out of sight.
+
+### Skeuomorphic elements
+
+I've been having fun leaning into the office visuals:
+
 - Click the corkboard to open the todo list.
 - Click the framed sign on the wall to edit the "office rules" (the office-wide system prompt).
-- Click the neon sign to visit [isomux.com](https://isomux.com).
 - Opus agents have a book; Haiku agents have crayons.
+- Click the moon through the window to toggle dark mode.
+- Click the neon sign to visit [isomux.com](https://isomux.com).
+
+The agent customization helps with anthropomorphizing; see, for example, the [demo](https://isomux.com/demo) based on the characters from The Office (in my actual setup, the agents have names more like Isomuxer1 and Isomuxer2).
 
 ### SVG graphics
 
-Claude's SVG skills and understanding of isometric geometry is genuinely good.
+Opus's SVG skills and understanding of isometric geometry is genuinely good.
 
-The entire scene was written by Claude - ~1,600 lines of raw coordinates, bezier curves, and animate tags. I didn't use any libraries, assets, or tools.
+The entire scene was written by Opus - ~1,600 lines of raw coordinates, bezier curves, and animate tags. I didn't use any libraries, assets, or tools.
 
-For me, the highlight is the neon sign. It one-shotted the skewed font, the light "diffusion", and the atmospheric flickering. Then, I asked it to add ligaments between letters for realism, and, even though it took some iterations, its first intuition for their location and shape was already spot on.
+For me, the highlight is the neon sign. It one-shotted the skewed font, the light "diffusion", and the atmospheric flickering. Then, I asked it to add ligatures between letters for realism, and, even though it took some iterations, its first intuition for their positioning and shape was already spot on.
 
-That said, Claude's SVG capabilities are a lot more spiky than coding. It sometimes fails and thrashes at trivial tasks, like moving the window a few pixels over. It's like if Claude sometimes got wrong the Fizz Buzz test.
+That said, Opus's SVG capabilities are a lot more spiky than coding. It sometimes fails and thrashes at trivial tasks, like moving the window a few pixels over. It's like if Opus sometimes got wrong the Fizz Buzz test.
 
 ### Redux-Like Store
 
@@ -255,15 +269,17 @@ I am optimizing the office layout for phone screens.
 
 For example, in the browser, you can use Tab and Shift+Tab to rotate conversations between agents in the room. On mobile, Tab and Shift+Tab are replaced by left and right swipe gestures.
 
+It also includes an optional agent list view, in case the isometric scene is too small.
+
 There's no native app yet, but I use an Iphone/safari feature that gets 80% of the way there:
 
-Go to the frontend on your browser, then in the browser menu, find the option "Add to home screen." This turns the website into a "Web App". Here is a [demo](https://x.com/Nil053/status/2039996579965542516/video/1) of what it looks like.
+Go to the frontend on your browser, then in the browser menu, find the option "Add to home screen." This turns the website into a "Web App". Here is a [demo](https://x.com/Nil053/status/2039996579965542516/video/1).
 
 ## QoL Features
 
 So far, we described a working architecture, but that's only half of the work; the other half is making it a place you actually want to spend 8 hours a day.
 
-Things like autocomplete on slash commands or an embedded terminal start to matter a lot.
+Things like autocomplete on slash commands, an embedded terminal, or recent CWD suggestions when spawning an agent, start to matter a lot.
 
 Here are some of the features I added for my own convenience.
 
@@ -318,6 +334,18 @@ The attention system is simple but effective. An agent "needs attention" when it
 
 On the office view, agents needing attention get a pulsing indicator. Combined with sound notifications (when the browser tab is hidden), you never miss when an agent finishes or gets stuck.
 
+### Auto-generated conversation topics
+
+Each agent displays a short topic below its nametag, like "Fixing auth middleware tests" or "Refactoring WebSocket layer."
+
+What's interesting is how they're generated. When the first user message comes in, the server fires off a `unstable_v2_prompt()` call behind the scenes. It builds a context snippet from the first user message (and the last few, if the topic is regenerated later) and then asks for a topic in 8 words or less.
+
+Orchestration tools should be mindful with server-initiated prompts like this. They spend user tokens doing something that's not directly answering the user.
+
+In this case, it's a trivial amount, but I still use a cheaper model (Sonnet).
+
+The topic is included in the agent manifest, helping agents know what others are up to. It is also persisted per-session in `sessions.json`, so it survives server restarts and shows up when browsing past sessions to resume.
+
 ## Final Thoughts
 
 It's great to have my own malleable orchestration tool. Oh, I don't like Claude Code's plan mode? No problem, I can roll out my own vision.
@@ -328,6 +356,6 @@ That said, I think Isomux - especially with Tailscale - _can_ provide real value
 
 The gap going from Level 1 to Level 5 was mostly about models getting smarter. But for 5 to 6, I think the orchestration tool matters more.
 
-We'll all be working with agents, so it's important to really like your orchestration tool. The orchestration layer is the new editor.
+We'll all be working with agents, so it's important to really like your orchestration tool. The orchestration tool is the new editor.
 
 To try: [isomux.com](https://isomux.com). (Do so at your own peril, it's not tested beyond my setup.)
