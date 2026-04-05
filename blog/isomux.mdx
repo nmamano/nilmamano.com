@@ -192,7 +192,7 @@ The `~/.isomux/` folder contains:
 - `agents-summary.json`: a lightweight version linked to all agents in their system prompt, so they can discover each other.
 - `logs/{agentId}/{sessionId}.jsonl`: append-only JSONL files for conversation history. Each line is a `LogEntry`.
 - `office-prompt.txt`: user-defined office-wide system prompt injected into all agents.
-- `todos.json`: shared office todo list.
+- `tasks.json`: shared task board (JSON array of tasks with status, priority, and assignee).
 - `launchers/`: the per-agent .mjs launcher scripts discussed above.
 - `recent-cwds.json`: recently used working directories (for autocomplete in the spawn dialog)
 
@@ -237,7 +237,7 @@ If I know I'm not going to touch a project for a while, I move the agent(s) to a
 
 I've been having fun leaning into the office visuals:
 
-- Click the corkboard to open the todo list.
+- Click the corkboard to open the office's task board.
 - Click the framed sign on the wall to edit the "office rules" (the office-wide system prompt).
 - Opus agents have a book; Haiku agents have crayons.
 - Click the moon through the window to toggle dark mode.
@@ -345,6 +345,14 @@ Orchestration tools should be mindful with server-initiated prompts like this. T
 In this case, it's a trivial amount, but I still use a cheaper model (Sonnet).
 
 The topic is included in the agent manifest, helping agents know what others are up to. It is also persisted per-session in `sessions.json`, so it survives server restarts and shows up when browsing past sessions to resume.
+
+### Shared task board
+
+Agents and humans share a task board. Anyone can create, assign, claim, and close tasks — from the UI or from agents via HTTP.
+
+Here's a [demo](https://x.com/Nil053/status/2040871759529025617): tell one agent to create a task for another, open the corkboard to see it, click the assignee to jump to them, and ask them to pick it up.
+
+Agents interact with the task board through a simple HTTP API (`GET /tasks`, `POST /tasks`, `POST /tasks/:id/claim`, `POST /tasks/:id/done`). The system prompt includes curl examples so they know how without being told. Tasks are persisted to a flat JSON file for now. Bun's single-threaded event loop handles concurrency naturally — no locking needed.
 
 ## Final Thoughts
 
