@@ -86,6 +86,7 @@ Nil's blog is at nilmamano.com/blog. Posts by category:
 - "What Vibe Coding Actually Looks Like" (nilmamano.com/blog/what-vibe-coding-actually-looks-like) -- exact prompts included
 - "What is Context Engineering?" (nilmamano.com/blog/context-engineering) -- why it matters for AI apps
 - "Herding 1440 Programs" (nilmamano.com/blog/herding-1440-programs) -- automating large-scale codebase changes for BCtCI
+- "Isomux Design and Architecture" (nilmamano.com/blog/isomux) -- how Isomux manages multiple concurrent Claude Code agents using the Agent SDK
 
 ### Personal / Other
 - "My Family During the Spanish Civil War" (nilmamano.com/blog/spanish-civil-war) -- Nil's grandparents' story
