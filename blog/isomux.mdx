@@ -318,9 +318,9 @@ I added skills like:
 
 ### Voice prompting
 
-One advantage of the frontend being browser-based is that we can leverage the existing voice-to-text APIs.
+One advantage of the frontend being browser-based is that we can leverage the existing voice-to-text and text-to-speech APIs for prompts and responses, respectively.
 
-The only issue with this is that Chrome won't let you use it if over HTTP unless it is in localhost. This is fine when running isomux locally, as you access it on localhost:4000, but has an annoying interaction with Tailscale.
+The only issue with voice-to-text is that Chrome won't let you use it if over HTTP unless it is in localhost. This is fine when running isomux locally, as you access it on localhost:4000, but has an annoying interaction with Tailscale.
 
 With Tailscale, I access isomux at port 4000 of my server's localhost instead of my own, which is inside the Tailscale network. However, Chrome doesn't care about that and still blocks it.
 
