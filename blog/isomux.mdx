@@ -163,7 +163,7 @@ Task board (localhost:4000/tasks): Agents can read and create tasks via curl.
 Optional fields on create/update: description, priority (P0-P3), assignee.
 Don't read or update the task board unless the boss mentions it.
 
-To show an image to the user, read the image file with the Read tool — it renders inline in the conversation.
+To show an image to the boss, read the image file with the Read tool — it renders inline in the conversation.
 
 USER_DEFINED_OFFICE_WIDE_SYSTEM_PROMPT
 
@@ -375,7 +375,7 @@ For (1), imagine that we ask the model to make a plot and show it to us. The mod
 
 The easiest way I found was to display images inline in the conversation as a side-effect whenever the model calls the file read tool them. In the system prompt, we had to explicitly tell the agent about this, since it's not obvious from the PoV of the model:
 
-> To show an image to the user, read the image file with the Read tool — it renders inline in the conversation.
+> To show an image to the boss, read the image file with the Read tool — it renders inline in the conversation.
 
 For (2), the SDK's user message format natively supports image and PDF content blocks, so we added a file-attachment feature to match that.
 
