@@ -152,12 +152,25 @@ the office boss, who talks to you in this chat.
 To discover other office agents and their conversation logs, read
 ~/.isomux/agents-summary.json.
 
+Task board (localhost:4000/tasks): Agents can read and create tasks via curl.
+  curl -s localhost:4000/tasks                                          # list open tasks
+  curl -s localhost:4000/tasks?status=all                               # include done
+  curl -s -X POST localhost:4000/tasks -H 'Content-Type: application/json' \
+    -d '{"title":"...","createdBy":"AGENT_NAME"}'                       # create
+  curl -s -X POST localhost:4000/tasks/ID/claim -H 'Content-Type: application/json' \
+    -d '{"assignee":"AGENT_NAME"}'                                      # claim
+  curl -s -X POST localhost:4000/tasks/ID/done -d '{}'                  # mark done
+Optional fields on create/update: description, priority (P0-P3), assignee.
+Don't read or update the task board unless the boss mentions it.
+
+To show an image to the user, read the image file with the Read tool — it renders inline in the conversation.
+
 USER_DEFINED_OFFICE_WIDE_SYSTEM_PROMPT
 
 USER_DEFINED_AGENT_SPECIFIC_SYSTEM_PROMPT
 ```
 
-The system prompt is designed to be brief, but leaves breadcrumbs so the agent can load in more state if it needs to.
+The system prompt is designed to be brief, but leaves breadcrumbs so the agent can load in more state if it needs to. See more on the [task board](#shared-task-board) and [image showing](#file-attachments) features below.
 
 In the mentioned agent summary doc, the agent can find metadata about itself and every other agent:
 
@@ -353,6 +366,24 @@ Agents and humans share a task board. Anyone can create, assign, claim, and clos
 Here's a [demo](https://x.com/Nil053/status/2040871759529025617): tell one agent to create a task for another, open the corkboard to see it, click the assignee to jump to them, and ask them to pick it up.
 
 Agents interact with the task board through a simple HTTP API (`GET /tasks`, `POST /tasks`, `POST /tasks/:id/claim`, `POST /tasks/:id/done`). The system prompt includes curl examples so they know how without being told. Tasks are persisted to a flat JSON file for now. Bun's single-threaded event loop handles concurrency naturally — no locking needed.
+
+### File attachments
+
+This feature goes two ways: (1) the agent showing us images, and (2) the user showing files to the agent.
+
+For (1), imagine that we ask the model to make a plot and show it to us. The model can write a Python script with matplotlib and generate a .png. But then, how does it show it to us?
+
+The easiest way I found was to display images inline in the conversation as a side-effect whenever the model calls the file read tool them. In the system prompt, we had to explicitly tell the agent about this, since it's not obvious from the PoV of the model:
+
+> To show an image to the user, read the image file with the Read tool — it renders inline in the conversation.
+
+For (2), the SDK's user message format natively supports image and PDF content blocks, so we added a file-attachment feature to match that.
+
+The upload path itself is what you'd see in typical chatting apps: files never travel over the WebSocket - only metadata does. The browser sends files via multipart HTTP POST to `/api/upload/{agentId}`, and then the server saves them to a per-agent `files/` directory (SHA256-deduped) and returns attachment metadata. On the frontend, the "send" button is blocked while uploads are in progress.
+
+When it's time to send the actual SDK message to Claude, the text and attachment references are combined.
+
+Since the upload-to-server path was already there, I extended it to support arbitrary file types. Text-detectable files (by extension) are inlined as text blocks; everything else is uploaded but flagged as unreadable (with a note for the model not to infer the content). This is useful in the remote-server setup, for transferring files to the server without needing a separate tool (like `scp`).
 
 ## Final Thoughts
 
