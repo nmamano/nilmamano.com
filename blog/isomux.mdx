@@ -385,6 +385,16 @@ When it's time to send the actual SDK message to Claude, the text and attachment
 
 Since the upload-to-server path was already there, I extended it to support arbitrary file types. Text-detectable files (by extension) are inlined as text blocks; everything else is uploaded but flagged as unreadable (with a note for the model not to infer the content). This is useful in the remote-server setup, for transferring files to the server without needing a separate tool (like `scp`).
 
+### Conversation branching
+
+Sometimes you send a message and wish you'd phrased it differently. In Isomux, you can click edit on any past user message to fork the conversation from that point.
+
+The SDK has a `forkSession` function that copies a session transcript up to a given message. For the edge case of editing the very first message, there's no predecessor, so we just start a fresh session.
+
+A key decision was how to handle logs. Since we want to preserve the existing conversation, we can't just delete all posterior messages. Instead, we create a new session. The naive approach is to copy all the parent entries into the fork's JSONL file. But that duplicates data, which inflates disk usage and pollutes search results. Instead, each session's JSONL only stores its own entries. When displaying a forked session, we walk the `forkedFrom` chain in `sessions.json` and assemble the full history from ancestors at display time. Chain depth is typically 1-2 levels, so the overhead is negligible.
+
+When looking at the list of past conversations to resume, forked sessions get a `↳` prefix, and sessions that have been branched from are dimmed with a "(branched)" label.
+
 ## Final Thoughts
 
 It's great to have my own malleable orchestration tool. Oh, I don't like Claude Code's plan mode? No problem, I can roll out my own vision.
