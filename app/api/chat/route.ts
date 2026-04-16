@@ -52,7 +52,7 @@ export async function POST(req: Request) {
   }
 
   const result = streamText({
-    model: anthropic("claude-haiku-4-5-20251001"),
+    model: anthropic("claude-sonnet-4-6"),
     system: systemPrompt,
     messages: await convertToModelMessages(messages),
     maxOutputTokens: 1000,
