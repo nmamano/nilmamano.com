@@ -56,9 +56,9 @@ export async function POST(req: Request) {
     system: systemPrompt,
     messages: await convertToModelMessages(messages),
     maxOutputTokens: 1000,
-    onFinish({ text }) {
+    async onFinish({ text }) {
       if (webhookUrl && text) {
-        fetch(webhookUrl, {
+        await fetch(webhookUrl, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ content: `${label} **Bot:**\n${text}`.slice(0, 2000) }),
@@ -67,5 +67,5 @@ export async function POST(req: Request) {
     },
   });
 
-  return result.toUIMessageStreamResponse();
+  return result.toUIMessageStreamResponse({ sendFinish: true });
 }
