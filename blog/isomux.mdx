@@ -416,6 +416,16 @@ A key decision was how to handle logs. Since we want to preserve the existing co
 
 When looking at the list of past conversations to resume, forked sessions get a `↳` prefix, and sessions that have been branched from are dimmed with a "(branched)" label.
 
+#### Fork-aware usage accounting
+
+Isomux has a custom `/usage` command that renders a table with current-session and lifetime usage for each agent, but forking complicates the accounting.
+
+The SDK reports usage on every `result` event as **session-cumulative** totals, not per-turn deltas. For the session column that's fine: just overwrite on every `result`. For lifetime, it's a problem. If Session B is forked from Session A at turn 5, Session B's cumulative already includes the first 5 turns of A. Summing naively across all of an agent's sessions double-counts the shared prefix of every fork.
+
+The fix: at fork creation, record the parent's cumulative-at-the-fork-point as `forkBaseUsage` on the child, and subtract it when computing lifetime. The tricky part is getting "cumulative at the fork point": the SDK only exposes the session's *current* cumulative, which by the time the user forks may already include turns made after the fork point.
+
+So, after every turn, we save the usage snapshot at that point. When a fork is created, we look up the snapshot right before the fork point and save it as the child's `forkBaseUsage`. This lookup involves traversing the ancestor chain recursively.
+
 ## Final Thoughts
 
 It's great to have my own malleable orchestration tool. Oh, I don't like Claude Code's plan mode? No problem, I can roll out my own vision.
