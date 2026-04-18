@@ -143,16 +143,28 @@ This is admittedly a hack - it relies on the SDK spawning the launcher as a subp
 
 ### Agent identity
 
-The system prompt looks like this, but with the parameters expanded:
+The system prompt is assembled from **four hierarchical layers**, concatenated into a single string and injected into the Claude Code CLI subprocess via the `--append-system-prompt` argument (see the [launcher hack](#spawning-agents) above for how).
+
+1. **Baseline**: hardcoded context explaining the office setting, the agent's identity (name and room), and isomux features.
+2. **Office prompt**: user-defined, applied to every agent in the office.
+3. **Room prompt**: user-defined, applied to every agent in a given room.
+4. **Agent prompt**: user-defined, applied to a single agent.
+
+The baseline is designed to be brief, but leaves breadcrumbs so the agent can load in more state if it needs to. Each non-baseline layer is optional; empty ones are skipped entirely.
+
+The room layer lets you group agents by project or role: e.g., you could have a room for your day job and a room for your side projects; each room may need different context, hence the room-wide prompt (you can even have different environment variables per room).
+
+The full system prompt looks like this:
 
 ```
-You are AGENT_NAME, one of the agents in the Isomux office. Your goal is to help
-the office boss, who talks to you in this chat.
+You are AGENT_NAME, an agent in room ROOM_NAME of the Isomux office.
+Your goal is to help the office boss, who talks to you in this chat.
+Messages are prefixed with the boss's name in brackets.
 
-To discover other office agents and their conversation logs, read
+How to discover other office agents and their conversation logs: read
 ~/.isomux/agents-summary.json.
 
-Task board (localhost:4000/tasks): Agents can read and create tasks via curl.
+How to use the task board (localhost:4000/tasks): only touch it when the boss asks. When you do:
   curl -s localhost:4000/tasks                                          # list open tasks
   curl -s localhost:4000/tasks?status=all                               # include done
   curl -s -X POST localhost:4000/tasks -H 'Content-Type: application/json' \
@@ -161,16 +173,25 @@ Task board (localhost:4000/tasks): Agents can read and create tasks via curl.
     -d '{"assignee":"AGENT_NAME"}'                                      # claim
   curl -s -X POST localhost:4000/tasks/ID/done -d '{}'                  # mark done
 Optional fields on create/update: description, priority (P0-P3), assignee.
-Don't read or update the task board unless the boss mentions it.
 
-To show an image to the boss, read the image file with the Read tool — it renders inline in the conversation.
+How to show an image to the boss: read the image file with the Read tool — it renders inline in the conversation.
+
+How to answer questions about Isomux itself: the source lives at https://github.com/nmamano/isomux. Read the README and the relevant code under server/, ui/, shared/, docs/ before answering.
+
+## Office Instructions
 
 USER_DEFINED_OFFICE_WIDE_SYSTEM_PROMPT
+
+## Instructions For Your Room: ROOM_NAME
+
+USER_DEFINED_ROOM_SYSTEM_PROMPT
+
+## Personal Instructions For You: AGENT_NAME
 
 USER_DEFINED_AGENT_SPECIFIC_SYSTEM_PROMPT
 ```
 
-The system prompt is designed to be brief, but leaves breadcrumbs so the agent can load in more state if it needs to. See more on the [task board](#shared-task-board) and [image showing](#file-attachments) features below.
+See more on the [task board](#shared-task-board) and [image showing](#file-attachments) features below.
 
 In the mentioned agent summary doc, the agent can find metadata about itself and every other agent:
 
@@ -361,11 +382,11 @@ The topic is included in the agent manifest, helping agents know what others are
 
 ### Shared task board
 
-Agents and humans share a task board. Anyone can create, assign, claim, and close tasks — from the UI or from agents via HTTP.
+Agents and humans share a task board. Anyone can create, assign, claim, and close tasks, from the UI or from agents via HTTP.
 
 Here's a [demo](https://x.com/Nil053/status/2040871759529025617): tell one agent to create a task for another, open the corkboard to see it, click the assignee to jump to them, and ask them to pick it up.
 
-Agents interact with the task board through a simple HTTP API (`GET /tasks`, `POST /tasks`, `POST /tasks/:id/claim`, `POST /tasks/:id/done`). The system prompt includes curl examples so they know how without being told. Tasks are persisted to a flat JSON file for now. Bun's single-threaded event loop handles concurrency naturally — no locking needed.
+Agents interact with the task board through a simple HTTP API (`GET /tasks`, `POST /tasks`, `POST /tasks/:id/claim`, `POST /tasks/:id/done`). The system prompt includes curl examples so they know how without being told. Tasks are persisted to a flat JSON file for now. Bun's single-threaded event loop handles concurrency naturally; no locking needed.
 
 ### File attachments
 
