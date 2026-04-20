@@ -238,7 +238,7 @@ On server restart, agents are restored from `agents.json` and their SDK sessions
 
 Past conversations can be resumed from the JSONL logs with `/resume` or by right-clicking an agent. This makes the `/resume` interaction per-agent, unlike in Claude Code.
 
-Isomux persists every conversation forever by design. My `~/.isomux/` is 22MB. You never know when it could be useful.
+Isomux persists every conversation forever by design. My `~/.isomux/` is 22MB (Update: it's now at 120MB as of Apr 20). You never know when it could be useful.
 
 ### The SDK stream event loop
 
@@ -324,6 +324,7 @@ I run all my agents in `bypassPermissions` mode. Isomux injects `PreToolUse` hoo
 1. **Git safety**: blocks destructive git commands.
 2. **Filesystem safety**: blocks `rm -rf` on root/home paths while allowing it on temp directories.
 3. **Isomux config protection**: blocks all writes to `~/.isomux/`, since that directory is managed by the server. Read operations are allowed (agents need to read `agents-summary.json` to discover each other).
+4. **Secrets protection**: blocks reads of `.env` files, private keys, and credential files (agents get a clear error and a hint to ask the user instead).
 
 The embedded terminal is very handy when you need to run one of the blocked commands.
 
@@ -349,6 +350,7 @@ I added skills like:
 
 - `/isomux-peer-review`: tells the agent to read the ongoing conversation with another agent and give feedback.
 - `/isomux-all-hands`: shows what everyone is working on.
+- `/isomux-system-prompt`: dumps the full assembled system prompt (see [Agent identity](#agent-identity)) so the user understands the agent's behavior.
 
 ### Voice prompting
 
@@ -418,13 +420,16 @@ When looking at the list of past conversations to resume, forked sessions get a 
 
 #### Fork-aware usage accounting
 
-Isomux has a custom `/usage` command that renders a table with current-session and lifetime usage for each agent, but forking complicates the accounting.
+Isomux has a custom `/usage` command that renders a table with current-session and lifetime usage for each agent.
 
-The SDK reports usage on every `result` event as **session-cumulative** totals, not per-turn deltas. For the session column that's fine: just overwrite on every `result`. For lifetime, it's a problem. If Session B is forked from Session A at turn 5, Session B's cumulative already includes the first 5 turns of A. Summing naively across all of an agent's sessions double-counts the shared prefix of every fork.
+The SDK reports two flavors of accounting on each `result` event, and they don't behave the same way:
 
-The fix: at fork creation, record the parent's cumulative-at-the-fork-point as `forkBaseUsage` on the child, and subtract it when computing lifetime. The tricky part is getting "cumulative at the fork point": the SDK only exposes the session's *current* cumulative, which by the time the user forks may already include turns made after the fork point.
+- **Tokens** (`input_tokens`, `output_tokens`, cache fields) are **per-turn deltas**. You have to sum them across turns to get a session running total.
+- **Cost** (`total_cost_usd`) is cumulative-for-this-process. Overwriting it each turn is correct within a run, but **it resets to 0 on session resume** (resume spawns a fresh process).
 
-So, after every turn, we save the usage snapshot at that point. When a fork is created, we look up the snapshot right before the fork point and save it as the child's `forkBaseUsage`. This lookup involves traversing the ancestor chain recursively.
+So we persist two buckets per session: `usage` for the current run (tokens accumulated, cost overwritten) and `priorRunsUsage` for completed runs, rolled up when a resume happens. Session lifetime is their sum.
+
+Forks add another wrinkle. When Session B forks Session A at turn 5, some of A's accounting leaks into B's first reported turn. To avoid double-counting when summing across sessions, we record the parent's usage at the fork point as `forkBaseUsage` on the child and subtract it. Getting "cumulative at the fork point" means looking up the snapshot right before the fork point, so we save a snapshot after every turn for exactly this.
 
 ## Final Thoughts
 
