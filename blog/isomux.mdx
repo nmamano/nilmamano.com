@@ -100,37 +100,20 @@ When you click an empty desk to spawn an agent, you can provide:
 
 The browser sends a `spawn` command to the server, which:
 
-1. Creates a **launcher script**,
-2. Initializes the SDK session,
-3. Emits an `agent_added` event to all browsers.
+1. Initializes the SDK session,
+2. Emits an `agent_added` event to all browsers.
 
-There's a problem: Claude SDK's `SDKSessionOptions` doesn't expose fields for `cwd` or `appendSystemPrompt` - those are CLI flags. Isomux works around this by generating a per-agent `.mjs` launcher script.
-
-A `.mjs` file is a JavaScript file using ES module syntax, which is needed here for the top-level await:
-
-```typescript
-// ~/.isomux/launchers/AGENT_ID.mjs
-
-// sets the working directory
-process.chdir(...)
-
-// injects the agent identity, office context, office prompt, and custom
-// instructions
-process.argv.push("--append-system-prompt", ...)
-
-// boots the Claude Code CLI, which picks up the modified cwd and argv
-await import("isomux/node_modules/@anthropic-ai/claude-agent-sdk/cli.js")
-```
-
-The launcher changes `process.cwd()` and injects `--append-system-prompt` into `process.argv` before importing the Claude Code CLI entry point. This is passed to `createSession` as `pathToClaudeCodeExecutable`:
+Claude SDK's V2 `SDKSessionOptions` doesn't expose a field for `appendSystemPrompt`. Isomux works around this by smuggling the flag through `executableArgs`, which the SDK prepends to the Claude binary's argv:
 
 ```typescript
 // server/agent-manager.ts
-function createSession(managed: ManagedAgent, resumeSessionId?: string) {
+function createSession(managed, resumeSessionId) {
   const opts = {
     model: managed.info.model,
+    cwd: managed.info.cwd,
     permissionMode: managed.info.permissionMode,
-    pathToClaudeCodeExecutable: managed.launcherPath,
+    pathToClaudeCodeExecutable: CLAUDE_NATIVE_BIN,
+    executableArgs: ["--append-system-prompt", buildSystemPrompt(...)],
     hooks: createSafetyHooks(),
   };
   return resumeSessionId
@@ -139,11 +122,11 @@ function createSession(managed: ManagedAgent, resumeSessionId?: string) {
 }
 ```
 
-This is admittedly a hack - it relies on the SDK spawning the launcher as a subprocess - but works reliably.
+The system prompt is rebuilt on every `createSession` call, so office/room/agent prompt edits automatically land on the next conversation.
 
 ### Agent identity
 
-The system prompt is assembled from **four hierarchical layers**, concatenated into a single string and injected into the Claude Code CLI subprocess via the `--append-system-prompt` argument (see the [launcher hack](#spawning-agents) above for how).
+The system prompt is assembled from **four hierarchical layers**, concatenated into a single string and injected into the Claude Code CLI subprocess via the `--append-system-prompt` argument (see [Spawning agents](#spawning-agents) above for how).
 
 1. **Baseline**: hardcoded context explaining the office setting, the agent's identity (name and room), and isomux features.
 2. **Office prompt**: user-defined, applied to every agent in the office.
@@ -227,7 +210,6 @@ The `~/.isomux/` folder contains:
 - `logs/{agentId}/{sessionId}.jsonl`: append-only JSONL files for conversation history. Each line is a `LogEntry`.
 - `office-prompt.txt`: user-defined office-wide system prompt injected into all agents.
 - `tasks.json`: shared task board (JSON array of tasks with status, priority, and assignee).
-- `launchers/`: the per-agent .mjs launcher scripts discussed above.
 - `recent-cwds.json`: recently used working directories (for autocomplete in the spawn dialog)
 
 These files are kept consistent with the state sent to the clients.
