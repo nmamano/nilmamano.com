@@ -59,6 +59,10 @@ Isomux is a **single [Bun](https://bun.com/) process** that:
 
 <BlogImage src="/blog/isomux/architecture.png" alt="Isomux system design: browser clients connect over WebSocket to the Bun service, which runs persistent agents backed by Claude Code SDK sessions and persists state to the local file system" />
 
+<Callout>
+This server + WebSocket-broadcast setup gives you something else for free beyond multi-device sync: real-time multi-user collaboration. In my case, it means that anyone connected to my Tailscale network can also chime in in the same conversations, all in real time.
+</Callout>
+
 ## How the Claude Agent SDK Works
 
 The [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) lets you run Claude Code sessions programmatically from JavaScript. You create a session, send messages, and get responses. It works with your existing Claude subscription, you just need to be logged in with the claude CLI tool (`/login`).
