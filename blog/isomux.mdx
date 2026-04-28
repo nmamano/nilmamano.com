@@ -57,11 +57,7 @@ Isomux is a **single [Bun](https://bun.com/) process** that:
 - manages agent lifecycles,
 - and runs Claude Code sessions with the Agent SDK.
 
-```
-Browser A  ──┐                      ┌── Agent 1 (SDK session)
-Browser B  ──┼── WebSocket ── Bun ──┼── Agent 2 (SDK session)
-Phone      ──┘              server  └── Agent 3 (SDK session)
-```
+<BlogImage src="/blog/isomux/architecture.png" alt="Isomux system design: browser clients connect over WebSocket to the Bun service, which runs persistent agents backed by Claude Code SDK sessions and persists state to the local file system" />
 
 ## How the Claude Agent SDK Works
 
