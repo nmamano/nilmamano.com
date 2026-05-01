@@ -137,6 +137,10 @@ The baseline is designed to be brief, but leaves breadcrumbs so the agent can lo
 
 The room layer lets you group agents by project or role: e.g., you could have a room for your day job and a room for your side projects; each room may need different context, hence the room-wide prompt (you can even have different environment variables per room).
 
+In fact, I believe that, as a general principle, any agent management system should have hierarchical, user-defined system prompts:
+
+<BlogImage src="/blog/isomux/hierarchical-prompts.png" alt="Isomux: 3 layers of user-defined system prompts (office-wide, per-room, per-agent) concatenated and sent to the agent, alongside the general principle that any agent management system should expose hierarchical, user-defined system prompts" />
+
 The full system prompt looks like this:
 
 ```
