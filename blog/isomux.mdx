@@ -417,6 +417,20 @@ So we persist two buckets per session: `usage` for the current run (tokens accum
 
 Forks add another wrinkle. When Session B forks Session A at turn 5, some of A's accounting leaks into B's first reported turn. To avoid double-counting when summing across sessions, we record the parent's usage at the fork point as `forkBaseUsage` on the child and subtract it. Getting "cumulative at the fork point" means looking up the snapshot right before the fork point, so we save a snapshot after every turn for exactly this.
 
+### Cron jobs
+
+A common pattern I wanted to support: "every morning at 9, look at what every agent did yesterday and summarize." So Isomux has cron jobs (you can get to the cron job UI by clicking the wall clock).
+
+A cron job is a schedule (daily/weekly/every N minutes) plus a prompt, with the same configurability as a desk agent (model, thinking effort, cwd, permission mode). On each scheduled fire, the server spins up a fresh SDK session, sends the prompt, and streams the result to a JSONL log just like an agent. Though cron jobs don't have a persistent identity like desk agents.
+
+A few decisions worth calling out:
+
+- **Each scheduled fire is its own session.** If a daily summary needs context from yesterday, it can `cat` the prior transcript from `~/.isomux/cronjobs/<jobId>/<runId>/`; the system prompt points it there.
+- **Runs are resumable and forkable.** A daily summary can become an interactive follow-up.
+- **Overlap policy: skip, don't queue.** Manual "Run now" bypasses this.
+- **Missed fires from server downtime are silently dropped.**
+- **Per cron job token spend rolls into `/usage`.** Same fork-aware accounting as agents. The total usage combines agents and cron jobs.
+
 ## Final Thoughts
 
 It's great to have my own malleable orchestration tool. Oh, I don't like Claude Code's plan mode? No problem, I can roll out my own vision.
