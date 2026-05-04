@@ -394,6 +394,10 @@ When it's time to send the actual SDK message to Claude, the text and attachment
 
 Since the upload-to-server path was already there, I extended it to support arbitrary file types. Text-detectable files (by extension) are inlined as text blocks; everything else is uploaded but flagged as unreadable (with a note for the model not to infer the content). This is useful in the remote-server setup, for transferring files to the server without needing a separate tool (like `scp`).
 
+### Built-in diff tool
+
+Raw `git diff` output dumped into chat is hard to read. The user can run `/isomux-diff` to render uncommitted changes as a styled diff card inline. The more interesting half: agents have the same affordance via `POST /agents/:id/diff` (with an optional `{"dir": "..."}` body), so an agent finishing a refactor can show its own work as a styled diff instead of a wall of text. This mirrors the pattern used for the [shared task board](#shared-task-board) HTTP API and the [file attachments](#file-attachments) flow: orchestration features exposed symmetrically to humans and agents, so agents can use the UI's affordances rather than just respond in plain text.
+
 ### Conversation branching
 
 Sometimes you send a message and wish you'd phrased it differently. In Isomux, you can click edit on any past user message to fork the conversation from that point.
