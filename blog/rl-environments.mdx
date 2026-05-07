@@ -6,134 +6,122 @@ coverImage: "/blog/rl-environments/cover.png"
 categories: ["ai", "swe"]
 ---
 
-A friend who works in the AI data industry walked me through how frontier models are trained, what RL environments are, and what the job actually looks like at some of the top AI startups.
+A friend who works in the AI data industry walked me through how frontier models are trained, what RL (Reinforcement Learning) environments are, and what the job actually looks like at some of the top AI startups.
+
+The thesis is that RL environments are the third and latest wave of LLM RL, and the current focus of a lot of investment in AI. He explains how we got here and what's driving the shift.
+
+<Callout title="Disclaimer">
+This post is a cleaned up version of his explanation.
+It reflects one practitioner's perspective; YMMV.
+**Any figures given should be taken as an off-the-cuff estimate, not a researched value.**
+</Callout>
 
 <Toc />
 
-<Callout>
-**Disclaimer:** This post is the cleanup transcript of his explanation.
-This is one practitioner's perspective; details differ across labs and teams.
-**Any hard figures given should be taken as an off-the-cuff estimate, not a researched value.**
-</Callout>
-
-The thesis of this post is that RL environments are the third and latest wave of RL data, and the current focus of a lot of investment in AI. The post explains this shift.
-
 ## Act I: How models are trained
+
+Most of this Act may be review for you, so skip accordingly.
 
 ### Overview
 
-The standard AI model today is the Transformer. It's the next word predictor. Basically tokens in and tokens out.
-
-Almost all models being trained today/driving the top startups, including LLMs, are just very, very large Transformers. That's it.
-
-And while the high-level Transformer architecture has evolved (e.g., MoE), it still looks similar to the original one from 2017.
+The standard AI model today is the Transformer, in particular LLMs. Currently, most model training efforts go toward them. And while the high-level Transformer architecture has evolved (e.g., MoE), it still looks similar to the original one from 2017.
 
 So, what has changed?
 
-One is, obviously, the Transformers have gotten bigger. We scaled compute.
+One is, obviously, the Transformers have gotten bigger. We scaled compute and data.
 
-Two is, we are putting in more and more data. And this is a huge industry.
+**Data acquisition for training is a huge industry.** Big labs - OpenAI, Anthropic, xAI, Meta, and to some extent Microsoft and Amazon - are spending in the billions on data acquisition.
 
-Big labs — OpenAI, Anthropic, xAI, Meta, and to some extent Microsoft and Amazon — are spending in the billions on data acquisition. They throw serious money around to get data to train models.
+This has led to new companies whose focus is generating this data, and some are making a lot of money.
 
-That's why there are dozens of companies generating this data, and many are making a lot of money.
+What does data look like these days?
 
-**What does data look like these days?**
+Before getting into that, we'll give an overview of the training process.
 
-Before getting into that, it'll be helpful to talk about the training process.
-
-There are 3 stages.
+There are 3 main stages:
 
 1. Pre-training.
-2. What's called mid-training, or SFT, supervised fine-tuning.
-3. RL, which is also called post-training.
+2. SFT, supervised fine-tuning.
+3. RL (a.k.a. post-training).
 
 #### Pre-training
 
-Essentially, you take the entire corpus of the entire internet and anything else you can have, books, everything you can scrape.
+For pre-training, we want a dataset as large as possible, so we take anything we can scrape, like the entire corpus of the internet, books, etc.
 
 These datasets can be in the terabytes - trillions of tokens.
 
-You put it in the model, and it learns to predict the next token, but it also learns the structure of all the text.
+You put it in the model, and it learns to predict the next token, as well as the general structure of language.
 
-The pre-trained model is called a base model.
+The pre-trained model is called a _base model_, which is a literal autocomplete.
 
-The base model is literally an autocomplete. You type something and it will just complete your sentence.
-
-It doesn't really know how to answer questions. It doesn't know how to do sophisticated tasks like tool use and coding.
-
-Next, the companies need to make these base models useful.
+It doesn't really know how to answer questions or do things like tool use.
 
 #### Supervised fine-tuning
 
-That's when **supervised fine-tuning** comes in.
+Next, the companies need to make these base models useful. That's when supervised fine-tuning comes in.
 
-That basically is, you put in specialized data. That specialized data could be domain specific data.
+The idea here is to do the same thing as pretraining, but with specialized data.
 
-So for example, if I want my model to be good at finance and science, I can put in specialized finance data and science data. And since this comes after pre-training and training has a recency bias, the model is more sensitive to finance and science.
+For example, if we want our model to be good at finance and science, we can put in specialized finance data and science data. Since this comes after pre-training and training has a recency bias, the model becomes more sensitive to finance and science.
 
-Part of supervised fine-tuning is called **instruction following**. That's the question answer format.
+A big part of supervised fine-tuning is _instruction following_: the question and answer format.
 
-We give it a lot of examples of question, answer, question, answer, question, answer, question, answer. And then eventually the model sees so many of these that when it sees the question, it knows to output the response in an answer format.
-
-It's called _supervised_ because, following the classic ML taxonomy, every "input" (question) has an explicit, human-provided "label" (answer).
-
-The reason why it's called fine-tuning, and we're not at RL yet, is that it's the same process as pre-training: you have these curated datasets with specific formats, and the model learns the formats from them.
-
-#### RL
-
-Now you get into RL. There are different types, like:
-
-- Verifier RL for the reasoning side - math, coding, objective things.
-- Human feedback RL for subjective things.
-
-Typically, you do the objective stuff first and you spend a lot of compute on it - as much compute as for training. So you can train this RL for months, and you need a lot of highly sophisticated math and reasoning data to do this RL.
-
-That's how you get models that do super well at math and science benchmarks: they spent a ton of money buying data from real mathematicians and researchers, and then they post-train the heck out of the model.
-
-And then you have the subjective stuff, like safety and creative writing. What's the model's personality? How does it speak? Is it unbiased? 
-
-All that soft stuff is at the end.
-
-Verifier RL and RLHF are done via slightly different RL processes, but they are both RL processes.
-
-We'll first talk about RL itself, and then about how it's applied to these cases.
+We train the model with a lot of examples of question, answer, question, answer, question, answer sequences. Eventually, the model gets to a point where, when it sees a question, it outputs a response in an answer format.
 
 <Callout>
-"Does RL modify the same weights in the model as training and supervised fine-tuning?"
+SFT is called _supervised_ because, following the classic ML taxonomy, every "input" (question) has an explicit, human-provided "label" (answer).
+</Callout>
 
-There are 2 variations.
+SFT is the same as process as pre-training, just with different data, so we are not at RL yet.
 
-That depends on the goal.
+#### Reinforcement Learning
 
-If you want to fundamentally uplift the model in science or whatever - then you bake it into the model.
+After SFT, we get to RL. There are different types depending on what we want the model to get better at.
 
-But there's also a technique called LoRA (low rank adapters) where you train an independent set of weights, and then you can optionally add those weights to the model to customize its behavior.
+Two bigs ones are:
 
-(LoRA trains two smaller matrices which, when multiplied, produce a matrix with the same shape as the ones in the model, and then it's literally element-wise addition.)
+- RLVR (RL with Verifiable Rewards): for the reasoning side - math, coding, objective things.
+- RLHF (RL with Human Feedback): for subjective things.
 
-So, during RL, you can train only the LoRA weights and not the main model weights.
+Typically, we do the objective stuff first.
 
-And then you can swap out the LoRA weights, and you can get a lot of different, e.g., personalities, by using the same base model and different added LoRA weights.
+The labs get models to do super well at math and science benchmarks by spending a ton of money buying data from real mathematicians and researchers to post-train the models on.
 
-That's how people do the more cosmetic stuff.
+The amount of compute spent on this kind of reasoning RL sometimes approaches pre-training scale, which is known as _scaling post-training_.
+
+And then we have the subjective stuff, like safety and creative writing. What's the model's personality? How does it speak? Is it unbiased?  All that soft stuff is at the end.
+
+We'll first talk about RL in general, and then about how it's applied to the different cases.
+
+<Callout>
+_"Does RL modify the same weights in the model as training and SFT?"_
+
+There are 2 options, depending on the goal.
+
+If we want to fundamentally uplift the model in science or some other domain, we bake it into the model.
+
+There's also a technique called LoRA (low rank adapters) where you train an independent set of weights, and then you can optionally add those weights to the model to customize its behavior.
+
+(LoRA trains pairs of smaller matrices which, when multiplied, produce a matrix with the same shape as the ones in the model, and then it's literally element-wise addition.)
+
+So, during RL, you can train only the LoRA weights without touching the base model.
+
+And then you can swap in and out different sets of LoRA weights to get different model personalities and specializations. That's how people do the more cosmetic stuff.
 </Callout>
 
 ### RL Overview
 
-RL, reinforcement learning, is a learning strategy based on doing a bunch of simulations and obtaining rewards.
+RL is a learning strategy based on doing a bunch of simulations and obtaining rewards.
 
-We can think of the model itself as a "policy" that maps a state (the system prompt) to actions (the continuations).
+We can think of the model itself as a "policy" that maps a "state" (the system prompt) to "actions" (the continuations).
 
-Let's say the model is trying to answer a math problem.
+Let's say we are trying to answer a math problem. We can run the model 100 times to answer it. That's called 100 _rollouts_.
 
-We can call ChatGPT 1000 times to answer this math problem. That's called 1000 "rollouts" of the policy.
-
-Sometimes it gets it right, sometimes it gets it wrong. Based on how often it gets it right, you get a score for how smart the current model is.
+Sometimes it gets it right, sometimes wrong. Based on how often it gets it right, we give it a score for how smart it is.
 
 RL is the process by which you take the right responses and upgrade the weights that correspond to those, while downgrading the weights corresponding to the wrong responses.
 
-There are several variants of this.
+There are several variants.
 
 #### DPO 
 
@@ -141,64 +129,55 @@ The easiest variant is DPO, direct preference optimization.
 
 Have you used ChatGPT and gotten, "here's response A and response B, which do you like better?"
 
-That's DPO: you have 2 examples (rollouts), you pick one, and DPO increases the weight on the one you like better, and decreases the weight on the one you like worse.
+That's likely for DPO: you have 2 examples (rollouts), you pick one, and DPO increases the weight on the one you like better, and decreases the weight on the one you like worse.
 
 People do this for a lot of things: safety, personality, vibes, aesthetics, and so forth.
 
 The good thing about DPO is that it's an _offline_ training method: the model doesn't need to run at all during training - the user preference becomes training data directly.
 
 Generating a ton of preference data is what Scale AI used to do.
-They created giant datasets of positive and negative examples, and then companies can DPO their models on this dataset, offline.
+They created giant datasets of positive and negative examples, and then companies can DPO their models offline.
 
-DPO is kind of like fine-tuning in that you train the model offline. Online RL is more complicated.
+DPO has similarities with SFT in that you train the model offline. Online RL is more complicated.
 
 #### GRPO
 
 The 2nd type of RL, GRPO (Group Relative Policy Optimization), is used for more objective tasks like math and science. It was created by DeepSeek.
 
-Let's say you want your model to be good at math.
+A good proxy for "model is good at math" is being able to solve questions from math competitions.
 
-A good proxy for that is that it can solve questions from some math competitions.
+We can take a dataset of competition questions, and, for each one, do a couple hundred runs of rollouts.
 
-So, we can take a dataset of contest questions, and, for each one, do a couple hundred runs of the model trying to solve it.
+For GRPO to work, we need the model to get it right at least some times, ideally in a middle band (roughly 20-50%). If it's too hard, there's no positive signal to incraese; if it's too easy, training is saturated.
 
-Some rollouts are correct, some are wrong.
+All the AI labs now want data like this: domain-specific tasks - like math problems - where the model gets the task correct in that middle band.
 
-For GRPO to work, we need the model to get it right at least some times, ideally in a middle band (roughly 20-50%). So the questions can't be too easy or too hard.
-
-All the AI labs now want data like this: domain-specific tasks - like math problems - where the model gets the task correct in that middle band, because you have positive signal for training but it's not saturated.
-
-If the model gets it right too often, you need harder tasks.
-
-In a typical setup, GRPO might do, say, 64-256 rollouts per question. Let's keep using 200 as a concrete example and calculate a score called an _advantage function_ for each one.
+In a typical setup, GRPO might do around 100 rollouts per question and calculate a score called an _advantage function_ for each one.
 
 The advantage function is how much better this rollout is compared to the average.
 
-If 50% of rollouts are correct, a correct rollout gets a modest positive advantage.
-
-But if only 10% are correct, a correct run gets a much larger positive advantage.
+- If 50% of rollouts are correct, a correct rollout gets a modest positive advantage.
+- But if only 10% are correct, a correct run gets a much larger positive advantage.
 
 Based on this advantage function, we backpropagate the weights.
 
-There's a certain loss function that I forget, but I have a Notion doc where I spell all this out.
-
-Unlike DPO, GRPO is an online training algorithm - it takes time. Doing a batch of 200 rollouts may take a couple of minutes.
+Unlike DPO, GRPO is an online training algorithm - we need to run the model during training time.
 
 These days, the kind of tasks trained with GRPO for coding agents are end-to-end coding tasks. Then there's some grader that determines if the task was completed correctly or not.
 
-The dataset size may be in the 100s to 1000s of high-quality tasks, so they are not huge.
+<Callout title="Scale">
+The dataset size needed for a model to get good at one narrow skill may be in the 100s to 1000s of high-quality tasks, which is not that big.
 
-And for every one of them, the model will do 200 simulations, and each of these simulated runs will take like 1000 steps.
+For each task, the model does 100 rollouts, and each of these may take 1000 steps (output tokens).
 
-So the total number of tokens generated can be approximated by 1000 * 200 * 1000, and from that, we get 1000 * 200 scores to train on.
+Doing a batch of 100 rollouts may take a few minutes.
 
-Training may go over the dataset twice.
-
-Compared to pre-training and supervised fine-tuning, which take months, this RL stuff only takes a couple of days.
+Compared to pre-training and supervised fine-tuning, which take months, RL for one narrow skill may only take a couple of days.
+</Callout>
 
 #### PPO
 
-This is the most complicated one, and the original version that OpenAI used back in the day.
+This is the original version that OpenAI used back in the day.
 
 PPO usually uses a value model (a critic) to estimate baseline values, then computes advantage from that.
 
@@ -206,12 +185,10 @@ Many teams use simpler alternatives in practice because PPO can be cumbersome, s
 
 ### Expert networks
 
-Now, there are companies like [Mercor](https://mercor.com), which are expert networks.
-If a company wants their model to be good at archaeology, they can go to Mercor and pay archaeologists to generate or annotate suitable training data.
+Now, there are services like [Mercor](https://mercor.com) which manage _expert networks_.
+If a lab wants their model to be good at archaeology, they can go to Mercor to find archaeologists.
 
-The archaeologists are gig workers, from grad students to professionals, and can get paid to write questions and answers about archaeology, or write some archaeology tests.
-
-To prove it understands archaeology, the model tries to do the tests and gets judged against the answers. That's what we need for RL and, more precisely, GRPO.
+The archaeologists are gig workers, from grad students to professionals, and get paid to generate or annotate training data.
 
 Expert networks can cover every niche of human knowledge, and that's how we get models that are pretty good at many distinct domains.
 
@@ -219,144 +196,108 @@ Expert networks can cover every niche of human knowledge, and that's how we get 
 
 ### 3rd Wave of RL
 
-Increasingly, the labs care about their models being good at what they call economically valuable tasks. Things like finance, accounting, insurance, healthcare. A lot of office work.
+By this point, the models have already been trained to operate tools, write code, and think agentically.
 
-There's even "whole company simulation," where the goal is to train agents in _every_ task across an entire company.
+Increasingly, the labs care about their models being good at what they call economically valuable tasks. Things like finance, accounting, insurance, and healthcare. Most office work.
 
-So far, software engineering has been the main one. There's a benchmark called SWE-Bench, which is basically a lot of hard software engineering tasks.
+Examples of tasks may be:
 
-These days, models can write code fine. So now it's about end-to-end software engineering workflows. SRE, deployment, etc. It's about making architecture and design decisions and then writing software end to end and then testing it and pushing it to GitHub. We need RL tasks that simulate all of that.
+- doing a financial analysis
+- handling a complicated logistics scheduling problem
+- managing emails with various stakeholders
+- writing a report
 
-So now, instead of sourcing data from experts, we source it from real companies, or at least from contractors doing actual work.
+So far, software engineering has been the main one. These days, models can write code fine. So now the goal is about end-to-end software engineering workflows. SRE, deployment, etc.
 
-- Originally, it was, "Here's all the text we found" (pre-training).
-- Then, "Here's some advanced scientific data" (supervised fine-tuning).
-- First RL wave (Scale AI): "Here's some preference data from human labelers" (DPO RL).
-- Second RL wave (Mercor / expert networks): "Here are questions and answers generated by experts." (GRPO RL).
-- Third RL wave: "Here are tasks done by real workers." (also GRPO RL).
+We need RL tasks to simulate all that.
 
-<Callout>
-Part of being able to do economically valuable tasks is being able to literally control a computer.
+Instead of asking experts to recreate tasks with realistic data, we can source the data from real companies, or at least from contractors doing actual work.
 
-Computer use, browser use, and terminal use are 3 dimensions of that.
+This shift toward simulating economically valuable tasks using more realistic data is the third wave of RL:
 
-Computer use is normally terminal-based. There's a benchmark for that called Terminal-Bench. There's also a version called OS World, which gives the model access to the pixels on the screen.
-
-Browser use is typically based on Chrome.
-</Callout>
-
-### RL Data Companies
-
-So, how do we formulate the tasks needed to RL agentic behaviors on economically valuable tasks?
-
-These are models that have already been trained to operate tools, write code, and operate agentically.
-
-There are _data environment companies_ which focus on generating these specialized tasks.
-
-The tasks should be to do some end-to-end workflow that is economically valuable.
-Doing a financial analysis, handling a complicated logistics scheduling problem, managing emails with various stakeholders, or writing a report.
-
-These are real tasks, and the real people doing these tasks are basically (and usually unknowingly) generating data and annotating it for free as part of their work.
-
-For example, for whole-company simulation, tasks can be created from a company's entire email history and every project they've ever done.
+- Pre-training: "Here's all the text we found."
+- SFT: "Here's some advanced scientific text and question-answer sequences."
+- First wave - RLHF: "Here's some preference data from human labelers" (Scale AI, DPO).
+- Second wave - RLVR: "Here are questions and answers generated by experts." (Expert networks, GRPO).
+- Third wave - Agentic RL: "Here are tasks done by real workers." (also GRPO RL).
 
 ### RL Environments
 
-An _RL environment_ is a sandboxed environment where an agent tries to complete these tasks.
+So, how do we formulate the tasks needed for agentic RL, exactly?
 
-RL environments are also called RL gyms or AI training gyms. 
+An _RL environment_ (also called RL gyms or AI training gyms) is a sandboxed environment where an agent tries to complete a task.
 
-These environments are typically a Docker container with:
+There are companies that focus on producing these specialized environments.
+
+They are typically a Docker container with:
 
 #### 1. Pre-installed software
 
-Say the task requires tools like Microsoft Word. The Docker container doesn't have Microsoft Word, but we can install LibreOffice or some open-source variant.
+Say the task requires Microsoft Word, Slack, and GitHub.
 
-The task may require Slack. We don't have Slack, but we can install an open-source version like Mattermost.
+We can't put Microsoft Word in the container, but we can install an open-source variant like LibreOffice. We do this for all software involved in the task.
 
-And so on. You need GitHub? We can attach the Docker container to GitHub.
+#### 2. MCPs
 
-It is a real simulated work environment.
+In the real world, agents interact with services like Slack via MCPs, so that's what we want them to get good at.
 
-#### 2. Data
+MCPs are basically an API with a description that tells the agent when to call each API. For example, the Slack API covers opening a channel, closing a channel, talking to a person, reading a channel, looking at a person's profile, etc.
 
-The data has to be realistic, so it has to come from some real-world source. That's why big labs and startups alike are going to big companies across different domains and asking them to sell data.
+In a Docker container, what we can do is build a wrapper around the open-source version of Slack so that, from the model's perspective, it looks exactly the same.
 
-#### 3. Tool APIs
+#### 3. Data
 
-You need an API spec for the tools that the agent can call.
-
-The APIs these days are MCPs, which are basically an API with a description that tells the agent when to call each API.
-
-For example, the slack API covers the operations in Slack: open a channel, close a channel, talk to a person, read a channel, look at a person's profile, etc.
-
-These are the API calls that the model is trying to learn for tasks involving Slack.
-
-In a Docker container, what we can do is build a wrapper around the open-source version of Slack so that, to the model, it can look exactly the same.
-
+Ideally, the data come from a real-world source. That's why big labs and startups alike are going to big companies across different domains and asking them to sell data.
 
 #### 4. A harness
 
-Whenever the model outputs tokens corresponding to a tool call, there needs to be a layer above it pausing the generation, running the corresponding operation, and resuming the agent with the appropriate output. That's the harness. There's a lot more to it, but think "Claude Code". That's the thing that we unleash in the environment, not just Opus 4.7.
+Whenever the model outputs tokens corresponding to a tool call, there needs to be a layer above it pausing the generation, running the corresponding operation, and resuming the agent with the appropriate output. That's the harness. There's a lot more to it, but think "Claude Code". That's what we unleash in the environment, not just the model.
 
-#### The tasks
+### The tasks
 
-So we create these Docker environments with very specialized settings.
+After creating the Docker environment, we need tasks for the model to attempt in them.
 
-Then we need tasks for the model to attempt in them.
+The tasks are designated by human experts, who specify the goal (which becomes the task's starting prompt).
 
-The tasks are also sourced from contractors or experts based on realistic tasks.
-They need to specify the goal (which becomes the task's starting prompt) and provide the official solution.
+In each rollout we give the model a maximum number of steps or a timeout limit. The model either hits the limit or says "I'm done."
 
-We may ask the expert, "If you did this Excel model well, what would the final sheet look like?"
+From there, we have some artifacts inside the environment that the model+harness created. For example, if the goal is to fill out an Excel model for finance, a sheet will be modified.
 
-Typically you want 100s of environments. Each of these can have multiple tasks (always run in isolation).
+Eventually, the outcomes need to be plugged into GRPO, so the rollouts need to have a score based on those artifacts.
 
-This means we still need a lot of expert annotators, as well as engineers to set up the environments and tasks. That's what a lot of the new AI companies focus on.
+<Callout>
+For Agentic RL, we need both experts and engineers to set up the environments. That's what some new AI data companies focus on.
+</Callout>
+
+Each environment can have multiple tasks, but the rollouts always run in isolation; every rollout spins up a Docker container.
 
 ### Grading
 
-So, every rollout is a full end-to-end run where it spins up a Docker container.
+We may ask the expert, "If you did this Excel model well, what would the final sheet look like?"
 
-Eventually, the outcome needs to be plugged into a GRPO trainer, so they need to have a score.
+The expert has to create a rubric. They can put in a mix of objective and subjective aspects.
 
-Let's get to the grading.
+Then the grader - also called verifier - runs to evaluate that rubric.
 
-The idea is that a human expert creates a rubric.
-
-The framework is often called RLVR: reinforcement learning with verifiable rewards (though people sometimes use the term loosely when rubrics include LLM-judge checks).
-
-You give the model a maximum number of steps or a timeout limit. The model will either hit the limit or it will say "I'm done."
-
-And from there, we  have a set of output artifacts inside the environment.
-For example, if the goal is to fill out an Excel model for finance, a sheet will be modified.
-
-Then the grader - also called verifier - runs.
-Its job is to evaluate the human-generated rubric.
-
-The expert writing the rubric can put in a mix of objective and subjective aspects.
-
-- **Deterministic** checks, like, are the numbers correct in the right places? Did the model mention what we told the model to mention? Did the model find the right data in the right places?
+- **Deterministic** checks, like: are the numbers correct in the right places? Did the model mention what we told the model to mention? Did the model find the right data in the right places?
 - **LLM judge** checks: another LLM evaluates subjective parts of the rubric, giving a score. For example, if the model made a bar chart, is it well formatted?
 
-For math, you can formalize correctness of some tasks in Lean, though a lot of practical setups use simpler graders. For other domains, maybe a lot of knowledge is not formalized. How can you make decision trade-offs? How does a real scientist operate? What is their intuition about different work that they do? You make the rubrics to bake in these intuitions.
-
-Implementation-wise, the rubric looks like a JSON file with a list of checks. Deterministic checks contain a reference to a Python function, and LLM judge checks contain a prompt for the grader LLM.
+Implementation-wise, the rubric looks like a JSON file with a list of checks. Deterministic checks contain references to Python functions, and LLM judge checks contain prompts for the grader LLM.
 
 There can be 100-200 checks for a single task, so the models get a detailed score, like 120/183. That's what goes into GRPO.
 
-After a training run, you also check whether the model improved on a held-out test set of tasks.
-
 Because the model is literally trained to the rubric, the rubric has to be really, really good.
+
+After a training run, we can check whether the model improved by running it on a set of test tasks that we held out.
 
 ### Domains of RL Environments
 
-The big labs are going to spend a lot of money to have people make these Docker container environments, because that's the path toward automating jobs. So that's what startups are working on.
+The big labs are spending a lot of money to have people make these Docker container environments, because that's the path toward automating jobs. So that's what startups are working on.
 
 What are the domains people are targeting these days?
 
 1. **End-to-end coding** - the software development life cycle.
-2. **Whole-company simulation.** They take a whole company with all of the company's history of Jira tickets, Confluence, emails, Slack messages, and you create tasks based on realistic work that has been done historically in this company. Sometimes, people get this data from failed startups, where it no longer serves any other purpose.
+2. **Whole-company simulation.** They take a whole company with all of the company's history of Jira tickets, Confluence, emails, Slack messages, and create tasks based on realistic work that has been done historically in this company. Sometimes, people get this data from failed startups, where it no longer serves any other purpose.
 3. **Specialized knowledge work**: domains like finance, accounting, healthcare. They will hire people to generate these Docker environments.
 4. **Hard math and science**: material science, biology, physics, and computer science itself, including AI research itself.
 
@@ -364,7 +305,7 @@ Those are the domains that people are mostly working with when we're talking abo
 
 There's also robotics (a burgeoning field) and things like gaming.
 
-## Recap
+## RL Environment Recap
 
 To recap, this is how RL environments work:
 
@@ -377,10 +318,10 @@ To recap, this is how RL environments work:
 
 ## What this means if you're an engineer
 
-- RL environments are very lucrative right now because they produce what the frontier labs want now. There are dozens of companies doing this.
+- RL environments are very lucrative right now because they produce what the frontier labs want. There are dozens of companies doing this.
 - RL environments require a substantial amount of engineering work to scale at quality, but it's not the most technically challenging work. A lot of the work is:
-    - Calibration. Recall that you want these tasks to land in that middle band of difficulty. A lot of it is mucking with the task to calibrate its difficulty.
-    - Random data work and data cleaning
+    - Calibration. Recall that you want these tasks to land in that middle band of difficulty. A lot of it is mucking with the tasks to calibrate their difficulty.
+    - Random data work and data cleaning.
     - Automating as much as possible to reduce the expert contractors' time.
 - To work in this space as an engineer, you don't need much ML knowledge. You need to be a good engineer and know how to use agents well.
 - If you work on RL environments, it's easy to get a job at a frontier lab because you've worked on their input data. It is a logical next step to become one of the researchers training on them.
