@@ -14,23 +14,19 @@ I have finally reached Level 6 in [Steve Yegge's hierarchy](https://steve-yegge.
 
 <BlogImage src="/blog/isomux/steve_hierarchy.jpeg" alt="Steve Yegge's hierarchy of software engineering needs"/>
 
-I was at Level 5 for about 5 months, using Claude Code as my primary coding tool.
+The main friction with getting to Level 6 using Claude Code was terminal management. Having a mix of local sessions and remote sessions (for tasks that can only be done remotely like [model training](/blog/wall-game-ai)) and ssh'ing all the time added friction.
 
-The main friction with getting to Level 6 was terminal management, especially for tasks that can only be done remotely, like [model training](/blog/wall-game-ai).
+[Tmux](https://github.com/tmux/tmux/wiki) helped; [cmux](https://cmux.com/) was even better. But what actually did it for me was:
 
-[Tmux](https://github.com/tmux/tmux/wiki) helped; [cmux](https://cmux.com/) was even better. But trying to keep good uptime on multiple agents felt... cramped.
+1. Building my own browser-based agent management system.
+2. Running it in a server in the same Tailscale network as my laptop and phone.
 
-What actually did it for me was:
+This consolidates the two ends of my workflow:
 
-1. Building my own browser-based agent orchestration.
-2. Running said tool in a home server inside a Tailscale network with my laptop and phone.
+- The device I'm on: all devices see the same agents and conversations.
+- The agents' environment: all agents run on the same machine.
 
-This simplifies the two ends of my workflow:
-
-- What device I'm on: all devices see the same agents and conversations.
-- Claude's environment: all agents run on the same machine.
-
-Two great things not to have to worry about!
+Two great things not to have to think about!
 
 But my custom-made orchestration, [Isomux](https://isomux.com) (Isometric Multiplexer), has something extra: it's cute.
 
@@ -62,6 +58,54 @@ Isomux is a **single [Bun](https://bun.com/) process** that:
 <Callout>
 This server + WebSocket-broadcast setup gives you something else for free beyond multi-device sync: real-time multi-user collaboration. In my case, it means that anyone connected to my Tailscale network can also chime in in the same conversations, all in real time.
 </Callout>
+
+### Giving Agents Superpowers
+
+Here's the general recipe behind a lot of Isomux's features:
+
+1. Run your Agent SDK wrappers in your own server, with a custom UI on top.
+2. Add a REST API to the server for inserting custom components into agent conversations.
+3. Tell agents how to use the API in the system prompt.
+
+Once those 3 pieces are in place, you can start giving your agents structured affordances:
+
+- Render styled side-by-side diffs in chat:
+
+`POST /agents/:id/diff { dir }`
+
+- Surface "Open in editor" cards for files:
+
+`POST /agents/:id/edit-file { path }`
+
+- Surface "Copy to terminal" cards for commands:
+
+`POST /agents/:id/terminal-command { command }`
+
+- Send messages to other agents:
+
+`POST /agents/:id/message { text, senderAgentId }`
+
+- Render images in chat:
+
+`GET /agents/:id/read-file { path }`
+
+- Create and complete tasks on a shared task board:
+
+`POST /tasks`
+
+<BlogImage src="/blog/isomux/superpowers.png" alt="High-level architecture: a user talks to a custom web UI on the left, which exchanges messages with a server on the right (e.g. Bun) that wraps Agent SDKs, holds the system prompts that teach agents about the API, and exposes a custom REST API at /agents/:id/* for diff, edit-file, terminal-command, message, read-file, and other endpoints. The chat panel shows examples of the resulting custom components: an inline diff, an 'Open in editor' card, a 'Copy to terminal' card, and an inter-agent message" />
+
+This pattern is used in many of [the QoL features](#qol-features) below.
+
+This design wasn't obvious from the start. When I first implemented inline image support, I used a "hack": if the agent read an image with the Read Tool, the server would send it to the UI for rendering in the chat. The system prompt had to explain the convention. It worked, but it co-opted a tool meant for something else.
+
+#### Office-to-office communication
+
+One nice consequence: if two Isomux offices live in the same VPN, agents in one can call the REST endpoints of the other. They can drop tasks on each other's boards, send messages, etc., without any extra plumbing.
+
+I discovered this [accidentally](https://x.com/Nil053/status/2052268533535649994?s=20).
+
+<BlogImage src="/blog/isomux/cross-office.png" alt="Agent 1, running in a laptop office, creates a task on the task board of an Isomux server office reached over Tailscale at auntie:4000" />
 
 ## How the Claude Agent SDK Works
 
@@ -409,11 +453,7 @@ Agents interact with the task board through a simple HTTP API (`GET /tasks`, `PO
 
 This feature goes two ways: (1) the agent showing us images, and (2) the user showing files to the agent.
 
-For (1), imagine that we ask the model to make a plot and show it to us. The model can write a Python script with matplotlib and generate a .png. But then, how does it show it to us?
-
-The easiest way I found was to display images inline in the conversation as a side-effect whenever the model calls the file read tool them. In the system prompt, we had to explicitly tell the agent about this, since it's not obvious from the PoV of the model:
-
-> To show an image to the boss, read the image file with the Read tool — it renders inline in the conversation.
+For (1), imagine that we ask the model to make a plot and show it to us. The model can write a Python script with matplotlib and generate a .png. But then, how does it show it to us? It uses the REST-API-for-UI pattern from [Giving Agents UI Superpowers](#giving-agents-ui-superpowers): a dedicated endpoint the agent calls on a file path, and the file renders inline in the conversation.
 
 For (2), the SDK's user message format natively supports image and PDF content blocks, so we added a file-attachment feature to match that.
 
