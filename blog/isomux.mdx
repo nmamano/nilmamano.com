@@ -1,7 +1,7 @@
 ---
 title: "Isomux Design and Architecture"
 date: "2026-04-03"
-excerpt: "A detailed walkthrough of how Isomux manages multiple concurrent Claude Code agents from a single Bun process, using the Claude Agent SDK, WebSockets, and an isometric office UI."
+excerpt: "Design, architecture, and takeaways from building a multi-provider agent office that supports multi-user, multi-device, and multi-agent conversations."
 coverImage: "/blog/isomux/cover.jpeg"
 categories: ["ai", "swe"]
 ---
@@ -51,7 +51,7 @@ Isomux is a **single [Bun](https://bun.com/) process** that:
 - serves the browser frontend,
 - talks to browsers over WebSocket,
 - manages agent lifecycles,
-- and runs Claude Code sessions with the Agent SDK.
+- and runs agent sessions on either the [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) (Anthropic) or the [Codex CLI's App Server](https://github.com/openai/codex) (OpenAI), behind a shared backend abstraction.
 
 <BlogImage src="/blog/isomux/architecture.png" alt="Isomux system design: browser clients connect over WebSocket to the Bun service, which runs persistent agents backed by Claude Code SDK sessions and persists state to the local file system" />
 
@@ -130,6 +130,18 @@ This makes abort possible: call `close()` to kill the stream, then `resumeSessio
 Isomux needs the ability to abort agents (e.g., the user does Ctrl+C to add, "Sorry, I meant..."), so we chose V2 even though it's in alpha.
 
 For now, V2 seems a bit buggy. Sometimes, the message order gets fumbled. [Here](https://github.com/nmamano/isomux/blob/62953229195fc50781eea1f384322c64953ecf28/docs/sdk-investigation.md) is an example of the kind of bugs I ran into.
+
+## How Codex Differs
+
+Claude and Codex agents share the same desks, task board, and persistence layer. They can message each other. But Codex works quite differently:
+
+- **We don't use an SDK.**[^codex-sdk] Instead, we talk to a subprocess called "App Server" that ships with the Codex CLI. It speaks a JSON-RPC-lite protocol over stdio. Isomux spawns `codex app-server`, sends `initialize` + `thread/start` requests, and reads `notifications` off stdout. An adapter translates these messages into a `NormalizedEvent` stream shared with Claude.
+- **Streaming is push, not pull.** The Claude SDK gives you an async iterator (`for await … of session.stream()`). Codex pushes notifications at you (`thread/started`, `turn/started`, `turn/completed`, `tool/started`, …) and expects you to filter by `threadId`. Per-thread filtering is non-negotiable: sub-agent and review-mode threads share the same stdio pipe but have their own ids, and resolving the wrong turn would unblock the queue prematurely.
+- **Capability mismatches.** Codex 0.130 doesn't expose hooks, and its `thread/fork` can only clone a whole thread from the start — it can't branch from a midpoint mid-conversation. That breaks Isomux's "edit a past message" feature, which forks the conversation at the edited message and keeps the original branch as a sibling. Our provider abstraction declares a `BackendCapabilities` record (`fork`, `hooks`, `skills`, `edit`, `mcp`, …) and the UI hides affordances accordingly. This keeps the orchestrator code backend-agnostic.
+
+[^codex-sdk]: OpenAI ships three integration surfaces: the [Codex TypeScript SDK](https://github.com/openai/codex/tree/main/sdk/typescript) (`@openai/codex-sdk`), a lightweight `codex exec` mode for one-off scripts, and the App Server we use here. OpenAI explicitly recommends App Server for UI integrators ([blog post](https://openai.com/index/unlocking-the-codex-harness/)): *"Codex App Server will be the first-class integration method we maintain moving forward… Choose the App Server when you want the full Codex harness exposed as a stable, UI-friendly event stream."* The SDK is positioned for *"server-side tools and workflows"* with a smaller surface area, and Exec for *"one-off tasks and CI runs"*.
+
+Auth piggybacks on the CLI, again: if `codex login` works (ChatGPT subscription) or `OPENAI_API_KEY` is set, Isomux's spawned subprocess inherits it. No API key plumbed through Isomux itself.
 
 ## The Agent Lifecycle
 
