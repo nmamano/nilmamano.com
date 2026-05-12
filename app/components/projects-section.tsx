@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { FaGithub, FaPlay, FaChevronDown, FaBook } from "react-icons/fa";
 import Image from "next/image";
-import { Project, getAllProjects } from "@/app/lib/research-projects";
+import { Project, getAllProjects } from "@/app/lib/projects";
 import { ExpandableCardGrid } from "./expandable-card-grid";
 
 interface ProjectCardPreviewProps {
