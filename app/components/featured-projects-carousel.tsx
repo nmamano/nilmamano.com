@@ -49,7 +49,7 @@ const projects = [
     id: "isomux",
     title: "Isomux: Your Agent Office",
     tagline:
-      "Friction going from 1 Claude Code to 4+? Isomux is your agent office. Free & open source, runs locally, works with your Claude subscription.",
+      "Your agent office. Multi-device, multi-user, multi-agent collaboration with Claude Code and Codex. Free & open source, runs locally.",
     image: "/projects/isomux.png",
     href: "https://isomux.com",
     cta: "Try it",
