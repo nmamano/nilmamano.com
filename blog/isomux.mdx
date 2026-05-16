@@ -12,7 +12,10 @@ categories: ["ai", "swe"]
 
 I have finally reached Level 6 in [Steve Yegge's hierarchy](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04)!
 
-<BlogImage src="/blog/isomux/steve_hierarchy.jpeg" alt="Steve Yegge's hierarchy of software engineering needs"/>
+<BlogImage
+  src="/blog/isomux/steve_hierarchy.jpeg"
+  alt="Steve Yegge's hierarchy of software engineering needs"
+/>
 
 The main friction with getting to Level 6 using Claude Code was terminal management. Having a mix of local sessions and remote sessions (for tasks that can only be done remotely like [model training](/blog/wall-game-ai)) and ssh'ing all the time added friction.
 
@@ -30,7 +33,10 @@ Two great things not to have to think about!
 
 But my custom-made orchestration, [Isomux](https://isomux.com) (Isometric Multiplexer), has something extra: it's cute.
 
-<BlogImage src="/blog/isomux/cover.jpeg" alt="Isomux office view with agents at desks" />
+<BlogImage
+  src="/blog/isomux/cover.jpeg"
+  alt="Isomux office view with agents at desks"
+/>
 
 I spend all day in the agent management tool. It had to be cute.
 
@@ -41,7 +47,8 @@ The thesis is that **by anthropomorphizing agents, we reduce cognitive load**; w
 Please play with [the demo](https://isomux.com/demo) before reading on. The source is on [GitHub](https://github.com/nmamano/isomux).
 
 <Callout>
-Isomux is being built by Claude Code agents running inside isomux since 3h after the project was started. Developing a dev tool from itself is fun!
+  Isomux is being built by Claude Code agents running inside isomux since 3h
+  after the project was started. Developing a dev tool from itself is fun!
 </Callout>
 
 ### Architecture Overview
@@ -53,10 +60,17 @@ Isomux is a **single [Bun](https://bun.com/) process** that:
 - manages agent lifecycles,
 - and runs agent sessions on either the [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) (Anthropic) or the [Codex CLI's App Server](https://github.com/openai/codex) (OpenAI), behind a shared backend abstraction.
 
-<BlogImage src="/blog/isomux/architecture.png" alt="Isomux system design: browser clients connect over WebSocket to the Bun service, which runs persistent agents backed by Claude Code SDK sessions and persists state to the local file system" />
+<BlogImage
+  src="/blog/isomux/architecture.png"
+  alt="Isomux system design: browser clients connect over WebSocket to the Bun service, which runs persistent agents backed by Claude Code SDK sessions and persists state to the local file system"
+/>
 
 <Callout>
-This server + WebSocket-broadcast setup gives you something else for free beyond multi-device sync: real-time multi-user collaboration. In my case, it means that anyone connected to my Tailscale network can also chime in in the same conversations, all in real time.
+  This server + WebSocket-broadcast setup gives you something else for free
+  beyond multi-device sync: real-time multi-user collaboration. In my case, it
+  means anyone I invite can chime in to the same conversations, all in real time
+  — as long as they can reach the server (tailnet or public URL; see the [Access
+  section](#access) below).
 </Callout>
 
 ### Giving Agents Superpowers
@@ -93,7 +107,10 @@ Once those 3 pieces are in place, you can start giving your agents structured af
 
 `POST /tasks`
 
-<BlogImage src="/blog/isomux/superpowers.png" alt="High-level architecture: a user talks to a custom web UI on the left, which exchanges messages with a server on the right (e.g. Bun) that wraps Agent SDKs, holds the system prompts that teach agents about the API, and exposes a custom REST API at /agents/:id/* for diff, edit-file, terminal-command, message, read-file, and other endpoints. The chat panel shows examples of the resulting custom components: an inline diff, an 'Open in editor' card, a 'Copy to terminal' card, and an inter-agent message" />
+<BlogImage
+  src="/blog/isomux/superpowers.png"
+  alt="High-level architecture: a user talks to a custom web UI on the left, which exchanges messages with a server on the right (e.g. Bun) that wraps Agent SDKs, holds the system prompts that teach agents about the API, and exposes a custom REST API at /agents/:id/* for diff, edit-file, terminal-command, message, read-file, and other endpoints. The chat panel shows examples of the resulting custom components: an inline diff, an 'Open in editor' card, a 'Copy to terminal' card, and an inter-agent message"
+/>
 
 This pattern is used in many of [the QoL features](#qol-features) below.
 
@@ -105,7 +122,10 @@ One nice consequence: if two Isomux offices live in the same VPN, agents in one 
 
 I discovered this [accidentally](https://x.com/Nil053/status/2052268533535649994?s=20).
 
-<BlogImage src="/blog/isomux/cross-office.png" alt="Agent 1, running in a laptop office, creates a task on the task board of an Isomux server office reached over Tailscale at auntie:4000" />
+<BlogImage
+  src="/blog/isomux/cross-office.png"
+  alt="Agent 1, running in a laptop office, creates a task on the task board of an Isomux server office reached over Tailscale at auntie:4000"
+/>
 
 ## How the Claude Agent SDK Works
 
@@ -139,7 +159,7 @@ Claude and Codex agents share the same desks, task board, and persistence layer.
 - **Streaming is push, not pull.** The Claude SDK gives you an async iterator (`for await … of session.stream()`). Codex pushes notifications at you (`thread/started`, `turn/started`, `turn/completed`, `tool/started`, …) and expects you to filter by `threadId`. Per-thread filtering is non-negotiable: sub-agent and review-mode threads share the same stdio pipe but have their own ids, and resolving the wrong turn would unblock the queue prematurely.
 - **Capability mismatches.** Codex 0.130 doesn't expose hooks, and its `thread/fork` can only clone a whole thread from the start — it can't branch from a midpoint mid-conversation. That breaks Isomux's "edit a past message" feature, which forks the conversation at the edited message and keeps the original branch as a sibling. Our provider abstraction declares a `BackendCapabilities` record (`fork`, `hooks`, `skills`, `edit`, `mcp`, …) and the UI hides affordances accordingly. This keeps the orchestrator code backend-agnostic.
 
-[^codex-sdk]: OpenAI ships three integration surfaces: the [Codex TypeScript SDK](https://github.com/openai/codex/tree/main/sdk/typescript) (`@openai/codex-sdk`), a lightweight `codex exec` mode for one-off scripts, and the App Server we use here. OpenAI explicitly recommends App Server for UI integrators ([blog post](https://openai.com/index/unlocking-the-codex-harness/)): *"Codex App Server will be the first-class integration method we maintain moving forward… Choose the App Server when you want the full Codex harness exposed as a stable, UI-friendly event stream."* The SDK is positioned for *"server-side tools and workflows"* with a smaller surface area, and Exec for *"one-off tasks and CI runs"*.
+[^codex-sdk]: OpenAI ships three integration surfaces: the [Codex TypeScript SDK](https://github.com/openai/codex/tree/main/sdk/typescript) (`@openai/codex-sdk`), a lightweight `codex exec` mode for one-off scripts, and the App Server we use here. OpenAI explicitly recommends App Server for UI integrators ([blog post](https://openai.com/index/unlocking-the-codex-harness/)): _"Codex App Server will be the first-class integration method we maintain moving forward… Choose the App Server when you want the full Codex harness exposed as a stable, UI-friendly event stream."_ The SDK is positioned for _"server-side tools and workflows"_ with a smaller surface area, and Exec for _"one-off tasks and CI runs"_.
 
 Auth piggybacks on the CLI, again: if `codex login` works (ChatGPT subscription) or `OPENAI_API_KEY` is set, Isomux's spawned subprocess inherits it. No API key plumbed through Isomux itself.
 
@@ -195,7 +215,10 @@ The room layer lets you group agents by project or role: e.g., you could have a 
 
 In fact, I believe that, as a general principle, any agent management system should have hierarchical, user-defined system prompts:
 
-<BlogImage src="/blog/isomux/hierarchical-prompts.png" alt="Isomux: 3 layers of user-defined system prompts (office-wide, per-room, per-agent) concatenated and sent to the agent, alongside the general principle that any agent management system should expose hierarchical, user-defined system prompts" />
+<BlogImage
+  src="/blog/isomux/hierarchical-prompts.png"
+  alt="Isomux: 3 layers of user-defined system prompts (office-wide, per-room, per-agent) concatenated and sent to the agent, alongside the general principle that any agent management system should expose hierarchical, user-defined system prompts"
+/>
 
 The full system prompt looks like this:
 
@@ -257,7 +280,10 @@ Further, through the `logDir` paths, it has access to the current conversation o
 
 This means you can ask an agent, _"What do you think of OTHER_AGENT's approach?"_ and it just works.
 
-<BlogImage src="/blog/isomux/inter-agent.jpeg" alt="Inter-agent communication via shared logs" />
+<BlogImage
+  src="/blog/isomux/inter-agent.jpeg"
+  alt="Inter-agent communication via shared logs"
+/>
 
 ### Agent persistence
 
@@ -311,7 +337,10 @@ The queue ends up with a mix of human and agent messages:
 
 When the agent is free, all queued messages are coalesced into a single message. Senders are labeled so the agent knows who said what.
 
-<BlogImage src="/blog/isomux/agent-to-agent-queue.jpeg" alt="Isomuxer4 receiving a message from Isomuxer1 and replying via the agent-to-agent endpoint, with a mixed queue of pending messages from Nil and Isomuxer1 at the bottom of the chat" />
+<BlogImage
+  src="/blog/isomux/agent-to-agent-queue.jpeg"
+  alt="Isomuxer4 receiving a message from Isomuxer1 and replying via the agent-to-agent endpoint, with a mixed queue of pending messages from Nil and Isomuxer1 at the bottom of the chat"
+/>
 
 It's still important to offer a UI option to flush the queue immediately, so there's a "Send now" button.
 
@@ -399,7 +428,33 @@ I run all my agents in `bypassPermissions` mode. Isomux injects `PreToolUse` hoo
 
 The embedded terminal is very handy when you need to run one of the blocked commands.
 
-<BlogImage src="/blog/isomux/embedded-terminal.jpeg" alt="Embedded terminal in Isomux" />
+<BlogImage
+  src="/blog/isomux/embedded-terminal.jpeg"
+  alt="Embedded terminal in Isomux"
+/>
+
+### Access
+
+There are no passwords or accounts in a traditional sense.
+
+Every browser request is gated by a session cookie:
+
+1. Owner clicks "Issue invite" → server generates a 256-bit random invite token, hashes it (sha256) to disk, and the UI shows an invite URL with the token to the owner. It's shown only once, so the owner must copy it now.
+2. Owner sends the URL out-of-band.
+3. The invitee clicks it → browser loads the accept page → browser POSTs the invite token to /auth/accept.
+4. Server hashes the incoming token, matches it against the hashes on disk, verifies it's unconsumed and unexpired.
+5. Server generates a new 256-bit random session ID, hashes it, and returns it in a `Set-Cookie: isomux_session=<raw-id>` response header. The original raw session ID is gone from the server's memory after this response.
+6. Browser stores the cookie (HttpOnly, so JS can't read it) and sends it on every subsequent request.
+
+On first boot the server prints a one-time bootstrap invite URL to stdout. Whoever opens it first claims ownership. After that, the owner mints further invites from the UI.
+
+There's a member role for everyday users and an owner role. The split controls who can grow the trust boundary, and things like who can access which rooms (soon).[^access]
+
+[^access]: Right now there's no OS-level isolation between members. Every agent runs as the same OS user, so anyone you invite can read whatever the isomux process can read. Adding per-member isolation is on the to-do list.
+
+For reachability beyond your own VPN, the best path I've found is Tailscale Funnel: same `*.ts.net` domain, exposed to the public internet. The relay forwards an encrypted TCP tunnel to your server. TLS terminates at your server, not the relay.
+
+There's an [agent prompt](https://github.com/nmamano/isomux/blob/main/docs/access-and-invites.md) that walks an agent through enabling the funnel (_installation by prompt_).
 
 ### Skills
 
@@ -483,7 +538,10 @@ Raw `git diff` output dumped into chat is hard to read. The user can run `/isomu
 
 It can be convenient to make quick edits manually from isomux itself, especially in the remote server setup. The editor side panel opens files in CodeMirror, an open-source web editor component. Humans can open files via `/isomux-edit <path>`, whle agents can `POST /agents/:id/edit-file` to offer an "[Open in editor]" card. Same human/agent symmetry as the [diff tool](#built-in-diff-tool).
 
-<BlogImage src="/blog/isomux/built-in-editor.jpeg" alt="Built-in editor side panel in Isomux" />
+<BlogImage
+  src="/blog/isomux/built-in-editor.jpeg"
+  alt="Built-in editor side panel in Isomux"
+/>
 
 ### Conversation branching
 
