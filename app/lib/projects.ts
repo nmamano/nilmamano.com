@@ -29,7 +29,7 @@ export const PROJECTS: Project[] = [
     description: [
       "Your agent office. Multi-device, multi-user, multi-agent collaboration with Claude Code and Codex. Cute in a useful way. Free & open source — works with your Claude or ChatGPT subscriptions, runs locally, no cloud, no account.",
 
-      "A visual office metaphor — see what every agent is doing at a glance. Multi-provider: spawn Claude Code agents (Anthropic) and Codex agents (OpenAI) in the same office. Works locally or as a persistent server (Mac Mini style): run at home, access from any device in your Tailscale network, with real-time sync and first-class mobile UI.",
+      "A visual office metaphor — see what every agent is doing at a glance. Multi-provider: spawn Claude Code agents (Anthropic) and Codex agents (OpenAI) in the same office. Works locally or as a persistent server (Mac Mini style): run at home, access from any device, real-time sync, first-class mobile UI. Invite-link auth lets anyone you invite use the office from their browser.",
     ],
   },
   {
