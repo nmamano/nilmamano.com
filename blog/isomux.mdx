@@ -450,6 +450,14 @@ For reachability beyond your own VPN, the best path I've found is Tailscale Funn
 
 There's an [agent prompt](https://github.com/nmamano/isomux/blob/main/docs/access-and-invites.md) that walks an agent through enabling the funnel (_installation by prompt_).
 
+### Live user presence
+
+Each connected device shows up as a small customizable ghost[^ghost] avatar next to whatever agent it's chatting with. This helps make the office feel more alive and get a real-time snapshot of what your teammates are working on.
+
+The server keeps an in-memory `connectionId → presence` map keyed per WebSocket (not per auth session, so multi-tab users get distinct ghosts) and broadcasts it on every focus or room change.
+
+[^ghost]: Why ghosts? Don't read into it too much, but Karpathy once [said](https://x.com/karpathy/status/1973435013875314729) that "today's frontier LLM research is not about building animals. It is about summoning ghosts." So, if agents look like humans, then humans should look like ghosts to go full circle. The fact that they hover also makes the moving animations easier.
+
 ### Skills
 
 In Claude code, skills can come from a few places, some hardcoded and some discovered dynamically.
