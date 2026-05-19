@@ -413,7 +413,7 @@ Here are some of the features I added for my own convenience.
 
 ### Safety Hooks
 
-I run all my agents in `bypassPermissions` mode. Isomux injects `PreToolUse` hooks into every SDK session that block dangerous commands before they execute.
+I run all my agents in `bypassPermissions` mode. Isomux injects `PreToolUse` hooks into every Claude SDK session that block dangerous commands before they execute. Codex agents don't have equivalent hooks — Codex 0.130 doesn't expose a programmatic register-from-client surface, as noted earlier.
 
 1. **Git safety**: blocks destructive git commands.
 2. **Filesystem safety**: blocks `rm -rf` on root/home paths while allowing it on temp directories.
