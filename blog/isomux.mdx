@@ -39,9 +39,10 @@ This simplified the two ends of my workflow:
 That was the starting premise. Since then, I've been rethinking agent management. The new thesis is:
 
 <Callout>
-  Every conversation should be [multi-user](#live-user-presence),
+  Every conversation should be [multi-user](#human-collaboration),
   [multi-agent](#agent-to-agent-communication),
-  [multi-provider](#how-codex-differs), and [multi-device](#access).
+  [multi-provider](#how-codex-differs), and
+  [multi-device](#remote-user-authorization).
 </Callout>
 
 ### Office metaphor
@@ -61,11 +62,6 @@ The thesis is that **by anthropomorphizing agents, we reduce cognitive load**; w
 
 Try [the demo](https://isomux.com/demo) and see if it clicks. The source is on [github.com/nmamano/isomux](https://github.com/nmamano/isomux).
 
-<Callout>
-  Isomux is being built by agents running inside isomux since 3h after the
-  project was started. Developing a dev tool from itself is fun!
-</Callout>
-
 ## Architecture Overview
 
 Isomux is a **single [Bun](https://bun.com/) process** that:
@@ -80,12 +76,11 @@ Isomux is a **single [Bun](https://bun.com/) process** that:
   alt="Isomux system design: browser clients connect over WebSocket to the Bun service, which runs persistent agents backed by Claude Code SDK sessions and persists state to the local file system"
 />
 
+Side benefit: the WebSocket-broadcast model gives you real-time [multi-user collaboration](#human-collaboration) for free.
+
 <Callout>
-  This server + WebSocket-broadcast setup gives you something else for free
-  beyond multi-device sync: real-time multi-user collaboration. In my case, it
-  means anyone I invite can chime in to the same conversations, all in real time
-  — as long as they can reach the server (tailnet or public URL; see the [Access
-  section](#access) below).
+  I'm building Isomux from inside Isomux since the first day. Developing a
+  dev tool from itself is fun!
 </Callout>
 
 ### Giving Agents Superpowers
@@ -142,7 +137,9 @@ I discovered this [accidentally](https://x.com/Nil053/status/2052268533535649994
   alt="Agent 1, running in a laptop office, creates a task on the task board of an Isomux server office reached over Tailscale at auntie:4000"
 />
 
-## The Agent Lifecycle
+## Working with agents, not sessions
+
+A nice abstraction in isomux is that you think in terms of _persistent agents_ rather than _ephemeral sessions_. The former wraps the latter.
 
 ### Persistent agents
 
@@ -157,7 +154,13 @@ When you click an empty desk to spawn an agent, you provide:
 
 This information gets sent to the server and persisted in `.isomux/`. All connected browsers start receiving broadcasts with all the updates about the new agent, starting with the "agent spawned" event.
 
-Each agent gets an individual session history with `/resume` support.
+Isomux reads each agent's event stream in an async loop, converting SDK events into two things browsers care about: **log entries** for the conversation view, and **agent state** for the character animations and notifications (thinking, tool calling, waiting, etc.).
+
+The file system is the source of truth: if the server crashes or restarts, agents are restored from `agents.json` with their SDK sessions recreated, no loss. Past conversations can be resumed with a **per-agent** `/resume` history.
+
+Isomux persists every conversation forever by design.[^isomux-size] You never know when it could be useful.
+
+[^isomux-size]: My `~/.isomux/` grew to 120MB in two weeks.
 
 ### Hierarchical prompts
 
@@ -210,11 +213,13 @@ USER_DEFINED_AGENT_SPECIFIC_SYSTEM_PROMPT
 
 See more on the [task board](#shared-task-board) and [image showing](#file-attachments) features below.
 
-In the mentioned agent summary doc, the agent can find metadata about itself and every other agent:
+## Agent-to-Agent Communication
+
+### Agent Discovery
+
+There's an agent summary doc (`~/.isomux/agents-summary.json`) where the agents can find metadata about themselves and every other agent:
 
 ```
-// ~/.isomux/agents-summary.json.
-
 {
   "id": "agent-1774819851476-qmpf",
   "name": "PersonalSiteAgent",
@@ -227,7 +232,7 @@ In the mentioned agent summary doc, the agent can find metadata about itself and
 },
 ```
 
-Further, through the `logDir` paths, it has access to the current conversation of every agent (i.e., since the last `/clear`, which works per-agent).
+Further, through the `logDir` paths, they have access to the current conversation of every agent (i.e., since the last `/clear`, which works per-agent).
 
 This means you can ask an agent, _"What do you think of OTHER_AGENT's approach?"_ and it just works.
 
@@ -236,38 +241,9 @@ This means you can ask an agent, _"What do you think of OTHER_AGENT's approach?"
   alt="Inter-agent communication via shared logs"
 />
 
-### Agent persistence
+### Direct messages
 
-The file system is the source of truth. If the server crashes, nothing is lost (I constantly ask the agents to restart their own server while building isomux, and pick conversations right back up).
-
-The `~/.isomux/` folder contains:
-
-- `agents.json`: full agent config, including things like the outfit choices and the agent-specific system prompt.
-- `agents-summary.json`: a lightweight version linked to all agents in their system prompt, so they can discover each other.
-- `logs/{agentId}/{sessionId}.jsonl`: append-only JSONL files for conversation history. Each line is a `LogEntry`.
-- `office-prompt.txt`: user-defined office-wide system prompt injected into all agents.
-- `tasks.json`: shared task board (JSON array of tasks with status, priority, and assignee).
-- `recent-cwds.json`: recently used working directories (for autocomplete in the spawn dialog)
-
-These files are kept consistent with the state sent to the clients.
-
-When a browser first connects, it receives a full snapshot of the office containing the settings of every agent, their logs, and office-wide settings.
-
-On server restart, agents are restored from `agents.json` and their SDK sessions are recreated.
-
-Past conversations can be resumed from the JSONL logs with `/resume` or by right-clicking an agent. This makes the `/resume` interaction per-agent, unlike in Claude Code.
-
-Isomux persists every conversation forever by design.[^isomux-size] You never know when it could be useful.
-
-[^isomux-size]: My `~/.isomux/` grew to 120MB in two weeks.
-
-### The SDK stream event loop
-
-Isomux reads each agent's event stream in an async loop, converting SDK events into two things browsers care about: **log entries** for the conversation view, and **agent state** for the character animations and notifications (thinking, tool calling, waiting, etc.).
-
-## Agent-to-Agent Communication
-
-The shared `agents-summary.json` lets agents know about each other. The next step was letting them message each other ([demo](https://x.com/Nil053/status/2053179885108232328)).
+The next step was letting agents message each other ([demo](https://x.com/Nil053/status/2053179885108232328)).
 
 Agent-to-agent messages go through `POST /agents/:id/message` to the isomux server. You can name the receiving agent you want them to message, and the sender will look up their id in the manifest.
 
@@ -277,7 +253,7 @@ There's no automatic reply. The receiver can choose to respond (another POST goi
 
 Agent-to-agent messaging has become a central primitive in my workflow.
 
-Say I'm in a chat with Alice, an Opus agent, and Bob is a Codex agent at another desk. I have encoded the useful collaboration patterns as skills:
+Say I'm in a chat with **Alice**, an Opus agent, and **Bob** is a Codex agent at another desk. I have encoded the useful collaboration patterns as skills:
 
 - `/pair-programming Bob {task}`: Alice implements a task end-to-end while requesting reviews from Bob at each step.
 - `/second-opinion Bob {question}`: Alice asks Bob to chime in on whatever we're discussing; useful for when you think the agent is missing something.
@@ -299,23 +275,39 @@ A decision you have to make when building agents is _queueing_ vs _steering_. Wh
 
 Steering interrupts the agent and sends it immediately; queueing puts it in a queue for when it's done.
 
-For isomux, I default to queueing, because I want to reuse the same queue for agents sending messages to other agents. An agent steering another agent seems too disruptive.
+For isomux, I default to queueing, because I reuse the same queue for agents sending messages to other agents. An agent steering another agent seems too disruptive.
 
-The queue ends up with a mix of human and agent messages:
+It's still important to offer a UI option to flush the queue immediately, so there's a "Send now" button.
+
+## Human Collaboration
+
+Most agent tools are single-user-per-session. Isomux treats every agent chat as a shared room: multiple humans share the same conversation in real time, with the agent treating each as a distinct participant.
+
+The message queue ends up with a mix of human and agent messages, labeled by sender so the agent knows who said what. When the agent is free, all queued messages are coalesced into one. A coalesced queue might look like:
 
 - `[Nil]` from the laptop
 - `[Nil (Phone)]` from the phone
-- `[OtherUser]` from a different person in the same tailscale network
+- `[OtherUser]` from a different person on the same tailnet
 - `[Isomuxer3]` from another agent
-
-When the agent is free, all queued messages are coalesced into a single message. Senders are labeled so the agent knows who said what.
 
 <BlogImage
   src="/blog/isomux/agent-to-agent-queue.jpeg"
   alt="Isomuxer4 receiving a message from Isomuxer1 and replying via the agent-to-agent endpoint, with a mixed queue of pending messages from Nil and Isomuxer1 at the bottom of the chat"
 />
 
-It's still important to offer a UI option to flush the queue immediately, so there's a "Send now" button.
+For how additional people get invited to an office, see [Remote User Authorization](#remote-user-authorization).
+
+### Live user presence
+
+Each connected device shows up as a small customizable ghost[^ghost] avatar next to whatever agent it's chatting with. This helps make the office feel more alive and get a real-time snapshot of what your teammates are working on.
+
+This video is what I see on my laptop while swiping between agents on my phone:
+
+<BlogVideo src="/blog/isomux/ghost.mp4" />
+
+The server keeps an in-memory `connectionId → presence` map keyed per WebSocket (not per auth session, so multi-tab users get distinct ghosts) and broadcasts it on every focus or room change.
+
+[^ghost]: Why ghosts? Don't read into it too much, but Karpathy once [said](https://x.com/karpathy/status/1973435013875314729) that "today's frontier LLM research is not about building animals. It is about summoning ghosts." So, if agents look like humans, then humans should look like ghosts to go full circle. The fact that they hover also makes the moving animations easier.
 
 ## The WebSocket Layer
 
@@ -324,21 +316,17 @@ Browsers are stateless relays - when one connects, the WebSocket `open` handler 
 The server talks to connected browsers via web sockets.
 
 - The server notifies all browsers of state updates via a single `broadcast` function.
-- The clients give commands to the server, which are handled in `handleCommand()`:
+- The clients give commands to the server, which are handled in `handleCommand()`.[^send-message]
 
-The `send_message` command - where a user sends a message to the LLM - is deliberately not awaited. Calling it without `await` kicks off the async work and returns immediately, so the event loop stays free to process other commands (spawns, aborts, messages to other agents, etc.) while the SDK streams the response in the background. Most other command types are handled synchronously.
+[^send-message]: The `send_message` command - where a user sends a message to the LLM - is deliberately not awaited. Calling it without `await` kicks off the async work and returns immediately, so the event loop stays free to process other commands (spawns, aborts, messages to other agents, etc.) while the SDK streams the response in the background. Some other command types like `edit_agent` or `new_conversation` are handled synchronously.
 
 ## The Frontend
 
 ### Office rooms
 
-The office groups agents into groups of at most 8; extra agents have to go in different rooms. It's designed so Tab and Shift+Tab for agent cycling stays within a room, as cycling through more than 8 conversations would be overwhelming.
+The office groups agents into rooms of at most 8, which can have shared context via the room prompt; extra agents have to go in different rooms.
 
-In the first room, I keep 3-5 agents for my main project (isomux right now), as well as 1 agent for each of my other projects I touch often (like this site). If an agent has no active conversation (it's been `/clear`ed), it's skipped from cycling.
-
-I also have agents for non-coding things, like my job search.
-
-If I know I'm not going to touch a project for a while, I move the agent(s) to a different room, so they are out of sight.
+When looking at a room, Tab and Shift+Tab cycle between rooms. When looking at an agent chat, Tab and Shift+Tab cycle between agents in the room (sleeping ones are skipped). The idea is that cycling through more than 8 conversations would be overwhelming.
 
 ### Skeuomorphic elements
 
@@ -346,6 +334,8 @@ I've been having fun leaning into the office visuals:
 
 - Click the corkboard to open the office's task board.
 - Click the framed sign on the wall to edit the "office rules" (the office-wide system prompt).
+- Click the doors to switch rooms.
+- Click the clock (which shows the real time) to open cronjobs.
 - Opus agents have a book; Haiku agents have crayons.
 - Click the moon through the window to toggle dark mode.
 - Click the neon sign to visit [isomux.com](https://isomux.com).
@@ -356,9 +346,9 @@ The agent customization helps with anthropomorphizing; see, for example, the [de
 
 Opus's SVG skills and understanding of isometric geometry is genuinely good.
 
-The entire scene was written by Opus - ~1,600 lines of raw coordinates, bezier curves, and animate tags. I didn't use any libraries, assets, or tools.
+The entire scene was written by Opus - ~1,600 lines of raw coordinates, bezier curves, and animate tags. I didn't use any libraries, assets, or tools.[^neon-sign]
 
-For me, the highlight is the neon sign. It one-shotted the skewed font, the light "diffusion", and the atmospheric flickering. Then, I asked it to add ligatures between letters for realism, and, even though it took some iterations, its first intuition for their positioning and shape was already spot on.
+[^neon-sign]: For me, the highlight is the neon sign. It one-shotted the skewed font, the light "diffusion", and the atmospheric flickering. Then, I asked it to add ligatures between letters for realism, and, even though it took some iterations, its first intuition for their positioning and shape was already spot on.
 
 That said, Opus's SVG capabilities are a lot more spiky than coding. It sometimes fails and thrashes at trivial tasks, like moving the window a few pixels over. It's like if Opus sometimes got wrong the Fizz Buzz test.
 
@@ -375,6 +365,14 @@ The store also manages local-only state: input drafts (preserved when switching 
 There's no native app yet, but the browser's PWA install feature gets 90% of the way there:
 
 On iPhone, find "Add to Home Screen" in Safari's Share menu. On Android, Chrome prompts you to install on first visit. Either way, the website becomes a standalone "Web App" with its own icon. Here is a [demo](https://x.com/Nil053/status/2039996579965542516/video/1).
+
+It's consistently a top most-used app on my phone:
+
+<BlogImage
+  src="/blog/isomux/phone-usage.png"
+  alt="iPhone Screen Time 'Most Used' for the last week: YouTube (27h), Instagram (10h 10m), the isomux PWA (9h 46m), X (2h 48m), Chrome (2h 28m)"
+  width="50%"
+/>
 
 ## QoL Features
 
@@ -400,7 +398,7 @@ The embedded terminal is very handy when you need to run one of the blocked comm
   alt="Embedded terminal in Isomux"
 />
 
-### Access
+### Remote User Authorization
 
 There are no passwords or accounts in a traditional sense.
 
@@ -413,23 +411,11 @@ Every browser request is gated by a session cookie:
 5. Server generates a new 256-bit random session ID, hashes it, and returns it in a `Set-Cookie: isomux_session=<raw-id>` response header. The original raw session ID is gone from the server's memory after this response.
 6. Browser stores the cookie (HttpOnly, so JS can't read it) and sends it on every subsequent request.
 
-On first boot the server prints a one-time bootstrap invite URL to stdout. Whoever opens it first claims ownership. After that, the owner mints further invites from the UI.
-
-There's a member role for everyday users and an owner role. The split controls who can grow the trust boundary, and things like who can access which rooms (soon).[^access]
+There's a member role for everyday users and an owner role. The split controls who can grow the trust boundary, and things like who can access which rooms.[^access]
 
 [^access]: Right now there's no OS-level isolation between members. Every agent runs as the same OS user, so anyone you invite can read whatever the isomux process can read. Adding per-member isolation is on the to-do list.
 
-For reachability beyond your own VPN, the best path I've found is Tailscale Funnel: same `*.ts.net` domain, exposed to the public internet. The relay forwards an encrypted TCP tunnel to your server. TLS terminates at your server, not the relay.
-
-There's an [agent prompt](https://github.com/nmamano/isomux/blob/main/docs/access-and-invites.md) that walks an agent through enabling the funnel (_installation by prompt_).
-
-### Live user presence
-
-Each connected device shows up as a small customizable ghost[^ghost] avatar next to whatever agent it's chatting with. This helps make the office feel more alive and get a real-time snapshot of what your teammates are working on.
-
-The server keeps an in-memory `connectionId → presence` map keyed per WebSocket (not per auth session, so multi-tab users get distinct ghosts) and broadcasts it on every focus or room change.
-
-[^ghost]: Why ghosts? Don't read into it too much, but Karpathy once [said](https://x.com/karpathy/status/1973435013875314729) that "today's frontier LLM research is not about building animals. It is about summoning ghosts." So, if agents look like humans, then humans should look like ghosts to go full circle. The fact that they hover also makes the moving animations easier.
+For reachability beyond your own VPN, the best path I've found is [Tailscale Funnel](https://isomux.com/docs/access-and-invites).
 
 ### Skills
 
@@ -445,25 +431,11 @@ There is a hierarchy that determines which one you see if there's a name clash. 
 4. **Project skills** (`.claude/skills/`). They are based on Claude Code's cwd.
 5. **Claude code bundled skills**: `/review`, `/simplify`, `/loop`, etc.
 
-In addition to dynamically fetching all these skills (except Enterprise), I have added my own tier of **isomux-bundled skills**, which have priority 4.5.
-
-I added skills like:
-
-- `/isomux-peer-review`: tells the agent to read the ongoing conversation with another agent and give feedback.
-- `/isomux-all-hands`: shows what everyone is working on.
-- `/isomux-system-prompt`: dumps the full assembled system prompt (see [Agent identity](#agent-identity)) so the user understands the agent's behavior.
+In addition to dynamically fetching all these skills (except Enterprise), I have added my own tier of **isomux-bundled skills**, which have priority 4.5. See the [agent-to-agent skills](#applications) above for examples.
 
 ### Voice prompting
 
 One advantage of the frontend being browser-based is that we can leverage the existing voice-to-text and text-to-speech APIs for prompts and responses, respectively.
-
-The only issue with voice-to-text is that Chrome won't let you use it if over HTTP unless it is in localhost. This is fine when running isomux locally, as you access it on localhost:4000, but has an annoying interaction with Tailscale.
-
-With Tailscale, I access isomux at port 4000 of my server's localhost instead of my own, which is inside the Tailscale network. However, Chrome doesn't care about that and still blocks it.
-
-The workaround is to get a TLS certificate for your server, and connecting through it. This is a common issue, so there are established workarounds for it.
-
-More details on the Tailscale setup, including https, on [isomux.com](https://isomux.com).
 
 ### Attention tracking and notifications
 
@@ -489,7 +461,14 @@ Agents and humans share a task board. Anyone can create, assign, claim, and clos
 
 Here's a [demo](https://x.com/Nil053/status/2040871759529025617): tell one agent to create a task for another, open the corkboard to see it, click the assignee to jump to them, and ask them to pick it up.
 
-Agents interact with the task board through a simple HTTP API (`GET /tasks`, `POST /tasks`, `POST /tasks/:id/claim`, `POST /tasks/:id/done`). The system prompt includes curl examples so they know how without being told. Tasks are persisted to a flat JSON file for now. Bun's single-threaded event loop handles concurrency naturally; no locking needed.
+Agents interact with the task board through a simple HTTP API (`GET /tasks`, `POST /tasks`, `POST /tasks/:id/claim`, `POST /tasks/:id/done`). The system prompt includes curl examples so they know how without being told. Tasks are persisted to a flat JSON file. Bun's single-threaded event loop handles concurrency naturally; no locking needed.
+
+<Callout>
+  A task board is the ideal **non-linear** hand-off mechanism. Agents often
+  discover possible improvements or follow-ups as they complete their task.
+  Rather than derailing their session, agents can create tasks for later
+  sessions.
+</Callout>
 
 ### File attachments
 
@@ -530,7 +509,7 @@ When looking at the list of past conversations to resume, forked sessions get a 
 
 #### Fork-aware usage accounting
 
-Isomux has a custom `/usage` command that renders a table with current-session and lifetime usage for each agent.
+Isomux has an `/isomux-usage` command that renders a table with current-session and lifetime usage for each agent.
 
 The SDK reports two flavors of accounting on each `result` event, and they don't behave the same way:
 
@@ -553,21 +532,24 @@ A few decisions worth calling out:
 - **Runs are resumable and forkable.** A daily summary can become an interactive follow-up.
 - **Overlap policy: skip, don't queue.** Manual "Run now" bypasses this.
 - **Missed fires from server downtime are silently dropped.**
-- **Per cron job token spend rolls into `/usage`.** Same fork-aware accounting as agents. The total usage combines agents and cron jobs.
+- **Per cron job token spend rolls into `/isomux-usage`.** Same fork-aware accounting as agents. The total usage combines agents and cron jobs.
 
 ## Final Thoughts
 
-It's great to have my own malleable orchestration tool. Oh, I don't like Claude Code's plan mode? No problem, I can roll out my own vision.
+At this point, I have a full lecture on designing an agent management system in my head... here are the main points.
 
-Even if nobody else uses Isomux, it provides a ton of value to myself. There's no feature pulling me back to raw Claude Code.
+- **It should be multi-user**: human collaboration at the agent conversation level is the best way for a team to level up together.
+- **It should be natively multi-device**: phones are underused for managing agents, don't make it an afterthought.
+- **It shouldn't run locally**: don't make people run around with an ajar laptop (among other reasons).
+- **Ephemeral sessions should be wrapped by an agent with a persistent identity and context.** Hierarchical system prompts can give each agent all the context they need for their role and nothing else. Bonus points if agents are visually recognizable and cute.
+- **Conversations should be multi-agent**: you probably don't realize how much copy-paste you are doing between chats.
+- **It should be multi-provider**: the obvious one - it's the one thing claude code and codex can't do.
+- **Agents should be able to add non-text components in chat** (diffs, diagrams, etc.) **and act on your system** (create tasks, message other agents, etc.). The right architecture for this is a REST API on your server.
+- **It should have a good (non-linear) hand-off mechanism,** like an agent-first task board.
 
-That said, I think Isomux - especially with Tailscale - _can_ provide real value to people going from Level 5 to 6.
+The points above are not orthogonal. They compound into a much richer experience than your typical claude code session.
 
-The gap going from Level 1 to Level 5 was mostly about models getting smarter. But for 5 to 6, I think the orchestration tool matters more.
-
-We'll all be working with agents, so it's important to really like your orchestration tool. The orchestration tool is the new editor.
-
-To try: [isomux.com](https://isomux.com). (Do so at your own peril, it's not tested beyond my setup.)
+Let me know if you'd be interested in this becoming an actual lecture!
 
 ## Appendix: How the Backends Work
 
