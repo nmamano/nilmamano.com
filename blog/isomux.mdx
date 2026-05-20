@@ -17,11 +17,18 @@ I reached Level 6 in [Steve Yegge's hierarchy](https://steve-yegge.medium.com/we
   alt="Steve Yegge's 8 levels of coding agent usage, from Y/N confirmations in a single chat (level 1) to an orchestrator managing a fleet of Claude Code instances (level 8)"
 />
 
-The main friction with running multiple agents in parallel was terminal management; I had a mix of local and remote sessions (tasks like [model training](/blog/wall-game-ai) can only be done remotely) and was ssh'ing all the time.
+<BlogImage
+  src="/blog/isomux/commits-per-week.png"
+  alt="My weekly commit count from Oct 2024 to mid-2026, color-coded by daily-driver tool: writing BCtCI (Oct-Dec 2024), then Cursor at Yegge Level 4, then Claude Code at Level 5, then Isomux at Level 6. Throughput climbs sharply as the driver moves up the levels, with isomux-era weeks peaking around 150 commits"
+/>
+
+The main friction with running multiple agents in parallel was terminal management; I had a mix of local and remote sessions[^remote-only] and was ssh'ing all the time.
+
+[^remote-only]: Tasks like [model training](/blog/wall-game-ai) can only be done remotely.
 
 [Tmux](https://github.com/tmux/tmux/wiki) and [cmux](https://cmux.com/) helped. But what actually did it for me was:
 
-1. Building a browser-based, multi-provider agent management system.
+1. Building a browser-based, multi-provider agent management tool.
 2. Running it in a server in the same VPN as my laptop and phone.
 
 This simplified the two ends of my workflow:
@@ -29,11 +36,17 @@ This simplified the two ends of my workflow:
 - **How I reach my agents:** all devices see the same agents and conversations.
 - **What my agents can do:** they all see the same environment.
 
-That was the starting premise. Since then, I've been rethinking agent management; I think features like [agent-to-agent communication](#agent-to-agent-communication) and human collaboration at the agent-chat level will soon become standard.
+That was the starting premise. Since then, I've been rethinking agent management. The new thesis is:
+
+<Callout>
+  Every conversation should be [multi-user](#live-user-presence),
+  [multi-agent](#agent-to-agent-communication),
+  [multi-provider](#how-codex-differs), and [multi-device](#access).
+</Callout>
 
 ### Office metaphor
 
-But my tool, [Isomux](https://isomux.com) (Isometric Multiplexer), has something extra: it's cute.
+My tool, [Isomux](https://isomux.com) (Isometric Multiplexer), has something extra: it's cute.
 
 <BlogImage
   src="/blog/isomux/cover.jpeg"
@@ -46,14 +59,12 @@ The idea is to create an office metaphor for agents (with isometric graphics for
 
 The thesis is that **by anthropomorphizing agents, we reduce cognitive load**; we're more used to coordinating humans than terminals.
 
-Try [the demo](https://isomux.com/demo) and see if it clicks.
+Try [the demo](https://isomux.com/demo) and see if it clicks. The source is on [github.com/nmamano/isomux](https://github.com/nmamano/isomux).
 
 <Callout>
   Isomux is being built by agents running inside isomux since 3h after the
   project was started. Developing a dev tool from itself is fun!
 </Callout>
-
-The source is on [github.com/nmamano/isomux](https://github.com/nmamano/isomux).
 
 ## Architecture Overview
 
@@ -131,60 +142,26 @@ I discovered this [accidentally](https://x.com/Nil053/status/2052268533535649994
   alt="Agent 1, running in a laptop office, creates a task on the task board of an Isomux server office reached over Tailscale at auntie:4000"
 />
 
-## How the Claude Agent SDK Works
-
-The [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) lets you run Claude Code sessions programmatically from JavaScript. You create a session, send messages, and get responses. It works with your existing Claude subscription, you just need to be logged in with the claude CLI tool (`/login`).
-
-But unlike a simple request/response API, the SDK gives you a **stream of events**.
-
-When you send a message, you don't get a single response back. You get events over time: "assistant started thinking," "assistant wants to use a tool," "tool produced output," "assistant is done."
-
-A single user message can trigger a stream that lasts minutes. The SDK exposes this as an async iterator you read in a loop.
-
-Sessions have an ID. If your application crashes or restarts, you can resume a session by its ID and the conversation history carries over.
-
-### V1 vs V2
-
-As of April 2026, the SDK has two versions. V1 (`query()`) is a fire-and-forget async call: you send a message and it runs to completion. There's no handle to grab, so there's no way to interrupt it.
-
-V2 (`unstable_v2_createSession`) gives you a persistent session object with `send()`, `stream()`, and `close()`.
-
-This makes abort possible: call `close()` to kill the stream, then `resumeSession(sessionId)` to resume that same stream again, perhaps with a new user message at the end. In contrast, V1's `query()` always runs to completion.
-
-Isomux needs the ability to abort agents (e.g., the user does Ctrl+C to add, "Sorry, I meant..."), so we chose V2 even though it's in alpha.
-
-For now, V2 seems a bit buggy. Sometimes, the message order gets fumbled. [Here](https://github.com/nmamano/isomux/blob/62953229195fc50781eea1f384322c64953ecf28/docs/sdk-investigation.md) is an example of the kind of bugs I ran into.
-
-## How Codex Differs
-
-Claude and Codex agents share the same desks, task board, and persistence layer. They can message each other. But Codex works quite differently:
-
-- **We don't use an SDK.**[^codex-sdk] Instead, we talk to a subprocess called "App Server" that ships with the Codex CLI. It speaks a JSON-RPC-lite protocol over stdio. Isomux spawns `codex app-server`, sends `initialize` + `thread/start` requests, and reads `notifications` off stdout. An adapter translates these messages into a `NormalizedEvent` stream shared with Claude.
-- **Streaming is push, not pull.** The Claude SDK gives you an async iterator (`for await … of session.stream()`). Codex pushes notifications at you (`thread/started`, `turn/started`, `turn/completed`, `tool/started`, …) and expects you to filter by `threadId`. Per-thread filtering is non-negotiable: sub-agent and review-mode threads share the same stdio pipe but have their own ids, and resolving the wrong turn would unblock the queue prematurely.
-- **Capability mismatches.** Codex 0.130 doesn't expose hooks, and its `thread/fork` can only clone a whole thread from the start — it can't branch from a midpoint mid-conversation. That breaks Isomux's "edit a past message" feature, which forks the conversation at the edited message and keeps the original branch as a sibling. Our provider abstraction declares a `BackendCapabilities` record (`fork`, `hooks`, `skills`, `edit`, `mcp`, …) and the UI hides affordances accordingly. This keeps the orchestrator code backend-agnostic.
-
-[^codex-sdk]: OpenAI ships three integration surfaces: the [Codex TypeScript SDK](https://github.com/openai/codex/tree/main/sdk/typescript) (`@openai/codex-sdk`), a lightweight `codex exec` mode for one-off scripts, and the App Server we use here. OpenAI explicitly recommends App Server for UI integrators ([blog post](https://openai.com/index/unlocking-the-codex-harness/)): _"Codex App Server will be the first-class integration method we maintain moving forward… Choose the App Server when you want the full Codex harness exposed as a stable, UI-friendly event stream."_ The SDK is positioned for _"server-side tools and workflows"_ with a smaller surface area, and Exec for _"one-off tasks and CI runs"_.
-
-Auth piggybacks on the CLI, again: if `codex login` works (ChatGPT subscription) or `OPENAI_API_KEY` is set, Isomux's spawned subprocess inherits it. No API key plumbed through Isomux itself.
-
 ## The Agent Lifecycle
 
-### Spawning agents
+### Persistent agents
 
 When you click an empty desk to spawn an agent, you provide:
 
 - a name and look,
 - a working directory for things like `AGENTS.md` and MCP servers defined in that directory.
-- the model, permission mode, thinking effort, etc.
+- the backend (claude or codex), model, permission mode, thinking effort, etc.
 - an agent-specific system prompt[^system-prompt-workaround]
 
 [^system-prompt-workaround]: Claude SDK's V2 `SDKSessionOptions` doesn't expose a field for `appendSystemPrompt`. Isomux works around this by smuggling the flag through `executableArgs`, which the SDK prepends to the Claude binary's argv. The system prompt is rebuilt on every `createSession` call, so office/room/agent prompt edits automatically land on the next conversation.
 
 This information gets sent to the server and persisted in `.isomux/`. All connected browsers start receiving broadcasts with all the updates about the new agent, starting with the "agent spawned" event.
 
-### Agent identity with hierarchical prompts
+Each agent gets an individual session history with `/resume` support.
 
-The system prompt is assembled from **four hierarchical layers**, concatenated into a single string and injected into the Claude Code CLI subprocess via the `--append-system-prompt` argument (see [Spawning agents](#spawning-agents) above for how).
+### Hierarchical prompts
+
+The system prompt is assembled from **four hierarchical layers**, concatenated into a single string and injected into the Claude Code CLI subprocess via the `--append-system-prompt` argument (see [Persistent agents](#persistent-agents) above for how).
 
 1. **Baseline**: hardcoded context explaining the office setting, the agent's identity (name and room), and isomux features.
 2. **Office prompt**: user-defined, applied to every agent in the office.
@@ -212,19 +189,11 @@ Messages are prefixed with the boss's name in brackets.
 How to discover other office agents and their conversation logs: read
 ~/.isomux/agents-summary.json.
 
-How to use the task board (localhost:4000/tasks): only touch it when the boss asks. When you do:
-  curl -s localhost:4000/tasks                                          # list open tasks
-  curl -s localhost:4000/tasks?status=all                               # include done
-  curl -s -X POST localhost:4000/tasks -H 'Content-Type: application/json' \
-    -d '{"title":"...","createdBy":"AGENT_NAME"}'                       # create
-  curl -s -X POST localhost:4000/tasks/ID/claim -H 'Content-Type: application/json' \
-    -d '{"assignee":"AGENT_NAME"}'                                      # claim
-  curl -s -X POST localhost:4000/tasks/ID/done -d '{}'                  # mark done
-Optional fields on create/update: description, priority (P0-P3), assignee.
+How to show a file to the boss: POST localhost:4000/agents/AGENT_ID/read-file with the file path. Images render inline; other files show as a "download" chip.
 
-How to show an image to the boss: read the image file with the Read tool — it renders inline in the conversation.
+How to use the task board (localhost:4000/tasks): [...]
 
-How to answer questions about Isomux itself: the source lives at https://github.com/nmamano/isomux. Read the README and the relevant code under server/, ui/, shared/, docs/ before answering.
+[... (more instructions for using isomux features)]
 
 ## Office Instructions
 
@@ -288,7 +257,9 @@ On server restart, agents are restored from `agents.json` and their SDK sessions
 
 Past conversations can be resumed from the JSONL logs with `/resume` or by right-clicking an agent. This makes the `/resume` interaction per-agent, unlike in Claude Code.
 
-Isomux persists every conversation forever by design. My `~/.isomux/` is 22MB (Update: it's now at 120MB as of Apr 20). You never know when it could be useful.
+Isomux persists every conversation forever by design.[^isomux-size] You never know when it could be useful.
+
+[^isomux-size]: My `~/.isomux/` grew to 120MB in two weeks.
 
 ### The SDK stream event loop
 
@@ -522,17 +493,17 @@ Agents interact with the task board through a simple HTTP API (`GET /tasks`, `PO
 
 ### File attachments
 
-This feature goes two ways: (1) the agent showing us images, and (2) the user showing files to the agent.
+This feature goes two ways: (1) the agent shows us images or lets us download files, and (2) the user uploads files to the agent.[^scp-substitute]
 
-For (1), imagine that we ask the model to make a plot and show it to us. The model can write a Python script with matplotlib and generate a .png. But then, how does it show it to us? It uses the REST-API-for-UI pattern from [Giving Agents UI Superpowers](#giving-agents-ui-superpowers): a dedicated endpoint the agent calls on a file path, and the file renders inline in the conversation.
+[^scp-substitute]: Useful in the remote-server setup, for transferring files to the server without needing `scp` or similar.
+
+For (1), imagine that we ask the model to make a plot and show it to us. The model can write a Python script with matplotlib and generate a .png. But then, how does it show it to us? It uses the REST-API-for-UI pattern from [Giving Agents UI Superpowers](#giving-agents-ui-superpowers): a dedicated endpoint the agent calls on a file path, and the file renders inline in the conversation if it's an image. Otherwise, it shows as a "download" chip.
 
 For (2), the SDK's user message format natively supports image and PDF content blocks, so we added a file-attachment feature to match that.
 
 The upload path itself is what you'd see in typical chatting apps: files never travel over the WebSocket - only metadata does. The browser sends files via multipart HTTP POST to `/api/upload/{agentId}`, and then the server saves them to a per-agent `files/` directory (SHA256-deduped) and returns attachment metadata. On the frontend, the "send" button is blocked while uploads are in progress.
 
 When it's time to send the actual SDK message to Claude, the text and attachment references are combined.
-
-Since the upload-to-server path was already there, I extended it to support arbitrary file types. Text-detectable files (by extension) are inlined as text blocks; everything else is uploaded but flagged as unreadable (with a note for the model not to infer the content). This is useful in the remote-server setup, for transferring files to the server without needing a separate tool (like `scp`).
 
 ### Built-in diff tool
 
@@ -597,6 +568,44 @@ The gap going from Level 1 to Level 5 was mostly about models getting smarter. B
 We'll all be working with agents, so it's important to really like your orchestration tool. The orchestration tool is the new editor.
 
 To try: [isomux.com](https://isomux.com). (Do so at your own peril, it's not tested beyond my setup.)
+
+## Appendix: How the Backends Work
+
+### Claude Agent SDK
+
+The [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) lets you run Claude Code sessions programmatically from JavaScript. You create a session, send messages, and get responses. It works with your existing Claude subscription, you just need to be logged in with the claude CLI tool (`/login`).
+
+But unlike a simple request/response API, the SDK gives you a **stream of events**.
+
+When you send a message, you don't get a single response back. You get events over time: "assistant started thinking," "assistant wants to use a tool," "tool produced output," "assistant is done."
+
+A single user message can trigger a stream that lasts minutes. The SDK exposes this as an async iterator you read in a loop.
+
+Sessions have an ID. If your application crashes or restarts, you can resume a session by its ID and the conversation history carries over.
+
+#### V1 vs V2
+
+As of April 2026, the SDK has two versions. V1 (`query()`) is a fire-and-forget async call: you send a message and it runs to completion. There's no handle to grab, so there's no way to interrupt it.
+
+V2 (`unstable_v2_createSession`) gives you a persistent session object with `send()`, `stream()`, and `close()`.
+
+This makes abort possible: call `close()` to kill the stream, then `resumeSession(sessionId)` to resume that same stream again, perhaps with a new user message at the end. In contrast, V1's `query()` always runs to completion.
+
+Isomux needs the ability to abort agents (e.g., the user does Ctrl+C to add, "Sorry, I meant..."), so we chose V2 even though it's in alpha.
+
+For now, V2 seems a bit buggy. Sometimes, the message order gets fumbled. [Here](https://github.com/nmamano/isomux/blob/62953229195fc50781eea1f384322c64953ecf28/docs/sdk-investigation.md) is an example of the kind of bugs I ran into.
+
+### How Codex Differs
+
+Claude and Codex agents share the same desks, task board, and persistence layer. They can message each other. But Codex works quite differently:
+
+- **We don't use an SDK.**[^codex-sdk] Instead, we talk to a subprocess called "App Server" that ships with the Codex CLI. It speaks a JSON-RPC-lite protocol over stdio. Isomux spawns `codex app-server`, sends `initialize` + `thread/start` requests, and reads `notifications` off stdout. An adapter translates these messages into a `NormalizedEvent` stream shared with Claude.
+- **Streaming is push, not pull.** The Claude SDK gives you an async iterator (`for await … of session.stream()`). Codex pushes notifications at you (`thread/started`, `turn/started`, `turn/completed`, `tool/started`, …) and expects you to filter by `threadId`. Per-thread filtering is non-negotiable: sub-agent and review-mode threads share the same stdio pipe but have their own ids, and resolving the wrong turn would unblock the queue prematurely.
+- **Capability mismatches.** Codex 0.130 doesn't expose hooks, and its `thread/fork` can only clone a whole thread from the start — it can't branch from a midpoint mid-conversation. That breaks Isomux's "edit a past message" feature, which forks the conversation at the edited message and keeps the original branch as a sibling. Our provider abstraction declares a `BackendCapabilities` record (`fork`, `hooks`, `skills`, `edit`, `mcp`, …) and the UI hides affordances accordingly. This keeps the orchestrator code backend-agnostic.
+
+[^codex-sdk]: OpenAI ships three integration surfaces: the [Codex TypeScript SDK](https://github.com/openai/codex/tree/main/sdk/typescript) (`@openai/codex-sdk`), a lightweight `codex exec` mode for one-off scripts, and the App Server we use here. OpenAI explicitly recommends App Server for UI integrators ([blog post](https://openai.com/index/unlocking-the-codex-harness/)): _"Codex App Server will be the first-class integration method we maintain moving forward… Choose the App Server when you want the full Codex harness exposed as a stable, UI-friendly event stream."_ The SDK is positioned for _"server-side tools and workflows"_ with a smaller surface area, and Exec for _"one-off tasks and CI runs"_.
+
+Auth piggybacks on the CLI, again: if `codex login` works (ChatGPT subscription) or `OPENAI_API_KEY` is set, Isomux's spawned subprocess inherits it. No API key plumbed through Isomux itself.
 
 ---
 
