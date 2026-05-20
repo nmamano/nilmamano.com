@@ -10,48 +10,52 @@ categories: ["ai", "swe"]
 
 ## Introduction
 
-I have finally reached Level 6 in [Steve Yegge's hierarchy](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04)!
+I reached Level 6 in [Steve Yegge's hierarchy](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04)!
 
 <BlogImage
   src="/blog/isomux/steve_hierarchy.jpeg"
   alt="Steve Yegge's hierarchy of software engineering needs"
 />
 
-The main friction with getting to Level 6 using Claude Code was terminal management. Having a mix of local sessions and remote sessions (for tasks that can only be done remotely like [model training](/blog/wall-game-ai)) and ssh'ing all the time added friction.
+The main friction with consistently running multiple agents in parallel was terminal management; I had a mix of local and remote sessions (tasks like [model training](/blog/wall-game-ai) can only be done remotely) and was ssh'ing all the time.
 
-[Tmux](https://github.com/tmux/tmux/wiki) helped; [cmux](https://cmux.com/) was even better. But what actually did it for me was:
+[Tmux](https://github.com/tmux/tmux/wiki) and [cmux](https://cmux.com/) helped. But what actually did it for me was:
 
-1. Building my own browser-based agent management system.
-2. Running it in a server in the same Tailscale network as my laptop and phone.
+1. Building a browser-based, multi-provider agent management system.
+2. Running it in a server in the same VPN as my laptop and phone.
 
-This consolidates the two ends of my workflow:
+This simplified the two ends of my workflow:
 
-- The device I'm on: all devices see the same agents and conversations.
-- The agents' environment: all agents run on the same machine.
+- **How I reach my agents:** all devices see the same agents and conversations.
+- **What my agents can do:** they all see the same environment.
 
-Two great things not to have to think about!
+That was the starting premise. Since then, I've added features like agent-to-agent communication and human collaboration at the agent-chat level.
 
-But my custom-made orchestration, [Isomux](https://isomux.com) (Isometric Multiplexer), has something extra: it's cute.
+### Office metaphor
+
+But my tool, [Isomux](https://isomux.com) (Isometric Multiplexer), has something extra: it's cute.
 
 <BlogImage
   src="/blog/isomux/cover.jpeg"
   alt="Isomux office view with agents at desks"
 />
 
-I spend all day in the agent management tool. It had to be cute.
+I spend all day in the agent management tool... it had to be cute.
 
-The idea is to create an office metaphor for agents, with isometric graphics for the nostalgia hit. Each agent has a customizable name and look and sits at a desk. You see who is working, who's sleeping, and who has their hand raised at a glance.
+The idea is to create an office metaphor for agents (with isometric graphics for the nostalgia hit). Each agent has a customizable name and look and sits at a desk. You see who is working, who's sleeping, and who has their hand raised at a glance.
 
-The thesis is that **by anthropomorphizing agents, we reduce cognitive load**; we're more used to coordinating humans than terminals. It's working for me.
+The thesis is that **by anthropomorphizing agents, we reduce cognitive load**; we're more used to coordinating humans than terminals.
 
-Please play with [the demo](https://isomux.com/demo) before reading on. The source is on [GitHub](https://github.com/nmamano/isomux).
+Try [the demo](https://isomux.com/demo) and see if it clicks.
 
 <Callout>
-  Isomux is being built by Claude Code agents running inside isomux since 3h
-  after the project was started. Developing a dev tool from itself is fun!
+  Isomux is being built by agents running inside isomux since 3h after the
+  project was started. Developing a dev tool from itself is fun!
 </Callout>
 
-### Architecture Overview
+The source is on [github.com/nmamano/isomux](https://github.com/nmamano/isomux).
+
+## Architecture Overview
 
 Isomux is a **single [Bun](https://bun.com/) process** that:
 
@@ -116,7 +120,7 @@ This pattern is used in many of [the QoL features](#qol-features) below.
 
 This design wasn't obvious from the start. When I first implemented inline image support, I used a "hack": if the agent read an image with the Read Tool, the server would send it to the UI for rendering in the chat. The system prompt had to explain the convention. It worked, but it co-opted a tool meant for something else.
 
-#### Office-to-office communication
+### Office-to-office communication
 
 One nice consequence: if two Isomux offices live in the same VPN, agents in one can call the REST endpoints of the other. They can drop tasks on each other's boards, send messages, etc., without any extra plumbing.
 
@@ -319,6 +323,26 @@ The shared `agents-summary.json` lets agents know about each other. The next ste
 Agent-to-agent messages go through `POST /agents/:id/message` to the isomux server. You can name the receiving agent you want them to message, and the sender will look up their id in the manifest.
 
 There's no automatic reply. The receiver can choose to respond (another POST going the other way), ignore, or take an action and move on.
+
+### Applications
+
+Agent-to-agent messaging has become a central primitive in my workflow.
+
+Say I'm in a chat with Alice, an Opus agent, and Bob is a Codex agent at another desk. I have encoded the useful collaboration patterns as skills:
+
+- `/pair-programming Bob {task}`: Alice implements a task end-to-end while requesting reviews from Bob at each step.
+- `/second-opinion Bob {question}`: Alice asks Bob to chime in on whatever we're discussing; useful for when you think the agent is missing something.
+- `/peer-review Bob`: Alice reads Bob's full session history and gives feedback directly to Bob; useful for when Bob is thrashing or going off-track.
+- `/soft-handoff Bob`: Alice tells Bob to pick up her work, while Alice sticks around in case Bob has questions; useful for when Alice is running out of context.
+
+<BlogImage
+  src="/blog/isomux/agent-to-agent-skills.png"
+  alt="Four agent-to-agent skills: /pair-programming for iterative review during implementation, /second-opinion for an outside perspective, /peer-review for full-session feedback, and /soft-handoff for context-window transitions"
+/>
+
+<Callout>
+  Agent-to-agent collaboration is the gateway to Levels 7 and 8 in [Yegge's hierarchy](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04).
+</Callout>
 
 ### Queueing vs steering
 
