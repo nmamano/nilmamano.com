@@ -6,6 +6,8 @@ coverImage: "/blog/isomux/cover.jpeg"
 categories: ["ai", "swe"]
 ---
 
+In this post I describe how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and my takeaways on designing agent management systems. I describe independently-developed features like [agent-collaboration skills](#applications), [human collaboration at the agent-chat level](#human-collaboration) via mixed human-agent message queues, a [REST-API-for-UI architecture](#giving-agents-superpowers), [hierarchical system prompts](#hierarchical-prompts), and [non-linear hand-off systems](#shared-task-board).
+
 <Toc />
 
 ## Introduction
@@ -296,6 +298,11 @@ The message queue ends up with a mix of human and agent messages, labeled by sen
 />
 
 For how additional people get invited to an office, see [Remote User Authorization](#remote-user-authorization).
+
+<Callout>
+  I think human collaboration at the agent-chat level will make it easier to
+  [onboard non-technical people into agent management systems](https://x.com/Nil053/status/2047935826366267505).
+</Callout>
 
 ### Live user presence
 
