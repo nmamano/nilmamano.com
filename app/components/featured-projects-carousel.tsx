@@ -26,6 +26,26 @@ interface FeaturedProjectsCarouselProps {
 
 const projects = [
   {
+    id: "isomux",
+    title: "Isomux: Your Agent Office",
+    tagline:
+      "Your agent office. Multi-device, multi-user, multi-agent collaboration with Claude Code and Codex. Free & open source, runs locally.",
+    image: "/projects/isomux.png",
+    href: "https://isomux.com",
+    cta: "Try it",
+    external: true,
+  },
+  {
+    id: "wallgame",
+    title: "Wall Game: Online Board Game with AI",
+    tagline:
+      "A full-stack online board game with a superhuman AlphaZero-style AI I trained from scratch via self-play.",
+    image: "/projects/wallwarsgame.gif",
+    href: "https://wallgame.io",
+    cta: "Play now",
+    external: true,
+  },
+  {
     id: "bctci",
     title: "Beyond Cracking the Coding Interview",
     tagline:
@@ -43,26 +63,6 @@ const projects = [
     image: "https://dsatoolkit.com/thumbnail.png",
     href: "https://dsatoolkit.com",
     cta: "Start learning",
-    external: true,
-  },
-  {
-    id: "isomux",
-    title: "Isomux: Your Agent Office",
-    tagline:
-      "Your agent office. Multi-device, multi-user, multi-agent collaboration with Claude Code and Codex. Free & open source, runs locally.",
-    image: "/projects/isomux.png",
-    href: "https://isomux.com",
-    cta: "Try it",
-    external: true,
-  },
-  {
-    id: "wallgame",
-    title: "Wall Game: Online Board Game with AI",
-    tagline:
-      "A fully-featured online board game, including an AlphaZero-style AI.",
-    image: "/projects/wallwarsgame.gif",
-    href: "https://wallgame.io",
-    cta: "Play now",
     external: true,
   },
 ];
