@@ -67,21 +67,14 @@ export default function AboutSection() {
         <div className="flex flex-col md:flex-row gap-8 items-start">
           <div className="md:w-2/3 space-y-6 text-muted-foreground order-1 md:order-1">
             <p>
-              I am a computer scientist specialized in data structures and
-              algorithms. Here is my{" "}
+              I&apos;m a software engineer focused on AI agents and agentic
+              tooling. Here is my{" "}
               <Link
                 href="/resume/resume_nilmamano.pdf"
                 target="_blank"
                 className="text-primary hover:underline"
               >
                 resume
-              </Link>
-              .
-            </p>
-            <p>
-              Are you looking for a short bio? See the{" "}
-              <Link href="/media-kit" className="text-primary hover:underline">
-                media kit
               </Link>
               .
             </p>
@@ -256,7 +249,15 @@ export default function AboutSection() {
                 .
               </p>
               <p className="mt-2">
-                Not sure what's next yet, but lately I've been active on my{" "}
+                Lately I&apos;ve been building{" "}
+                <Link
+                  href="https://isomux.com"
+                  target="_blank"
+                  className="text-primary hover:underline"
+                >
+                  Isomux
+                </Link>{" "}
+                and writing about agentic engineering on my{" "}
                 <Link href="/blog" className="text-primary hover:underline">
                   blog
                 </Link>

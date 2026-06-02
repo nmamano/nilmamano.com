@@ -33,6 +33,19 @@ export const PROJECTS: Project[] = [
     ],
   },
   {
+    id: "wallgame",
+    title: "Wall Game: online board game with AI",
+    coverImage: "/projects/wallwarsgame.gif",
+    links: {
+      demo: "https://wallgame.io",
+      github: "https://github.com/nmamano/wallgame",
+      blog: "/blog/wall-game-intro",
+    },
+    description: [
+      "The Wall Game is an online 2-player strategy board game. Each player controls a cat and a mouse, and the goal is to catch the opponent's mouse before they catch yours. You can place walls to reshape the terrain to your advantage. It features a <a href='/blog/wall-game-ai' class='text-primary hover:underline' onClick='event.stopPropagation()'>superhuman AlphaZero-style AI</a> trained through self-play.",
+    ],
+  },
+  {
     id: "toolkit-x",
     title: "Toolkit-X: DS&A Interview Prep",
     coverImage: "https://dsatoolkit.com/thumbnail.png",
@@ -44,19 +57,6 @@ export const PROJECTS: Project[] = [
       "Toolkit-X is a free DS&A toolkit for coding interview prep. Unlike traditional problem lists (NeetCode-150, Blind-75, etc.), it focuses on acquiring reusable tools rather than checking off solved problems.",
 
       "For each tool, I include a curated problem from Beyond Cracking the Coding Interview that demonstrates its use. The problems and solutions are hosted on the BCtCI platform with an AI interviewer where you can practice.",
-    ],
-  },
-  {
-    id: "wallgame",
-    title: "Wall Game: online board game with AI",
-    coverImage: "/projects/wallwarsgame.gif",
-    links: {
-      demo: "https://wallgame.io",
-      github: "https://github.com/nmamano/wallgame",
-      blog: "/blog/wall-game-intro",
-    },
-    description: [
-      "The Wall Game is an online 2-player strategy board game. Each player controls a cat and a mouse, and the goal is to catch the opponent's mouse before they catch yours. You can place walls to reshape the terrain to your advantage. It features a <a href='/blog/wall-game-ai' class='text-primary hover:underline' onClick='event.stopPropagation()'>superhuman AlphaZero-style AI</a> trained through self-play.",
     ],
   },
   {

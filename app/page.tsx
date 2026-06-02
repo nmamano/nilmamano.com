@@ -8,8 +8,8 @@ export default function Page() {
   return (
     <>
       <AboutSection />
-      <SelectedPublications />
       <ProjectsSection />
+      <SelectedPublications />
       <section id="contact" className="py-16 px-4">
         <div className="container mx-auto">
           <ContactForm />
