@@ -6,7 +6,7 @@ coverImage: "/blog/isomux/cover.jpeg"
 categories: ["ai", "swe"]
 ---
 
-In this post I describe how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and my takeaways on designing agent management systems. I describe independently-developed features like [agent-collaboration skills](#applications), [human collaboration at the agent-chat level](#human-collaboration) via mixed human-agent message queues, a [REST-API-for-UI architecture](#giving-agents-superpowers), [hierarchical system prompts](#hierarchical-prompts), and [non-linear hand-off systems](#shared-task-board).
+In this post I describe how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and my takeaways on designing agent management systems. I describe independently-developed features like [agent-collaboration skills](#applications), [human collaboration at the agent-chat level](#human-collaboration) via mixed human-agent message queues, a [REST-API-for-UI architecture](#giving-agents-superpowers), [hierarchical system prompts](#hierarchical-prompts) and [memory](#hierarchical-memory), and [non-linear hand-off systems](#shared-task-board).
 
 <Toc />
 
@@ -540,6 +540,27 @@ A few decisions worth calling out:
 - **Overlap policy: skip, don't queue.** Manual "Run now" bypasses this.
 - **Missed fires from server downtime are silently dropped.**
 - **Per cron job token spend rolls into `/isomux-usage`.** Same fork-aware accounting as agents. The total usage combines agents and cron jobs.
+
+### Hierarchical memory
+
+<Callout>
+  Unlike the other features above, this one isn't built yet; it's just a design.
+</Callout>
+
+I've been designing a memory system for Isomux.
+
+Just like [system prompts](#hierarchical-prompts), I want memories to follow the same hierarchy — roughly, they can be for a specific agent, a whole room, or the whole office.[^mem0]
+
+**Memory creation**: a hook that runs after every turn. It extracts facts to remember, chooses their scope (agent/room/office), and stores them in a vector DB (like [Qdrant](https://qdrant.tech)). During this step, we must also update or remove preexisting obsolete memories, like [mem0 does](https://docs.mem0.ai/core-concepts/memory-operations/update).
+
+**Memory retrieval**: before every assistant turn, we'd pull relevant memories for this agent, the room they're in, and the office-wide context.
+
+<BlogImage
+  src="/blog/isomux/memory.png"
+  alt="Isomux's planned hierarchical memory flow. Memory creation (after every turn): (1) extract facts from the conversation, (2) choose each fact's scope (agent, room, or office), (3) store it in the matching agent, room, or office memory. Memory retrieval (before every assistant turn): pull relevant memories at each level (agent, room, office), then merge, deduplicate, and rank them by relevance, and pass the result to the agent as context for its turn."
+/>
+
+[^mem0]: I experimented with an existing memory solution, [Mem0](https://mem0.ai), but it doesn't fit this hierarchical memory shape. I'll probably roll my own, inspired by their [open-source library](https://github.com/mem0ai/mem0).
 
 ## Final Thoughts
 
