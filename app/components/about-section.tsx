@@ -257,7 +257,7 @@ export default function AboutSection() {
                 >
                   Isomux
                 </Link>{" "}
-                and writing about agentic engineering on my{" "}
+                and writing about AI and agentic engineering on my{" "}
                 <Link href="/blog" className="text-primary hover:underline">
                   blog
                 </Link>
