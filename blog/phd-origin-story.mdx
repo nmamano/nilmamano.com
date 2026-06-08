@@ -1,0 +1,40 @@
+---
+title: "The cold email that got me into a PhD"
+date: "2026-06-07"
+excerpt: "My PhD origin story."
+coverImage: "/blog/phd-origin-story/cover.png"
+categories: ["research", "dsa"]
+---
+
+When I wanted to do a PhD in the US, I searched for open problems on professors' personal websites and tried to solve them. I found one - on [David Eppstein](https://www.ics.uci.edu/~eppstein/)'s website - that seemed doable, and managed to solve it with help from [Guillem Godoy](https://www.cs.upc.edu/~ggodoy/), the professor I was working for at the time.
+
+I sent him an email with the solution.[^emeritus] I didn't hear back until, four months later, someone asked the same question on [CS Theory Stack Exchange](https://cstheory.stackexchange.com/questions/25048/hidden-path-in-square-grids), which jogged his memory about my email:
+
+[^emeritus]: I also remember drafting a letter for a professor whom I thought could be a good match research-wise, before I realized what "emeritus" means 🫣 😆
+
+<BlogImage
+  src="/blog/phd-origin-story/eppstein-stackexchange-answer.png"
+  alt="David Eppstein's answer on CS Theory Stack Exchange crediting Nil Mamano with the NP-completeness proof"
+  width="80%"
+/>
+
+He became my PhD advisor.
+
+> Sorry for the slow response. This does look like a valid proof. I was reminded of it by a question on cstheory.stackexchange.com asking whether my problem had been solved — I am in the process of leaving an answer there crediting you for the solution. If you're still interested in visiting UCI in Spring 2015, you'd be welcome.[^emdash]
+
+[^emdash]: Yes, he used em dashes in 2014.
+
+## The problem
+
+The problem was on a slide from one of Eppstein's old courses, listed among project ideas with the note _"Should be NP-complete. No proof known."_
+
+You're given an `n×n` matrix of 0's and 1's and a binary sequence, and asked whether there's a path through adjacent cells, visiting each exactly once, whose values spell out the sequence.
+
+To prove it NP-hard, I reduced from [Hamilton Path on grid graphs](https://en.wikipedia.org/wiki/Hamiltonian_path). Here is the original write-up that I emailed him:
+
+📄 **[Sequence Matching Hamilton Path: NP-hardness proof (PDF)](/blog/phd-origin-story/sequence-matching-hamilton-path.pdf)**
+
+---
+
+_Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_when-i-wanted-to-do-a-phd-in-the-us-i-searched-activity-7469452934527746048-ssAD) or the [X post](https://x.com/Nil053/status/2063686421542793325)._
+
