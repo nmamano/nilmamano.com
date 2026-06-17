@@ -9,6 +9,8 @@ export function HeaderWithActiveLink() {
   let currentRoute;
   if (pathname.startsWith("/blog")) {
     currentRoute = "blog";
+  } else if (pathname === "/about") {
+    currentRoute = "about";
   } else if (pathname === "/research") {
     currentRoute = "research";
   } else if (pathname === "/media-kit") {
