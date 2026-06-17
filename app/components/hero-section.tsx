@@ -12,13 +12,21 @@ export default function HeroSection() {
     >
       <div className="flex flex-col items-center justify-center space-y-4 text-center">
         <Link href="/about" aria-label="About Nil Mamano">
+          {/* Light mode: daytime photo. Dark mode: nighttime photo. */}
           <Image
             src="/nil2024_opt.jpg"
             alt="Nil Mamano"
             width={224}
             height={224}
             priority
-            className="h-28 w-28 rounded-full object-cover shadow-md transition-opacity hover:opacity-90"
+            className="h-28 w-28 rounded-full object-cover shadow-md transition-opacity hover:opacity-90 dark:hidden"
+          />
+          <Image
+            src="/nil2024_night_opt.jpg"
+            alt="Nil Mamano"
+            width={224}
+            height={224}
+            className="hidden h-28 w-28 rounded-full object-cover shadow-md transition-opacity hover:opacity-90 dark:block"
           />
         </Link>
         <div className="space-y-2">
