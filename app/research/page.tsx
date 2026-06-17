@@ -47,18 +47,16 @@ function ResearchSection() {
       id="research"
       className="pt-1 pb-6 md:pt-2 md:pb-12 lg:pt-3 lg:pb-16 scroll-mt-16"
     >
-      <h2 className="text-2xl font-medium tracking-tighter sm:text-3xl md:text-4xl mb-8 text-center">
-        Research Publications
-      </h2>
-      <div className="max-w-6xl mx-auto">
+      <div className="max-w-4xl mx-auto">
+        <h2 className="text-2xl font-bold mb-8">Publications</h2>
         <ul className="text-muted-foreground mb-8 list-disc pl-6 space-y-2">
           <li>Click on a publication for a brief summary.</li>
           <li>
             All papers are <b>freely available online</b> (PDF icon).
           </li>
           <li>
-            Authors are in alphabetical order—per convention in CS theory—except
-            when marked with "*".
+            Authors are in alphabetical order, per convention in CS theory,
+            except when marked with "*".
           </li>
           <li>
             See also my{" "}
@@ -83,7 +81,7 @@ function ResearchSection() {
 
         {/* Conference Publications Section */}
         <div className="mb-12">
-          <h3 className="text-3xl font-semibold mb-12 text-center">
+          <h3 className="text-xl font-semibold mb-6">
             Conference Publications
           </h3>
           {conferencePublications.length > 0 ? (
@@ -95,7 +93,7 @@ function ResearchSection() {
 
         {/* Journal Publications Section */}
         <div className="mb-12">
-          <h3 className="text-3xl font-semibold mb-12 text-center">
+          <h3 className="text-xl font-semibold mb-6">
             Journal Publications
           </h3>
           {journalPublications.length > 0 ? (
@@ -107,7 +105,7 @@ function ResearchSection() {
 
         {/* PhD Dissertation Section */}
         <div className="mb-12">
-          <h3 className="text-3xl font-semibold mb-12 text-center">
+          <h3 className="text-xl font-semibold mb-6">
             PhD Dissertation
           </h3>
           <PublicationGrid publications={dissertations} />
@@ -117,9 +115,130 @@ function ResearchSection() {
   );
 }
 
+function AcademicBackground() {
+  return (
+    <section className="max-w-4xl mx-auto mb-16">
+      <h1 className="text-3xl font-bold mb-6">Research</h1>
+      <div className="space-y-4 text-muted-foreground">
+        <p>
+          I received a PhD as part of the{" "}
+          <Link
+            href="http://www.ics.uci.edu/~theory"
+            target="_blank"
+            className="text-primary hover:underline"
+          >
+            CS Theory group
+          </Link>{" "}
+          at{" "}
+          <Link
+            href="http://www.uci.edu/"
+            target="_blank"
+            className="text-primary hover:underline"
+          >
+            UCI
+          </Link>
+          . I was fortunate to be advised by{" "}
+          <Link
+            href="https://www.ics.uci.edu/~eppstein/"
+            target="_blank"
+            className="text-primary hover:underline"
+          >
+            David Eppstein
+          </Link>{" "}
+          and{" "}
+          <Link
+            href="http://www.ics.uci.edu/~goodrich/"
+            target="_blank"
+            className="text-primary hover:underline"
+          >
+            Michael Goodrich
+          </Link>
+          . Before that, I got a bachelor&apos;s degree in CS from UPC in my
+          hometown, Barcelona.
+        </p>
+        <p>
+          My research spans computational geometry, greedy algorithms, graph
+          data structures, computational biology, and recreational mathematics.
+          My dissertation,{" "}
+          <Link
+            href="/dissertation/nildissertation.pdf"
+            className="text-primary hover:underline"
+            target="_blank"
+          >
+            <em>New Applications of the Nearest-neighbor Chain Algorithm</em>
+          </Link>{" "}
+          (see also:{" "}
+          <Link
+            href="/blog/greedy-algorithms"
+            className="text-primary hover:underline"
+          >
+            blog post
+          </Link>
+          ,{" "}
+          <Link
+            href="https://11011110.github.io/blog/2019/09/26/congratulations-dr-mamano.html"
+            className="text-primary hover:underline"
+            target="_blank"
+          >
+            advisor&apos;s blog post
+          </Link>
+          ,{" "}
+          <Link
+            href="/dissertation/nildissertationslides.pdf"
+            className="text-primary hover:underline"
+            target="_blank"
+          >
+            defense slides
+          </Link>
+          ) studies how to relax the &quot;greedy choice&quot; in certain greedy
+          algorithms without affecting the final solution. This idea, paired
+          with an algorithmic technique called nearest-neighbor chain, allows us
+          to speed up some greedy algorithms (like the{" "}
+          <Link
+            href="https://en.wikipedia.org/wiki/Multi-fragment_algorithm"
+            className="text-primary hover:underline"
+            target="_blank"
+          >
+            Multi-fragment algorithm
+          </Link>{" "}
+          for{" "}
+          <Link
+            href="https://en.wikipedia.org/wiki/Travelling_salesman_problem"
+            className="text-primary hover:underline"
+            target="_blank"
+          >
+            Euclidean TSP
+          </Link>{" "}
+          from O(n<sup>2</sup>) to O(n log n) (
+          <Link
+            href="https://arxiv.org/abs/1902.06875"
+            className="text-primary hover:underline"
+            target="_blank"
+          >
+            paper
+          </Link>
+          )).
+        </p>
+        <p>
+          My personal highlight is{" "}
+          <Link
+            href="https://x.com/Nil053/status/2067322147819946361"
+            className="text-primary hover:underline"
+            target="_blank"
+          >
+            being cited by Donald Knuth
+          </Link>
+          .
+        </p>
+      </div>
+    </section>
+  );
+}
+
 export default function ResearchPage() {
   return (
     <div className="container mx-auto px-4 py-8">
+      <AcademicBackground />
       <ResearchSection />
     </div>
   );

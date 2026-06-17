@@ -32,29 +32,30 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
           </Link>
         )}
 
-        <div className="mr-4 hidden md:flex">
-          <div className="mr-6 flex items-center space-x-2">
-            <Link href="/" className="hidden font-bold sm:inline-block transition-colors hover:text-foreground/80">
-              Nil Mamano
-            </Link>
-          </div>
+        <div className="mr-4 hidden md:flex items-center gap-6">
+          <Link
+            href="/"
+            className="font-bold leading-none transition-colors hover:text-foreground/80"
+          >
+            Nil Mamano
+          </Link>
           {!isBlog && (
-            <nav className="flex items-center space-x-6 text-sm font-medium">
+            <nav className="flex items-center gap-6 text-sm font-medium leading-none">
+              <Link
+                href="/about"
+                className={`leading-none transition-colors hover:text-foreground/80 ${
+                  currentRoute === "about" ? "text-primary" : ""
+                }`}
+              >
+                About
+              </Link>
               <Link
                 href="/research"
-                className={`transition-colors hover:text-foreground/80 ${
+                className={`leading-none transition-colors hover:text-foreground/80 ${
                   currentRoute === "research" ? "text-primary" : ""
                 }`}
               >
                 Research
-              </Link>
-              <Link
-                href="/#contact"
-                className={`transition-colors hover:text-foreground/80 ${
-                  currentRoute === "contact" ? "text-primary" : ""
-                }`}
-              >
-                Contact
               </Link>
             </nav>
           )}
