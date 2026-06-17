@@ -19,7 +19,7 @@ export const HIGHLIGHTS: Highlight[] = [
   {
     id: "agentic-tooling",
     statement: "Agentic tooling",
-    image: "/projects/isomux-office.gif",
+    image: "/projects/isomux-office-sm.mp4",
     blurb:
       "Isomux gives your agents a cute office: multi-device, multi-user, multi-agent collaboration across Claude and Codex. Context Composer lets you edit an agent's working context mid-conversation, without the agent knowing.",
     links: [
@@ -56,38 +56,6 @@ export const HIGHLIGHTS: Highlight[] = [
     ],
   },
   {
-    id: "author-educator",
-    statement: "Author and educator",
-    image: "/projects/bctci-cover.png",
-    blurb:
-      "Co-author of Beyond Cracking the Coding Interview and creator of the DS&A Toolkit.",
-    links: [
-      {
-        label: "Beyond Cracking the Coding Interview",
-        href: "https://www.amazon.com/dp/195570600X",
-        external: true,
-        icon: "amazon",
-      },
-      { label: "dsatoolkit.com", href: "https://dsatoolkit.com", external: true },
-    ],
-  },
-  {
-    id: "build-in-public",
-    statement: "Building in public",
-    image: "/og-blog.jpg",
-    blurb:
-      "40+ articles on agentic engineering, AI, algorithms, and how I build my projects - all open source.",
-    links: [
-      { label: "Read the blog", href: "/blog" },
-      {
-        label: "GitHub",
-        href: "https://github.com/nmamano",
-        external: true,
-        icon: "github",
-      },
-    ],
-  },
-  {
     id: "research",
     statement: "Algorithms research",
     image: "/knight/3d.svg",
@@ -101,6 +69,38 @@ export const HIGHLIGHTS: Highlight[] = [
         external: true,
         icon: "scholar",
       },
+    ],
+  },
+  {
+    id: "build-in-public",
+    statement: "Building in public",
+    image: "/blog-node.jpg",
+    blurb:
+      "40+ articles on agentic engineering, AI, algorithms, and how I build my projects - all open source.",
+    links: [
+      { label: "Read the blog", href: "/blog" },
+      {
+        label: "GitHub",
+        href: "https://github.com/nmamano",
+        external: true,
+        icon: "github",
+      },
+    ],
+  },
+  {
+    id: "author-educator",
+    statement: "Author and educator",
+    image: "/book-node.jpg",
+    blurb:
+      "Co-author of Beyond Cracking the Coding Interview and creator of the DS&A Toolkit.",
+    links: [
+      {
+        label: "Beyond Cracking the Coding Interview",
+        href: "https://www.amazon.com/dp/195570600X",
+        external: true,
+        icon: "amazon",
+      },
+      { label: "dsatoolkit.com", href: "https://dsatoolkit.com", external: true },
     ],
   },
 ];

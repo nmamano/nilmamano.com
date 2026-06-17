@@ -77,10 +77,6 @@ export default function AboutPage() {
               >
                 resume
               </Link>
-              , and feel free to{" "}
-              <Link href="/contact" className="text-primary hover:underline">
-                get in touch
-              </Link>
               .
             </p>
 
@@ -91,16 +87,48 @@ export default function AboutPage() {
               </Link>
               .
             </p>
+
+            <p>
+              To get in touch, please reach out on{" "}
+              <Link
+                href="https://linkedin.com/in/nilmamano/"
+                target="_blank"
+                className="text-primary hover:underline"
+              >
+                LinkedIn
+              </Link>
+              ,{" "}
+              <Link
+                href="https://x.com/Nil053"
+                target="_blank"
+                className="text-primary hover:underline"
+              >
+                X
+              </Link>
+              , or using this{" "}
+              <Link href="/contact" className="text-primary hover:underline">
+                contact form
+              </Link>
+              . I love feedback!
+            </p>
           </div>
 
           <div className="md:w-1/3 flex justify-center mt-6 md:mt-0 order-2">
+            {/* Light mode: daytime photo. Dark mode: nighttime photo. */}
             <Image
               src="/nil2024_opt.jpg"
               alt="Nil, 2024"
               width={300}
               height={300}
-              className="rounded-lg shadow-md"
+              className="rounded-lg shadow-md dark:hidden"
               priority
+            />
+            <Image
+              src="/nil2024_night_opt.jpg"
+              alt="Nil, 2024"
+              width={300}
+              height={300}
+              className="hidden rounded-lg shadow-md dark:block"
             />
           </div>
         </div>
