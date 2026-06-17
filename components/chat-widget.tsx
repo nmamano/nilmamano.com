@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect, useMemo } from "react";
 import { useChat } from "@ai-sdk/react";
 import { DefaultChatTransport } from "ai";
-import { MessageCircle, X, Send, Loader2 } from "lucide-react";
+import { MessageCircle, X, Send, Loader2, Quote } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -11,6 +11,12 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 interface ChatWidgetProps {
   context: "homepage" | "blog";
   slug?: string;
+}
+
+interface SelectionPopup {
+  text: string;
+  top: number;
+  left: number;
 }
 
 const starterQuestions: Record<string, string[]> = {
@@ -77,8 +83,12 @@ function renderFormattedText(text: string): React.ReactNode[] {
 export default function ChatWidget({ context, slug }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [input, setInput] = useState("");
+  const [popup, setPopup] = useState<SelectionPopup | null>(null);
+  const [quoted, setQuoted] = useState<string | null>(null);
   const scrollRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const panelRef = useRef<HTMLDivElement>(null);
+  const popupRef = useRef<HTMLButtonElement>(null);
 
   const transport = useMemo(
     () => new DefaultChatTransport({ body: { context, slug } }),
@@ -106,11 +116,75 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
     }
   }, [isOpen]);
 
+  // "Ask about this": show a floating button when the user selects text on the page
+  useEffect(() => {
+    function handleMouseUp(e: MouseEvent) {
+      // Ignore mouseups on the popup button itself
+      if (popupRef.current && popupRef.current.contains(e.target as Node)) return;
+
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed || sel.rangeCount === 0) {
+        setPopup(null);
+        return;
+      }
+      const text = sel.toString().trim();
+      if (text.length < 2) {
+        setPopup(null);
+        return;
+      }
+      // Ignore selections made inside the chat panel (e.g. copying a reply)
+      if (panelRef.current && panelRef.current.contains(sel.anchorNode)) {
+        setPopup(null);
+        return;
+      }
+      const rect = sel.getRangeAt(0).getBoundingClientRect();
+      if (!rect || (rect.width === 0 && rect.height === 0)) {
+        setPopup(null);
+        return;
+      }
+      setPopup({ text, top: rect.top, left: rect.left + rect.width / 2 });
+    }
+
+    function handleMouseDown(e: MouseEvent) {
+      if (popupRef.current && popupRef.current.contains(e.target as Node)) return;
+      setPopup(null);
+    }
+
+    function clearPopup() {
+      setPopup(null);
+    }
+
+    document.addEventListener("mouseup", handleMouseUp);
+    document.addEventListener("mousedown", handleMouseDown);
+    window.addEventListener("scroll", clearPopup, true);
+    window.addEventListener("resize", clearPopup);
+    return () => {
+      document.removeEventListener("mouseup", handleMouseUp);
+      document.removeEventListener("mousedown", handleMouseDown);
+      window.removeEventListener("scroll", clearPopup, true);
+      window.removeEventListener("resize", clearPopup);
+    };
+  }, []);
+
+  const handleAskAboutThis = () => {
+    if (!popup) return;
+    setQuoted(popup.text);
+    setIsOpen(true);
+    setPopup(null);
+    window.getSelection()?.removeAllRanges();
+    setTimeout(() => inputRef.current?.focus(), 120);
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!input.trim() || isLoading) return;
-    sendMessage({ text: input });
+    const q = input.trim();
+    if ((!q && !quoted) || isLoading) return;
+    const text = quoted
+      ? `Regarding this excerpt:\n\n"${quoted}"\n\n${q || "Can you explain this?"}`
+      : q;
+    sendMessage({ text });
     setInput("");
+    setQuoted(null);
   };
 
   const handleStarterClick = (q: string) => {
@@ -119,6 +193,25 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
 
   return (
     <>
+      {/* "Ask about this" floating button on text selection */}
+      {popup && (
+        <button
+          ref={popupRef}
+          onMouseDown={(e) => e.preventDefault()}
+          onClick={handleAskAboutThis}
+          style={{
+            position: "fixed",
+            top: popup.top,
+            left: popup.left,
+            transform: "translate(-50%, calc(-100% - 8px))",
+          }}
+          className="z-[60] flex items-center gap-1.5 rounded-full bg-primary px-3 py-1.5 text-xs font-medium text-primary-foreground shadow-lg transition-transform hover:scale-105"
+        >
+          <MessageCircle className="h-3.5 w-3.5" />
+          Ask about this
+        </button>
+      )}
+
       {/* Floating button */}
       {!isOpen && (
         <button
@@ -132,7 +225,10 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
 
       {/* Chat panel */}
       {isOpen && (
-        <div className="fixed bottom-6 right-6 z-50 flex w-[min(400px,calc(100vw-3rem))] flex-col rounded-xl border bg-background shadow-2xl sm:h-[500px] h-[min(500px,calc(100vh-6rem))]">
+        <div
+          ref={panelRef}
+          className="fixed bottom-6 right-6 z-50 flex w-[min(400px,calc(100vw-3rem))] flex-col rounded-xl border bg-background shadow-2xl sm:h-[500px] h-[min(500px,calc(100vh-6rem))]"
+        >
           {/* Header */}
           <div className="flex items-center justify-between border-b px-4 py-3">
             <div className="flex items-center gap-2">
@@ -207,16 +303,29 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
 
           {/* Footer */}
           <div className="border-t px-4 py-2">
+            {quoted && (
+              <div className="mb-2 flex items-start gap-2 rounded-md border bg-muted/50 px-2 py-1.5 text-xs text-muted-foreground">
+                <Quote className="mt-0.5 h-3.5 w-3.5 shrink-0" />
+                <span className="line-clamp-2 flex-1 italic">{quoted}</span>
+                <button
+                  onClick={() => setQuoted(null)}
+                  aria-label="Remove quoted text"
+                  className="shrink-0 rounded p-0.5 hover:bg-muted"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              </div>
+            )}
             <form onSubmit={handleSubmit} className="flex gap-2">
               <Input
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
-                placeholder="Type a message..."
+                placeholder={quoted ? "Ask about the selected text..." : "Type a message..."}
                 disabled={isLoading}
                 className="flex-1"
               />
-              <Button type="submit" size="icon" disabled={isLoading || !input.trim()}>
+              <Button type="submit" size="icon" disabled={isLoading || (!input.trim() && !quoted)}>
                 <Send className="h-4 w-4" />
               </Button>
             </form>
