@@ -76,7 +76,7 @@ export const HIGHLIGHTS: Highlight[] = [
     statement: "Building in public",
     image: "/blog-node.jpg",
     blurb:
-      "40+ articles on agentic engineering, AI, algorithms, and how I build my projects - all open source.",
+      "40+ posts on agentic engineering, AI, algorithms, and how I build my projects - all open source.",
     links: [
       { label: "Read the blog", href: "/blog" },
       {

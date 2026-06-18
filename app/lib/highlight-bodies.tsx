@@ -48,20 +48,19 @@ export const HIGHLIGHT_BODIES: Record<string, React.ReactNode> = {
   ),
   "build-in-public": (
     <>
-      <A href="/blog">40+ articles</A> on agentic engineering, AI, algorithms,
+      <A href="/blog">40+ posts</A> on agentic engineering, AI, algorithms,
       and how I build my projects - all{" "}
       <A href="https://github.com/nmamano">open source</A>.
     </>
   ),
   research: (
     <>
-      <A href="/research">10 peer-reviewed papers</A> with 180 citations in
-      computational geometry, graphs, computational biology, and recreational
-      math - all{" "}
       <A href="https://scholar.google.bg/citations?user=LIuIigEAAAAJ&hl=en">
-        publicly available
-      </A>
-      .
+        10 peer-reviewed papers
+      </A>{" "}
+      with 180 citations in computational geometry, graphs, computational
+      biology, and recreational math - all{" "}
+      <A href="/research">publicly available</A>.
     </>
   ),
 };
