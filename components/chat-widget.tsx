@@ -154,13 +154,25 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
       setPopup(null);
     }
 
+    // Whenever the selection itself goes away — keyboard caret moves, another
+    // selection elsewhere, or a programmatic removeAllRanges() — drop the popup
+    // too, so it never outlives the selection it points at.
+    function handleSelectionChange() {
+      const sel = window.getSelection();
+      if (!sel || sel.isCollapsed || sel.toString().trim().length < 2) {
+        setPopup(null);
+      }
+    }
+
     document.addEventListener("mouseup", handleMouseUp);
     document.addEventListener("mousedown", handleMouseDown);
+    document.addEventListener("selectionchange", handleSelectionChange);
     window.addEventListener("scroll", clearPopup, true);
     window.addEventListener("resize", clearPopup);
     return () => {
       document.removeEventListener("mouseup", handleMouseUp);
       document.removeEventListener("mousedown", handleMouseDown);
+      document.removeEventListener("selectionchange", handleSelectionChange);
       window.removeEventListener("scroll", clearPopup, true);
       window.removeEventListener("resize", clearPopup);
     };

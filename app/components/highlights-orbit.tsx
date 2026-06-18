@@ -104,6 +104,16 @@ export default function HighlightsOrbit() {
   const R = 38; // % radius of node centers from the middle
   const cur = highlights[active];
 
+  // Switching nodes swaps the center text out from under any active selection,
+  // which the browser would otherwise leave visually highlighted on the new
+  // content. Clear it whenever the active node actually changes.
+  const selectNode = (i: number) => {
+    if (i !== active) {
+      window.getSelection()?.removeAllRanges();
+      setActive(i);
+    }
+  };
+
   const nodes = highlights.map((_, i) => {
     const a = (-90 + (360 / n) * i) * (Math.PI / 180); // start at top, clockwise
     return { x: 50 + R * Math.cos(a), y: 50 + R * Math.sin(a) };
@@ -155,8 +165,8 @@ export default function HighlightsOrbit() {
               href={primary.href}
               target={primary.external ? "_blank" : undefined}
               rel={primary.external ? "noopener noreferrer" : undefined}
-              onMouseEnter={() => setActive(i)}
-              onFocus={() => setActive(i)}
+              onMouseEnter={() => selectNode(i)}
+              onFocus={() => selectNode(i)}
               aria-label={h.statement}
               style={{
                 left: `${nodes[i].x}%`,
