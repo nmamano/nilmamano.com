@@ -78,7 +78,7 @@ function TortoiseHareImpl({ count, radius }: { count: number; radius: number }) 
       <span
         ref={tortoiseRef}
         aria-hidden="true"
-        className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 select-none text-2xl leading-none"
+        className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 select-none text-xl leading-none md:text-2xl"
         style={{ left: "50%", top: "12%", opacity: 0 }}
       >
         🐢
@@ -86,7 +86,7 @@ function TortoiseHareImpl({ count, radius }: { count: number; radius: number }) 
       <span
         ref={hareRef}
         aria-hidden="true"
-        className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 select-none text-2xl leading-none"
+        className="pointer-events-none absolute -translate-x-1/2 -translate-y-1/2 select-none text-xl leading-none md:text-2xl"
         style={{ left: "50%", top: "12%", opacity: 0 }}
       >
         🐇
@@ -100,13 +100,85 @@ const TortoiseHare = memo(TortoiseHareImpl);
 export default function HighlightsOrbit() {
   const highlights = getHighlights();
   const [active, setActive] = useState(0);
+  // Desktop has hover + a fine pointer; touch devices have neither. On touch a
+  // tap selects a node (previewing its content below) instead of navigating.
+  const [canHover, setCanHover] = useState(true);
+  // Pull the ring inward on small screens so node labels don't run off the
+  // edges; full radius on desktop where there's room to spare.
+  const [R, setR] = useState(38); // % radius of node centers from the middle
   const n = highlights.length;
-  const R = 38; // % radius of node centers from the middle
   const cur = highlights[active];
 
-  // Switching nodes swaps the center text out from under any active selection,
-  // which the browser would otherwise leave visually highlighted on the new
-  // content. Clear it whenever the active node actually changes.
+  const pentagonRef = useRef<HTMLDivElement>(null);
+  const boxRef = useRef<HTMLDivElement>(null);
+  const textRef = useRef<HTMLParagraphElement>(null);
+  // Measured "clear zone" in the middle of the ring where the blurb can live,
+  // centered on the geometric middle of the pentagon.
+  const [fit, setFit] = useState<{ w: number; h: number } | null>(null);
+
+  useEffect(() => {
+    const hover = window.matchMedia("(hover: hover) and (pointer: fine)");
+    const wide = window.matchMedia("(min-width: 768px)");
+    const sync = () => {
+      setCanHover(hover.matches);
+      setR(wide.matches ? 38 : 34);
+    };
+    sync();
+    hover.addEventListener("change", sync);
+    wide.addEventListener("change", sync);
+    return () => {
+      hover.removeEventListener("change", sync);
+      wide.removeEventListener("change", sync);
+    };
+  }, []);
+
+  // Measure the empty zone between the top node and the two bottom nodes, so the
+  // active blurb can be sized to sit inside the pentagon. Re-measures on resize.
+  useEffect(() => {
+    const el = pentagonRef.current;
+    if (!el) return;
+    const measure = () => {
+      const c = el.clientWidth; // square: width === height
+      if (!c) return;
+      const nodeR = R === 38 ? 56 : 32; // circle radius (md:h-28 vs h-16)
+      const sin54 = Math.sin((54 * Math.PI) / 180);
+      const cos18 = Math.cos((18 * Math.PI) / 180);
+      const padX = 12; // gap to the inner edge of the two upper side nodes
+      const padY = 8;
+      // Vertical room above/below the ring center, capped by the nearest node
+      // (single node above, two nodes below). Symmetric so the text stays
+      // centered on the geometric middle of the pentagon.
+      const up = (c * R) / 100 - nodeR;
+      const down = (c * R * sin54) / 100 - nodeR;
+      const halfH = Math.max(24, Math.min(up, down) - padY);
+      // Horizontal room to the inner edge of the upper side nodes.
+      const halfW = (c * R * cos18) / 100 - nodeR - padX;
+      setFit({ w: Math.max(80, 2 * halfW), h: 2 * halfH });
+    };
+    measure();
+    const ro = new ResizeObserver(measure);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [R]);
+
+  // Shrink the blurb until it fits the clear zone (longer blurbs end up smaller).
+  useEffect(() => {
+    const t = textRef.current;
+    const b = boxRef.current;
+    if (!t || !b || !fit) return;
+    let size = 14;
+    t.style.fontSize = `${size}px`;
+    let guard = 0;
+    while (size > 7 && t.scrollHeight > b.clientHeight && guard < 40) {
+      size -= 0.5;
+      guard += 1;
+      t.style.fontSize = `${size}px`;
+    }
+  }, [active, fit, cur.id]);
+
+  // Switching nodes swaps the active content out from under any text selection,
+  // which the browser would otherwise leave visually highlighted. Clear it
+  // whenever the active node actually changes.
   const selectNode = (i: number) => {
     if (i !== active) {
       window.getSelection()?.removeAllRanges();
@@ -120,13 +192,16 @@ export default function HighlightsOrbit() {
   });
 
   return (
-    <section aria-label="What I work on" className="hidden md:block pt-6 pb-8">
+    <section aria-label="What I work on" className="block pt-6 pb-8">
       <style>{`
         .orbit-node { opacity: 0; animation: orbit-in 0.6s ease forwards; }
         @keyframes orbit-in { to { opacity: 1; } }
         @media (prefers-reduced-motion: reduce) { .orbit-node { opacity: 1; animation: none; } }
       `}</style>
-      <div className="relative mx-auto aspect-square w-full max-w-[600px]">
+      <div
+        ref={pentagonRef}
+        className="relative mx-auto aspect-square w-full max-w-[600px]"
+      >
         {/* pentagon ring connecting the nodes */}
         <svg
           viewBox="0 0 100 100"
@@ -142,9 +217,27 @@ export default function HighlightsOrbit() {
         {/* tortoise & hare travel behind the nodes (below them in the DOM) */}
         <TortoiseHare count={n} radius={R} />
 
-        {/* center: active highlight details */}
-        <div className="absolute left-1/2 top-1/2 w-[44%] -translate-x-1/2 -translate-y-1/2 text-center">
-          <p className="text-sm leading-relaxed text-muted-foreground [&_a:hover]:underline [&_a]:font-medium [&_a]:text-primary">
+        {/* center: active highlight details, dynamically sized to fit inside
+            the ring (smaller on mobile and for longer blurbs) */}
+        <div
+          ref={boxRef}
+          className="absolute left-1/2 flex items-center justify-center overflow-hidden text-center"
+          style={
+            fit
+              ? {
+                  top: "50%",
+                  width: fit.w,
+                  height: fit.h,
+                  transform: "translate(-50%, -50%)",
+                }
+              : { top: "50%", width: "44%", transform: "translate(-50%, -50%)" }
+          }
+        >
+          <p
+            ref={textRef}
+            className="w-full leading-tight text-muted-foreground [&_a:hover]:underline [&_a]:font-medium [&_a]:text-primary"
+            style={{ fontSize: 14 }}
+          >
             {HIGHLIGHT_BODIES[cur.id] ?? cur.blurb}
           </p>
         </div>
@@ -165,8 +258,20 @@ export default function HighlightsOrbit() {
               href={primary.href}
               target={primary.external ? "_blank" : undefined}
               rel={primary.external ? "noopener noreferrer" : undefined}
-              onMouseEnter={() => selectNode(i)}
-              onFocus={() => selectNode(i)}
+              onMouseEnter={() => {
+                if (canHover) selectNode(i);
+              }}
+              onFocus={() => {
+                if (canHover) selectNode(i);
+              }}
+              onClick={(e) => {
+                // On touch (no hover), a tap selects the node and previews its
+                // content below rather than navigating; links live in that panel.
+                if (!canHover) {
+                  e.preventDefault();
+                  selectNode(i);
+                }
+              }}
               aria-label={h.statement}
               style={{
                 left: `${nodes[i].x}%`,
@@ -176,14 +281,14 @@ export default function HighlightsOrbit() {
               className="orbit-node absolute -translate-x-1/2 -translate-y-1/2 rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2"
             >
               <span
-                className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-lg font-semibold transition-colors ${
-                  labelBelow ? "top-full mt-2" : "bottom-full mb-2"
+                className={`absolute left-1/2 -translate-x-1/2 whitespace-nowrap text-xs font-semibold leading-tight transition-colors md:text-lg ${
+                  labelBelow ? "top-full mt-1 md:mt-2" : "bottom-full mb-1 md:mb-2"
                 } ${isActive ? "text-foreground" : "text-muted-foreground"}`}
               >
                 {h.statement}
               </span>
               <span
-                className={`block h-28 w-28 overflow-hidden rounded-full border-2 shadow-sm transition-all duration-300 ${
+                className={`block h-16 w-16 overflow-hidden rounded-full border-2 shadow-sm transition-all duration-300 md:h-28 md:w-28 ${
                   isActive
                     ? "border-primary scale-110 shadow-md"
                     : "border-border"

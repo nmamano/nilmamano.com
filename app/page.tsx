@@ -1,17 +1,14 @@
 import HeroSection from "./components/hero-section";
 import HighlightsOrbit from "./components/highlights-orbit";
-import HighlightsSection from "./components/highlights-section";
 import ChatWidget from "@/components/chat-widget";
 
 export default function Page() {
   return (
     <>
       <HeroSection />
-      {/* Desktop: radial orbit. Mobile: linear list. */}
+      {/* Radial pentagon orbit on all breakpoints; details render in the ring
+          center on desktop and below the ring on mobile. */}
       <HighlightsOrbit />
-      <div className="md:hidden">
-        <HighlightsSection />
-      </div>
       <ChatWidget context="homepage" />
     </>
   );
