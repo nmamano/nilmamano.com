@@ -1,0 +1,171 @@
+---
+title: "Context Composer: Editing Your Agent's Context Behind Its Back"
+date: "2026-06-11"
+excerpt: "A proxy that turns a live Claude Code session's context into editable frames - delete, compact, offload, and reorder what the model sees, without the agent ever knowing."
+coverImage: "/blog/context-composer/cover.png"
+categories: ["ai", "swe"]
+---
+
+Context accumulates junk, degrading attention and increasing costs.[^context-engineering]
+
+[^context-engineering]: As I said in my [Context Engineering](/blog/context-engineering) post, giving the model all the data it needs and nothing else, is the biggest lever in our control that affects output quality.
+
+The standard answers are coarse:
+
+- `/clear` (lose everything)
+- `/compact` (no control over what survives)
+
+Recently, new patterns are emerging to give more control:[^soft-handoff]
+
+- Conversation forking to remove the last `N` turns.
+- Subagents for token-expensive computations or searches, where only the final result makes it to the main context.
+- `/btw` for aside questions that don't stay in context.
+
+[^soft-handoff]: My own meta-harness, [isomux](https://isomux.com), has a `/soft-handoff` command, where one agent hands off a task to another agent via a direct message, while staying around to answer questions from the new agent (see more [here](https://nilmamano.com/blog/isomux#applications)).
+
+So, I asked:
+
+> What is the final form of context management? What if we give users full control?
+
+To examine this question, I built [Context Composer](https://github.com/nmamano/context-composer), a proxy that sits between Claude Code and Anthropic's servers.
+
+It lets you see the raw text flowing through, but more importantly, you have **full control to edit it**; it's like doing brain surgery on your agent:
+
+- Delete a wrong-direction exploration
+- Compact only unimportant messages
+- Strip a 50KB tool result that mattered for exactly one turn
+- Offload to the filesystem context that's unlikely to be needed again
+- Fix hallucinations at any past point with free-form editing
+
+You can do all this from a web UI or a [CLI](#two-views-one-truth), which means an agent can do it too:
+
+<Callout>
+The vision is that you can go to an agent and say something like, _"strip from context obsolete iterations of the code, and compact that tangent we went on about lunch,"_ and it just works.
+</Callout>
+
+This post explains how.
+
+<Toc />
+
+## How to use it
+
+To intercept traffic with the proxy, all you need to do is use `ANTHROPIC_BASE_URL`:
+
+```
+bun run proxy                                     # the daemon
+ANTHROPIC_BASE_URL=http://localhost:8788 claude   # a stock Claude Code
+```
+
+Auth rides through untouched - the proxy is credential-agnostic, so your existing subscription session works.
+
+You can then open the UI at WIP, from where you can manipulate context. Or use the CLI WIP.
+
+## Overview
+
+The Anthropic API is stateless, which means that **Claude Code resends the entire conversation on every turn**. That resend is the interception point:
+
+```
+Claude Code  ──►   Context Composer (proxy)   ──►  Anthropic API
+               decompose → reconcile → recompose
+```
+
+Each incoming request is:
+
+1. **decomposed** into _context frames_, which are "units of context" that can be manipulated independently.
+2. **reconciled** against the proxy's frame store.
+3. **recomposed** with your edits applied before forwarding.
+
+The full resend also means that we don't need to capture responses coming from the server.
+
+### Frames
+
+Each user message plus reply becomes one frame. This screenshot from the browser UI shows the frame view: 
+
+<BlogImage
+  src="/blog/context-composer/frames.png"
+  alt="Context Composer's frame view: one card per frame with auto-generated titles and summaries, token counts, and state chips. A preamble frame at 53K tokens, several turn frames, one offloaded frame with a restore button on its chip, a user-added note, and two split children titled '(part 1/2)' and '(part 2/2)'"
+/>
+
+Frames have auto-generated titles by a cheap model.
+
+The system prompt is also just a frame, which means that you can, e.g., delete it, though the server will likely reject your request.
+
+### The operation catalog
+
+The operations operate on frames and are available via browser UI or CLI.
+
+- `delete`: remove a frame
+- `revert`: undo any past operation.
+- `edit`: edit the frame's content freely.
+- `compact`: swap the frame for a short summary.
+- `offload`: park a frame's content in a file; a stub with the file path takes its place, so the *agent can read it back on demand* with its own file tools.
+- `restore`: undo an offload (WIP: why is restore needed if revert exists?)
+- `add`: inject a new frame anywhere.
+- `move`: reorder frames.
+- `combine`: merge frames.
+- `split`: cut a frame into parts. (WIP: what parts)
+- `strip`: drop tool results in a frame (WIP: needs a better name)
+- `summarize`: summarize tool results (WIP: needs a better name)
+
+## Reconciliation
+
+Claude Code is *unaware* of our proxy. If you delete Turn 3 at the proxy level, the agent still believes Turn 3 happened, so it **resends it on every request**.
+
+Thus, the proxy needs to keep track of past frames and mark ones that have been deleted.
+
+The same one-to-one matching handles edits, filesystem offloads, etc: the agent keeps resending the original, while the proxy keeps a map from it to your edited version.
+
+## Identity WIP
+
+Claude Code agents reuse the same session for side queries: title generation, quota probes, next-message suggestions.
+
+To the proxy, these look indistinguishable from a user message.
+
+Identity must be **derived, never guessed from content**. A conversation is keyed by its opening turn's fingerprint - the one part of a request that is byte-stable across the agent's lifecycle, because history only appends.
+  
+The system prompt is deliberately *not* part of identity. Live wiretap evidence showed Claude Code embeds a per-invocation billing hash in a system block - it re-keys on every process restart. Keying on the head would fork your conversation every time you resumed a session.[^billing-line]
+
+[^billing-line]: That billing line caused a second, funnier bug: the engine's "did the head change?" detection fired on *every single request*, because the head really did change every time - by exactly one volatile attestation hash. The audit log dutifully reported the system prompt as "grown" forever. The fix is a deliberately narrow exception: the change-detection signature ignores that one line, while the stored bytes and the forwarded wire stay faithful (the attestation must ride - it's the client proving it's a real client).
+
+## Browser UI
+
+The browser UI has:
+
+- the conversation view: the chat as the server currently sees it (different from what Claude Code sees)
+- the frame view above, which is the main manipulation surface
+- the history tab, a git-like history of all context edits.
+
+<BlogImage
+  src="/blog/context-composer/details.png"
+  alt="The details panel for a frame: title and description editable in place with AI-regenerate buttons, metadata fields, and the frame's messages with per-message edit pencils - plus an explicit 'current emission' vs 'source' split for overridden frames"
+/>
+
+Every mutation is a commit with a before/after diff, and every wire event (request captured, reply captured, metadata enriched) lands in an append-only timeline. Nothing happens to the context silently - which turns out to be the feature that makes you *trust* a tool whose whole job is silent manipulation.
+
+<BlogImage
+  src="/blog/context-composer/history-commits.png"
+  alt="The history tab: five commits - a delete wearing a 'reverted' chip, the revert that undid it, an offload with its artifact path, an add, and a split - each with frame links and a revert button"
+/>
+
+## Honest limitations
+
+- **It doesn't save you money by existing.** The proxy forwards faithfully; editing the context down is what saves tokens, and that's on you. (Offloading the 53KB preamble is the dramatic demo - but it also busts the provider's prefix cache, which wants your head byte-stable. The tool keeps the head stable *unless you explicitly mutate it*.)
+- **Single branch, for now.** Branching/checkout (fork the context, explore, import the good frame back) is designed but future work.
+- **Identity has a documented collision**: two conversations opening with byte-identical first messages merge. Visible in the conversation list, accepted for now.
+- **Provider assumptions.** It speaks the Anthropic wire format. The frame model isn't provider-specific, but the decompose/compose layer is.
+
+## Takeaways
+
+If you're building anything that manipulates an unaware client's traffic:
+
+- **Intercept at the boundary you don't control.** An SDK integration would have been easier and useless - the proxy works with a stock client, which is the entire value.
+- **The resend is your friend.** Stateless-model-plus-full-resend means you get a fresh reconciliation opportunity every turn. Tombstones beat deletion.
+- **Derive identity from structure, not content.** And when you must read content, make it a narrow, marked, documented exception.
+- **Read the wire, don't reason about it.** Every literal and every "the client sends X" assumption should come from a real captured request, not from memory or docs.
+- **Audit everything, refuse loudly.** A tool that silently edits context must be the *least* silent tool you own, everywhere else.
+
+The source is at [github.com/nmamano/context-composer](https://github.com/nmamano/context-composer), README tour included.
+
+---
+
+_Want to leave a comment? You can post under the [linkedin post](TODO) or the [X post](TODO)._
