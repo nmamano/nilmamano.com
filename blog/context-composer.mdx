@@ -1,6 +1,6 @@
 ---
 title: "Context Composer: Editing Your Agent's Context Behind Its Back"
-date: "2026-06-11"
+date: "2026-06-18"
 excerpt: "A proxy that turns a live Claude Code session's context into editable frames - delete, compact, offload, and reorder what the model sees, without the agent ever knowing."
 coverImage: "/blog/context-composer/cover.png"
 categories: ["ai", "swe"]
@@ -21,11 +21,11 @@ Recently, new patterns are emerging to give more control:[^soft-handoff]
 
 [^soft-handoff]: My own meta-harness, [isomux](https://isomux.com), has a `/soft-handoff` command, where one agent hands off a task to another agent via a direct message, while staying around to answer questions from the new agent (see more [here](https://nilmamano.com/blog/isomux#applications)). This works across models from different providers, like a Claude-to-Codex handoff.
 
-So, I asked:
+To me, the interesting question is:
 
 > What is the final form of context management? What if we give users full control?
 
-To examine this question, I built [Context Composer](https://github.com/nmamano/context-composer), a proxy that sits between Claude Code and Anthropic's servers.
+To examine this, I built [Context Composer](https://github.com/nmamano/context-composer), a proxy that sits between Claude Code and Anthropic's servers.
 
 It lets you see the raw text flowing through, but more importantly, it gives you **full control to edit it**.
 
@@ -35,46 +35,36 @@ It's like doing brain surgery on your agent:
 - Compact only unimportant messages
 - Fix past hallucinations with free-form editing
 - Offload to the filesystem context that's unlikely to be needed again
-- Strip a 50KB tool result that mattered for just one turn
+- Strip a 10KB tool result that mattered for just one turn
 
 You can do all this from a web UI or a CLI, which means an agent can do it too:
 
 <Callout>
-The vision is that you can go to an agent and say something like, _"strip from context obsolete iterations of the code, and compact that tangent we went on about lunch,"_ and it just works.
+The vision is that you can go to an agent and say something like,
+  
+_"strip from context the part where we went in the wrong direction, summarize long tool results and delete useless ones, and compact that tangent we went on about lunch"_
+  
+and it just works.
+  
+Instead of `/compact`, we could create a new skill, `/compose-context`, where you pass a description like the one above, and the agent translates it into CLI calls.
 </Callout>
 
-The source is at [github.com/nmamano/context-composer](https://github.com/nmamano/context-composer). This post explains how it works.
+This post explains how it works. The source is at [github.com/nmamano/context-composer](https://github.com/nmamano/context-composer).
 
 <Toc />
 
 ## How to use it
 
-To intercept traffic with the proxy, set `ANTHROPIC_BASE_URL`:
+To intercept traffic with the proxy, set `ANTHROPIC_BASE_URL` when running Claude Code:
 
 ```
-bun run proxy                                     # the daemon
-ANTHROPIC_BASE_URL=http://localhost:8788 claude   # a stock Claude Code
+bun run proxy                                    # start the proxy
+ANTHROPIC_BASE_URL=http://localhost:8788 claude  # a stock Claude Code
 ```
 
-You can then open the UI at http://localhost:8788/ui to manipulate context.
+Then, use Claude Code as usual. The proxy is credential-agnostic, so your existing Claude subscription works.
 
-### CLI
-
-The CLI talks to the running proxy via its local control API (default: localhost:8788), so it operates on the same live state.
-
-By default, the CLI targets the conversation with the most recent activity, i.e., the one you're actively having in your Claude Code session.
-
-```
-WIP: add command to list conversations
-bun run ctx list              # list the frames (ids, titles, token counts)
-bun run ctx show t3           # print one frame's full content + metadata
-bun run ctx delete t3         # drop a frame
-bun run ctx offload t2        # move the content to a file, leaving a reference
-bun run ctx revert            # undo the last operation
-bun run ctx compose --dump    # print the context the provider would get right now
-```
-
-The proxy is credential-agnostic, so your existing Claude subscription works.
+You can open http://localhost:8788/ui to manipulate its context. The CLI is mentioned [below](#cli).
 
 ## Overview
 
@@ -91,7 +81,7 @@ Each incoming request is:
 2. **reconciled** against the proxy's frame store.
 3. **recomposed** with your edits applied before forwarding.
 
-The full resend also means that we don't need to capture responses coming from the server.
+The full resend also means that we don't rely on capturing responses coming from the server. The proxy only acts on the forward pass.
 
 ### Frames
 
@@ -99,38 +89,60 @@ Each user message plus reply becomes one frame. This screenshot from the browser
 
 <BlogImage
   src="/blog/context-composer/frames.png"
-  alt="Context Composer's frame view: one card per frame with auto-generated titles and summaries, token counts, and state chips. A preamble frame at 53K tokens, several turn frames, one offloaded frame with a restore button on its chip, a user-added note, and two split children titled '(part 1/2)' and '(part 2/2)'"
+  alt="Context Composer's frame view"
 />
 
 Frames have auto-generated titles by a cheap model.
 
-The system prompt is also just a frame, which means that you can, e.g., delete it, though the server will likely reject your request.
+The system prompt is also just a frame, which means that you can, e.g., delete it, though the provider (Anthropic's servers) will likely reject your request.
 
 ### The operation catalog
 
 The operations operate on frames and are available via browser UI or CLI.
 
-- `delete`: remove a frame
+- `delete`: remove a frame.
 - `revert`: undo any past operation.
 - `edit`: edit the frame's content freely.[^troll]
 - `compact`: swap the frame for a short summary.
 - `offload`: park a frame's content in a file; a stub with the file path takes its place, so the *agent can read it back on demand* with its own file tools.
-- `restore`: undo an offload
+- `restore`: undo an offload.
 - `move`: reorder frames.
+- `add`: insert a new frame at any point in the context, with any content you want.
 - `combine`: merge frames.
-- `split`: cut a frame into parts (see image below)
-- `drop-results`: drop tool results in a frame, keeping the calls
-- `summarize-results`: summarize tool results
+- `drop-results`: drop tool results in a frame, keeping the calls.
+- `summarize-results`: summarize tool results.
+- `split`: cut a frame into parts:
 
-[^troll]: You can use this to "gaslight" the agent, making it think it said things it didn't say. E.g.: (1) ask it for `9*11`; (2) edit the frame to a wrong answer; (3) ask it how much is `9*11` again. It will appear confused and apologize about getting it wrong.
+<BlogImage
+  src="/blog/context-composer/split.png"
+  alt="The split form on a tool-loop frame: its four messages numbered #0-#3 (question, Read tool call, tool result, final answer) with 'cut here' checkboxes between them; the last ticked, separating the tool loop from the answer"
+/>
+
+[^troll]: You can use this to "gaslight" the agent, making it think it said things it didn't say. E.g.: (1) ask it for `9*11`; (2) edit the frame to a wrong answer; (3) ask how much is `9*11` again. It will likely appear confused and apologize about getting it wrong before.
+
+### CLI
+
+The CLI talks to the running proxy via its local control API (default: localhost:8788), so it operates on the same live state.
+
+By default, the CLI targets the conversation with the most recent activity, i.e., the one you're actively having in your Claude Code session.
+
+```
+bun run ctx conversations     # list conversations (active one marked *)
+bun run ctx list              # list the frames (ids, titles, token counts)
+bun run ctx show t3           # print one frame's full content + metadata
+bun run ctx delete t3         # drop a frame
+bun run ctx offload t2        # move the content to a file, leaving a reference
+bun run ctx revert            # undo the last operation
+bun run ctx compose --dump    # print the context provider would get right now
+```
 
 <Callout>
-In practice, I expect the browser UI to be most useful for _understanding_ and debugging context issues. Actual context shaping should probably be driven by an agent via the CLI.
+In practice, I expect the browser UI to be most useful for understanding and debugging context issues. Actual context shaping should probably be driven by an agent via the CLI.
 </Callout>
 
-WIP: insert split image here, with a caption: UI for the split operation.
+## How it works
 
-## Reconciliation
+### Reconciliation
 
 Claude Code is *unaware* of our proxy. If you delete Turn 3 at the proxy level, the agent still believes Turn 3 happened, so it **resends it on every request**.
 
@@ -138,7 +150,7 @@ Thus, the proxy needs to keep track of past frames and mark ones that have been 
 
 The same one-to-one matching handles edits, filesystem offloads, etc.: the agent keeps resending the original, while the proxy keeps a map from it to your edited version.
 
-## Identifying conversations
+### Identifying conversations
 
 Claude Code reuses the same connection for _background requests_: title generation, quota probes, next-message suggestions, ...
 
@@ -146,23 +158,20 @@ To the proxy, these look indistinguishable from user conversations, so the proxy
 
 The same issue arises when you `/resume` a session: the agent resends the whole conversation, and the proxy has to recognize it as the same one it saw before so your edits are still there.
 
-The proxy handles all of this by identifying conversations based on the first message (before any edits to it). Claude Code is unaware of your edits, so it resends the original first message on every turn, even if you've since edited its frame.[^random-token]
+The proxy handles all of this by identifying conversations based on the first message after the system prompt. Claude Code is unaware of your edits, so it resends the original first message on every turn (even if you later edit it in the proxy), so it acts as a stable identifier for the conversation.
 
 This works for background requests because they have distinct first messages. One limitation is that two different user conversations opening with the exact same first message get mixed up. The proxy has no way to tell them apart, and I haven't found an easy workaround yet.
 
-[^random-token]: Labeling by the system prompt quietly breaks continuity because Claude Code adds a random token into the system prompt on every session resume. The workaround is to ...WIP.
 
 ## Browser UI
 
-The browser UI has three views:
+There are three views:
 
-- **conversation view:** the chat as the server/model currently sees it - different from what the Claude Code client sees. Clicking a message opens a side panel with the content and metadata for its frame.
-
-WIP: update this image below with the newly generated one, with the 5 turns and side panel.
+- **Conversation view:** the chat as the server/model currently sees it - different from what the Claude Code client sees. Clicking a message opens a side panel with the content and metadata for its frame.
 
 <BlogImage
-  src="/blog/context-composer/conversation.png"
-  alt="Context Composer's conversation view: the active chat rendered as the model currently sees it, with collapsed thinking blocks and a markdown table from one turn's pytest plan"
+  src="/blog/context-composer/conversation-panel.png"
+  alt="Context Composer's conversation view: five short turns as chat bubbles; the middle turn ('Name one primary color' / 'Red.') is selected, opening the details side panel with that frame's title, summary, fields, and messages"
 />
 
 - **frame view:** the main manipulation surface.
@@ -172,7 +181,7 @@ WIP: update this image below with the newly generated one, with the 5 turns and 
   alt="The details panel for a frame: title and description editable in place with AI-regenerate buttons, metadata fields, and the frame's messages with per-message edit pencils - plus an explicit 'current emission' vs 'source' split for overridden frames"
 />
 
-- **history view:** a git-like history of all context edits. Every chat message _and_ context mutation is a commit, and they land in an append-only timeline. This provides observability and makes changes reversible.
+- **history view:** a git-like history of all context edits. Every context mutation is a commit. Chat messages are captured as well, creating a complete append-only timeline of context changes. This provides observability and makes changes reversible.
 
 <BlogImage
   src="/blog/context-composer/history-commits.png"
@@ -192,17 +201,17 @@ So, frequent and small context modifications are inefficient (unless new caching
 
 #### Hands-on management
 
-The proxy doesn't do anything by itself; it just forwards faithfully. Editing the context down is on you.
+By design, the proxy doesn't do anything on its own; it just forwards faithfully. Editing the context is on you.
 
-The best way to use the tool is probably through an agent using the CLI. Instead of `/compact`, we could create a new skill, `/compose-context`, where you describe in words how you'd like to edit it, and the agent translates this to CLI calls.
+As mentioned, the best way to use the tool is probably through an agent using the CLI.
 
 #### Known bugs
 
-Two conversations that start with the exact same first message get merged - the proxy can't tell them apart.
+Two conversations that start with the exact same first message get mixed - the proxy can't tell them apart. See [here](#identifying-conversations).
 
 #### Claude Code only
 
-It speaks the Anthropic wire format. The frame model isn't provider-specific, but the decompose/compose layer is.
+The frame model isn't provider-specific, but the decompose/compose layer is.
 
 ---
 
