@@ -21,7 +21,7 @@ export const HIGHLIGHTS: Highlight[] = [
     statement: "Agentic tooling",
     image: "/projects/isomux-office-sm.mp4",
     blurb:
-      "Isomux gives your agents a cute office: multi-device, multi-user, multi-agent collaboration across Claude and Codex. Context Composer lets you edit an agent's working context mid-conversation, without the agent knowing.",
+      "Isomux gives your agents a cute office: multi-device, multi-user, multi-agent collaboration across Claude and Codex. Context Composer lets you edit an agent's context mid-conversation.",
     links: [
       { label: "isomux.com", href: "https://isomux.com", external: true },
       {
@@ -30,7 +30,6 @@ export const HIGHLIGHTS: Highlight[] = [
         external: true,
         icon: "github",
       },
-      { label: "How it works", href: "/blog/isomux" },
       {
         label: "Context Composer",
         href: "https://github.com/nmamano/context-composer",

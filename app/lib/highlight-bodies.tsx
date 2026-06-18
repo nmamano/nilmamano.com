@@ -22,11 +22,10 @@ export const HIGHLIGHT_BODIES: Record<string, React.ReactNode> = {
     <>
       <A href="https://isomux.com">Isomux</A> gives your agents a cute office:
       multi-device, multi-user, multi-agent collaboration across Claude and
-      Codex (<A href="/blog/isomux">how it works</A>,{" "}
+      Codex (<A href="/blog/isomux">writeup</A>,{" "}
       <A href="https://github.com/nmamano/isomux">GitHub</A>).{" "}
       <A href="https://github.com/nmamano/context-composer">Context Composer</A>{" "}
-      lets you edit an agent&apos;s working context mid-conversation, without the
-      agent knowing.
+      lets you edit an agent&apos;s context mid-conversation.
     </>
   ),
   "full-stack-ai": (
