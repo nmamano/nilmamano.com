@@ -1,12 +1,12 @@
 ---
 title: "Isomux Design and Architecture"
 date: "2026-04-03"
-excerpt: "Design, architecture, and takeaways from building a multi-provider agent office that supports multi-user, multi-device, and multi-agent conversations."
+excerpt: "Design, architecture, and takeaways from building a meta-harness that supports multi-user, multi-device, and multi-agent conversations."
 coverImage: "/blog/isomux/cover.jpeg"
 categories: ["ai", "swe"]
 ---
 
-In this post I describe how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and my takeaways on designing agent management systems. I describe independently-developed features like [agent-collaboration skills](#applications), [human collaboration at the agent-chat level](#human-collaboration) via mixed human-agent message queues, a [REST-API-for-UI architecture](#giving-agents-superpowers), [hierarchical system prompts](#hierarchical-prompts) and [memory](#hierarchical-memory), and [non-linear hand-off systems](#shared-task-board).
+In this post I describe how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and my takeaways on designing meta-harnesses. I describe independently-developed features like [agent-collaboration skills](#applications), [human collaboration at the agent-chat level](#human-collaboration) via mixed human-agent message queues, a [REST-API-for-UI architecture](#giving-agents-superpowers), [hierarchical system prompts](#hierarchical-prompts) and [memory](#hierarchical-memory), and [non-linear hand-off systems](#shared-task-board).
 
 <Toc />
 
@@ -66,12 +66,16 @@ Try [the demo](https://isomux.com/demo) and see if it clicks. The source is on [
 
 ## Architecture Overview
 
-Isomux is a **single [Bun](https://bun.com/) process** that:
+Isomux is a **meta-harness**: it sits one level above Claude Code and Codex and runs them side by side.[^meta-harness]
+
+Under the hood, Isomux is a **single [Bun](https://bun.com/) process** that:
 
 - serves the browser frontend,
 - talks to browsers over WebSocket,
 - manages agent lifecycles,
 - and runs agent sessions on either the [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) (Anthropic) or the [Codex CLI's App Server](https://github.com/openai/codex) (OpenAI), behind a shared backend abstraction.
+
+[^meta-harness]: Databricks' [Omnigent post](https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents) (June 2026) names this layer a _meta-harness_: a system that sits above individual agent harnesses to combine, control, and share them. Isomux predates it by two months, but I've adopted the term.
 
 <BlogImage
   src="/blog/isomux/architecture.png"
@@ -177,11 +181,11 @@ The baseline is designed to be brief, but leaves breadcrumbs so the agent can lo
 
 The room layer lets you group agents by project or role: e.g., you could have a room for your day job and a room for your side projects; each room may need different context, hence the room-wide prompt (you can even have different environment variables per room).
 
-In fact, I believe that, as a general principle, any agent management system should have hierarchical, user-defined system prompts:
+In fact, I believe that, as a general principle, any meta-harness should have hierarchical, user-defined system prompts:
 
 <BlogImage
   src="/blog/isomux/hierarchical-prompts.png"
-  alt="Isomux: 3 layers of user-defined system prompts (office-wide, per-room, per-agent) concatenated and sent to the agent, alongside the general principle that any agent management system should expose hierarchical, user-defined system prompts"
+  alt="Isomux: 3 layers of user-defined system prompts (office-wide, per-room, per-agent) concatenated and sent to the agent, alongside the general principle that any meta-harness should expose hierarchical, user-defined system prompts"
 />
 
 The full system prompt looks like this:
@@ -301,7 +305,7 @@ For how additional people get invited to an office, see [Remote User Authorizati
 
 <Callout>
   I think human collaboration at the agent-chat level will make it easier to
-  [onboard non-technical people into agent management systems](https://x.com/Nil053/status/2047935826366267505).
+  [onboard non-technical people into meta-harnesses](https://x.com/Nil053/status/2047935826366267505).
 </Callout>
 
 ### Live user presence
@@ -564,7 +568,7 @@ Just like [system prompts](#hierarchical-prompts), I want memories to follow the
 
 ## Final Thoughts
 
-At this point, I have a full lecture on designing an agent management system in my head... here are the main points.
+At this point, I have a full lecture on designing a meta-harness in my head... here are the main points.
 
 - **It should be multi-user**: human collaboration at the agent conversation level is the best way for a team to level up together.
 - **It should be natively multi-device**: phones are underused for managing agents, don't make it an afterthought.
