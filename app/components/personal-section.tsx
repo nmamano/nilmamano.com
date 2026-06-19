@@ -36,7 +36,7 @@ export default function PersonalSection() {
           </p>
 
           <p>
-            Of course, I also like playing the{" "}
+            I also like playing the{" "}
             <Link
               href="https://wallgame.io"
               className="text-primary hover:underline"
@@ -50,6 +50,38 @@ export default function PersonalSection() {
               className="text-primary hover:underline"
             >
               building in public
+            </Link>
+            . Some of my other board game projects include{" "}
+            <Link
+              href="https://chess.nilmamano.com"
+              className="text-primary hover:underline"
+              target="_blank"
+            >
+              Round-Trip Chess
+            </Link>
+            ,{" "}
+            <Link
+              href="https://rps.nilmamano.com"
+              className="text-primary hover:underline"
+              target="_blank"
+            >
+              RPS Roulette
+            </Link>
+            ,{" "}
+            <Link
+              href="https://ludwig.nilmamano.com"
+              className="text-primary hover:underline"
+              target="_blank"
+            >
+              Ludwig Chess
+            </Link>
+            , and{" "}
+            <Link
+              href="https://drawback.nilmamano.com"
+              className="text-primary hover:underline"
+              target="_blank"
+            >
+              Drawback Analyzer
             </Link>
             .
           </p>
