@@ -51,37 +51,9 @@ export default function PersonalSection() {
             >
               building in public
             </Link>
-            . Some of my other board game projects include{" "}
-            <Link
-              href="https://chess.nilmamano.com"
-              className="text-primary hover:underline"
-              target="_blank"
-            >
-              Round-Trip Chess
-            </Link>
-            ,{" "}
-            <Link
-              href="https://rps.nilmamano.com"
-              className="text-primary hover:underline"
-              target="_blank"
-            >
-              RPS Roulette
-            </Link>
-            ,{" "}
-            <Link
-              href="https://ludwig.nilmamano.com"
-              className="text-primary hover:underline"
-              target="_blank"
-            >
-              Ludwig Chess
-            </Link>
-            , and{" "}
-            <Link
-              href="https://drawback.nilmamano.com"
-              className="text-primary hover:underline"
-              target="_blank"
-            >
-              Drawback Analyzer
+            {" "}— as well as a few{" "}
+            <Link href="/games" className="text-primary hover:underline">
+              other board game ideas
             </Link>
             .
           </p>
