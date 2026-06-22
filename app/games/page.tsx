@@ -63,6 +63,13 @@ const games = [
     alt: "RPS Roulette — Rock-Paper-Scissors where the winning rules reshuffle every round",
   },
   {
+    name: "Knight's Puzzle",
+    href: "https://knight.nilmamano.com",
+    domain: "knight.nilmamano.com",
+    image: "/games/knights-puzzle.png",
+    alt: "Knight's Puzzle — a knight's-tour puzzle: hop the knight onto every square and finish on the goal",
+  },
+  {
     name: "Drawback Analyzer",
     href: "https://drawback.nilmamano.com",
     domain: "drawback.nilmamano.com",
