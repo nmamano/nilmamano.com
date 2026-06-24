@@ -70,6 +70,13 @@ const games = [
     alt: "Knight's Puzzle — a knight's-tour puzzle: hop the knight onto every square and finish on the goal",
   },
   {
+    name: "Knight Rendezvous",
+    href: "https://rendezvous.nilmamano.com",
+    domain: "rendezvous.nilmamano.com",
+    image: "/games/knight-rendezvous.png",
+    alt: "Knight Rendezvous — a two-player co-op knight puzzle: each player drives a knight and you win by meeting on the same square",
+  },
+  {
     name: "Drawback Analyzer",
     href: "https://drawback.nilmamano.com",
     domain: "drawback.nilmamano.com",
