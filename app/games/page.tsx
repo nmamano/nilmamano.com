@@ -42,6 +42,20 @@ const games = [
     alt: "Wall Game — an online strategy board game I invented, with a superhuman self-play AI",
   },
   {
+    name: "Knight Rendezvous",
+    href: "https://rendezvous.nilmamano.com",
+    domain: "rendezvous.nilmamano.com",
+    image: "/games/knight-rendezvous.png",
+    alt: "Knight Rendezvous — a two-player co-op knight puzzle: each player drives a knight and you win by meeting on the same square",
+  },
+  {
+    name: "Knight's Puzzle",
+    href: "https://knight.nilmamano.com",
+    domain: "knight.nilmamano.com",
+    image: "/games/knights-puzzle.png",
+    alt: "Knight's Puzzle — a knight's-tour puzzle: hop the knight onto every square and finish on the goal",
+  },
+  {
     name: "Round-Trip Chess",
     href: "https://chess.nilmamano.com",
     domain: "chess.nilmamano.com",
@@ -61,20 +75,6 @@ const games = [
     domain: "rps.nilmamano.com",
     image: "/games/rps-roulette.png",
     alt: "RPS Roulette — Rock-Paper-Scissors where the winning rules reshuffle every round",
-  },
-  {
-    name: "Knight's Puzzle",
-    href: "https://knight.nilmamano.com",
-    domain: "knight.nilmamano.com",
-    image: "/games/knights-puzzle.png",
-    alt: "Knight's Puzzle — a knight's-tour puzzle: hop the knight onto every square and finish on the goal",
-  },
-  {
-    name: "Knight Rendezvous",
-    href: "https://rendezvous.nilmamano.com",
-    domain: "rendezvous.nilmamano.com",
-    image: "/games/knight-rendezvous.png",
-    alt: "Knight Rendezvous — a two-player co-op knight puzzle: each player drives a knight and you win by meeting on the same square",
   },
   {
     name: "Drawback Analyzer",
