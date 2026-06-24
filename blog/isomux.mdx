@@ -6,7 +6,7 @@ coverImage: "/blog/isomux/cover.jpeg"
 categories: ["ai", "swe"]
 ---
 
-In this post I describe how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and my takeaways on designing meta-harnesses. I describe independently-developed features like [agent-collaboration skills](#applications), [human collaboration at the agent-chat level](#human-collaboration) via mixed human-agent message queues, a [REST-API-for-UI architecture](#giving-agents-superpowers), [hierarchical system prompts](#hierarchical-prompts) and [memory](#hierarchical-memory), and [non-linear hand-off systems](#shared-task-board).
+In this post, I describe how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and what I learned about designing meta-harnesses. I describe independently-developed features, like: [inter-agent skills](#applications), "Google Docs"-style [live collaboration](#human-collaboration), [meta-harness reflection](#meta-harness-reflection), a [REST-API-for-UI architecture](#giving-agents-ui-superpowers), [hierarchical system prompts](#hierarchical-prompts) and [memory](#hierarchical-memory), and [non-linear task hand-offs](#shared-task-board).
 
 <Toc />
 
@@ -68,12 +68,12 @@ Try [the demo](https://isomux.com/demo) and see if it clicks. The source is on [
 
 Claude Code and Codex are harnesses around models. Isomux is a **meta-harness**: it sits one level above them and runs them side by side.[^meta-harness]
 
-Under the hood, Isomux is a **single [Bun](https://bun.com/) process** that:
+Under the hood, Isomux is a single [bun](https://bun.com/) process that:
 
 - serves the browser frontend,
 - talks to browsers over WebSocket,
 - manages agent lifecycles,
-- and runs agent sessions on either the [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) (Anthropic) or the [Codex CLI's App Server](https://github.com/openai/codex) (OpenAI), behind a shared backend abstraction.
+- and runs agent sessions on either the [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) or the [Codex CLI's App Server](https://github.com/openai/codex), behind a shared backend abstraction.
 
 [^meta-harness]: Databricks' [Omnigent post](https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents) (June 2026) names this layer a _meta-harness_: a system that sits above individual agent harnesses to combine, control, and share them. Isomux predates it by two months, but I've adopted the term.
 
@@ -82,22 +82,53 @@ Under the hood, Isomux is a **single [Bun](https://bun.com/) process** that:
   alt="Isomux system design: browser clients connect over WebSocket to the Bun service, which runs persistent agents backed by Claude Code SDK sessions and persists state to the local file system"
 />
 
-Side benefit: the WebSocket-broadcast model gives you real-time [multi-user collaboration](#human-collaboration) for free.
-
 <Callout>
   I'm building Isomux from inside Isomux since the first day. Developing a
   dev tool from itself is fun!
 </Callout>
 
-### Giving Agents Superpowers
+### Meta-harness reflection
 
-Here's the general recipe behind a lot of Isomux's features:
+Every knob in Isomux can be tweaked with a REST API, not just UI buttons.
 
-1. Run your Agent SDK wrappers in your own server, with a custom UI on top.
-2. Add a REST API to the server for inserting custom components into agent conversations.
-3. Tell agents how to use the API in the system prompt.
+This pays off when you describe the REST API in the agents' own system prompt. The agents running _inside_ the office understand it and can control their own setup while running.
 
-Once those 3 pieces are in place, you can start giving your agents structured affordances:
+For example, an agent can:
+
+1. Create a new room.
+
+`POST /api/rooms`
+
+2. Spawn a teammate in it.
+
+`POST /api/agents { roomId }`
+
+3. Set the teammate's model and system prompt.
+
+`PATCH /api/agents/:id`
+
+4. Create a task on the shared task board.
+
+`POST /api/tasks`
+
+5. Assign it to the teammate.
+
+`PATCH /api/tasks/:id { assignee }`
+
+6. Message the teammate to start working on it.
+
+`POST /api/agents/:id/messages { text }`
+
+There is a system based on "scoped tokens" that limits which agents (and humans) can do which actions.
+
+### Giving Agents UI Superpowers
+
+Meta-harness reflection can also enhance the agents' UI capabilities. Here's a general recipe:
+
+1. Add a REST API to the server for inserting custom components into agent chats.
+2. Tell agents how to use the API in the system prompt.
+
+Once those 2 pieces are in place, you can start giving your agents structured affordances:
 
 - Render styled side-by-side diffs in chat:
 
@@ -111,17 +142,9 @@ Once those 3 pieces are in place, you can start giving your agents structured af
 
 `POST /agents/:id/terminal-command { command }`
 
-- Send messages to other agents:
-
-`POST /agents/:id/message { text, senderAgentId }`
-
 - Render images in chat:
 
 `POST /agents/:id/read-file { path }`
-
-- Create and complete tasks on a shared task board:
-
-`POST /tasks`
 
 <BlogImage
   src="/blog/isomux/superpowers.png"
@@ -130,11 +153,11 @@ Once those 3 pieces are in place, you can start giving your agents structured af
 
 This pattern is used in many of [the QoL features](#qol-features) below.[^image-render-hack]
 
-[^image-render-hack]: This design wasn't obvious from the start. When I first implemented inline image support, I used a "hack": if the agent read an image with the Read Tool, the server would send it to the UI for rendering in the chat. The system prompt had to explain the convention. It worked, but it co-opted a tool meant for something else.
+[^image-render-hack]: This design wasn't obvious from the start. For example, when I first implemented inline image support, I used a "hack": if the agent read an image with the Read Tool, the server would send it to the UI for rendering in the chat. The system prompt had to explain the convention. It worked, but it co-opted a tool meant for something else.
 
 ### Office-to-office communication
 
-One nice consequence: if two Isomux offices live in the same VPN, agents in one can call the REST endpoints of the other. They can drop tasks on each other's boards, send messages, etc., without any extra plumbing.
+One nice consequence of the REST API is that if two Isomux processes can reach each other, agents in one can call the REST endpoints of the other. They can drop tasks on each other's boards, send messages, etc.
 
 I discovered this [accidentally](https://x.com/Nil053/status/2052268533535649994?s=20).
 
@@ -251,7 +274,7 @@ This means you can ask an agent, _"What do you think of OTHER_AGENT's approach?"
 
 The next step was letting agents message each other ([demo](https://x.com/Nil053/status/2053179885108232328)).
 
-Agent-to-agent messages go through `POST /agents/:id/message` to the isomux server. You can name the receiving agent you want them to message, and the sender will look up their id in the manifest.
+Agent-to-agent messages go through `POST /api/agents/:id/message` to the isomux server. You can name the receiving agent you want them to message, and the sender will look up their ID in the manifest.
 
 There's no automatic reply. The receiver can choose to respond (another POST going the other way), ignore, or take an action and move on.
 
@@ -281,7 +304,7 @@ A decision you have to make when building agents is _queueing_ vs _steering_. Wh
 
 Steering interrupts the agent and sends it immediately; queueing puts it in a queue for when it's done.
 
-For isomux, I default to queueing, because I reuse the same queue for agents sending messages to other agents. An agent steering another agent seems too disruptive.
+For isomux, I default to queueing because I reuse the same queue for agents sending messages to other agents. An agent steering another agent seems too disruptive.
 
 It's still important to offer a UI option to flush the queue immediately, so there's a "Send now" button.
 
@@ -305,7 +328,7 @@ For how additional people get invited to an office, see [Remote User Authorizati
 
 <Callout>
   I think human collaboration at the agent-chat level will make it easier to
-  [onboard non-technical people into meta-harnesses](https://x.com/Nil053/status/2047935826366267505).
+  [onboard non-technical people into agentic work](https://x.com/Nil053/status/2047935826366267505).
 </Callout>
 
 ### Live user presence
@@ -322,14 +345,11 @@ The server keeps an in-memory `connectionId → presence` map keyed per WebSocke
 
 ## The WebSocket Layer
 
-Browsers are stateless relays - when one connects, the WebSocket `open` handler sends it a `full_state` snapshot, and from there incremental events keep it in sync.
+If REST is how you act on Isomux ([reflection section](#meta-harness-reflection)), the WebSocket is how you watch it: an agent's reply streaming in, a room being created, or another person moving rooms.
 
-The server talks to connected browsers via web sockets.
+Browsers are stateless. When one connects, they get a full state snapshot, and from there, incremental events keep it in sync. The server fans out events to the clients, filtering out those not allowed to see them.
 
-- The server notifies all browsers of state updates via a single `broadcast` function.
-- The clients give commands to the server, which are handled in `handleCommand()`.[^send-message]
-
-[^send-message]: The `send_message` command - where a user sends a message to the LLM - is deliberately not awaited. Calling it without `await` kicks off the async work and returns immediately, so the event loop stays free to process other commands (spawns, aborts, messages to other agents, etc.) while the SDK streams the response in the background. Some other command types like `edit_agent` or `new_conversation` are handled synchronously.
+On the client-to-server direction, the WebSockets are used for ephemeral updates that don't belong to the REST API: terminal keystrokes, user presence (who's looking at what), and heartbeats.
 
 ## The Frontend
 
@@ -395,20 +415,22 @@ Here are some of the features I added for my own convenience.
 
 ### Safety Hooks
 
-I run all my agents in `bypassPermissions` mode. Isomux injects `PreToolUse` hooks into every Claude SDK session that block dangerous commands before they execute. Codex agents don't have equivalent hooks — Codex 0.130 doesn't expose a programmatic register-from-client surface, as noted earlier.
+Before Anthropic added the `auto` permission mode, I ran all my agents in `bypassPermissions` mode. Isomux injects `PreToolUse` hooks into every Claude SDK session that block dangerous commands before they execute.
 
 1. **Git safety**: blocks destructive git commands.
 2. **Filesystem safety**: blocks `rm -rf` on root/home paths while allowing it on temp directories.
 3. **Isomux config protection**: blocks all writes to `~/.isomux/`, since that directory is managed by the server. Read operations are allowed (agents need to read `agents-summary.json` to discover each other).
 4. **Secrets protection**: blocks reads of `.env` files, private keys, and credential files (agents get a clear error and a hint to ask the user instead).
 
-The embedded terminal is very handy when you need to run one of the blocked commands.
+The embedded terminal is handy when you need to run a blocked command.
 
 <BlogImage
   src="/blog/isomux/embedded-terminal.jpeg"
   alt="Embedded terminal in Isomux"
 />
 
+As of writing, Codex doesn't have equivalent hooks.
+ 
 ### Remote User Authorization
 
 There are no passwords or accounts in a traditional sense.
