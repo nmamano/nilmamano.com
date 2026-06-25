@@ -16,14 +16,23 @@ export default function AboutPage() {
 
         <div className="flex flex-col md:flex-row gap-8 items-start">
           <div className="md:w-2/3 space-y-4 text-muted-foreground order-1">
+            <p className="font-medium text-foreground">
+              Algorithms PhD &rarr; Google Infra &rarr; Beyond Cracking the
+              Coding Interview &rarr; Agentic AI
+            </p>
+
             <p>
               My original focus was data structures and algorithms. I came to
               the US to do a{" "}
               <Link href="/research" className="text-primary hover:underline">
                 PhD
               </Link>{" "}
-              on the subject, at UC Irvine. After that, I joined Google&apos;s
-              networking infrastructure team, where I was promoted to senior.
+              on the subject, at UC Irvine.
+            </p>
+
+            <p>
+              After that, I joined Google&apos;s networking infrastructure team,
+              where I was promoted to senior.
             </p>
 
             <p>
@@ -35,49 +44,47 @@ export default function AboutPage() {
               >
                 Beyond Cracking the Coding Interview
               </Link>
-              , where my DS&amp;A background was a perfect fit. Once the book
-              shipped, I spent time on my own projects, like{" "}
+              , where my DS&amp;A background was a perfect fit.
+            </p>
+
+            <p>
+              Once the book shipped, I found a new focus: AI and agentic
+              engineering. I built{" "}
               <Link
                 href="https://isomux.com"
                 target="_blank"
                 className="text-primary hover:underline"
               >
-                Isomux
-              </Link>
-              , the{" "}
+                isomux.com
+              </Link>{" "}
+              (a meta-harness where multiple Claude and Codex agents and humans
+              collaborate in the same conversation),{" "}
+              <Link
+                href="/blog/context-composer"
+                className="text-primary hover:underline"
+              >
+                Context Composer
+              </Link>{" "}
+              (a proxy for fine-grained control over an agent&apos;s live
+              context),{" "}
               <Link
                 href="https://wallgame.io"
                 target="_blank"
                 className="text-primary hover:underline"
               >
-                Wall Game
-              </Link>
-              , and the{" "}
-              <Link
-                href="https://dsatoolkit.com"
-                target="_blank"
-                className="text-primary hover:underline"
-              >
-                DSA Toolkit
-              </Link>
-              , and writing on my{" "}
+                wallgame.io
+              </Link>{" "}
+              (a full-stack board game with an AlphaZero-style AI), and more. I
+              build in public at{" "}
               <Link href="/blog" className="text-primary hover:underline">
-                blog
+                nilmamano.com/blog
               </Link>
-              . That&apos;s where I found a new focus: agentic engineering.
+              .
             </p>
 
             <p>
               I&apos;m now looking to join a top AI startup or lab working on
-              agentic tooling or vertical AI agents. Here&apos;s my{" "}
-              <Link
-                href="/resume/resume_nilmamano.pdf"
-                target="_blank"
-                className="text-primary hover:underline"
-              >
-                resume
-              </Link>
-              .
+              agentic tooling or vertical AI agents.
             </p>
 
             <p>
