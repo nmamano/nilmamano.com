@@ -59,7 +59,9 @@ nil @ mamano . com\\
 	\href{http://www.github.com/nmamano}{github.com/nmamano}
 	\end{flushright}
 \end{minipage}\\
-\vspace{5px}
+\vspace{9px}
+{\centering\large Ex-Google engineer and bestselling author, now building agentic AI\par}
+\vspace{0px}
 \hrulefill
 }
 %\vspace{7px}
@@ -74,75 +76,51 @@ nil @ mamano . com\\
 
 	\noindent\llap{\textbullet\hspace{6pt}}Co-wrote the official sequel to Cracking the Coding Interview with Gayle L. McDowell et al. \#1 Best Seller in Data Structures \& Algorithms on Amazon (\href{https://www.amazon.com/dp/195570600X}{amazon.com/dp/195570600X}).
 
+	\vspace{2px}
+	\noindent\llap{\textbullet\hspace{6pt}}Built \href{https://dsatoolkit.com}{dsatoolkit.com}, a companion site to practice all the book's problems, with an AI interviewer I co-designed (tens of thousands of interviews, \href{https://bctci.co/ai}{bctci.co/ai}).
+
+	\vspace{2px}
+	\noindent\llap{\textbullet\hspace{6pt}}Automated large-scale codebase changes with test-driven LLM loops, e.g., translating 288 book solutions from Python to Go, re-prompting each until its tests passed.
+
 \end{description}
 \subsection*{Google}
 \vspace{-3px}
 \begin{description}
 	\item[Senior Software Engineer]\hfill Nov 2022 -- Aug 2024
 
-	\noindent\llap{\textbullet\hspace{6pt}}Part of a team that migrated the bandwidth ordering system from a quarterly manual process to an on-demand service with daily resolution, giving internal teams more flexibility and improving WAN utilization. (C++, Go, Python, SQL)
+	\noindent\llap{\textbullet\hspace{6pt}}Built and owned the bandwidth allocation component of a new on-demand bandwidth ordering service that replaced a quarterly manual process, giving internal teams more flexibility and improving network utilization. Designed and implemented time-series algorithms to distribute projected available bandwidth across teams, balancing fairness, prioritization, and utilization when demand exceeds capacity. (C++, Go, Python, SQL)
 
 	\vspace{2px}
-	\noindent\llap{\textbullet\hspace{6pt}}Built and owned the bandwidth allocation and validation components. Designed time-series-based algorithms for distributing the projected available bandwidth among products, balancing prioritization, fairness, and continuity constraints when demand exceeds capacity.
-
-	\vspace{2px}
-	\noindent\llap{\textbullet\hspace{6pt}}Point of contact in a cross-functional effort to rapidly provision network capacity for Gemini. Quickly prototyped and then standardized a new mechanism for specifying and prioritizing business-critical traffic while minimizing impact to other traffic.
+	\noindent\llap{\textbullet\hspace{6pt}}Point of contact for my team in a cross-functional effort to rapidly provision network capacity for Gemini. Quickly prototyped and standardized a new mechanism for prioritizing business-critical traffic while minimizing impact to existing traffic.
 
 	\item[Software Engineer]\hfill Feb 2021 -- Nov 2022
 
-	\noindent\llap{\textbullet\hspace{6pt}}Designed a rollout scheduler for config changes to Google's global WAN (Wide Area Network), parallelizing deployments across continents to halve deploy time while reducing outage risk.
+	\noindent\llap{\textbullet\hspace{6pt}}Designed a rollout scheduler for config changes to Google's global network, halving deploy time while reducing outage risk by parallelizing deployments across continents.
 
 \end{description}
 
-\section*{Education}
+\section*{AI Projects}
 \begin{description}
-\item[PhD + Master's in Computer Science]\quad University of California Irvine, GPA 3.83/4 \hfill Sep 2015 -- Dec 2019
+	\item[Isomux]\quad \href{https://isomux.com}{isomux.com} \hfill 2026 -- current
 
-\noindent\llap{\textbullet\hspace{6pt}}Co-authored 9 peer-reviewed papers on algorithm design, including as main author in tier A conferences like ICALP and ISAAC. The papers describe new algorithmic improvements in graph theory (routing), computational geometry (clustering, matching, TSP), and computational biology (network alignment) (\href{https://scholar.google.bg/citations?hl=en&user=LIuIigEAAAAJ}{scholar.google.bg/citations?user=LIuIigEAAAAJ}).
-
-\vspace{2px}
-\noindent\llap{\textbullet\hspace{6pt}}Led a research project from inception to publication: came up with an original problem, engaged 3 colleagues to work on it, and collaborated with them to solve it and write a paper. We invented an algorithm for the knight's tour problem (cited by Knuth).
-
-\vspace{2px}
-\noindent\llap{\textbullet\hspace{6pt}}Led a 120-student study on the effect of immediate automated feedback on learning outcomes.
-
-\item[B.E. in Computer Science]\quad Polytechnic University of Catalonia, GPA 3.8/4 (99th percentile) \hfill Sep 2011 -- Jul 2015
-
-\noindent\llap{\textbullet\hspace{6pt}}Created SANA, a C++ biological network alignment tool that uses simulated annealing. 100+ citations; actively maintained for 10+ years by 50+ collaborators, with 2,000+ commits (\href{https://github.com/nmamano/SANA}{github.com/nmamano/SANA}).
-\end{description}
-
-\section*{Projects}
-\begin{description}
-	\item[Isomux]\quad \href{https://isomux.com}{isomux.com} \hfill 2026
-
-	\noindent\llap{\textbullet\hspace{6pt}}Built a meta-harness where conversations are multi-agent, multi-user, multi-provider, and multi-device. (React, Bun, WebSocket, Claude Agent SDK, Codex App Server)
+	\noindent\llap{\textbullet\hspace{6pt}}Building a meta-harness where multiple Claude and Codex agents and humans can collaborate in the same conversation. (React, Bun, WebSocket, Claude Agent SDK, Codex App Server)
 
 	\vspace{2px}
-	\noindent\llap{\textbullet\hspace{6pt}}Isometric office UI with animated agent workers as an intuitive visual metaphor.
+	\noindent\llap{\textbullet\hspace{6pt}}Isometric office UI with animated agent workers as an intuitive visual metaphor, optimized for desktop and mobile.
 
 	\vspace{2px}
-	\noindent\llap{\textbullet\hspace{6pt}}Bun process manages agent lifecycles, inter-agent messaging, and real-time sync across clients via WebSocket.
+	\noindent\llap{\textbullet\hspace{6pt}}Cron jobs, a shared task board, a built-in editor, terminal, and diff tool, and more, all controllable by the agents via an API.
 
-	\item[DSA Toolkit]\quad \href{https://dsatoolkit.com}{dsatoolkit.com} \hfill 2025
+	\item[Context Composer]\quad \href{https://github.com/nmamano/context-composer}{github.com/nmamano/context-composer} \hfill 2026
 
-	\noindent\llap{\textbullet\hspace{6pt}}A companion DS\&A toolkit for Beyond Cracking the Coding Interview. Built an automated pipeline to parse, test, and generate articles for all 1,440 code solutions across 5 languages. (Next.js, TypeScript, Python)
-
-	\vspace{2px}
-	\noindent\llap{\textbullet\hspace{6pt}}Built LLM orchestration pipelines for large-scale codebase changes, e.g., translating 288 book solutions from Python to Go with few-shot prompting and test-driven retry loops, using local models and APIs.
-
-	\vspace{2px}
-	\noindent\llap{\textbullet\hspace{6pt}}Co-designed an AI interviewer for the book problems, with tens of thousands of interviews completed (\href{https://bctci.co/ai}{bctci.co/ai}).
+	\noindent\llap{\textbullet\hspace{6pt}}Built a proxy that sits between Claude Code and Anthropic's servers, giving you (or another agent) fine-grained control over the live context: delete, rewrite, reorder, or compact individual fragments without the agent noticing. (Bun, TypeScript)
 
 	\item[Wall Game]\quad \href{https://wallgame.io}{wallgame.io} \hfill 2025
 
-	\noindent\llap{\textbullet\hspace{6pt}}A full-stack online board game supporting AIs as first-class citizens via an AI integration protocol/client. (React, TypeScript, Tailwind, shadcn, PostgreSQL, MongoDB, WebSocket)
+	\noindent\llap{\textbullet\hspace{6pt}}A full-stack online board game with AIs as first-class citizens through a bot protocol. (React, TypeScript, WebSocket, PostgreSQL)
 
 	\vspace{2px}
-	\noindent\llap{\textbullet\hspace{6pt}}Trained multiple AlphaZero-style models for different board sizes and rule sets via self-play on consumer GPUs. (C++, PyTorch, TensorRT, ONNX, WebAssembly)
-
-	\item[Technical Blog]\quad \href{https://nilmamano.com/blog}{nilmamano.com/blog} \hfill 2025
-
-	\noindent\llap{\textbullet\hspace{6pt}}30+ articles on algorithms, data structures, AI, CS research, and software engineering.
+	\noindent\llap{\textbullet\hspace{6pt}}Implemented two engines for it: a Negamax-based one and an AlphaZero-style one with models trained via self-play. (C++, PyTorch, TensorRT, ONNX)
 
 \begin{comment}
 	 
@@ -168,8 +146,19 @@ nil @ mamano . com\\
 \end{comment}	
 \end{description}
 
+\section*{Education}
+\begin{description}
+\item[PhD + Master's in Computer Science]\quad University of California Irvine, GPA 3.83/4 \hfill Sep 2015 -- Dec 2019
 
+\noindent\llap{\textbullet\hspace{6pt}}Co-authored 9 peer-reviewed papers on algorithm design, including as main author in tier A conferences like ICALP and ISAAC. The papers describe new algorithmic improvements in graph theory (routing), computational geometry (clustering, matching, TSP), and computational biology (network alignment) (\href{https://scholar.google.bg/citations?hl=en&user=LIuIigEAAAAJ}{scholar.google.bg/citations?user=LIuIigEAAAAJ}).
 
+\vspace{2px}
+\noindent\llap{\textbullet\hspace{6pt}}Led a research project from inception to publication: came up with an original problem, engaged 3 colleagues to work on it, and collaborated with them to solve it. We invented an algorithm for the knight's tour problem (cited by Donald Knuth).
+
+\item[B.E. in Computer Science]\quad Polytechnic University of Catalonia, GPA 3.8/4 (99th percentile) \hfill Sep 2011 -- Jul 2015
+
+\noindent\llap{\textbullet\hspace{6pt}}Created SANA, a C++ biological network alignment tool that uses simulated annealing. It has 100+ citations and has been actively maintained by 50+ collaborators for 10+ years, with 2,000+ commits (\href{https://github.com/nmamano/SANA}{github.com/nmamano/SANA}).
+\end{description}
 
 \end{document}
 \begin{comment}
