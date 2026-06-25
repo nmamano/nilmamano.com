@@ -48,8 +48,8 @@ export default function AboutPage() {
             </p>
 
             <p>
-              Once the book shipped, I found a new focus: AI and agentic
-              engineering. I built{" "}
+              Once the book shipped, I found a new focus:{" "}
+              <strong>AI and agentic engineering</strong>. I built{" "}
               <Link
                 href="https://isomux.com"
                 target="_blank"
@@ -112,7 +112,7 @@ export default function AboutPage() {
               >
                 X
               </Link>
-              , or using this{" "}
+              , or use this{" "}
               <Link href="/contact" className="text-primary hover:underline">
                 contact form
               </Link>
