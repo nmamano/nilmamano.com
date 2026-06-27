@@ -1,4 +1,5 @@
 import { getAllPosts } from "../../../lib/blog";
+import { getCategoryConfig } from "../../../lib/blog-categories";
 import BlogList from "../../../components/blog-list";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
@@ -14,7 +15,7 @@ export async function generateMetadata({
   params,
 }: BlogCategoryPageProps): Promise<Metadata> {
   const { category } = await params;
-  const title = `${category.charAt(0).toUpperCase() + category.slice(1)} Posts`;
+  const title = `Nil Pointers: ${getCategoryConfig(category).name} Posts`;
 
   return {
     title,
