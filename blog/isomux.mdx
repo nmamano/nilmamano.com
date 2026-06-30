@@ -6,7 +6,7 @@ coverImage: "/blog/isomux/cover.jpeg"
 categories: ["ai", "swe"]
 ---
 
-In this post, I describe how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and what I learned about designing meta-harnesses. I describe independently-developed features, like: [inter-agent skills](#applications), "Google Docs"-style [live collaboration](#human-collaboration), [meta-harness reflection](#meta-harness-reflection), a [REST-API-for-UI architecture](#giving-agents-ui-superpowers), [hierarchical system prompts](#hierarchical-prompts) and [memory](#hierarchical-memory), and [non-linear task hand-offs](#shared-task-board).
+In this post, I describe how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and what I learned about designing meta-harnesses. I describe independently-developed features, like: [inter-agent skills](#applications), "Google Docs"-style [live collaboration](#human-collaboration), [meta-harness reflection](#meta-harness-reflection), a [REST-API-for-UI architecture](#giving-agents-ui-superpowers), [hierarchical agents](#hierarchical-agents) and [memory](#hierarchical-memory), and [non-linear task hand-offs](#shared-task-board).
 
 <Toc />
 
@@ -75,6 +75,8 @@ Under the hood, Isomux is a single [bun](https://bun.com/) process that:
 - manages agent lifecycles,
 - and runs agent sessions on either the [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) or the [Codex CLI's App Server](https://github.com/openai/codex), behind a shared backend abstraction.
 
+There are a few different approaches to making a meta-harness multi-provider; the [appendix](#appendix-three-ways-to-make-a-meta-harness-multi-provider) compares the one Isomux takes (drive each provider's SDK) against alternatives.
+
 [^meta-harness]: Databricks' [Omnigent post](https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents) (June 2026) names this layer a _meta-harness_: a system that sits above individual agent harnesses to combine, control, and share them. Isomux predates it by two months, but I've adopted the term.
 
 <BlogImage
@@ -86,6 +88,8 @@ Under the hood, Isomux is a single [bun](https://bun.com/) process that:
   I'm building Isomux from inside Isomux since the first day. Developing a
   dev tool from itself is fun!
 </Callout>
+
+The Isomux server reads each agent's event stream in an async loop, converting SDK events into two things browsers care about: **log entries** for the conversation view, and **agent state** for the character animations and notifications (thinking, tool calling, waiting, etc.).
 
 ### Meta-harness reflection
 
@@ -166,81 +170,113 @@ I discovered this [accidentally](https://x.com/Nil053/status/2052268533535649994
   alt="Agent 1, running in a laptop office, creates a task on the task board of an Isomux server office reached over Tailscale at auntie:4000"
 />
 
-## Working with agents, not sessions
+## Hierarchical Agents
 
-A nice abstraction in isomux is that you think in terms of _persistent agents_ rather than _ephemeral sessions_. The former wraps the latter.
+When designing an agent management system, how should we _organize_ agents?
+
+For Isomux, I decided to organize them hierarchically. This is not a new idea: file systems are hierarchical, for example; but I haven't seen it applied to agents.
+
+I don't mean top-level agents spawning subagents which in turn can spawn their own subagents - most harnesses already do that (including those in Isomux). I mean the top-level agents themselves are in a hierarchy.
+
+Isomux organizes everything as a hierarchy: an **office** holds **rooms**, each room holds anthropomorphized **persistent agents**, and each agent wraps a sequence of ephemeral **sessions**.
+
+This hierarchy affects:
+
+- The UI (you only see agents in the same room at once)
+- The user-defined system prompt(s)
+- Agent memory
+- Usage statistics
 
 ### Persistent agents
 
+The first level of the hierarchy is grouping _ephemeral sessions_ into anthropomorphized, _persistent agents_.
+
 When you click an empty desk to spawn an agent, you provide:
 
-- a name and look,
-- a working directory for things like `AGENTS.md` and MCP servers defined in that directory.
+- a name and look
+- a working directory
 - the backend (claude or codex), model, permission mode, thinking effort, etc.
-- an agent-specific system prompt[^system-prompt-workaround]
+- an agent-specific (user-provided) system prompt
 
-[^system-prompt-workaround]: Claude SDK's V2 `SDKSessionOptions` doesn't expose a field for `appendSystemPrompt`. Isomux works around this by smuggling the flag through `executableArgs`, which the SDK prepends to the Claude binary's argv. The system prompt is rebuilt on every `createSession` call, so office/room/agent prompt edits automatically land on the next conversation.
+This information gets persisted in `~/.isomux/`.
 
-This information gets sent to the server and persisted in `.isomux/`. All connected browsers start receiving broadcasts with all the updates about the new agent, starting with the "agent spawned" event.
+Over time, this persistent agent develops:
 
-Isomux reads each agent's event stream in an async loop, converting SDK events into two things browsers care about: **log entries** for the conversation view, and **agent state** for the character animations and notifications (thinking, tool calling, waiting, etc.).
+- Its own conversation history that can be resumed with `/resume` and inspected by other agents.
+- Its own memories.
 
-The file system is the source of truth: if the server crashes or restarts, agents are restored from `agents.json` with their SDK sessions recreated, no loss. Past conversations can be resumed with a **per-agent** `/resume` history.
+<Callout>
+Why not just use `AGENTS.md`? Because you may want multiple agents with different roles in the same folder. E.g., you can have a driver agent and a reviewer agent, or a frontend agent and a backend agent. Each can get a custom identity.[^claudemd] One way to replicate this outside of Isomux is with skills, but it adds the extra step of calling a skill at the beginning of each session.
+</Callout>
 
-Isomux persists every conversation forever by design.[^isomux-size] You never know when it could be useful.
+Crucially, persistent agents enable [agent-to-agent communication](#agent-to-agent-communication). The agent exists even when there's no ongoing session, meaning that other agents have a target to message.
 
-[^isomux-size]: My `~/.isomux/` grew to 120MB in two weeks.
+[^claudemd]: Also, Claude agents don't follow the AGENTS.md convention (they expect CLAUDE.md), and they don't always read it. In Isomux, I inject the user-defined system prompts directly into context.
 
 ### Hierarchical prompts
 
-The system prompt is assembled from **four hierarchical layers**, concatenated into a single string and injected into the Claude Code CLI subprocess via the `--append-system-prompt` argument (see [Persistent agents](#persistent-agents) above for how).
+The system prompt is assembled from a mix of hardcoded sections and optional, user-defined sections (recall that, due to [meta-harness reflection](#meta-harness-reflection), anything that is user-defined can also be agent-defined):
 
-1. **Baseline**: hardcoded context explaining the office setting, the agent's identity (name and room), and isomux features.
-2. **Office prompt**: user-defined, applied to every agent in the office.
-3. **Room prompt**: user-defined, applied to every agent in a given room.
-4. **Agent prompt**: user-defined, applied to a single agent.
+1. **Introduction** (hardcoded): establishing the setting: "You are 'NAME', an agent in room 'ROOM NAME' of the Isomux office. ..."
+2. **Meta-harness features** (hardcoded): a description of how to use Isomux features, with subsections like "How to discover other office agents", "How to use the task board", "How to show a styled code diff", etc. The descriptions are brief, leaving breadcrumbs so the agent can load in details as needed.
+3. **Manager prompt** (user-defined): instructions for the specific human user that spawned the agent (independent of which room the agent is in).
+4. **Office prompt** (user-defined): applies to every agent in the office. This is the ChatGPT-equivalent of "custom instructions" that apply to every conversation.
+5. **Room prompt** (user-defined): applies to every agent in a given room.
+6. **Agent prompt** (user-defined): applies to a single agent.
+7. **Memory** (agent-defined): office-wide, room-wide, and per-agent memories for this agent.
 
-The baseline is designed to be brief, but leaves breadcrumbs so the agent can load in more state if it needs to. Each non-baseline layer is optional; empty ones are skipped entirely.
-
-The room layer lets you group agents by project or role: e.g., you could have a room for your day job and a room for your side projects; each room may need different context, hence the room-wide prompt (you can even have different environment variables per room).
-
-In fact, I believe that, as a general principle, any meta-harness should have hierarchical, user-defined system prompts:
+Rooms let you group agents that need a shared context, which you can put in the room-wide system prompt. E.g., you could have a room for your day job and a room for your side projects; or each user in the same office could get their own room.
 
 <BlogImage
   src="/blog/isomux/hierarchical-prompts.png"
-  alt="Isomux: 3 layers of user-defined system prompts (office-wide, per-room, per-agent) concatenated and sent to the agent, alongside the general principle that any meta-harness should expose hierarchical, user-defined system prompts"
+  alt="Isomux: 3 layers of user-defined system prompts (office-wide, per-room, per-agent) concatenated into a single system prompt and sent to the agent"
 />
 
-The full system prompt looks like this:
+You can see the full raw system prompt for my "Isomuxer1" agent in my room "Isomux Dev" [here](https://gist.github.com/nmamano/9baa3fbcc7fb524400a83b8effdefa21) (you can see the full prompt for a given persistent agent with `/isomux-system-prompt`).
 
-```
-You are AGENT_NAME, an agent in room ROOM_NAME of the Isomux office.
-Your goal is to help the office boss, who talks to you in this chat.
-Messages are prefixed with the boss's name in brackets.
+### Hierarchical memory
 
-How to discover other office agents and their conversation logs: read
-~/.isomux/agents-summary.json.
+Isomux has a simple memory system driven by the agents themselves.[^mem0]
 
-How to show a file to the boss: POST localhost:4000/agents/AGENT_ID/read-file with the file path. Images render inline; other files show as a "download" chip.
+[^mem0]: My first memory attempt used the [Mem0](https://mem0.ai) OSS library, which extracts facts after every turn and inserts relevant memories at the beginning of each turn. I implemented an [isomux mem0 plugin](https://github.com/nmamano/isomux-mem0) for this. It's an automated memory system: the agent doesn't need to call any endpoints or take any actions. It's also backed by a vector DB instead of plain files. However, it had two issues. First, it doesn't support hierarchical scopes. Second, its default extraction over-captured, sweeping in things that didn't need to outlast the current session. I decided to start with the simpler, agent-driven approach.
 
-How to use the task board (localhost:4000/tasks): [...]
+There are four kinds of memory scopes, mirroring the four kinds of user-defined system prompts:
 
-[... (more instructions for using isomux features)]
+- Manager memories (memories for a specific human user, independent of the agent's room)
+- Office-wide memories
+- Room-wide memories
+- Agent-specific memories
 
-## Office Instructions
+Within each scope, memory is just a plain text file persisted in `~/.isomux`.
 
-USER_DEFINED_OFFICE_WIDE_SYSTEM_PROMPT
+Agents can update the memories via 3 API endpoints:
 
-## Instructions For Your Room: ROOM_NAME
+1. APPEND(memory, scope): appends a memory to the end of the file as a bullet point, injecting who added it and the date.
+2. READ(scope): reads all the memories in a scope
+3. UPDATE(scope, new content): updates the entire file for that scope.
 
-USER_DEFINED_ROOM_SYSTEM_PROMPT
+The hard-coded system prompt instructs agents how to use the endpoints and drives the behavior we want, such as:
 
-## Personal Instructions For You: AGENT_NAME
+- Default to the append-only endpoint.
+- Consult with the human before adding office-wide memories.
+- If you need to modify or delete a memory, do it as a read-modify-write transaction.[^memorytransaction]
 
-USER_DEFINED_AGENT_SPECIFIC_SYSTEM_PROMPT
-```
+[^memorytransaction]: The READ endpoint is generally not necessary, since relevant scopes are injected into the context with the system prompt. However, it's needed for a read-modify-write transaction. To avoid race conditions, the READ endpoint returns a revision number, which _must_ be passed in the UPDATE endpoint. If the scope has been modified since the READ, the UPDATE gets rejected.
 
-See more on the [task board](#shared-task-board) and [image showing](#file-attachments) features below.
+Finally, the full history of memory updates is saved somewhere in `~/.isomux`, in case an agent does some destructive action with the UPDATE endpoint.
+
+### Hierarchical usage
+
+The hierarchy even shows up in the books. The `/isomux-usage` command renders a table where token spend rolls up level by level: each agent's current **session**, summed into that **agent's** lifetime total, summed into **per-room** totals, and finally an **office-wide** grand total that even folds in cron-job spend.
+
+Here's a screenshot of the per-room section from my personal office:
+
+<BlogImage
+  src="/blog/isomux/usage.png"
+  alt="The Per-room section of the /isomux-usage table: one row per room with session and lifetime token spend (input/output tokens and dollar cost)"
+/>
+
+Getting these numbers right across session resumes and forks takes some care; those mechanics are in [the appendix on fork-aware usage accounting](#appendix-fork-aware-usage-accounting).
 
 ## Agent-to-Agent Communication
 
@@ -540,19 +576,6 @@ A key decision was how to handle logs. Since we want to preserve the existing co
 
 When looking at the list of past conversations to resume, forked sessions get a `↳` prefix, and sessions that have been branched from are dimmed with a "(branched)" label.
 
-#### Fork-aware usage accounting
-
-Isomux has an `/isomux-usage` command that renders a table with current-session and lifetime usage for each agent.
-
-The SDK reports two flavors of accounting on each `result` event, and they don't behave the same way:
-
-- **Tokens** (`input_tokens`, `output_tokens`, cache fields) are **per-turn deltas**. You have to sum them across turns to get a session running total.
-- **Cost** (`total_cost_usd`) is cumulative-for-this-process. Overwriting it each turn is correct within a run, but **it resets to 0 on session resume** (resume spawns a fresh process).
-
-So we persist two buckets per session: `usage` for the current run (tokens accumulated, cost overwritten) and `priorRunsUsage` for completed runs, rolled up when a resume happens. Session lifetime is their sum.
-
-Forks add another wrinkle. When Session B forks Session A at turn 5, some of A's accounting leaks into B's first reported turn. To avoid double-counting when summing across sessions, we record the parent's usage at the fork point as `forkBaseUsage` on the child and subtract it. Getting "cumulative at the fork point" means looking up the snapshot right before the fork point, so we save a snapshot after every turn for exactly this.
-
 ### Cron jobs
 
 A common pattern I wanted to support: "every morning at 9, look at what every agent did yesterday and summarize." So Isomux has cron jobs (you can get to the cron job UI by clicking the wall clock).
@@ -566,27 +589,6 @@ A few decisions worth calling out:
 - **Overlap policy: skip, don't queue.** Manual "Run now" bypasses this.
 - **Missed fires from server downtime are silently dropped.**
 - **Per cron job token spend rolls into `/isomux-usage`.** Same fork-aware accounting as agents. The total usage combines agents and cron jobs.
-
-### Hierarchical memory
-
-<Callout>
-  Unlike the other features above, this one isn't built yet; it's just a design.
-</Callout>
-
-I've been designing a memory system for Isomux.
-
-Just like [system prompts](#hierarchical-prompts), I want memories to follow the same hierarchy — roughly, they can be for a specific agent, a whole room, or the whole office.[^mem0]
-
-**Memory creation**: a hook that runs after every turn. It extracts facts to remember, chooses their scope (agent/room/office), and stores them in a vector DB (like [Qdrant](https://qdrant.tech)). During this step, we must also update or remove preexisting obsolete memories, like [mem0 does](https://docs.mem0.ai/core-concepts/memory-operations/update).
-
-**Memory retrieval**: before every assistant turn, we'd pull relevant memories for this agent, the room they're in, and the office-wide context.
-
-<BlogImage
-  src="/blog/isomux/memory.png"
-  alt="Isomux's planned hierarchical memory flow. Memory creation (after every turn): (1) extract facts from the conversation, (2) choose each fact's scope (agent, room, or office), (3) store it in the matching agent, room, or office memory. Memory retrieval (before every assistant turn): pull relevant memories at each level (agent, room, office), then merge, deduplicate, and rank them by relevance, and pass the result to the agent as context for its turn."
-/>
-
-[^mem0]: I experimented with an existing memory solution, [Mem0](https://mem0.ai), but it doesn't fit this hierarchical memory shape. I'll probably roll my own, inspired by their [open-source library](https://github.com/mem0ai/mem0).
 
 ## Final Thoughts
 
@@ -604,6 +606,19 @@ At this point, I have a full lecture on designing a meta-harness in my head... h
 The points above are not orthogonal. They compound into a much richer experience than your typical claude code session.
 
 Let me know if you'd be interested in this becoming an actual lecture!
+
+## Appendix: Fork-aware usage accounting
+
+Isomux has an `/isomux-usage` command that renders a table with current-session and lifetime usage for each agent.
+
+The SDK reports two flavors of accounting on each `result` event, and they don't behave the same way:
+
+- **Tokens** (`input_tokens`, `output_tokens`, cache fields) are **per-turn deltas**. You have to sum them across turns to get a session running total.
+- **Cost** (`total_cost_usd`) is cumulative-for-this-process. Overwriting it each turn is correct within a run, but **it resets to 0 on session resume** (resume spawns a fresh process).
+
+So we persist two buckets per session: `usage` for the current run (tokens accumulated, cost overwritten) and `priorRunsUsage` for completed runs, rolled up when a resume happens. Session lifetime is their sum.
+
+Forks add another wrinkle. When Session B forks Session A at turn 5, some of A's accounting leaks into B's first reported turn. To avoid double-counting when summing across sessions, we record the parent's usage at the fork point as `forkBaseUsage` on the child and subtract it. Getting "cumulative at the fork point" means looking up the snapshot right before the fork point, so we save a snapshot after every turn for exactly this.
 
 ## Appendix: How the Backends Work
 
@@ -642,6 +657,29 @@ Claude and Codex agents share the same desks, task board, and persistence layer.
 [^codex-sdk]: OpenAI ships three integration surfaces: the [Codex TypeScript SDK](https://github.com/openai/codex/tree/main/sdk/typescript) (`@openai/codex-sdk`), a lightweight `codex exec` mode for one-off scripts, and the App Server we use here. OpenAI explicitly recommends App Server for UI integrators ([blog post](https://openai.com/index/unlocking-the-codex-harness/)): _"Codex App Server will be the first-class integration method we maintain moving forward… Choose the App Server when you want the full Codex harness exposed as a stable, UI-friendly event stream."_ The SDK is positioned for _"server-side tools and workflows"_ with a smaller surface area, and Exec for _"one-off tasks and CI runs"_.
 
 Auth piggybacks on the CLI, again: if `codex login` works (ChatGPT subscription) or `OPENAI_API_KEY` is set, Isomux's spawned subprocess inherits it. No API key plumbed through Isomux itself.
+
+## Appendix: Three Ways to Make a Meta-Harness Multi-Provider
+
+Let's talk about making an ADE / meta-harness multi-provider.
+
+Where do you draw the line between the provider and your own code?
+
+Three approaches, followed by three tools in the space:
+
+**Orca: wrap the terminal.** The providers' native TUIs run in embedded terminals. This is the easiest integration: any agent with a TUI can run in Orca, untouched. The downside is you can't make different providers look like one product.
+
+**AdaL: rebuild the harness.** AdaL reimplements tool calling, compaction, the agent loop, etc., and uses the providers only for next-token prediction. Big upfront effort, but it means you can swap any provider underneath and get perfectly uniform UI and harness behavior.
+
+**Isomux: drive the SDKs.** Isomux runs each provider's harness programmatically and renders one shared UI. It's a middle ground that leans on the provider's own harness for the hard parts while still owning the UI. Since each SDK is different, this approach has the most provider-specific code, requiring the most work per additional provider.
+
+In all three cases, the meta-harness provides the agents with an API to perform actions at the meta-harness level, like driving the UI or orchestration.[^multi-provider-caveats]
+
+[^multi-provider-caveats]: There's a lot of nuance to this. Some caveats:
+
+    - Isomux has an embedded terminal too, so you _can_ run any TUI, but it won't be "Isomux-aware".
+    - Orca still has harness-specific code, like custom hooks. Just less than Isomux.
+    - AdaL is closed source so I may have the details wrong.
+    - There are many other tools in this space I haven't looked into.
 
 ---
 
