@@ -142,6 +142,9 @@ export default async function BlogPost({
               source={post.content}
               components={components}
               options={{
+                // Our own trusted content: allow JSX expression attributes
+                // (e.g. style={{...}}), which next-mdx-remote v6 strips by default.
+                blockJS: false,
                 mdxOptions: {
                   remarkPlugins: [remarkGfm],
                   rehypePlugins: [],
