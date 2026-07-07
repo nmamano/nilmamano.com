@@ -335,13 +335,13 @@ def stage4():
 
 def stage5():
     return outer_loop_scene(
-        SYS, "stage 5", "Opening the open-ended loop", "write v0", agent_arrow=False,
+        SYS, "frontier 1", "Co-Evolving Agent Exploration", "write v0", agent_arrow=False,
     )
 
 
 def direction_tasks():
     d = D(880, 620)
-    d.title("frontier", "Co-Evolving Tasks")
+    d.title("frontier 2", "Co-Evolving Tasks")
     humans_box(d, y=250, sub=None)
     d.box(240, 118, 330, 326, HUMAN, "Open-ended loop", fill_op=0.06, title_dy=26)
     d.tree(300, 156, HUMAN)
@@ -368,25 +368,29 @@ def direction_tasks():
 
 
 def direction_model():
-    d = D(880, 510)
-    d.title("direction 3", "Let it improve its own model")
-    humans_box(d)
-    agent_box(d, SYS, title="Self-referential meta agent", title_size=12.5)
-    model_box(d, color=SYS, sub="its own weights, editable")
-    task_panel(d, color=SYS, title="Generated tasks")
-    d.arrow("M 154 261 L 326 261", HUMAN, "write v0")
-    d.arrow("M 400 324 L 400 364", FLOW, "calls")
-    d.arrow("M 528 310 C 620 336, 600 390, 514 394", SYS, "finetunes (speculative)")
-    d.arrow("M 539 238 L 658 238", FLOW, "attempts", label_color=TEXT)
-    d.arrow("M 658 292 L 539 292", FLOW, "results + traces", label_color=TEXT)
-    d.text(432, 466, "today, the loop closes outside the system: AI research agents improve models,", 10.5)
-    d.text(432, 482, "but never the model they run on (the AI Scientist line, now in Nature)", 10.5)
+    d = D(880, 570)
+    d.title("frontier 3", "Co-Evolving Models")
+    humans_box(d, y=250, sub=None)
+    d.box(240, 118, 330, 266, HUMAN, "RL training loop", fill_op=0.06, title_dy=26)
+    d.box(272, 180, 266, 44, HUMAN, "Task agent", title_size=12.5, title_dy=28)
+    d.box(340, 290, 180, 44, HUMAN, "Task-generator agent", title_size=11.5, title_dy=28)
+    model_box(d, color=SYS, y=430, x=300, sub="weights updated by RL")
+    task_panel(d, color=SYS, x=690, y=180, title="Task set", archive=True)
+    d.arrow("M 154 280 L 236 280", HUMAN, "write")
+    d.arrow("M 95 350 C 95 560, 520 620, 755 374", HUMAN, "seed tasks", lx=145, ly=462)
+    d.arrow("M 310 228 L 310 426", FLOW, "calls", lx=310, ly=402)
+    d.arrow("M 430 338 L 430 426", FLOW, "calls", lx=430, ly=408)
+    d.arrow("M 510 388 C 550 435, 510 455, 459 448", SYS, "trains", lx=548, ly=428)
+    d.arrow("M 542 195 L 686 195", FLOW, "attempts", lx=630, ly=195, label_color=TEXT)
+    d.arrow("M 686 218 L 542 218", FLOW, "rewards", lx=630, ly=218, label_color=TEXT)
+    d.arrow("M 686 305 L 524 305", FLOW, "tasks + results", lx=620, ly=305, lw=92, label_color=TEXT)
+    d.arrow("M 524 325 L 686 325", SYS, "generated tasks", lx=620, ly=325, lw=96)
     return d
 
 
 def final():
     d = D(880, 575)
-    d.title("the final destination", "Humans only plant the seed")
+    d.title("conclusion", "Everything Co-Evolves")
     humans_box(d, y=250, sub=None)
     d.box(240, 118, 330, 326, SYS, "Open-ended loop", fill_op=0.06, title_dy=26)
     d.tree(300, 156, SYS)
@@ -398,15 +402,14 @@ def final():
     d.chip(345, 330, "Task agent", SYS)
     d.chip(462, 330, "Meta agent", SYS)
     d.box(340, 378, 180, 44, SYS, "Task-generator agent", title_size=11.5, title_dy=28)
-    model_box(d, color=SYS, y=490, x=300, sub="finetuned by the system")
+    model_box(d, color=SYS, y=490, x=300, sub="weights updated by RL")
     task_panel(d, color=SYS, x=690, y=254, title="Task set", archive=True)
-    d.arrow("M 154 298 L 236 298", HUMAN, "the seed")
-    d.text(95, 382, "initial program, first tasks,", 10, HUMAN)
-    d.text(95, 397, "a base model, and inside it,", 10, HUMAN)
-    d.text(95, 412, "our notion of interesting", 10, HUMAN)
+    d.arrow("M 154 298 L 236 298", HUMAN, "write v0", lx=192, ly=298)
+    d.arrow("M 95 350 C 95 580, 520 650, 755 448", HUMAN, "seed tasks", lx=158, ly=486)
+    d.arrow("M 140 350 C 180 440, 220 490, 296 508", HUMAN, "train v0", lx=196, ly=444)
     d.arrow("M 310 362 L 310 486", FLOW, "calls", lx=310, ly=412)
     d.arrow("M 430 426 L 430 486", FLOW, "calls", lx=430, ly=458)
-    d.arrow("M 510 448 C 550 495, 510 515, 459 508", SYS, "finetunes", lx=545, ly=488)
+    d.arrow("M 510 448 C 550 495, 510 515, 459 508", SYS, "trains", lx=527, ly=490)
     d.arrow("M 542 292 L 686 292", FLOW, "attempts", lx=630, ly=292, label_color=TEXT)
     d.arrow("M 686 330 L 542 330", FLOW, "results + traces", lx=630, ly=330, label_color=TEXT, lw=96)
     d.arrow("M 686 388 L 524 388", FLOW, "tasks + results", lx=620, ly=388, lw=92, label_color=TEXT)
