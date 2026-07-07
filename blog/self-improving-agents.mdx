@@ -1,0 +1,243 @@
+---
+title: "How to Build a Self-Improving Agent"
+date: "2026-07-05"
+excerpt: "From a hand-coded agent to a system that redesigns its own improvement loop, one stage at a time."
+coverImage: "/blog/self-improving-agents/cover.png"
+categories: ["ai", "swe"]
+---
+
+I've fallen into the open-endedness rabbit hole recently, where the goal is to set up an algorithm that never stops discovering new things.
+
+Evolution and science are two examples of open-ended systems. Can we program something like that? A program that, even if it ran a million years, we'd still want to run it one more year just to see what else it came up with?
+
+This rabbit hole led me to the [Darwin Gödel Machine](https://arxiv.org/abs/2505.22954) (2025), a coding agent that follows the open-ended philosophy to rewrite itself, going from 20% to 50% on SWE-bench.
+
+In this post, I'll walk through how to design an AI agent that improves itself - potentially forever. The diagram colors show which parts are
+
+- <strong style={{color: "#e8a33d"}}>Hand-coded</strong>: built by humans before the system can start self-improving.
+- <strong style={{color: "#4ade80"}}>Self-modifiable</strong>: initialized by humans and evolved by the system itself.
+
+We'll go in stages. At each stage, the hand-coded part will shrink and the self-modifiable part will grow, increasing the surface for open-endedness to take over.
+
+<Toc />
+
+<SelfImprovingStepper />
+
+## Stage 1: The Hand-Coded Agent
+
+Let's start with the architecture of essentially every production agent today (coding, deep research, contract review, computer use, medical diagnosis, and so on):
+
+1. The **task set.** A sample of the type of tasks we want the agent to solve, like a coding benchmark for a coding agent. Each task must come with **verifiable rewards**: e.g., the tests pass, the answer matches, or the robot reaches the goal; this could even include an **LLM-as-judge** component. 
+2. The **task agent.** The main program in charge of completing tasks. It's a _harness_ wrapping a model: prompts, tools, control flow, etc.
+3. The **model.** A foundation model, usually an LLM, trained beforehand. The harness is code; the model is weights. Real harnesses often call multiple models - one for planning, a cheaper one for summarization, etc. Some models may not even be LLMs, depending on the task. We'll just say "the model" for simplicity.
+
+<BlogImage
+  src="/blog/self-improving-agents/stage1.svg"
+  alt="Stage 1 diagram: humans write and iterate on the task agent and curate the task set; the task agent calls the model and attempts tasks; results and traces flow back to the humans"
+  width="90%"
+/>
+
+Having verifiable rewards means we can validate changes to the task agent against the task set. See my post on [agentic RL environments](/blog/rl-environments) for more on how agentic tasks are created and evaluated.
+
+## Stage 2: The Meta Agent
+
+Diagnosing failures of the task agent and tweaking it accordingly is a job with well-defined inputs and outputs, so it's natural to hand it to another agent. Call it the **meta agent**.[^adas]
+
+It typically follows an improvement loop:
+
+1. Run the task agent on the task set.
+2. Read the results and relevant traces (e.g., evaluation logs, model transcripts).
+3. Propose and apply modifications to the task agent's code (e.g., giving the task agent a better file-editing tool).
+4. Run the modified task agent on the task set. Keep the change if it helps; revert it otherwise.
+
+<BlogImage
+  src="/blog/self-improving-agents/stage2.svg"
+  alt="Stage 2 diagram: the meta agent reads results and traces from the task agent's attempts and modifies the task agent's code; both agents call the same model; humans now write and iterate on the meta agent instead of the task agent"
+  width="90%"
+/>
+
+[^adas]: [ADAS](https://arxiv.org/abs/2408.08435) demonstrated this approach in 2024: its meta agent programs new agents in code, tests them on tasks, and uses what it learned to program better ones. [The Last Harness You'll Ever Build](https://arxiv.org/abs/2604.21003) (2026) proposes a similar architecture.
+
+The bet is that this is a better use of human effort, because improvements to the improver compound.
+
+## Stage 3: The Self-Referential Meta Agent
+
+The meta agent in Stage 2 is just another harness calling a model. Who improves _it_? We could add a meta-meta agent, but then the humans would have to maintain _that_ agent instead.
+
+An elegant answer from the [Hyperagents paper](https://arxiv.org/abs/2603.19461) is to extend the scope of the meta agent's code modifications to the meta agent itself. The improvement loop now is:
+
+1. Run the task agent on the task set.
+2. Read the results and relevant traces (e.g., evaluation logs, model transcripts).
+3. Propose and apply modifications to the task agent **and the meta agent** (e.g., improving how the meta agent scans traces for failures).
+4. Run the modified task agent on the task set. Keep the change if it helps; revert it otherwise.[^hacking]
+
+<BlogImage
+  src="/blog/self-improving-agents/stage3.svg"
+  alt="Stage 3 diagram: task agent and meta agent merge into a single self-referential meta agent that modifies its own code based on its own results and traces; humans only wrote the initial version"
+  width="90%"
+/>
+
+[^hacking]: Some care is needed here to avoid reward hacking. The DGM paper documents a case where the task evaluation included a reward for not hallucinating tool calls. During self-modification, the agent removed the code to mark hallucinated tool calls in the logs, despite explicit instructions against it.
+
+The [Darwin Gödel Machine](https://arxiv.org/abs/2505.22954) (DGM) was the first self-referential agent to come out of the open-endedness school of thought, though not by deliberately having separate task and meta agents.[^first] It's a coding agent, and self-improvement is a coding task, so a gain in coding skill is a gain in self-modification skill. Recursive self-improvement came for free for coding agents.
+
+On the contrary, getting better at, say, reviewing papers, doesn't necessarily make you better at rewriting your own Python code. Having a dedicated meta agent that can self-modify unlocks recursive self-improvement regardless of the task.
+
+[^first]: Self-referential agents appeared earlier outside this lineage - [STOP](https://arxiv.org/abs/2310.02304) (2023) and [Gödel Agent](https://arxiv.org/abs/2410.04444) (2024) - but without the open-endedness machinery (archive, stepping stones) that this post builds toward.
+
+The Hyperagents paper showed that **improvements to the meta level transfer across domains.** They evolved the system on a domain (paper review), then transplanted the evolved meta agent to a new domain (grading olympiad math solutions). The meta machinery it had built for itself (things like performance tracking and persistent memory) meant that it improved the task agent faster than a "v0" copy of the meta agent.
+
+## Stage 4: Agent Exploration
+
+Consider the space of all possible agents. The improvement loop in Stage 3 takes a linear path through this space, from one agent to another, hill-climbing toward maximum rewards.
+
+Hill climbing has a well-known failure mode: it gets stuck at local optima. This is catastrophic to the open-endedness agenda.
+
+The next step is to open up how we explore the agent space. The self-referential meta agent stays the same as in Stage 3; it is not aware that the outer loop changed.
+
+For this stage, we'll keep the exploration mechanism hand-coded; in particular, we'll look at the approach from the DGM paper.
+
+Instead of keeping one agent, we keep an **archive** (i.e., descendant tree) of every valid variant ever produced.[^qd] Now, the improvement loop is:
+
+1. Pick a parent from the archive (not just the current best).[^lineage]
+2. Let the parent propose and apply a modification to itself (based on its own results and traces).
+3. Run the modified code on the task set. If it _works_ (even if it scores worse), add it to the archive as a child of the parent.
+
+[^lineage]: The DGM paper shows that this matters: its best agent descended from a lineage that got _worse_ before it got better.
+
+[^qd]: The archive idea comes from quality-diversity algorithms like [MAP-Elites](https://arxiv.org/abs/1504.04909): instead of optimizing for the single best solution, collect diverse "stepping stones," because the path to the best solutions routinely passes through mediocre ones.
+
+<BlogImage
+  src="/blog/self-improving-agents/stage4.svg"
+  alt="Stage 4 diagram: a hand-coded outer loop manages an archive of agent variants, samples parents, and adds self-modified children back; the self-referential meta agent is not aware of the outer loop"
+  width="90%"
+/>
+
+Parent sampling is a key piece of this setup. The DGM samples parents mostly based on task scores: good agents get to reproduce. Running this loop, the DGM took itself from 20% to 50% on SWE-bench, inventing its own upgrades along the way: better code-editing tools, long-context management, and even a mechanism to peer-review its own patches.
+
+But this is not the only possible strategy. The [Huxley-Gödel Machine](https://arxiv.org/abs/2510.21614) (HGM) variant argues that an agent's own score doesn't necessarily predict how good it is at self-improving, which is the more important quality to select for. They outperformed the DGM by sampling parents based on the aggregate performance of their descendants, because that's the actual predictor for how good the agent is at self-improving.
+
+---
+
+One part of an agent's code with a rich design space is the memory component, which is how agents carry learnings between tasks. It can be as simple as a plain text file the agent updates with its editing tool, or as complicated as a vector database that surfaces relevant facts automatically before every turn. The [ALMA paper](https://arxiv.org/abs/2602.07755) applied this archive-based open-ended loop to the design of the memory system, freezing all the other components, and the evolved memory designs beat state-of-the-art human-crafted ones across benchmarks.
+
+## Stage 5: Opening the Outer Loop
+
+So far, **the agent is agnostic to the outer loop.** The archive, the parent selection rule, the keep/discard rule, etc., are _not_ part of the agent's editable surface.
+
+The DGM vs. HGM debate is proof that the outer loop is non-trivial and matters; in particular, it is a non-trivial _coding task_, so it can benefit from self-improvement.
+
+The natural next step is to put the entire outer loop on the meta agent's editable surface.
+
+<BlogImage
+  src="/blog/self-improving-agents/stage5.svg"
+  alt="Stage 5 diagram: the outer loop - archive structure, parent selection, keep rule, evaluation budget - becomes self-modifiable; humans only wrote the initial version of everything"
+  width="90%"
+/>
+
+The only code that must stay off the editable surface is the evaluation of the task agent on the task set. This grounds all progress to the real baseline (otherwise, stuff like the log-tampering from the Stage 3 footnote may happen).
+
+**This is the frontier as of July 2026.** The [Hyperagents paper](https://arxiv.org/abs/2603.19461) (March 2026) has an appendix experiment where they unfroze exactly one knob in the outer loop: parent selection. They started with random parent selection and the meta agent replaced it with UCB-style selection to balance exploration and exploitation, among other ideas. However, this approach didn't beat the handcrafted rule.
+
+Notice the pattern, which recurs throughout open-endedness research: carefully deciding which components to freeze and which to let evolve, rather than mindlessly opening everything at once.
+
+---
+
+Take stock of the Stage 5 diagram. What's left?
+
+1. The **task set**: still curated by humans.
+2. The **model weights**: still frozen.
+
+Making each of those self-improving can be seen as an independent frontier.
+
+## Frontier 1: Co-Evolving Tasks
+
+Everything so far optimizes against a fixed, human-curated task set.
+
+Automating task generation predates LLM-based agents; it's one of the three pillars of Clune's 2019 [AI-GAs manifesto](https://arxiv.org/abs/1905.10985) (AI-Generating Algorithms), and it has a rich lineage. The [POET paper](https://arxiv.org/abs/1901.01753) co-evolves bipedal walking agents and landscape environments, and found something remarkable: the hard environments it generated could not be navigated by agents trained on them directly - the agent had to train on the stepping-stone environments generated along the way first.
+
+<BlogImage
+  src="/blog/self-improving-agents/poet.png"
+  alt="A bipedal walker from the POET paper traversing a procedurally generated terrain with gaps and stumps"
+  width="70%"
+/>
+
+Can we do the same for LLM-based agents and their tasks?
+
+The tasks need to have the right difficulty and be **interesting**, which is notoriously 
+hard to define.
+
+The [OMNI paper](https://arxiv.org/abs/2306.01711) argues that, while we can't define "interesting", **LLMs know what's interesting because they've trained on the internet**, including endless threads of humans discussing what they find interesting.
+
+We can ask a task-generator agent: "The task agent is already good at these ten things; what's the next thing worth learning?" and use the response to add relevant tasks to the task set. Human judgment is still deciding what's "interesting", but indirectly via the model weights.
+
+Its sequel, [OMNI-EPIC](https://arxiv.org/abs/2405.15568) has the LLM write new environments and their reward functions _as code_, making the task space effectively unlimited.
+
+The outer loop now does this:
+
+1. Pick a parent from the archive (not just the current best).
+2. Let the parent propose and apply a modification to itself.
+3. Run the modified code on the task set. If it works, add it to the archive as a child of the parent.
+4. Let the task-generator agent read the task set and the latest results - what's getting solved, what isn't - and write new tasks (with their verifiable rewards) into the task set.
+
+<BlogImage
+  src="/blog/self-improving-agents/direction-tasks.svg"
+  alt="Direction 2 diagram: a task generator replaces the human-curated task set; humans only seed the domain, and the FM judges which tasks are interesting"
+  width="90%"
+/>
+
+The task set becomes an archive too: the task-generator agent can pick an existing task, and tweak it to make it harder or more interesting in some way.
+
+For the agents, parent selection is hand-coded (Stage 4) or rewritable by the meta agent (Stage 5); for the tasks, parent selection is the domain of the task-generator agent and its judgment of what's interesting.
+
+---
+
+An elegant approach is to make the task generator _the task agent itself_. This form of "self-play" comes with built-in auto-calibration: the agent setting the tasks is at the same level as the one solving them.
+
+Self-play started with AlphaZero (you can read my post on [training an AlphaZero-style AI via self-play](/blog/wall-game-ai)), but it has LLM-era descendants: [Foundation Model Self-Play](https://arxiv.org/abs/2507.06466), [Language Self-Play](https://arxiv.org/abs/2509.07414), [Agent0](https://arxiv.org/abs/2511.16043).
+
+## Frontier 2: Co-Evolving Models
+
+Since stage 1, the model has been the one box nothing touches. It's a natural place to draw the line because it's more computationally expensive, potentially requiring an entirely different infrastructure for model training (GPUs, etc.).
+
+Can we automate improving the model itself?
+
+Research agents (task agents where the domain is "research") have been able to produce valid _research ideas_ to improve models. The [AI Scientist](https://arxiv.org/abs/2408.06292) (2024) automated the whole pipeline - idea, experiments, manuscript - though its papers didn't clear a real review bar; [its successor](https://arxiv.org/abs/2504.08066) produced the first AI-written peer-reviewed paper, at an ICLR 2025 workshop; the [latest iteration](https://arxiv.org/abs/2606.15497) (published in Nature) drops the human-provided scaffolding in favor of open-ended exploration.
+
+In June 2026, Recursive's [automated research loop](https://recursive.com) found genuine SOTA training speedups for NanoGPT.
+
+But none of them is improving its _own_ model as part of the recursive self-improvement loop. _If_ the loop closes, it's through the outside world: an AI lab needs to pick up the research, use it to train a better model, which can then be potentially used by the agent that came up with the research.
+
+[DéjàQ](https://arxiv.org/abs/2601.01931) evolves a set of synthetic math problems alongside the model's RL training, adapting them to the model's ability so they stay learnable - and the problem mutations are proposed by the model itself. The self-referential meta agent from stage 5, but with one more editable surface - its own weights. Generate your own training tasks (direction 2 supplies them, with verifiable rewards), decide what to train on, finetune, validate on the task set like any other self-modification.[^lora] Nothing in principle rules this out; today it's mostly an engineering-cost argument, and engineering costs have a way of collapsing.
+
+[^lora]: The tooling for cheap self-finetuning is appearing independently: [Text-to-LoRA](https://arxiv.org/abs/2506.06105) generates a task-specific adapter from a plain-language description in a single forward pass.
+
+<BlogImage
+  src="/blog/self-improving-agents/direction-model.svg"
+  alt="Direction 3 diagram: the model box becomes self-modifiable, with a speculative finetuning loop from the agent into its own weights"
+  width="90%"
+/>
+
+## The Final Destination
+
+Stitch it all together:
+
+<BlogImage
+  src="/blog/self-improving-agents/final.svg"
+  alt="Final diagram: agent code, improvement loop, memory, task generation, and model weights are all self-modifiable; the only human arrow left is the seed"
+  width="95%"
+/>
+
+Every box the humans used to maintain is now on the system's editable surface: the agent's code (stage 3), the improvement loop that evolves it (stage 5), the memory it learns with (direction 1), the tasks it learns from (direction 2), the model it runs on (direction 3). The humans' one remaining arrow is the **seed**: an initial program, an initial task or two, a base model, and - smuggled inside that model - a notion of what counts as interesting.[^safety]
+
+[^safety]: The obvious question: is building this a good idea? The current safety story is containment: sandboxed execution, every self-modification logged and reviewable, benchmarks as gates (both the DGM and Hyperagents papers dedicate sections to this). I'd add that the diagrams in this post double as a checklist of what to watch: every box that flips to self-modifiable is one more thing humans no longer review by hand.
+
+Here's what I find satisfying about this endpoint. It isn't a new idea - it's the _oldest_ idea in this line of work. Schmidhuber's 2003 Gödel machine was defined as exactly this: a system that can rewrite _every_ part of itself, including the part that searches for rewrites. It went nowhere for twenty years because it demanded mathematical proof that each rewrite helps. The whole lineage in this post - ADAS, DGM, HGM, Hyperagents - is the field walking back to Schmidhuber's blueprint, holding the one substitution that made it practical: benchmarks in place of proofs.
+
+Would this system keep getting better forever? Honestly, nobody knows - today's versions still lose to hand-tuned baselines on some knobs, still bootstrap everything from human knowledge, and still slam into compute walls. But it's the first design where no component has a human bottleneck: nothing in the loop waits for us.
+
+I don't know where a system like this ends up after a million years. I just know I'd still be curious about what it finds next year.
+
+In some sense, this post is an archive of self-improving agentic systems.
+
+As models get better, we won't need to program _anything_. We'll just convey the principles of open-endedness in our initial prompt, and the agent will be capable of building an open-ended system from those principles. Eventually, we won't even have to mention the open-endedness principles. They'll be in the training data, so simply saying "build a self-improving AI agent" will be enough to build the kind of architectures we discussed.

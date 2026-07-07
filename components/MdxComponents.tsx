@@ -11,6 +11,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import TocElement from "./TableOfContents";
+import SelfImprovingStepper from "./SelfImprovingStepper";
 
 interface BlogImageProps {
   src: string;
@@ -333,6 +334,7 @@ const components = {
   Problem,
   Solution,
   Toc: TocElement,
+  SelfImprovingStepper,
   // Table components
   Table,
   TableBody,
