@@ -32,7 +32,7 @@ Let's start with the architecture of essentially every production agent today (b
 <BlogImage
   src="/blog/self-improving-agents/stage1.svg"
   alt="Stage 1 diagram: humans write and iterate on the task agent and curate the task set; the task agent calls the model and attempts tasks; results and traces flow back to the humans"
-  width="90%"
+  width="100%"
 />
 
 Having verifiable rewards means we can validate changes to the task agent against the task set. See my post on [agentic RL environments](/blog/rl-environments) for more on how agentic tasks are created and evaluated.
@@ -51,7 +51,7 @@ We can run an improvement loop:
 <BlogImage
   src="/blog/self-improving-agents/stage2.svg"
   alt="Stage 2 diagram: a hand-coded improvement loop contains the meta agent and the task agent; the meta agent modifies the task agent's code; the task agent attempts tasks from the task set and results and traces flow back to the meta agent; humans write the loop and the task agent's initial version"
-  width="90%"
+  width="100%"
 />
 
 [^adas]: [ADAS](https://arxiv.org/abs/2408.08435) demonstrated this approach in 2024: its meta agent programs new agents in code, tests them on tasks, and uses what it learned to program better ones. [The Last Harness You'll Ever Build](https://arxiv.org/abs/2604.21003) (2026) proposes a similar architecture.
@@ -72,7 +72,7 @@ An elegant answer from the [Hyperagents paper](https://arxiv.org/abs/2603.19461)
 <BlogImage
   src="/blog/self-improving-agents/stage3.svg"
   alt="Stage 3 diagram: same layout as stage 2, but the meta agent is now self-modifiable too - it modifies both the task agent's code and its own; humans write the loop and the initial versions of both agents"
-  width="90%"
+  width="100%"
 />
 
 [^metadata]: One thing should bother you about this setup. In Stage 2, we established what it takes to improve an agent: a collection of results and traces to diagnose. We have that for the task agent, but for the meta agent's own job (improving agents), each iteration of the loop produces a single data point: whether the last modification helped. To not starve the meta agent of data, we should feed it the outcomes of all past modifications, not just the last one.
@@ -110,7 +110,7 @@ Instead of keeping one agent, we keep an **archive** (i.e., a descendant tree) o
 <BlogImage
   src="/blog/self-improving-agents/stage4.svg"
   alt="Stage 4 diagram: a hand-coded open-ended loop keeps an archive of agent variants, samples a parent self-referential meta agent (task agent plus meta agent), and adds self-modified children back; the sampled agent attempts tasks and receives results and traces"
-  width="90%"
+  width="100%"
 />
 
 Parent selection is a key piece of this setup. The DGM samples parents mostly based on task scores: good agents get to reproduce. Running this loop, the DGM took itself from 20% to 50% on SWE-bench, coming up with upgrades along the way: better code-editing tools, long-context management, and even a mechanism to peer-review its own patches.
@@ -144,7 +144,7 @@ The natural next step is to put the entire outer loop on the meta agent's editab
 <BlogImage
   src="/blog/self-improving-agents/stage5.svg"
   alt="Frontier 1 diagram: the open-ended loop with its archive and rules becomes self-modifiable; humans only write the initial version of the loop"
-  width="90%"
+  width="100%"
 />
 
 The only code that must stay off the editable surface is the evaluation of the task agent on the task set. This grounds all progress to the real baseline (otherwise, stuff like the log-tampering from the Stage 3 footnote may happen).
@@ -184,7 +184,7 @@ The outer loop now does this:
 <BlogImage
   src="/blog/self-improving-agents/direction-tasks.svg"
   alt="Frontier 2 diagram: a hand-coded task-generator agent joins the open-ended loop; it reads tasks and results from the task set and writes generated tasks back into it, turning the task set into a growing archive of tasks seeded by humans"
-  width="90%"
+  width="100%"
 />
 
 The task set becomes an archive too: the task-generator agent can pick an existing task and tweak it to make it harder or more interesting in some way.
@@ -218,7 +218,7 @@ The closest step toward closing the loop within the system is [DéjàQ](https://
 <BlogImage
   src="/blog/self-improving-agents/direction-model.svg"
   alt="Frontier 3 diagram: DejaQ's hand-coded RL training loop contains a fixed task agent and task-generator agent; the task set is a growing archive of tasks kept at the right difficulty, and the loop trains the model, whose weights are updated by RL"
-  width="90%"
+  width="100%"
 />
 
 As the model improves, solved tasks stop being learnable and get replaced by harder variants.
@@ -238,7 +238,7 @@ This is what the system would look like if we let everything co-evolve:[^safety]
 <BlogImage
   src="/blog/self-improving-agents/final.svg"
   alt="Conclusion diagram: everything co-evolves - the open-ended loop, the self-referential meta agent, the task-generator agent, the archive of tasks, and the model weights are all self-modifiable; humans only write v0 of the code, seed the first tasks, and train the initial model"
-  width="95%"
+  width="100%"
 />
 
 [^safety]: The obvious question: is building this safe? Every box that flips to self-modifiable is one more thing humans no longer stamp. We won't get into it here (both the DGM and Hyperagents papers have dedicated safety sections), but at the very least, execution should be sandboxed.
