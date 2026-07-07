@@ -6,7 +6,7 @@ coverImage: "/blog/self-improving-agents/cover.png"
 categories: ["ai", "swe"]
 ---
 
-I've fallen into the open-endedness rabbit hole recently, where the goal is to set up an algorithm that never stops discovering new things.
+I went down the open-endedness rabbit hole recently, where the goal is to set up an algorithm that never stops discovering new things.
 
 Evolution and science are two examples of open-ended systems. Can we program something like that? A program that could run for a million years, and we'd still want to run it one more year just to see what else it comes up with?
 
@@ -250,4 +250,8 @@ This endpoint we seem to be building toward is actually the _oldest_ idea in thi
 Would this system keep getting better forever if "v0" is set up just right? Nobody knows. Today's versions still lose to hand-tuned baselines on some knobs, still bootstrap everything from human knowledge, and still hit compute walls. But it's our first design where no component has a human in the loop.
 
 In theory, as models get better, we won't need to program a "v0". We'll just convey the principles of open-endedness in our initial prompt, and the agent will be capable of building an open-ended system from those principles. Eventually, we won't even have to mention the open-endedness principles. They'll be in the training data, so simply asking, "build a self-improving AI agent," will be enough for the agent to build the kind of architectures we discussed.
+
+---
+
+_Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_new-blog-post-how-to-build-a-self-improving-ugcPost-7480197207317536768-tlde) or the [X post](https://x.com/Nil053/status/2074431121975349274)._
 
