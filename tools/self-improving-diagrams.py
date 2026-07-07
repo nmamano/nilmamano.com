@@ -378,6 +378,7 @@ def direction_model():
     task_panel(d, color=SYS, x=690, y=180, title="Task set", archive=True)
     d.arrow("M 154 280 L 236 280", HUMAN, "write")
     d.arrow("M 95 350 C 95 560, 520 620, 755 374", HUMAN, "seed tasks", lx=145, ly=462)
+    d.arrow("M 140 350 C 175 400, 215 435, 296 450", HUMAN, "train v0", lx=200, ly=410)
     d.arrow("M 310 228 L 310 426", FLOW, "calls", lx=310, ly=402)
     d.arrow("M 430 338 L 430 426", FLOW, "calls", lx=430, ly=408)
     d.arrow("M 510 388 C 550 435, 510 455, 459 448", SYS, "trains", lx=548, ly=428)
@@ -390,7 +391,7 @@ def direction_model():
 
 def final():
     d = D(880, 575)
-    d.title("conclusion", "Everything Co-Evolves")
+    d.title("the ideal state", "Everything Co-Evolves")
     humans_box(d, y=250, sub=None)
     d.box(240, 118, 330, 326, SYS, "Open-ended loop", fill_op=0.06, title_dy=26)
     d.tree(300, 156, SYS)
