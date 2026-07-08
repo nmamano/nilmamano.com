@@ -137,6 +137,17 @@ I discovered this [accidentally](https://x.com/Nil053/status/2052268533535649994
 
 The scoped-token system later closed this hole: every agent request needs a token issued by the office it targets.
 
+
+### The WebSocket Layer
+
+If REST is how you act on Isomux ([reflection section](#meta-harness-reflection)), the WebSocket is how you watch it: an agent's reply streaming in, a room being created, or another person moving rooms.
+
+Browsers hold no authoritative state of their own. When one connects, it gets a full state snapshot, and from there incremental events keep its copy in sync.[^redux-store] The server fans out each event only to the clients allowed to see it.
+
+On the client-to-server direction, the WebSockets are used for ephemeral updates that don't belong to the REST API: terminal keystrokes, user presence (who's looking at what), and heartbeats.
+
+[^redux-store]: The React frontend uses a `useReducer` store where server messages are actions: the same `ServerMessage` types that flow over the WebSocket are dispatched straight into the reducer, so adding a server event type works end-to-end (define it, add a reducer case, done). The store also holds local-only state like input drafts, attention tracking, and the focused agent.
+
 ## Hierarchical Agents
 
 When designing an agent management system, how should we _organize_ agents?
@@ -153,6 +164,7 @@ This hierarchy affects:
 - The user-defined system prompt(s)
 - Agent memory
 - Usage tracking
+- Notifications (can be turned on or off at the room level)
 
 ### Persistent agents
 
@@ -301,10 +313,6 @@ Say I'm in a chat with **Alice**, an Opus agent, and **Bob** is a Codex agent at
   alt="Four agent-to-agent skills: /pair-programming for iterative review during implementation, /second-opinion for an outside perspective, /peer-review for full-session feedback, and /soft-handoff for context-window transitions"
 />
 
-<Callout>
-  Agent-to-agent collaboration is the gateway to Levels 7 and 8 in [Yegge's hierarchy](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04).
-</Callout>
-
 ### Queueing vs steering
 
 A decision you have to make when building agents is _queueing_ vs _steering_. What happens when you send a message to a busy agent?
@@ -313,28 +321,56 @@ Steering interrupts the agent and sends it immediately; queueing puts it in a qu
 
 For isomux, I default to queueing because I reuse the same queue for agents sending messages to other agents. An agent steering another agent seems too disruptive.
 
+We can think of an agent's queue as an **inbox** that can receive messages from humans and other agents. When the agent is free, all queued messages are coalesced into one.
+
 It's still important to offer a UI option to flush the queue immediately, so there's a "Send now" button.
+
+### Agent Orchestration
+
+Agent-to-agent collaboration is the gateway to Level 8 in [Yegge's hierarchy](#introduction).
+
+I've been experimenting with a workflow where I talk to a single agent, "Isomux Manager", to decide what tasks to pick up next. We look for tasks that don't touch the same files. Then, I let that agent dispatch the tasks to (up to) 6 worker agents in parallel. In turn, each of those runs their work by their own reviewer agent.
+
+<BlogImage
+  src="/blog/isomux/level8-orchestration.png"
+  alt="Agent orchestration across two rooms: in the dev room, the Isomux Manager fans out gold task-assignment arrows to six worker agents (Isomuxer1 to 6); each worker has a two-way arrow to its counterpart reviewer agent (Reviewer1 to 6) in a separate review room"
+/>
+
+The workers are Claude agents while the reviewers are Codex agents. This diversity covers each other's weak spots.
+
+The difference between doing this in Isomux and using subagents is that you can check on and interact with every agent involved. (The reviewers are in another room because I don't want to cycle through them when tabbing between the workers.)
+
+The downside compared to subagents is that it's very disorganized. Agents are not _forced_ to respond when asked something, so a worker agent may end up hanging while waiting for a reviewer response that never comes.
+
+As I refine my workflow, I'll see what changes are needed to make it work and come back to update this section.
+
+### Shared task board
+
+Agents and humans share a task board. Anyone can create, assign, claim, and close tasks, from the browser UI or the REST API.
+
+This is what the [orchestration workflow](#agent-orchestration) runs on: the manager picks tasks from the board, assigns them to workers, and marks them done once the changes are folded in.
+
+<Callout>
+  A task board is the ideal **non-linear** hand-off mechanism. Agents often discover possible improvements or follow-ups as they complete their task. Rather than derailing their session, agents can create tasks for later sessions.
+</Callout>
+
+Tasks are persisted as a flat JSON file. Bun's single-threaded event loop handles concurrency naturally, so no locking needed.
 
 ## Human Collaboration
 
 Most agent tools are single-user-per-session. Isomux treats every agent chat as a shared room: multiple humans share the same conversation in real time, with the agent treating each as a distinct participant.
 
-The message queue ends up with a mix of human and agent messages, labeled by sender so the agent knows who said what. When the agent is free, all queued messages are coalesced into one. A coalesced queue might look like:
+The message queue ends up with a mix of human and agent messages, labeled by sender so the agent knows who said what. It might look like:
 
 - `[Nil]` from the laptop
 - `[Nil (Phone)]` from the phone
 - `[Other User]` from a different user
 - `[Isomuxer3]` from another agent
 
-<BlogImage
-  src="/blog/isomux/agent-to-agent-queue.jpeg"
-  alt="Isomuxer4 receiving a message from Isomuxer1 and replying via the agent-to-agent endpoint, with a mixed queue of pending messages from Nil and Isomuxer1 at the bottom of the chat"
-/>
-
 For how additional people get invited to an office, see [Remote User Authorization](#remote-user-authorization).
 
 <Callout>
-  I think human collaboration at the agent-chat level will make it easier to
+  My bet is that human collaboration at the agent-chat level will be important to
   [onboard non-technical people into agentic work](https://x.com/Nil053/status/2047935826366267505).
 </Callout>
 
@@ -350,14 +386,6 @@ The server keeps an in-memory `connectionId → presence` map keyed per WebSocke
 
 [^ghost]: Why ghosts? Don't read into it too much, but Karpathy once [said](https://x.com/karpathy/status/1973435013875314729) that "today's frontier LLM research is not about building animals. It is about summoning ghosts." So, if agents look like humans, then humans should look like ghosts to go full circle. The fact that they hover also makes the moving animations easier.
 
-## The WebSocket Layer
-
-If REST is how you act on Isomux ([reflection section](#meta-harness-reflection)), the WebSocket is how you watch it: an agent's reply streaming in, a room being created, or another person moving rooms.
-
-Browsers are stateless. When one connects, they get a full state snapshot, and from there, incremental events keep it in sync. The server fans out events to the clients, filtering out those not allowed to see them.
-
-On the client-to-server direction, the WebSockets are used for ephemeral updates that don't belong to the REST API: terminal keystrokes, user presence (who's looking at what), and heartbeats.
-
 ## The Frontend
 
 ### Office rooms
@@ -371,7 +399,7 @@ When looking at a room, Tab and Shift+Tab cycle between rooms. When looking at a
 I've been having fun leaning into the office visuals:
 
 - Click the corkboard to open the office's task board.
-- Click the framed sign on the wall to edit the "office rules" (the office-wide system prompt).
+- Click the framed sign on the wall to see the "office rules" (the office-wide system prompt), among other settings.
 - Click the doors to switch rooms.
 - Click the clock (which shows the real time) to open cronjobs.
 - Opus agents have a book; Haiku agents have crayons.
@@ -384,19 +412,11 @@ The agent customization helps with anthropomorphizing; see, for example, the [de
 
 Opus's SVG skills and understanding of isometric geometry is genuinely good.
 
-The entire scene was written by Opus - ~1,600 lines of raw coordinates, bezier curves, and animate tags. I didn't use any libraries, assets, or tools.[^neon-sign]
+The entire scene was written by Opus: several thousand lines of raw coordinates, bezier curves, and animate tags. I didn't use any libraries, assets, or tools.[^neon-sign]
 
 [^neon-sign]: For me, the highlight is the neon sign. It one-shotted the skewed font, the light "diffusion", and the atmospheric flickering. Then, I asked it to add ligatures between letters for realism, and, even though it took some iterations, its first intuition for their positioning and shape was already spot on.
 
 That said, Opus's SVG capabilities are a lot more spiky than coding. It sometimes fails and thrashes at trivial tasks, like moving the window a few pixels over. It's like if Opus sometimes got wrong the Fizz Buzz test.
-
-### Redux-Like Store
-
-The React frontend uses a `useReducer` store where **server messages are actions**. The same `ServerMessage` types that flow over the WebSocket are dispatched directly into the reducer.
-
-This eliminates the usual action-creator boilerplate. Adding a new server event type automatically works end-to-end: define the message on the server, add a case to the reducer, done.
-
-The store also manages local-only state: input drafts (preserved when switching between agents), attention tracking, and the focused agent.
 
 ### Mobile app
 
@@ -408,7 +428,7 @@ It's consistently a top most-used app on my phone:
 
 <BlogImage
   src="/blog/isomux/phone-usage.png"
-  alt="iPhone Screen Time 'Most Used' for the last week: YouTube (27h), Instagram (10h 10m), the isomux PWA (9h 46m), X (2h 48m), Chrome (2h 28m)"
+  alt="iPhone Screen Time 'Most Used' for the last week: YouTube (27h), <main chatting/VC app> (10h 10m), the isomux PWA (9h 46m), X (2h 48m), Chrome (2h 28m)"
   width="50%"
 />
 
@@ -487,28 +507,13 @@ On the office view, agents needing attention get a pulsing indicator. Combined w
 
 Each agent displays a short topic below its nametag, like "Fixing auth middleware tests" or "Refactoring WebSocket layer."
 
-What's interesting is how they're generated. When the first user message comes in, the server fires off a `unstable_v2_prompt()` call behind the scenes. It builds a context snippet from the first user message (and the last few, if the topic is regenerated later) and then asks for a topic in 8 words or less.
+What's interesting is how they're generated. When the first user message comes in, the server fires off a background prompt: it builds a context snippet from that message (plus the last few, if the topic is regenerated later) and asks for a topic in 8 words or fewer.
 
 Orchestration tools should be mindful with server-initiated prompts like this. They spend user tokens doing something that's not directly answering the user.
 
 In this case, it's a trivial amount, but I still use a cheaper model (Sonnet).
 
 The topic is included in the agent manifest, helping agents know what others are up to. It is also persisted per-session in `sessions.json`, so it survives server restarts and shows up when browsing past sessions to resume.
-
-### Shared task board
-
-Agents and humans share a task board. Anyone can create, assign, claim, and close tasks, from the UI or from agents via HTTP.
-
-Here's a [demo](https://x.com/Nil053/status/2040871759529025617): tell one agent to create a task for another, open the corkboard to see it, click the assignee to jump to them, and ask them to pick it up.
-
-Agents interact with the task board through a simple HTTP API (`GET /tasks`, `POST /tasks`, `POST /tasks/:id/claim`, `POST /tasks/:id/done`). The system prompt includes curl examples so they know how without being told. Tasks are persisted to a flat JSON file. Bun's single-threaded event loop handles concurrency naturally; no locking needed.
-
-<Callout>
-  A task board is the ideal **non-linear** hand-off mechanism. Agents often
-  discover possible improvements or follow-ups as they complete their task.
-  Rather than derailing their session, agents can create tasks for later
-  sessions.
-</Callout>
 
 ### File attachments
 
@@ -526,11 +531,11 @@ When it's time to send the actual SDK message to Claude, the text and attachment
 
 ### Built-in diff tool
 
-Raw `git diff` output dumped into chat is hard to read. The user can run `/isomux-diff` to render uncommitted changes as a styled diff card inline. The more interesting half: agents have the same affordance via `POST /agents/:id/diff` (with an optional `{"dir": "..."}` body), so an agent finishing a refactor can show its own work as a styled diff instead of a wall of text. This mirrors the pattern used for the [shared task board](#shared-task-board) HTTP API and the [file attachments](#file-attachments) flow: orchestration features exposed symmetrically to humans and agents, so agents can use the UI's affordances rather than just respond in plain text.
+Raw `git diff` output dumped into chat is hard to read. The user can run `/isomux-diff` to render uncommitted changes as a styled diff card inline. Agents have the same affordance via `POST /agents/:id/diff`, so an agent finishing a refactor can show its own work as a styled diff instead of a wall of text.
 
 ### Built-in editor
 
-It can be convenient to make quick edits manually from isomux itself, especially in the remote server setup. The editor side panel opens files in CodeMirror, an open-source web editor component. Humans can open files via `/isomux-edit <path>`, whle agents can `POST /agents/:id/edit-file` to offer an "[Open in editor]" card. Same human/agent symmetry as the [diff tool](#built-in-diff-tool).
+The tool from which I edit this post - especially convenient with a remote server. The editor side panel opens files in CodeMirror, an open-source web editor component. Humans can open files via `/isomux-edit <path>`, while agents can `POST /agents/:id/edit-file` to offer an "[Open in editor]" card.
 
 <BlogImage
   src="/blog/isomux/built-in-editor.jpeg"
@@ -603,19 +608,9 @@ When you send a message, you don't get a single response back. You get events ov
 
 A single user message can trigger a stream that lasts minutes. The SDK exposes this as an async iterator you read in a loop.
 
-Sessions have an ID. If your application crashes or restarts, you can resume a session by its ID and the conversation history carries over.
+Sessions have an ID. If your application crashes or restarts, you can resume a session by its ID and the conversation history carries over.[^sdk-churn]
 
-#### V1 vs V2
-
-As of April 2026, the SDK has two versions. V1 (`query()`) is a fire-and-forget async call: you send a message and it runs to completion. There's no handle to grab, so there's no way to interrupt it.
-
-V2 (`unstable_v2_createSession`) gives you a persistent session object with `send()`, `stream()`, and `close()`.
-
-This makes abort possible: call `close()` to kill the stream, then `resumeSession(sessionId)` to resume that same stream again, perhaps with a new user message at the end. In contrast, V1's `query()` always runs to completion.
-
-Isomux needs the ability to abort agents (e.g., the user does Ctrl+C to add, "Sorry, I meant..."), so we chose V2 even though it's in alpha.
-
-For now, V2 seems a bit buggy. Sometimes, the message order gets fumbled. [Here](https://github.com/nmamano/isomux/blob/62953229195fc50781eea1f384322c64953ecf28/docs/sdk-investigation.md) is an example of the kind of bugs I ran into.
+[^sdk-churn]: The SDK's programmatic interface has changed shape over time (an early fire-and-forget query() call, later a session-based API). Isomux needs to abort a run mid-turn and resume it afterward, so it wraps whatever the SDK exposes behind its own session interface (send(), close(), resume-by-id), which keeps the rest of the code insulated from the churn.
 
 ### How Codex Differs
 
@@ -647,10 +642,10 @@ In all three cases, the meta-harness provides the agents with an API to perform 
 
 [^multi-provider-caveats]: There's a lot of nuance to this. Some caveats:
 
-    - Isomux has an embedded terminal too, so you _can_ run any TUI, but it won't be "Isomux-aware".
-    - Orca still has harness-specific code, like custom hooks. Just less than Isomux.
-    - AdaL is closed source so I may have the details wrong.
-    - There are many other tools in this space I haven't looked into.
+- Isomux has an embedded terminal too, so you _can_ run any TUI, but it won't be "Isomux-aware".
+- Orca still has harness-specific code, like custom hooks. Just less than Isomux.
+- AdaL is closed source so I may have the details wrong.
+- There are many other tools in this space I haven't looked into.
 
 ---
 
