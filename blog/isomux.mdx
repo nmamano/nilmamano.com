@@ -1,12 +1,14 @@
 ---
-title: "Isomux Design and Architecture"
+title: "Isomux: Designing a Meta-Harness"
 date: "2026-04-03"
 excerpt: "Design, architecture, and takeaways from building a meta-harness that supports multi-user, multi-device, and multi-agent conversations."
 coverImage: "/blog/isomux/cover.jpeg"
 categories: ["ai", "swe"]
 ---
 
-In this post, I describe how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and what I learned about designing meta-harnesses. I describe independently-developed features, like: [inter-agent skills](#applications), "Google Docs"-style [live collaboration](#human-collaboration), [meta-harness reflection](#meta-harness-reflection), a [REST-API-for-UI architecture](#giving-agents-ui-superpowers), [hierarchical agents](#hierarchical-agents) and [memory](#hierarchical-memory), and [non-linear task hand-offs](#shared-task-board).
+This post covers how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and what I learned about designing meta-harnesses.
+
+I describe independently-developed features like [inter-agent skills](#applications), "Google Docs"-style [live collaboration](#human-collaboration), [meta-harness reflection](#meta-harness-reflection), [agent-driven UI](#giving-agents-ui-superpowers), [hierarchical agents](#hierarchical-agents), and [non-linear task hand-offs](#shared-task-board).
 
 <Toc />
 
@@ -24,151 +26,116 @@ I reached Level 6 in [Steve Yegge's hierarchy](https://steve-yegge.medium.com/we
   alt="My weekly commit count from Oct 2024 to mid-2026, color-coded by daily-driver tool: writing BCtCI (Oct-Dec 2024), then Cursor at Yegge Level 4, then Claude Code at Level 5, then Isomux at Level 6. Throughput climbs sharply as the driver moves up the levels, with isomux-era weeks peaking around 150 commits"
 />
 
-The main friction with running multiple agents in parallel was terminal management; I had a mix of local and remote sessions[^remote-only] and was ssh'ing all the time.
+Isomux started as a nicer way to manage agents; back then, I had a mix of local and remote sessions.[^remote-only] For the former, I had to keep my laptop open; for the latter, I had to ssh all the time.
 
 [^remote-only]: Tasks like [model training](/blog/wall-game-ai) can only be done remotely.
 
-[Tmux](https://github.com/tmux/tmux/wiki) and [cmux](https://cmux.com/) helped. But what actually did it for me was:
+The fix was to run all my agents on a server with a browser UI:
 
-1. Building a browser-based, multi-provider agent management tool.
-2. Running it in a server in the same VPN as my laptop and phone.
+- All my devices see the same agents and conversations.
+- All my agents outlive my laptop and see the same environment.
 
-This simplified the two ends of my workflow:
+Over time, I developed Isomux into a **meta-harness**: Claude Code and Codex are harnesses around models, while Isomux sits one level above them and runs them side by side.[^meta-harness]
 
-- **How I reach my agents:** all devices see the same agents and conversations.
-- **What my agents can do:** they all see the same environment.
-
-That was the starting premise. Since then, I've been rethinking agent management. The new thesis is:
+This refined my thesis of what a meta-harness should be:
 
 <Callout>
-  Every conversation should be [multi-user](#human-collaboration),
+  **Thesis:** every conversation should be [multi-user](#human-collaboration),
   [multi-agent](#agent-to-agent-communication),
   [multi-provider](#how-codex-differs), and
   [multi-device](#remote-user-authorization).
 </Callout>
 
+[^meta-harness]: Databricks' [Omnigent post](https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents) (June 2026) names this layer a _meta-harness_: a system that sits above individual agent harnesses to combine, control, and share them. Isomux predates it by two months, but I've adopted the term.
+
 ### Office metaphor
 
-My tool, [Isomux](https://isomux.com) (Isometric Multiplexer), has something extra: it's cute.
+Isomux (Isometric Multiplexer) has something extra: it's cute.
 
-<BlogImage
-  src="/blog/isomux/cover.jpeg"
-  alt="Isomux office view with agents at desks"
-/>
+<BlogVideo src="/blog/isomux/cover.mp4" width="70%"/>
 
-I spend all day in the agent management tool... it had to be cute.
+I spend all day managing agents, and I wasn't a fan of the Claude Code UX. I got a bit creative and made an [office metaphor](https://x.com/mom_agency_/status/2054909371071582501?s=20) for agents (with isometric graphics for the nostalgia).
 
-The idea is to create an [office metaphor](https://x.com/mom_agency_/status/2054909371071582501?s=20) for agents (with isometric graphics for the nostalgia hit). Each agent has a customizable name and look and sits at a desk. You see who is working, who's sleeping, and who has their hand raised at a glance.
+Each agent has a customizable name and look and sits at a desk. You see who is working, who's sleeping, and who needs you (hand raised) at a glance.
 
-The thesis is that **by anthropomorphizing agents, we reduce cognitive load**; we're more used to coordinating humans than terminals.
+The idea is that **by anthropomorphizing agents, we reduce cognitive load**; we're more used to coordinating humans than terminals.
 
-Try [the demo](https://isomux.com/demo) and see if it clicks. The source is on [github.com/nmamano/isomux](https://github.com/nmamano/isomux).
+In the [hierarchical agents](#hierarchical-agents) section, we'll see more implications of this metaphor.
 
 ## Architecture Overview
 
-Claude Code and Codex are harnesses around models. Isomux is a **meta-harness**: it sits one level above them and runs them side by side.[^meta-harness]
+Isomux is a single [bun](https://bun.com/) process that:
 
-Under the hood, Isomux is a single [bun](https://bun.com/) process that:
+- serves the browser frontend
+- talks to browsers over WebSocket for live updates
+- exposes a REST API for everything else
+- manages agent lifecycles and sessions
 
-- serves the browser frontend,
-- talks to browsers over WebSocket,
-- manages agent lifecycles,
-- and runs agent sessions on either the [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) or the [Codex CLI's App Server](https://github.com/openai/codex), behind a shared backend abstraction.
-
-There are a few different approaches to making a meta-harness multi-provider; the [appendix](#appendix-three-ways-to-make-a-meta-harness-multi-provider) compares the one Isomux takes (drive each provider's SDK) against alternatives.
-
-[^meta-harness]: Databricks' [Omnigent post](https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents) (June 2026) names this layer a _meta-harness_: a system that sits above individual agent harnesses to combine, control, and share them. Isomux predates it by two months, but I've adopted the term.
+The server is event-driven. Updates come in from three ends: browsers (over WebSocket), the REST API, and the LLM providers (via the agent sessions). Everything funnels into a single event loop, where each event can trigger some combination of: (a) browser updates via WebSocket, (b) agent session updates, and (c) state writes (all the state is stored in `~/.isomux`).
 
 <BlogImage
   src="/blog/isomux/architecture.png"
-  alt="Isomux system design: browser clients connect over WebSocket to the Bun service, which runs persistent agents backed by Claude Code SDK sessions and persists state to the local file system"
+  alt="Isomux system design: two users' devices talk to the bun service over WebSocket and a REST API; inside the service, an agent lifecycle + event loop runs the agents, connected through a shared backend abstraction to Claude Agent SDK and Codex App Server sessions, which reach Anthropic's and OpenAI's servers; state persists to the local file system (~/.isomux)"
 />
 
-<Callout>
-  I'm building Isomux from inside Isomux since the first day. Developing a
-  dev tool from itself is fun!
-</Callout>
+Claude agents use the [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) and Codex agents use the [Codex CLI's App Server](https://github.com/openai/codex), both behind a shared backend abstraction. There are multiple ways of making a meta-harness multi-provider; the [appendix](#appendix-three-ways-to-make-a-meta-harness-multi-provider) shows a comparison.
 
-The Isomux server reads each agent's event stream in an async loop, converting SDK events into two things browsers care about: **log entries** for the conversation view, and **agent state** for the character animations and notifications (thinking, tool calling, waiting, etc.).
+<Callout>
+  I've been building Isomux from inside Isomux since the first day. Developing a dev tool from itself is fun!
+</Callout>
 
 ### Meta-harness reflection
 
-Every knob in Isomux can be tweaked with a REST API, not just UI buttons.
+Isomux has many features and configurations, but every knob in the UI can also be tweaked with a REST API.
 
-This pays off when you describe the REST API in the agents' own system prompt. The agents running _inside_ the office understand it and can control their own setup while running.
+This pays off when you describe the API in the agents' system prompt. The agents running _inside_ the office understand it and can control their own setup (reflection, in the programming-language sense).
 
 For example, an agent can:
 
-1. Create a new room.
+1. Create a new room: `POST /api/rooms`
+2. Spawn a teammate in it: `POST /api/agents { roomId }`
+3. Set the teammate's model and system prompt: `PATCH /api/agents/:id`
+4. Create a task on the shared task board: `POST /api/tasks`
+5. Assign it to the teammate: `PATCH /api/tasks/:id { assignee }`
+6. Message the teammate to start working on it: `POST /api/agents/:id/messages { text }`
 
-`POST /api/rooms`
-
-2. Spawn a teammate in it.
-
-`POST /api/agents { roomId }`
-
-3. Set the teammate's model and system prompt.
-
-`PATCH /api/agents/:id`
-
-4. Create a task on the shared task board.
-
-`POST /api/tasks`
-
-5. Assign it to the teammate.
-
-`PATCH /api/tasks/:id { assignee }`
-
-6. Message the teammate to start working on it.
-
-`POST /api/agents/:id/messages { text }`
-
-There is a system based on "scoped tokens" that limits which agents (and humans) can do which actions.
+Scoped tokens limit which agents (and humans) can do which actions. Users can promote an agent to have more privileges; when they do, the server starts injecting a mention of the additional API endpoints into their system prompt, so agents know what they can do.
 
 ### Giving Agents UI Superpowers
 
-Meta-harness reflection can also enhance the agents' UI capabilities. Here's a general recipe:
+The REST API can also enhance the agents' UI capabilities, so they can put things in chat beyond text.
 
-1. Add a REST API to the server for inserting custom components into agent chats.
-2. Tell agents how to use the API in the system prompt.
+Here's the general recipe:[^image-render-hack]
 
-Once those 2 pieces are in place, you can start giving your agents structured affordances:
+1. Add a REST endpoint for inserting a custom component into the agent chat.
+2. Tell agents how to use the endpoint in the system prompt.
 
-- Render styled side-by-side diffs in chat:
+Once those two pieces are in place, you can start giving your agents "UI superpowers":
 
-`POST /agents/:id/diff { dir }`
-
-- Surface "Open in editor" cards for files:
-
-`POST /agents/:id/edit-file { path }`
-
-- Surface "Copy to terminal" cards for commands:
-
-`POST /agents/:id/terminal-command { command }`
-
-- Render images in chat:
-
-`POST /agents/:id/read-file { path }`
+- Render styled side-by-side diffs in chat: `POST /agents/:id/diff { dir }`
+- Surface "Open in editor" cards for files: `POST /agents/:id/edit-file { path }`
+- Surface "Copy to terminal" cards for commands: `POST /agents/:id/terminal-command { command }`
+- Render images in chat: `POST /agents/:id/read-file { path }`
 
 <BlogImage
   src="/blog/isomux/superpowers.png"
   alt="High-level architecture: a user talks to a custom web UI on the left, which exchanges messages with a server on the right (e.g. Bun) that wraps Agent SDKs, holds the system prompts that teach agents about the API, and exposes a custom REST API at /agents/:id/* for diff, edit-file, terminal-command, message, read-file, and other endpoints. The chat panel shows examples of the resulting custom components: an inline diff, an 'Open in editor' card, a 'Copy to terminal' card, and an inter-agent message"
 />
 
-This pattern is used in many of [the QoL features](#qol-features) below.[^image-render-hack]
-
 [^image-render-hack]: This design wasn't obvious from the start. For example, when I first implemented inline image support, I used a "hack": if the agent read an image with the Read Tool, the server would send it to the UI for rendering in the chat. The system prompt had to explain the convention. It worked, but it co-opted a tool meant for something else.
 
 ### Office-to-office communication
 
-One nice consequence of the REST API is that if two Isomux processes can reach each other, agents in one can call the REST endpoints of the other. They can drop tasks on each other's boards, send messages, etc.
+The REST API had a fun consequence: if two Isomux processes could reach each other, agents in one could call the endpoints of the other.
 
-I discovered this [accidentally](https://x.com/Nil053/status/2052268533535649994?s=20).
+I discovered this [accidentally](https://x.com/Nil053/status/2052268533535649994?s=20) when an agent in my laptop office filed a task on the task board of my server office (both were in the same VPN).
 
 <BlogImage
   src="/blog/isomux/cross-office.png"
   alt="Agent 1, running in a laptop office, creates a task on the task board of an Isomux server office reached over Tailscale at auntie:4000"
 />
+
+The scoped-token system later closed this hole: every agent request needs a token issued by the office it targets.
 
 ## Hierarchical Agents
 
@@ -185,7 +152,7 @@ This hierarchy affects:
 - The UI (you only see agents in the same room at once)
 - The user-defined system prompt(s)
 - Agent memory
-- Usage statistics
+- Usage tracking
 
 ### Persistent agents
 
@@ -198,47 +165,56 @@ When you click an empty desk to spawn an agent, you provide:
 - the backend (claude or codex), model, permission mode, thinking effort, etc.
 - an agent-specific (user-provided) system prompt
 
-This information gets persisted in `~/.isomux/`.
+Agents also have:
 
-Over time, this persistent agent develops:
-
-- Its own conversation history that can be resumed with `/resume` and inspected by other agents.
-- Its own memories.
-
-<Callout>
-Why not just use `AGENTS.md`? Because you may want multiple agents with different roles in the same folder. E.g., you can have a driver agent and a reviewer agent, or a frontend agent and a backend agent. Each can get a custom identity.[^claudemd] One way to replicate this outside of Isomux is with skills, but it adds the extra step of calling a skill at the beginning of each session.
-</Callout>
+- Their own conversation history that can be resumed with `/resume` and inspected by other agents
+- Their own memories
+- Their own usage tracking
+- Their own inbox other persistent agents can reach it at
 
 Crucially, persistent agents enable [agent-to-agent communication](#agent-to-agent-communication). The agent exists even when there's no ongoing session, meaning that other agents have a target to message.
 
-[^claudemd]: Also, Claude agents don't follow the AGENTS.md convention (they expect CLAUDE.md), and they don't always read it. In Isomux, I inject the user-defined system prompts directly into context.
+<Callout title="Why not just use a folder with AGENTS.md?">
+Something feels nice about going to different agents for different things.
 
-### Hierarchical prompts
+For example, my Tax Expert agent did my taxes. When I go back to her next year, I'll find all my past tax-related sessions and attachments there - and she will _just know_ to search them for relevant context. And she will have memories from last year. And if another agent, like my Home Assistant agent, has some question about taxes, they _just know_ they can direct the question to her.
 
-The system prompt is assembled from a mix of hardcoded sections and optional, user-defined sections (recall that, due to [meta-harness reflection](#meta-harness-reflection), anything that is user-defined can also be agent-defined):
+A folder gives you most of that; e.g., `AGENTS.md` can capture an agent's personality, `/resume` is already per folder, and so are Claude's built-in memory capabilities. But I think coupling folders and agent identities is wrong. (1) You may want multiple agents with distinct identities in the same folder (e.g., a frontend agent and a backend agent); (2) You may want to move an agent across folders without losing its identity. (3) You are also coupling the backend (Claude vs Codex) with the agent identity. A Codex agent in that folder won't see Claude's memories.[^claudemd]
+</Callout>
 
-1. **Introduction** (hardcoded): establishing the setting: "You are 'NAME', an agent in room 'ROOM NAME' of the Isomux office. ..."
-2. **Meta-harness features** (hardcoded): a description of how to use Isomux features, with subsections like "How to discover other office agents", "How to use the task board", "How to show a styled code diff", etc. The descriptions are brief, leaving breadcrumbs so the agent can load in details as needed.
-3. **Manager prompt** (user-defined): instructions for the specific human user that spawned the agent (independent of which room the agent is in).
-4. **Office prompt** (user-defined): applies to every agent in the office. This is the ChatGPT-equivalent of "custom instructions" that apply to every conversation.
-5. **Room prompt** (user-defined): applies to every agent in a given room.
-6. **Agent prompt** (user-defined): applies to a single agent.
-7. **Memory** (agent-defined): office-wide, room-wide, and per-agent memories for this agent.
+[^claudemd]: There are other issues with AGENTS.md, like the fact that Claude agents don't follow the convention (they expect CLAUDE.md).
 
-Rooms let you group agents that need a shared context, which you can put in the room-wide system prompt. E.g., you could have a room for your day job and a room for your side projects; or each user in the same office could get their own room.
+### Hierarchical system prompts
+
+The system prompt for a given agent is assembled from a mix of hardcoded, user-defined, and agent-defined sections:[^agents-too]
+
+[^agents-too]: Recall that, due to [meta-harness reflection](#meta-harness-reflection), anything that is user-defined can also be agent-defined and vice versa.
+
+1. **Introduction** (hardcoded): establishes the setting: "You are `NAME`, an agent in room `ROOM_NAME` of the Isomux office. ..."
+2. **Meta-harness features** (hardcoded): a description of how to use Isomux features, with subsections like "How to discover other office agents", "How to use the task board", "How to show a styled code diff", etc.
+3. **Manager prompt** (user-defined): information about the specific human user who spawned the agent (independent of which room the agent is in).
+4. **Office prompt** (user-defined): instructions for every agent in the office. (This is the ChatGPT-equivalent of "custom instructions" that apply to every conversation.)
+5. **Room prompt** (user-defined): instructions for every agent in a given room.
+6. **Agent prompt** (user-defined): instructions for that agent.
+7. **Manager memories** (agent-defined): memories about the specific human user who spawned the agent.
+8. **Office memories** (agent-defined): office-wide memories.
+9. **Room memories** (agent-defined): room-wide memories.
+10. **Agent memories** (agent-defined): memories for that agent.
+
+User- and agent-defined sections are optional. More on memory later.
+
+Rooms let you group agents that need a shared context. E.g., you could have a room for your day job and a room for your side projects; or each user in the same office could get their own room.
 
 <BlogImage
   src="/blog/isomux/hierarchical-prompts.png"
   alt="Isomux: 3 layers of user-defined system prompts (office-wide, per-room, per-agent) concatenated into a single system prompt and sent to the agent"
 />
 
-You can see the full raw system prompt for my "Isomuxer1" agent in my room "Isomux Dev" [here](https://gist.github.com/nmamano/9baa3fbcc7fb524400a83b8effdefa21) (you can see the full prompt for a given persistent agent with `/isomux-system-prompt`).
+You can see the full prompt for a given persistent agent with `/isomux-system-prompt`. [Here](https://gist.github.com/nmamano/9baa3fbcc7fb524400a83b8effdefa21) is the output for my "Isomuxer1" agent in my room "Isomux Dev".
 
 ### Hierarchical memory
 
-Isomux has a simple memory system driven by the agents themselves.[^mem0]
-
-[^mem0]: My first memory attempt used the [Mem0](https://mem0.ai) OSS library, which extracts facts after every turn and inserts relevant memories at the beginning of each turn. I implemented an [isomux mem0 plugin](https://github.com/nmamano/isomux-mem0) for this. It's an automated memory system: the agent doesn't need to call any endpoints or take any actions. It's also backed by a vector DB instead of plain files. However, it had two issues. First, it doesn't support hierarchical scopes. Second, its default extraction over-captured, sweeping in things that didn't need to outlast the current session. I decided to start with the simpler, agent-driven approach.
+Isomux has hierarchical memory because a fact learned about the office shouldn't be trapped in one agent, and a fact about one agent shouldn't pollute the whole office.
 
 There are four kinds of memory scopes, mirroring the four kinds of user-defined system prompts:
 
@@ -247,34 +223,29 @@ There are four kinds of memory scopes, mirroring the four kinds of user-defined 
 - Room-wide memories
 - Agent-specific memories
 
-Within each scope, memory is just a plain text file persisted in `~/.isomux`.
+Other than the hierarchy aspect, I went for simplicity because memory is finicky. A prior, more sophisticated attempt didn't work well.[^mem0]
 
-Agents can update the memories via 3 API endpoints:
+[^mem0]: My first memory attempt used the [Mem0](https://mem0.ai) OSS library, which extracts facts after every turn and inserts relevant memories at the beginning of each turn. I implemented an [isomux mem0 plugin](https://github.com/nmamano/isomux-mem0) for this. It's an automated memory system: the agent doesn't need to call any endpoints or take any actions. It's also backed by a vector DB instead of plain files. However, it had two issues. First, it doesn't support hierarchical scopes. Second, its default extraction over-captured, sweeping in things that didn't need to outlast the current session. I decided to start with the simpler, agent-driven approach.
 
-1. APPEND(memory, scope): appends a memory to the end of the file as a bullet point, injecting who added it and the date.
-2. READ(scope): reads all the memories in a scope
+That's why, within each scope, memory is just a plain text file persisted in `~/.isomux`, and why the system is driven by the agents themselves. They interact with memories via 3 API endpoints:
+
+1. APPEND(memory, scope): appends a memory to the end of the file as a bullet point, inserting who added it and the date.
+2. READ(scope): reads all the memories in a scope.
 3. UPDATE(scope, new content): updates the entire file for that scope.
 
-The hard-coded system prompt instructs agents how to use the endpoints and drives the behavior we want, such as:
+Instead of overarchitecting the system to enforce rules like "an agent shouldn't be able to wipe room-wide memories for a room it's not in", we use the system prompt to drive the behaviors we want:
 
 - Default to the append-only endpoint.
 - Consult with the human before adding office-wide memories.
 - If you need to modify or delete a memory, do it as a read-modify-write transaction.[^memorytransaction]
 
-[^memorytransaction]: The READ endpoint is generally not necessary, since relevant scopes are injected into the context with the system prompt. However, it's needed for a read-modify-write transaction. To avoid race conditions, the READ endpoint returns a revision number, which _must_ be passed in the UPDATE endpoint. If the scope has been modified since the READ, the UPDATE gets rejected.
+[^memorytransaction]: The READ endpoint is not usually necessary, since relevant scopes are injected into the context with the system prompt. However, it's needed for a read-modify-write transaction. To avoid race conditions, the READ endpoint returns a revision number, which _must_ be passed in the UPDATE endpoint. If the scope has been modified since the READ, the UPDATE gets rejected.
 
-Finally, the full history of memory updates is saved somewhere in `~/.isomux`, in case an agent does some destructive action with the UPDATE endpoint.
+The full history of memory updates is saved in `~/.isomux`, out of reach of the agents, in case an agent does a destructive UPDATE.
 
 ### Hierarchical usage
 
-The hierarchy even shows up in the books. The `/isomux-usage` command renders a table where token spend rolls up level by level: each agent's current **session**, summed into that **agent's** lifetime total, summed into **per-room** totals, and finally an **office-wide** grand total that even folds in cron-job spend.
-
-Here's a screenshot of the per-room section from my personal office:
-
-<BlogImage
-  src="/blog/isomux/usage.png"
-  alt="The Per-room section of the /isomux-usage table: one row per room with session and lifetime token spend (input/output tokens and dollar cost)"
-/>
+The hierarchy even shows up in the books. The `/isomux-usage` command renders a table where token spend rolls up level by level: each agent's current **session**, summed into that **agent's** lifetime total, summed into **per-room** totals, and finally an **office-wide** grand total that folds in cron-job spend.
 
 Getting these numbers right across session resumes and forks takes some care; those mechanics are in [the appendix on fork-aware usage accounting](#appendix-fork-aware-usage-accounting).
 
