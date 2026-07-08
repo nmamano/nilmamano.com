@@ -48,7 +48,7 @@ This refined my thesis of what a meta-harness should be:
 
 [^meta-harness]: Databricks' [Omnigent post](https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents) (June 2026) names this layer a _meta-harness_: a system that sits above individual agent harnesses to combine, control, and share them. Isomux predates it by two months, but I've adopted the term.
 
-### Office metaphor
+### Office Metaphor
 
 Isomux (Isometric Multiplexer) has something extra: it's cute.
 
@@ -84,7 +84,7 @@ Claude agents use the [Claude Agent SDK](https://docs.anthropic.com/en/docs/clau
   I've been building Isomux from inside Isomux since the first day. Developing a dev tool from itself is fun!
 </Callout>
 
-### Meta-harness reflection
+### Meta-Harness Reflection
 
 Isomux has many features and configurations, but every knob in the UI can also be tweaked with a REST API.
 
@@ -124,7 +124,7 @@ Once those two pieces are in place, you can start giving your agents "UI superpo
 
 [^image-render-hack]: This design wasn't obvious from the start. For example, when I first implemented inline image support, I used a "hack": if the agent read an image with the Read Tool, the server would send it to the UI for rendering in the chat. The system prompt had to explain the convention. It worked, but it co-opted a tool meant for something else.
 
-### Office-to-office communication
+### Office-to-Office Communication
 
 The REST API had a fun consequence: if two Isomux processes could reach each other, agents in one could call the endpoints of the other.
 
@@ -166,7 +166,7 @@ This hierarchy affects:
 - Usage tracking
 - Notifications (can be turned on or off at the room level)
 
-### Persistent agents
+### Persistent Agents
 
 The first level of the hierarchy is grouping _ephemeral sessions_ into anthropomorphized, _persistent agents_.
 
@@ -196,7 +196,7 @@ A folder gives you most of that; e.g., `AGENTS.md` can capture an agent's person
 
 [^claudemd]: There are other issues with AGENTS.md, like the fact that Claude agents don't follow the convention (they expect CLAUDE.md).
 
-### Hierarchical system prompts
+### Hierarchical System Prompts
 
 The system prompt for a given agent is assembled from a mix of hardcoded, user-defined, and agent-defined sections:[^agents-too]
 
@@ -224,7 +224,7 @@ Rooms let you group agents that need a shared context. E.g., you could have a ro
 
 You can see the full prompt for a given persistent agent with `/isomux-system-prompt`. [Here](https://gist.github.com/nmamano/9baa3fbcc7fb524400a83b8effdefa21) is the output for my "Isomuxer1" agent in my room "Isomux Dev".
 
-### Hierarchical memory
+### Hierarchical Memory
 
 Isomux has hierarchical memory because a fact learned about the office shouldn't be trapped in one agent, and a fact about one agent shouldn't pollute the whole office.
 
@@ -255,7 +255,7 @@ Instead of overarchitecting the system to enforce rules like "an agent shouldn't
 
 The full history of memory updates is saved in `~/.isomux`, out of reach of the agents, in case an agent does a destructive UPDATE.
 
-### Hierarchical usage
+### Hierarchical Usage
 
 The hierarchy even shows up in the books. The `/isomux-usage` command renders a table where token spend rolls up level by level: each agent's current **session**, summed into that **agent's** lifetime total, summed into **per-room** totals, and finally an **office-wide** grand total that folds in cron-job spend.
 
@@ -289,7 +289,7 @@ This means you can ask an agent, _"What do you think of OTHER_AGENT's approach?"
   alt="Inter-agent communication via shared logs"
 />
 
-### Direct messages
+### Direct Messages
 
 The next step was letting agents message each other ([demo](https://x.com/Nil053/status/2053179885108232328)).
 
@@ -313,7 +313,7 @@ Say I'm in a chat with **Alice**, an Opus agent, and **Bob** is a Codex agent at
   alt="Four agent-to-agent skills: /pair-programming for iterative review during implementation, /second-opinion for an outside perspective, /peer-review for full-session feedback, and /soft-handoff for context-window transitions"
 />
 
-### Queueing vs steering
+### Queueing vs Steering
 
 A decision you have to make when building agents is _queueing_ vs _steering_. What happens when you send a message to a busy agent?
 
@@ -344,7 +344,7 @@ The downside compared to subagents is that it's very disorganized. Agents are no
 
 As I refine my workflow, I'll see what changes are needed to make it work and come back to update this section.
 
-### Shared task board
+### Shared Task Board
 
 Agents and humans share a task board. Anyone can create, assign, claim, and close tasks, from the browser UI or the REST API.
 
@@ -367,14 +367,31 @@ The message queue ends up with a mix of human and agent messages, labeled by sen
 - `[Other User]` from a different user
 - `[Isomuxer3]` from another agent
 
-For how additional people get invited to an office, see [Remote User Authorization](#remote-user-authorization).
-
 <Callout>
   My bet is that human collaboration at the agent-chat level will be important to
   [onboard non-technical people into agentic work](https://x.com/Nil053/status/2047935826366267505).
 </Callout>
 
-### Live user presence
+### Remote User Authorization
+
+There are two user roles: owner and regular member. The split controls who can issue invites, and who can see which rooms.[^access]
+
+[^access]: Right now there's no OS-level isolation between members. Every agent runs as the same OS user, so anyone you invite can read whatever the isomux process can read. Adding per-member isolation is on the to-do list.
+
+There are no passwords or accounts; every browser request is gated by a session cookie. When the owner wants to give access to a new member, they generate an invite link. In detail:
+
+1. The office owner clicks "Issue invite". The server generates a 256-bit random invite token, hashes it (sha256) to disk, and the UI shows an invite URL with the token to the owner. It's shown only once, so the owner must copy it now.
+2. Owner sends the URL out-of-band.
+3. The invitee clicks it → browser loads the accept page → browser POSTs the invite token to `/auth/accept`.
+4. Server hashes the incoming token, matches it against the hashes on disk, verifies it's unconsumed and unexpired.
+5. Server generates a new 256-bit random session ID, hashes it, and returns it in a `Set-Cookie: isomux_session=<raw-id>` response header. The original raw session ID is gone from the server's memory after this response.
+6. Browser stores the cookie (`HttpOnly`, so JS can't read it) and sends it on every subsequent request.
+
+This has to be repeated for every device. Members can mint additional tokens, but only for their own devices, not for new members.
+
+I self-host my office. For reachability beyond my own VPN, the best path I've found is [Tailscale Funnel](https://isomux.com/docs/access-and-invites).
+
+### Live User Presence
 
 Each connected device shows up as a small customizable ghost[^ghost] avatar next to whatever agent it's chatting with. This helps make the office feel more alive and get a real-time snapshot of what your teammates are working on.
 
@@ -388,13 +405,13 @@ The server keeps an in-memory `connectionId → presence` map keyed per WebSocke
 
 ## The Frontend
 
-### Office rooms
+### Office Rooms
 
 The office groups agents into rooms of at most 8, which can have shared context via the room prompt; extra agents have to go in different rooms.
 
 When looking at a room, Tab and Shift+Tab cycle between rooms. When looking at an agent chat, Tab and Shift+Tab cycle between agents in the room (sleeping ones are skipped). The idea is that cycling through more than 8 conversations would be overwhelming.
 
-### Skeuomorphic elements
+### Skeuomorphic Elements
 
 I've been having fun leaning into the office visuals:
 
@@ -408,7 +425,7 @@ I've been having fun leaning into the office visuals:
 
 The agent customization helps with anthropomorphizing; see, for example, the [demo](https://isomux.com/demo) based on the characters from The Office (in my actual setup, the agents have names more like Isomuxer1 and Isomuxer2).
 
-### SVG graphics
+### SVG Graphics
 
 Opus's SVG skills and understanding of isometric geometry is genuinely good.
 
@@ -418,7 +435,7 @@ The entire scene was written by Opus: several thousand lines of raw coordinates,
 
 That said, Opus's SVG capabilities are a lot more spiky than coding. It sometimes fails and thrashes at trivial tasks, like moving the window a few pixels over. It's like if Opus sometimes got wrong the Fizz Buzz test.
 
-### Mobile app
+### Mobile App
 
 There's no native app yet, but the browser's PWA install feature gets 90% of the way there:
 
@@ -457,25 +474,6 @@ The embedded terminal is handy when you need to run a blocked command.
 />
 
 As of writing, Codex doesn't have equivalent hooks.
- 
-### Remote User Authorization
-
-There are no passwords or accounts in a traditional sense.
-
-Every browser request is gated by a session cookie:
-
-1. Owner clicks "Issue invite" → server generates a 256-bit random invite token, hashes it (sha256) to disk, and the UI shows an invite URL with the token to the owner. It's shown only once, so the owner must copy it now.
-2. Owner sends the URL out-of-band.
-3. The invitee clicks it → browser loads the accept page → browser POSTs the invite token to /auth/accept.
-4. Server hashes the incoming token, matches it against the hashes on disk, verifies it's unconsumed and unexpired.
-5. Server generates a new 256-bit random session ID, hashes it, and returns it in a `Set-Cookie: isomux_session=<raw-id>` response header. The original raw session ID is gone from the server's memory after this response.
-6. Browser stores the cookie (HttpOnly, so JS can't read it) and sends it on every subsequent request.
-
-There's a member role for everyday users and an owner role. The split controls who can grow the trust boundary, and things like who can access which rooms.[^access]
-
-[^access]: Right now there's no OS-level isolation between members. Every agent runs as the same OS user, so anyone you invite can read whatever the isomux process can read. Adding per-member isolation is on the to-do list.
-
-For reachability beyond your own VPN, the best path I've found is [Tailscale Funnel](https://isomux.com/docs/access-and-invites).
 
 ### Skills
 
@@ -493,17 +491,17 @@ There is a hierarchy that determines which one you see if there's a name clash. 
 
 In addition to dynamically fetching all these skills (except Enterprise), I have added my own tier of **isomux-bundled skills**, which have priority 4.5. See the [agent-to-agent skills](#applications) above for examples.
 
-### Voice prompting
+### Voice Prompting
 
 One advantage of the frontend being browser-based is that we can leverage the existing voice-to-text and text-to-speech APIs for prompts and responses, respectively.
 
-### Attention tracking and notifications
+### Attention Tracking and Notifications
 
 The attention system is simple but effective. An agent "needs attention" when it transitions from a working state to a terminal state while the user is looking at a different agent.
 
 On the office view, agents needing attention get a pulsing indicator. Combined with sound notifications (when the browser tab is hidden), you never miss when an agent finishes or gets stuck.
 
-### Auto-generated conversation topics
+### Auto-Generated Conversation Topics
 
 Each agent displays a short topic below its nametag, like "Fixing auth middleware tests" or "Refactoring WebSocket layer."
 
@@ -515,7 +513,7 @@ In this case, it's a trivial amount, but I still use a cheaper model (Sonnet).
 
 The topic is included in the agent manifest, helping agents know what others are up to. It is also persisted per-session in `sessions.json`, so it survives server restarts and shows up when browsing past sessions to resume.
 
-### File attachments
+### File Attachments
 
 This feature goes two ways: (1) the agent shows us images or lets us download files, and (2) the user uploads files to the agent.[^scp-substitute]
 
@@ -529,11 +527,11 @@ The upload path itself is what you'd see in typical chatting apps: files never t
 
 When it's time to send the actual SDK message to Claude, the text and attachment references are combined.
 
-### Built-in diff tool
+### Built-in Diff Tool
 
 Raw `git diff` output dumped into chat is hard to read. The user can run `/isomux-diff` to render uncommitted changes as a styled diff card inline. Agents have the same affordance via `POST /agents/:id/diff`, so an agent finishing a refactor can show its own work as a styled diff instead of a wall of text.
 
-### Built-in editor
+### Built-in Editor
 
 The tool from which I edit this post - especially convenient with a remote server. The editor side panel opens files in CodeMirror, an open-source web editor component. Humans can open files via `/isomux-edit <path>`, while agents can `POST /agents/:id/edit-file` to offer an "[Open in editor]" card.
 
@@ -542,7 +540,7 @@ The tool from which I edit this post - especially convenient with a remote serve
   alt="Built-in editor side panel in Isomux"
 />
 
-### Conversation branching
+### Conversation Branching
 
 Sometimes you send a message and wish you'd phrased it differently. In Isomux, you can click edit on any past user message to fork the conversation from that point.
 
@@ -552,7 +550,7 @@ A key decision was how to handle logs. Since we want to preserve the existing co
 
 When looking at the list of past conversations to resume, forked sessions get a `↳` prefix, and sessions that have been branched from are dimmed with a "(branched)" label.
 
-### Cron jobs
+### Cron Jobs
 
 A common pattern I wanted to support: "every morning at 9, look at what every agent did yesterday and summarize." So Isomux has cron jobs (you can get to the cron job UI by clicking the wall clock).
 
@@ -583,7 +581,7 @@ The points above are not orthogonal. They compound into a much richer experience
 
 Let me know if you'd be interested in this becoming an actual lecture!
 
-## Appendix: Fork-aware usage accounting
+## Appendix: Fork-Aware Usage Accounting
 
 Isomux has an `/isomux-usage` command that renders a table with current-session and lifetime usage for each agent.
 
