@@ -473,6 +473,8 @@ Before Anthropic added the `auto` permission mode, I ran all my agents in `bypas
 3. **Isomux config protection**: blocks all writes to `~/.isomux/`, since that directory is managed by the server. Read operations are allowed (agents need to read `agents-summary.json` to discover each other).
 4. **Secrets protection**: blocks reads of `.env` files, private keys, and credential files (agents get a clear error and a hint to ask the user instead).
 
+The hooks matter less now that `auto` mode exists, where a model classifier approves routine operations on its own. When something does get blocked, it surfaces in the agent's chat and I decide how to proceed. The hooks are still a nice safety net: a hook is a deterministic rule, so it holds even when the classifier gets something wrong.
+
 The embedded terminal is handy when you need to run a blocked command.
 
 <BlogImage
