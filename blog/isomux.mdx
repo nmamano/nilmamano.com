@@ -101,6 +101,13 @@ For example, an agent can:
 
 Scoped tokens limit which agents (and humans) can do which actions. Users can promote an agent to have more privileges; when they do, the server starts injecting a mention of the additional API endpoints into their system prompt, so agents know what they can do.
 
+Bonus: the UI formats curl calls to the API in a nicer format than general bash commands.
+
+<Image
+  src="/blog/isomux/curl-cards.png"
+  alt="Two collapsed tool-call rows in the isomux chat: a plain Bash row showing a raw git commit command, and below it an Isomux-tagged row reading 'Save a memory for this agent' with scope and text payload fields shown as chips"
+/>
+
 ### Giving Agents UI Superpowers
 
 The REST API can also enhance the agents' UI capabilities, so they can put things in chat beyond text.
