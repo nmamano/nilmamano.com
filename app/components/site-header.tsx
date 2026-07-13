@@ -67,7 +67,7 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
               currentRoute === "posts" ? "text-primary" : ""
             }`}
           >
-            Posts
+            Feed
           </Link>
           <Link href="/blog">
             <Button

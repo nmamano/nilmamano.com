@@ -3,10 +3,10 @@ import { PostFeed } from "../components/post-feed";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Posts",
+  title: "Feed",
   description: "Short-form posts by Nil Mamano.",
   openGraph: {
-    title: "Posts — Nil Mamano",
+    title: "Feed — Nil Mamano",
     description: "Short-form posts by Nil Mamano.",
     url: "https://nilmamano.com/posts",
   },
@@ -20,7 +20,7 @@ export default function PostsPage() {
   return (
     <div className="container mx-auto max-w-2xl px-4 py-12">
       <h1 className="text-3xl font-medium tracking-tighter sm:text-4xl mb-2 text-center">
-        Posts
+        Feed
       </h1>
       <p className="text-muted-foreground text-center mb-8">
         Short-form thoughts / Social media posts
