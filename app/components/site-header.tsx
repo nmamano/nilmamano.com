@@ -57,6 +57,14 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
               >
                 Research
               </Link>
+              <Link
+                href="/posts"
+                className={`leading-none transition-colors hover:text-foreground/80 ${
+                  currentRoute === "posts" ? "text-primary" : ""
+                }`}
+              >
+                Posts
+              </Link>
             </nav>
           )}
         </div>
