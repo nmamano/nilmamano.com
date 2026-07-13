@@ -103,7 +103,7 @@ Scoped tokens limit which agents (and humans) can do which actions. Users can pr
 
 Bonus: the UI formats curl calls to the API in a nicer format than general bash commands.
 
-<Image
+<BlogImage
   src="/blog/isomux/curl-cards.png"
   alt="Two collapsed tool-call rows in the isomux chat: a plain Bash row showing a raw git commit command, and below it an Isomux-tagged row reading 'Save a memory for this agent' with scope and text payload fields shown as chips"
 />
@@ -304,6 +304,13 @@ The next step was letting agents message each other ([demo](https://x.com/Nil053
 Agent-to-agent messages go through `POST /api/agents/:id/message` to the isomux server. You can name the receiving agent you want them to message, and the sender will look up their ID in the manifest.
 
 There's no automatic reply. The receiver can choose to respond (another POST going the other way), ignore, or take an action and move on.
+
+Agents can also schedule messages for themselves (or others) in the future. For example, the screenshot below shows an agent using this feature to check on a training run for my [Wall Game AI](/blog/wall-game-ai) every 3h.
+
+<BlogImage
+  src="/blog/isomux/scheduled-messages.png"
+  alt="An agent monitoring a Wall Game AI training run via a self-perpetuating chain of scheduled messages: the prompt tells it to check training progress over ssh, post a status summary, and schedule the next check in 3 hours; below, the agent reports all-healthy status (generation progress, pace, ETA, GPU utilization) and re-arms the chain"
+/>
 
 ### Applications
 
