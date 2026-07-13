@@ -23,7 +23,7 @@ export default function PostsPage() {
         Posts
       </h1>
       <p className="text-muted-foreground text-center mb-8">
-        Short-form thoughts, owned here first.
+        Short-form thoughts / Social media posts
       </p>
 
       {showingHidden && (
