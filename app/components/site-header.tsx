@@ -57,18 +57,18 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
               >
                 Research
               </Link>
-              <Link
-                href="/posts"
-                className={`leading-none transition-colors hover:text-foreground/80 ${
-                  currentRoute === "posts" ? "text-primary" : ""
-                }`}
-              >
-                Posts
-              </Link>
             </nav>
           )}
         </div>
         <div className="ml-auto flex items-center space-x-3">
+          <Link
+            href="/posts"
+            className={`text-sm font-medium leading-none transition-colors hover:text-foreground/80 ${
+              currentRoute === "posts" ? "text-primary" : ""
+            }`}
+          >
+            Posts
+          </Link>
           <Link href="/blog">
             <Button
               variant="default"

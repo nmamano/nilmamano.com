@@ -10,14 +10,6 @@ import { CurationControls } from "./curation-controls";
 
 const DEV = process.env.NODE_ENV !== "production";
 
-function SourceBadge({ source }: { source?: string }) {
-  if (source === "x" || source === "both")
-    return <FaXTwitter className="inline h-3.5 w-3.5" title="from X" />;
-  if (source === "linkedin")
-    return <FaLinkedin className="inline h-3.5 w-3.5" title="from LinkedIn" />;
-  return null;
-}
-
 export function PostCard({
   post,
   onTagClick,
@@ -40,14 +32,11 @@ export function PostCard({
     <article className="card-border rounded-lg p-5 bg-card text-card-foreground hover:shadow-md transition-shadow">
       <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
         <time dateTime={post.date}>{formatDate(post.date)}</time>
-        <div className="flex items-center gap-2">
-          {post.status === "imported" && (
-            <span className="text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
-              imported
-            </span>
-          )}
-          <SourceBadge source={post.source} />
-        </div>
+        {post.status === "imported" && (
+          <span className="text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
+            imported
+          </span>
+        )}
       </div>
 
       {DEV && (

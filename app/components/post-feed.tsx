@@ -23,7 +23,10 @@ export function PostFeed({ posts, dev }: { posts: Post[]; dev: boolean }) {
   for (const p of posts) {
     for (const t of p.tags ?? []) tagCounts.set(t, (tagCounts.get(t) ?? 0) + 1);
   }
-  const allTags = [...tagCounts.entries()].sort((a, b) => b[1] - a[1]);
+  // "personal" is a filter only in dev; hidden from the public tag bar.
+  const allTags = [...tagCounts.entries()]
+    .filter(([t]) => dev || t !== "personal")
+    .sort((a, b) => b[1] - a[1]);
 
   const q = query.trim().toLowerCase();
   const filtered = posts.filter((p) => {

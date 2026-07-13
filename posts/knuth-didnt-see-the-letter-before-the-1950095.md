@@ -1,7 +1,7 @@
 ---
 date: '2025-12-06'
 timestamp: '2025-12-06T03:22:22.000Z'
-source: x
+source: both
 status: published
 xUrl: 'https://x.com/Nil053/status/1997144557121950095'
 tweetId: '1997144557121950095'
@@ -13,6 +13,7 @@ images:
     /posts/knuth-didnt-see-the-letter-before-the-1950095/1997144557121950095-G7dHTrGbcAArZZj.jpg
 tags:
   - research
+linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:7402912164795363328'
 ---
 Knuth didn't see the letter before the lecture, but I lined up after the lecture and showed him a copy in person.
 

@@ -175,3 +175,9 @@ We then simply construct the output text by concatenating byte_seq(X) for each t
 This covers vanilla BPE. Production tokenizers add tweaks like special handling of whitespace and punctuation. But the algorithm above is at the core of the tokenization process surrounding every LLM call.
 
 Further reading in the comments.
+
+An even faster encoding algorithm with a clever use of dynamic programming:
+https://github.blog/ai-and-ml/llms/so-many-tokens-so-little-time-introducing-a-faster-more-flexible-byte-pair-tokenizer/
+
+Karpathy lecture implementing BPE in Python:
+https://www.youtube.com/watch?v=zduSFxRajkE
