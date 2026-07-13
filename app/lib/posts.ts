@@ -66,13 +66,16 @@ export function getPostBySlug(slug: string): Post | null {
   }
 }
 
-// All slugs (including hidden) so permalinks are directly reachable.
-export function getAllPostSlugs(): string[] {
+// Post slugs. By default includes hidden posts (so permalinks resolve in dev);
+// pass { publishedOnly: true } to exclude hidden ones (used for prod prerender).
+export function getAllPostSlugs(
+  { publishedOnly }: { publishedOnly?: boolean } = {}
+): string[] {
   if (!fs.existsSync(postsDirectory)) return [];
-  return fs
-    .readdirSync(postsDirectory)
-    .filter((f) => f.endsWith(".md"))
-    .map((f) => f.replace(/\.md$/, ""));
+  const all = readAll();
+  return (publishedOnly ? all.filter((p) => !isHidden(p)) : all).map(
+    (p) => p.slug
+  );
 }
 
 export function getPostStats() {

@@ -10,7 +10,8 @@ import { Metadata } from "next";
 const DEV = process.env.NODE_ENV !== "production";
 
 export async function generateStaticParams() {
-  return getAllPostSlugs().map((slug) => ({ slug }));
+  // In production only pre-render published posts; hidden ones 404.
+  return getAllPostSlugs({ publishedOnly: !DEV }).map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({
@@ -44,6 +45,8 @@ export default async function PostPermalink({
   const { slug } = await params;
   const post = getPostBySlug(slug);
   if (!post) notFound();
+  // Hidden (unpublished) posts are unreachable in production, like the feed.
+  if (!DEV && post.status === "imported") notFound();
 
   const bodyHtml = renderPostBody(post.content);
 

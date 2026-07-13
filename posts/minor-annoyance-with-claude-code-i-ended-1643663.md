@@ -2,7 +2,7 @@
 date: '2025-03-09'
 timestamp: '2025-03-09T10:09:54.000Z'
 source: x
-status: published
+status: imported
 xUrl: 'https://x.com/Nil053/status/1898677618431643663'
 tweetId: '1898677618431643663'
 segments: 2
