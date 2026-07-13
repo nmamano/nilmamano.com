@@ -123,6 +123,7 @@ Once those two pieces are in place, you can start giving your agents "UI superpo
 - Surface "Open in editor" cards for files: `POST /agents/:id/edit-file { path }`
 - Surface "Copy to terminal" cards for commands: `POST /agents/:id/terminal-command { command }`
 - Render images in chat: `POST /agents/:id/read-file { path }`
+- Screenshot web pages (e.g. a dev server) into chat: `POST /agents/:id/preview-url { url }`
 
 <BlogImage
   src="/blog/isomux/superpowers.png"
