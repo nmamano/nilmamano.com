@@ -29,9 +29,11 @@ export function PostCard({
   const isVideo = firstImage?.toLowerCase().endsWith(".mp4");
 
   return (
-    <article className="card-border rounded-lg p-5 bg-card text-card-foreground hover:shadow-md transition-shadow">
-      <div className="flex items-center justify-between text-sm text-muted-foreground mb-2">
-        <time dateTime={post.date}>{formatDate(post.date)}</time>
+    <article className="card-border rounded-lg px-5 pt-3 pb-5 bg-card text-card-foreground hover:shadow-md transition-shadow">
+      <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
+        <time dateTime={post.date} className="text-muted-foreground/60">
+          {formatDate(post.date)}
+        </time>
         {post.status === "imported" && (
           <span className="text-[10px] uppercase tracking-wide px-2 py-0.5 rounded-full bg-muted text-muted-foreground">
             imported
