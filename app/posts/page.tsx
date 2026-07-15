@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getAllPosts, getPostStats } from "../lib/posts";
 import { PostFeed } from "../components/post-feed";
 import { Metadata } from "next";
@@ -32,6 +33,14 @@ export default function PostsPage() {
           {stats.imported} imported/hidden. In production only the{" "}
           {stats.published} promoted ones appear. Curation buttons edit the
           posts/*.md files directly.
+          <div className="mt-2">
+            <Link
+              href="/posts/compose"
+              className="inline-block rounded border border-primary/40 px-3 py-1 text-primary hover:bg-primary/10"
+            >
+              ＋ New post (composer)
+            </Link>
+          </div>
         </div>
       )}
 

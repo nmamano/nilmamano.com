@@ -48,3 +48,6 @@ _source_assets/*.autosave.ipe
 .DS_Store
 
 .claude/worktrees
+# local import scratch (not for the repo)
+tools/linkedin-import-report.tsv
+tools/selfquote-merges.json
