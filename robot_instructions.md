@@ -9,7 +9,7 @@ This guide provides essential context for working with this Next.js portfolio co
 - **UI Components**: shadcn/ui with Tailwind CSS
 - **Email Service**: Contact form uses Resend API
 - **Validation**: Zod for form validation
-- **Content**: Blog posts use MDX format
+- **Content**: Long-form blog posts use MDX format (`blog/*.mdx`); short-form feed posts live in `posts/*.md` — see [`posts/README.md`](posts/README.md) for that format and how to add one (do not reverse-engineer it from code)
 
 ## Critical Environment Variables
 
