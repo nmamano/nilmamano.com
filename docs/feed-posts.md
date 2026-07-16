@@ -1,10 +1,14 @@
 # Feed posts (`/posts`)
 
 Short-form posts (the "Feed" — the stuff that also goes to X/LinkedIn). One
-Markdown file per post in this `posts/` directory. This is the source of truth;
+Markdown file per post in the `posts/` directory. This is the source of truth;
 posts are authored here first and syndicated out.
 
 You should not need to read code to add one. This is the format.
+
+> Note: every `.md` file in `posts/` is treated as a post, so a stray
+> non-post file there (a README, notes, etc.) breaks the build. That is why
+> this doc lives in `docs/`, not `posts/`.
 
 ## File
 
