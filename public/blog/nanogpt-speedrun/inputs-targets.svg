@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 252" role="img" aria-label="Inputs and targets are the same text shifted by one token" font-family="Inter, Arial, Helvetica, sans-serif">
+  <rect x="0" y="0" width="720" height="252" fill="#f7f8fa" rx="8"/>
+  <text x="20" y="30" fill="#2f3640" font-size="15" font-weight="bold">token buffer from disk</text>
+  <g font-family="monospace" font-size="15">
+    <rect x="20" y="45" width="70" height="34" fill="none" stroke="#5a6470" stroke-width="1.2"/><text x="55" y="67" text-anchor="middle" fill="#2f3640">464</text>
+    <rect x="95" y="45" width="70" height="34" fill="none" stroke="#5a6470" stroke-width="1.2"/><text x="130" y="67" text-anchor="middle" fill="#2f3640">3797</text>
+    <rect x="170" y="45" width="70" height="34" fill="none" stroke="#5a6470" stroke-width="1.2"/><text x="205" y="67" text-anchor="middle" fill="#2f3640">3332</text>
+    <rect x="245" y="45" width="70" height="34" fill="none" stroke="#5a6470" stroke-width="1.2"/><text x="280" y="67" text-anchor="middle" fill="#2f3640">319</text>
+    <rect x="320" y="45" width="70" height="34" fill="none" stroke="#5a6470" stroke-width="1.2"/><text x="355" y="67" text-anchor="middle" fill="#2f3640">262</text>
+    <rect x="395" y="45" width="70" height="34" fill="none" stroke="#5a6470" stroke-width="1.2"/><text x="430" y="67" text-anchor="middle" fill="#2f3640">2603</text>
+    <rect x="470" y="45" width="70" height="34" fill="none" stroke="#5a6470" stroke-width="1.2"/><text x="505" y="67" text-anchor="middle" fill="#2f3640">13</text>
+    <rect x="545" y="45" width="70" height="34" fill="none" stroke="#5a6470" stroke-width="1.2"/><text x="580" y="67" text-anchor="middle" fill="#2f3640">383</text>
+    <rect x="620" y="45" width="70" height="34" fill="none" stroke="#5a6470" stroke-width="1.2"/><text x="655" y="67" text-anchor="middle" fill="#2f3640">2415</text>
+  </g>
+  <text x="20" y="120" fill="#4a90d9" font-size="15" font-weight="bold">inputs: all but the last</text>
+  <rect x="20" y="130" width="595" height="34" fill="none" stroke="#4a90d9" stroke-width="2" rx="4"/>
+  <text x="317" y="152" text-anchor="middle" fill="#4a90d9" font-size="15" font-family="monospace">464 3797 3332 319 262 2603 13 383</text>
+  <text x="20" y="200" fill="#e0653e" font-size="15" font-weight="bold">targets: all but the first (shifted by one)</text>
+  <rect x="95" y="210" width="595" height="34" fill="none" stroke="#e0653e" stroke-width="2" rx="4"/>
+  <text x="392" y="232" text-anchor="middle" fill="#e0653e" font-size="15" font-family="monospace">3797 3332 319 262 2603 13 383 2415</text>
+</svg>

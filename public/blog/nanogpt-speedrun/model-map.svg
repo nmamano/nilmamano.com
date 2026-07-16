@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="185 5 370 445" role="img" aria-label="Model map: embedding, 12 blocks, output head, with tensor shapes" font-family="Inter, Arial, Helvetica, sans-serif">
+  <rect x="185" y="5" width="370" height="445" fill="#f7f8fa" rx="8"/>
+  <defs>
+    <marker id="arrow1" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#2f3640" />
+    </marker>
+  </defs>
+  <text x="360" y="26" text-anchor="middle" fill="#2f3640" font-size="16" font-family="monospace">token IDs, shape B × T</text>
+  <line x1="360" y1="36" x2="360" y2="60" stroke="#5a6470" stroke-width="1.5" marker-end="url(#arrow1)"/>
+  <rect x="240" y="62" width="240" height="44" rx="8" fill="none" stroke="#4a90d9" stroke-width="2"/>
+  <text x="360" y="89" text-anchor="middle" fill="#2f3640" font-size="16">embedding: ID to vector</text>
+  <line x1="360" y1="106" x2="360" y2="132" stroke="#5a6470" stroke-width="1.5" marker-end="url(#arrow1)"/>
+  <text x="372" y="124" text-anchor="start" fill="#2f3640" font-size="13" font-family="monospace">B × T × 768</text>
+  <rect x="200" y="136" width="320" height="150" rx="10" fill="none" stroke="#e0653e" stroke-width="2"/>
+  <text x="360" y="162" text-anchor="middle" fill="#2f3640" font-size="16" font-weight="bold">transformer block × 12</text>
+  <rect x="240" y="180" width="240" height="38" rx="6" fill="none" stroke="#e0653e" stroke-width="1.4"/>
+  <text x="360" y="204" text-anchor="middle" fill="#2f3640" font-size="15">attention: positions look left</text>
+  <rect x="240" y="230" width="240" height="38" rx="6" fill="none" stroke="#e0653e" stroke-width="1.4"/>
+  <text x="360" y="254" text-anchor="middle" fill="#2f3640" font-size="15">MLP: think about each position</text>
+  <line x1="360" y1="286" x2="360" y2="312" stroke="#5a6470" stroke-width="1.5" marker-end="url(#arrow1)"/>
+  <text x="372" y="304" text-anchor="start" fill="#2f3640" font-size="13" font-family="monospace">B × T × 768 (refined)</text>
+  <rect x="240" y="316" width="240" height="44" rx="8" fill="none" stroke="#3fa46a" stroke-width="2"/>
+  <text x="360" y="343" text-anchor="middle" fill="#2f3640" font-size="16">output head: vector to scores</text>
+  <line x1="360" y1="360" x2="360" y2="386" stroke="#5a6470" stroke-width="1.5" marker-end="url(#arrow1)"/>
+  <text x="372" y="378" text-anchor="start" fill="#2f3640" font-size="13" font-family="monospace">B × T × 50304</text>
+  <rect x="240" y="390" width="240" height="44" rx="8" fill="none" stroke="#5a6470" stroke-width="1.5"/>
+  <text x="360" y="410" text-anchor="middle" fill="#2f3640" font-size="16">loss: compare scores</text>
+  <text x="360" y="427" text-anchor="middle" fill="#2f3640" font-size="16">with actual next tokens</text>
+</svg>

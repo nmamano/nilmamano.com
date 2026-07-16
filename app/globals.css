@@ -54,7 +54,7 @@ body {
   
   /* Keep inline code (not in pre blocks) at a reasonable size */
   :not(pre) > code {
-    font-size: 1.05rem !important; /* Increased from 0.9rem */
+    font-size: 0.95rem !important; /* Was 1.05rem; monospace runs optically large next to 1rem prose */
   }
 
   /* Adjust the prose text size specifically for blog content */

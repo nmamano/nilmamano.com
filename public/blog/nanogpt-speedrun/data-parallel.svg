@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 300" role="img" aria-label="Data parallel training: each GPU computes gradients on its slice, all_reduce sums them, all apply the same update" font-family="Inter, Arial, Helvetica, sans-serif">
+  <rect x="0" y="0" width="720" height="300" fill="#f7f8fa" rx="8"/>
+  <defs>
+    <marker id="arrow3" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6 Z" fill="#2f3640" />
+    </marker>
+  </defs>
+  <rect x="40" y="30" width="640" height="46" rx="8" fill="none" stroke="#4a90d9" stroke-width="2"/>
+  <text x="360" y="58" text-anchor="middle" fill="#2f3640" font-size="15">one training batch: 524,288 tokens</text>
+  <g font-size="14">
+    <line x1="130" y1="76" x2="130" y2="106" stroke="#5a6470" stroke-width="1.4" marker-end="url(#arrow3)"/>
+    <line x1="290" y1="76" x2="290" y2="106" stroke="#5a6470" stroke-width="1.4" marker-end="url(#arrow3)"/>
+    <line x1="450" y1="76" x2="450" y2="106" stroke="#5a6470" stroke-width="1.4" marker-end="url(#arrow3)"/>
+    <line x1="610" y1="76" x2="610" y2="106" stroke="#5a6470" stroke-width="1.4" marker-end="url(#arrow3)"/>
+    <rect x="70" y="110" width="120" height="70" rx="8" fill="none" stroke="#5a6470" stroke-width="1.5"/>
+    <text x="130" y="135" text-anchor="middle" fill="#2f3640" font-weight="bold">GPU 0</text>
+    <text x="130" y="155" text-anchor="middle" fill="#2f3640">its slice,</text>
+    <text x="130" y="171" text-anchor="middle" fill="#2f3640">its gradient</text>
+    <rect x="230" y="110" width="120" height="70" rx="8" fill="none" stroke="#5a6470" stroke-width="1.5"/>
+    <text x="290" y="135" text-anchor="middle" fill="#2f3640" font-weight="bold">GPU 1</text>
+    <text x="290" y="155" text-anchor="middle" fill="#2f3640">its slice,</text>
+    <text x="290" y="171" text-anchor="middle" fill="#2f3640">its gradient</text>
+    <rect x="390" y="110" width="120" height="70" rx="8" fill="none" stroke="#5a6470" stroke-width="1.5"/>
+    <text x="450" y="135" text-anchor="middle" fill="#2f3640" font-weight="bold">GPU 2</text>
+    <text x="450" y="155" text-anchor="middle" fill="#2f3640">its slice,</text>
+    <text x="450" y="171" text-anchor="middle" fill="#2f3640">its gradient</text>
+    <rect x="550" y="110" width="120" height="70" rx="8" fill="none" stroke="#5a6470" stroke-width="1.5"/>
+    <text x="610" y="135" text-anchor="middle" fill="#2f3640" font-weight="bold">GPU 3 ...</text>
+    <text x="610" y="155" text-anchor="middle" fill="#2f3640">its slice,</text>
+    <text x="610" y="171" text-anchor="middle" fill="#2f3640">its gradient</text>
+  </g>
+  <line x1="130" y1="180" x2="352" y2="218" stroke="#3fa46a" stroke-width="1.4" marker-end="url(#arrow3)"/>
+  <line x1="290" y1="180" x2="356" y2="216" stroke="#3fa46a" stroke-width="1.4" marker-end="url(#arrow3)"/>
+  <line x1="450" y1="180" x2="364" y2="216" stroke="#3fa46a" stroke-width="1.4" marker-end="url(#arrow3)"/>
+  <line x1="610" y1="180" x2="368" y2="218" stroke="#3fa46a" stroke-width="1.4" marker-end="url(#arrow3)"/>
+  <rect x="210" y="222" width="300" height="44" rx="8" fill="none" stroke="#3fa46a" stroke-width="2"/>
+  <text x="360" y="242" text-anchor="middle" fill="#2f3640" font-size="15">all_reduce: gradients summed,</text>
+  <text x="360" y="259" text-anchor="middle" fill="#2f3640" font-size="15">every GPU applies the identical update</text>
+</svg>
