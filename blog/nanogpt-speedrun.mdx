@@ -162,7 +162,7 @@ Two dtype details: inputs become `int32` and targets `int64`, simply because tho
 
 The model has this shape:
 
-<BlogImage src="/blog/nanogpt-speedrun/model-map.svg" alt="Model map: embedding, 12 blocks, output head, with tensor shapes" width="60%" />
+<BlogImage src="/blog/nanogpt-speedrun/model-map.svg" alt="Model map: embedding, 12 blocks, output head, with tensor shapes" width="50%" />
 
 Each token ID becomes a list of 768 numbers - we say it's _embedded_ as a _vector_ in a 768-dimensional space. Twelve transformer blocks (identical structure, different parameters) refine those embeddings, letting information flow from earlier positions to later ones. At the end, the embedding at each position is converted into 50,304 scores, one per possible next token, and the scores are graded against what actually came next.
 
@@ -806,3 +806,5 @@ step:3500/3500 val_loss:3.27851 train_time:509.113s step_avg:145.46ms
 The first line, before any training, sits near 10.8, which is exactly the loss of assigning equal probability to all 50,257 tokens (the natural logarithm of 50,257 is 10.82). The final validation loss should land just below 3.28.
 
 Individual runs [vary by random seed](https://nilmamano.com/posts/does-halfway-loss-predict-the-final-loss-4150648), so serious speedrun claims are checked across multiple runs.
+
+_Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_new-blog-post-a-fully-annotated-nanogpt-share-7483412250561806336-w5it) or the [X post](https://x.com/Nil053/status/2077647110019928103)._
