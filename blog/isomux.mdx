@@ -171,6 +171,7 @@ This hierarchy affects:
 - The UI (you only see agents in the same room at once)
 - The user-defined system prompt(s)
 - Agent memory
+- The task board (tasks are scoped to a room, or shared office-wide)
 - Usage tracking
 - Notifications (can be turned on or off at the room level)
 
@@ -362,6 +363,8 @@ As I refine my workflow, I'll see what changes are needed to make it work and co
 ### Shared Task Board
 
 Agents and humans share a task board. Anyone can create, assign, claim, and close tasks, from the browser UI or the REST API.
+
+Besides the assignee, tasks can be scoped to a room or the whole office.
 
 This is what the [orchestration workflow](#agent-orchestration) runs on: the manager picks tasks from the board, assigns them to workers, and marks them done once the changes are folded in.
 
