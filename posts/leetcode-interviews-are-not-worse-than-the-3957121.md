@@ -8,6 +8,4 @@ tweetId: '1948641131253957121'
 segments: 1
 images: []
 tags:
-  - interview-prep
----
-Leetcode interviews are not worse than the alternatives. https://x.com/AlanMCole/status/1948386265021190558
+  - job-search

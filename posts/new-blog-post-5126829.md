@@ -10,18 +10,6 @@ segments: 2
 images:
   - /posts/new-blog-post-5126829/1999262401515126829-G77OjJBbUAE8u0t.jpg
 tags:
-  - interview-prep
+  - job-search
   - ai
   - blog
----
-New blog post:
-
-Herding 1440 Programs: Automating Large-Scale Codebase Changes for BCtCI
-
-I've been managing a codebase with 1440 BCtCI solutions (288 problems x 5 languages) since the book came out. In this post, I go over how I made this work more manageable (more "agentic") with LLMs. Prompts and scripts included.
-
-Link below.
-
----
-
-https://nilmamano.com/blog/herding-1440-programs

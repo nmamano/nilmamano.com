@@ -9,6 +9,4 @@ tweetId: '1897788483579867153'
 segments: 1
 images: []
 tags:
-  - interview-prep
----
-The only people who should be asking red-black tree questions in interviews are cherry farmers.
+  - job-search

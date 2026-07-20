@@ -7,9 +7,5 @@ linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:share:7303460517560365
 segments: 1
 images: []
 tags:
-  - interview-prep
+  - job-search
   - blog
----
-If you have any questions about Beyond Cracking the Coding Interview, we are doing a Reddit AMA on r/cscareerquestions with Gayle McDowell, Aline Lerner, and Mike Mroczka!
-
-https://lnkd.in/g5XCeEpN

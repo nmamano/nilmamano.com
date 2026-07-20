@@ -7,6 +7,4 @@ linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:ugcPost:74181804604652
 segments: 1
 images: []
 tags:
-  - interview-prep
----
-Mike Mroczka gifted me a 3D print of the clock in Beyond Cracking the Coding Interview. Cape included 😍
+  - job-search

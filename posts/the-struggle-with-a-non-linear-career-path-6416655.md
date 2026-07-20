@@ -17,21 +17,4 @@ images:
   - >-
     /posts/the-struggle-with-a-non-linear-career-path-6416655/2070167217816416655-HLq1h1IbcAAW8-3.jpg
 tags:
-  - career
----
-The struggle with a non-linear career path is telling a story that's easy for recruiters to understand.
-
-In my case, I have to convince AI startups that this makes sense:
-
-Theoretical PhD -> Big tech (infra) -> Interview prep book -> AI startup
-
-I realized my personal site and resume weren't positioning me well. Here are before/after pictures of how I tried to fix that.
-
-Examples:
-- "Academic background" is gone from the landing page.
-- There's a new positioning line at the top of the resume.
-
----
-
-http://nilmamano.com
-http://nilmamano.com/resume
+  - job-search

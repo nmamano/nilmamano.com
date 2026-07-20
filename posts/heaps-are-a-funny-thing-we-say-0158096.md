@@ -9,6 +9,4 @@ tweetId: '1874023423200158096'
 segments: 1
 images: []
 tags:
-  - interview-prep
----
-Heaps are a funny thing. We say they are priority queues, we visualize them as binary trees, and we implement them with arrays!
+  - job-search

@@ -7,10 +7,4 @@ linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:share:7366379291745415
 segments: 1
 images: []
 tags:
-  - interview-prep
----
-I helped edit a Pragmatic Engineer post! Go learn about the problem-solving strategies in Beyond Cracking the Coding Interview.
-
-Congratz Mike Mroczka
-
-(Re: Mike Mroczka's announcement: https://substack.com/profile/19162723-mike/note/c-149339625)
+  - job-search

@@ -13,10 +13,4 @@ images:
   - >-
     /posts/a-metaphor-for-problem-solving-techniques-as-shortest-p-7966125/1981634007478735114-G4AtmFyW0AE8dfX.jpg
 tags:
-  - interview-prep
----
-A metaphor for problem-solving techniques as shortest-path heuristics.
-
----
-
-Based on the "problem-solving boosters" from Beyond Cracking the Coding Interview.
+  - job-search

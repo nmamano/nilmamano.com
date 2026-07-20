@@ -13,11 +13,5 @@ images:
   - >-
     /posts/my-journey-up-the-steve-yegge-hierarchy-4168770/2057184996344168770-HIyW0xBa8AAkKxg.jpg
 tags:
-  - career
+  - job-search
   - personal
----
-My journey up the Steve Yegge hierarchy.
-
----
-
-Source: https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04

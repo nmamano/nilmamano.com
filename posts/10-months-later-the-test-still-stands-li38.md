@@ -10,10 +10,4 @@ images:
   - /posts/10-months-later-the-test-still-stands-li38/055-photo.png
 tags:
   - ai
-  - interview-prep
----
-10 months later, the test still stands. Neither GPT-5 nor Cursor's new stealth "code-supernova" model can solve this (GPT-5 thought for 2m 26s).
-
-Can't add images to reposts, so their new drawings will be in the comment.
-
-(Reposting my Pythagorean tree test: https://nilmamano.com/posts/my-personal-test-for-do-llms-still-li98)
+  - job-search

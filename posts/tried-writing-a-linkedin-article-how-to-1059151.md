@@ -9,9 +9,5 @@ tweetId: '1932711752481059151'
 segments: 1
 images: []
 tags:
-  - interview-prep
+  - job-search
   - blog
----
-Tried writing a LinkedIn article: "How to solve problems you have not seen before in a coding interview"
-
-It addresses a recurring problem: candidates become good at questions they have previously solved, but struggle with new ones.

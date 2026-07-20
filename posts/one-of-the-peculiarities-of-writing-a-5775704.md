@@ -11,6 +11,4 @@ images:
   - >-
     /posts/one-of-the-peculiarities-of-writing-a-5775704/1948645972755775704-Gwr7JuebgAYgZOQ.png
 tags:
-  - interview-prep
----
-One of the peculiarities of writing a DS&A book is having to come up with hundreds of arbitrary strings for problem examples.  (Credit to Gayle for these)
+  - job-search

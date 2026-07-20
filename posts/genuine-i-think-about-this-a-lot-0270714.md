@@ -10,17 +10,5 @@ images:
   - >-
     /posts/genuine-i-think-about-this-a-lot-0270714/1905960702990270714-GnNU1NpWEAA4vWr.jpg
 tags:
-  - interview-prep
+  - job-search
   - personal
----
-Genuine "I think about this a lot"
-
-Or at least I did when I was writing BCtCI.
-
----
-
-"show AND tell"
-
----
-
-Idea: gdocs extension that highlights sentences in different colors based on length. This way, you can visually spot where you are being monotonous.

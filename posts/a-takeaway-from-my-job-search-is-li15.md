@@ -7,8 +7,4 @@ linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:share:7457200469124337
 segments: 1
 images: []
 tags:
-  - career
----
-A takeaway from my job search is that experience with Docker and k8s is really important, so it's unfortunate that I didn't get that at Google (we used an internal stack).
-
-The irony is that k8s was originally based on borg, Google's internal version.
+  - job-search

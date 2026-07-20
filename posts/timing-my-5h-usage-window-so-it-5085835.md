@@ -10,6 +10,4 @@ segments: 1
 images: []
 tags:
   - ai
-  - career
----
-Timing my 5h usage window so it restarts at the midpoint of my agentic coding interview.
+  - job-search

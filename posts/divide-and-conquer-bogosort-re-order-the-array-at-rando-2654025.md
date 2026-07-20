@@ -10,6 +10,4 @@ segments: 1
 images: []
 tags:
   - research
-  - interview-prep
----
-Divide-and-conquer bogosort: re-order the array at random until the smallest half is before the largest half, and then sort each half recursively.
+  - job-search

@@ -13,10 +13,4 @@ images:
   - >-
     /posts/average-number-of-lines-of-code-of-2145070/1998842512971329886-G71QY9aaMAEssSH.png
 tags:
-  - interview-prep
----
-Average number of lines of code of BCtCI solutions by language (including tests). This is why people recommend Python for DS&A interviews.
-
----
-
-It's not only fewer lines, but also shorter lines. Here is a  comparison of the number of characters:
+  - job-search

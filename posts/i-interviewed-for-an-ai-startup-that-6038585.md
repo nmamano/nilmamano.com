@@ -9,8 +9,4 @@ tweetId: '2067764952296038585'
 segments: 1
 images: []
 tags:
-  - career
----
-I interviewed for an AI startup that hosts poker nights at their office.
-
-At no point during the process did I have the faintest sense of how it was going.
+  - job-search

@@ -10,11 +10,5 @@ images:
   - >-
     /posts/i-really-should-be-doing-interview-prep-4787511/2046777600404787511-HGedJawbMAAcAin.png
 tags:
-  - interview-prep
+  - job-search
   - personal
----
-I really should be doing interview prep... (like, actually)
-
----
-
-anyone hiring based on vanity github metrics?

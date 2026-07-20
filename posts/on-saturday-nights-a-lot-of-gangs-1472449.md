@@ -10,6 +10,4 @@ images:
   - >-
     /posts/on-saturday-nights-a-lot-of-gangs-1472449/1898586235511472449-GlkiCsgb0AAjNtp.jpg
 tags:
-  - interview-prep
----
-On saturday nights, a lot of gangs gather together on leetcode
+  - job-search

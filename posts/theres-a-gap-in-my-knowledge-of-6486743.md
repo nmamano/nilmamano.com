@@ -12,10 +12,4 @@ images:
     /posts/theres-a-gap-in-my-knowledge-of-6486743/1875158137516486743-GgXmR2JaQAA2eg3.png
 tags:
   - research
-  - interview-prep
----
-There's a gap in my knowledge of algorithms for counting problems. How do you count subarrays with sum at most k / at least k if negative numbers are allowed? Can it be done faster than O(n^2)?
-
----
-
-Someone showed me how to fill the gaps in my table in O(n log n) time. The idea is to use prefix sums + a self-balancing BST
+  - job-search

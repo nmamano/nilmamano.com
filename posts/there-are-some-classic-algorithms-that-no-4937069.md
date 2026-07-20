@@ -10,14 +10,4 @@ segments: 1
 images: []
 tags:
   - research
-  - interview-prep
----
-There are some classic algorithms that, no matter how many times I revisit them, I only ever feel like I "get it" for a fleeting moment. 🥲
-
-Examples:
-
-- KMP algorithm for string matching
-- Manacher's algorithm for listing palindromic substrings
-- Fenwick trees
-
-What's your DS&A cryptonite? Maybe I can tell you what made it finally click for me!
+  - job-search

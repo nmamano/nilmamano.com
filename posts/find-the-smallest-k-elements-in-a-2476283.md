@@ -11,15 +11,5 @@ images:
   - >-
     /posts/find-the-smallest-k-elements-in-a-2476283/1951362679622476283-GxSh-RgboAAfYa4.png
 tags:
-  - interview-prep
+  - job-search
   - blog
----
-"Find the smallest k elements in a list" is one of the most classic coding interview problems.
-
-In this new blog post, I use it as a launching pad to discuss the connections between sorting algorithms, heaps, and Quickselect.
-
-Link below.
-
----
-
-https://nilmamano.com/blog/top-k-problems

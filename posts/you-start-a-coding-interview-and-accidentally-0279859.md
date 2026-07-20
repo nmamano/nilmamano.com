@@ -8,7 +8,5 @@ tweetId: '1912470091490279859'
 segments: 1
 images: []
 tags:
-  - interview-prep
+  - job-search
   - personal
----
-You start a coding interview and accidentally press ctrl+A. wdyd?

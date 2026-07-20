@@ -10,10 +10,4 @@ segments: 1
 images: []
 tags:
   - ai
-  - career
----
-A lot of discourse about how AI will replace all SWEs.
-
-A lot of discourse about how AI is just hype.
-
-Not enough discourse about how to ride the line and use AI to write better code *and* faster *and* also become better SWEs along the way. I believe it's possible.
+  - job-search

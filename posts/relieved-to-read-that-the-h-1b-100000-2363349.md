@@ -9,10 +9,4 @@ tweetId: '1980829152472363349'
 segments: 2
 images: []
 tags:
-  - career
----
-Relieved to read that the  H-1B $100,000 fee doesn't apply when moving from one type of visa to another, such as from an F-1 visa (for international students) to H-1B.
-
----
-
-https://www.cbsnews.com/amp/news/100000-h-1b-visa-fee-who-pays/
+  - job-search

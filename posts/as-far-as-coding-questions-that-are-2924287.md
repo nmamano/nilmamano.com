@@ -9,8 +9,4 @@ tweetId: '1852029955992924287'
 segments: 1
 images: []
 tags:
-  - interview-prep
----
-As far as coding questions that are harder than they look, this is a banger:
-
-Given two nodes in an undirected graph, find if they are part of a cycle without repeated nodes.
+  - job-search

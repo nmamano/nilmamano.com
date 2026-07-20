@@ -8,6 +8,4 @@ segments: 1
 images:
   - /posts/a-fun-problem-from-beyond-cracking-the-li37/054-feed-photo.jpg
 tags:
-  - interview-prep
----
-A fun problem from Beyond Cracking the Coding Interview:
+  - job-search

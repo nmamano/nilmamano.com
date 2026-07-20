@@ -8,8 +8,4 @@ tweetId: '2007071168772407451'
 segments: 1
 images: []
 tags:
-  - interview-prep
----
-Started 2025 co-authoring a book with Gayle McDowell  and ended 2025 being cited by Knuth.
-
-We take those
+  - job-search

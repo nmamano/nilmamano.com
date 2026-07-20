@@ -11,13 +11,5 @@ images:
   - >-
     /posts/if-you-want-to-get-good-at-0581295/2007578280300581295-G9xZuHxa4AAPg3C.jpg
 tags:
-  - interview-prep
+  - job-search
   - blog
----
-If you want to get good at DS&A as a New Year's resolution, Toolkit-X makes it easy to start.
-
-Like a problem list, but for reusable techniques.
-
----
-
-https://nilmamano.com/toolkit

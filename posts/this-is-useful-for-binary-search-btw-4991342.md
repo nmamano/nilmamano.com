@@ -8,10 +8,4 @@ tweetId: '1953854828594991342'
 segments: 1
 images: []
 tags:
-  - interview-prep
----
-This is useful for binary search, btw. If you are looking for a transition point, you want to stop when the two pointers are next to each other.
-
-i.e., keep going while # of elements between l and r > 0
-
-i.e., while sleepy cat > 0 https://x.com/Nil053/status/1953248646503559547
+  - job-search

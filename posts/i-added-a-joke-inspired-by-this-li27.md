@@ -8,6 +8,4 @@ segments: 1
 images:
   - /posts/i-added-a-joke-inspired-by-this-li27/decision-tree.png
 tags:
-  - interview-prep
----
-I added a joke inspired by this in Beyond Cracking the Coding Interview. It goes something like this: "Some say that real trees grow upward, but that's not true; even when the nodes have floating point values, we still draw them like this."
+  - job-search

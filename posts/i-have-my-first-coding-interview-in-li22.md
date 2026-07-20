@@ -7,9 +7,4 @@ linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:share:7444374904457572
 segments: 1
 images: []
 tags:
-  - career
-  - interview-prep
----
-I have my first coding interview in 6 years today, wish me luck, lol!
-
-My prep consisted of reviewing the tools in dsatoolkit.com.
+  - job-search

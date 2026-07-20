@@ -9,10 +9,4 @@ tweetId: '1963736900747075601'
 segments: 2
 images: []
 tags:
-  - interview-prep
----
-There must be a clever way to leverage the trendy "cracked engineer" slang to promote my book, Beyond CRACKING the coding interview...
-
----
-
-Gayle really was ahead of her time.
+  - job-search

@@ -13,14 +13,4 @@ images:
   - >-
     /posts/coding-interview-hack-if-you-have-two-3559547/1953537257471979780-GxxbwgabsAYZ07O.png
 tags:
-  - interview-prep
----
-Coding interview hack: if you have two pointers, l and r, the number of elements between them looks like a sleepy cat.
-
----
-
-For people who still don't see the sleepy cat
-
----
-
-Some people couldn't see it at all, who knew this is the true Schrödinger's cat.
+  - job-search
