@@ -10,9 +10,4 @@ images:
   - >-
     /posts/algorithmic-solution-to-the-horse-enclosing-game-5490839/2007253682455490839-G9syjGaaAAAhfmy.png
 tags:
-  - wallgame
   - research
----
-Algorithmic solution to the horse enclosing game!
-
-https://x.com/Nil053/status/2007241057176899908?s=20

@@ -10,17 +10,4 @@ segments: 1
 images: []
 tags:
   - isomux
-  - wallgame
   - personal
----
-A couple of friends have encouraged me to turn isomux into a company.
-
-But the same friends stick to Claude Code.
-
-I trust their actions more than their words.
-
-I’ve been here before: everyone I’ve shown my board game to, loves it and says it’s a lot of fun. But never plays again.
-
-I read it as a lack of product-market fit.
-
-Either way, I keep building what I think is worth building.

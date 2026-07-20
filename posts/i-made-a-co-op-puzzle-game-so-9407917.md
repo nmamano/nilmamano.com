@@ -9,9 +9,4 @@ segments: 1
 images:
   - /posts/5266804/2069874898005266804-HLmsPiGbgAAujiZ.jpg
 tags:
-  - wallgame
   - personal
----
-I made a co-op puzzle game so y'all can have some quality time with the INTPs in your life.
-
-https://rendezvous.nilmamano.com/

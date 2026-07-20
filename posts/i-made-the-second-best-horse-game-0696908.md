@@ -8,9 +8,4 @@ tweetId: '2069509485660696908'
 segments: 1
 images: []
 tags:
-  - wallgame
   - research
----
-I made the second best horse game
-
-http://knight.nilmamano.com

@@ -9,6 +9,5 @@ tweetId: '2061840282279350366'
 segments: 2
 images: []
 tags:
-  - wallgame
   - ai
   - job-search

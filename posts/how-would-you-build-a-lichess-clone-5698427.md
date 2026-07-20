@@ -9,11 +9,4 @@ tweetId: '1920565799535698427'
 segments: 1
 images: []
 tags:
-  - wallgame
   - blog
----
-How would you build a Lichess clone in 2025?
-
-New blog post comparing the Lichess stack, the http://wallwars.net stack (a game I built in 2019), and the new stack I'll use to rebuild it in 2025
-
-https://nilmamano.com/blog/2025-stack

@@ -26,7 +26,7 @@ export function PostFeed({ posts, dev }: { posts: Post[]; dev: boolean }) {
   // "personal" is a filter only in dev; hidden from the public tag bar.
   // These tags are retired as categories: hidden from the tag bar everywhere
   // (the tag stays on posts so search still finds them).
-  const HIDDEN_TAGS = new Set(["blog", "swe", "agents", "wallgame"]);
+  const HIDDEN_TAGS = new Set(["blog", "swe", "agents"]);
   const allTags = [...tagCounts.entries()]
     .filter(([t]) => !HIDDEN_TAGS.has(t))
     .filter(([t]) => dev || t !== "personal")
