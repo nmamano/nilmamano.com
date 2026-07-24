@@ -13,13 +13,15 @@ The standard answers are coarse:
 - `/clear` (lose everything)
 - `/compact` (no control over what survives)
 
-Recently, new patterns are emerging to give more control:[^soft-handoff]
+Recently, new patterns are emerging to give more control:[^soft-handoff][^semi-compact]
 
 - Conversation forking to remove the last `N` turns.
 - Subagents for token-expensive computations or searches, where only the final result makes it to the main context.
 - `/btw` for aside questions that don't stay in context.
 
 [^soft-handoff]: My own meta-harness, [isomux](https://isomux.com), has a `/soft-handoff` command, where one agent hands off a task to another agent via a direct message, while staying around to answer questions from the new agent (see more [here](https://nilmamano.com/blog/isomux#applications)). This works across models from different providers, like a Claude-to-Codex handoff.
+
+[^semi-compact]: One dev's ["semi-compact"](https://x.com/greg_horvay/status/2072302254481121550) leaves the last ~40K tokens alone and only compacts what's older.
 
 To me, the interesting question is:
 
