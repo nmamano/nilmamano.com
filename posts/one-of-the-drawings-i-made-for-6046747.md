@@ -12,3 +12,13 @@ images:
     /posts/one-of-the-drawings-i-made-for-6046747/1907688439606046747-Gnl4eDFWwAAErmx.png
 tags:
   - job-search
+---
+One of the drawings I made for Beyond Cracking the Coding Interview. It shows the four cases among directed/undirected and weighted/unweighted graphs.
+
+One of the differences between the original CtCI and BCtCI is that BCtCI has a lot more diagrams!
+
+---
+
+I made the 100+ figures for the DS&A section of the book with a little-known tool called IPE: https://ipe.otfried.org/
+
+I started using IPE during my phd, as it is popular for the niche use case of CS paper figures. It natively supports latex, making it blend well with papers written in latex.

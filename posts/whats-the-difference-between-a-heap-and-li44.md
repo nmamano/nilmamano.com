@@ -9,3 +9,9 @@ images:
   - /posts/whats-the-difference-between-a-heap-and-li44/075-feed-photo.jpg
 tags:
   - job-search
+---
+What's the difference between a heap and a priority queue?
+
+A priority queue is an *abstract* data structure. It specifies a behavior, an interface listing the methods it supports.
+
+A heap is a possible *implementation* of the "priority queue" interface. It tells you how the elements are laid out in memory and how to process the operations.

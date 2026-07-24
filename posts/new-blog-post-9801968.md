@@ -13,3 +13,21 @@ images:
 tags:
   - job-search
   - blog
+---
+New blog post!
+
+A look at how the different strengths of DFS and BFS help us push the space complexity for the classic "Counting Islands in a Grid" problem from O(R*C) to O(min(R, C)) to O(1).
+
+Link below.
+
+---
+
+https://nilmamano.com/blog/counting-islands
+
+---
+
+The post even lists an open problem I couldn't quite work out.
+
+---
+
+My conjecture was wrong. Follow-up: https://x.com/Nil053/status/1979287606228848705

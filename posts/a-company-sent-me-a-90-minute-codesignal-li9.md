@@ -8,3 +8,9 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+A company sent me a 90-minute CodeSignal test 3 weeks ago. I completed it the same day with a perfect score, but I haven't heard back.
+
+Is it just me, or is three weeks too much?
+
+Respect the candidates' time.

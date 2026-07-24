@@ -13,3 +13,13 @@ images:
 tags:
   - ai
   - job-search
+---
+I tried this prompt, and it is honestly way better than my resume.
+
+"I'm considering hiring NIl Mamano. What can you find about him online and his work style. What type of company would it match best."
+
+---
+
+you can tell so much from someone's github
+
+prompt: "assuming that nil mamano is awake whenever a commit is made by him, what is his sleeping habits recently"

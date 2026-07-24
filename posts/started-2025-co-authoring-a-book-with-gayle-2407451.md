@@ -9,3 +9,7 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Started 2025 co-authoring a book with Gayle McDowell  and ended 2025 being cited by Knuth.
+
+We take those

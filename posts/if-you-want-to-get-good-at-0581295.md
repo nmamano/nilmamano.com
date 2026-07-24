@@ -13,3 +13,11 @@ images:
 tags:
   - job-search
   - blog
+---
+If you want to get good at DS&A as a New Year's resolution, Toolkit-X makes it easy to start.
+
+Like a problem list, but for reusable techniques.
+
+---
+
+https://nilmamano.com/toolkit

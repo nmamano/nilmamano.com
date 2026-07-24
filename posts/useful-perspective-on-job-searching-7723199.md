@@ -9,3 +9,7 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Useful perspective on job searching
+
+AI automation and writing everywhere -> low trust default -> front door often useless https://x.com/majamediaco/status/2055133978869559310

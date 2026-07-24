@@ -10,3 +10,9 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+You don't want the first time you think about the question "What should I do if I get stuck in a coding interview?" to be when you are stuck in a coding interview.
+
+Have a plan. Think in advance about what problem-solving strategies you'll try if you end up in that position.
+
+Executing is less scary when you have a plan.

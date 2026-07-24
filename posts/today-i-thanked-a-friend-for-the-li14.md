@@ -9,3 +9,17 @@ images: []
 tags:
   - isomux
   - job-search
+---
+Today I thanked a friend for the best advice I've gotten in my job search.
+
+He said he's given it to a lot of people, but only I applied it.
+
+The advice was: build an agentic project.
+
+That's what companies care about now, he said.
+
+And from my experience, he's right.
+
+Isomux got noticed by some pretty cool companies.
+
+Sometimes it even feels like it has more weight than anything else on my resume.

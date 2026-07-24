@@ -13,3 +13,7 @@ images:
 tags:
   - job-search
   - research
+---
+Simplest explanation I could write of this.
+
+Most explanations go the route of 1+2+3+...+n, but showing that that is equal to (n+1)*n/2 takes just a bit more work.

@@ -11,3 +11,7 @@ images:
     /posts/what-it-looks-like-to-go-from-0539255/2040915983150539255-HFLJ913bsAAuNUG.jpg
 tags:
   - isomux
+---
+What it looks like to go from Level 5 to Level 6, which I was able to do thanks to isomux.
+
+https://x.com/Nil053/status/2039023007310754098?s=20

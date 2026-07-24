@@ -12,3 +12,7 @@ images:
     /posts/balanced-parentheses-problems-become-a-lot-easier-with-4109216/1937733474364109216-GuQ2Qw4agAElp-u.png
 tags:
   - job-search
+---
+Balanced-parentheses problems become a lot easier with this visualization.
+
+One of my favorite reusable ideas from Beyond Cracking the Coding Interview.

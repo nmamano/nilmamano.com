@@ -9,3 +9,5 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Are leetcode contests significantly harder than ~5 years ago or is it just me?

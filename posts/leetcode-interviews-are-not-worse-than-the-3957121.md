@@ -9,3 +9,5 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Leetcode interviews are not worse than the alternatives. https://x.com/AlanMCole/status/1948386265021190558

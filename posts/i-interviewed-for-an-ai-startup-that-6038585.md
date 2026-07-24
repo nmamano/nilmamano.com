@@ -10,3 +10,7 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+I interviewed for an AI startup that hosts poker nights at their office.
+
+At no point during the process did I have the faintest sense of how it was going.

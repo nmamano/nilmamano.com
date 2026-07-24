@@ -15,3 +15,9 @@ images:
 tags:
   - job-search
   - personal
+---
+My journey up the Steve Yegge hierarchy.
+
+---
+
+Source: https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04

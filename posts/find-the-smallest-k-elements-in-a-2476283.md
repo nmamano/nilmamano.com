@@ -13,3 +13,13 @@ images:
 tags:
   - job-search
   - blog
+---
+"Find the smallest k elements in a list" is one of the most classic coding interview problems.
+
+In this new blog post, I use it as a launching pad to discuss the connections between sorting algorithms, heaps, and Quickselect.
+
+Link below.
+
+---
+
+https://nilmamano.com/blog/top-k-problems

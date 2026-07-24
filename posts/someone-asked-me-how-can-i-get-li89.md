@@ -8,3 +8,9 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Someone asked me, "How can I get myself to like leetcoding?"
+
+I never heard that before. Most people just want to get *good* at it, assuming they'll just suffer through it.
+
+If you went from disliking solving coding questions to liking it, what changed?

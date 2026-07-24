@@ -8,3 +8,9 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+My old team is hiring! Great opportunity and great people.
+
+Given the scale, working on Google's networking SWE team involves unique technical challenges. E.g., training/inference for huge models like Gemini requires different network patterns than typical Google traffic, so figuring out how to adapt the SDN to handle this new use case effectively is tricky.
+
+(Re: Asha Mohan's hiring post for Google's networking team)

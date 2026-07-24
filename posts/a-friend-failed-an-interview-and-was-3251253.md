@@ -13,3 +13,7 @@ images:
 tags:
   - job-search
   - personal
+---
+A friend failed an interview and was later told that they suspected he was cheating because he kept looking down.
+
+Since then, whenever he does an interview, he proactively shares a video of his entire desk from an external camera, allowing the interviewer to see his screen (as he sees it), his hands, and so on.

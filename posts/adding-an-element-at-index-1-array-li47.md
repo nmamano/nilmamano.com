@@ -10,3 +10,7 @@ images:
   - /posts/adding-an-element-at-index-1-array-li47/078-feed-photo.jpg
 tags:
   - job-search
+---
+Adding an element at index 1: array vs linked list.
+
+The runtime is O(n) for arrays and O(1) for linked lists.

@@ -13,3 +13,13 @@ images:
 tags:
   - job-search
   - blog
+---
+New blog post: Building Lego castles with recurrences, memoization, and math
+
+It's based on a problem from Beyond Cracking the Coding Interview, and it touches on recurrence relations, memoization, space optimizations, and math tricks.
+
+Link below
+
+---
+
+https://nilmamano.com/blog/recurrences-memoization-math

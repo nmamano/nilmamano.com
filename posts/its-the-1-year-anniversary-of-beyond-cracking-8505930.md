@@ -11,3 +11,13 @@ images: []
 tags:
   - job-search
   - ai
+---
+It's the 1-year anniversary of Beyond Cracking the Coding Interview.
+
+I'm pivoting away from interview prep. dsatoolkit.com is my vision of the ideal resource for DS&A interviews, so it feels like a natural conclusion of that chapter.
+
+Next, I'd like to join an AI company and work on building abstractions on top of LLMs to create new delightful illusions (something I wrote about in nilmamano . com/blog/context-engineering).
+
+To that end, I think I'll do most of my outreach on X, since I see quite a lot of AI people making hiring announcements there.
+
+If you'd like to follow the job search journey of a co-author of a job search book, and my more spontaneous thoughts, I'll link my X account in the comments.

@@ -9,3 +9,7 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+I've thought of doing (and pinning) a thread like this for BCtCI, but I was worried it'd come across as self-congratulatory in a distasteful way (and redundant because people can already see reviews on Amazon)
+
+But @visakanv has great taste and he did it, so it's probably fine? https://x.com/visakanv/status/1489090454113046529

@@ -10,3 +10,11 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+A trick for coming up with good DP problems:
+
+Take an NP-hard graph-based problem, and make it about a graph that is just a path.
+
+Maximum weighted independent set becomes 'house robber.'
+Minimum weighted vertex cover becomes 'climbing stairs.'
+Graph coloring becomes 'paint houses.'

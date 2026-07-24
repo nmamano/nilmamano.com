@@ -13,3 +13,15 @@ images:
 tags:
   - job-search
   - blog
+---
+If I ever get a binary search question in a coding interview again, my eyes will light up, and I'll start yapping about how every binary search problem is really just the transition-point problem under the hood.
+
+New blog post: "Get Binary Search Right Every Time, Explained Without Code"
+
+It's based on the Binary Search chapter from Beyond Cracking the Coding Interview, with one difference. I have noticed that some readers go straight to the code and sometimes don't fully get the rationale behind it. So, here I explained the concept without any code.
+
+Link in comment.
+
+---
+
+https://nilmamano.com/blog/binary-search

@@ -8,3 +8,9 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Question for people who do coding interviews in JS:
+
+Given that JS doesn't have a built-in queue data structure, how do you implement BFS?
+
+I looked up some user submissions on LeetCode and people are using array shift(), which AFAICT is O(n).

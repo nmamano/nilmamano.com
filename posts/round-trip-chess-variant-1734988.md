@@ -9,3 +9,23 @@ segments: 2
 images: []
 tags:
   - personal
+---
+Round-trip chess variant:
+
+Starts like normal chess until pieces are captured. Captured pieces are not removed - they are moved to a second board that starts empty. The captured piece doesn't change sides, but the capturer decides where to place it among the valid starting positions for that piece and color.
+
+At each turn, each player moves a piece on either board of their choosing (not both).
+
+Capturing a piece on the second board sends it back to the first board - again, the capturer decides where to place it among the valid starting positions for that piece and color.
+
+The weird part: if you capture a piece and there is another piece in one of its starting positions in the other board, you can place the captured piece there and capture that other piece - even your own piece - which you then need to move to the other board. This can cause long chain reactions and has many strategic applications.
+
+You win by capturing the opponent's king on both boards. That is, sending it round-trip from the first board to the second board and back.
+
+Notes:
+- There is no checkmate; you have to actually capture the king.
+- If you cause an infinite loop (a rare edge case), you win.
+
+---
+
+Came up with it yesterday and then played 4 games at a friendsgiving vs 3 different people, and it was more fun than expected. Will be playing more!

@@ -9,3 +9,7 @@ images: []
 tags:
   - job-search
   - blog
+---
+If you have any questions about Beyond Cracking the Coding Interview, we are doing a Reddit AMA on r/cscareerquestions with Gayle McDowell, Aline Lerner, and Mike Mroczka!
+
+https://lnkd.in/g5XCeEpN

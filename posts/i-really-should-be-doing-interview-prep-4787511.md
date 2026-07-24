@@ -12,3 +12,9 @@ images:
 tags:
   - job-search
   - personal
+---
+I really should be doing interview prep... (like, actually)
+
+---
+
+anyone hiring based on vanity github metrics?

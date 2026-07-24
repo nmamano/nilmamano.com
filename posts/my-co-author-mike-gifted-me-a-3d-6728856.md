@@ -13,3 +13,5 @@ images:
     /posts/my-co-author-mike-gifted-me-a-3d-6728856/2012415878906728856-G-2JkitbwAAEzjQ.jpg
 tags:
   - job-search
+---
+My co-author Mike gifted me a 3d print of the clock in the BCtCI cover. Cape included 😍

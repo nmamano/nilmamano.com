@@ -9,3 +9,7 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Actually great take. This is the way.
+
+Show up to the interview with a demo https://x.com/TheChowdhary/status/2068030234696487384

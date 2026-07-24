@@ -12,3 +12,15 @@ images:
     /posts/new-post-training-an-alphazero-style-ai-for-1849872/2024242486361849872-HBeNpKZbgAApUg2.jpg
 tags:
   - blog
+---
+New post: Training an AlphaZero-Style AI for a New Board Game
+
+It goes over everything, architecture, training, deployment. Should be a good reference for anyone wanting to implement their own.
+
+It's a chunky post! A lot of work behind this one.
+
+Link below.
+
+---
+
+https://nilmamano.com/blog/wall-game-ai

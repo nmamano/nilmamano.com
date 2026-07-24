@@ -8,3 +8,7 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Question: for "past work" type interviews, what are the typical norms regarding sharing screen to show a diagram or a quick demo?
+
+I think some things would be a lot easier to explain that way.

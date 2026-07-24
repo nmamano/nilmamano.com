@@ -9,3 +9,11 @@ segments: 2
 images: []
 tags:
   - job-search
+---
+"Graphs are, like, really really important. More than you think. Even if you already think they're important, it's probably more than you think."
+
+-Steve Yegge, from his blog post 'Get that job at Google.'
+
+---
+
+https://steve-yegge.blogspot.com/2008/03/get-that-job-at-google.html

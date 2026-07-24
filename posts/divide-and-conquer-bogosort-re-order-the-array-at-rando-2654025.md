@@ -11,3 +11,5 @@ images: []
 tags:
   - research
   - job-search
+---
+Divide-and-conquer bogosort: re-order the array at random until the smallest half is before the largest half, and then sort each half recursively.

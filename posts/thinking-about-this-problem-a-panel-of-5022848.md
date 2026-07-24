@@ -10,3 +10,9 @@ images: []
 tags:
   - research
   - job-search
+---
+Thinking about this problem: A panel of k judges needs to grade n essays.
+
+The judges are biased: the more they read, the more bored they are, and thus grade more harshly.
+
+How do you come up with k different orderings of the essays to make it as fair as possible?

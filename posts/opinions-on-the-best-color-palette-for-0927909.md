@@ -17,3 +17,9 @@ images:
     /posts/opinions-on-the-best-color-palette-for-0927909/1919387360480927909-GqMIZzkbwAAZovo.jpg
   - >-
     /posts/opinions-on-the-best-color-palette-for-0927909/1919612140115153282-GqPVDnUa8AAnCqe.jpg
+---
+Opinions on the best color palette for an online board game I'm building?
+
+---
+
+I think this is it :)

@@ -8,3 +8,5 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Mike Mroczka gifted me a 3D print of the clock in Beyond Cracking the Coding Interview. Cape included 😍

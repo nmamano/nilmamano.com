@@ -13,3 +13,19 @@ images:
 tags:
   - job-search
   - blog
+---
+Are you doing DS&A interview prep, and like the structured approach of problem lists?
+
+If so, I created something you may really like!
+
+Toolkit-X: It's like a problem list, but for what actually matters: reusable ideas and techniques - illustrated with BCtCI problems.
+
+It's free, so take a look! Link below
+
+---
+
+Toolkit: https://nilmamano.com/toolkit
+
+---
+
+Full thoughts on problem lists: https://x.com/Nil053/status/1999588534395818090?s=20

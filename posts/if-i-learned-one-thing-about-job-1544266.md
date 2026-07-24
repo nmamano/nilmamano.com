@@ -10,3 +10,9 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+If I learned one thing about job searching in 2026, it's that you have to make your own side doors.
+
+So let me try something new.
+
+If you are (a) familiar with my work, and (b) close to someone at Google DeepMind, please slide into my DMs!

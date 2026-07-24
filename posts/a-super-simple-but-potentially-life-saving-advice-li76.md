@@ -8,3 +8,11 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+A super simple but potentially life-saving advice for coding interviews:
+
+If you have working code but think of an optimization or better approach, do NOT edit your code. Copy-paste it and work on a separate copy.
+
+This way, if you don't have time to finish or realize it's wrong, you'll still have the previous working version.
+
+Ending the interview with only half-finished code in the editor when you previously had something working is the worst feeling 🥲 🥲

@@ -10,3 +10,5 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+The only people who should be asking red-black tree questions in interviews are cherry farmers.

@@ -8,3 +8,7 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+I have my first coding interview in 6 years today, wish me luck, lol!
+
+My prep consisted of reviewing the tools in dsatoolkit.com.

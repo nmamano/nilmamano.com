@@ -11,3 +11,13 @@ images: []
 tags:
   - isomux
   - job-search
+---
+An ex-YC-founder reached out and urged me to apply to a16z speedrun with isomux (deadline is today).
+
+I said I didn't see the vision. I like building, but being a founder is so much more than that.
+
+He insisted. He even said he'd fill out the application for me 😂.
+
+So, what the heck. Application sent.
+
+In the meantime, nothing changes; still job searching, still thinking about how and where to leverage agents all day!

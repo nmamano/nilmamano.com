@@ -11,3 +11,13 @@ images:
     /posts/i-cant-stop-making-simple-games-5141780/2069078736885141780-HLbX2ddbsAI1m60.jpg
 tags:
   - personal
+---
+I can't stop making (simple) games
+
+---
+
+http://nilmamano.com/games
+
+---
+
+Alternative title: Using my endless game ideas to experiment with loop engineering.

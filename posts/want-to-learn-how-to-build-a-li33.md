@@ -10,3 +10,13 @@ images:
   - /posts/want-to-learn-how-to-build-a-li33/043-feed-photo.jpg
 tags:
   - job-search
+---
+Want to learn how to build a fully functional hash table from scratch, step by step?
+
+That's exactly what we do in the free, online-only chapter "Set & Map Implementations" of Beyond Cracking the Coding Interview, now crossposted to my blog:
+
+https://lnkd.in/g5bCNMUq
+
+We also talk about how to hash different types (e.g., strings), dynamic resizing for hash tables, how to think about the load factor and collisions, and the tricky rolling-hash algorithm.
+
+It is one of my favorite chapters!

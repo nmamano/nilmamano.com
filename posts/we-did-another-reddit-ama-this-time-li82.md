@@ -9,3 +9,5 @@ images: []
 tags:
   - job-search
   - blog
+---
+We did another Reddit AMA, this time in r/leetcode. Trying to get the word out that this book exists 🥹

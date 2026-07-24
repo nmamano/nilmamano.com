@@ -8,3 +8,7 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Is there a single problem on leetcode where using an adjacency matrix instead of an adjacency list makes sense? I can't find any.
+
+I feel like it is taught out of tradition but not actually useful for coding interviews.

@@ -11,3 +11,11 @@ images: []
 tags:
   - job-search
   - personal
+---
+I'm learning that you never know what to expect when meeting a founder for the first time.
+
+Sometimes it's a super pleasant chat. Sometimes you get grilled for 30 min straight 😂
+
+Would you read anything into it?
+
+Ultimately, I respect them trying to extract as much signal as possible. That's their job. But it's interesting to observe the different approaches.

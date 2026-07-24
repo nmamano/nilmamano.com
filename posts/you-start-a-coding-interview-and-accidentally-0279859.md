@@ -10,3 +10,5 @@ images: []
 tags:
   - job-search
   - personal
+---
+You start a coding interview and accidentally press ctrl+A. wdyd?

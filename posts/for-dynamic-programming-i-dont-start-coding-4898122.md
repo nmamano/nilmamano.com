@@ -10,3 +10,15 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+For dynamic programming, I don't start coding until I have written down the recurrence relation.
+
+For backtracking, I don't start coding until I have visualized the decision tree.
+
+For greedy algorithms, I don't start coding until I have specified the greedy rule and looked for counterexamples.
+
+For binary search, I don't start coding until I have established the transition point I need to pinpoint.
+
+For trees, I don't start coding until I have decided what information needs to flow up the tree, down the tree, or sidestep the recursive flow (be stored "globally").
+
+For sliding windows, I don't start coding until I have identified what information I need to maintain about the window, and what data structures allow me to do that incrementally.

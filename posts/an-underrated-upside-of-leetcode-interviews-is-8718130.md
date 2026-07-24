@@ -10,3 +10,7 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+An underrated upside of leetcode interviews is that you only need to study one thing for all the big companies. I feel like if every company asked different things, interview prep time would decrease for any specific company but increase overall.
+
+In fact, a likely outcome of the push for fewer leetcode-style interviews is an even worse compromise: coding interviews won't completely go away, so you'll still need to grind leetcode, but you'll also have to prep a bunch of specialized stuff for each company on top of that.

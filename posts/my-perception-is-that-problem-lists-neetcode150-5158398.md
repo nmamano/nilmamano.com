@@ -10,3 +10,15 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+My perception is that problem lists (NeetCode150, Blind75, ...) encourage memorizing problem solutions rather than developing reusable techniques and general problem-solving skills.
+
+If you've used such a list before, I'd love to hear what you got out of it.
+
+Was your goal to cover the most popular questions, hoping that you'd get the exact same question in the interview?
+
+Do you feel the list prepared you to tackle questions outside the list?
+
+Thanks!
+
+Edit: never mind, I stand corrected. Thanks for all the comments!

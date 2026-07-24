@@ -11,3 +11,9 @@ images: []
 tags:
   - job-search
   - blog
+---
+It's 2025, and JS still doesn't have a built-in queue.
+
+New blog post: I wrote a quick PSA about what to do if you need a Queue in a coding interview and you are using JS.
+
+https://nilmamano.com/blog/js-queues

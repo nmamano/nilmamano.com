@@ -10,3 +10,9 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Here is a cute problem from BCtCI:
+
+Given a sorted array of integers, a target value, and a positive integer, `k`, return whether the number of occurrences of the target in the array is a multiple of `k`.
+
+Spoiler in comment

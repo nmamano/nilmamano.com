@@ -14,3 +14,5 @@ images:
     /posts/my-suggested-opener-for-the-big-o-2997477/1878730097362178225-GhKW2ygbUAAOThp.png
 tags:
   - job-search
+---
+My suggested opener for the big O analysis chapter of BCTCI didn't make it past coauthor review. Probably a good call by them 😆

@@ -12,3 +12,7 @@ images:
     /posts/bfs-implementation-without-using-a-queue-ove-2137598/1940976467502137598-Gu-7w5bbkAAHp5G.png
 tags:
   - job-search
+---
+BFS implementation without using a queue. O(V+E) time and O(V) space.
+
+Useful for languages like JS that don't have a built-in queue.

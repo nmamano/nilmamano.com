@@ -10,3 +10,7 @@ images:
 tags:
   - job-search
   - blog
+---
+I spend a lot of time trying to come up with insightful problems for Beyond Cracking the Coding Interview. Here is one.
+
+I'm curious if someone finds a different approach the one I'm intending.

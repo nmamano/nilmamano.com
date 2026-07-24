@@ -10,3 +10,5 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Heaps are a funny thing. We say they are priority queues, we visualize them as binary trees, and we implement them with arrays!

@@ -10,3 +10,12 @@ segments: 1
 images: []
 tags:
   - job-search
+---
+Quiz: Name the algorithm or data structure that yields each of the following runtimes for the following problem: "Return the k largest numbers of an unsorted array of length n > k, in order."
+
+1. O(n log n)
+2. O(n log k)
+3. O(n + k log n)
+4. O(n + k log k)
+
+Spoiler in the comments.
