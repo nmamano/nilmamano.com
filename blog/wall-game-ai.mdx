@@ -19,6 +19,8 @@ The AlphaZero engine turned out to be much stronger. Based on the experiment, I'
 
 This post describes the design and can serve as a reference. We cover the architecture, implementation, training, and server integration.
 
+Note: the network architecture described here is the ResNet from the AlphaZero paper, which is what the engine used originally. The ResNet was later superseded by a transformer, which is covered in [this section](#update-july-2026-replacing-the-resnet-with-a-transformer).
+
 <Toc />
 
 ## Links
@@ -62,7 +64,7 @@ For the [Minimax engine](https://github.com/nmamano/wallwars/tree/master/AI), I 
 
 What crushed it is the branching factor. On an `RxC` board, there are about `2*R*C` possible walls. With *two* actions per turn, the number of possible moves is roughly the square of that.
 
-In contrast, the AlphaZero-based engine is superhuman on `8x8` boards, handling raw branching factors of approximately `(2*8*8 + 8)^2 = 18496`. I'm now training models for boards up to `10x12`. Chess has average branching factor `~40`.
+In contrast, the AlphaZero-based engine is superhuman on `12x10` boards, handling raw branching factors of approximately `(2*12*10 + 8)^2 = 61504`. Chess has average branching factor `~40`.
 
 This is exactly the kind of problem where Monte Carlo Tree Search (MCTS) with a learned evaluation function through self-play shines.
 
@@ -129,9 +131,17 @@ For the first generation, we used a simple bootstrap policy: cats walked toward 
 
 ## Neural Network Architecture
 
-Our network follows the AlphaZero architecture: a ResNet core with 20 residual blocks and 128 hidden channels, totaling about 2.3 million parameters. Small by modern deep learning standards, but large enough to capture the strategic complexity of an 8x8 board game.
+Here we describe our first model, which worked for boards up to 8x8.
+
+Our network follows the AlphaZero architecture: a ResNet core with 20 residual blocks and 128 hidden channels, totaling about 6.3 million parameters. Small by modern deep learning standards, but large enough to capture the strategic complexity of an 8x8 board game.
 
 ResNet was designed for image classification, using convolutions to extract local features. This works well for board games like chess or the Wall Game because (1) the board is a grid, like an image, and (2) local features matter - like clusters of adjacent walls blocking a path.
+
+<Callout>
+
+Update (July 2026): the engine has since moved from ResNet to a transformer, which trained faster and generalizes across board sizes and variants. See [Replacing the ResNet with a Transformer](#update-july-2026-replacing-the-resnet-with-a-transformer) at the end of the Training section. The ResNet described here is what the original 8x8 models used.
+
+</Callout>
 
 ### Input Encoding
 
@@ -354,9 +364,11 @@ Our fix was pragmatic: for a few generations, we boosted mouse-move probabilitie
 
 The warm-start paid off: the model became strong in far fewer generations.
 
-### The Universal Model
+### The Universal Model, First Attempt: Warm-Starting
 
 Next, I wanted models that could play the standard and classic variants for larger boards (up to 12x10).
+
+My first attempt was to keep warm-starting, the trick that had just worked so well for Standard. It didn't get there, but it's worth walking through, because where it falls short is what motivated the approach that did work.
 
 Warm-starting across board sizes is possible - the core ResNet convolutions are input-size independent and can still detect wall patterns regardless of board size. The Linear layers in the output heads need remapping, but that's a small fraction of the network.
 
@@ -366,7 +378,7 @@ We could do 8x8 Standard -> 12x10 Standard and 8x8 Classic -> 12x10 Classic, or 
 
 But training multiple models feels wasteful - everything is done twice, once per variant.
 
-My most ambitious training experiment is the universal model: a single network that plays both Classic and Standard on larger boards (12x10), so all compute goes toward improving one model.
+So the goal became a universal model: a single network that plays both Classic and Standard on larger boards (12x10), so all compute goes toward improving one model.
 
 This required several changes:
 
@@ -398,7 +410,9 @@ row 9:  .  .  .  .  .  .  .  .  .  .  .  .   <-- new
   width="80%"
 />
 
-As of Feb 2026, the universal model makes good moves early, but sometimes plays nonsensically later in the game. It's already live on the site, but I'm still training it further.
+This universal model didn't get to human strength.
+
+The approach that eventually did work was a different one: a network with no board-size-dependent weights, trained from scratch on a mix of board sizes. That's the transformer, below.
 
 ### Board Padding: One Model, Many Board Sizes
 
@@ -411,6 +425,40 @@ For example, to play on a 6x6 board with an 8x8 model, we place the 6x6 game are
 The question was whether this works without explicit training on padded boards - walls forming a complete border around a smaller subgrid don't come up in natural gameplay.
 
 Thankfully, the model's pattern recognition is general enough, so this worked out of the box (pun intended).
+
+### Update (July 2026): Replacing the ResNet with a Transformer
+
+Everything above uses the ResNet architecture from the AlphaZero paper. Recently, I retrained the engine from scratch with a transformer instead.
+
+The idea came from the [ViT (Vision Transformers) paper](https://arxiv.org/abs/2010.11929), which shows that transformers can work better for vision than CNNs. This made me wonder if the same would apply to the Wall Game. I checked if anyone has used transformers with the AlphaZero-style tree search, and, indeed, Leela Chess Zero's transformer policy jumped ~270 Elo over the CNN.
+
+Where the ResNet sees the board as a grid of pixels, the transformer sees it as a sequence of vectors. Each cell becomes one vector of 256 numbers, with learned row and column embeddings added so the model knows which cell it is. On a 12x10 board that's 120 vectors, and we prepend one extra vector that belongs to no cell, for 121 in total.
+
+Those 121 vectors go through 10 encoder layers - each one an attention block followed by an MLP block - and 121 vectors come out. The model is about 8 million parameters, compared to the ResNet's 6.3 million.
+
+Then we choose which output vector to read each prediction from. A wall placement belongs to a cell, so each cell's output vector gives the two wall logits for that cell. But "who is winning" and "which direction should the cat move" belong to the position as a whole, and no cell is a natural home for them - that's what the extra vector is for. Having attended to every cell at every layer, it ends up holding a summary of the whole board.[^clstoken]
+
+[^clstoken]: It's the same device as the `[CLS]` token in BERT, and the same thing GPT does when it reads its next-word prediction off the last token's output vector: one slot that attention has loaded with global information.
+
+<BlogImage
+  src="/blog/wall-game-ai/transformer-tokens.svg"
+  alt="121 vectors go into 10 encoder layers and 121 come out; the cell vectors give wall logits, the extra vector gives the evaluation and pawn moves."
+  width="85%"
+/>
+
+The rest of the pipeline - MCTS, the self-play loop, the loss - is unchanged.
+
+This time, I tried a different approach to turn the transformer into a universal model: train the model from scratch, and progressively expand the mix of board dimensions that are trained at each generation. I started with 50% Classic and 50% Standard on 8x8 boards. When it surpassed the ResNet models, I started adding 8x9, 9x8, and 9x9 boards into the mix, while still keeping 25% of games at 8x8 Classic. This way, it not only preserved the strength at 8x8, but it kept getting better.
+
+Eventually, I expanded to board sizes up to 12x10, and the share of 8x8 Classic games dropped below 10%, yet the model kept improving. That single model is what runs on wallgame.io today, with superhuman strength across every variant and board size.
+
+<BlogImage
+  src="/blog/wall-game-ai/cnn_vs_transformer.png"
+  alt="Top: Elo progression for the ResNet and the transformer against total self-play games. Bottom: the percentage of self-play games played on 8x8 Classic for each."
+  width="90%"
+/>
+
+One caveat, in fairness to the ResNet: it had a training bug whose impact is impossible to quantify. For half of the positions in every generation (those played by Player 1), instead of training on the rich move distribution found by MCTS, it trained on only the selected move, i.e., a distribution with probability 1 at that move and 0 everywhere else.
 
 ## Serving Moves in a Live Web Game
 

@@ -1,0 +1,52 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 310" font-family="system-ui, -apple-system, sans-serif">
+  <rect width="640" height="310" fill="none" />
+
+  <!-- Input row -->
+  <text x="20" y="22" fill="#94a3b8" font-size="13">121 vectors in (256 numbers each)</text>
+
+  <rect x="20" y="32" width="96" height="44" rx="10" fill="#1e3a8a" stroke="#60a5fa" stroke-width="1.5" />
+  <text x="68" y="52" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="600">extra</text>
+  <text x="68" y="68" text-anchor="middle" fill="#bfdbfe" font-size="11">(no cell)</text>
+
+  <rect x="132" y="32" width="80" height="44" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="172" y="60" text-anchor="middle" fill="#f8fafc" font-size="13">cell 1</text>
+
+  <rect x="228" y="32" width="80" height="44" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="268" y="60" text-anchor="middle" fill="#f8fafc" font-size="13">cell 2</text>
+
+  <text x="324" y="60" fill="#94a3b8" font-size="15">. . .</text>
+
+  <rect x="360" y="32" width="90" height="44" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="405" y="60" text-anchor="middle" fill="#f8fafc" font-size="13">cell 120</text>
+
+  <!-- Encoder -->
+  <line x1="235" y1="76" x2="235" y2="108" stroke="#64748b" stroke-width="2" />
+  <rect x="20" y="108" width="430" height="50" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5" stroke-dasharray="5 4" />
+  <text x="235" y="130" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="600">10 encoder layers</text>
+  <text x="235" y="149" text-anchor="middle" fill="#94a3b8" font-size="12">each one: attention block + MLP block</text>
+  <line x1="235" y1="158" x2="235" y2="190" stroke="#64748b" stroke-width="2" />
+
+  <!-- Output row -->
+  <text x="20" y="184" fill="#94a3b8" font-size="13">121 vectors out (256 numbers each)</text>
+
+  <rect x="20" y="196" width="96" height="44" rx="10" fill="#1e3a8a" stroke="#60a5fa" stroke-width="1.5" />
+  <text x="68" y="223" text-anchor="middle" fill="#f8fafc" font-size="13" font-weight="600">extra</text>
+
+  <rect x="132" y="196" width="80" height="44" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="172" y="223" text-anchor="middle" fill="#f8fafc" font-size="13">cell 1</text>
+
+  <rect x="228" y="196" width="80" height="44" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="268" y="223" text-anchor="middle" fill="#f8fafc" font-size="13">cell 2</text>
+
+  <text x="324" y="223" fill="#94a3b8" font-size="15">. . .</text>
+
+  <rect x="360" y="196" width="90" height="44" rx="10" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="405" y="223" text-anchor="middle" fill="#f8fafc" font-size="13">cell 120</text>
+
+  <!-- Read-out legend -->
+  <rect x="20" y="262" width="12" height="12" rx="3" fill="#1e3a8a" stroke="#60a5fa" stroke-width="1.5" />
+  <text x="42" y="272" fill="#94a3b8" font-size="13">extra vector out &#8594; position evaluation + pawn-move probabilities</text>
+
+  <rect x="20" y="286" width="12" height="12" rx="3" fill="#1e293b" stroke="#475569" stroke-width="1.5" />
+  <text x="42" y="296" fill="#94a3b8" font-size="13">each cell vector out &#8594; the two wall logits for that cell</text>
+</svg>
