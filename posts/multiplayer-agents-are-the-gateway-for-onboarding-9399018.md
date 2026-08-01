@@ -1,8 +1,11 @@
 ---
 date: '2026-08-01'
 timestamp: '2026-08-01T18:36:39.018Z'
-source: original
+source: both
 status: published
+xUrl: 'https://x.com/Nil053/status/2083625371795333572'
+tweetId: '2083625371795333572'
+linkedinUrl: 'https://www.linkedin.com/posts/nilmamano_multiplayer-agents-are-the-gateway-for-onboarding-share-7489391230645346304-uDQq/'
 segments: 1
 images:
   - /posts/multiplayer-agents-are-the-gateway-for-onboarding-9399018/isomux-office-dad.png
