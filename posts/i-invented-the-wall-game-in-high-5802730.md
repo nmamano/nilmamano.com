@@ -5,7 +5,7 @@ source: both
 status: published
 xUrl: 'https://x.com/Nil053/status/2083568272784699875'
 tweetId: '2083568272784699875'
-linkedinUrl: 'https://www.linkedin.com/posts/nilmamano_i-invented-the-wall-game-in-high-school-share-7489333821062967296-VN0Q/'
+linkedinUrl: 'https://www.linkedin.com/posts/nilmamano_i-invented-the-wall-game-in-high-school-share-7489334842006974465-I3MO/'
 segments: 1
 images:
   - /posts/i-invented-the-wall-game-in-high-5802730/engine-analysis.png
