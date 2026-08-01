@@ -51,3 +51,6 @@ _source_assets/*.autosave.ipe
 # local import scratch (not for the repo)
 tools/linkedin-import-report.tsv
 tools/selfquote-merges.json
+# private ops runbooks - they name service-account keys and other secret file
+# paths, so they stay local rather than going to the public repo
+ops-private/
