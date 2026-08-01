@@ -13,7 +13,7 @@ tags:
   - ai
   - research
 ---
-Follow-up to: https://www.linkedin.com/posts/nilmamano_cnn-vs-transformer-for-the-wall-game-alphazero-style-share-7488068457935278081-zEtb/
+Follow-up to: https://nilmamano.com/posts/cnn-vs-transformer-for-the-wall-game-2546007
 I went back and retrained 36 generations of the ResNet for a fair comparison with the transformer.
 
 This plot: everything equal, only different model architectures.
