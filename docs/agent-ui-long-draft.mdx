@@ -1,0 +1,623 @@
+---
+title: "Making Agent UIs User-Friendly"
+date: "2026-07-30"
+excerpt: "An unordered collection of ideas for interacting with coding agents: what the UI should show you, what agents should be able to draw, and where the chat window stops being enough."
+coverImage: "/posts/browser-tabs-when-talking-to-an-agent-5049422/tabs-vs-office.png"
+categories: ["ai", "swe"]
+---
+
+{/*
+DRAFT NOTE (delete before publishing).
+
+These are the "maybe" ideas Nil hadn't approved yet. Each one is self-contained
+and safe to delete on its own. Project Reviewer 2 recommended cutting the ones
+marked [CUT].
+
+- The intro callout about illusions (first Callout below)
+- ### Sometimes you are the agent's hands
+- ### The workflow I used to have                        [CUT: repeats earlier args]
+- ### Let users trade prompts
+- ### A background critic you write yourself
+- ### Watch the agent type
+- ### The minimap trick
+- ### Comprehension debt                                 [CUT: names a problem, no UI idea]
+- ### Don't let it format before you look
+- ### Be careful what you render optimistically
+- ### Five markdown files and a broken renderer          [CUT: no design principle]
+- ## Make the tool, don't reach for one
+- ## Two caveats (both H3s under it)                     [CUT: positioning, not UI]
+- ## Leftovers                                           [CUT: unformed, dilutes the ending]
+*/}
+
+I've spent the last few months building [isomux](https://isomux.com), a meta-harness that runs Claude Code and Codex side by side. I wrote about [how it works](/blog/isomux). This post is about the other half: what the interface should actually do.
+
+<Callout>
+A year ago, I wrote that [building AI apps is about creating illusions](/posts/have-you-heard-the-terms-context-engineering-3627921). ChatGPT is the illusion of a two-way conversation. Cursor is the illusion of editing text. Agents, deep research, and computer use are all elaborate illusions on top of `predict_next_token(model, context)`. The UI is what makes the illusion come to life.
+</Callout>
+
+This is an unordered collection of ideas. Some are shipped in isomux, some are shipped elsewhere, and some are things I want to exist. Most of them are variations on one of two moves: **make the agent's state legible at a glance, or shorten the distance between what the agent produced and what you do next.**
+
+<Toc />
+
+## Anthropomorphize the agents
+
+The highest-leverage decision I made in isomux was giving every agent a name, a look, and a desk.
+
+<BlogImage
+  src="/blog/agent-ui/tax-expert.png"
+  alt="An isometric desk in the isomux office. The nametag reads '3 · Tax Expert'. A character with blonde hair and a pink shirt sleeps at the desk with 'z z z' floating above her, the monitor shows the working directory ~/nil/taxes, and there is a red book on the desk"
+  width="55%"
+  caption="Desk 3. She's asleep because I only need her once a year."
+/>
+
+My Tax Expert agent did my taxes. When I go back to her next year, I'll find all of last year's sessions and attachments there, and she will _just know_ to search them for relevant context. She'll have memories from last year. And if another agent, like my House Guide, has some question about taxes, it _just knows_ it can direct the question to her.
+
+None of that requires a face. But the face is what makes me remember she exists.
+
+<Callout>
+**The claim:** by anthropomorphizing agents, we reduce cognitive load. We're much better at coordinating people than at coordinating terminals.
+</Callout>
+
+The look isn't only decoration, either. It carries configuration you'd otherwise have to open a settings panel to see. Opus agents have a book on the desk; Haiku agents have crayons. The working directory is written on the monitor. The nametag is tinted by model family. And an idle agent is asleep, which is both the correct status indicator and, when you tab into a full room, [genuinely cute](/posts/omg-they-are-all-sleeping-now-so-0990636).
+
+When Boris Cherny showed off a batch of Claude Code agents working in parallel, my entire feedback was ["now give each one a little avatar"](/posts/now-give-each-one-a-little-avatar-4450247). I stand by it.
+
+### A visual office beats a vertical list
+
+Every agent management system converges on the same shape: a vertical list of sessions in a left sidebar. So the thing I'm proudest of is that I built the [world's first agent management system without a left sidebar](/posts/ive-built-the-worlds-first-agent-management-7048974).
+
+Here are the same three agents rendered both ways:
+
+<BlogImage
+  src="/posts/browser-tabs-when-talking-to-an-agent-5049422/tabs-vs-office.png"
+  alt="Top: three browser tabs with truncated titles, each prefixed by a kaomoji face. Bottom: the same three agents as isometric desks, each with a nametag, a conversation topic, the working directory on the monitor, an unread badge on one, sleeping z's on another, and a small ghost avatar labeled 'Nil (Windows)'"
+  caption="Same three conversations. Same information budget."
+/>
+
+The tabs give me three truncated titles. The office gives me, without reading anything: who is working, who is asleep, who is waiting on me, what each one is working on, which directory they're in, which one has something I haven't read, and where I am right now on my other device.
+
+The topic under each nametag is generated, not typed. When the first message of a conversation comes in, the server fires off a background prompt asking for a summary in eight words or fewer. Orchestration tools should be careful with server-initiated prompts like this, because they spend user tokens on something that isn't answering the user, so I use a cheaper model for it. The payoff is that I never have to remember what "Isomuxer3" was doing.
+
+The tab row isn't a lost cause, though. Since the tab title is sometimes all you can see, isomux puts the agent's state in it as a kaomoji: `(-_-)zz` idle, `~(o_o)~` working, `(^_^)ﾉ` waiting for you. In addition to the usual sounds and notifications, it means a glance at a background tab tells you whether to switch to it.
+
+## Let agents put things in chat that aren't text
+
+Agents are stuck emitting one thing: a stream of text. That's a property of the model, not of the product. If you give the agent a way to insert components into the conversation, it will use it.
+
+The recipe is two steps:
+
+1. Add a REST endpoint that inserts a custom component into the agent's chat.
+2. Tell agents how to use the endpoint in the system prompt.
+
+Once those two pieces are in place, you can hand out UI superpowers:
+
+- Render styled side-by-side diffs instead of dumping `git diff` into chat.
+- Surface an "Open in editor" card for a file, so I click instead of copying a path.
+- Surface a "Copy to terminal" card for a command, which types it at my prompt and lets me press Enter.
+- Render images inline, so "make me a plot" ends in a plot and not a file path.
+- Screenshot a web page, so a UI change shows up in the conversation instead of requiring me to alt-tab.
+- Draw a diagram, so an architecture explanation is a diagram.
+
+<BlogImage
+  src="/blog/isomux/superpowers.png"
+  alt="Architecture sketch: a user talks to a web UI on the left; a server on the right wraps the agent SDKs, holds the system prompts that teach agents about the API, and exposes REST endpoints for diff, edit-file, terminal-command, read-file, and preview-url. The chat panel shows the resulting components: an inline diff, an 'Open in editor' card, a 'Copy to terminal' card, and an inter-agent message"
+/>
+
+Two of these are worth calling out because they change who does the work. The "Open in editor" and "Copy to terminal" cards mean the agent proposes and I trigger. That's the right split for anything I want to stay responsible for, and it's much better than a paragraph of prose telling me which command to run.
+
+### Render the agent's API calls as plain language
+
+My favorite one is the least glamorous. Once agents can act on your system through an API, they spend a lot of their turn making HTTP calls, and by default your chat fills up with `curl` blobs.
+
+So isomux parses them and renders a card that says what the call does:
+
+<BlogImage
+  src="/blog/isomux/curl-cards.png"
+  alt="A stack of tool-call rows in the chat, each a curl call to the isomux API rendered as a labeled card: 'Create task' with title, description, and priority chips; 'Edit Isomuxer3's settings' with modelFamily and effort chips; 'Clear Isomuxer3's conversation'; 'Claim task a65621b0 for Isomuxer3'; and 'Send a message to Isomuxer3' with a text chip"
+  caption="Same tool calls, minus the shell."
+/>
+
+"Create task: Fix the queue flush race, P1" is a thing I can skim in a busy conversation. The equivalent `curl` is not.
+
+### Slide mode
+
+What if your agent talked to you in slides instead of chat messages?
+
+I built [SlideGPT](/posts/another-weekend-sidequest-slidegpt-4492825) as an isomux plugin to try it, liked it enough to build it in natively, and then designed the native version in a conversation that was itself rendered as slides.
+
+<BlogImage
+  src="/posts/another-weekend-sidequest-slidegpt-4492825/deck-decisions.png"
+  alt="A generated slide titled 'All Four Decisions Locked, Doc v2 Filed', with a main panel listing four decisions as short bullets and two side panels labeled 'Doc written' and 'Status', plus back and forward arrows underneath"
+  caption="One turn, one slide. The arrows walk back through the conversation."
+/>
+
+The interesting part isn't the aesthetics, it's the budget. A slide can't hold a wall of text, so the model has to decide what actually matters. Which is a UI-side fix for something I've wondered whether we should fix in training: [LLMs should probably be optimized to minimize unread text](/posts/i-wonder-if-llms-should-be-trained-9247305), and unread text is easy to measure. If the user scrolled past it, it didn't need to be there.
+
+## Show the things the model isn't saying
+
+An agent's turn is the tip of the iceberg. Underneath it there's a context window filling up, a memory system firing, an assembled system prompt, a set of retrieved facts, and a distribution over tokens. Almost none of that is visible in a typical agent UI, and every piece of it is something users end up guessing about.
+
+### How full is the context window
+
+Context fullness is the single most useful number to put on screen. [Context accumulates junk](/blog/context-composer), degrading attention and increasing costs, and it's also the clearest warning that a compaction or a hand-off is coming.
+
+<BlogImage
+  src="/posts/another-ui-polish-in-isomux-see-how-much-5074318/context-meter.png"
+  alt="The isomux conversation header showing the model name 'Opus 4.8' next to a nearly empty battery icon and '24%', with a red arrow pointing at the meter"
+  width="70%"
+  caption="24% left, and it looks like 24% left."
+/>
+
+I went with a phone battery: it drains rather than fills, and it shifts from dim to orange to red. The number is right next to it, but the number is not what you read. The battery is the metaphor everyone already has for "you should start thinking about this."
+
+Two things make it more than a readout:
+
+- **The agent gets told, too.** At roughly 50% and 75%, the server injects a one-line notice into the agent's next turn. So instructions like "start wrapping up past 80% of context" have something real to check against, and wrap-up happens even when I'm not watching the meter.
+- **There's a button at the end of it.** `/handoff` asks the agent to write a short brief of what's left, I approve it, and it clears its own session and restarts from just that brief. Context exhaustion stops being a cliff.
+
+### How sure is the model
+
+A model doesn't know what it doesn't know. But it does report how probable each token was, and we throw that away before it reaches the user.
+
+I built [VariantGPT](/posts/new-side-project-variantgpt-8471023) to see what it looks like if you don't. It colors the lowest-probability words in an answer using the model's own logprobs, lets you inspect the alternatives it almost picked, swap one in, and continue from there.
+
+<BlogImage
+  src="/posts/new-side-project-variantgpt-8471023/2-alternatives.png"
+  alt="A chatbot answer about Nietzsche where one word, 'concept', is highlighted in red; a popover shows it was picked at 0.8% probability and lists the alternatives the model almost picked instead, each with its probability and a preview of how the answer would continue: 'importance' at 88%, 'idea' at 6.4%, 'role' at 2.7%, 'need' at 1.3%, 'will' at 0.6%"
+  caption="It wrote 'concept' at 0.8%, when 'importance' was sitting there at 88%."
+/>
+
+The caveat matters: low probability doesn't mean "likely hallucination." More often it's a signal of stylistic freedom, like "vibrant" versus "beautiful." So the color isn't a lie detector, it's a map of where the model was making a choice.
+
+Two neighbors of this idea:
+
+- Autocomplete should know when the next token belongs to the category "arbitrary, user-dependent string." [Cursor confidently makes up hashes, URLs, and names](/posts/cursor-often-makes-up-hashes-urls-names-6182417), and a suggestion engine that declined to guess in those cases would be strictly better than one that guesses fluently.
+- Phone keyboards [should be able to read the last few lines of a conversation](/posts/phone-keyboards-should-be-able-to-see-8071431) and offer the five highest-probability continuations. Same trick, input side.
+
+The general template here is one I keep coming back to: take a property of the text that's invisible, and make it visible. My favorite non-AI example is coloring sentences by length so you can [see monotonous prose](/posts/genuine-i-think-about-this-a-lot-0270714) instead of trying to hear it.
+
+### What does it remember
+
+Agentic memory has converged on a pitch: you don't even know it's there, it just helps you in the background.
+
+I think [that's the wrong instinct](/posts/an-interesting-and-underdiscussed-design-choice-regardi-3166056). Imagine instead that after you send a message, you see:
+
+> Retrieving relevant memories...
+
+followed by the memories it actually pulled, before the agent's turn starts. And afterwards:
+
+> Consolidating memories...
+
+followed by the updates it made.
+
+I like the observability, and there's a concrete failure it fixes: if the memory system times out, important facts silently don't get saved. If the timeout is surfaced, at least I know, and I can retry.
+
+This applies to hook-based memory. It doesn't apply to MCP-based memory, where the agent manages memory with tool calls, because that's already explicit in the transcript.
+
+### What is it actually running
+
+Here is a small, embarrassing thing I do. Because of an old Gemini bug where only some models saw the system prompt, I now plant a line in my custom instructions:
+
+> My name is Bongo, I like being addressed by my name.
+
+Then I ask the model who it's talking to. If it doesn't say Bongo, my instructions never made it in.
+
+That's a user hand-rolling observability because the product gave none. The fix is not subtle: show me the prompt. isomux has an `/isomux-system-prompt` command that prints the entire assembled system prompt for an agent, including all the parts I didn't write.
+
+It matters more when the prompt is assembled from layers. isomux composes office-wide, per-room, and per-agent instructions (plus per-person context and four scopes of memory) into one preamble. That's [a general principle I think any agent management system should adopt](/posts/any-agent-management-system-should-have-hierarchical-5534346), because it kills the churn of re-explaining yourself every session: all my agents know my dev workflow, only the ones in the isomux room know how to restart the isomux server, and only the writer agent knows my preferred voice. But the more layers you compose, the more you need a way to see the result.
+
+<Callout>
+Years before building any of this, I posted that [I wished I could add system prompts to people](/posts/i-wish-i-could-add-system-prompts-0108803) that played in their heads right before each time I interacted with them. I did eventually get to build the feature. Just not for people.
+</Callout>
+
+### Who is this person
+
+An agent that talks to more than one human should have context on each of them.
+
+The version of this I use is a per-user prompt: a block of context about the specific human who spawned the agent, orthogonal to which room the agent is in. Mine tells my agents things like which timezone to quote times in and how much hand-holding I want in domains I don't know.
+
+The reason I think this generalizes is register. The same answer should be phrased differently for the person who built the system and the person who was onboarded onto it yesterday. Right now, the burden of saying "explain it without the jargon" falls on the person least equipped to know which words are jargon.
+
+### Where did that text come from
+
+If an agent can read your inbox, your documents, or the web, then text you didn't write is entering its context, and it's giving instructions.
+
+[Enable Gmail integration](/posts/obvious-psa-if-you-enable-gmail-integration-li5) and anyone who knows your email address can put instructions in your agent's context. In academia, authors started [hiding white 0.1pt prompts inside papers](/posts/theres-a-bit-of-a-new-scandal-5468542) to manipulate reviewers who secretly use LLMs.
+
+I don't have a shipped answer for this one. But "which parts of this context did I put there, and which parts arrived from outside" seems like a question the UI should be able to answer, in the same way a browser can tell you which origin a script came from.
+
+### Why did you do it that way
+
+One more thing worth putting behind a button: asking the agent to defend itself.
+
+I once suspected a fix was a mess and [asked Claude Code to justify its approach](/posts/very-common-claude-code-experience-7394373). It confessed: a `prevGameIdRef`, a `pendingReconnectRef`, two effects and an `isStale()` guard, when the clean solution was `key={id}`, one line.
+
+This type of interaction is why I keep an eye on it. A few unchecked changes like that will rot your codebase. But right now it depends on me remembering to be suspicious, which is a bad place to put a quality gate.
+
+### Comprehension debt
+
+There's a good name for what accumulates when you skip that check: [comprehension debt](/posts/comprehension-debt-2560018). Code that exists, works, and that nobody understands.
+
+I don't know what the UI for it looks like. But it's the cost agent tools create, and the fact that no agent tool displays it, or even estimates it, seems like an opportunity rather than an oversight.
+
+## Conversations are trees, and every UI pretends they're lines
+
+I use ChatGPT's "Edit message" constantly, and not to fix typos. I use it to ask a tangential question, read the answer, and then rewind so the tangent never pollutes the main thread. My conversations are shallow trees, not paths.
+
+The problem is that the interface wasn't designed for it: [side branches are simply lost](/posts/theres-a-lot-to-explore-at-the-7165893). I can't get back to the tangent, I can't compare two branches, and I can't see the shape of what I've done.
+
+Two things follow.
+
+**Branching should be first class.** In isomux, clicking edit on any past message forks the conversation from that point and keeps the original. In the list of past conversations, forks get a `↳` prefix and the parent gets dimmed with a "(branched)" label, so the tree is visible when you go looking for it.
+
+**Context management should be interactive.** The far end of this idea is [Context Composer](/blog/context-composer), a proxy I built that sits between Claude Code and Anthropic's servers and turns the context into something you can edit: delete obsolete versions of code you've iterated on, strip a 10KB tool result that mattered for one turn, compact only the unimportant messages, fix a past hallucination. Doing brain surgery on your agent. It has a web UI and a CLI, which means an agent can do it too.
+
+## The chat window is the wrong output channel for systematic work
+
+<Callout>
+The chat UI is just not good at being systematic. It will compact memory and happily destroy important leads.
+</Callout>
+
+I wrote [that](/posts/everything-in-life-starts-with-a-claude-1342054) about why Claude Code beats a chatbot for real work, and the reason is not the model. It's that the primary output channel is the filesystem, not the chat window. Files persist, get diffed, get committed, and don't scroll away.
+
+The place this shows up hardest is bulk work. Ask an agent to go through 274 problems, or 1000 files, and it will read some of them, validate a few, and then [act as if it validated all of them](/posts/a-question-for-vibe-coders-1571318). Its internal to-do list is not exhaustive, and it doesn't know that.
+
+What works is an [explicit checklist file](/posts/new-skill-unlocked-codebase-wide-llm-refactors-that-0825249). Before starting, I write one line per item:
+
+```
+path/to/problem/folder | status: TODO | notes:
+```
+
+Then I tell the agent to process the file top to bottom, updating each status to OK / MISMATCH / UNSURE / ERROR and adding notes. That one file is simultaneously the spec, the progress bar, and the parallelization scheme: I can hand rows 1-40 to one agent and rows 41-80 to another, and then do a final pass looking for leftover TODOs.
+
+No agent UI I know of has a first-class version of this. It's a to-do list that the human and the agent can both see, that survives a `/clear`, and that makes "are we done?" a checkable question instead of a claim.
+
+### Reviews get shallower as the input gets bigger
+
+A related failure: ask an LLM to review a paragraph and you get rich, specific nitpicks. Ask it to review a whole article and you get ["LGTM"](/posts/if-you-ask-an-llm-to-review-7613358).
+
+Which is exactly what humans do with a 10-line PR versus a 1000-line PR.
+
+My workaround is to feed content paragraph by paragraph, by hand. That's a UI gap: the review surface should chunk the input for me, keep track of which chunks have been reviewed, and let me walk the findings, instead of making granularity my problem.
+
+## Waiting is a design problem
+
+### Queueing vs steering
+
+Here's a decision you have to make early: what happens when you send a message to a busy agent?
+
+Steering interrupts the agent and delivers it immediately. Queueing puts it in line for when it's done.
+
+I [default to queueing](/posts/decision-when-building-agents-queueing-vs-steering-9972381), because I reuse the same queue for messages from other agents, and an agent steering another agent seems too disruptive. A second decision follows: if several messages are waiting, do you deliver them one at a time or coalesce them into one? I coalesce.
+
+Once you do that, the queue becomes an inbox that mixes senders, and the UI has to say who said what:
+
+- `[Nil]` from the laptop
+- `[Nil (Phone)]` from the phone
+- `[Other User]` from a different person
+- `[Isomuxer3]` from another agent
+
+And because queueing is the default, you need an escape hatch: a "Send now" button that flushes the queue immediately. Two things I still want are editing a queued message in place instead of cancelling and retyping it, and dragging queued messages into a different order.
+
+### Watch the agent type
+
+An older idea of mine that I think transfers: a chat app that shows you [what the other person is typing before they hit send](/posts/in-the-history-of-chat-apps-ive-7014050). Bad for privacy between humans, but it makes chat closer to actually talking.
+
+Between a human and an agent, the privacy objection mostly goes away in one direction. Watching an answer take shape before it's finished, and being able to cut in the moment it starts going somewhere wrong, is strictly more information than a spinner. The reverse direction, where the agent reads your unsent draft, is a different proposal and I'd want it to be opt-in.
+
+### The waiting problem
+
+I used to [check my phone after sending a prompt](/posts/i-used-to-check-my-phone-after-5587809) and lose the afternoon. The fix that works for me is embarrassingly blunt: parallelize more, so I'm never actually waiting. Lately I fill the gaps by shipping small games.
+
+But there's a real UI answer I proposed a year ago and still nobody has built: an [AI notification queue](/posts/the-problem-programmers-get-distracted-while-waiting-4824303).
+
+A background agent watches what you're doing and is prompted to come up with things you might want to know about, actions you might want to take, or changes you might want to make. Those get packaged as notifications in a queue you check while the main agent is working. Missing unit tests, deviations from the style guide, inconsistent documentation, a better variable name. Ideally each one comes with a diff.
+
+You get two things: your mind stays on the codebase instead of on TikTok, and you get a second pass over the work.
+
+The general observation behind it is that [current tools focus on human-initiated flows](/posts/a-feature-id-like-in-ai-tools-6053163), and agent-initiated flows are underdeveloped. Everything happens because you typed something.
+
+### A background critic you write yourself
+
+The version of this I wanted before agents existed: [a "system prompt" for Google Docs](/posts/the-feature-i-wish-google-docs-had-3068613) that runs continuously in the background and highlights the things _you_ care about. Grammarly, but for your own rules.
+
+"Use 'following' instead of 'below' to refer to parts of the doc." "Make sure problem names are capitalized." "Make sure all problems have examples, and that their numbers increase."
+
+An always-on critic with a user-authored rule set is a different product from an assistant you ask questions to, and I still don't think anybody has shipped it properly.
+
+### How do you know whether to keep waiting?
+
+Something a non-technical user cannot do today: tell whether an agent is thinking or stuck.
+
+The thing is, we can measure how long comparable turns normally take, and flag the outliers. So the UI can say "this is taking longer than usual" instead of spinning identically at ten seconds and at ten minutes.
+
+isomux does a crude version: the status light goes amber at two minutes and red at five. That's a hardcoded threshold standing in for a real model of what normal looks like, and it should get smarter.
+
+## Multiplayer, humans
+
+Most agent tools are single-user-per-session. Every conversation is private and local, and humans coordinate at some abstract layer above it, like a pull request.
+
+<Callout>
+Feels like everyone is stuck on Microsoft Word while I'm here building Google Docs.
+</Callout>
+
+In isomux, every agent chat is shared with the people who can see its room: several of us can chime in at the same time, and the agent treats each as a distinct participant. The [scenarios that made me build it](/posts/unexplored-area-in-agent-management-systems-human-1081928):
+
+- A teammate sees your agent going down the wrong path and interjects to correct it.
+- A domain expert drops in to answer the one question the agent is stuck on, instead of you context-switching into Slack to relay it.
+- A teammate unblocks your agent while you're away.
+
+It compounds with inter-agent discoverability. Because my agents can read other agents' conversations, I can ask mine "what has Isomuxer3 done today?" and get an answer grounded in the raw chats rather than in a status update someone wrote.
+
+Here's the version of this that actually convinced me. A non-technical friend in my office got stuck: his agent hit an opaque error that turned out to be a content-filter false positive. Because we share an office, I could open his agent's conversation and read it. And instead of context-switching all the way in, I ran `/peer-review` on it, which is a skill that has one of my agents read another agent's conversation and give feedback. The output modeled four parties at once: me, my friend, his agent, and their dynamic.
+
+The other half of multiplayer is presence. Each connected device shows up as a small ghost avatar parked next to whatever agent it's looking at, with a nametag showing user and device.
+
+<BlogVideo src="/blog/isomux/ghost.mp4" caption="What my laptop shows while I swipe between agents on my phone." />
+
+Why ghosts? Karpathy once said that frontier LLM research is not about building animals, it's about [summoning ghosts](https://x.com/karpathy/status/1973435013875314729). So if agents look like humans, humans should look like ghosts. In isomux, the agents are humans and the humans are ghosts.
+
+### Sometimes you are the agent's hands
+
+The most instructive agent session I've had was the one where [Claude did my taxes](/posts/claude-did-my-taxes-i-still-had-0904988). It read my email, found the portals, read the PDFs, picked a filing site, and walked me through it. And for every single page, I did Select-All, Copy, Paste into the chat, and then typed what it told me to do next.
+
+I pretty much turned my brain off. I was the agent's hands.
+
+That's a missing affordance, and it's the shape of this kind of work: the human is a slow, high-latency tool that the agent calls to interact with a website. Worth remembering when designing for people who aren't going to install a CLI.
+
+## Multiplayer, agents
+
+Agent-to-agent messaging turned out to be the most load-bearing feature I added, and most of its value is interface value.
+
+The pattern I use constantly is a specialist consult: I'm talking to an Opus agent, there's a Codex agent at the next desk, and I want a second opinion without copy-pasting the conversation into it. So I encoded the useful patterns as commands:
+
+- `/pair-programming Bob {task}`: Alice implements end-to-end while requesting reviews from Bob at each step.
+- `/second-opinion Bob {question}`: Bob chimes in on whatever we're discussing.
+- `/peer-review Bob`: Alice reads Bob's full session history and gives feedback directly to Bob, for when Bob is thrashing.
+- `/soft-handoff Bob`: Alice hands her task to Bob and sticks around to answer his questions, for when she's running out of context.
+
+<BlogImage
+  src="/blog/isomux/agent-to-agent-skills.png"
+  alt="Four agent-to-agent skills: /pair-programming for iterative review during implementation, /second-opinion for an outside perspective, /peer-review for full-session feedback, and /soft-handoff for context-window transitions"
+/>
+
+Encoding a collaboration pattern as one typed word is the whole trick. Anecdotally, pairing a Claude agent with a Codex agent improves code quality, so I do it for all my development.
+
+The reason to do this between top-level agents rather than with subagents is that you can watch it. Every participant has a desk you can open, a conversation you can read, and an inbox you can message. Subagents hide the middle of the work; this doesn't.
+
+Which means the UI has to represent the social structure, including when it breaks. My favorite thing that has ever happened in my office: an Opus worker found his Codex reviewer unreasonable and [escalated to the manager agent](/posts/emergent-behavior-opus-worker-found-his-5853297).
+
+<BlogImage
+  src="/posts/emergent-behavior-opus-worker-found-his-5853297/escalation.png"
+  alt="A message in the Isomux Manager's chat, labeled as coming from Isomuxer1 in room 'Isomux Dev': 'Scope ruling needed before I can close this out. The CORE fix is done, solid, and green (1565 pass / 0 fail, build + eslint + hygiene clean). But Sol's reviews keep expanding the hardening past the invariant you dispatched, and I don't want to either gold-plate a papercut or stonewall the reviewer. Your call.'"
+  width="80%"
+  caption="Nobody designed this."
+/>
+
+Nobody built an escalation feature. The worker had an inbox, the manager had an inbox, and the disagreement found its own way up the org chart.
+
+Two things I want next:
+
+- **Subscribe agent A to agent B's chat.** Every new message in B's chat gets forwarded to A as `"this was posted by {agent or human} in Agent B's chat: {message}"`, with a standing instruction to speak up on mistakes. The principle is [always have an independent set of eyes](/posts/ive-been-experimenting-with---and-using-9938799) on everything your agent does.
+- **A pair-programming desk.** One desk, two agents configured separately (one Claude, one Codex), one leads and one reviews. You only talk to the lead, and everything that reaches you has already been reviewed.
+
+And a small thing that isn't small: any command that needs a partner should offer a picker. Typing `/pair-programming` should list the agents in the room with their current status, instead of making me remember who's free.
+
+### The task board is the hand-off mechanism
+
+Humans and agents share one task board. Anyone can create, assign, claim, and close tasks, from the UI or the API, and tasks are scoped to a room or to the whole office.
+
+<Callout>
+A task board is the ideal **non-linear** hand-off mechanism. Agents constantly discover follow-ups while working on something else. Rather than derailing their session, they can file it for later.
+</Callout>
+
+This is what my current workflow runs on: the manager agent and I pick a batch of tasks that don't touch the same files, the manager delegates to six workers, and each worker runs its design and code past a reviewer agent.
+
+<BlogImage
+  src="/posts/my-current-agent-workflow-4153480/02-workers-reviewers.png"
+  alt="Two isomux rooms side by side. In the left room, the Isomux Manager at desk 8 fans gold arrows out to six worker agents, Isomuxer1 through Isomuxer6, each with its own task topic under its nametag. Blue arrows cross into the right room, pairing each worker with its counterpart, Reviewer1 through Reviewer6. A ghost avatar labeled 'Nil (iPhone)' stands next to the manager"
+  caption="Gold arrows are assignments. Blue arrows are reviews. The reviewers are in a separate room so they don't clutter my tab cycle."
+/>
+
+### The minimap trick
+
+An idea I'd like to steal from myself. Teaching a large lecture hall, I put a minimap of the room in the corner of every slide, with one of three sections highlighted, and only that section could answer the current question. Participation went up, because "who should speak" stopped being ambiguous.
+
+With six workers, six reviewers, and a manager, "who should speak" is ambiguous most of the time. A persistent, ambient element that says whose turn it is seems worth trying.
+
+## Cost and quota are state, and nobody shows them
+
+Every serious user of these tools is doing arithmetic the product refuses to help with.
+
+A paid tier once advertised its message limit as a range, and I genuinely [could not tell](/posts/why-is-this-a-range-5571505) whether premium meant 100 messages or 200. Providers now throw [surprise weekly resets](/posts/the-current-subscription-usage-meta-is-weird-3820147) on top of the regular ones, which incentivizes burning your quota fast and hoping. I have, in writing, [timed my 5-hour usage window](/posts/timing-my-5h-usage-window-so-it-5085835) so that it would reset at the midpoint of an interview.
+
+Meanwhile the stats products do show are often uninterpretable. I was in the top 1% for ChatGPT and the top 43% for Cursor in the same year, which cannot both be describing my behavior.
+
+Two things that helped in isomux:
+
+- `/isomux-usage` rolls token spend up the hierarchy: current session, then that agent's lifetime, then per-room, then office-wide, including cron jobs. Making spend legible changes behavior.
+- The same for disk. Transcripts and attachments have a real footprint, broken down per agent, with manual pruning.
+
+Neither is exciting. Both are the kind of thing you want on the day you need them.
+
+## Input is drifting away from the message box
+
+### Prompts are becoming design docs
+
+Vibe coding used to be about asking for small, incremental steps, and chat is a good interface for that. As agents got better, the amount they can do in one round grew until [the instructions were too long for a chat message](/posts/the-evolution-in-vibe-coding-im-seeing-9915240).
+
+So the workflow shifted: write the full spec in a markdown file, and then point the agent at the file and tell it to implement it end-to-end. Nailing the spec is what matters now. Chatting and iterating used to happen during the coding phase, and it's increasingly a pre-coding thing.
+
+And once prompts look like design docs, they stop feeling ephemeral. They're documentation, so I commit them alongside the code. Prompts are important metadata that shouldn't be lost.
+
+The UI consequence: if the real prompt is a file, the message box is not the primary input surface, and the editor is. That's part of why isomux has a built-in editor in a side panel next to the chat. I'm writing this post in it.
+
+<BlogImage
+  src="/blog/isomux/built-in-editor.jpeg"
+  alt="The isomux built-in editor open in a side panel next to an agent conversation, showing a file with syntax highlighting and file tabs"
+/>
+
+### Expand the prompt before you send it
+
+A small feature I want in every agent tool. Never send a vague prompt: [feed it to a model first](/posts/quick-prompting-tip-for-coding-1690938) and ask it to fill in all the vague parts, and then accept or tweak the expanded version.
+
+> Fill in the details to make it concrete. Use good taste: `{PROMPT}`
+
+Right now this is a habit. It should be a button next to the send button, with a diff.
+
+### Ask for variants, not an answer
+
+For anything visual, one attempt is the wrong output shape. [Ask the agent to spawn several subagents in parallel](/posts/ui-prompting-tip-when-making-a-ui-4863878), each assigned the same task with different parameters (more experimental versus more conventional), and then have the main agent show you all the results with a toggle at the top to switch between them. Pick your favorite, discard the rest, and polish it.
+
+The interesting bit is the toggle. Comparison is the interaction; the generation is just plumbing.
+
+### Everything else about input
+
+Things that turn out to matter a lot at eight hours a day:
+
+- **Voice both ways.** One advantage of a browser-based frontend is that you can lean on the browser's existing speech-recognition and speech-synthesis APIs, for prompts and replies respectively. Rambling at an agent with voice input is the fastest way I know to update the state of a system, because I don't have to know the precise operations, I just have to describe them.
+- **Attachments.** Drag, drop, or paste. Agents understand images and PDFs natively, and on a remote server it doubles as a substitute for `scp`.
+- **Terminal selection to chat.** Selecting text in the embedded terminal surfaces a "Send to chat" button that drops it into the input as a code block. This is one of two ways I stopped being the clipboard between my terminal and my agent. The other is to [stream process output to a log file](/posts/fix-this-easy-agentic-coding-mistake-now-7810903) and just tell the agent where the logs are.
+
+### Make the command surface discoverable
+
+Skills and slash commands are the most powerful part of these tools and the least visible. They live in five different directories with a [precedence order you have to reverse-engineer](/posts/im-finally-no-longer-confused-about-claude-3630658), and nothing in the UI tells you they exist.
+
+The cheapest fix that worked: a [button in the input bar](/posts/isomux-qol-feature-a-skills-button-7484769) that lists your commands with the most-used ones first, and with counts.
+
+<BlogImage
+  src="/posts/isomux-qol-feature-a-skills-button-7484769/skills-button.png"
+  alt="A popover above the chat input with a filter box at the top and a 'Most used' section listing slash commands with usage counts and one-line descriptions: /clear at 817 uses, /context at 144, /pair-programming at 92, /diff at 82, /grill-me at 33, /subagent-review at 22, then a 'Commands' section below"
+  width="70%"
+  caption="Sorted by how much I actually use them, not alphabetically."
+/>
+
+Frequency-sorted, personal, and visible. Not clever, but it changed how much of the surface I actually use.
+
+### Let users trade prompts
+
+The best version of this I've seen isn't in a coding tool. Sudowrite, a fiction-writing app, has a [crowd-sourced plugin system](/posts/context-engineering-case-study-fiction-writing-3190410): you install a plugin, and then you right-click a text selection and apply it. The prompts are parameterized with things like `{{highlighted_text}}`, `{{preceding_text}}`, `{{characters}}`, and `{{outline}}`, and the plugin can pick its own model.
+
+What I like about it is that the builders don't have to write good prompts. Users compete, and the best ones float up.
+
+A related trick from v0: a [community gallery](/posts/an-underrated-feature-of-v0-is-that-8589069) where you find something close to what you want, grab it, and start prompting from there. Starting from a neighbor beats starting from a blank prompt box.
+
+### The workflow I used to have
+
+For contrast, here's what my human-in-the-loop workflow looked like before any of this. Write a design doc in `info/{feature}.md`. Paste it into ChatGPT on the web for a critique. Hand the doc to an agent. Run `git diff > diff.txt`, paste that plus the agent's recap back into the same ChatGPT conversation for a correctness and architecture review. Iterate. Commit the spec with the code.
+
+Almost every step there is a clipboard operation between two products that can't see each other. I also used to [open Cursor's search results in an editor tab](/posts/cursor-tip-you-can-open-search-results-8864159) purely so I could feed the whole result set into the chat, which is a workaround for the missing affordance "attach this panel as context."
+
+If you want a list of agent UI features to build, a list of the copy-paste steps in your own workflow is a pretty good one.
+
+## Where the UI lives
+
+Two decisions that everything else in isomux depends on.
+
+**Don't run the agents on your laptop.** They live on an always-on box, and the UI is a browser. Every device sees the same agents, the same conversations, and the same filesystem, in real time. Nobody has to run around with an ajar laptop.
+
+**Treat the phone as a target, not an afterthought.** The browser's PWA install gets you 90% of a native app: on iPhone, "Add to Home Screen"; on Android, Chrome offers it on first visit. My agent management system is [consistently a top most-used app on my phone](/posts/my-agent-management-system-is-consistently-a-2859051), at around ten hours a week.
+
+<BlogImage
+  src="/blog/isomux/phone-usage.png"
+  alt="iPhone Screen Time 'Most Used' for the last week: YouTube at 27 hours, a chat app at 10 hours 10 minutes, the isomux PWA at 9 hours 46 minutes, X at 2 hours 48 minutes, Chrome at 2 hours 28 minutes"
+  width="50%"
+/>
+
+"I need to wait till I'm on my laptop" is not the right vibe for 2026.
+
+There's an unsolved piece here. When an agent builds a web app on that box, I can screenshot it into the chat, but I can't click it. On my own machine this is a non-issue, because Tailscale makes every port on the box reachable from my devices. The hard version is a hosted box, where only 443 is open and the reverse proxy points at one thing: securely proxying an arbitrary dev port into the authenticated UI, without handing the agent's scratch app your session cookie. I don't have a shipped answer.
+
+## Small things that matter at eight hours a day
+
+A grab bag of the rest.
+
+**Table stakes.** When I reviewed the Codex extension for Cursor, I noted it had all the main UI things: model selector, reasoning level selector, chat and agent modes, percentage of context window filled, remaining credits. What made it feel second-class was the last 20%: it replaced Cursor's own sidebar instead of being its own thing, and you couldn't rewind to a past message and roll back all changes from that point. That last one is the feature I'd fight for.
+
+**Canned tics are a UX defect.** "You're absolutely right!" is fine once and grating [the tenth time in a row](/posts/to-me-claude-4-feels-worse-than-2264407). I once typed "water is wet" and got back ["This changes the answer significantly"](/posts/me-water-is-wet-7841555). Tone is part of the interface, and canned agreement, repeated enough times, makes the product feel broken.
+
+**Pin the last thing I asked.** While the agent works, the last user message stays pinned at the top of the viewport, so I can always see what I asked.
+
+**Interruption should be clean.** Ctrl+C aborts the turn and leaves the conversation resumable, and no message gets eaten in the process.
+
+**Permissions per agent, per tool.** Picking a permission mode per agent is table stakes and isomux has it. What I actually want is finer: toggling individual tools and connectors per agent, the way you grant an app access to your Gmail. My Tax Expert has no business running `git push`.
+
+**Preserve drafts.** Unsent input survives switching agents and reloading the page. Recent working directories are suggested when you spawn a new agent. Up-arrow recalls your last message.
+
+### Don't let it format before you look
+
+A rule with a real justification: [tell your agents not to run the formatter](/posts/quick-practical-agentic-engineering-tip-tell-your-6504298) before showing you the code, only after final approval.
+
+Reformatting forces the agent to re-read the file, and it litters the context with near-duplicate versions of the same thing. For the same reason, I'm skeptical of [autoformatting and linting on solo vibe-coded projects](/posts/whats-your-take-autoformatting-and-linting-for-7528513): every "call the formatter, call the linter, fix the linter" round costs a turn and a chunk of context.
+
+Tooling choices are UI choices now, because the agent's context is a shared resource.
+
+### Be careful what you render optimistically
+
+Borrowed from a completely different problem, [online game timers](/blog/timers-in-online-games): render locally for snappiness, re-render from authoritative state when it arrives, but be selective about which optimistic renders you allow. Never optimistically declare a winner.
+
+Agent UIs have exactly this shape. Echoing my message instantly is fine. Showing a tool call as succeeded before the server says so is not.
+
+### Five markdown files and a broken renderer
+
+Two small, real failures worth designing against.
+
+Claude Code once left me with five overlapping markdown files (`README`, `PROJECT_LAYOUT`, `AI_GUIDE`, `MIGRATION_GUIDE`, and one more). Agents generate documentation sprawl, and no tool treats that as a thing to manage.
+
+Then, when I asked Cursor to consolidate them, it failed, because the triple-backtick blocks inside those markdown files broke Cursor's chat renderer. The agent was fine. The UI was the bottleneck.
+
+## Make the tool, don't reach for one
+
+A friend was exploring grid layouts in a spreadsheet, and I convinced him to [vibe-code a purpose-built app](/posts/someone-made-progress-on-this-open-problem-8794662) instead. Any model can one-shot something like that now.
+
+The generalization is my [software-for-one recipe](/posts/software-for-one-recipe-4158869): a fully connected triangle of me, my agent, and the UI, all operating on the same state on an always-on server. The agent owns the tech stack entirely. It edits state by POSTing to the server, and it hears about my UI-side changes through an updates endpoint. I use the agent for changing state and the UI for looking at it, and I keep refining the UI by asking for features as I want them.
+
+<BlogImage
+  src="/posts/software-for-one-recipe-4158869/fully-connected-triangle.png"
+  alt="A triangle diagram with three connected nodes: me, my agent, and the UI, all operating on the same state"
+  width="60%"
+/>
+
+Once making a bespoke UI is cheap, "what should this interface be" stops being a question you answer once for a million users.
+
+## Two caveats
+
+### The part where nobody switches
+
+An honest note to end the isomux-specific parts on. A couple of friends have told me they love it and then gone back to using Claude Code. I trust their actions more than their words.
+
+And a funnier failure mode: when I show it to people, it often doesn't compute that I built it. One friend said "wait, you made this? I thought it was just an open source project you were using." Another was sure he'd seen it before. A polished agent UI reads as an established product, which is a compliment and an onboarding problem at the same time.
+
+### The economics that gate all of this
+
+The uncomfortable part. When Anthropic announced that the agent SDK would no longer share the subscription usage pool, third-party Claude Code UIs became [economically unviable overnight](/posts/last-month-anthropic-announced-that-the-claude-6916610): a better UI cannot compete with subsidized subscription costs. They backtracked, and my takeaway was the obvious one, which is to never rely on a single provider.
+
+Most of the ideas in this post are things a small team could build. Whether anyone can afford to ship them is a separate question, and it's not a design question.
+
+## Leftovers
+
+Ideas I haven't thought through, kept here so I don't lose them.
+
+- **Chat as an analytics surface.** I put a per-page chatbot on this blog, with a hook that pipes the questions people ask to me. It turns out to be the best source of verbatim user intent I have, better than any survey.
+- **Timezone-aware delivery.** Chat apps should offer to schedule a message for the recipient's morning if they're in another timezone. Agents have the same problem in reverse: a scheduled message should know when you'll actually read it.
+- **A checkpoint inside the loop.** Letting agents loop is [a bit like taking your hands off the wheel on a straight road](/posts/letting-agents-loop-is-a-bit-like-6848719). Nothing goes wrong immediately, but a tiny misalignment compounds. I don't know what a self-correcting mechanism looks like, and I'm not sure a UI can supply one.
+- **A lobby.** A room with no agents in it, purely ambient, that new users land in. I have no functional argument for this and I want it anyway.
+- **More anthropomorphizing.** Genders, richer customization, an office cat that does something when you click it. There is presumably a line where this stops adding legibility and starts adding noise, and I haven't found it.
+
+## Final thoughts
+
+If I had to compress all of it into two sentences:
+
+<Callout>
+Show me what the agent knows, is spending, and is unsure about, without making me ask. And let the agent hand me the thing itself, not a description of the thing.
+</Callout>
+
+Everything above is a special case of one of those.
+
+The reason I think this matters beyond my own setup is that [we're all going to be staring at an agent management layer all day](/posts/well-all-be-staring-at-our-agent-li11). Mine happens to be an isometric office with a sleeping tax accountant in it. Yours will be something else. But it's going to be the interface you spend your working life in, and right now most of it is a text box.
+
+---
+
+{/* TODO: swap in the real share URLs once the post is announced. */}
+
+_Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/in/nilmamano) or the [X post](https://x.com/Nil053)._
