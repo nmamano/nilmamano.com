@@ -4,7 +4,8 @@ timestamp: '2026-08-01T18:36:39.018Z'
 source: original
 status: published
 segments: 1
-images: []
+images:
+  - /posts/multiplayer-agents-are-the-gateway-for-onboarding-9399018/isomux-office-dad.png
 tags:
   - isomux
   - ai
