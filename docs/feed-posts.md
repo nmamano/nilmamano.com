@@ -38,6 +38,12 @@ tags:                                  # optional; lowercase-hyphenated; drives 
 
 Field notes:
 
+- **date vs timestamp**: `date` is the date the post was written *in Pacific
+  time* (it's the one the card displays). `timestamp` stays UTC and only drives
+  ordering, so the two disagree for anything posted after 5pm PT — that's fine.
+  (Posts backfilled from the X/LinkedIn archives used the UTC date for both;
+  those were not rewritten.)
+
 - **status**: `imported` hides the post from the live site; it still shows in
   the dev feed (see below) with curation controls. `published` makes it live.
   Promote a draft with the "publish" button in the dev feed, or by editing this
