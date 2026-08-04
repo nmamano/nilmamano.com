@@ -5,7 +5,7 @@ source: x
 status: published
 xUrl: 'https://x.com/Nil053/status/2067322147819946361'
 tweetId: '2067322147819946361'
-segments: 4
+segments: 5
 images: []
 tags:
   - research
@@ -34,3 +34,9 @@ https://x.com/Nil053/status/1997144557121950095?s=20
 4. I get an email from Knuth saying he's citing me.
 
 https://x.com/Nil053/status/2004678564118233342?s=20
+
+---
+
+5. A TAOCP reader finds our open problem there, improves our bound, and emails us.
+
+https://x.com/Nil053/status/2084659845282881934

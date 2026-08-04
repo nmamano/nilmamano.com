@@ -413,6 +413,20 @@ By that point, we had already published the paper in a conference called [FUN](h
 
 Still one of my favorite emails I've ever received.
 
+## More unexpected help
+
+Five years later, it happened again. Shisheng Li, from USTC, worked through Knuth's Exercise 7.2.2.4-161, which cites our paper, and built upon it.
+
+He made another heel optimization: every five adjacent copies can be replaced by a single 4x40 template that keeps the same knight formation but has 10 fewer crossings (see his [interactive visualization](https://daizisheng.github.io/MinCrossingsKnightsTour/index.html)).
+
+<BlogImage
+  src="/blog/knights-tour/shisheng-substitution.png"
+  alt="Top: five adjacent 4x8 heels from our construction, each outlined in green. Bottom: the same 4x40 region covered by a single SequenceP_40 template outlined in red, with fewer crossings"
+  width="100%"
+/>
+
+The number of crossings goes down from `12n + O(1)` to `11.5n + O(1)`.
+
 ## Conclusion
 
 I hope this post helped demystify CS theory research a bit--even if it is for a silly puzzle that originated at tea time. I may summarize it as: it's not as hard as it seems, but it is more work than it seems. So, enjoying the process and having fun is probably more important than being a genius.
