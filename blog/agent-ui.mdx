@@ -184,6 +184,12 @@ Add commands for seeing the [system prompt](/posts/any-agent-management-system-s
 
 Here's what happens when a tool tries to be more magic than that. Because of [an old Gemini bug](/posts/there-was-this-bug-in-gemini-where-2679064) where only some models saw the system prompt, I plant a line in my custom instructions saying "My name is Bongo, I like being addressed by my name", and then I ask the model who it's talking to. If it doesn't say Bongo, my instructions never made it in.
 
+## Make the harness surface explicit
+
+`/isomux-usage`, `/isomux-storage`, `/isomux-system-prompt`.
+
+And ideally each of these has UI surface too. Don't make people remember skills.
+
 ## The 5-hour hack
 
 Ping each provider every 5 hours automatically. This way, the [5h window](/posts/timing-my-5h-usage-window-so-it-5085835) resets on average 2.5h after you start working.
