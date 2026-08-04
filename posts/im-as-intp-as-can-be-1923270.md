@@ -1,11 +1,8 @@
 ---
 date: '2026-08-03'
 timestamp: '2026-08-03T20:27:07.000Z'
-source: both
+source: x
 status: published
-xUrl: 'https://x.com/Nil053/status/2084375533027262743'
-tweetId: '2084375533027262743'
-linkedinUrl: 'https://www.linkedin.com/posts/nilmamano_im-as-intp-as-can-be-for-most-of-my-life-share-7490141726771261440-lCN5/'
 segments: 1
 tags:
   - personal
