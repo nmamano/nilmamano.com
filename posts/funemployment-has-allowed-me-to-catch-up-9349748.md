@@ -28,7 +28,7 @@ The missing piece is an app orchestrator module in the meta-harness itself, beca
 How it works:
 
 - The app orchestrator manages an app registry. The agents register apps *by name* via the meta-harness API (which they know about because it's in the meta-harness system prompt).
-- The apps get a URL like `<name>.apps.<main_metaharness_url>`.
+- The apps get a URL like <name>.apps.<main_metaharness_url>.
 - The app orchestrator handles port assignment internally.
 - Apps share the lifetime of the meta-harness, not the agents. They survive individual sessions.
 - Apps ride the same authentication as the meta-harness, so you get privacy and multiplayer features for free.

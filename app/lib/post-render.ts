@@ -41,8 +41,20 @@ function linkify(escaped: string): string {
   return out;
 }
 
+// `[label](/internal/path)` -> an internal link. Site-relative hrefs only, so
+// this can't introduce javascript: or an off-site target; external links are
+// already handled by linkify. Runs after linkify, and the label excludes `<`
+// so it never matches across an anchor linkify just inserted.
+function internalLinks(html: string): string {
+  return html.replace(
+    /\[([^\]<]+)\]\((\/[^)\s]*)\)/g,
+    (_m, label, href) =>
+      `<a href="${href}" class="text-primary hover:underline">${label}</a>`
+  );
+}
+
 function renderSegment(text: string): string {
-  const html = linkify(escapeHtml(text)).replace(/\n/g, "<br/>");
+  const html = internalLinks(linkify(escapeHtml(text))).replace(/\n/g, "<br/>");
   return `<p>${html}</p>`;
 }
 
