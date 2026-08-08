@@ -46,10 +46,10 @@ export function BlogImage({
 
   return (
     <div
+      className="blog-media"
       style={{
         display: centered ? "flex" : "block",
         justifyContent: centered ? "center" : "flex-start",
-        margin: "1.5rem 0",
         flexDirection: "column",
         alignItems: centered ? "center" : "flex-start",
       }}
@@ -119,10 +119,10 @@ export function BlogVideo({
 }: BlogVideoProps) {
   return (
     <div
+      className="blog-media"
       style={{
         display: centered ? "flex" : "block",
         justifyContent: centered ? "center" : "flex-start",
-        margin: "1.5rem 0",
         flexDirection: "column",
         alignItems: centered ? "center" : "flex-start",
       }}
@@ -424,10 +424,11 @@ const components = {
       );
     }
 
-    // Handle internal page links
+    // Handle internal page links. These open in a new tab too, so that reading
+    // a post is never interrupted by following a reference.
     if (href && href.startsWith("/")) {
       return (
-        <Link href={href} {...props}>
+        <Link href={href} target="_blank" rel="noopener" {...props}>
           {props.children}
         </Link>
       );

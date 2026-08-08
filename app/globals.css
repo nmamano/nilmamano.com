@@ -342,3 +342,20 @@ body {
 .confetti-piece.shoot {
   animation: confetti-shoot 2s ease-out forwards;
 }
+
+/* Images and videos in blog posts (BlogImage / BlogVideo).
+   The gap around one is the collapsed margin between the media block and the
+   paragraph next to it, so trimming only the media's own margin does nothing:
+   the paragraph's larger margin wins the collapse. The neighbour rules below
+   are what actually tightens the spacing. */
+.prose .blog-media {
+  margin: 0.75rem 0;
+}
+
+.prose p:has(+ .blog-media) {
+  margin-bottom: 0.75rem;
+}
+
+.prose .blog-media + p {
+  margin-top: 0.75rem;
+}

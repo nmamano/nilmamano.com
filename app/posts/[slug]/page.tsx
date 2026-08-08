@@ -84,7 +84,7 @@ export default async function PostPermalink({
                   key={src}
                   src={src}
                   controls
-                  className="w-full rounded-md border border-border"
+                  className="w-[70%] mx-auto rounded-md border border-border"
                 />
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element

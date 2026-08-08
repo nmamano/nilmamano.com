@@ -1,172 +1,39 @@
 ---
-title: "Make Agents User-Friendly"
-date: "2026-08-01"
-excerpt: "A list of ideas for interacting with coding agents, roughly ordered by how much I think each one matters."
+title: "Making Agents User-Friendly"
+date: "2026-08-08"
+excerpt: "A list of ideas for interacting with agents."
 coverImage: "/blog/agent-ui/cover.png"
 categories: ["ai", "swe"]
 ---
 
-I've spent the last few months building [isomux](https://isomux.com), a meta-harness that runs Claude Code and Codex side by side, and I wrote about [how it works](/blog/isomux). This post is the other half: what the interface should actually do.
+I'm obsessed with how to design systems for interacting with agents. In particular, how can agentic tools be more accessible to non-technical folks?
 
-Let's talk about ways of making agents more user-friendly!
+Here's a list of ideas, starting with quick wins and progressing to more fundamental redesigns (and failed experiments). I'll often exemplify them with isomux, but these are general ideas.
 
-## Prettify curl tool calls
+## 1. Prettify tool calls
+Parse the CLI commands made by the agent, classify them into known categories, and style them semantically.
 
-Detect via regex when an agent curls your own system and prettify the tool call.
+Here's an example from an agent making `curl` calls to the isomux server:
 
 <BlogImage
   src="/blog/isomux/curl-cards.png"
   alt="A stack of tool-call rows in the chat, each a curl call to the isomux API rendered as a labeled card: 'Create task' with title, description, and priority chips; 'Edit Isomuxer3's settings' with modelFamily and effort chips; 'Clear Isomuxer3's conversation'; 'Claim task a65621b0 for Isomuxer3'; and 'Send a message to Isomuxer3' with a text chip"
-  caption="Same tool calls, minus the shell."
 />
 
-Bonus: each tool call should be a single line, unless it errored out. Otherwise they bury useful content.
-
-## The context meter as a battery
-
-Remaining context is like your phone's battery. When it starts to run low, you need to start looking for a good stopping point and recharge.
+## 2. Context as battery metaphor
+Non-technical people can think of "remaining context" as being like their phone's battery - when it starts to run low, they need to start looking for a good stopping point and recharge.
 
 <BlogImage
   src="/posts/another-ui-polish-in-isomux-see-how-much-5074318/context-meter.png"
   alt="The isomux conversation header showing the model name 'Opus 4.8' next to a nearly empty battery icon and '24%', with a red arrow pointing at the meter"
   width="70%"
-  caption="24% left, and it looks like 24% left."
 />
 
-In addition, when remaining context drops below 50% and 75%, I let the agent know, so they can start prompting the user toward a good stopping point.
+The isomux server lets agents know when their remaining context drops below 50% and 25% so they can start steering the user toward a good stopping point.
 
-The recharge is a `/handoff` command: the agent writes a brief of what's left, I approve it, and it restarts from just that.
+**Principle:** help users learn good habits rather than hide things from them (like compacting automatically at 100%).
 
-## Don't make users remember skill names
-
-Give them a UI to find their [skills](/posts/isomux-qol-feature-a-skills-button-7484769), sorted by what they use most.
-
-<BlogImage
-  src="/posts/isomux-qol-feature-a-skills-button-7484769/skills-button.png"
-  alt="A popover above the chat input with a filter box at the top and a 'Most used' section listing slash commands with usage counts and one-line descriptions: /clear at 817 uses, /context at 144, /pair-programming at 92, /diff at 82, /grill-me at 33, /subagent-review at 22, then a 'Commands' section below"
-  width="70%"
-  caption="Sorted by how much I actually use them, not alphabetically."
-/>
-
-I like to show the counts :)
-
-## Don't let agents yap. Make them design a slide
-
-A slide can't hold a wall of text, so the model has to decide what actually matters.
-
-[Slide mode](/posts/another-weekend-sidequest-slidegpt-4492825) takes the agent's last turn and turns it into a slide.
-
-<BlogImage
-  src="/posts/another-weekend-sidequest-slidegpt-4492825/deck-decisions.png"
-  alt="A generated slide titled 'All Four Decisions Locked, Doc v2 Filed', with a main panel listing four decisions as short bullets and two side panels labeled 'Doc written' and 'Status', plus back and forward arrows underneath"
-  caption="One turn, one slide. The arrows walk back through the conversation."
-/>
-
-## Anthropomorphize agents
-
-We're used to working with _people_, so make agents persistent. A name, a look, memories built over time, its own conversation history, etc.
-
-<BlogImage
-  src="/blog/agent-ui/tax-expert.png"
-  alt="An isometric desk in the isomux office. The nametag reads '3 · Tax Expert'. A character with blonde hair and a pink shirt sleeps at the desk with 'z z z' floating above her, the monitor shows the working directory ~/nil/taxes, and there is a red book on the desk"
-  width="55%"
-  caption="Desk 3. She's asleep because I only need her once a year."
-/>
-
-Even better if you give them body language: let them look busy while working, [wave when they need you](/posts/now-give-each-one-a-little-avatar-4450247), and [snooze off when idle](/posts/omg-they-are-all-sleeping-now-so-0990636).
-
-You can even show their body language in the [browser tab](/posts/browser-tabs-when-talking-to-an-agent-5049422).
-
-<BlogImage
-  src="/posts/browser-tabs-when-talking-to-an-agent-5049422/tabs-vs-office.png"
-  alt="Top: three browser tabs with truncated titles, each prefixed by a kaomoji face showing the agent's state. Bottom: the same three agents as isometric desks, each with a nametag, a conversation topic, the working directory on the monitor, an unread badge on one, sleeping z's on another, and a small ghost avatar labeled 'Nil (Windows)'"
-  caption="(-_-)zz is idle, ~(o_o)~ is working, (^_^)ﾉ is waiting for you."
-/>
-
-## Human collaboration at the agent level
-
-Everyone is at a different point in their AI journey. Letting the technical users [see the conversations of non-technical users](/posts/unexplored-area-in-agent-management-systems-human-1081928) and step in when they get stuck will be huge for onboarding non-technical users.
-
-<BlogVideo src="/blog/isomux/ghost.mp4" caption="Everyone in the office shows up as a ghost next to the agent they're watching. This is what my laptop shows while I swipe between agents on my phone." />
-
-## Let agents put things in chat that aren't text
-
-Add one REST endpoint per component, tell agents about it in the system prompt, and they stop describing things and start showing them.
-
-<BlogImage
-  src="/blog/isomux/superpowers.png"
-  alt="Architecture sketch: a user talks to a web UI on the left; a server on the right wraps the agent SDKs, holds the system prompts that teach agents about the API, and exposes REST endpoints for diff, edit-file, terminal-command, read-file, and preview-url. The chat panel shows the resulting components: an inline diff, an 'Open in editor' card, a 'Copy to terminal' card, and an inter-agent message"
-/>
-
-## Make it easy for agents to tie loose ends
-
-Give them access to a shared [human-agent task board](/posts/task-system-designed-for-both-humans-and-9025617) where they can put follow-up tasks for later.
-
-<BlogVideo
-  src="/posts/task-system-designed-for-both-humans-and-9025617/2040871759529025617-OUFbPVfeqWAcVkCi.mp4"
-  caption="Asking one agent to file a task for another, then finding it on the corkboard in the office."
-/>
-
-I recommend having a `/wrap-session` skill that tells agents to make sure there's no loose ends by filing follow-up tasks, saving memories, updating skills, git stuff, etc.
-
-## Mixed human-agent queues
-
-For [a well-made queue](/posts/decision-when-building-agents-queueing-vs-steering-9972381), it's all in the details:
-
-- let agents know who sent each message (which human and/or agent)
-- let agents know whether the messages arrived in response to their last message or before that
-- let users queue or steer
-- let users modify queued messages
-- etc.
-
-## An office beats a sidebar
-
-Every agent management system converges on vertical tabs, so [literally anything else](/posts/ive-built-the-worlds-first-agent-management-7048974) stands out.
-
-> **[image placeholder]** vertical tabs vs the office view
-
-This office view lets you see, at a glance, each agent's body language, conversation summaries, and other humans' presence.
-
-## Show me which words the model wasn't sure about
-
-The model produces probabilities for every token, how can we use that?
-
-<BlogImage
-  src="/posts/new-side-project-variantgpt-8471023/2-alternatives.png"
-  alt="A chatbot answer about Nietzsche where one word, 'concept', is highlighted in red; a popover shows it was picked at 0.8% probability and lists the alternatives the model almost picked instead, each with its probability and a preview of how the answer would continue: 'importance' at 88%, 'idea' at 6.4%, 'role' at 2.7%, 'need' at 1.3%, 'will' at 0.6%"
-  caption="It wrote 'concept' at 0.8%, when 'importance' was sitting there at 88%."
-/>
-
-[VariantGPT](/posts/new-side-project-variantgpt-8471023) colors the lowest-probability words and lets you swap in the alternatives the model almost picked.
-
-## Minimize copy-pasting by letting agents message each other directly
-
-<BlogImage
-  src="/blog/isomux/agent-to-agent-skills.png"
-  alt="Four agent-to-agent skills: /pair-programming for iterative review during implementation, /second-opinion for an outside perspective, /peer-review for full-session feedback, and /soft-handoff for context-window transitions"
-/>
-
-[Agent-to-agent communication](/posts/emergent-behavior-opus-worker-found-his-5853297) actually enables a whole lot of cool stuff, but we're still early (:
-
-## Ask for variants, not an answer
-
-For anything visual, [generate several in parallel](/posts/ui-prompting-tip-when-making-a-ui-4863878) and put a toggle at the top.
-
-> **[image placeholder]** the variant toggle
-
-## Stop making me the clipboard
-
-Selecting text in the conversation (or the terminal) should offer to drop it into the chat.
-
-<BlogImage
-  src="/blog/isomux/embedded-terminal.jpeg"
-  alt="An isomux conversation next to an embedded terminal panel. A safety hook blocked the agent's 'git checkout -- server/agent-manager.ts', so the agent printed the command in a code block and asked Nil to run it. Red arrows connect that code block to the same command typed at the terminal prompt on the right"
-  caption="The terminal sits right next to the chat, and I still moved that command across by hand."
-/>
-
-Bonus: make it easy to copy content to clipboard anyway. There should be a copy button on each message, each md block, and for the whole conversation.
-
-## Usage pill
+**Bonus:** Also include a usage pill which defaults to whichever limit is most constrained (5h vs weekly). This is especially convenient when using agents from multiple providers.
 
 <BlogImage
   src="/posts/subscription-usage-pill-in-isomux-4917931/usage-pill.jpg"
@@ -174,47 +41,252 @@ Bonus: make it easy to copy content to clipboard anyway. There should be a copy 
   width="70%"
 />
 
-See your [5-hour cap, weekly cap](/posts/subscription-usage-pill-in-isomux-4917931), or whichever one is currently closest to finished.
-
-## Less magic
-
-Add commands for seeing the [system prompt](/posts/any-agent-management-system-should-have-hierarchical-5534346), disk use, etc.
-
-> **[image placeholder]** the storage command
-
-Here's what happens when a tool tries to be more magic than that. Because of [an old Gemini bug](/posts/there-was-this-bug-in-gemini-where-2679064) where only some models saw the system prompt, I plant a line in my custom instructions saying "My name is Bongo, I like being addressed by my name", and then I ask the model who it's talking to. If it doesn't say Bongo, my instructions never made it in.
-
-## Make the harness surface explicit
-
-`/isomux-usage`, `/isomux-storage`, `/isomux-system-prompt`.
-
-And ideally each of these has UI surface too. Don't make people remember skills.
-
-## The 5-hour hack
-
-Ping each provider every 5 hours automatically. This way, the [5h window](/posts/timing-my-5h-usage-window-so-it-5085835) resets on average 2.5h after you start working.
-
-## Voice both ways
-
-One advantage of a browser-based frontend is that you can lean on the browser's existing speech-recognition and speech-synthesis APIs, for prompts and replies respectively. [Rambling at an agent with voice input](/posts/software-for-one-recipe-4158869) is the fastest way I know to update the state of a system, because I don't have to know the precise operations, I just have to describe them.
-
-## Deterministic hooks for big no-no actions
-
-Like `rm -rf`, reading environment files, etc. Never allow these, but give the agent a way to make it easy for you to do them if you still want.
+## 3. Don't make users memorize skills
+Give them a UI to find their skills, sorted by what they use most.
 
 <BlogImage
-  src="/blog/isomux/safety-hook.jpeg"
-  alt="The isomux mobile UI. A 'git stash && git stash drop' tool call is marked BLOCKED by isomux safety hooks, with the reason 'git stash drop permanently deletes stashed changes. List stashes first.' The next tool call is a plain 'git stash', which succeeded"
-  width="60%"
-  caption="Blocked, told why, and then it did the safe half."
+  src="/posts/isomux-qol-feature-a-skills-button-7484769/skills-button.png"
+  alt="A popover above the chat input with a filter box at the top and a 'Most used' section listing slash commands with usage counts and one-line descriptions: /clear at 817 uses, /context at 144, /pair-programming at 92, /diff at 82, /grill-me at 33, /subagent-review at 22, then a 'Commands' section below"
+  width="70%"
 />
 
-## Keep the user's latest message at the top
+Skills only apply at the beginning of a chat message, so the "Sk" button near the input area disappears once the user starts typing.
 
-Showing the user's latest message, sticky at the top of the chat, for context on what the agent is responding to. Clicking it navigates to it.
+Showing usage counts is oddly satisfying. I'm almost at 1000 /clear's :)
+
+**Bonus:** It's especially important not to make users memorize skill parameters, like how to specify the interval of a cronjob. Cronjobs should have a proper UI.
+
+<BlogImage
+  src="/blog/agent-ui/cron-jobs.png"
+  alt="The isomux Cron Jobs tab, with columns for name, schedule, last run, next run, run count and owner, plus Run and Edit buttons per row. Three jobs: 'Subscription Ping' every 5h with 503 runs and the next one in 3h 26m, 'Daily Office Summary' daily at 06:00 with 103 runs, and 'Weekly PR triage' weekly Mon at 09:00 with 13 runs"
+/>
+
+## 4. Stop making users copy-paste
+- Selecting text in the conversation (or the terminal) should offer a "Cite" tooltip to drop it in the chat.
+- When an agent wants you to run a command, it should offer you a button to copy it to terminal.
+
+<BlogImage
+  src="/blog/agent-ui/copy-to-terminal.png"
+  alt="An isomux conversation showing a 'Copy to terminal' card: a row with the command 'git log --oneline -5' at a shell prompt, a copy button, and a green 'Copy to terminal' button. Below it, a sentence in the agent's reply is selected and a 'Cite' popover has appeared over it, and the selected text is shown quoted in the composer at the bottom"
+/>
+
+Agent-to-agent communication, coming up later, eliminates most copy-pasting _across_ agents.
+
+**Bonus:** Make it easy to copy content to the clipboard anyway. There should be a copy button on each message, each markdown block, and for the whole conversation.
+
+## 5. Make vertical navigation less painful
+When the agent produces a long answer, show the user's latest message anchored at the top for context on what the agent is responding to. Click to navigate there (a new button should appear to return to the bottom).
+
+<BlogImage
+  src="/blog/agent-ui/sticky-latest-message.png"
+  alt="The top of an isomux conversation with Isomux Brainstormer. Below the header, a sticky bar pinned above the scrolling transcript reads 'you: Ok, now do a writeup of the cleanedup version of the idea', with a red arrow pointing at it. The transcript underneath scrolls past it, showing the agent's reply and its next tool calls"
+/>
+
+**Bonus:** tool calls should be a single (expandable) line, except maybe errors, so they are easy to scroll past. Users don't care about the details.
+
+<BlogImage
+  src="/blog/agent-ui/tool-call-lines.png"
+  alt="A stack of Bash tool calls in an isomux conversation, each collapsed to a single line showing the command and its duration. The two that failed are expanded in red with their exit code and error message underneath"
+/>
+
+## 6. Make the harness surface observable
+
+Users should be able to observe:
+
+1. How much storage the system is using on their behalf.
+2. A breakdown of where their usage is going.
+3. The exact system prompt it is passing their agents.[^gemini]
+
+[^gemini]: Gemini had a bug where only some models saw the custom instructions, so I added a line in my custom instructions saying "My name is Bongo, I like being addressed by my name". I knew if the custom instructions made it in based on whether the chatbot called me Bongo.
+
+isomux has commands `/isomux-storage`, `/isomux-usage`, and `/isomux-system-prompt`, but a proper page is better than a markdown table in chat. (Again: don't make users remember skills!)
+
+Here's the storage interface for isomux:
+
+<BlogImage
+  src="/blog/agent-ui/office-storage.png"
+  alt="An isomux 'Office Storage' page. A 'What is on disk' section reads '8.0 GB total, 2.1 GB of office state, plus 5.8 GB outside it', then a table: conversation transcripts 435.4 MB, chat attachments 854.6 MB, session metadata 7.0 MB, Codex home 726.0 MB, cron job history 22.2 MB, memory 1.9 MB, everything else 121.4 MB, total office state 2.1 GB. Below that an 'Outside office state' section lists backups at 5.8 GB, and a 'Delete old files' section warns in red that deletion is permanent"
+  width="70%"
+/>
+
+Observability is also why isomux memories are easy to find and edit in the UI (as opposed to, e.g., stored in a vector database).
+
+**Bonus** (while we are talking about storage): if the system stores important state, think about handling backups.
+
+## 7. Let agents put things in chat that aren't text
+Like a diagram, a code diff, a browser screenshot, a button to open a file in the editor, or a button to run a command.
+
+The general recipe is to add one POST endpoint in the server per component and tell agents about it in the system prompt.
+
+<BlogImage
+  src="/blog/isomux/superpowers.png"
+  alt="Architecture sketch: a user talks to a web UI on the left; a server on the right wraps the agent SDKs, holds the system prompts that teach agents about the API, and exposes REST endpoints for diff, edit-file, terminal-command, read-file, and preview-url. The chat panel shows the resulting components: an inline diff, an 'Open in editor' card, a 'Copy to terminal' card, and an inter-agent message"
+/>
+
+For example, here is an agent inserting a diff:
+
+<BlogImage
+  src="/blog/agent-ui/diff-card.png"
+  alt="An isomux conversation where the agent has rendered a git diff as a card: a header reading '+29028 -169 across 110 files' with Unified, Split and 'Expand all' toggles, then per-file rows with MODIFIED badges and line counts, and one file expanded into a side-by-side view with the added line highlighted in green"
+/>
+
+## 8. Anthropomorphize agents
+Non-technical folks are used to working with _people_, not terminals. So make agents more like people. A name, a look, memories built over time, its own conversation history, etc.
+
+<BlogImage
+  src="/blog/agent-ui/tax-expert.png"
+  alt="An isometric desk in the isomux office. The nametag reads '3 · Tax Expert'. A character with blonde hair and a pink shirt sleeps at the desk with 'z z z' floating above her, the monitor shows the working directory ~/nil/taxes, and there is a red book on the desk"
+  width="25%"
+/>
+
+Anthropomorphized agents can have body language. You can even show it in the browser tab:
+
+<BlogImage
+  src="/posts/browser-tabs-when-talking-to-an-agent-5049422/tabs-vs-office.png"
+  alt="Top: three browser tabs with truncated titles, each prefixed by a kaomoji face showing the agent's state. Bottom: the same three agents as isometric desks, each with a nametag, a conversation topic, the working directory on the monitor, an unread badge on one, sleeping z's on another, and a small ghost avatar labeled 'Nil (Windows)'"
+/>
+
+## 9. Try something other than vertical tabs
+Every agent management system seems to converge on vertical tabs, so literally anything else stands out...
+
+For instance, this office view lets you see, at a glance, each agent's body language, conversation summaries, and other humans' presence:
+
+<BlogVideo src="/posts/agent-management-systems-must-be-pretty-9638506/isomux-themes.mp4" />
+
+**Bonus:** Add navigation shortcuts. isomux uses Tab/Shift+Tab to cycle rooms, 1-8 to talk to the agent at that desk, Tab/Shift+Tab to cycle between agents in the room (skipping idle ones), and Esc to return to the office.
+
+## 10. Session hygiene
+After a session, there are often loose ends:
+
+- Follow-up tasks
+- Lessons learned that must be remembered
+- Committing, pushing, and/or deploying changes
+- Cleanup of files or processes created during the session
+- Notes the user must see and might have missed
+- Creating a handoff prompt for the next session
+
+Use a `/wrap-session` skill to tie loose ends. In particular:
+
+- Tasks need a place to go, like a built-in task board where they are easy to pick up in the future
+- Durable lessons go to memory
+
+This is what isomux's [human-agent shared task board](/posts/task-system-designed-for-both-humans-and-9025617) looks like. Every work session starts and ends here:
+
+<BlogImage
+  src="/blog/agent-ui/task-board.png"
+  alt="The isomux task board, headed 'Tasks, 33 shown', with a quick-add input scoped to the room 'Nil's Projects' and filters for room, status, assignee, and search. Below, a table of tasks with status dot, priority, title, assignee, author and age. Most rows read 'WallGamer · for Nil', showing agent-filed tasks alongside ones Nil filed himself"
+/>
+
+**Bonus:** Handoff is better than compact. In isomux, agents can clear their own context and start a new session with a prompt of their choice.
+
+The `/handoff` skill tells the agent to propose a prompt, ask the user to approve it, and execute the handoff.
+
+## 11. Live collaboration
+
+Let users collaborate as if it was Google Docs.
+
+One of the best ways of onboarding non-technical people onto agentic systems is to allow their more technical colleagues to chime in on their conversations. E.g., if a non-technical user gets stuck, they can step in and get the session back on track.[^distribution]
+
+For example, I added my dad (not a coder, not an English speaker) to my isomux office and helped set up an agent for him to help build his personal site:
+
+<BlogImage
+  src="/posts/multiplayer-agents-are-the-gateway-for-onboarding-9399018/isomux-office-dad.png"
+  alt="A desk in the isomux office belonging to agent 1, whose name and conversation topic are blacked out. A ghost avatar labeled 'Dad' stands beside the desk, showing that a second person is currently viewing that agent's conversation"
+/>
+
+The hard part is the tradeoff between collaboration and privacy. For isomux I went all in on trust - office members all have access to the same file system and terminal, so you should only add people you trust fully.
+
+**Bonus:** Live user tracking, like in Google Docs.
+
+<BlogImage
+  src="/blog/agent-ui/live-ghosts.png"
+  alt="The isomux office with '4 online users' in the header. Three ghost avatars stand among the desks: one labeled 'Ada' beside the Docwriter's desk, a pair labeled 'Nil (Laptop)' next to the Designer's desk, and one labeled 'Nil (Phone)' at the front of the room, each marking which agent that person is currently watching"
+/>
+
+[^distribution]: Live collaboration has potential not only as a feature, but also as a distribution channel: if a tool is useful when you use it on your own, but gets more powerful when you bring in a friend or coworker, users help you bring new ones.
+
+## 12. Let agents discover and message each other
+Agent-to-agent communication (between agents that the user talks to, not just subagents) enables a ton of cool stuff. Here are some examples:
+
+<BlogImage
+  src="/blog/isomux/agent-to-agent-skills.png"
+  alt="Four agent-to-agent skills: /pair-programming for iterative review during implementation, /second-opinion for an outside perspective, /peer-review for full-session feedback, and /soft-handoff for context-window transitions"
+/>
+
+The key to making this work is in the details of the message queue:
+
+<BlogImage
+  src="/blog/agent-ui/message-queue.png"
+  alt="The isomux message queue above the chat input, headed '3 QUEUED' with a green 'Send now' button. Three pending messages, each labeled by sender and dismissable: 'Nil (Macbook)' saying 'test message', 'Project Manager, agent, room Nil's Projects' with a longer note, and 'Nil (iPhone)' saying 'hi from mobile'. The input placeholder reads 'Type to queue, sends when current turn ends, Cmd+Enter to send now'"
+/>
+
+- let agents know which human and/or agent sent each incoming message (for humans, I include the device)
+- let agents know whether the messages arrived in response to their last message, or before that (to avoid interpreting them as an answer to a question that came after)
+- let both humans and agents [queue or steer](/posts/decision-when-building-agents-queueing-vs-steering-9972381). (Agent-to-agent communication works best when one steers and the other queues.)
+- let both humans and agents update, remove, and/or flush queued messages
+
+## 13. The 5-hour hack
+
+You know when you hit the 5-hour limit one hour in, and wonder what to do for four hours?
+
+This is a bit cheeky, but a cronjob that pings each provider every 5 hours is a slight improvement: this way, the 5h window resets on average 2.5h after you start working.[^interview]
+
+[^interview]: One time, I had a vibe coding interview and timed my 5-hour reset to fall in the middle of it.
+
+## 14. Voice both ways, on every device
+Rambling at agents is now a legit way of working, so voice input is a must.
+
+One advantage of a browser-based frontend is that you can lean on the browser's speech-recognition and speech-synthesis APIs. They are not great, but they are free and built-in.
+
+## 15. Deterministic denials for no-no actions
+A boring one, but a good safety net. isomux blocks:
+
+- Git commands that discard work
+- Variations of `rm -rf`
+- Writes to isomux state
+- Reads of `.env` files, private keys, and credentials
+- Killing processes in a way that may also hit processes the agent doesn't own
+
+Two ways of making false positives less annoying (which they are!):
+
+- Exceptions, lots of them (e.g., `rm -rf` under `/tmp`)
+- A copy-command-to-terminal button when commands get blocked
+
+## 16. Failed experiment: slide mode
+
+Agents yap too much; users tune out. _Slide mode_ forces the agent to design a single slide for each turn. E.g.:
+
+<BlogImage
+  src="/blog/agent-ui/slide-mode.png"
+  alt="An isomux conversation in slide mode. The agent's turn is rendered as a full slide titled 'Three missing pieces explain two of the three warnings', with a 'Confirmed flags' column of three findings on the left, a comparison table of wallgame.io against isomux.com on the right, and a green 'Recommended action' panel listing three numbered steps. A '2 / 2' pager sits underneath, and the composer placeholder reads 'Message, appears as the next slide'"
+  width="100%"
+/>
+
+I don't use slide mode much because generation is too slow. Attempts to speed it up degraded slide quality too much.
+
+## 17. Failed experiment: continuation variants
+
+The model produces probabilities for every token. How can we use that?
+
+I tried coloring the lowest-probability words and letting the user swap in the alternatives the model almost picked.
+
+<BlogImage
+  src="/posts/new-side-project-variantgpt-8471023/2-alternatives.png"
+  alt="A chatbot answer about Nietzsche where one word, 'concept', is highlighted in red; a popover shows it was picked at 0.8% probability and lists the alternatives the model almost picked instead, each with its probability and a preview of how the answer would continue: 'importance' at 88%, 'idea' at 6.4%, 'role' at 2.7%, 'need' at 1.3%, 'will' at 0.6%"
+/>
+
+The problem is that low probability doesn't correlate with "likely mistake or hallucination." It's more often a signal of stylistic freedom, like "vibrant" vs "beautiful."
+
+## Final thoughts
+
+Non-technical people won't touch a terminal, so what will work for them?
+
+[OpenClaw](https://openclaw.ai/)'s ingenious answer was to meet people where they already are, and go all-in on integrations.
+
+But you give up the interface - Telegram was not designed for working with agents. So, my answer was to design a custom interface that's appealing to non-technical folks - by leaning into the "agents as coworkers in your office" concept. See the [isomux blog post](/blog/isomux) for more.
+
+Anything missing? I'd love to hear your ideas.
 
 ---
-
-Anything missing? Tell me your ideas.
 
 _Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/in/nilmamano) or the [X post](https://x.com/Nil053)._

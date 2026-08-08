@@ -413,9 +413,12 @@ I self-host my office. For reachability beyond my own VPN, the best path I've fo
 
 Each connected device shows up as a small customizable ghost[^ghost] avatar next to whatever agent it's chatting with. This helps make the office feel more alive and get a real-time snapshot of what your teammates are working on.
 
-This video is what I see on my laptop while swiping between agents on my phone:
+Here is an office with four people connected, each ghost parked next to the agent they are looking at:
 
-<BlogVideo src="/blog/isomux/ghost.mp4" />
+<BlogImage
+  src="/blog/agent-ui/live-ghosts.png"
+  alt="The isomux office with '4 online users' in the header. Three ghost avatars stand among the desks: one labeled 'Ada' beside the Docwriter's desk, a pair labeled 'Nil (Laptop)' next to the Designer's desk, and one labeled 'Nil (Phone)' at the front of the room, each marking which agent that person is currently watching"
+/>
 
 The server keeps an in-memory `connectionId → presence` map keyed per WebSocket (not per auth session, so multi-tab users get distinct ghosts) and broadcasts it on every focus or room change.
 
@@ -636,7 +639,7 @@ Claude and Codex agents share the same desks, task board, and persistence layer.
 
 - **We don't use an SDK.**[^codex-sdk] Instead, we talk to a subprocess called "App Server" that ships with the Codex CLI. It speaks a JSON-RPC-lite protocol over stdio. Isomux spawns `codex app-server`, sends `initialize` + `thread/start` requests, and reads `notifications` off stdout. An adapter translates these messages into a `NormalizedEvent` stream shared with Claude.
 - **Streaming is push, not pull.** The Claude SDK gives you an async iterator (`for await … of session.stream()`). Codex pushes notifications at you (`thread/started`, `turn/started`, `turn/completed`, `tool/started`, …) and expects you to filter by `threadId`. Per-thread filtering is non-negotiable: sub-agent and review-mode threads share the same stdio pipe but have their own ids, and resolving the wrong turn would unblock the queue prematurely.
-- **Capability mismatches.** Codex 0.130 doesn't expose hooks, and its `thread/fork` can only clone a whole thread from the start — it can't branch from a midpoint mid-conversation. That breaks Isomux's "edit a past message" feature, which forks the conversation at the edited message and keeps the original branch as a sibling. Our provider abstraction declares a `BackendCapabilities` record (`fork`, `hooks`, `skills`, `edit`, `mcp`, …) and the UI hides affordances accordingly. This keeps the orchestrator code backend-agnostic.
+- **Capability mismatches.** Codex 0.130 doesn't expose hooks, and its `thread/fork` can only clone a whole thread from the start; it can't branch from a midpoint mid-conversation. That breaks Isomux's "edit a past message" feature, which forks the conversation at the edited message and keeps the original branch as a sibling. Our provider abstraction declares a `BackendCapabilities` record (`fork`, `hooks`, `skills`, `edit`, `mcp`, …) and the UI hides affordances accordingly. This keeps the orchestrator code backend-agnostic.
 
 [^codex-sdk]: OpenAI ships three integration surfaces: the [Codex TypeScript SDK](https://github.com/openai/codex/tree/main/sdk/typescript) (`@openai/codex-sdk`), a lightweight `codex exec` mode for one-off scripts, and the App Server we use here. OpenAI explicitly recommends App Server for UI integrators ([blog post](https://openai.com/index/unlocking-the-codex-harness/)): _"Codex App Server will be the first-class integration method we maintain moving forward… Choose the App Server when you want the full Codex harness exposed as a stable, UI-friendly event stream."_ The SDK is positioned for _"server-side tools and workflows"_ with a smaller surface area, and Exec for _"one-off tasks and CI runs"_.
 

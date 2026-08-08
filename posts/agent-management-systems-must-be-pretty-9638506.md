@@ -7,8 +7,7 @@ xUrl: 'https://x.com/Nil053/status/2054709610519638506'
 tweetId: '2054709610519638506'
 segments: 2
 images:
-  - >-
-    /posts/agent-management-systems-must-be-pretty-9638506/2054709610519638506--HOt-bRDypee_yyE.mp4
+  - /posts/agent-management-systems-must-be-pretty-9638506/isomux-themes.mp4
 tags:
   - isomux
 ---
