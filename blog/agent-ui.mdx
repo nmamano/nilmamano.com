@@ -12,7 +12,7 @@ Here's a list of ideas, starting with quick wins and progressing to more fundame
 
 <Toc />
 
-## 1. Prettify tool calls
+### 1. Prettify tool calls
 Parse the CLI commands made by the agent, classify them into known categories, and style them semantically.
 
 Here's an example from an agent making `curl` calls to the isomux server:
@@ -22,7 +22,7 @@ Here's an example from an agent making `curl` calls to the isomux server:
   alt="A stack of tool-call rows in the chat, each a curl call to the isomux API rendered as a labeled card: 'Create task' with title, description, and priority chips; 'Edit Isomuxer3's settings' with modelFamily and effort chips; 'Clear Isomuxer3's conversation'; 'Claim task a65621b0 for Isomuxer3'; and 'Send a message to Isomuxer3' with a text chip"
 />
 
-## 2. Context as battery metaphor
+### 2. Context as battery metaphor
 Non-technical people can think of "remaining context" as being like their phone's battery - when it starts to run low, they need to start looking for a good stopping point and recharge.
 
 <BlogImage
@@ -43,7 +43,7 @@ The isomux server lets agents know when their remaining context drops below 50% 
   width="70%"
 />
 
-## 3. Don't make users memorize skills
+### 3. Don't make users memorize skills
 Give them a UI to find their skills, sorted by what they use most.
 
 <BlogImage
@@ -63,7 +63,7 @@ Showing usage counts is oddly satisfying. I'm almost at 1000 /clear's :)
   alt="The isomux Cron Jobs tab, with columns for name, schedule, last run, next run, run count and owner, plus Run and Edit buttons per row. Three jobs: 'Subscription Ping' every 5h with 503 runs and the next one in 3h 26m, 'Daily Office Summary' daily at 06:00 with 103 runs, and 'Weekly PR triage' weekly Mon at 09:00 with 13 runs"
 />
 
-## 4. Stop making users copy-paste
+### 4. Stop making users copy-paste
 - Selecting text in the conversation (or the terminal) should offer a "Cite" tooltip to drop it in the chat.
 - When an agent wants you to run a command, it should offer you a button to copy it to terminal.
 
@@ -76,7 +76,7 @@ Agent-to-agent communication, coming up later, eliminates most copy-pasting _acr
 
 **Bonus:** Make it easy to copy content to the clipboard anyway. There should be a copy button on each message, each markdown block, and for the whole conversation.
 
-## 5. Make vertical navigation less painful
+### 5. Make vertical navigation less painful
 When the agent produces a long answer, show the user's latest message anchored at the top for context on what the agent is responding to. Click to navigate there (a new button should appear to return to the bottom).
 
 <BlogImage
@@ -91,7 +91,7 @@ When the agent produces a long answer, show the user's latest message anchored a
   alt="A stack of Bash tool calls in an isomux conversation, each collapsed to a single line showing the command and its duration. The two that failed are expanded in red with their exit code and error message underneath"
 />
 
-## 6. Make the harness surface observable
+### 6. Make the harness surface observable
 
 Users should be able to observe:
 
@@ -115,7 +115,7 @@ Observability is also why isomux memories are easy to find and edit in the UI (a
 
 **Bonus** (while we are talking about storage): if the system stores important state, think about handling backups.
 
-## 7. Let agents put things in chat that aren't text
+### 7. Let agents put things in chat that aren't text
 Like a diagram, a code diff, a browser screenshot, a button to open a file in the editor, or a button to run a command.
 
 The general recipe is to add one POST endpoint in the server per component and tell agents about it in the system prompt.
@@ -132,7 +132,7 @@ For example, here is an agent inserting a diff:
   alt="An isomux conversation where the agent has rendered a git diff as a card: a header reading '+29028 -169 across 110 files' with Unified, Split and 'Expand all' toggles, then per-file rows with MODIFIED badges and line counts, and one file expanded into a side-by-side view with the added line highlighted in green"
 />
 
-## 8. Anthropomorphize agents
+### 8. Anthropomorphize agents
 Non-technical folks are used to working with _people_, not terminals. So make agents more like people. A name, a look, memories built over time, its own conversation history, etc.
 
 <BlogImage
@@ -148,7 +148,7 @@ Anthropomorphized agents can have body language. You can even show it in the bro
   alt="Top: three browser tabs with truncated titles, each prefixed by a kaomoji face showing the agent's state. Bottom: the same three agents as isometric desks, each with a nametag, a conversation topic, the working directory on the monitor, an unread badge on one, sleeping z's on another, and a small ghost avatar labeled 'Nil (Windows)'"
 />
 
-## 9. Try something other than vertical tabs
+### 9. Try something other than vertical tabs
 Every agent management system seems to converge on vertical tabs, so literally anything else stands out...
 
 For instance, this office view lets you see, at a glance, each agent's body language, conversation summaries, and other humans' presence:
@@ -157,7 +157,7 @@ For instance, this office view lets you see, at a glance, each agent's body lang
 
 **Bonus:** Add navigation shortcuts. isomux uses Tab/Shift+Tab to cycle rooms, 1-8 to talk to the agent at that desk, Tab/Shift+Tab to cycle between agents in the room (skipping idle ones), and Esc to return to the office.
 
-## 10. Session hygiene
+### 10. Session hygiene
 After a session, there are often loose ends:
 
 - Follow-up tasks
@@ -183,7 +183,7 @@ This is what isomux's [human-agent shared task board](/posts/task-system-designe
 
 The `/handoff` skill tells the agent to propose a prompt, ask the user to approve it, and execute the handoff.
 
-## 11. Live collaboration
+### 11. Live collaboration
 
 Let users collaborate as if it was Google Docs.
 
@@ -207,7 +207,7 @@ The hard part is the tradeoff between collaboration and privacy. For isomux I we
 
 [^distribution]: Live collaboration has potential not only as a feature, but also as a distribution channel: if a tool is useful when you use it on your own, but gets more powerful when you bring in a friend or coworker, users help you bring new ones.
 
-## 12. Let agents discover and message each other
+### 12. Let agents discover and message each other
 Agent-to-agent communication (between agents that the user talks to, not just subagents) enables a ton of cool stuff. Here are some examples:
 
 <BlogImage
@@ -227,7 +227,7 @@ The key to making this work is in the details of the message queue:
 - let both humans and agents [queue or steer](/posts/decision-when-building-agents-queueing-vs-steering-9972381). (Agent-to-agent communication works best when one steers and the other queues.)
 - let both humans and agents update, remove, and/or flush queued messages
 
-## 13. The 5-hour hack
+### 13. The 5-hour hack
 
 You know when you hit the 5-hour limit one hour in, and wonder what to do for four hours?
 
@@ -235,12 +235,12 @@ This is a bit cheeky, but a cronjob that pings each provider every 5 hours is a 
 
 [^interview]: One time, I had a vibe coding interview and timed my 5-hour reset to fall in the middle of it.
 
-## 14. Voice both ways, on every device
+### 14. Voice both ways, on every device
 Rambling at agents is now a legit way of working, so voice input is a must.
 
 One advantage of a browser-based frontend is that you can lean on the browser's speech-recognition and speech-synthesis APIs. They are not great, but they are free and built-in.
 
-## 15. Deterministic denials for no-no actions
+### 15. Deterministic denials for no-no actions
 A boring one, but a good safety net. isomux blocks:
 
 - Git commands that discard work
@@ -254,7 +254,7 @@ Two ways of making false positives less annoying (which they are!):
 - Exceptions, lots of them (e.g., `rm -rf` under `/tmp`)
 - A copy-command-to-terminal button when commands get blocked
 
-## 16. Experiment: slide mode
+### 16. Experiment: slide mode
 
 Agents yap too much; users tune out. _Slide mode_ forces the agent to design a single slide for each turn. E.g.:
 
@@ -266,7 +266,7 @@ Agents yap too much; users tune out. _Slide mode_ forces the agent to design a s
 
 I don't use slide mode much because generation is too slow. Attempts to speed it up degraded slide quality too much.
 
-## 17. Experiment: continuation variants
+### 17. Experiment: continuation variants
 
 The model produces probabilities for every token. How can we use that?
 
@@ -279,7 +279,7 @@ I tried coloring the lowest-probability words and letting the user swap in the a
 
 The problem is that low probability doesn't correlate with "likely mistake or hallucination." It's more often a signal of stylistic freedom, like "vibrant" vs "beautiful."
 
-## Final thoughts
+### Final thoughts
 
 Non-technical people won't touch a terminal, so what will work for them?
 

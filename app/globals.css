@@ -359,15 +359,3 @@ body {
 .prose .blog-media + p {
   margin-top: 0.75rem;
 }
-
-/* Blog headings run large next to 16px prose, especially in list-style posts
-   with many sections. Pull h2/h3 down a step on desktop; the mobile sizes
-   above already handle small screens. */
-@media (min-width: 641px) {
-  .prose h2 {
-    @apply text-2xl;
-  }
-  .prose h3 {
-    @apply text-xl;
-  }
-}
