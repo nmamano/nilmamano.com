@@ -6,9 +6,9 @@ coverImage: "/blog/agent-ui/cover.png"
 categories: ["ai", "swe"]
 ---
 
-I'm obsessed with how to design systems for interacting with agents. In particular, how can agentic tools be more accessible to non-technical folks?
+I'm obsessed with how to design systems for interacting with agents. In particular, how can we make agents more accessible to non-technical folks?
 
-Here's a list of ideas, starting with quick wins and progressing to more fundamental redesigns (and failed experiments). I'll often exemplify them with isomux, but these are general ideas.
+Here's a list of ideas, starting with quick wins and progressing to more fundamental redesigns (and failed experiments). These are general ideas, isomux is just the reference implementation.
 
 <Toc />
 
@@ -33,7 +33,7 @@ Non-technical people can think of "remaining context" as being like their phone'
 
 The isomux server lets agents know when their remaining context drops below 50% and 25% so they can start steering the user toward a good stopping point.
 
-**Principle:** help users learn good habits rather than hide things from them (like compacting automatically at 100%).
+**Principle:** help users learn good habits rather than hide things from them (such as automatically compacting at 100%).
 
 **Bonus:** Also include a usage pill which defaults to whichever limit is most constrained (5h vs weekly). This is especially convenient when using agents from multiple providers.
 
@@ -56,7 +56,7 @@ Skills only apply at the beginning of a chat message, so the "Sk" button near th
 
 Showing usage counts is oddly satisfying. I'm almost at 1000 /clear's :)
 
-**Bonus:** It's especially important not to make users memorize skill parameters, like how to specify the interval of a cronjob. Cronjobs should have a proper UI.
+**Bonus:** it's especially important not to make users memorize skill parameters, such as how to specify a cron job interval. Cron jobs should have a proper UI.
 
 <BlogImage
   src="/blog/agent-ui/cron-jobs.png"
@@ -97,7 +97,7 @@ Users should be able to observe:
 
 1. How much storage the system is using on their behalf.
 2. A breakdown of where their usage is going.
-3. The exact system prompt it is passing their agents.[^gemini]
+3. The exact system prompt it is passing to their agents.[^gemini]
 
 [^gemini]: Gemini had a bug where only some models saw the custom instructions, so I added a line in my custom instructions saying "My name is Bongo, I like being addressed by my name". I knew if the custom instructions made it in based on whether the chatbot called me Bongo.
 
@@ -118,14 +118,14 @@ Observability is also why isomux memories are easy to find and edit in the UI (a
 ### 7. Let agents put things in chat that aren't text
 Like a diagram, a code diff, a browser screenshot, a button to open a file in the editor, or a button to run a command.
 
-The general recipe is to add one POST endpoint in the server per component and tell agents about it in the system prompt.
+The general recipe is to add one POST endpoint on the server per component and tell agents about it in the system prompt.
 
 <BlogImage
   src="/blog/isomux/superpowers.png"
   alt="Architecture sketch: a user talks to a web UI on the left; a server on the right wraps the agent SDKs, holds the system prompts that teach agents about the API, and exposes REST endpoints for diff, edit-file, terminal-command, read-file, and preview-url. The chat panel shows the resulting components: an inline diff, an 'Open in editor' card, a 'Copy to terminal' card, and an inter-agent message"
 />
 
-For example, here is an agent inserting a diff:
+For example, here's an agent inserting a diff:
 
 <BlogImage
   src="/blog/agent-ui/diff-card.png"
@@ -134,12 +134,6 @@ For example, here is an agent inserting a diff:
 
 ### 8. Anthropomorphize agents
 Non-technical folks are used to working with _people_, not terminals. So make agents more like people. A name, a look, memories built over time, its own conversation history, etc.
-
-<BlogImage
-  src="/blog/agent-ui/tax-expert.png"
-  alt="An isometric desk in the isomux office. The nametag reads '3 · Tax Expert'. A character with blonde hair and a pink shirt sleeps at the desk with 'z z z' floating above her, the monitor shows the working directory ~/nil/taxes, and there is a red book on the desk"
-  width="25%"
-/>
 
 Anthropomorphized agents can have body language. You can even show it in the browser tab:
 
@@ -231,7 +225,7 @@ The key to making this work is in the details of the message queue:
 
 You know when you hit the 5-hour limit one hour in, and wonder what to do for four hours?
 
-This is a bit cheeky, but a cronjob that pings each provider every 5 hours is a slight improvement: this way, the 5h window resets on average 2.5h after you start working.[^interview]
+This is a bit cheeky, but a cron job that pings each provider every 5 hours is a slight improvement: this way, the 5h window resets on average 2.5h after you start working.[^interview]
 
 [^interview]: One time, I had a vibe coding interview and timed my 5-hour reset to fall in the middle of it.
 
@@ -248,6 +242,12 @@ A boring one, but a good safety net. Isomux blocks:
 - Writes to isomux state
 - Reads of `.env` files, private keys, and credentials
 - Killing processes in a way that may also hit processes the agent doesn't own
+
+<BlogImage
+  src="/blog/agent-ui/blocked-command.png"
+  alt="A tool call in an isomux conversation reading 'Bash git stash && git stash drop', with the output 'BLOCKED by isomux safety hooks' and 'Reason: git stash drop permanently deletes stashed changes. List stashes first.'"
+  width="50%"
+/>
 
 Two ways of making false positives less annoying (which they are!):
 
