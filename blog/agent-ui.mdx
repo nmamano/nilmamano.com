@@ -10,6 +10,8 @@ I'm obsessed with how to design systems for interacting with agents. In particul
 
 Here's a list of ideas, starting with quick wins and progressing to more fundamental redesigns (and failed experiments). I'll often exemplify them with isomux, but these are general ideas.
 
+<Toc />
+
 ## 1. Prettify tool calls
 Parse the CLI commands made by the agent, classify them into known categories, and style them semantically.
 
@@ -252,7 +254,7 @@ Two ways of making false positives less annoying (which they are!):
 - Exceptions, lots of them (e.g., `rm -rf` under `/tmp`)
 - A copy-command-to-terminal button when commands get blocked
 
-## 16. Failed experiment: slide mode
+## 16. Experiment: slide mode
 
 Agents yap too much; users tune out. _Slide mode_ forces the agent to design a single slide for each turn. E.g.:
 
@@ -264,7 +266,7 @@ Agents yap too much; users tune out. _Slide mode_ forces the agent to design a s
 
 I don't use slide mode much because generation is too slow. Attempts to speed it up degraded slide quality too much.
 
-## 17. Failed experiment: continuation variants
+## 17. Experiment: continuation variants
 
 The model produces probabilities for every token. How can we use that?
 
