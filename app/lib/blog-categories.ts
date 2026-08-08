@@ -2,9 +2,22 @@ export interface CategoryConfig {
   name: string;
   bgColor: string;
   textColor: string;
+  /** Keep the badge styling but leave it out of the filter row. */
+  hiddenFromFilters?: boolean;
 }
 
+// Insertion order is the order of the filter buttons.
 export const CATEGORIES: Record<string, CategoryConfig> = {
+  ai: {
+    name: "AI",
+    bgColor: "bg-pink-100",
+    textColor: "text-pink-800",
+  },
+  wallgame: {
+    name: "Wall Game",
+    bgColor: "bg-orange-100",
+    textColor: "text-orange-800",
+  },
   bctci: {
     name: "BCtCI",
     bgColor: "bg-blue-100",
@@ -24,16 +37,7 @@ export const CATEGORIES: Record<string, CategoryConfig> = {
     name: "SWE",
     bgColor: "bg-yellow-100",
     textColor: "text-yellow-800",
-  },
-  wallgame: {
-    name: "Wall Game",
-    bgColor: "bg-orange-100",
-    textColor: "text-orange-800",
-  },
-  ai: {
-    name: "AI",
-    bgColor: "bg-pink-100",
-    textColor: "text-pink-800",
+    hiddenFromFilters: true,
   },
 };
 

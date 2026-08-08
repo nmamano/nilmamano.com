@@ -45,7 +45,7 @@ export default function BlogList({
         <span className="font-mono">nil pointers</span>
       </h1>
       <p className="text-lg text-muted-foreground text-center mb-12">
-        Teaching DS&A · CS research highlights · SWE things · building in public
+        Agentic systems · Building in public · Teaching DS&A · CS research highlights
       </p>
 
       {/* Newsletter Subscription */}
@@ -65,7 +65,9 @@ export default function BlogList({
         >
           All Posts
         </button>
-        {Object.entries(CATEGORIES).map(([key, config]) => (
+        {Object.entries(CATEGORIES)
+          .filter(([, config]) => !config.hiddenFromFilters)
+          .map(([key, config]) => (
           <button
             key={key}
             onClick={() => handleCategoryChange(key)}

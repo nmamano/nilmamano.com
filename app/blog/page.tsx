@@ -5,11 +5,11 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Nil Pointers",
   description:
-    "Teaching DS&A, CS research highlights, SWE things, building in public.",
+    "Agentic systems, building in public, teaching DS&A, CS research highlights.",
   openGraph: {
     title: "nil pointers",
     description:
-      "Teaching DS&A, CS research highlights, SWE things, building in public.",
+      "Agentic systems, building in public, teaching DS&A, CS research highlights.",
     url: "https://nilmamano.com/blog",
     images: [
       {
@@ -24,7 +24,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "nil pointers",
     description:
-      "Teaching DS&A, CS research highlights, SWE things, building in public.",
+      "Agentic systems, building in public, teaching DS&A, CS research highlights.",
     images: ["/og-blog.jpg"],
   },
 };
