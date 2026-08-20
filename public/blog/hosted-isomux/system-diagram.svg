@@ -1,0 +1,135 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 980 668" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#3d4a5c"/>
+    </marker>
+    <marker id="arrowDashed" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9a4f12"/>
+    </marker>
+    <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1f9550"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="980" height="668" fill="#ffffff"/>
+
+  <!-- ===== Groups ===== -->
+  <rect x="225" y="40" width="255" height="565" rx="12" fill="none" stroke="#8895a7" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="240" y="64" font-size="13" font-weight="700" fill="#1a2030" letter-spacing="0.5">CONTROL PLANE (ours)</text>
+
+  <rect x="520" y="40" width="210" height="425" rx="12" fill="none" stroke="#8895a7" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="535" y="64" font-size="13" font-weight="700" fill="#1a2030" letter-spacing="0.5">THIRD PARTIES</text>
+
+  <rect x="755" y="240" width="215" height="375" rx="12" fill="none" stroke="#8895a7" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <text x="770" y="264" font-size="13" font-weight="700" fill="#1a2030" letter-spacing="0.5">CONTABO (rented)</text>
+
+  <!-- ===== Boxes ===== -->
+  <!-- Customer -->
+  <rect x="30" y="265" width="150" height="90" rx="10" fill="#eef1f5" stroke="#3d4a5c" stroke-width="1.5"/>
+  <text x="105" y="303" text-anchor="middle" font-size="16" font-weight="600" fill="#1a2030">Customer</text>
+  <text x="105" y="325" text-anchor="middle" font-size="12" fill="#1a2030">browser + SSH key</text>
+
+  <!-- Web app -->
+  <rect x="250" y="85" width="205" height="100" rx="10" fill="#e7f2ff" stroke="#2b6cb0" stroke-width="1.5"/>
+  <text x="352" y="113" text-anchor="middle" font-size="15" font-weight="600" fill="#1a2030">Web app</text>
+  <text x="352" y="133" text-anchor="middle" font-size="12" fill="#1a2030">cloud.isomux.com</text>
+  <text x="352" y="151" text-anchor="middle" font-size="12" fill="#1a2030">Next.js on Vercel</text>
+  <text x="352" y="169" text-anchor="middle" font-size="11" fill="#1a2030">signup, dashboard, progress</text>
+
+  <!-- Neon -->
+  <rect x="250" y="275" width="205" height="105" rx="10" fill="#e8f7ee" stroke="#1f9550" stroke-width="1.5"/>
+  <text x="352" y="303" text-anchor="middle" font-size="15" font-weight="600" fill="#1a2030">Neon Postgres</text>
+  <text x="352" y="323" text-anchor="middle" font-size="12" fill="#1a2030">control-plane state</text>
+  <text x="352" y="341" text-anchor="middle" font-size="11" fill="#1a2030">least-privilege roles:</text>
+  <text x="352" y="358" text-anchor="middle" font-size="11" font-family="monospace" fill="#1a2030">cp_web / cp_provisioner</text>
+
+  <!-- Provisioner -->
+  <rect x="250" y="455" width="205" height="130" rx="10" fill="#fdf1e7" stroke="#c05621" stroke-width="1.5"/>
+  <text x="352" y="483" text-anchor="middle" font-size="15" font-weight="600" fill="#1a2030">Provisioner</text>
+  <text x="352" y="503" text-anchor="middle" font-size="12" fill="#1a2030">one Fly.io machine</text>
+  <text x="352" y="521" text-anchor="middle" font-size="11" fill="#1a2030">tick loop + SSH driver</text>
+  <text x="352" y="539" text-anchor="middle" font-size="11" fill="#1a2030">holds provider credentials</text>
+  <text x="352" y="557" text-anchor="middle" font-size="11" fill="#1a2030">and temporary SSH keys</text>
+
+  <!-- Stripe -->
+  <rect x="540" y="85" width="170" height="100" rx="10" fill="#f3edfb" stroke="#6b46c1" stroke-width="1.5"/>
+  <text x="625" y="113" text-anchor="middle" font-size="15" font-weight="600" fill="#1a2030">Stripe</text>
+  <text x="625" y="133" text-anchor="middle" font-size="12" fill="#1a2030">Managed Payments</text>
+  <text x="625" y="151" text-anchor="middle" font-size="12" fill="#1a2030">(merchant of record)</text>
+  <text x="625" y="169" text-anchor="middle" font-size="11" fill="#1a2030">checkout + webhooks</text>
+
+  <!-- Cloudflare -->
+  <rect x="540" y="260" width="170" height="80" rx="10" fill="#fef8e7" stroke="#b7791f" stroke-width="1.5"/>
+  <text x="625" y="292" text-anchor="middle" font-size="15" font-weight="600" fill="#1a2030">Cloudflare</text>
+  <text x="625" y="312" text-anchor="middle" font-size="12" fill="#1a2030">DNS for isomux.app</text>
+
+  <!-- Let's Encrypt -->
+  <rect x="540" y="380" width="170" height="80" rx="10" fill="#fef8e7" stroke="#b7791f" stroke-width="1.5"/>
+  <text x="625" y="412" text-anchor="middle" font-size="15" font-weight="600" fill="#1a2030">Let's Encrypt</text>
+  <text x="625" y="432" text-anchor="middle" font-size="12" fill="#1a2030">TLS certificates</text>
+
+  <!-- Contabo API -->
+  <rect x="770" y="285" width="185" height="70" rx="10" fill="#eef1f5" stroke="#3d4a5c" stroke-width="1.5"/>
+  <text x="862" y="313" text-anchor="middle" font-size="14" font-weight="600" fill="#1a2030">Contabo API</text>
+  <text x="862" y="333" text-anchor="middle" font-size="11" fill="#1a2030">create / reinstall / cancel</text>
+
+  <!-- Customer VPS -->
+  <rect x="770" y="395" width="185" height="190" rx="10" fill="#e8f7ee" stroke="#1f9550" stroke-width="2"/>
+  <text x="862" y="423" text-anchor="middle" font-size="15" font-weight="600" fill="#1a2030">Customer VPS</text>
+  <text x="862" y="443" text-anchor="middle" font-size="12" font-family="monospace" fill="#15803c">name.isomux.app</text>
+  <line x1="785" y1="456" x2="940" y2="456" stroke="#8895a7"/>
+  <text x="862" y="476" text-anchor="middle" font-size="12" fill="#1a2030">Isomux office (systemd)</text>
+  <text x="862" y="494" text-anchor="middle" font-size="12" fill="#1a2030">Caddy (auto-HTTPS)</text>
+  <text x="862" y="512" text-anchor="middle" font-size="12" fill="#1a2030">daily local backups</text>
+  <text x="862" y="530" text-anchor="middle" font-size="12" fill="#1a2030">customer's admin key</text>
+  <text x="862" y="552" text-anchor="middle" font-size="11" font-style="italic" fill="#9a4f12">our key: temporary,</text>
+  <text x="862" y="568" text-anchor="middle" font-size="11" font-style="italic" fill="#9a4f12">removed at handoff</text>
+
+  <!-- ===== Edges ===== -->
+  <!-- Customer -> Web -->
+  <path d="M 180 285 C 205 250, 220 200, 248 152" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="212" y="212" text-anchor="end" font-size="11" font-weight="600" fill="#1a2030" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke">sign up, dashboard</text>
+
+  <!-- Web -> Stripe -->
+  <path d="M 455 120 L 538 120" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="496" y="112" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2030" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke">checkout</text>
+
+  <!-- Stripe -> Neon (webhooks) -->
+  <path d="M 560 187 C 505 250, 482 390, 440 451" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="505" y="318" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2030" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke">webhooks</text>
+
+  <!-- Web -> Neon -->
+  <path d="M 352 187 L 352 271" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="344" y="235" text-anchor="end" font-size="11" font-weight="600" fill="#1a2030" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke">read + enqueue</text>
+
+  <!-- Web -> Provisioner (invite seam) -->
+  <path d="M 248 165 Q 228 310 248 452" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="236" y="310" font-size="11" font-weight="600" fill="#1a2030" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke" transform="rotate(-90 236 310)" text-anchor="middle">invite seam (1 verb)</text>
+
+  <!-- Provisioner -> Neon -->
+  <path d="M 362 453 L 362 383" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="371" y="422" text-anchor="start" font-size="11" font-weight="600" fill="#1a2030" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke">drives operations</text>
+
+  <!-- Provisioner -> Cloudflare -->
+  <path d="M 457 465 C 495 420, 515 375, 570 342" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="499" y="394" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2030" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke">DNS records</text>
+
+  <!-- Provisioner -> Let's Encrypt -->
+  <path d="M 457 515 Q 500 480 538 442" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="495" y="474" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2030" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke">ACME</text>
+
+  <!-- Provisioner -> Contabo API (below Let's Encrypt, then up) -->
+  <path d="M 457 530 C 630 535, 750 490, 768 345" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#arrow)"/>
+  <text x="668" y="508" text-anchor="middle" font-size="11" font-weight="600" fill="#1a2030" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke">provider API</text>
+
+  <!-- Let's Encrypt -> VPS -->
+  <path d="M 712 435 L 766 443" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+  <!-- Provisioner -> VPS (SSH, temporary) -->
+  <path d="M 457 545 C 590 570, 700 545, 766 505" fill="none" stroke="#9a4f12" stroke-width="1.5" stroke-dasharray="5 4" marker-end="url(#arrowDashed)"/>
+  <text x="600" y="547" text-anchor="middle" font-size="11" font-weight="600" fill="#9a4f12" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke">SSH during setup only</text>
+
+  <!-- Customer -> VPS (daily use) -->
+  <path d="M 105 357 C 105 680, 520 680, 768 560" fill="none" stroke="#1f9550" stroke-width="2" marker-end="url(#arrowGreen)"/>
+  <text x="330" y="652" font-size="12" font-weight="700" fill="#15803c" stroke="#ffffff" stroke-width="3.5" stroke-linejoin="round" paint-order="stroke">daily use: straight to their own box, we are not in the path</text>
+</svg>

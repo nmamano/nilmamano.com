@@ -1,0 +1,303 @@
+---
+title: "Building a Hosted Agents Product End-to-End"
+date: "2026-08-16"
+excerpt: "The design and engineering behind Hosted Isomux: the product, every system involved, the codebase, and the technical decisions, including how we lock ourselves out of customer servers."
+coverImage: "/blog/hosted-isomux/cover.png"
+categories: ["ai", "swe"]
+---
+
+In [a previous post](/blog/isomux), I covered building [Isomux](https://isomux.com) ([github](https://github.com/nmamano/isomux)), a meta-harness where agents act like coworkers instead of throwaway sessions. Isomux is open source and self-hosting is encouraged, but most people would rather not set up and maintain a VPS. So, I built the managed version: [Hosted Isomux](https://isomux.com/hosted). Customers sign up, pay, and get their own office at `yourname.isomux.app` without touching a terminal.
+
+This post describes how I built it, and it is meant to act as a playbook for hosted agent products.
+
+<Toc />
+
+## The product
+
+The pitch is that customers get their own 24/7 office for their agents at `yourname.isomux.app`, on a private server. As described in [isomux.com/hosted](https://isomux.com/hosted):
+
+<BlogImage
+  src="/blog/hosted-isomux/what-you-get.png"
+  alt="The 'What you get' section of the Hosted Isomux page: six cards titled A whole office, Multiplayer agents, For every device, Your subscriptions, Your own Virtual Private Server, and Updates when you choose"
+/>
+
+"Your subscriptions" means users don't need to pay API prices. Instead, they log in to claude or codex from the built-in terminal, as they would normally. Isomux agents piggyback on those credentials, which we never see.
+
+A separate VPS per user solves isolation: each customer gets their own virtual CPU and memory, and, most importantly, their own privacy boundary.
+
+There are many similar products for OpenClaw, like [oneclickclaw.io](https://oneclickclaw.io).[^diverged]
+
+[^diverged]: We diverge from their design choices where we disagree. The biggest divergence: their docs state that they retain SSH access to customer servers. I think this is a lot of trust to give to a VPS-wrapper company. We remove our SSH access after setup.
+
+## System architecture
+
+<BlogImage
+  src="/blog/hosted-isomux/system-diagram.svg"
+  alt="System diagram of Hosted Isomux. A customer talks to the control-plane web app (cloud.isomux.com, Next.js on Vercel), which talks to Stripe for checkout and webhooks and to Neon Postgres for state. A separate provisioner (one Fly.io machine) drives operations from the same database, calls the Contabo API, writes the certificate proof records into Cloudflare DNS, gets TLS certificates from Let's Encrypt, and reaches the customer VPS over SSH during setup only. For daily use, the customer connects straight to their own box at name.isomux.app; the control plane is not in the path."
+  needsBackground={true}
+/>
+
+The key property of the system is that, for daily use, the customer connects straight to their own box. The control plane provisions the office and gets out of the way. After that, if our systems go down, the office keeps working.
+
+Here is the component list:
+
+- **The web storefront app** (`cloud.isomux.com`, Next.js hosted on Vercel): the place where users sign up with their Google accounts via `Auth.js`, order an office, and check out via Stripe. There, they can see a dashboard with step-level provisioning progress (pictured below; the provisioning is [detailed later](#provisioning-orchestration)) and some high-level management actions for their VPS that holds the office, like restarting it. The web app is the least privileged component because it's the most public. It cannot reach customer boxes; only the **provisioner** can, which is more locked down.
+
+<BlogImage
+  src="/blog/hosted-isomux/provisioning-progress.png"
+  alt="The customer dashboard's Progress section during provisioning: six steps marked done (ordering your server, waiting for the server to answer, securing our temporary access, installing your SSH key, setting a timer for our access to expire, waiting for the server's package manager), 'Installing isomux' in progress at the build-isomux step, and 'Checking your office over HTTPS' still queued"
+/>
+
+- **Customer boxes** run on Contabo VPS instances and (once provisioned) run the customers' offices as always-on services. Caddy acts as a reverse proxy so the office is reachable from `https://somename.isomux.app` - a `.app` domain to isolate the cookies and domain reputation of `isomux.com` (the `vercel.com` vs `someapp.vercel.app` pattern).
+- **Neon Postgres** holds the control-plane state: accounts, box names, VPS instances, subscriptions, and box lifecycle status. The web app and the provisioner connect with different roles and permissions ([more below](#securing-the-db)). Simplified schema:
+
+<BlogImage
+  src="/blog/hosted-isomux/db-diagram.svg"
+  alt="Entity diagram of the control-plane Postgres schema, 15 tables in five groups. Accounts and signup: accounts, name_reservations. Billing: subscriptions, stripe_events, reinstatement_attempts. The office: instances, instance_liveness, certificate_credentials. Provisioning: operations, create_intents, attention_reasons, provider_assets, audit_events. Bookkeeping: schema_meta, sequences. Most tables reference instances.id or accounts.id."
+/>
+
+- **The provisioner** is one always-on machine (Fly.io, located next to the database). It keeps provider (Contabo) credentials and SSH keys out of the public web app. It runs a 5-second tick loop polling the DB to check on the lifecycle status rows; it acts on the boxes as needed, over SSH, to drive the setup.
+- **Stripe** handles billing through Stripe Checkout (we have no billing UI), with Stripe Managed Payments as merchant of record ([more below](#stripe-integration)). The provisioner receives Stripe's calls via webhooks, since it is the only piece of ours that is always on.
+- **Contabo (the provider)** rents us the customer boxes (Ubuntu VPSs). The provisioner uses its API to create, rebuild, power, and cancel instances. It's a cheaper alternative to Hetzner ([more below](#choosing-a-provider-contabo)).
+- **Cloudflare** serves DNS for `isomux.app`. Each office gets an A record at `yourname.isomux.app`.
+- **Let's Encrypt** issues the TLS certificates that make `https://yourname.isomux.app` work. The provisioner requests each office's certificate on its behalf ([more below](#issuing-tls-certificates-for-every-customer)).
+
+## The codebase
+
+Everything lives in the same public [repo](https://github.com/nmamano/isomux) as isomux itself.[^monorepo] I'll cite the LoC (lines of code) numbers as of writing to give some sense of proportion.
+
+[^monorepo]: Why a monorepo? The installer script the provisioner uploads to each customer box is the same one a self-hoster runs, and the control plane depends on office internals like the readiness endpoint and the invite API. One CI run proves both halves agree instead of having a cross-repo contract that can drift. The storefront is its own package, so if a self-hoster runs `bun install` at the root, it's not installed. And, since we claim we lock ourselves out after setup, it helps that anyone can read the code.
+
+- `server/` (69k LoC) and `ui/` (43k LoC) are isomux itself, described in the [architecture](/blog/isomux) post. This is what runs on every box, self-hosted or hosted.
+- `deploy/` (5k LoC) holds the installer. `deploy/install.sh` is the single script that the provisioner pulls into a new box and runs. It turns a fresh Ubuntu VPS into a working HTTPS office:
+
+<BlogImage
+  src="/blog/hosted-isomux/install-script.svg"
+  alt="Flow of install.sh in four phases. Phase 1, harden the machine: install packages, configure firewall, harden SSH, enable auto-updates, configure OOM protection. Phase 2, prepare the box: create service user, configure user manager, check root reachability (a gate), install browser, configure codex sandbox. Phase 3, install isomux: fetch isomux at a pinned tag, install bun, build isomux, install updater, install systemd service, wait for server. Phase 4, verify then hand off: assert hardening (a gate), claim owner, configure public access, mint owner invite, configure Caddy for HTTPS."
+  needsBackground={true}
+/>
+
+It takes about 5 minutes. The dashed steps are gates that stop the installation.
+
+While anyone can run Isomux locally just by running the server with bun, making it multiuser without a VPN involves setting up HTTPS, running Caddy _outside_ of Isomux, and benefits from things like SSH hardening, so the script is independently useful to self-hosters.
+
+- `site/` (3k LoC) holds the [isomux.com](https://isomux.com) site.
+- `scripts/` (4k LoC) holds the release machinery, among other scripts:
+  - `release.sh` cuts a release: it tags a commit with a CalVer release tag (`v2026.7.19`), gated on CI. I dogfoot the commit on my own office for at least a day first.
+  - `update.sh` is the customer-side updater, which snapshots the office, updates, health-checks, and restores the snapshot if the new version fails to come up.
+- `control-plane/` (36k LoC) has everything specific to the hosted product:
+  - `control-plane/web/`, the Next.js storefront, deployed to Vercel.
+  - `cli.ts` a CLI for operator work: provisioning, revoking access, migrations. `cli.ts run` is the provisioner loop deployed to Fly.
+
+The total is at 163k LoC. Tests add another 118k LoC.
+
+### Testing
+
+Isomux has four tiers of tests, based on how expensive they are to run:
+
+1. pure unit tests,
+2. integration tests against fake Claude and Codex backends (the main tier),
+3. contract tests that replay hand-written SDK events through the real backend adapters,
+4. and an opt-in live smoke tier that spends real model credits and asserts invariants only (this needs to run on SDK bumps).
+
+The control plane runs additional tests against a real Postgres DB for the provisioning lifecycle behavior, like ensuring the database refuses to start a second installer for a box that already has one running. The suite runs against a DB branch in Neon before deploying (the 26ms round trips to Frankfurt turn a 50s local script into 10 minutes!).
+
+The tests don't order a new Contabo box every time, but I do have a Contabo box set aside just for running the tests on it. Contabo has a reinstall operation that makes it appear like a freshly ordered box each time.
+
+## Product decisions
+
+### Locking ourselves out of the box after setup
+
+Setup runs over SSH. But after setup is done, we delete our SSH key, and hold no access to the customer's box anymore. We do this to **match the level of privacy one would expect from renting a VPS directly**, without a middleman (with one caveat below).
+
+When a user first visits their office from the storefront dashboard, we ask them to click a button confirming they are in, and we remove our key at that point. The provisioner verifies the removal by trying to reconnect, and requires the attempt to fail (by public-key rejection, not timeout or something else).
+
+There's a second mechanism to ensure we don't keep access just in case (e.g., the user may never click the button, or the provisioner could be down when they do). The enforcement lives in the key itself. We set OpenSSH's `expiry-time` to seven days in the future, and sshd refuses the key after that no matter what.
+
+The provisioner's first act on a new box is to rewrite the Contabo-injected key to carry that deadline, and then read it back from disk to confirm it was applied. Until that happens, nothing else proceeds.
+
+This has second-order consequences:
+
+- **We disable backups for the provisioner's disk.** Fly.io turns scheduled snapshots on by default with five-day retention, and a snapshot would keep copies of a private key for five days after we proved it destroyed. For the same reason, our temporary setup SSH keys live only on the provisioner's disk, which is the most isolated component.
+- **We can only issue Isomux sign-in links while our key exists.** Minting one needs shell access on the box, and invites are single-use and expire. Once our access is revoked, there is no path left for us to make another, which is why the dashboard nags the user to confirm they are in as the trigger for removing our key. (The invite link itself is also not stored anywhere. It is minted on request and held in provisioner memory for five minutes. If the user doesn't use it, they need to request another one.)
+- **The trade-off is higher risk of customers getting locked out.** If we kept an SSH key, we could offer them a way to get back in from the storefront dashboard, but we can't provide that convenience. The mitigation is that the signup flow helps users set up their own SSH key. Their browser generates a server administrator keypair and asks the user to save the private half; only the public half reaches our servers, to be installed on the box during setup. Generating the SSH key for the user instead of asking them to provide one keeps the "no terminal required" promise.
+- **The honest limit.** A fact about any VPS-wrapper product is that we, as Contabo's actual client, are technically the renters for the users' boxes and have certain owner privileges: power, reinstall, and a rescue console **that can reach the disk.** We can't engineer ourselves out of that, so it's addressed in the [Terms of Service](https://isomux.com/hosted-terms) and [Privacy Policy](https://isomux.com/hosted-privacy): we only ever use the rescue console on a user's explicit written request, for a named incident, and we log everything we do.
+
+### Choosing a provider: Contabo
+
+We chose Contabo because it had the most competitive prices compared to known alternatives like Hetzner.
+
+One downside is that the Contabo API has a bunch of poorly documented quirks which we found by live probing, and had to work around.
+
+Creating a box is the only operation that spends money, and Contabo's create endpoint documents no idempotency mechanism at all. A create that times out is ambiguous: the box may or may not exist. So, right before the call, the provisioner writes a `create_intents` row that means "the paid call may have happened; create is permanently forbidden for this intent". When the outcome is ambiguous, the provisioner resolves it by searching the provider's instance list.
+
+### Provisioning orchestration
+
+<BlogImage
+  src="/blog/hosted-isomux/provisioning-chain.svg"
+  alt="The provisioning chain, one database row per step, driven by the 5-second tick loop. Signup and payment write the first rows, then eight steps run in order: order the box (create_instance), wait for SSH to answer (wait_for_ssh), put an expiry on our key (first_contact), install the customer's key (install_customer_key), arm the removal timer (arm_revocation), wait for the package manager (wait_for_package_manager), run the installer (run_installer, which is the whole installer diagram), and check HTTPS answers (verify_https). The office is then live and the chain stops and waits. Separately, from the dashboard, the customer asks for a sign-in link (mint_invite), signs in, confirms they are in (revoke_access), and our key is removed and destroyed. Seven days after signup, sshd expires our key on its own regardless."
+  needsBackground={true}
+/>
+
+The provisioner tracks each box's progress as durable operation rows in the DB (`create_instance`, `wait_for_ssh`, ...). One row is one step for one box, and it carries a status, the evidence of what happened so far, and when to try it again.[^finding]
+
+[^finding]: An example of a finding from this: a box can accept SSH and not be ready yet. Two minutes after boot, Ubuntu was still doing its own package work and holding the package manager lock, but answered SSH at 88 seconds. An installer that starts in that window dies immediately. So "wait until the package manager is free" became its own step with its own deadline.
+
+The provisioner runs a 5-second tick loop. On each tick, it asks the database which steps are due, and for each one:
+
+1. claims it, so no other process picks up the same step
+2. does the remote work (a Contabo API call, a command over SSH, etc.)
+3. records the result and opens the next step, both in the same transaction
+
+The `next_attempt_at` field in each row says when a waiting step is due, so each tick is a single question to the database: which steps are due now?
+
+Since every tick starts by reading the database, a provisioner that dies mid-step is replaced by one that can pick up the same row. But the catch with claiming a row is that a provisioner which dies leaves it claimed forever. That's why it also writes a deadline in the `lease_until` column, after which it is fair game to be picked up again by a new process.
+
+There's also an absolute deadline and an inactivity deadline for when the provisioner is healthy but the step itself isn't (e.g., the Contabo API stops responding). They raise a flag in the operator dashboard, but the steps keep retrying.
+
+Since the installer runs many steps inside the box, the provisioner needs a way to track progress (to report it on the user dashboard and to know whether it needs to retry the installer). On the box, the installer runs under a small wrapper script that records the current step and its final exit code to a file, which the provisioner reads over SSH on each tick.
+
+### Securing the DB
+
+The web storefront app and the provisioner get distinct DB roles with narrow per-table, per-action grants. The web role is the most restricted. E.g., it can enqueue operations but not drive them (INSERT and SELECT on `operations`, no UPDATE). Neither role can DELETE anything. We audit the permissions by keeping two lists: what each role is allowed to do, and what the deployed code actually does (as traced by a reviewer agent). A test ensures they match (no missing permissions but also no extra permissions).
+
+The DB enforces connection budgets on the web app and provisioner (40 and 12, against a ceiling of 894), so no amount of web traffic can starve the provisioner. (Vercel decides how many serverless web instances to run, so only a cap on the DB itself can bound the total.)
+
+### Stripe integration
+
+Stripe tells the provisioner about subscription changes by calling our webhook.
+
+We use **Stripe Managed Payments** so Stripe is the merchant of record (Stripe is legally the seller, not us). In particular, it means we don't need to worry about EU taxes (VAT) if we have EU customers. Stripe Adaptive Pricing means EU customers see and pay EUR at checkout while we settle USD.
+
+While Stripe makes payments easy, we had to work around at least two issues:
+
+1. The first is a standard Stripe integration lesson: webhook calls _can_ arrive out of order, so we treat each webhook as a signal that something changed, and we refetch the current state from Stripe.
+2. The design for a failed payment was: card fails -> Stripe retries -> retries run out -> Stripe calls the webhook to notify that the subscription status changed to `unpaid` -> we power the box off and wait for the customer to fix their card. However, when testing, Stripe never produced `unpaid`; it deleted the subscription outright at the 9th failure. The fix was a dashboard toggle in Stripe; it was not configurable by API.
+
+### Getting Isomux updates to customers
+
+An update restarts the office, and a restart kills every in-flight agent turn. The customer is best placed to judge whether an interruption right now is acceptable, so updates are initiated by them. Isomux periodically checks for new releases, and when one is detected, a "new release banner" appears with a button and a warning saying how many agents are mid-turn.
+
+The updater stops the office, takes a full copy of its state, updates it, checks that it comes back up, and restores the copy if it doesn't.
+
+The control plane has no access to customer boxes, so we have no way of doing a "fleet-wide patch" (we cannot even see what release each box runs). This is a concern if there is an important security patch. Our mitigation is to label security releases with a security marker; the "new release banner" notices it and tells the user that it's important that they update.
+
+Some more forceful options we may consider: making the updater auto-apply security patches, having boxes report to control plane which version they run, and Contabo power-off (as a last resort).
+
+### Customer-friendly cancellations
+
+Our users may have a lot of important data inside their box, so deleting it instantly over a missed payment could cause a lot of pain.
+
+There are three dates:
+
+- the instant the paid period ends (the office powers off)
+- the retention boundary: 14 days later. Until then, restarting their subscription powers the same office back on, data intact. A customer who only needs to retrieve their data can also ask support for a free temporary power-on (a self-serve version is planned, where users press a button from the storefront dashboard to get access for 4 hours, as long as they are within the retention window).
+- Contabo's own paid-term end: that's when the data actually disappears. We make sure it is after the retention window.
+
+Having a retention window means we eat the cost of renting the box an extra month (there's no partial renting), but it felt like a necessary guarantee for a product like this. After the retention window, we request Contabo to wipe the box as soon as possible.
+
+We currently don't reuse already-paid boxes after the retention window for a different customer. That's an optimization to consider in the future, though it must come with strong proof that no prior customer data remains.
+
+### Why not external backups
+
+Isomux (self-hosted or not) makes daily backups (the entire state tarred and verified) and saves the seven latest verified copies. But those copies live in the same file system as Isomux itself. It doesn't help a Hosted Isomux customer who gets locked out of their VPS.
+
+VPS products often offer an _external backup_ add-on: for an extra cost, you can make a backup of your entire VPS. We considered exposing the same feature to our customers, but that would mean holding extra copies of customer data, which sits badly next to the lockout guarantee.
+
+I think the simplest answer is the right one here: a customer who wants protection against losing the box is in charge of making external backups. Agents make it easy to set up a cron job that replicates the functionality, making the feature less important.
+
+### Sizing the boxes
+
+The Contabo entry tier is a 4 vCPU / 8 GB box at EUR 5.50/month. So the question is, is that enough?
+
+The main bottleneck is RAM. ~1 GB goes to the OS. Sampled on my own office, active Claude agents use 314–421 MB of RAM and Codex agents use 136–158 MB of RAM.
+
+Running my office on an entry box for over a month, I found that running 10+ agents at the same time was fine most of the time, but if multiple tried to build codebases at once, that could easily trigger an OOM (Out of memory) error. (For example, the Isomux build takes 3 GB.)
+
+We address this in two ways:
+
+1. Offer two tiers: entry and poweruser. The poweruser tier is an 8 vCPU / 24 GB box, which costs us EUR 11.90/month at Contabo; I plan to move my own office onto it.
+2. Harden the boxes against OOM regardless of tier. We do defense in depth based on various ways in which I hit OOM myself:
+    - **Capping the office memory.** The office runs as a service under `systemd` (Linux service manager), which manages the main process, which spawns subprocesses (the agents), which spawn their own subprocesses (tool calls). The service puts all those processes into one group, and caps it at the box's RAM minus 1 GB. This way, Isomux can only hit its own ceiling, not the machine's, and SSH and DNS keep working. There's also a soft threshold at 85% of the cap where the kernel starts evicting cached memory, moving pages to swap, and slowing down processes allocating more memory.
+    - **A big swapfile.** The box ships with no swap, so the installer adds an 8 GB swapfile. This is where the kernel pushes the office's memory when it crosses the soft threshold. An overloaded office gets slow instead of losing an agent, and it recovers when the spike passes. The office is allowed most of the swap, but some is reserved so the rest of the box always finds some swap free.
+    - **Smart kill order.** When the office hits its hard limit, either because the growth is sudden or because even the swap is full, the kernel has to kill something inside it. First, we tell `systemd` to keep the service running when one of its processes is killed, instead of tearing the whole thing down. Second, we adjust the kill priorities so the main office process is killed last. Among the rest, the kernel picks the largest, so a big build is targeted first and only costs a failed tool call; the agents stay alive.
+    - **Killing early.** The cap mentioned above only watches the office, but the excessive allocation can also come from the OS or anything else the user runs on the box. The kernel's killer only fires once memory is genuinely exhausted, by which point the box may have been thrashing the disk for a while. So, the installer adds `earlyoom`, a watchdog that watches the whole box and steps in while there is still memory left to act with. It's configured to spare the office and the box's own critical services like SSH and DNS.
+
+Benchmarking with fake agents backed our results. Even on an entry box, after we added the memory limits and a bigger swapfile, the out-of-memory killer stopped firing entirely, even at 24 agents plus a 3 GB build. The office stayed up and swapped to disk instead, with every agent alive and the box still answering SSH. However, the local work around each agent's turn went up from 300ms to 30 seconds for the slowest 5%. Swap wasn't touched with 14 agents plus a 3 GB build.
+
+### Issuing TLS certificates for every customer
+
+A TLS certificate is what makes `https://yourname.isomux.app` work: it encrypts the connection and lets the browser trust it really is talking to that address.
+
+_Let's Encrypt_, a nonprofit certificate authority trusted by browsers, hands them out free and automatically, so most people never think about them.
+
+But in our case, every office gets its own `myname.isomux.app` hostname, so getting a certificate is a provisioning step.
+
+The first issue is that Let's Encrypt only allows 50 new certificates per domain per week (renewals don't count). Since every office lives under `isomux.app`, we can only onboard 50 offices per week. If signups ever outgrow it, the standard fix is registering `isomux.app` in the Public Suffix List, which gives every customer name its own budget.[^limit]
+
+[^limit]: During development, we hit a separate limit: Let's Encrypt allows only 5 certificates for the exact same hostname per week, and our install-test cycles burned all five on the test hostname in 11 hours. We had to switch testing to a fresh hostname, but the lasting fix is that automated tests should never talk to Let's Encrypt at all and use a local stand-in instead. Real certificates should only be issued for a few deliberate end-to-end runs.
+
+The second issue is that we need a certificate not only for `myname.isomux.app`, but also for everything one level below it: `*.myname.isomux.app`. The reason is that Isomux is also a [personal-software suite](/posts/software-for-one-recipe-4158869): agents can host their own web apps at `myapp.myname.isomux.app`. If every app got its own certificate, one customer could burn the whole week's budget.
+
+**Wildcard certificates** are a bit more complicated to get. For an ordinary hostname, the requester generates a public-private key pair and sends the public half along with the hostname to Let's Encrypt. Let's Encrypt gives the requester a file to put under that hostname, and then fetches it from that hostname. Serving it back proves you control the hostname. Let's Encrypt then signs the public key and the hostname together; that signed statement is the certificate, and the private key is what the server later uses to prove to browsers that the certificate is talking about it.
+
+For a wildcard certificate, there's no way to serve a file at every possible `*.name`, so Let's Encrypt requires you to place a record in the domain's DNS instead.
+
+This creates a conundrum: we don't want customer boxes to hold the credentials for editing the DNS records of `isomux.app`, and we don't want our systems to hold the private key used to prove the customer box's identity.
+
+So, the job of getting the TLS certificate is split. The customer box makes the key pair; the secret half never leaves it, and the public half is sent to the provisioner, which holds the DNS credentials for `isomux.app`. The provisioner makes the Let's Encrypt request, writes the proof record into `isomux.app`'s DNS, Let's Encrypt checks it and signs the request, and the provisioner hands the certificate back to the box.
+
+On the box, the certificate is used by Caddy, a web server our installer sets up that sits in front of the office: it owns port 443, terminates the encrypted connections for the office and all its app subdomains with that one certificate, and forwards the traffic to the office process.
+
+## Starting a company around the product
+
+It made sense to start an LLC for Hosted Isomux, even if the transaction volume stays small.
+
+The main reason is **liability.** If a box gets abused, or someone loses data, the claim lands on the company instead of me.
+
+To keep things clean, it's better to separate my money from the company's money. Thankfully, for a single-member LLC, taxes stay simple (no separate federal return).
+
+Starting a company took a few steps, each under 1h of filing forms:
+
+1. **File the LLC**: about $100.
+2. **Get an EIN** from the IRS: free. Everything below asks for it.
+3. **Open a business bank account**: free. I used Mercury, a common recommendation; approved the same day.
+4. **Register for city business tax**: free, and exempt below a revenue threshold.
+5. **Open Stripe under the company**, with payouts going to the business account.
+6. **Small things** like an email address under `isomux.com` and a new phone number (to avoid doxing myself, as all company filings are public).
+
+I was later told I should have filed the company in Delaware because it makes it easier to raise money; investors essentially expect it. But I'm not planning to raise for Hosted Isomux (feel free to slide into my DMs though, lol), and registering in Delaware while living somewhere else does not replace your home state, it adds to it: in addition to Delaware's own stuff, you need a foreign-entity registration at home anyway. If I ever do raise, converting is more or less a known path.
+
+## How it was built
+
+Hosted Isomux was built by a team of Isomux agents running on an entry tier box (the one that costs EUR 5.50, but self-hosted), in about a month, as my main (but not only) project. I think the work would fit under one $200 Claude sub and one $20 ChatGPT sub, so I'd price the AI cost at $220.
+
+My workflow relies heavily on inter-agent communication (4k agent-to-agent messages in the first half of August):
+
+<BlogImage
+  src="/blog/isomux/level8-orchestration.png"
+  alt="Agent orchestration across two rooms: in the dev room, the Isomux Manager fans out gold task-assignment arrows to six worker agents (Isomuxer1 to 6); each worker has a two-way arrow to its counterpart reviewer agent (Reviewer1 to 6) in a separate review room"
+/>
+
+There are three types of agents:
+
+- The PM: the main agent I talk to; it dispatches work to the workers. It runs Fable 5, the most pleasant model to interact with and the one with the best judgement in my opinion, which helps keep other agents in check.
+- The workers: Opus 5 agents that get tasks assigned by the PM.
+- The reviewers: GPT 5.6 Sol agents that pair up with workers to review their plans and code. Mixing Claude and Codex agents is intentional to smooth out provider-specific blind spots.
+
+The PM and I work in one of two modes: deep or wide.
+
+- **Deep mode** is for when there's long sequential work. After aligning on the scope with me, the PM tackles it in a loop, assigning one task at a time to a worker, keeping its own context focused on orchestrating. It clears the worker's and reviewer's context between tasks. I often leave deep mode running overnight and ask for a consolidated report in the morning.
+- **Wide mode** is for when a lot of small tasks pile up (often leftovers from deep sessions). Isomux agents file tasks to a task board, which acts as the handoff mechanism between the PM and the workers. Wide mode starts with my custom `/isomux-pm-session` skill, which asks the PM to look at all the Isomux tasks on the task board, propose a set to tackle in this session, and group them into up to six batches without overlap. We then align on the task set, after which the PM dispatches one batch to each worker, waits for all to report back, handles merging to main, and shows me a final consolidated report. The PM indicates where it needs my input and runs any user-facing copy by me. One wide-mode session can close 10-20 tasks at once while opening several more.
+
+I don't read any code. I align with the PM through these reports, and it often takes over an hour to fully align on what was done and why, and what needs to be fixed or changed. I've developed a good sense for when the agent is _rationalizing_ something that doesn't make sense; for when I need to dig deeper or just rubberstamp. I do read every bit of copy that is user-facing, and edit it manually in my own voice.
+
+Writing a blog post like this at the end of the project, which took about 4 days, is also how I make sure I understand the full system.
+
+## Takeaways
+
+Building a "VPS-wrapper" product turned out to be more involved than expected, but I'm glad I did it (and in public), regardless of how many customers I get. Once you try running agents on your own always-on machine, the benefits are obvious, and VPSs fill the gap between self-hosted and SaaS. So, I believe that agents running on VPSs will be a massive infrastructure piece in the agentic era, and now I have a much deeper understanding of it.
+
+As Brian Armstrong said, action produces information.
+
+If you want the full detail, the design docs and the control-plane reference live in the [public repo](https://github.com/nmamano/isomux). If you'd like your own office, check out [isomux.com/hosted](https://isomux.com/hosted).

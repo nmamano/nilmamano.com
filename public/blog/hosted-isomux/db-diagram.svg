@@ -1,0 +1,456 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1164 812" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<rect width="1164" height="812" fill="#3f4348"/>
+<rect x="18" y="66" width="224" height="370" rx="6" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.8"/><text x="22" y="57" font-family="Georgia, serif" font-size="17" fill="#ffffff">Accounts &amp; signup</text>
+<rect x="18" y="498" width="224" height="202" rx="6" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.8"/><text x="22" y="489" font-family="Georgia, serif" font-size="17" fill="#ffffff">Bookkeeping</text>
+<rect x="244" y="66" width="224" height="703" rx="6" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.8"/><text x="248" y="57" font-family="Georgia, serif" font-size="17" fill="#ffffff">Billing</text>
+<rect x="470" y="66" width="224" height="619" rx="6" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.8"/><text x="474" y="57" font-family="Georgia, serif" font-size="17" fill="#ffffff">The office</text>
+<rect x="696" y="66" width="450" height="724" rx="6" fill="none" stroke="#ffffff" stroke-width="1.2" stroke-opacity="0.8"/><text x="700" y="57" font-family="Georgia, serif" font-size="17" fill="#ffffff">Provisioning</text>
+<rect x="30" y="78" width="200" height="160" rx="4" fill="#4b4f55"/>
+<path d="M 30 82 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="40" y="96.5" font-size="12.5" font-weight="700" fill="#eef0f3">accounts</text>
+<text x="40" y="119.5" font-size="11" font-weight="700" fill="#eef0f3">id<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="203" y="119.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="203" y="110.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="119.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="40" y="140.5" font-size="11" font-weight="400" fill="#eef0f3">email</text>
+<text x="203" y="140.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="203" y="131.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="140.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="40" y="161.5" font-size="11" font-weight="400" fill="#eef0f3">google_subject</text>
+<text x="220" y="161.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="40" y="182.5" font-size="11" font-weight="400" fill="#eef0f3">stripe_customer_id</text>
+<text x="220" y="182.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="40" y="203.5" font-size="11" font-weight="400" fill="#eef0f3">is_operator</text>
+<text x="203" y="203.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">integer</text>
+<rect x="203" y="194.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="203.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="40" y="224.5" font-size="11" font-weight="400" fill="#eef0f3">version</text>
+<text x="203" y="224.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">integer</text>
+<rect x="203" y="215.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="224.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<rect x="30" y="264" width="200" height="160" rx="4" fill="#4b4f55"/>
+<path d="M 30 268 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="40" y="282.5" font-size="12.5" font-weight="700" fill="#eef0f3">name_reservations</text>
+<text x="40" y="305.5" font-size="11" font-weight="700" fill="#eef0f3">name<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="203" y="305.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="203" y="296.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="305.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="40" y="326.5" font-size="11" font-weight="400" fill="#eef0f3">id</text>
+<text x="203" y="326.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="203" y="317.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="326.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="40" y="347.5" font-size="11" font-weight="400" fill="#eef0f3">account_id</text>
+<text x="203" y="347.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="203" y="338.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="347.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="40" y="368.5" font-size="11" font-weight="400" fill="#eef0f3">instance_id</text>
+<text x="203" y="368.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="203" y="359.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="368.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="40" y="389.5" font-size="11" font-weight="400" fill="#eef0f3">plan</text>
+<text x="203" y="389.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="203" y="380.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="389.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="40" y="410.5" font-size="11" font-weight="400" fill="#eef0f3">coupon_id</text>
+<text x="220" y="410.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="30" y="510" width="200" height="76" rx="4" fill="#4b4f55"/>
+<path d="M 30 514 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="40" y="528.5" font-size="12.5" font-weight="700" fill="#eef0f3">schema_meta</text>
+<text x="40" y="551.5" font-size="11" font-weight="700" fill="#eef0f3">key<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="203" y="551.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="203" y="542.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="551.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="40" y="572.5" font-size="11" font-weight="400" fill="#eef0f3">value</text>
+<text x="203" y="572.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="203" y="563.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="572.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<rect x="30" y="612" width="200" height="76" rx="4" fill="#4b4f55"/>
+<path d="M 30 616 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="40" y="630.5" font-size="12.5" font-weight="700" fill="#eef0f3">sequences</text>
+<text x="40" y="653.5" font-size="11" font-weight="700" fill="#eef0f3">name<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="203" y="653.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="203" y="644.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="653.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="40" y="674.5" font-size="11" font-weight="400" fill="#eef0f3">value</text>
+<text x="203" y="674.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="203" y="665.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="212.5" y="674.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<rect x="256" y="78" width="200" height="286" rx="4" fill="#4b4f55"/>
+<path d="M 256 82 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="266" y="96.5" font-size="12.5" font-weight="700" fill="#eef0f3">subscriptions</text>
+<text x="266" y="119.5" font-size="11" font-weight="700" fill="#eef0f3">id<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="429" y="119.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="429" y="110.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="119.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="140.5" font-size="11" font-weight="400" fill="#eef0f3">account_id</text>
+<text x="429" y="140.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="429" y="131.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="140.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="161.5" font-size="11" font-weight="400" fill="#eef0f3">instance_id</text>
+<text x="446" y="161.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="266" y="182.5" font-size="11" font-weight="400" fill="#eef0f3">status</text>
+<text x="429" y="182.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="429" y="173.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="182.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="203.5" font-size="11" font-weight="400" fill="#eef0f3">current_period_end</text>
+<text x="446" y="203.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<text x="266" y="224.5" font-size="11" font-weight="400" fill="#eef0f3">cancel_at_period_end</text>
+<text x="429" y="224.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">integer</text>
+<rect x="429" y="215.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="224.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="245.5" font-size="11" font-weight="400" fill="#eef0f3">ended_at</text>
+<text x="446" y="245.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<text x="266" y="266.5" font-size="11" font-weight="400" fill="#eef0f3">cancellation_reason</text>
+<text x="446" y="266.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="266" y="287.5" font-size="11" font-weight="400" fill="#eef0f3">discount_percent_off</text>
+<text x="446" y="287.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">integer</text>
+<text x="266" y="308.5" font-size="11" font-weight="400" fill="#eef0f3">ever_full_discount</text>
+<text x="429" y="308.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">integer</text>
+<rect x="429" y="299.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="308.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="329.5" font-size="11" font-weight="400" fill="#eef0f3">payment_failures</text>
+<text x="429" y="329.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">integer</text>
+<rect x="429" y="320.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="329.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="350.5" font-size="11" font-weight="400" fill="#eef0f3">episode_state</text>
+<text x="429" y="350.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="429" y="341.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="350.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<rect x="256" y="390" width="200" height="139" rx="4" fill="#4b4f55"/>
+<path d="M 256 394 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="266" y="408.5" font-size="12.5" font-weight="700" fill="#eef0f3">stripe_events</text>
+<text x="266" y="431.5" font-size="11" font-weight="700" fill="#eef0f3">id<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="429" y="431.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="429" y="422.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="431.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="452.5" font-size="11" font-weight="400" fill="#eef0f3">type</text>
+<text x="429" y="452.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="429" y="443.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="452.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="473.5" font-size="11" font-weight="400" fill="#eef0f3">created</text>
+<text x="429" y="473.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="429" y="464.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="473.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="494.5" font-size="11" font-weight="400" fill="#eef0f3">subscription_id</text>
+<text x="446" y="494.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="266" y="515.5" font-size="11" font-weight="400" fill="#eef0f3">outcome</text>
+<text x="429" y="515.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="429" y="506.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="515.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<rect x="256" y="555" width="200" height="202" rx="4" fill="#4b4f55"/>
+<path d="M 256 559 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="266" y="573.5" font-size="12.5" font-weight="700" fill="#eef0f3">reinstatement_attempts</text>
+<text x="266" y="596.5" font-size="11" font-weight="700" fill="#eef0f3">id<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="429" y="596.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="429" y="587.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="596.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="617.5" font-size="11" font-weight="400" fill="#eef0f3">account_id</text>
+<text x="429" y="617.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="429" y="608.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="617.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="638.5" font-size="11" font-weight="400" fill="#eef0f3">instance_id</text>
+<text x="429" y="638.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="429" y="629.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="638.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="659.5" font-size="11" font-weight="400" fill="#eef0f3">closed_subscription_id</text>
+<text x="429" y="659.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="429" y="650.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="659.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="680.5" font-size="11" font-weight="400" fill="#eef0f3">new_subscription_id</text>
+<text x="446" y="680.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="266" y="701.5" font-size="11" font-weight="400" fill="#eef0f3">checkout_session_id</text>
+<text x="446" y="701.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="266" y="722.5" font-size="11" font-weight="400" fill="#eef0f3">fence_expires_at</text>
+<text x="429" y="722.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="429" y="713.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="722.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="266" y="743.5" font-size="11" font-weight="400" fill="#eef0f3">state</text>
+<text x="429" y="743.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="429" y="734.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="438.5" y="743.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<rect x="482" y="78" width="200" height="265" rx="4" fill="#4b4f55"/>
+<path d="M 482 82 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="492" y="96.5" font-size="12.5" font-weight="700" fill="#eef0f3">instances</text>
+<text x="492" y="119.5" font-size="11" font-weight="700" fill="#eef0f3">id<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="655" y="119.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="110.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="119.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="140.5" font-size="11" font-weight="400" fill="#eef0f3">run_id</text>
+<text x="672" y="140.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="492" y="161.5" font-size="11" font-weight="400" fill="#eef0f3">name</text>
+<text x="655" y="161.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="152.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="161.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="182.5" font-size="11" font-weight="400" fill="#eef0f3">plan</text>
+<text x="655" y="182.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="173.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="182.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="203.5" font-size="11" font-weight="400" fill="#eef0f3">service_state</text>
+<text x="655" y="203.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="194.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="203.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="224.5" font-size="11" font-weight="400" fill="#eef0f3">goal</text>
+<text x="655" y="224.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="215.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="224.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="245.5" font-size="11" font-weight="400" fill="#eef0f3">subscription_state</text>
+<text x="655" y="245.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="236.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="245.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="266.5" font-size="11" font-weight="400" fill="#eef0f3">attention_state</text>
+<text x="655" y="266.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="257.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="266.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="287.5" font-size="11" font-weight="400" fill="#eef0f3">access_window_expires_at</text>
+<text x="672" y="287.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<text x="492" y="308.5" font-size="11" font-weight="400" fill="#eef0f3">customer_ssh_key</text>
+<text x="672" y="308.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="492" y="329.5" font-size="11" font-weight="400" fill="#eef0f3">version</text>
+<text x="655" y="329.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">integer</text>
+<rect x="655" y="320.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="329.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<rect x="482" y="369" width="200" height="139" rx="4" fill="#4b4f55"/>
+<path d="M 482 373 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="492" y="387.5" font-size="12.5" font-weight="700" fill="#eef0f3">instance_liveness</text>
+<text x="492" y="410.5" font-size="11" font-weight="700" fill="#eef0f3">instance_id<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="655" y="410.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="401.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="410.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="431.5" font-size="11" font-weight="400" fill="#eef0f3">rung</text>
+<text x="655" y="431.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="422.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="431.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="452.5" font-size="11" font-weight="400" fill="#eef0f3">strikes</text>
+<text x="655" y="452.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">integer</text>
+<rect x="655" y="443.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="452.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="473.5" font-size="11" font-weight="400" fill="#eef0f3">next_check_at</text>
+<text x="655" y="473.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="655" y="464.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="473.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="494.5" font-size="11" font-weight="400" fill="#eef0f3">claim_until</text>
+<text x="672" y="494.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="482" y="534" width="200" height="139" rx="4" fill="#4b4f55"/>
+<path d="M 482 538 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="492" y="552.5" font-size="12.5" font-weight="700" fill="#eef0f3">certificate_credentials</text>
+<text x="492" y="575.5" font-size="11" font-weight="700" fill="#eef0f3">id<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="655" y="575.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="566.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="575.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="596.5" font-size="11" font-weight="400" fill="#eef0f3">instance_id</text>
+<text x="655" y="596.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="587.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="596.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="617.5" font-size="11" font-weight="400" fill="#eef0f3">token_hash</text>
+<text x="655" y="617.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="608.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="617.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="638.5" font-size="11" font-weight="400" fill="#eef0f3">status</text>
+<text x="655" y="638.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="655" y="629.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="664.5" y="638.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="492" y="659.5" font-size="11" font-weight="400" fill="#eef0f3">last_used_at</text>
+<text x="672" y="659.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="708" y="78" width="200" height="286" rx="4" fill="#4b4f55"/>
+<path d="M 708 82 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="718" y="96.5" font-size="12.5" font-weight="700" fill="#eef0f3">operations</text>
+<text x="718" y="119.5" font-size="11" font-weight="700" fill="#eef0f3">id<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="881" y="119.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="110.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="119.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="140.5" font-size="11" font-weight="400" fill="#eef0f3">instance_id</text>
+<text x="881" y="140.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="131.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="140.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="161.5" font-size="11" font-weight="400" fill="#eef0f3">kind</text>
+<text x="881" y="161.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="152.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="161.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="182.5" font-size="11" font-weight="400" fill="#eef0f3">status</text>
+<text x="881" y="182.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="173.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="182.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="203.5" font-size="11" font-weight="400" fill="#eef0f3">attempt</text>
+<text x="881" y="203.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">integer</text>
+<rect x="881" y="194.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="203.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="224.5" font-size="11" font-weight="400" fill="#eef0f3">next_attempt_at</text>
+<text x="881" y="224.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="881" y="215.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="224.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="245.5" font-size="11" font-weight="400" fill="#eef0f3">lease_until</text>
+<text x="898" y="245.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<text x="718" y="266.5" font-size="11" font-weight="400" fill="#eef0f3">lease_holder</text>
+<text x="898" y="266.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="718" y="287.5" font-size="11" font-weight="400" fill="#eef0f3">inactivity_deadline_at</text>
+<text x="881" y="287.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="881" y="278.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="287.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="308.5" font-size="11" font-weight="400" fill="#eef0f3">absolute_deadline_at</text>
+<text x="881" y="308.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="881" y="299.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="308.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="329.5" font-size="11" font-weight="400" fill="#eef0f3">evidence</text>
+<text x="881" y="329.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="320.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="329.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="350.5" font-size="11" font-weight="400" fill="#eef0f3">version</text>
+<text x="881" y="350.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">integer</text>
+<rect x="881" y="341.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="350.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<rect x="708" y="390" width="200" height="160" rx="4" fill="#4b4f55"/>
+<path d="M 708 394 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="718" y="408.5" font-size="12.5" font-weight="700" fill="#eef0f3">create_intents</text>
+<text x="718" y="431.5" font-size="11" font-weight="700" fill="#eef0f3">intent_id<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="881" y="431.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="422.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="431.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="452.5" font-size="11" font-weight="400" fill="#eef0f3">state</text>
+<text x="881" y="452.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="443.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="452.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="473.5" font-size="11" font-weight="400" fill="#eef0f3">latched_at</text>
+<text x="881" y="473.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="881" y="464.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="473.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="494.5" font-size="11" font-weight="400" fill="#eef0f3">plan</text>
+<text x="881" y="494.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="485.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="494.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="515.5" font-size="11" font-weight="400" fill="#eef0f3">provider_id</text>
+<text x="898" y="515.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="718" y="536.5" font-size="11" font-weight="400" fill="#eef0f3">reason</text>
+<text x="898" y="536.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="708" y="576" width="200" height="202" rx="4" fill="#4b4f55"/>
+<path d="M 708 580 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="718" y="594.5" font-size="12.5" font-weight="700" fill="#eef0f3">attention_reasons</text>
+<text x="718" y="617.5" font-size="11" font-weight="700" fill="#eef0f3">id<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="881" y="617.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="608.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="617.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="638.5" font-size="11" font-weight="400" fill="#eef0f3">instance_id</text>
+<text x="881" y="638.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="629.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="638.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="659.5" font-size="11" font-weight="400" fill="#eef0f3">source_op_id</text>
+<text x="881" y="659.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="650.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="659.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="680.5" font-size="11" font-weight="400" fill="#eef0f3">reason_class</text>
+<text x="881" y="680.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="671.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="680.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="701.5" font-size="11" font-weight="400" fill="#eef0f3">severity</text>
+<text x="881" y="701.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="881" y="692.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="701.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="722.5" font-size="11" font-weight="400" fill="#eef0f3">raised_at</text>
+<text x="881" y="722.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="881" y="713.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="890.5" y="722.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="718" y="743.5" font-size="11" font-weight="400" fill="#eef0f3">cleared_at</text>
+<text x="898" y="743.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<text x="718" y="764.5" font-size="11" font-weight="400" fill="#eef0f3">acknowledged_at</text>
+<text x="898" y="764.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="934" y="78" width="200" height="223" rx="4" fill="#4b4f55"/>
+<path d="M 934 82 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="944" y="96.5" font-size="12.5" font-weight="700" fill="#eef0f3">provider_assets</text>
+<text x="944" y="119.5" font-size="11" font-weight="700" fill="#eef0f3">id<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="1107" y="119.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="1107" y="110.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="1116.5" y="119.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="944" y="140.5" font-size="11" font-weight="400" fill="#eef0f3">instance_id</text>
+<text x="1107" y="140.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="1107" y="131.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="1116.5" y="140.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="944" y="161.5" font-size="11" font-weight="400" fill="#eef0f3">provider</text>
+<text x="1107" y="161.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="1107" y="152.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="1116.5" y="161.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="944" y="182.5" font-size="11" font-weight="400" fill="#eef0f3">provider_id</text>
+<text x="1124" y="182.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="944" y="203.5" font-size="11" font-weight="400" fill="#eef0f3">intent_id</text>
+<text x="1124" y="203.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="944" y="224.5" font-size="11" font-weight="400" fill="#eef0f3">asset_state</text>
+<text x="1107" y="224.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="1107" y="215.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="1116.5" y="224.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="944" y="245.5" font-size="11" font-weight="400" fill="#eef0f3">ipv4</text>
+<text x="1124" y="245.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="944" y="266.5" font-size="11" font-weight="400" fill="#eef0f3">service_ends_at</text>
+<text x="1124" y="266.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="944" y="287.5" font-size="11" font-weight="400" fill="#eef0f3">next_reconcile_at</text>
+<text x="1107" y="287.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="1107" y="278.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="1116.5" y="287.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<rect x="934" y="327" width="200" height="160" rx="4" fill="#4b4f55"/>
+<path d="M 934 331 a 4 4 0 0 1 4 -4 h 192 a 4 4 0 0 1 4 4 v 23 h -200 z" fill="#2c3036"/>
+<text x="944" y="345.5" font-size="12.5" font-weight="700" fill="#eef0f3">audit_events</text>
+<text x="944" y="368.5" font-size="11" font-weight="700" fill="#eef0f3">seq<tspan dx="5" font-size="9" font-weight="400" fill="#b9bfc7">&#9675;</tspan></text>
+<text x="1107" y="368.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="1107" y="359.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="1116.5" y="368.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="944" y="389.5" font-size="11" font-weight="400" fill="#eef0f3">ts</text>
+<text x="1107" y="389.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">bigint</text>
+<rect x="1107" y="380.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="1116.5" y="389.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="944" y="410.5" font-size="11" font-weight="400" fill="#eef0f3">actor</text>
+<text x="1107" y="410.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="1107" y="401.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="1116.5" y="410.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="944" y="431.5" font-size="11" font-weight="400" fill="#eef0f3">instance_id</text>
+<text x="1124" y="431.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<text x="944" y="452.5" font-size="11" font-weight="400" fill="#eef0f3">action</text>
+<text x="1107" y="452.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="1107" y="443.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="1116.5" y="452.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<text x="944" y="473.5" font-size="11" font-weight="400" fill="#eef0f3">outcome</text>
+<text x="1107" y="473.5" font-size="10.5" text-anchor="end" fill="#b9bfc7">text</text>
+<rect x="1107" y="464.5" width="19" height="12" rx="2" fill="#71777f"/>
+<text x="1116.5" y="473.0" font-size="8" font-weight="700" text-anchor="middle" fill="#eef0f3">NN</text>
+<path d="M 30 343.5 C -16 343.5, -16 115.5, 30 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="30" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="30" cy="343.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 256 136.5 C 222 136.5, 264 115.5, 230 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="230" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="256" cy="136.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 256 613.5 C 222 613.5, 264 115.5, 230 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="230" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="256" cy="613.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 256 490.5 C 210 490.5, 210 115.5, 256 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="256" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="256" cy="490.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 256 655.5 C 210 655.5, 210 115.5, 256 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="256" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="256" cy="655.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 456 157.5 C 490 157.5, 448 115.5, 482 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="482" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="456" cy="157.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 230 364.5 C 264 364.5, 448 115.5, 482 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="482" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="230" cy="364.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 482 406.5 C 436 406.5, 436 115.5, 482 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="482" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="482" cy="406.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 482 592.5 C 436 592.5, 436 115.5, 482 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="482" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="482" cy="592.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 708 136.5 C 674 136.5, 716 115.5, 682 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="682" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="708" cy="136.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 708 634.5 C 674 634.5, 716 115.5, 682 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="682" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="708" cy="634.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 934 136.5 C 900 136.5, 716 115.5, 682 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="682" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="934" cy="136.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 934 427.5 C 900 427.5, 716 115.5, 682 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="682" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="934" cy="427.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 708 655.5 C 662 655.5, 662 115.5, 708 115.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="708" cy="115.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="708" cy="655.5" r="2.4" fill="#9aa1aa"/>
+<path d="M 934 199.5 C 900 199.5, 942 427.5, 908 427.5" fill="none" stroke="#9aa1aa" stroke-width="1.1" stroke-opacity="0.75"/>
+<circle cx="908" cy="427.5" r="2.4" fill="#9aa1aa"/>
+<circle cx="934" cy="199.5" r="2.4" fill="#9aa1aa"/>
+</svg>

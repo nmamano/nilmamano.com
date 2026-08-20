@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 352" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="ia" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#3d4a5c"/>
+    </marker>
+  </defs>
+
+  <rect x="0" y="0" width="1000" height="352" fill="#ffffff"/>
+
+  <!-- ===== Phase 1 ===== -->
+  <rect x="18" y="20" width="224" height="312" rx="10" fill="#fdf1e7" stroke="#c05621" stroke-width="1.5"/>
+  <text x="30" y="44" font-size="12" font-weight="700" fill="#9a4f12" letter-spacing="0.4">1 · HARDEN THE MACHINE</text>
+  <rect x="30" y="58" width="200" height="32" rx="6" fill="#ffffff" stroke="#c9a68b" stroke-width="1"/>
+  <text x="130" y="79" text-anchor="middle" font-size="12.5" fill="#1a2030">install packages</text>
+  <rect x="30" y="98" width="200" height="32" rx="6" fill="#ffffff" stroke="#c9a68b" stroke-width="1"/>
+  <text x="130" y="119" text-anchor="middle" font-size="12.5" fill="#1a2030">configure firewall</text>
+  <rect x="30" y="138" width="200" height="32" rx="6" fill="#ffffff" stroke="#c9a68b" stroke-width="1"/>
+  <text x="130" y="159" text-anchor="middle" font-size="12.5" fill="#1a2030">harden SSH</text>
+  <rect x="30" y="178" width="200" height="32" rx="6" fill="#ffffff" stroke="#c9a68b" stroke-width="1"/>
+  <text x="130" y="199" text-anchor="middle" font-size="12.5" fill="#1a2030">enable auto-updates</text>
+  <rect x="30" y="218" width="200" height="32" rx="6" fill="#ffffff" stroke="#c9a68b" stroke-width="1"/>
+  <text x="130" y="239" text-anchor="middle" font-size="12.5" fill="#1a2030">configure OOM protection</text>
+  <text x="130" y="276" text-anchor="middle" font-size="11.5" font-style="italic" fill="#9a4f12">nothing of ours exists yet,</text>
+  <text x="130" y="292" text-anchor="middle" font-size="11.5" font-style="italic" fill="#9a4f12">so a failed install still</text>
+  <text x="130" y="308" text-anchor="middle" font-size="11.5" font-style="italic" fill="#9a4f12">leaves a hardened box</text>
+
+  <!-- ===== Phase 2 ===== -->
+  <rect x="264" y="20" width="224" height="312" rx="10" fill="#eef1f5" stroke="#5a6a80" stroke-width="1.5"/>
+  <text x="276" y="44" font-size="12" font-weight="700" fill="#3d4a5c" letter-spacing="0.4">2 · PREPARE THE BOX</text>
+  <rect x="276" y="58" width="200" height="32" rx="6" fill="#ffffff" stroke="#b3bdc9" stroke-width="1"/>
+  <text x="376" y="79" text-anchor="middle" font-size="12.5" fill="#1a2030">create service user</text>
+  <rect x="276" y="98" width="200" height="32" rx="6" fill="#ffffff" stroke="#b3bdc9" stroke-width="1"/>
+  <text x="376" y="119" text-anchor="middle" font-size="12.5" fill="#1a2030">configure user manager</text>
+  <rect x="276" y="138" width="200" height="32" rx="6" fill="#fff8ec" stroke="#b7791f" stroke-width="2" stroke-dasharray="5 3"/>
+  <text x="376" y="159" text-anchor="middle" font-size="12.5" font-weight="600" fill="#8a5a08">check root reachability</text>
+  <rect x="276" y="178" width="200" height="32" rx="6" fill="#ffffff" stroke="#b3bdc9" stroke-width="1"/>
+  <text x="376" y="199" text-anchor="middle" font-size="12.5" fill="#1a2030">install browser</text>
+  <rect x="276" y="218" width="200" height="32" rx="6" fill="#ffffff" stroke="#b3bdc9" stroke-width="1"/>
+  <text x="376" y="239" text-anchor="middle" font-size="12.5" fill="#1a2030">configure codex sandbox</text>
+  <text x="376" y="276" text-anchor="middle" font-size="11.5" font-style="italic" fill="#8a5a08">gate: can you still get in</text>
+  <text x="376" y="292" text-anchor="middle" font-size="11.5" font-style="italic" fill="#8a5a08">after we locked it down?</text>
+
+  <!-- ===== Phase 3 ===== -->
+  <rect x="510" y="20" width="224" height="312" rx="10" fill="#e8f7ee" stroke="#1f9550" stroke-width="1.5"/>
+  <text x="522" y="44" font-size="12" font-weight="700" fill="#15803c" letter-spacing="0.4">3 · INSTALL ISOMUX</text>
+  <rect x="522" y="58" width="200" height="32" rx="6" fill="#ffffff" stroke="#9ecfb2" stroke-width="1"/>
+  <text x="622" y="79" text-anchor="middle" font-size="12.5" fill="#1a2030">fetch isomux (pinned tag)</text>
+  <rect x="522" y="98" width="200" height="32" rx="6" fill="#ffffff" stroke="#9ecfb2" stroke-width="1"/>
+  <text x="622" y="119" text-anchor="middle" font-size="12.5" fill="#1a2030">install bun</text>
+  <rect x="522" y="138" width="200" height="32" rx="6" fill="#ffffff" stroke="#9ecfb2" stroke-width="1"/>
+  <text x="622" y="159" text-anchor="middle" font-size="12.5" fill="#1a2030">build isomux</text>
+  <rect x="522" y="178" width="200" height="32" rx="6" fill="#ffffff" stroke="#9ecfb2" stroke-width="1"/>
+  <text x="622" y="199" text-anchor="middle" font-size="12.5" fill="#1a2030">install updater</text>
+  <rect x="522" y="218" width="200" height="32" rx="6" fill="#ffffff" stroke="#9ecfb2" stroke-width="1"/>
+  <text x="622" y="239" text-anchor="middle" font-size="12.5" fill="#1a2030">install systemd service</text>
+  <rect x="522" y="258" width="200" height="32" rx="6" fill="#ffffff" stroke="#9ecfb2" stroke-width="1"/>
+  <text x="622" y="279" text-anchor="middle" font-size="12.5" fill="#1a2030">wait for server</text>
+
+  <!-- ===== Phase 4 ===== -->
+  <rect x="756" y="20" width="224" height="312" rx="10" fill="#e7f2ff" stroke="#2b6cb0" stroke-width="1.5"/>
+  <text x="768" y="44" font-size="12" font-weight="700" fill="#1d4f86" letter-spacing="0.4">4 · VERIFY, THEN HAND OFF</text>
+  <rect x="768" y="58" width="200" height="32" rx="6" fill="#fff8ec" stroke="#b7791f" stroke-width="2" stroke-dasharray="5 3"/>
+  <text x="868" y="79" text-anchor="middle" font-size="12.5" font-weight="600" fill="#8a5a08">assert hardening</text>
+  <rect x="768" y="98" width="200" height="32" rx="6" fill="#ffffff" stroke="#a8c4e0" stroke-width="1"/>
+  <text x="868" y="119" text-anchor="middle" font-size="12.5" fill="#1a2030">claim owner</text>
+  <rect x="768" y="138" width="200" height="32" rx="6" fill="#ffffff" stroke="#a8c4e0" stroke-width="1"/>
+  <text x="868" y="159" text-anchor="middle" font-size="12.5" fill="#1a2030">configure public access</text>
+  <rect x="768" y="178" width="200" height="32" rx="6" fill="#ffffff" stroke="#a8c4e0" stroke-width="1"/>
+  <text x="868" y="199" text-anchor="middle" font-size="12.5" fill="#1a2030">mint owner invite</text>
+  <rect x="768" y="218" width="200" height="32" rx="6" fill="#ffffff" stroke="#a8c4e0" stroke-width="1"/>
+  <text x="868" y="239" text-anchor="middle" font-size="12.5" fill="#1a2030">configure Caddy (HTTPS)</text>
+  <text x="868" y="276" text-anchor="middle" font-size="11.5" font-style="italic" fill="#8a5a08">gate: runs before the owner</text>
+  <text x="868" y="292" text-anchor="middle" font-size="11.5" font-style="italic" fill="#8a5a08">exists, so a failure leaves</text>
+  <text x="868" y="308" text-anchor="middle" font-size="11.5" font-style="italic" fill="#8a5a08">no owner and no invite</text>
+
+  <!-- arrows between phases -->
+  <path d="M 244 176 L 262 176" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#ia)"/>
+  <path d="M 490 176 L 508 176" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#ia)"/>
+  <path d="M 736 176 L 754 176" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#ia)"/>
+
+</svg>
