@@ -1,66 +1,66 @@
 ---
 title: "Building a Hosted Agents Product End-to-End"
-date: "2026-08-16"
+date: "2026-08-21"
 excerpt: "The design and engineering behind Hosted Isomux: the product, every system involved, the codebase, and the technical decisions, including how we lock ourselves out of customer servers."
 coverImage: "/blog/hosted-isomux/cover.png"
 categories: ["ai", "swe"]
 ---
 
-In [a previous post](/blog/isomux), I covered building [Isomux](https://isomux.com) ([github](https://github.com/nmamano/isomux)), a meta-harness where agents act like coworkers instead of throwaway sessions. Isomux is open source and self-hosting is encouraged, but most people would rather not set up and maintain a VPS. So, I built the managed version: [Hosted Isomux](https://isomux.com/hosted). Customers sign up, pay, and get their own office at `yourname.isomux.app` without touching a terminal.
+In [a previous post](/blog/isomux), I covered building [Isomux](https://isomux.com) ([github](https://github.com/nmamano/isomux)), a meta-harness where agents act like coworkers. It's open source and self-hosting is encouraged, but most people would rather not set up and maintain a VPS. So, I built the managed version: [Hosted Isomux](https://isomux.com/hosted). Customers sign up, pay, and get their own office at `yourname.isomux.app` without touching a terminal.
 
-This post describes how I built it, and it is meant to act as a playbook for hosted agent products.
+This build-in-public post is meant to act as a playbook for hosted agent products. There are similar products for OpenClaw, like [oneclickclaw.io](https://oneclickclaw.io).[^diverged]
+
+[^diverged]: We diverge from their design in some places. For example, their docs state that they retain SSH access to customer servers, which makes some things more convenient but requires trust. We remove our SSH access after setup (more on this [here](#locking-ourselves-out-of-the-box-after-setup)).
 
 <Toc />
 
 ## The product
 
-The pitch is that customers get their own 24/7 office for their agents at `yourname.isomux.app`, on a private server. As described in [isomux.com/hosted](https://isomux.com/hosted):
+The pitch is that customers get a 24/7 office for their agents at `yourname.isomux.app`, on their own private server. As described in [isomux.com/hosted](https://isomux.com/hosted):
 
 <BlogImage
   src="/blog/hosted-isomux/what-you-get.png"
   alt="The 'What you get' section of the Hosted Isomux page: six cards titled A whole office, Multiplayer agents, For every device, Your subscriptions, Your own Virtual Private Server, and Updates when you choose"
 />
 
-"Your subscriptions" means users don't need to pay API prices. Instead, they log in to claude or codex from the built-in terminal, as they would normally. Isomux agents piggyback on those credentials, which we never see.
+A separate VPS per user solves isolation: customers get their own virtual CPU and memory, so we don't have to handle resource allocation. And, most importantly, they get a clear privacy boundary.
 
-A separate VPS per user solves isolation: each customer gets their own virtual CPU and memory, and, most importantly, their own privacy boundary.
-
-There are many similar products for OpenClaw, like [oneclickclaw.io](https://oneclickclaw.io).[^diverged]
-
-[^diverged]: We diverge from their design choices where we disagree. The biggest divergence: their docs state that they retain SSH access to customer servers. I think this is a lot of trust to give to a VPS-wrapper company. We remove our SSH access after setup.
+"Your subscriptions" means users don't need to pay API prices. Instead, they log in to claude or codex inside the VPS (e.g., from the Isomux built-in terminal) and Isomux agents operate using those credentials. We never see them.
 
 ## System architecture
 
+The key property of the system is that, for daily use, the customer connects straight to their own box. The control plane provisions the office and gets out of the way. After that, our systems can go down and the offices keeps working.
+
 <BlogImage
   src="/blog/hosted-isomux/system-diagram.svg"
-  alt="System diagram of Hosted Isomux. A customer talks to the control-plane web app (cloud.isomux.com, Next.js on Vercel), which talks to Stripe for checkout and webhooks and to Neon Postgres for state. A separate provisioner (one Fly.io machine) drives operations from the same database, calls the Contabo API, writes the certificate proof records into Cloudflare DNS, gets TLS certificates from Let's Encrypt, and reaches the customer VPS over SSH during setup only. For daily use, the customer connects straight to their own box at name.isomux.app; the control plane is not in the path."
+  alt="System diagram of Hosted Isomux. A customer talks to the control-plane web app (cloud.isomux.com, Next.js on Vercel), which sends the customer to Stripe for checkout and keeps state in Neon Postgres. A separate provisioner (one Fly.io machine) receives Stripe's webhooks, drives operations from the same database, calls the Contabo API, writes the certificate proof records into Cloudflare DNS, gets TLS certificates from Let's Encrypt, and reaches the customer VPS over SSH during setup only. For daily use, the customer connects straight to their own box at name.isomux.app; the control plane is not in the path."
   needsBackground={true}
 />
 
-The key property of the system is that, for daily use, the customer connects straight to their own box. The control plane provisions the office and gets out of the way. After that, if our systems go down, the office keeps working.
+Component list:
 
-Here is the component list:
-
-- **The web storefront app** (`cloud.isomux.com`, Next.js hosted on Vercel): the place where users sign up with their Google accounts via `Auth.js`, order an office, and check out via Stripe. There, they can see a dashboard with step-level provisioning progress (pictured below; the provisioning is [detailed later](#provisioning-orchestration)) and some high-level management actions for their VPS that holds the office, like restarting it. The web app is the least privileged component because it's the most public. It cannot reach customer boxes; only the **provisioner** can, which is more locked down.
+- **The storefront web app** ([cloud.isomux.com](https://cloud.isomux.com/), a Next.js app hosted on Vercel): the place where users sign up with their Google accounts via `Auth.js`, order an office, and get sent to Stripe to check out. After paying, they see a dashboard with step-level provisioning progress (pictured below). From the dashboard, they can also manage their VPS and subscription. It also has an admin dashboard that surfaces provisioning issues. The web app is the least privileged component because it's the most public. It cannot reach customer boxes; only the **provisioner** can, which is more locked down.
 
 <BlogImage
   src="/blog/hosted-isomux/provisioning-progress.png"
   alt="The customer dashboard's Progress section during provisioning: six steps marked done (ordering your server, waiting for the server to answer, securing our temporary access, installing your SSH key, setting a timer for our access to expire, waiting for the server's package manager), 'Installing isomux' in progress at the build-isomux step, and 'Checking your office over HTTPS' still queued"
+  caption="The provisioning is [detailed later](#provisioning-orchestration)."
 />
 
-- **Customer boxes** run on Contabo VPS instances and (once provisioned) run the customers' offices as always-on services. Caddy acts as a reverse proxy so the office is reachable from `https://somename.isomux.app` - a `.app` domain to isolate the cookies and domain reputation of `isomux.com` (the `vercel.com` vs `someapp.vercel.app` pattern).
-- **Neon Postgres** holds the control-plane state: accounts, box names, VPS instances, subscriptions, and box lifecycle status. The web app and the provisioner connect with different roles and permissions ([more below](#securing-the-db)). Simplified schema:
+- **Customer boxes** are VPS instances we rent from Contabo. Once provisioned, they run the customers' offices as always-on services. We set up Caddy to act as a reverse proxy so the office is reachable from `https://somename.isomux.app`. It's a `.app` domain to isolate the cookies and domain reputation of `isomux.com` (the `vercel.com` vs `someapp.vercel.app` pattern).
+- **Neon Postgres** is the DB holding the control-plane state: accounts, box names, VPS instances, subscriptions, and box lifecycle status. The web app and the provisioner connect with different roles and permissions ([more below](#securing-the-db)).
+- **The provisioner** is one always-on machine (Fly.io, located next to the database). It runs a 5-second tick loop polling the DB to check on the lifecycle status rows; it acts on the boxes as needed, over SSH, to drive the setup. It keeps SSH keys for the customer boxes out of the web app and the DB.
+- **Stripe** handles billing through Stripe Checkout (we have no billing UI), with Stripe Managed Payments as merchant of record ([more below](#stripe-integration)). The provisioner receives Stripe's calls via webhooks, since it's the worker that's always on.
+- **Contabo (the provider)** rents us the customer boxes (Ubuntu VPSs). The provisioner uses its API to create and cancel instances. It's a cheaper alternative to Hetzner ([more below](#choosing-a-provider-contabo)).
+- **Cloudflare** serves DNS for `isomux.app`. Each customer office gets an A record at `yourname.isomux.app`; we use Cloudflare because we need a DNS provider with an API.
+- **Let's Encrypt** issues the TLS certificates that make `https://yourname.isomux.app` work. The provisioner requests each office's certificate on its behalf ([more below](#issuing-tls-certificates-for-every-customer)).
 
 <BlogImage
   src="/blog/hosted-isomux/db-diagram.svg"
   alt="Entity diagram of the control-plane Postgres schema, 15 tables in five groups. Accounts and signup: accounts, name_reservations. Billing: subscriptions, stripe_events, reinstatement_attempts. The office: instances, instance_liveness, certificate_credentials. Provisioning: operations, create_intents, attention_reasons, provider_assets, audit_events. Bookkeeping: schema_meta, sequences. Most tables reference instances.id or accounts.id."
+  caption="Simplified DB schema."
 />
 
-- **The provisioner** is one always-on machine (Fly.io, located next to the database). It keeps provider (Contabo) credentials and SSH keys out of the public web app. It runs a 5-second tick loop polling the DB to check on the lifecycle status rows; it acts on the boxes as needed, over SSH, to drive the setup.
-- **Stripe** handles billing through Stripe Checkout (we have no billing UI), with Stripe Managed Payments as merchant of record ([more below](#stripe-integration)). The provisioner receives Stripe's calls via webhooks, since it is the only piece of ours that is always on.
-- **Contabo (the provider)** rents us the customer boxes (Ubuntu VPSs). The provisioner uses its API to create, rebuild, power, and cancel instances. It's a cheaper alternative to Hetzner ([more below](#choosing-a-provider-contabo)).
-- **Cloudflare** serves DNS for `isomux.app`. Each office gets an A record at `yourname.isomux.app`.
-- **Let's Encrypt** issues the TLS certificates that make `https://yourname.isomux.app` work. The provisioner requests each office's certificate on its behalf ([more below](#issuing-tls-certificates-for-every-customer)).
 
 ## The codebase
 
@@ -69,27 +69,22 @@ Everything lives in the same public [repo](https://github.com/nmamano/isomux) as
 [^monorepo]: Why a monorepo? The installer script the provisioner uploads to each customer box is the same one a self-hoster runs, and the control plane depends on office internals like the readiness endpoint and the invite API. One CI run proves both halves agree instead of having a cross-repo contract that can drift. The storefront is its own package, so if a self-hoster runs `bun install` at the root, it's not installed. And, since we claim we lock ourselves out after setup, it helps that anyone can read the code.
 
 - `server/` (69k LoC) and `ui/` (43k LoC) are isomux itself, described in the [architecture](/blog/isomux) post. This is what runs on every box, self-hosted or hosted.
-- `deploy/` (5k LoC) holds the installer. `deploy/install.sh` is the single script that the provisioner pulls into a new box and runs. It turns a fresh Ubuntu VPS into a working HTTPS office:
+- `deploy/` (5k LoC) holds the installer. The provisioner copies `install.sh` to a new box and runs it. In about 5 minutes, it turns a fresh Ubuntu VPS into a working HTTPS office:
 
 <BlogImage
   src="/blog/hosted-isomux/install-script.svg"
   alt="Flow of install.sh in four phases. Phase 1, harden the machine: install packages, configure firewall, harden SSH, enable auto-updates, configure OOM protection. Phase 2, prepare the box: create service user, configure user manager, check root reachability (a gate), install browser, configure codex sandbox. Phase 3, install isomux: fetch isomux at a pinned tag, install bun, build isomux, install updater, install systemd service, wait for server. Phase 4, verify then hand off: assert hardening (a gate), claim owner, configure public access, mint owner invite, configure Caddy for HTTPS."
   needsBackground={true}
+  caption="Installer steps. The dashed steps are gates that stop the installation."
 />
 
-It takes about 5 minutes. The dashed steps are gates that stop the installation.
+Anyone can run Isomux locally just by running the server with bun, but the script is independently useful to self-hosters because making it multiuser without a VPN involves setting up HTTPS, running Caddy _outside_ of Isomux, and benefits from things like SSH hardening.
 
-While anyone can run Isomux locally just by running the server with bun, making it multiuser without a VPN involves setting up HTTPS, running Caddy _outside_ of Isomux, and benefits from things like SSH hardening, so the script is independently useful to self-hosters.
+- `site/` (3k LoC) holds the static-ish [isomux.com](https://isomux.com) site.
+- `scripts/` (4k LoC) holds the release machinery ([more below](#getting-isomux-updates-to-customers)), among other scripts.
+- `control-plane/` (36k LoC) has everything specific to the hosted product. `web/` is the storefront web app, and `cli.ts` is a CLI for driving the control plane used by the provisioner.
 
-- `site/` (3k LoC) holds the [isomux.com](https://isomux.com) site.
-- `scripts/` (4k LoC) holds the release machinery, among other scripts:
-  - `release.sh` cuts a release: it tags a commit with a CalVer release tag (`v2026.7.19`), gated on CI. I dogfoot the commit on my own office for at least a day first.
-  - `update.sh` is the customer-side updater, which snapshots the office, updates, health-checks, and restores the snapshot if the new version fails to come up.
-- `control-plane/` (36k LoC) has everything specific to the hosted product:
-  - `control-plane/web/`, the Next.js storefront, deployed to Vercel.
-  - `cli.ts` a CLI for operator work: provisioning, revoking access, migrations. `cli.ts run` is the provisioner loop deployed to Fly.
-
-The total is at 163k LoC. Tests add another 118k LoC.
+The total is at 163k LoC, most of it Isomux itself. Tests add another 118k LoC.
 
 ### Testing
 
@@ -106,22 +101,28 @@ The tests don't order a new Contabo box every time, but I do have a Contabo box 
 
 ## Product decisions
 
+Below are some non-obvious design choices and how we handled the trade-offs.
+
 ### Locking ourselves out of the box after setup
 
-Setup runs over SSH. But after setup is done, we delete our SSH key, and hold no access to the customer's box anymore. We do this to **match the level of privacy one would expect from renting a VPS directly**, without a middleman (with one caveat below).
+When you rent a VPS, the provider (Contabo) hands you an SSH key. Provisioning runs over SSH with that key.
 
-When a user first visits their office from the storefront dashboard, we ask them to click a button confirming they are in, and we remove our key at that point. The provisioner verifies the removal by trying to reconnect, and requires the attempt to fail (by public-key rejection, not timeout or something else).
+But after setup is done, we delete our SSH key, and hold no access to the customer's box anymore. We do this to **match the level of privacy one would expect from renting a VPS directly**, without a middleman (with one caveat below).
 
-There's a second mechanism to ensure we don't keep access just in case (e.g., the user may never click the button, or the provisioner could be down when they do). The enforcement lives in the key itself. We set OpenSSH's `expiry-time` to seven days in the future, and sshd refuses the key after that no matter what.
+When a user first visits their office from the storefront dashboard, we ask them to click a button confirming they are in, and we remove our key at that point. The provisioner verifies the removal by trying to reconnect, and requires the attempt to fail (by public-key rejection, not timeout).
 
-The provisioner's first act on a new box is to rewrite the Contabo-injected key to carry that deadline, and then read it back from disk to confirm it was applied. Until that happens, nothing else proceeds.
+There's a second mechanism to ensure we don't keep access even if the user doesn't click the button (or the provisioner is down). The provisioner's first act on a new box is to set OpenSSH's `expiry-time` in our SSH key to seven days in the future. `sshd` refuses the key after that no matter what.[^twobackstops]
+
+[^twobackstops]: The provisioner also schedules a timer on the box to delete the expired key after the seven days. Why both an expiration date and a scheduled deletion? The date rides inside the key's own line in `authorized_keys`, so it holds even if the deletion is never scheduled or doesn't fire. The scheduled deletion removes the key file entirely, so a useless key doesn't stick around.
 
 This has second-order consequences:
 
-- **We disable backups for the provisioner's disk.** Fly.io turns scheduled snapshots on by default with five-day retention, and a snapshot would keep copies of a private key for five days after we proved it destroyed. For the same reason, our temporary setup SSH keys live only on the provisioner's disk, which is the most isolated component.
-- **We can only issue Isomux sign-in links while our key exists.** Minting one needs shell access on the box, and invites are single-use and expire. Once our access is revoked, there is no path left for us to make another, which is why the dashboard nags the user to confirm they are in as the trigger for removing our key. (The invite link itself is also not stored anywhere. It is minted on request and held in provisioner memory for five minutes. If the user doesn't use it, they need to request another one.)
-- **The trade-off is higher risk of customers getting locked out.** If we kept an SSH key, we could offer them a way to get back in from the storefront dashboard, but we can't provide that convenience. The mitigation is that the signup flow helps users set up their own SSH key. Their browser generates a server administrator keypair and asks the user to save the private half; only the public half reaches our servers, to be installed on the box during setup. Generating the SSH key for the user instead of asking them to provide one keeps the "no terminal required" promise.
-- **The honest limit.** A fact about any VPS-wrapper product is that we, as Contabo's actual client, are technically the renters for the users' boxes and have certain owner privileges: power, reinstall, and a rescue console **that can reach the disk.** We can't engineer ourselves out of that, so it's addressed in the [Terms of Service](https://isomux.com/hosted-terms) and [Privacy Policy](https://isomux.com/hosted-privacy): we only ever use the rescue console on a user's explicit written request, for a named incident, and we log everything we do.
+- **We turn off backups for the provisioner's disk.** Fly.io has backups on by default with five-day retention, but backups would keep copies of a private key for five days after we proved it destroyed. For the same reason, our temporary setup SSH keys live only on the provisioner's disk, which is the most isolated component.
+- **We can mint Isomux sign-in links only while our key is alive.** Minting one needs shell access on the box, and invites are single-use and expire after 24h. Once our access is revoked, there is no path left for us to make another, which is why the dashboard nags the user to confirm they are in as the trigger for removing our key.[^invite]
+- **Customers carry a higher lockout risk.** If we kept an SSH key, we could offer them a way to get back in from the storefront dashboard, which would be convenient. The mitigation is that the signup flow helps customers set up their own SSH key. Their browser generates a public/private pair and asks the user to save the private half; only the public half leaves the local browser so the provisioner can install it on the box. Generating the SSH key for the user instead of asking them to provide one keeps the "no terminal required" promise.
+- **We keep Contabo's owner privileges, whatever we do.** A fact about any VPS-wrapper product is that we, as Contabo's actual client, are technically the renters for the users' boxes and have certain owner privileges: power, reinstall, and a rescue console **that can reach the disk.** We can't engineer ourselves out of that, so it's addressed in the [Terms of Service](https://isomux.com/hosted-terms) and [Privacy Policy](https://isomux.com/hosted-privacy): we only ever use the rescue console on a user's explicit written request, for a named incident, and we log everything we do.
+
+[^invite]: The invite link itself is never written to disk or DB; the provisioner mints it on request from the storefront (via a DB operation row) and holds it in memory for five minutes; the storefront fetches it directly from the provisioner (by retrying every 2s until it's ready). It's the only direct communication between them.
 
 ### Choosing a provider: Contabo
 
@@ -129,19 +130,19 @@ We chose Contabo because it had the most competitive prices compared to known al
 
 One downside is that the Contabo API has a bunch of poorly documented quirks which we found by live probing, and had to work around.
 
-Creating a box is the only operation that spends money, and Contabo's create endpoint documents no idempotency mechanism at all. A create that times out is ambiguous: the box may or may not exist. So, right before the call, the provisioner writes a `create_intents` row that means "the paid call may have happened; create is permanently forbidden for this intent". When the outcome is ambiguous, the provisioner resolves it by searching the provider's instance list.
+Creating a box is the only operation that spends money, and Contabo's create endpoint doesn't say it's idempotent. If a create times out, the box may or may not exist. So, right before the call, the provisioner writes a `create_intents` DB row that means "the paid call may have happened; create is forbidden for this intent". When the outcome is ambiguous, the provisioner resolves it by searching the provider's instance list.
 
 ### Provisioning orchestration
 
-<BlogImage
-  src="/blog/hosted-isomux/provisioning-chain.svg"
-  alt="The provisioning chain, one database row per step, driven by the 5-second tick loop. Signup and payment write the first rows, then eight steps run in order: order the box (create_instance), wait for SSH to answer (wait_for_ssh), put an expiry on our key (first_contact), install the customer's key (install_customer_key), arm the removal timer (arm_revocation), wait for the package manager (wait_for_package_manager), run the installer (run_installer, which is the whole installer diagram), and check HTTPS answers (verify_https). The office is then live and the chain stops and waits. Separately, from the dashboard, the customer asks for a sign-in link (mint_invite), signs in, confirms they are in (revoke_access), and our key is removed and destroyed. Seven days after signup, sshd expires our key on its own regardless."
-  needsBackground={true}
-/>
-
-The provisioner tracks each box's progress as durable operation rows in the DB (`create_instance`, `wait_for_ssh`, ...). One row is one step for one box, and it carries a status, the evidence of what happened so far, and when to try it again.[^finding]
+The provisioner tracks each box's progress as durable operation rows in the DB (`create_instance`, `create_dns`, ...). One row is one step for one box, and it carries a status, the evidence of what happened so far, and when to try it again.[^finding]
 
 [^finding]: An example of a finding from this: a box can accept SSH and not be ready yet. Two minutes after boot, Ubuntu was still doing its own package work and holding the package manager lock, but answered SSH at 88 seconds. An installer that starts in that window dies immediately. So "wait until the package manager is free" became its own step with its own deadline.
+
+<BlogImage
+  src="/blog/hosted-isomux/provisioning-chain.svg"
+  alt="The provisioning chain, one database row per step, driven by the 5-second tick loop. Signup and payment write the first rows, then nine steps run in order: order the box (create_instance), create the office's DNS records (create_dns), wait for SSH to answer (wait_for_ssh), give our key a 7-day deadline (first_contact), install the customer's key (install_customer_key), schedule the box to delete our key (arm_revocation), wait for the package manager (wait_for_package_manager), run the installer (run_installer, which is the whole installer diagram), and check the office over HTTPS (verify_https). The office is then live and the chain stops and waits. Separately, from the dashboard, the customer asks for a sign-in link (mint_invite), signs in, confirms they are in (revoke_access), and our key is removed and destroyed. Seven days after signup, sshd expires our key on its own regardless."
+  needsBackground={true}
+/>
 
 The provisioner runs a 5-second tick loop. On each tick, it asks the database which steps are due, and for each one:
 
@@ -159,7 +160,9 @@ Since the installer runs many steps inside the box, the provisioner needs a way 
 
 ### Securing the DB
 
-The web storefront app and the provisioner get distinct DB roles with narrow per-table, per-action grants. The web role is the most restricted. E.g., it can enqueue operations but not drive them (INSERT and SELECT on `operations`, no UPDATE). Neither role can DELETE anything. We audit the permissions by keeping two lists: what each role is allowed to do, and what the deployed code actually does (as traced by a reviewer agent). A test ensures they match (no missing permissions but also no extra permissions).
+The web storefront app and the provisioner get distinct DB roles with narrow per-table, per-action grants.[^stripekeys] The web role is the most restricted. E.g., it can enqueue operations but not drive them (INSERT and SELECT on `operations`, no UPDATE). Neither role can DELETE anything. We audit the permissions by keeping two lists: what each role is allowed to do, and what the deployed code actually does (as traced by a reviewer agent). A test ensures they match (no missing permissions but also no extra permissions).
+
+[^stripekeys]: The same split applies to Stripe: the storefront holds a restricted key, enough to create Checkout Sessions, while the provisioner holds the full one. Taking the storefront's key would let someone start checkouts and change subscriptions, but not move money out or read any credential.
 
 The DB enforces connection budgets on the web app and provisioner (40 and 12, against a ceiling of 894), so no amount of web traffic can starve the provisioner. (Vercel decides how many serverless web instances to run, so only a cap on the DB itself can bound the total.)
 
@@ -178,7 +181,9 @@ While Stripe makes payments easy, we had to work around at least two issues:
 
 An update restarts the office, and a restart kills every in-flight agent turn. The customer is best placed to judge whether an interruption right now is acceptable, so updates are initiated by them. Isomux periodically checks for new releases, and when one is detected, a "new release banner" appears with a button and a warning saying how many agents are mid-turn.
 
-The updater stops the office, takes a full copy of its state, updates it, checks that it comes back up, and restores the copy if it doesn't.
+On our side, `release.sh` cuts a release: it tags a commit with a CalVer tag (`v2026.7.19`), gated on CI. I dogfoot the commit on my own office for at least a day first.
+
+`update.sh`, the customer-side updater, stops the office, takes a full copy of its state, updates it, checks that it comes back up, and restores the copy if it doesn't.
 
 The control plane has no access to customer boxes, so we have no way of doing a "fleet-wide patch" (we cannot even see what release each box runs). This is a concern if there is an important security patch. Our mitigation is to label security releases with a security marker; the "new release banner" notices it and tells the user that it's important that they update.
 
@@ -229,7 +234,7 @@ Benchmarking with fake agents backed our results. Even on an entry box, after we
 
 A TLS certificate is what makes `https://yourname.isomux.app` work: it encrypts the connection and lets the browser trust it really is talking to that address.
 
-_Let's Encrypt_, a nonprofit certificate authority trusted by browsers, hands them out free and automatically, so most people never think about them.
+_Let's Encrypt_, a nonprofit certificate authority trusted by browsers, hands them out free and automatically (over a protocol called ACME), so most people never think about them.
 
 But in our case, every office gets its own `myname.isomux.app` hostname, so getting a certificate is a provisioning step.
 
@@ -245,7 +250,7 @@ For a wildcard certificate, there's no way to serve a file at every possible `*.
 
 This creates a conundrum: we don't want customer boxes to hold the credentials for editing the DNS records of `isomux.app`, and we don't want our systems to hold the private key used to prove the customer box's identity.
 
-So, the job of getting the TLS certificate is split. The customer box makes the key pair; the secret half never leaves it, and the public half is sent to the provisioner, which holds the DNS credentials for `isomux.app`. The provisioner makes the Let's Encrypt request, writes the proof record into `isomux.app`'s DNS, Let's Encrypt checks it and signs the request, and the provisioner hands the certificate back to the box.
+So, the job of getting the TLS certificate is split. The customer box makes the key pair; the secret half never leaves it, and the public half is sent to the provisioner, which holds the Cloudflare credentials for `isomux.app`'s DNS. The provisioner makes the Let's Encrypt request, writes the proof record into Cloudflare, Let's Encrypt checks it and signs the request, and the provisioner hands the certificate back to the box.
 
 On the box, the certificate is used by Caddy, a web server our installer sets up that sits in front of the office: it owns port 443, terminates the encrypted connections for the office and all its app subdomains with that one certificate, and forwards the traffic to the office process.
 

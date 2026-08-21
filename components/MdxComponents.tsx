@@ -86,7 +86,7 @@ export function BlogImage({
           style={{
             maxWidth: width === "100%" ? "100%" : width,
             textAlign: centered ? "center" : "left",
-            marginTop: "0rem",
+            marginTop: "0.6rem",
           }}
         >
           {parseCaption(caption)}
@@ -293,18 +293,25 @@ function parseCaption(text: string) {
   const parts = [];
   let currentIndex = 0;
 
-  // Replace **bold** with <strong> tags
-  const boldPattern = /\*\*(.*?)\*\*/g;
+  // Replace **bold** with <strong> tags and [text](href) with links
+  const pattern = /\*\*(.*?)\*\*|\[([^\]]+)\]\(([^)]+)\)/g;
   let match;
 
-  while ((match = boldPattern.exec(text)) !== null) {
+  while ((match = pattern.exec(text)) !== null) {
     // Add text before the match
     if (match.index > currentIndex) {
       parts.push(text.slice(currentIndex, match.index));
     }
 
-    // Add the bold text
-    parts.push(<strong key={match.index}>{match[1]}</strong>);
+    if (match[1] !== undefined) {
+      parts.push(<strong key={match.index}>{match[1]}</strong>);
+    } else {
+      parts.push(
+        <a key={match.index} href={match[3]}>
+          {match[2]}
+        </a>,
+      );
+    }
 
     currentIndex = match.index + match[0].length;
   }

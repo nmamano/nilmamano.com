@@ -359,3 +359,14 @@ body {
 .prose .blog-media + p {
   margin-top: 0.75rem;
 }
+
+/* Pull the caption up to its image (prose puts a ~2em margin on img), and push
+   the following paragraph down, so the caption reads with the image rather
+   than with the text. Only applies when there is a caption. */
+.prose .blog-media img {
+  margin: 0;
+}
+
+.prose .blog-media:has(figcaption) + p {
+  margin-top: 1.5rem;
+}
