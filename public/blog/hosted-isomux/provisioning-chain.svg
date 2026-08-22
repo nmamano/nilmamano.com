@@ -57,7 +57,7 @@
   <rect x="45" y="212" width="210" height="58" rx="7" fill="#e8f7ee" stroke="#1f9550" stroke-width="2"/>
   <text x="150" y="232" text-anchor="middle" font-size="12.5" font-weight="700" fill="#1a2030">8. run the installer</text>
   <text x="150" y="248" text-anchor="middle" font-size="11" font-family="monospace" fill="#146c33">run_installer</text>
-  <text x="150" y="263" text-anchor="middle" font-size="10" font-weight="600" fill="#146c33">the whole installer diagram above</text>
+  <text x="150" y="263" text-anchor="middle" font-size="10" font-weight="600" fill="#146c33">the whole installer diagram below</text>
 
   <path d="M 763 241 L 739 241" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#pa)"/>
   <path d="M 523 241 L 499 241" fill="none" stroke="#3d4a5c" stroke-width="1.5" marker-end="url(#pa)"/>
