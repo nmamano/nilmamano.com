@@ -6,7 +6,7 @@ linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:share:7497463698966511
 status: published
 xUrl: 'https://x.com/Nil053/status/2091698332850851942'
 tweetId: '2091698332850851942'
-segments: 1
+segments: 2
 images:
   - >-
     /posts/wallgame-transformer-elo-across-126-generations/policy-elo-126-generations.png
@@ -21,3 +21,7 @@ This plot tracks Elo across 126 self-play generations of the wallgame.io transfo
 The cool part is that a single model became superhuman at all of them. I started training it on the easiest modes and, over time, mixed in harder ones. E.g., the jump at generation 96 is the animal cycle variant entering the mix.
 
 Expanding the scope slowly didn't cause regression on earlier modes. Some kept improving even as they saw fewer and fewer games.
+
+---
+
+I had not even invented the animal cycle variant when I started training! The transformer architecture is general enough to support new variants with new rulesets, within some limits.
