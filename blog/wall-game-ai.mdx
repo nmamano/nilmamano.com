@@ -458,7 +458,7 @@ Eventually, I expanded to board sizes up to 12x10, and the share of 8x8 Classic 
   width="90%"
 />
 
-I later plotted the same run mode by mode: [Elo across all 126 generations for 10 game modes](/posts/wallgame-transformer-elo-across-126-generations). The clearest moment there is generation 96, where the animal cycle variant enters the training mix, a variant that did not exist when I started training.
+See [this post](/posts/wallgame-transformer-elo-across-126-generations) for a follow-up update on the transformer training run.
 
 One caveat, in fairness to the ResNet: it had a training bug whose impact is impossible to quantify. For half of the positions in every generation (those played by Player 1), instead of training on the rich move distribution found by MCTS, it trained on only the selected move, i.e., a distribution with probability 1 at that move and 0 everywhere else.
 
