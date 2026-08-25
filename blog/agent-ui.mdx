@@ -84,11 +84,19 @@ When the agent produces a long answer, show the user's latest message anchored a
   alt="The top of an isomux conversation with Isomux Brainstormer. Below the header, a sticky bar pinned above the scrolling transcript reads 'you: Ok, now do a writeup of the cleanedup version of the idea', with a red arrow pointing at it. The transcript underneath scrolls past it, showing the agent's reply and its next tool calls"
 />
 
-**Bonus:** tool calls should be a single (expandable) line, except maybe errors, so they are easy to scroll past. Users don't care about the details.
+**Bonus:** tool calls should be easy to scroll past; users don't care about the details. In Isomux, tool calls appear as a single (expandable) line, except errors.
 
 <BlogImage
   src="/blog/agent-ui/tool-call-lines.png"
   alt="A stack of Bash tool calls in an isomux conversation, each collapsed to a single line showing the command and its duration. The two that failed are expanded in red with their exit code and error message underneath"
+/>
+
+And then, once the conversation moves on, a block of N tool calls in a row gets collapsed into a single expandable "N tool calls" block.
+
+<BlogImage
+  src="/blog/agent-ui/collapsed-tool-call-runs.png"
+  alt="An isomux transcript where consecutive tool calls between the agent's messages have collapsed into single green rows reading '3 tool calls' and '4 tool calls', each with an expand triangle"
+  width="70%"
 />
 
 ### 6. Make the harness surface observable
@@ -254,7 +262,58 @@ Two ways of making false positives less annoying (which they are!):
 - Exceptions, lots of them (e.g., `rm -rf` under `/tmp`)
 - A copy-command-to-terminal button when commands get blocked
 
-### 16. Experiment: slide mode
+### 16. Offer predefined agent templates
+When a user spawns an agent, offer a set of ready-made profiles next to the blank one.
+
+<BlogImage
+  src="/blog/agent-ui/agent-templates.png"
+  alt="The Spawn New Agent dialog. An Engine row offers Claude or Codex, and a 'Start with a template' grid offers Blank plus twelve profiles, each with a one-line description: Side Project Builder, Personal Site Builder, Code Reviewer, Money Planner, Job Search Coach, Research Analyst, Health Navigator, Life Coach, Relationship Advisor, Todo List Assistant, City Guide, and Trip Planner. The right column holds the name, working directory, manager, permission mode, model, and thinking effort fields"
+/>
+
+Each profile comes with a dedicated system prompt, and, as they accumulate memories and session history over time, they become the go-to agent for personalized expertise on a topic.
+
+It helps users realize potential use cases for agents they may not have thought of.
+
+### 17. Let personal software ride the meta-harness runtime
+Software-for-one doesn't scale once a user has 10+ agents spinning up their own apps: ports are hard to remember, can collide, and are unfamiliar to non-technical users; apps may go down when the user clears the session.
+
+The missing piece is an app orchestrator module in the meta-harness itself, because the meta-harness already solves the hard parts: an always-on box, accounts and permissions, a UI that syncs across devices, and an API agents already call.
+
+The whole loop:
+
+1. The user asks an agent for a personal-software app.
+2. The agent registers it with the meta-harness, which handles ports and gives it a subdomain.
+3. It appears in the Apps page of the meta-harness, next to apps registered by other agents on behalf of other users.
+4. The user opens the app from any device, including their phone.
+5. A button in the app messages the agent back.
+6. The agent acts on the message, forming a closed loop.
+
+<BlogImage
+  src="/posts/personal-software-suite-in-isomux/1-ask-and-register.png"
+  alt="An isomux conversation. The user asks for an app that plots their commits over time at week resolution, where clicking a week sends the agent a message; further down, a 'Register app' tool call carries the app's name, command, working directory, and description"
+  caption="Steps 1 and 2: the request, and the agent registering the app."
+/>
+
+<BlogImage
+  src="/posts/personal-software-suite-in-isomux/2-apps-page.png"
+  alt="The Apps page listing running apps with live previews. Each row shows its port, restart count, the agent that created it, and its owner; two different rows were created by different agents and belong to different users"
+  caption="Step 3: the app in the Apps page, alongside apps built by other agents for other owners."
+/>
+
+<BlogImage
+  src="/posts/personal-software-suite-in-isomux/3-open-on-phone.png"
+  alt="The commit plot app open in a phone browser at its own subdomain, showing weekly commit bars with a rolling average, a selected week's per-repository breakdown, and a button reading 'Ask the agent what happened'"
+  caption="Steps 4 and 5: the app on a phone, with the button that messages the agent."
+  width="60%"
+/>
+
+<BlogImage
+  src="/posts/personal-software-suite-in-isomux/4-app-messages-agent.png"
+  alt="The agent's conversation receiving a message labeled 'COMMIT-PLOT · APP', reporting which week the user clicked and its commit counts per repository, followed by the agent's answer explaining what shipped that week"
+  caption="Step 6: the app's message arrives in the agent's chat, and the agent answers."
+/>
+
+### 18. Experiment: slide mode
 
 Agents yap too much; users tune out. _Slide mode_ forces the agent to design a single slide for each turn. E.g.:
 
@@ -266,7 +325,7 @@ Agents yap too much; users tune out. _Slide mode_ forces the agent to design a s
 
 I don't use slide mode much because generation is too slow. Attempts to speed it up degraded slide quality too much.
 
-### 17. Experiment: continuation variants
+### 19. Experiment: continuation variants
 
 The model produces probabilities for every token. How can we use that?
 
