@@ -24,16 +24,16 @@ LinkedIn mutual: "Because I explained why you're also a superstar. Which I belie
 
 I had to remind myself that it's not on me to reject myself. Instead, I worked hard to prep; it's my way of expressing gratitude.
 
-One was an ML researcher with >100k citations. To prep for his company, I made a Karpathy-style Wiki tracing each founder's research lineage and how those lines converged. Then, I internalized it by writing a blog post in my own words. I came in prepared - when he brought up that they're struggling with reward hacking, I brought up a case study from one of his cofounders' papers.
+One was an ML researcher with >100k citations. To prep for his company, I made a Karpathy-style Wiki tracing each founder's research lineage and how those lines converged. Then, I internalized it by writing a blog post in my own words. I came in prepared - when he raised that they're struggling with reward hacking, I brought up a case study from one of his cofounders' papers.
 
-The other was a VC who had been in the inner circle of one of the biggest names in tech for decades. To prep, I faced my weakness head-on: behavioral interviews. I hired the best coach I could find (as I said I would in my last job search update) and worked on the squishy stuff: "tell me about yourself", etc. Then, I gave the coach's notes to Claude, turned voice mode on, and drilled the questions over and over again for hours. And it worked! I could tell I sounded more confident.
+The other was a VC partner who had been in the inner circle of one of the biggest names in tech for decades. To prep, I faced my weakness head-on: behavioral interviews. I hired the best coach I could find (as I said I would in my last job search update) and worked on the squishy stuff: "tell me about yourself", etc. Then, I gave the coach's notes to Claude, turned voice mode on, and drilled the questions over and over again for hours. And it worked! I could tell I sounded more confident.
 
 Either of these two companies would have been a Cinderella ending to my job search... but that's not the timeline we live in 😝
 
 Still, meeting these people has been a highlight of my career. These rejections motivated me to keep building, and directly influenced what I built next:
 
 - The ML researcher inspired me to swap the ResNet in my wall game AI for a transformer, and it's been stomping wallgame.io visitors for a while now lol.
-- The VC inspired me to think more deeply about how we interact with agents (which I captured in nilmamano.com/blog/agent-ui), including the personal-software suite idea (nilmamano.com/posts/funemployment-has-allowed-me-to-catch-up-9349748).
+- The VC partner inspired me to think more deeply about how we interact with agents (which I captured in nilmamano.com/blog/agent-ui), including the personal-software suite idea (nilmamano.com/posts/funemployment-has-allowed-me-to-catch-up-9349748).
 - And finally, I felt inspired to start my first business, Hosted Isomux (isomux.app).
 
 Anyway. While I'd rather find a team, as long as I'm growing, I'm sure it'll work out.
