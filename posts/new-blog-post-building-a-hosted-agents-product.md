@@ -2,7 +2,7 @@
 date: '2026-08-25'
 timestamp: '2026-08-26T01:56:33.000Z'
 source: both
-linkedinUrl: 'https://lnkd.in/p/gvAt-p8y'
+linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:share:7498196671957405696'
 status: published
 xUrl: 'https://x.com/Nil053/status/2092430970599428115'
 tweetId: '2092430970599428115'
