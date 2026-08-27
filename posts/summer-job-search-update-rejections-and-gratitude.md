@@ -1,11 +1,11 @@
 ---
 date: '2026-08-26'
-timestamp: '2026-08-27T02:47:24.000Z'
+timestamp: '2026-08-27T02:53:30.000Z'
 source: both
 linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:share:7498570781866479616'
 status: published
-xUrl: 'https://x.com/Nil053/status/2092806153189425536'
-tweetId: '2092806153189425536'
+xUrl: 'https://x.com/Nil053/status/2092807691580436509'
+tweetId: '2092807691580436509'
 segments: 2
 images:
   - /posts/summer-job-search-update-rejections-and-gratitude/selfie.jpeg
