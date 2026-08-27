@@ -6,7 +6,7 @@ linkedinUrl: 'https://www.linkedin.com/posts/nilmamano_funemployment-has-allowed
 status: published
 xUrl: 'https://x.com/Nil053/status/2084867852499349748'
 tweetId: '2084867852499349748'
-segments: 1
+segments: 2
 tags:
   - ai
   - isomux
@@ -37,3 +37,7 @@ How it works:
 One final idea: agents will build their apps to message them back about updates, so they always answer you with full knowledge. The agents will do this with the same agent-messaging API in the meta-harness they use to message each other.
 
 Your personal app suite, coming soon to isomux.
+
+---
+
+Update: I shipped this on Isomux, see demo: https://nilmamano.com/posts/personal-software-suite-in-isomux
