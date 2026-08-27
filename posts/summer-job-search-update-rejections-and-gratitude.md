@@ -24,7 +24,7 @@ LinkedIn mutual: "Because I explained why you're also a superstar. Which I belie
 
 I had to remind myself that it's not on me to reject myself. Instead, I worked hard to prep; it's my way of expressing gratitude.
 
-One was an ML researcher with >100k citations. To prep for his company, I made a Karpathy-style Wiki tracing each founder's research lineage and how those lines converged. Then, I internalized it by writing a blog post in my own words. I came in prepared - when he raised that they're struggling with reward hacking, I brought up a case study from one of his cofounders' papers.
+One was an ML researcher with >100k citations. To prep for his company, I made a Karpathy-style Wiki tracing each founder's research lineage and how those lines converged. Then, I internalized it by writing a blog post in my own words. I came in prepared - when he mentioned that they're struggling with reward hacking, I brought up a case study from one of his cofounders' papers.
 
 The other was a VC partner who had been in the inner circle of one of the biggest names in tech for decades. To prep, I faced my weakness head-on: behavioral interviews. I hired the best coach I could find (as I said I would in my last job search update) and worked on the squishy stuff: "tell me about yourself", etc. Then, I gave the coach's notes to Claude, turned voice mode on, and drilled the questions over and over again for hours. And it worked! I could tell I sounded more confident.
 
