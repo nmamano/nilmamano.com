@@ -1,5 +1,6 @@
 import { getPostBySlug, getAllPostSlugs } from "../../lib/posts";
 import { renderPostBody } from "../../lib/post-render";
+import { mediaClass, mediaStyle } from "../../lib/post-media";
 import { formatDate } from "../../lib/date-utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -32,7 +33,7 @@ export async function generateMetadata({
       type: "article",
       publishedTime: post.timestamp || post.date,
       url: `https://nilmamano.com/posts/${post.slug}`,
-      images: post.images?.length ? [{ url: post.images[0] }] : undefined,
+      images: post.images?.length ? [{ url: post.images[0].src }] : undefined,
     },
   };
 }
@@ -78,21 +79,27 @@ export default async function PostPermalink({
 
         {post.images && post.images.length > 0 && (
           <div className="mt-4 grid gap-3">
-            {post.images.map((src) =>
-              src.toLowerCase().endsWith(".mp4") ? (
+            {post.images.map((image) =>
+              image.src.toLowerCase().endsWith(".mp4") ? (
                 <video
-                  key={src}
-                  src={src}
+                  key={image.src}
+                  src={image.src}
                   controls
-                  className="w-[70%] mx-auto rounded-md border border-border"
+                  className={
+                    image.width
+                      ? mediaClass(image)
+                      : "w-[70%] mx-auto rounded-md border border-border"
+                  }
+                  style={mediaStyle(image)}
                 />
               ) : (
                 // eslint-disable-next-line @next/next/no-img-element
                 <img
-                  key={src}
-                  src={src}
+                  key={image.src}
+                  src={image.src}
                   alt=""
-                  className="w-full rounded-md border border-border"
+                  className={mediaClass(image)}
+                  style={mediaStyle(image)}
                 />
               )
             )}

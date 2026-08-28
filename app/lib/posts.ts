@@ -6,6 +6,14 @@ import matter from "gray-matter";
 // One Markdown file per post in /posts, git-versioned = source of truth.
 const postsDirectory = path.join(process.cwd(), "posts");
 
+// An entry of a post's `images` list. In frontmatter it is either a bare path
+// ("/posts/slug/pic.png") or a mapping with a width ({ src: ..., width: 60 }).
+export interface PostImage {
+  src: string;
+  /** Percent of the post column. Omitted = full width. */
+  width?: number;
+}
+
 export interface Post {
   slug: string;
   date: string; // YYYY-MM-DD (for display)
@@ -17,10 +25,26 @@ export interface Post {
   linkedinUrl?: string;
   tweetId?: string;
   segments?: number;
-  images?: string[];
+  images?: PostImage[];
   tags?: string[];
   linkedinText?: string; // alternate wording kept during curation
   [key: string]: any;
+}
+
+function normalizeImages(raw: unknown): PostImage[] | undefined {
+  if (!Array.isArray(raw)) return undefined;
+  const images = raw
+    .map((entry): PostImage | null => {
+      if (typeof entry === "string") return { src: entry };
+      if (entry && typeof entry === "object") {
+        const { src, width } = entry as { src?: unknown; width?: unknown };
+        if (typeof src === "string")
+          return { src, width: typeof width === "number" ? width : undefined };
+      }
+      return null;
+    })
+    .filter((image): image is PostImage => !!image && image.src.length > 0);
+  return images.length ? images : undefined;
 }
 
 function readAll(): Post[] {
@@ -32,7 +56,12 @@ function readAll(): Post[] {
       const slug = fileName.replace(/\.md$/, "");
       const raw = fs.readFileSync(path.join(postsDirectory, fileName), "utf8");
       const { data, content } = matter(raw);
-      return { slug, content, ...data } as Post;
+      return {
+        slug,
+        content,
+        ...data,
+        images: normalizeImages(data.images),
+      } as Post;
     })
     .sort((a, b) => {
       const ak = a.timestamp || a.date || "";
@@ -60,7 +89,12 @@ export function getPostBySlug(slug: string): Post | null {
   try {
     const raw = fs.readFileSync(path.join(postsDirectory, `${slug}.md`), "utf8");
     const { data, content } = matter(raw);
-    return { slug, content, ...data } as Post;
+    return {
+      slug,
+      content,
+      ...data,
+      images: normalizeImages(data.images),
+    } as Post;
   } catch {
     return null;
   }

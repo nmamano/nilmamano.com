@@ -10,7 +10,8 @@ segments: 2
 images:
   - /posts/personal-software-suite-in-isomux/1-ask-and-register.png
   - /posts/personal-software-suite-in-isomux/2-apps-page.png
-  - /posts/personal-software-suite-in-isomux/3-open-on-phone.png
+  - src: /posts/personal-software-suite-in-isomux/3-open-on-phone.png
+    width: 60
   - /posts/personal-software-suite-in-isomux/4-app-messages-agent.png
 tags:
   - isomux

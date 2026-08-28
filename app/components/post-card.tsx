@@ -6,6 +6,7 @@ import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
 import { formatDate } from "../lib/date-utils";
 import type { Post } from "../lib/posts";
 import { renderPostBody } from "../lib/post-render";
+import { mediaClass, mediaStyle } from "../lib/post-media";
 import { CurationControls } from "./curation-controls";
 
 const DEV = process.env.NODE_ENV !== "production";
@@ -26,7 +27,7 @@ export function PostCard({
     preview.length > 400 ||
     preview.split("\n").length > 10;
   const firstImage = post.images?.[0];
-  const isVideo = firstImage?.toLowerCase().endsWith(".mp4");
+  const isVideo = firstImage?.src.toLowerCase().endsWith(".mp4");
 
   return (
     <article className="card-border rounded-lg px-5 pt-3 pb-5 bg-card text-card-foreground hover:shadow-md transition-shadow">
@@ -83,7 +84,7 @@ export function PostCard({
         <div className="mt-3">
           {isVideo ? (
             <video
-              src={firstImage}
+              src={firstImage.src}
               className="max-h-72 rounded-md border border-border"
               controls
               muted
@@ -92,7 +93,7 @@ export function PostCard({
           ) : (
             // eslint-disable-next-line @next/next/no-img-element
             <img
-              src={firstImage}
+              src={firstImage.src}
               alt=""
               className="max-h-72 rounded-md border border-border object-cover"
             />
@@ -107,21 +108,23 @@ export function PostCard({
 
       {expanded && post.images && post.images.length > 1 && (
         <div className="mt-3 grid gap-3">
-          {post.images.slice(1).map((src) =>
-            src.toLowerCase().endsWith(".mp4") ? (
+          {post.images.slice(1).map((image) =>
+            image.src.toLowerCase().endsWith(".mp4") ? (
               <video
-                key={src}
-                src={src}
+                key={image.src}
+                src={image.src}
                 controls
-                className="w-full rounded-md border border-border"
+                className={mediaClass(image)}
+                style={mediaStyle(image)}
               />
             ) : (
               // eslint-disable-next-line @next/next/no-img-element
               <img
-                key={src}
-                src={src}
+                key={image.src}
+                src={image.src}
                 alt=""
-                className="w-full rounded-md border border-border"
+                className={mediaClass(image)}
+                style={mediaStyle(image)}
               />
             )
           )}

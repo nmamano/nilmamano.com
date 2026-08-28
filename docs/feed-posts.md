@@ -28,6 +28,8 @@ status: imported                       # imported = hidden; published = live on 
 segments: 2                            # number of thread parts (see Body)
 images:                                # optional; public paths, first one renders under the post
   - /blog/nanogpt-speedrun/cover.png
+  - src: /posts/my-slug/phone.png      # mapping form: same thing, plus a width
+    width: 60                          # percent of the post column; centered
 tags:                                  # optional; lowercase-hyphenated; drives tag filtering
   - ai
   - swe
@@ -51,7 +53,10 @@ Field notes:
 - **segments**: must match the number of `---`-delimited chunks in the body.
 - **images**: any path under `public/` (e.g. `/posts/<slug>/pic.png` or an
   existing asset like a blog cover). The first image renders below the post; a
-  `.mp4` renders as a video.
+  `.mp4` renders as a video. An entry is either a bare path (full width) or a
+  `src` + `width` mapping, where `width` is a percent of the post column and
+  centers the image. Use it for tall images, such as phone screenshots, which
+  are too large at full width.
 - **tags**: lowercase, hyphenated (`a-b`), used by the tag filter.
 
 ## Body
