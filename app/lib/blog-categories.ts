@@ -13,6 +13,11 @@ export const CATEGORIES: Record<string, CategoryConfig> = {
     bgColor: "bg-pink-100",
     textColor: "text-pink-800",
   },
+  isomux: {
+    name: "Isomux",
+    bgColor: "bg-teal-100",
+    textColor: "text-teal-800",
+  },
   wallgame: {
     name: "Wall Game",
     bgColor: "bg-orange-100",
