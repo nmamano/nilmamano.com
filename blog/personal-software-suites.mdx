@@ -1,0 +1,188 @@
+---
+title: "The Personal Software Suite"
+date: "2026-08-28"
+excerpt: "A case for personal-software suites as a meta-harness feature: the agents build the apps, and the meta-harness runs them."
+coverImage: "/blog/personal-software-suites/cover.png"
+categories: ["isomux", "ai", "swe"]
+---
+
+In this post, I make a case for **personal-software suites as a meta-harness feature**.
+
+<Toc />
+
+## Harness vs Meta-harness
+
+- A **harness** wraps a model into an agent.
+  - **Features:** tool calling, compaction, thinking effort, etc.
+  - **Examples:** Claude Code and Codex.
+- A **meta-harness** sits one layer above: it manages the runtime of multiple agents, often across providers.
+  - **Features:** cloud hosting, multiuser conversations, cross-platform UI with real-time sync, cross-provider orchestration, persistent agent identity, dreaming (async memory and skill refinement), etc.
+  - **Examples:** [Omnigent](https://github.com/omnigent-ai/omnigent) by Databricks, [qm](https://github.com/yc-software/qm) by YC, and my own [Isomux](https://isomux.com).
+
+The boundary is blurry, but a useful framing is that the harness is model-centered while the meta-harness is human-centered:
+
+<BlogImage
+  src="/blog/personal-software-suites/layers.svg"
+  alt="Three nested boxes. The innermost is the model. Around it is the harness, which asks how we make the most out of a model, with Claude Code and Codex as examples. Around that is the meta-harness, which asks how humans make the most out of agents, with Omnigent, qm, and Isomux as examples."
+/>
+
+## Personal software
+
+The terms _software-for-one_, _personal software_, and _just-in-time software_ all represent the same concept: an app spun up by an agent on the spot, for a specific user and use case.
+
+This category became possible when agents started one-shotting simple apps, and it supplements the LLM's default way of interacting with you. Chat is not always the best interface!
+
+Say you are planning a trip. The agent can build a web app showing the itinerary, find an unused port, and point you at something like `localhost:5173` to see it.
+
+Despite their simplicity, personal software has some cool features that normal software doesn't. Here's the core architecture:
+
+<BlogImage
+  src="/blog/personal-software-suites/agent-app-loop.svg"
+  alt="A four-node loop. The user sends natural language inputs to the agent and gets natural language outputs back; the user sends interactive inputs to the just-in-time app and gets interactive outputs back. The agent writes the app's implementation and the app sends the agent notifications. The agent maps natural language requests to structured state updates and reads back data to base answers on; the app writes state updates and reads back data to display."
+/>
+
+The full graph is not needed for every app, but it can be convenient:
+
+- You can engage with the app via **both natural language and an interactive UI**. Consider a to-do app. Sometimes, you want to look at a dashboard and tick items off. Sometimes, it's better to _ramble at_ the agent and let it figure out how to map that into to-do list updates.
+- The arrow going from the app to the agent forms a **closed loop**: agents can build apps that message them back (we'll see how soon). For example, imagine a service monitoring app that messages the agent when a health metric crosses a threshold.
+
+Personal software is typically _vibe coded_ (the user often doesn't even know the tech stack), and version control is optional.
+
+## Scaling Personal Software
+
+As people reach for personal software more and more, we hit some scaling pains:
+
+- A **port coordination problem**: ports are hard to remember, can collide, and are hostile to non-technical users.
+- A **lifecycle problem**: depending on how agents spin up apps, the apps may go down when the user clears the session.
+
+In fact, personal software benefits from many meta-harness features: 24/7 access independent of the agents, multi-device support, and human collaboration with authentication.
+
+### The App Orchestrator
+
+The clean solution is an **app orchestrator module in the meta-harness itself.** The meta-harness already solves the hard parts! That is:
+
+- An always-on box
+- accounts and permissions
+- multi-device
+- an API agents already call
+
+The app orchestrator piggybacks on all of that and adds centralized port assignment. Ideally, it also hides ports from the end user and shows them a nice UI with all their apps: the **personal app suite**.
+
+<BlogImage
+  src="/blog/personal-software-suites/port-problem.svg"
+  alt="One box labelled meta-harness, noted as the always-on host. Inside it are two runtimes side by side: a group of agents on the left and a group of apps named todo, commit-plot, and business-health on the right. Between them run the two legs of a loop. On the outbound leg the agents register apps with the app orchestrator, which assigns ports and keeps apps alive, and the orchestrator runs them. On the return leg an app calls message queueing, which queues if the agent is busy and then delivers to the agents. Below, users reach both runtimes with one login from any device."
+/>
+
+How it works:[^details]
+
+[^details]: Implementation details are at [agent-apps-design.md](https://github.com/nmamano/isomux/blob/main/internal-docs/agent-apps-design.md).
+
+- The app orchestrator manages an app registry.
+- The agents register apps _by name_ via the meta-harness API (which they know about via the meta-harness system prompt).
+- The orchestrator finds a free port for the app and gives it a name-based URL, like `todo-list.metaharness-url` (`metaharness-url` is where you manage your agents).
+- Apps share the lifetime of the meta-harness, not the agents. They survive individual sessions.
+- Apps ride the same authentication as the meta-harness, so privacy and multiplayer features come for free.[^room-visibility]
+- The meta-harness UI includes a page where the user can see and manage all their apps, like a personal app store.
+
+[^room-visibility]: The way it works in Isomux is that the office owner can see apps registered by every agent, whereas office members can see only apps registered by agents in rooms they have access to.
+
+Meta-harnesses often have API endpoints for messaging agents, which means that the infrastructure to implement the [closed-loop](#personal-software) is already there.
+
+## Demo
+
+Here is the full workflow in Isomux (follow the captions):
+
+<BlogCarousel
+  images={[
+    {
+      src: "/posts/personal-software-suite-in-isomux/1-ask-and-register.png",
+      alt: "An Isomux conversation. The user asks for an app that plots their commits over time at weekly resolution, where clicking a week sends the agent a message; further down, a 'Register app' tool call carries the app's name, command, working directory, and description.",
+      caption: "I ask an agent for a personal-software app **(1)**, and the agent registers it with Isomux **(2)**.",
+    },
+    {
+      src: "/posts/personal-software-suite-in-isomux/2-apps-page.png",
+      alt: "The Apps page lists running apps with live previews. Each row shows its port, restart count, the agent that created it, and its owner; two rows were created by different agents and belong to different users.",
+      caption: "The app appears in the Isomux Apps page **(3)**. It shows all the apps I have access to, including ones registered by other agents on behalf of other users.",
+    },
+    {
+      src: "/posts/personal-software-suite-in-isomux/3-open-on-phone.png",
+      alt: "The commit plot app is open in a phone browser at its own subdomain, showing weekly commit bars with a rolling average, a selected week's per-repository breakdown, and a button reading 'Ask the agent what happened'.",
+      caption: "I open the app from my phone. It works because it has access to my Isomux office. Notice the clean URL **(4)**. A button in the app messages the agent back **(5)**.",
+    },
+    {
+      src: "/posts/personal-software-suite-in-isomux/4-app-messages-agent.png",
+      alt: "The agent's conversation shows a message labeled 'COMMIT-PLOT and APP', which reports the week the user clicked and its commit counts per repository, followed by the agent's answer explaining what shipped that week.",
+      caption: "The agent acts on the message, closing the loop **(6)**.",
+    },
+  ]}
+/>
+
+## Examples
+
+This section is to give readers ideas for things they can use personal software for.
+
+<Callout>
+Despite the feature being fairly new, as of 2026-08-28, my office is running **13 apps, built by 8 agents for 3 different users.**[^dunno]
+
+  Two guests in my office got apps built for them without ever seeing a port, a terminal, or a deploy. They asked an agent for something, and a URL appeared.
+</Callout>
+
+[^dunno]: I don't know their tech stacks, but I've seen at least JS and Python apps. I also don't know which ones are on GitHub, if any. As mentioned, these are non-concerns for just-in-time apps.
+
+Six personal examples:[^fun-fact]
+
+[^fun-fact]: I made one just to write this post - my usual blog previewer was being slow, so I asked the agent to spin up a new one.
+
+<BlogCarousel
+  images={[
+    {
+      src: "/blog/personal-software-suites/apps/business-health.png",
+      alt: "The business-health dashboard, with customer-identifying fields blacked out. Six status cards read OK: Neon Allowance with its plan and byte usage, Customer Offices, Control Plane, Billing, Provisioner with one machine started, and Signup with HTTP status 200. Below them a Customer Offices table lists billing state and paid-through dates.",
+      caption: "A monitoring dashboard for Hosted Isomux ([isomux.app](https://isomux.app)). It queries the DB, Stripe, etc. every 30 min, and automatically messages my Isomux Tech Lead agent if there are any issues.",
+    },
+    {
+      src: "/blog/personal-software-suites/apps/policy-elo.png",
+      alt: "The policy-elo app: a dashboard titled 'Policy strength across generations' with counters for clean games, policy lines, loadable range and excluded games, a sidebar of toggleable board conditions, and a scatter plot of relative Elo rising across generations.",
+      caption: "The Elo rating evolution of the transformer for the [wallgame.io](https://wallgame.io) AI.",
+    },
+    {
+      src: "/blog/personal-software-suites/apps/feed-drafts.png",
+      alt: "The feed composer: on the left, a box to write a post with a note that a line of three dashes breaks it into thread segments, plus a tags field and a 'Save to site' button. On the right, the same text rendered as 'Copy for X' with a tweet count and 'Copy for LinkedIn' with a character count, each with its own copy button.",
+      caption: "Where I draft and preview posts before cross-posting them to X, LinkedIn, and the [feed](https://nilmamano.com/posts) on my site.",
+    },
+    {
+      src: "/blog/personal-software-suites/apps/game-video.png",
+      alt: "The game-to-video app: a short form with a field for a wallgame.io game URL, controls for seconds per move, shape, music and board theme, and a 'Make the video' button.",
+      caption: "A form where I can paste the URL for a [wallgame.io](https://wallgame.io) game and make a video of it to share on social media.",
+    },
+    {
+      src: "/blog/personal-software-suites/apps/commit-plot.png",
+      alt: "A stacked bar chart of commits per week since July 2020 with a four-week rolling average, a legend naming the top repositories and their commit counts, and a panel below reading 'No week selected'.",
+      caption: "A chart of my commits over time. Shown in the [Demo](#demo) above.",
+    },
+        {
+      src: "/blog/personal-software-suites/apps/todo.png",
+      alt: "The todo app, with the task list blacked out. A header reads \"Nil's Todos, 91 open\", above a box to add a task with a list picker set to Today, then empty Today and Inbox sections.",
+      caption: "My TODO list, as in the example [above](#personal-software).",
+    },
+  ]}
+/>
+
+A cute detail is that the app orchestrator gives each one a different favicon:
+
+<BlogImage
+  src="/blog/personal-software-suites/app-tabs.png"
+  alt="A browser tab bar with seven tabs open side by side, each showing a different favicon: the office itself, then Aurora, Business health, Commit Plot, Wall Game video, and two more."
+/>
+
+## Conclusions
+
+The personal software suite fits naturally in the meta-harness and doesn't really have any downside, which is rare.[^security]
+
+[^security]: Another major upside that didn't even make it to the post is that, by controlling ports at the meta-harness level, you can lock down security a lot more tightly than if random agents are exposing ports willy-nilly.
+
+The main pieces were already there; the missing connection was the app orchestrator module.
+
+I expect the idea to catch on or be re-invented by a bigger player soon. If you are building on top of harnesses, copy it! Or hire me and I'll do it :)
+
+But if you just want your own suite, check out [Isomux](https://isomux.com).

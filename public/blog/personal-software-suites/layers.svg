@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 348" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="1000" height="348" fill="#ffffff"/>
+
+  <rect x="50" y="26" width="900" height="292" rx="14" fill="#f0e9ff" stroke="#6b46c1" stroke-width="2"/>
+  <text x="76" y="62" font-size="21" font-weight="700" fill="#6b46c1">Meta-harness</text>
+  <text x="76" y="88" font-size="16" font-weight="500" fill="#6b46c1" opacity="0.78">How can humans make the most out of agents?</text>
+  <text x="924" y="62" text-anchor="end" font-size="16" font-weight="500" fill="#6b46c1" opacity="0.78">Omnigent, qm, Isomux</text>
+
+  <rect x="110" y="110" width="780" height="180" rx="14" fill="#e7f2ff" stroke="#2b6cb0" stroke-width="2"/>
+  <text x="136" y="146" font-size="21" font-weight="700" fill="#2b6cb0">Harness</text>
+  <text x="136" y="172" font-size="16" font-weight="500" fill="#2b6cb0" opacity="0.78">How can we make the most out of a model?</text>
+  <text x="864" y="146" text-anchor="end" font-size="16" font-weight="500" fill="#2b6cb0" opacity="0.78">Claude Code, Codex</text>
+
+  <rect x="190" y="194" width="620" height="72" rx="12" fill="#fdf0e0" stroke="#b45309" stroke-width="2"/>
+  <text x="500" y="237" text-anchor="middle" font-size="21" font-weight="700" fill="#b45309">Model</text>
+</svg>

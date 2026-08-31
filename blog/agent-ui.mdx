@@ -288,29 +288,29 @@ The whole loop:
 5. A button in the app messages the agent back.
 6. The agent acts on the message, forming a closed loop.
 
-<BlogImage
-  src="/posts/personal-software-suite-in-isomux/1-ask-and-register.png"
-  alt="An isomux conversation. The user asks for an app that plots their commits over time at week resolution, where clicking a week sends the agent a message; further down, a 'Register app' tool call carries the app's name, command, working directory, and description"
-  caption="Steps 1 and 2: the request, and the agent registering the app."
-/>
-
-<BlogImage
-  src="/posts/personal-software-suite-in-isomux/2-apps-page.png"
-  alt="The Apps page listing running apps with live previews. Each row shows its port, restart count, the agent that created it, and its owner; two different rows were created by different agents and belong to different users"
-  caption="Step 3: the app in the Apps page, alongside apps built by other agents for other owners."
-/>
-
-<BlogImage
-  src="/posts/personal-software-suite-in-isomux/3-open-on-phone.png"
-  alt="The commit plot app open in a phone browser at its own subdomain, showing weekly commit bars with a rolling average, a selected week's per-repository breakdown, and a button reading 'Ask the agent what happened'"
-  caption="Steps 4 and 5: the app on a phone, with the button that messages the agent."
-  width="60%"
-/>
-
-<BlogImage
-  src="/posts/personal-software-suite-in-isomux/4-app-messages-agent.png"
-  alt="The agent's conversation receiving a message labeled 'COMMIT-PLOT · APP', reporting which week the user clicked and its commit counts per repository, followed by the agent's answer explaining what shipped that week"
-  caption="Step 6: the app's message arrives in the agent's chat, and the agent answers."
+<BlogCarousel
+  images={[
+    {
+      src: "/posts/personal-software-suite-in-isomux/1-ask-and-register.png",
+      alt: "An Isomux conversation. The user asks for an app that plots their commits over time at weekly resolution, where clicking a week sends the agent a message; further down, a 'Register app' tool call carries the app's name, command, working directory, and description.",
+      caption: "Steps 1 and 2: the request, and the agent registering the app.",
+    },
+    {
+      src: "/posts/personal-software-suite-in-isomux/2-apps-page.png",
+      alt: "The Apps page lists running apps with live previews. Each row shows its port, restart count, the agent that created it, and its owner; two rows were created by different agents and belong to different users.",
+      caption: "Step 3: the app in the Apps page, alongside apps built by other agents for other owners.",
+    },
+    {
+      src: "/posts/personal-software-suite-in-isomux/3-open-on-phone.png",
+      alt: "The commit plot app is open in a phone browser at its own subdomain, showing weekly commit bars with a rolling average, a selected week's per-repository breakdown, and a button reading 'Ask the agent what happened'.",
+      caption: "Steps 4 and 5: the app on a phone, with the button that messages the agent.",
+    },
+    {
+      src: "/posts/personal-software-suite-in-isomux/4-app-messages-agent.png",
+      alt: "The agent's conversation shows a message labeled 'COMMIT-PLOT and APP', which reports the week the user clicked and its commit counts per repository, followed by the agent's answer explaining what shipped that week.",
+      caption: "Step 6: the app's message arrives in the agent's chat, and the agent answers.",
+    },
+  ]}
 />
 
 ### 18. Experiment: slide mode

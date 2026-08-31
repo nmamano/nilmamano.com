@@ -348,8 +348,12 @@ body {
    paragraph next to it, so trimming only the media's own margin does nothing:
    the paragraph's larger margin wins the collapse. The neighbour rules below
    are what actually tightens the spacing. */
+/* Tight above, so the media stays attached to the paragraph introducing it.
+   Below, 1.5rem: that is the collapsed paragraph-to-list gap in prose-lg
+   (1.3333333em on a 1.125rem base = 24px), so what follows an image is spaced
+   like any other block. */
 .prose .blog-media {
-  margin: 0.75rem 0;
+  margin: 0.75rem 0 1.5rem;
 }
 
 .prose p:has(+ .blog-media) {
@@ -360,13 +364,9 @@ body {
   margin-top: 0.75rem;
 }
 
-/* Pull the caption up to its image (prose puts a ~2em margin on img), and push
-   the following paragraph down, so the caption reads with the image rather
-   than with the text. Only applies when there is a caption. */
+/* Pull the caption up to its image (prose puts a ~2em margin on img), so the
+   caption reads with the image rather than with the text. The gap below the
+   caption is the media's own 1.5rem bottom margin, same as any other image. */
 .prose .blog-media img {
   margin: 0;
-}
-
-.prose .blog-media:has(figcaption) + p {
-  margin-top: 1.5rem;
 }

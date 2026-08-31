@@ -1,0 +1,145 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #06080f; }
+  #card {
+    width: 1200px; height: 630px; position: relative; overflow: hidden;
+    font-family: Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(900px 620px at 88% 46%, #16233f 0%, rgba(22,35,63,0) 68%),
+      linear-gradient(140deg, #0a1120 0%, #070c17 52%, #05080f 100%);
+  }
+  /* faint diagonal lattice, like the other covers */
+  #card::before {
+    content: ""; position: absolute; inset: 0; opacity: .5;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(120,160,230,.055) 0 1px, transparent 1px 84px),
+      repeating-linear-gradient(-45deg, rgba(120,160,230,.055) 0 1px, transparent 1px 84px);
+  }
+
+  .left { position: absolute; left: 78px; top: 240px; }
+  .title { font-size: 63px; font-weight: 800; letter-spacing: -1.6px; line-height: 1.1; color: #ffffff; }
+  .title .accent { color: #6ea8fe; }
+  .rule { width: 92px; height: 5px; border-radius: 3px; background: #34d399; margin-top: 34px; }
+  .sub { margin-top: 26px; font-size: 21px; font-weight: 500; color: #93a4c2; letter-spacing: -.2px; }
+
+  /* ---- Apps panel ---- */
+  .panel {
+    position: absolute; right: 74px; top: 110px; width: 452px;
+    background: #0e1727; border: 1px solid #22314c; border-radius: 20px;
+    padding: 20px 20px 22px; box-shadow: 0 30px 70px rgba(0,0,0,.5);
+  }
+  .panel-head { display: flex; align-items: center; gap: 10px; margin: 2px 2px 16px; }
+  .panel-title { font-size: 19px; font-weight: 700; color: #e8eefc; }
+  .panel-count { margin-left: auto; font-size: 13px; font-weight: 600; color: #6f83a6; }
+
+  .app { background: #131f33; border: 1px solid #24344f; border-radius: 13px; padding: 12px 13px; margin-bottom: 12px; }
+  .app:last-child { margin-bottom: 0; }
+  .app-head { display: flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 9px rgba(52,211,153,.85); }
+  .name { font-size: 15px; font-weight: 700; color: #cddcf6; }
+  .state { font-size: 11.5px; font-weight: 600; color: #62baa0; }
+  .owner { margin-left: auto; font-size: 11.5px; font-weight: 500; color: #63769a; }
+  .thumb { height: 74px; border-radius: 9px; overflow: hidden; background: #0a1220; border: 1px solid #1d2b43; }
+</style>
+</head>
+<body>
+<div id="card">
+  <div class="left">
+    <div class="title">Personal<br/><span class="accent">Software Suites</span></div>
+    <div class="rule"></div>
+    <div class="sub">Agents build the apps.<br/>The meta-harness runs them.</div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-head">
+      <div class="panel-title">Apps</div>
+      <div class="panel-count">13</div>
+    </div>
+
+    <!-- commit-plot: bar chart -->
+    <div class="app">
+      <div class="app-head">
+        <div class="dot"></div><div class="name">commit-plot</div><div class="state">running</div>
+        <div class="owner">Nil</div>
+      </div>
+      <div class="thumb">
+        <svg width="100%" height="74" viewBox="0 0 400 74" preserveAspectRatio="none">
+          <g fill="#3b82f6">
+            <rect x="10" y="58" width="7" height="14"/><rect x="22" y="62" width="7" height="10"/>
+            <rect x="34" y="54" width="7" height="18"/><rect x="46" y="60" width="7" height="12"/>
+            <rect x="58" y="50" width="7" height="22"/><rect x="70" y="57" width="7" height="15"/>
+            <rect x="82" y="46" width="7" height="26"/><rect x="94" y="55" width="7" height="17"/>
+            <rect x="106" y="42" width="7" height="30"/><rect x="118" y="52" width="7" height="20"/>
+            <rect x="130" y="38" width="7" height="34"/><rect x="142" y="47" width="7" height="25"/>
+            <rect x="154" y="33" width="7" height="39"/><rect x="166" y="44" width="7" height="28"/>
+            <rect x="178" y="28" width="7" height="44"/><rect x="190" y="40" width="7" height="32"/>
+            <rect x="202" y="24" width="7" height="48"/><rect x="214" y="36" width="7" height="36"/>
+            <rect x="226" y="19" width="7" height="53"/><rect x="238" y="31" width="7" height="41"/>
+            <rect x="250" y="26" width="7" height="46"/><rect x="262" y="15" width="7" height="57"/>
+            <rect x="274" y="29" width="7" height="43"/><rect x="286" y="12" width="7" height="60"/>
+            <rect x="298" y="22" width="7" height="50"/><rect x="310" y="9" width="7" height="63"/>
+            <rect x="322" y="18" width="7" height="54"/><rect x="334" y="6" width="7" height="66"/>
+            <rect x="346" y="26" width="7" height="46"/><rect x="358" y="14" width="7" height="58"/>
+            <rect x="370" y="21" width="7" height="51"/><rect x="382" y="34" width="7" height="38"/>
+          </g>
+          <path d="M13 62 L37 59 L61 56 L85 52 L109 48 L133 44 L157 41 L181 36 L205 33 L229 28 L253 30 L277 25 L301 22 L325 18 L349 20 L373 16 L389 24"
+                fill="none" stroke="#f97316" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </div>
+
+    <!-- todo: list -->
+    <div class="app">
+      <div class="app-head">
+        <div class="dot"></div><div class="name">todo</div><div class="state">running</div>
+        <div class="owner">Nil</div>
+      </div>
+      <div class="thumb">
+        <svg width="100%" height="74" viewBox="0 0 400 74" preserveAspectRatio="none">
+          <g>
+            <rect x="14" y="12" width="11" height="11" rx="3" fill="none" stroke="#34d399" stroke-width="2"/>
+            <path d="M17 17.5 l2.6 2.6 l4.4 -5.4" fill="none" stroke="#34d399" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <rect x="34" y="15.5" width="150" height="5" rx="2.5" fill="#3d5375"/>
+            <rect x="14" y="32" width="11" height="11" rx="3" fill="none" stroke="#4f6486" stroke-width="2"/>
+            <rect x="34" y="35.5" width="210" height="5" rx="2.5" fill="#516a92"/>
+            <rect x="14" y="52" width="11" height="11" rx="3" fill="none" stroke="#4f6486" stroke-width="2"/>
+            <rect x="34" y="55.5" width="120" height="5" rx="2.5" fill="#516a92"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+
+    <!-- aurora: generative art -->
+    <div class="app">
+      <div class="app-head">
+        <div class="dot"></div><div class="name">aurora</div><div class="state">running</div>
+        <div class="owner">koboy</div>
+      </div>
+      <div class="thumb">
+        <svg width="100%" height="74" viewBox="0 0 400 74" preserveAspectRatio="none">
+          <defs>
+            <linearGradient id="au" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#7c3aed"/><stop offset="55%" stop-color="#a855f7"/><stop offset="100%" stop-color="#22d3ee"/>
+            </linearGradient>
+          </defs>
+          <rect x="0" y="0" width="400" height="74" fill="#0b1020"/>
+          <g fill="none" stroke="url(#au)" stroke-width="1.6" opacity=".95">
+            <path d="M-10 60 C 70 20, 130 66, 200 30 S 330 8, 410 34"/>
+            <path d="M-10 66 C 70 28, 130 72, 200 38 S 330 16, 410 42"/>
+            <path d="M-10 52 C 70 14, 130 60, 200 24 S 330 2, 410 26"/>
+            <path d="M-10 44 C 70 8, 130 52, 200 18 S 330 -4, 410 18"/>
+            <path d="M-10 72 C 70 36, 130 78, 200 46 S 330 24, 410 50"/>
+            <path d="M-10 36 C 70 4, 130 44, 200 12 S 330 -8, 410 12"/>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

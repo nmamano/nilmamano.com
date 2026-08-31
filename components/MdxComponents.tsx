@@ -11,6 +11,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import TocElement from "./TableOfContents";
+import { parseCaption } from "./parse-caption";
+import { BlogCarousel } from "./BlogCarousel";
 
 interface BlogImageProps {
   src: string;
@@ -289,40 +291,6 @@ export function Solution({ number, title, link }: SolutionProps) {
 }
 
 // Simple markdown parser for captions
-function parseCaption(text: string) {
-  const parts = [];
-  let currentIndex = 0;
-
-  // Replace **bold** with <strong> tags and [text](href) with links
-  const pattern = /\*\*(.*?)\*\*|\[([^\]]+)\]\(([^)]+)\)/g;
-  let match;
-
-  while ((match = pattern.exec(text)) !== null) {
-    // Add text before the match
-    if (match.index > currentIndex) {
-      parts.push(text.slice(currentIndex, match.index));
-    }
-
-    if (match[1] !== undefined) {
-      parts.push(<strong key={match.index}>{match[1]}</strong>);
-    } else {
-      parts.push(
-        <a key={match.index} href={match[3]}>
-          {match[2]}
-        </a>,
-      );
-    }
-
-    currentIndex = match.index + match[0].length;
-  }
-
-  // Add remaining text
-  if (currentIndex < text.length) {
-    parts.push(text.slice(currentIndex));
-  }
-
-  return parts.length > 0 ? parts : text;
-}
 
 const slugify = (text: string) => {
   return text
@@ -335,6 +303,7 @@ const slugify = (text: string) => {
 const components = {
   BlogImage,
   BlogVideo,
+  BlogCarousel,
   BlogTable,
   Callout,
   Problem,

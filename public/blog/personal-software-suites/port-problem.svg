@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 498" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="1000" height="498" fill="#ffffff"/>
+
+  <rect x="40" y="30" width="920" height="326" rx="16" fill="#f7f9fc" stroke="#4a5568" stroke-width="2"/>
+  <text x="66" y="62" font-size="17" font-weight="700" fill="#4a5568">Meta-harness<tspan font-size="14" font-weight="500" opacity="0.8" dx="9">(always-on host)</tspan></text>
+  <rect x="76" y="96" width="220" height="232" rx="13" fill="#f0e9ff" stroke="#6b46c1" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="186" y="128" text-anchor="middle" font-size="17" font-weight="700" fill="#6b46c1">Agents</text>
+  <rect x="101" y="143" width="170" height="44" rx="9" fill="#f0e9ff" stroke="#6b46c1" stroke-width="2"/>
+  <text x="186" y="170" text-anchor="middle" font-size="14.5" font-weight="700" fill="#6b46c1">Agent 1</text>
+  <rect x="101" y="198" width="170" height="44" rx="9" fill="#f0e9ff" stroke="#6b46c1" stroke-width="2"/>
+  <text x="186" y="225" text-anchor="middle" font-size="14.5" font-weight="700" fill="#6b46c1">Agent 2</text>
+  <rect x="101" y="253" width="170" height="44" rx="9" fill="#f0e9ff" stroke="#6b46c1" stroke-width="2"/>
+  <text x="186" y="280" text-anchor="middle" font-size="14.5" font-weight="700" fill="#6b46c1">Agent 3</text>
+  <rect x="704" y="96" width="220" height="232" rx="13" fill="#e6f6ec" stroke="#1f9550" stroke-width="2" stroke-dasharray="7 5"/>
+  <text x="814" y="128" text-anchor="middle" font-size="17" font-weight="700" fill="#1f9550">Apps</text>
+  <rect x="724" y="143" width="180" height="44" rx="9" fill="#e6f6ec" stroke="#1f9550" stroke-width="2"/>
+  <text x="814" y="170" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1f9550">todo</text>
+  <rect x="724" y="198" width="180" height="44" rx="9" fill="#e6f6ec" stroke="#1f9550" stroke-width="2"/>
+  <text x="814" y="225" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1f9550">commit-plot</text>
+  <rect x="724" y="253" width="180" height="44" rx="9" fill="#e6f6ec" stroke="#1f9550" stroke-width="2"/>
+  <text x="814" y="280" text-anchor="middle" font-size="14.5" font-weight="700" fill="#1f9550">business-health</text>
+  <rect x="380" y="136" width="240" height="68" rx="12" fill="#fdf0e0" stroke="#b45309" stroke-width="2"/>
+  <text x="500" y="164" text-anchor="middle" font-size="17" font-weight="700" fill="#b45309">App orchestrator</text>
+  <text x="500" y="187" text-anchor="middle" font-size="13" font-weight="500" fill="#b45309" opacity="0.82">assigns ports, keeps apps alive</text>
+  <line x1="298" y1="170" x2="365" y2="170" stroke="#6b46c1" stroke-width="2"/>
+  <polygon points="376,170 365,174.6 365,165.4" fill="#6b46c1"/>
+  <text x="337" y="154" text-anchor="middle" font-size="13" font-weight="600" fill="#6b46c1">register</text>
+  <line x1="622" y1="170" x2="689" y2="170" stroke="#b45309" stroke-width="2"/>
+  <polygon points="700,170 689,174.6 689,165.4" fill="#b45309"/>
+  <text x="661" y="154" text-anchor="middle" font-size="13" font-weight="600" fill="#b45309">runs</text>
+  <rect x="380" y="246" width="240" height="68" rx="12" fill="#e0f5f2" stroke="#0f766e" stroke-width="2"/>
+  <text x="500" y="274" text-anchor="middle" font-size="17" font-weight="700" fill="#0f766e">Message queueing</text>
+  <text x="500" y="297" text-anchor="middle" font-size="13" font-weight="500" fill="#0f766e" opacity="0.82">queues if the agent is busy</text>
+  <line x1="700" y1="280" x2="633" y2="280" stroke="#1f9550" stroke-width="2"/>
+  <polygon points="622,280 633,275.4 633,284.6" fill="#1f9550"/>
+  <text x="661" y="264" text-anchor="middle" font-size="13" font-weight="600" fill="#1f9550">calls</text>
+  <line x1="376" y1="280" x2="309" y2="280" stroke="#0f766e" stroke-width="2"/>
+  <polygon points="298,280 309,275.4 309,284.6" fill="#0f766e"/>
+  <text x="337" y="264" text-anchor="middle" font-size="13" font-weight="600" fill="#0f766e">delivers</text>
+  <rect x="415" y="408" width="170" height="56" rx="12" fill="#e7f2ff" stroke="#2b6cb0" stroke-width="2"/>
+  <text x="500" y="442" text-anchor="middle" font-size="17" font-weight="700" fill="#2b6cb0">Users</text>
+  <line x1="452" y1="406" x2="250.4" y2="335.6" stroke="#2b6cb0" stroke-width="2"/>
+  <polygon points="240,332 251.9,331.3 248.9,340" fill="#2b6cb0"/>
+  <line x1="548" y1="406" x2="749.6" y2="335.6" stroke="#2b6cb0" stroke-width="2"/>
+  <polygon points="760,332 751.1,340 748.1,331.3" fill="#2b6cb0"/>
+  <text x="500" y="486" text-anchor="middle" font-size="13.5" font-weight="500" fill="#2b6cb0">one login, any device</text>
+</svg>

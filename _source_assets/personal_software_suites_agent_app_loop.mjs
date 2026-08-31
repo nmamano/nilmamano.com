@@ -35,9 +35,9 @@ const edges = [
   { from: "agent", to: "user",  side: -1, rot: true, lines: ["Natural language outputs"] },
   { from: "user",  to: "app",   side: +1, rot: true, lines: ["Interactive inputs"] },
   { from: "app",   to: "user",  side: -1, rot: true, lines: ["Interactive outputs"] },
-  { from: "agent", to: "app",   side: +1, gap: 64, lines: ["Implementation"] },
-  { from: "app",   to: "agent", side: +1, gap: 60, lines: ["Notifications"] },
-  { from: "agent", to: "state", side: +1, rot: true, gap: 46, lines: ["Natural language requests", "mapped to structured", "state updates"] },
+  { from: "agent", to: "app",   side: +1, gap: 72, lines: ["Implementation"] },
+  { from: "app",   to: "agent", side: +1, gap: 66, lines: ["Notifications"] },
+  { from: "agent", to: "state", side: +1, rot: true, gap: 50, size: 15, lines: ["Natural language requests", "mapped to structured", "state updates"] },
   { from: "state", to: "agent", side: -1, rot: true, lines: ["Data to base answers on"] },
   { from: "app",   to: "state", side: +1, rot: true, lines: ["State updates"] },
   { from: "state", to: "app",   side: -1, rot: true, lines: ["Data to display"] },
@@ -82,7 +82,7 @@ for (const e of edges) {
   const gap = e.gap ?? (e.rot ? 26 : 30);
   const lx = (x1 + x2) / 2 + px * gap * e.side;
   const ly = (y1 + y2) / 2 + py * gap * e.side;
-  const lh = 16;
+  const lh = (e.size ?? 17) + 3;
   const top = ly - ((e.lines.length - 1) * lh) / 2 + 4.5;
   const spans = e.lines
     .map((t, i) => `<tspan x="${r2(lx)}" y="${r2(top + i * lh)}">${t}</tspan>`)
@@ -94,7 +94,7 @@ for (const e of edges) {
     if (deg < -90) deg += 180;
     rot = ` transform="rotate(${r2(deg)} ${r2(lx)} ${r2(ly)})"`;
   }
-  body += `  <text text-anchor="middle" font-size="13.5" font-weight="500" fill="${color}"${rot}>${spans}</text>\n\n`;
+  body += `  <text text-anchor="middle" font-size="${e.size ?? 17}" font-weight="600" fill="${color}"${rot}>${spans}</text>\n\n`;
 }
 
 let boxes = "";
@@ -106,8 +106,17 @@ for (const n of Object.values(nodes)) {
   boxes += `  <text x="${r2(left + ICON + PAD)}" y="${n.y + 6}" font-size="17" font-weight="700" fill="${n.stroke}">${n.label}</text>\n`;
 }
 
-const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${W} ${H}" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
-  <rect x="0" y="0" width="${W}" height="${H}" fill="#ffffff"/>
+// Crop to the nodes plus a margin, so the figure carries no dead border.
+const MARGIN = 22;
+const xs = Object.values(nodes).flatMap((n) => [n.x - n.w / 2, n.x + n.w / 2]);
+const ys = Object.values(nodes).flatMap((n) => [n.y - n.h / 2, n.y + n.h / 2]);
+const vx = r2(Math.min(...xs) - MARGIN);
+const vy = r2(Math.min(...ys) - MARGIN);
+const vw = r2(Math.max(...xs) + MARGIN - vx);
+const vh = r2(Math.max(...ys) + MARGIN - vy);
+
+const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="${vx} ${vy} ${vw} ${vh}" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <rect x="${vx}" y="${vy}" width="${vw}" height="${vh}" fill="#ffffff"/>
 
   <!-- ===== Edges ===== -->
 ${body}  <!-- ===== Nodes ===== -->
