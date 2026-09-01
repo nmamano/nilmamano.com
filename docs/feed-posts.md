@@ -97,6 +97,14 @@ http://auntie:3002 so the composer and curation UI work. It shows **all** posts,
 including hidden/`imported` ones. Do not start your own `next dev` on port 3002;
 use `systemctl --user restart|status nilmamano-feed`.
 
+## Importing an X post from its URL
+
+Fetch `https://api.fxtwitter.com/<handle>/status/<id>`. `tweet.raw_text.text` keeps the
+original line breaks; `created_at`, `media` and `quote` (quoted post url, author, text) are
+also there. Fallback: `https://r.jina.ai/<x-url>` shows self-replies in the thread but
+collapses line breaks and rate-limits anonymous access. Media: download the
+`pbs.twimg.com/media/<id>` url with `?format=png&name=large` into `public/posts/<slug>/`.
+
 ## Gotchas
 
 - **This repo is public.** Post `.md` files are public on GitHub once pushed.
