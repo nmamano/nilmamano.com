@@ -57,7 +57,7 @@ export default function AboutPage() {
               >
                 isomux.com
               </Link>{" "}
-              (a meta-harness where multiple Claude and Codex agents and humans
+              (a meta-harness where Claude, Codex, and more agents and humans
               collaborate in the same conversation),{" "}
               <Link
                 href="/blog/context-composer"

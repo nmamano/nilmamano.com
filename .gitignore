@@ -45,6 +45,8 @@ _source_assets/resume_nilmamano.log
 _source_assets/resume_nilmamano.out
 _source_assets/resume_nilmamano.synctex.gz
 _source_assets/*.autosave.ipe
+# rendered output of the _source_assets generators; the shipped copies live in public/
+_source_assets/out/
 .DS_Store
 
 .claude/worktrees

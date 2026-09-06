@@ -14,7 +14,7 @@ I describe independently-developed features like [inter-agent skills](#applicati
 
 ## Introduction
 
-I reached Level 6 in [Steve Yegge's hierarchy](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04)!
+I went through every level of [Steve Yegge's hierarchy](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04).
 
 <BlogImage
   src="/blog/isomux/steve_hierarchy.png"
@@ -23,7 +23,7 @@ I reached Level 6 in [Steve Yegge's hierarchy](https://steve-yegge.medium.com/we
 
 <BlogImage
   src="/blog/isomux/commits-per-week.png"
-  alt="My weekly commit count from Oct 2024 to mid-2026, color-coded by daily-driver tool: writing BCtCI (Oct-Dec 2024), then Cursor at Yegge Level 4, then Claude Code at Level 5, then Isomux at Level 6. Throughput climbs sharply as the driver moves up the levels, with isomux-era weeks peaking around 150 commits"
+  alt="My weekly commit count from Nov 2024 to Sep 2026, banded by stage of Yegge's hierarchy: Level 4 with Cursor as daily driver, Level 5 with Claude Code from Oct 2025, and Levels 6-8 with Isomux from Mar 2026. Weekly commits climb from single digits to a peak near 250"
 />
 
 Isomux started as a nicer way to manage agents; back then, I had a mix of local and remote sessions.[^remote-only] For the former, I had to keep my laptop open; for the latter, I had to ssh all the time.
@@ -71,14 +71,16 @@ Isomux is a single [bun](https://bun.com/) process that:
 - exposes a REST API for everything else
 - manages agent lifecycles and sessions
 
-The server is event-driven. Updates come in from three ends: browsers (over WebSocket), the REST API, and the LLM providers (via the agent sessions). Everything funnels into a single event loop, where each event can trigger some combination of: (a) browser updates via WebSocket, (b) agent session updates, and (c) state writes (all the state is stored in `~/.isomux`).
+The server is event-driven. Updates come in from three ends: browsers (over WebSocket), the REST API, and the LLM providers (via the agent sessions). Everything funnels into a single event loop, where each event can trigger some combination of: (a) browser updates via WebSocket, (b) agent session updates, and (c) state writes (all the state is stored in `~/.isomux`).[^opencode]
+
+[^opencode]: Isomux now supports OpenCode as a third backend.
 
 <BlogImage
   src="/blog/isomux/architecture.png"
-  alt="Isomux system design: two users' devices talk to the bun service over WebSocket and a REST API; inside the service, an agent lifecycle + event loop runs the agents, connected through a shared backend abstraction to Claude Agent SDK and Codex App Server sessions, which reach Anthropic's and OpenAI's servers; state persists to the local file system (~/.isomux)"
+  alt="Isomux system design: two users' devices talk to the Bun service over WebSocket and a REST API; inside the service, an agent lifecycle and event loop run agents through a shared backend abstraction connected to the Claude Agent SDK and Codex App Server; state persists to the local file system (~/.isomux)"
 />
 
-Claude agents use the [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk) and Codex agents use the [Codex CLI's App Server](https://github.com/openai/codex), both behind a shared backend abstraction. There are multiple ways of making a meta-harness multi-provider; the [appendix](#appendix-three-ways-to-make-a-meta-harness-multi-provider) shows a comparison.
+Claude agents use the [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk), Codex agents use the [Codex CLI's App Server](https://github.com/openai/codex), and OpenCode agents use a pinned shared OpenCode server. All three sit behind the same backend abstraction. There are multiple ways of making a meta-harness multi-provider; the [appendix](#appendix-three-ways-to-make-a-meta-harness-multi-provider) shows a comparison.
 
 <Callout>
   I've been building Isomux from inside Isomux since the first day. Developing a dev tool from itself is fun!
@@ -183,7 +185,7 @@ When you click an empty desk to spawn an agent, you provide:
 
 - a name and look
 - a working directory
-- the backend (claude or codex), model, permission mode, thinking effort, etc.
+- the backend (Claude, Codex, or OpenCode), model, permission mode, thinking effort, etc.
 - an agent-specific (user-provided) system prompt
 
 Agents also have:
@@ -200,7 +202,7 @@ Something feels nice about going to different agents for different things.
 
 For example, my Tax Expert agent did my taxes. When I go back to her next year, I'll find all my past tax-related sessions and attachments there - and she will _just know_ to search them for relevant context. And she will have memories from last year. And if another agent, like my Home Assistant agent, has some question about taxes, they _just know_ they can direct the question to her.
 
-A folder gives you most of that; e.g., `AGENTS.md` can capture an agent's personality, `/resume` is already per folder, and so are Claude's built-in memory capabilities. But I think coupling folders and agent identities is wrong. (1) You may want multiple agents with distinct identities in the same folder (e.g., a frontend agent and a backend agent); (2) You may want to move an agent across folders without losing its identity. (3) You are also coupling the backend (Claude vs Codex) with the agent identity. A Codex agent in that folder won't see Claude's memories.[^claudemd]
+A folder gives you most of that; e.g., `AGENTS.md` can capture an agent's personality, `/resume` is already per folder, and so are Claude's built-in memory capabilities. But I think coupling folders and agent identities is wrong. (1) You may want multiple agents with distinct identities in the same folder (e.g., a frontend agent and a backend agent); (2) You may want to move an agent across folders without losing its identity. (3) You are also coupling the backend with the agent identity. A Codex or OpenCode agent in that folder won't see Claude's memories.[^claudemd]
 </Callout>
 
 [^claudemd]: There are other issues with AGENTS.md, like the fact that Claude agents don't follow the convention (they expect CLAUDE.md).
@@ -635,7 +637,7 @@ Sessions have an ID. If your application crashes or restarts, you can resume a s
 
 ### How Codex Differs
 
-Claude and Codex agents share the same desks, task board, and persistence layer. They can message each other. But Codex works quite differently:
+Claude and Codex agents share all the same office features. They can message each other. But Codex works quite differently:
 
 - **We don't use an SDK.**[^codex-sdk] Instead, we talk to a subprocess called "App Server" that ships with the Codex CLI. It speaks a JSON-RPC-lite protocol over stdio. Isomux spawns `codex app-server`, sends `initialize` + `thread/start` requests, and reads `notifications` off stdout. An adapter translates these messages into a `NormalizedEvent` stream shared with Claude.
 - **Streaming is push, not pull.** The Claude SDK gives you an async iterator (`for await … of session.stream()`). Codex pushes notifications at you (`thread/started`, `turn/started`, `turn/completed`, `tool/started`, …) and expects you to filter by `threadId`. Per-thread filtering is non-negotiable: sub-agent and review-mode threads share the same stdio pipe but have their own ids, and resolving the wrong turn would unblock the queue prematurely.
@@ -657,7 +659,7 @@ Three approaches, followed by three tools in the space:
 
 **AdaL: rebuild the harness.** AdaL reimplements tool calling, compaction, the agent loop, etc., and uses the providers only for next-token prediction. Big upfront effort, but it means you can swap any provider underneath and get perfectly uniform UI and harness behavior.
 
-**Isomux: drive the SDKs.** Isomux runs each provider's harness programmatically and renders one shared UI. It's a middle ground that leans on the provider's own harness for the hard parts while still owning the UI. Since each SDK is different, this approach has the most provider-specific code, requiring the most work per additional provider.
+**Isomux: drive harness APIs.** Isomux runs each provider's harness programmatically and renders one shared UI. It's a middle ground that leans on the provider's own harness for the hard parts while still owning the UI. Since each harness integration surface is different, this approach has the most provider-specific code, requiring the most work per additional provider.
 
 In all three cases, the meta-harness provides the agents with an API to perform actions at the meta-harness level, like driving the UI or orchestration.[^multi-provider-caveats]
 
