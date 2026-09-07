@@ -56,6 +56,22 @@ export async function POST(req: Request) {
     system: systemPrompt,
     messages: await convertToModelMessages(messages),
     maxOutputTokens: 1000,
+    // Without this, a failed turn is invisible in Discord: the user's question
+    // posts before the model call, and onFinish never runs. Credit exhaustion
+    // would look exactly like a visitor closing the tab.
+    onError({ error }) {
+      const detail = error instanceof Error ? error.message : String(error);
+      console.error("[chat] stream failed:", detail);
+      if (webhookUrl) {
+        fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            content: `${label} :warning: **Chat failed:** ${detail}`.slice(0, 2000),
+          }),
+        }).catch(() => {});
+      }
+    },
     onFinish({ text }) {
       if (webhookUrl && text) {
         fetch(webhookUrl, {
