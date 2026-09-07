@@ -159,6 +159,48 @@ export function BlogVideo({
   );
 }
 
+interface DemoEmbedProps {
+  src: string;
+  href: string;
+  title: string;
+  maxWidth?: string;
+}
+
+// Embeds a live demo hosted on another origin, with a click-through overlay to
+// the full version. The target site must allow us as a frame ancestor.
+export function DemoEmbed({
+  src,
+  href,
+  title,
+  maxWidth = "820px",
+}: DemoEmbedProps) {
+  return (
+    <div className="blog-media" style={{ display: "flex", justifyContent: "center" }}>
+      <div
+        className="relative w-full overflow-hidden rounded-md"
+        style={{ maxWidth, aspectRatio: "4 / 3" }}
+      >
+        <iframe
+          src={src}
+          title={title}
+          loading="lazy"
+          className="absolute inset-0 h-full w-full border-none"
+        />
+        <a
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group absolute inset-0 z-10 flex items-center justify-center transition-colors hover:bg-black/35"
+        >
+          <span className="pointer-events-none text-lg font-semibold text-white opacity-0 transition-opacity group-hover:opacity-100 [text-shadow:0_1px_8px_rgba(0,0,0,0.5)]">
+            Try the demo &rarr;
+          </span>
+        </a>
+      </div>
+    </div>
+  );
+}
+
 interface CalloutProps {
   children: React.ReactNode;
   type?: "info" | "warning" | "success" | "error";
@@ -304,6 +346,7 @@ const components = {
   BlogImage,
   BlogVideo,
   BlogCarousel,
+  DemoEmbed,
   BlogTable,
   Callout,
   Problem,
