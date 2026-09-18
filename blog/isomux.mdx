@@ -6,9 +6,11 @@ coverImage: "/blog/isomux/cover.jpeg"
 categories: ["isomux", "ai", "swe"]
 ---
 
-This post covers how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and what I learned about designing meta-harnesses.
+This post covers how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and the lessons I learned about designing meta-harnesses.
 
-I describe independently-developed features like [inter-agent skills](#applications), "Google Docs"-style [live collaboration](#human-collaboration), [meta-harness reflection](#meta-harness-reflection), [agent-driven UI](#giving-agents-ui-superpowers), [hierarchical agents](#hierarchical-agents), and [non-linear task hand-offs](#shared-task-board).
+I describe independently-developed features like [inter-agent skills](#applications), "Google Docs"-style [live collaboration](#human-collaboration), [meta-harness reflection](#meta-harness-reflection), [agent-driven UI](#giving-agents-ui-superpowers), [hierarchical agents](#hierarchical-agents), [an agent-human shared task board](#agent-human-shared-task-board), and (in a standalone post) [a personal-software suite](/blog/personal-software-suites).
+
+For a closer look at the UX side, see [Making Agents User-Friendly](/blog/agent-ui).
 
 <Toc />
 
@@ -246,7 +248,7 @@ You can see the full prompt for a given persistent agent with `/isomux-system-pr
 
 ### Hierarchical Memory
 
-Isomux has hierarchical memory because a fact learned about the office shouldn't be trapped in one agent, and a fact about one agent shouldn't pollute the whole office.
+Isomux has hierarchical memory so agents can share facts about the office and keep facts relevant to just one agent in that agent's memory.
 
 There are four kinds of memory scopes, mirroring the four kinds of user-defined system prompts:
 
@@ -367,11 +369,34 @@ The workers are Claude agents while the reviewers are Codex agents. This diversi
 
 The difference between doing this in Isomux and using subagents is that you can check on and interact with every agent involved. (The reviewers are in another room because I don't want to cycle through them when tabbing between the workers.)
 
-The downside compared to subagents is that it's very disorganized. Agents are not _forced_ to respond when asked something, so a worker agent may end up hanging while waiting for a reviewer response that never comes.
+This shows 2,776 messages in a 3-day period.[^wall-game-worker]
+
+- orange is me-to-agent
+- purple is agent-to-agent
+- yellow circle is turn end (can be thought of as agent-to-me)
+- red circle is scheduled self-message
+
+[^wall-game-worker]: An interesting case is "Wall Game Worker 1". It's just monitoring a training run. Checks that it's doing fine, schedules a message for itself a few hours later, repeat.
+
+<BlogImage
+  src="/blog/isomux/message-timeline.png"
+  alt="A timeline of 2,776 messages between me and 23 agents over three days, Aug 29 to Sep 1 2026. Each agent gets a row: Isomux PM, six Isomux workers paired with six reviewers in a separate room, and the wall game agents below them. Orange curves are messages from me to an agent, purple curves are agent to agent, yellow dots mark the end of a turn, and red dots mark a scheduled self-message. Traffic arrives in dense bursts separated by quiet hours, and the Wall Game Worker 1 row is almost entirely evenly spaced red dots"
+/>
+
+Over the 30 days to 2026-09-09:[^messaging-stats]
+
+| Category | Count |
+| --- | --- |
+| Agent → a different agent (delivered) | 13,024 |
+| Agent → itself (scheduled self-reminders) | 1,473 |
+| Agent → itself (session handoffs) | 124 |
+| **All messages sent through the agent messaging API** | **14,621** |
+
+[^messaging-stats]: Measured 2026-09-09 across all 3,096 conversation logs in `~/.isomux/logs/` (179 agent directories, 687,079 log lines), from 36 different senders to 37 different receivers.
 
 As I refine my workflow, I'll see what changes are needed to make it work and come back to update this section.
 
-### Shared Task Board
+### Agent-Human Shared Task Board
 
 Agents and humans share a task board. Anyone can create, assign, claim, and close tasks, from the browser UI or the REST API.
 
@@ -380,8 +405,12 @@ Besides the assignee, tasks can be scoped to a room or the whole office.
 This is what the [orchestration workflow](#agent-orchestration) runs on: the manager picks tasks from the board, assigns them to workers, and marks them done once the changes are folded in.
 
 <Callout>
-  A task board is the ideal **non-linear** hand-off mechanism. Agents often discover possible improvements or follow-ups as they complete their task. Rather than derailing their session, agents can create tasks for later sessions.
+  Agents often discover improvements or follow-ups while working on a task. They can put those on the shared board for another agent or human to pick up later. This makes handoffs non-linear: one session can leave work for several future sessions, or pick up work from several past sessions.
 </Callout>
+
+As of September 17, 2026, my office’s task board holds 310 open tasks and 1,157 closed tasks. I created 381, agents created 1,067, and scheduled runs (cron jobs) created 19. 20+ agents appear as creators, and likewise as assignees. Two humans also appear as assignees. Agents also create tasks for humans: ten recorded tasks go in that direction.[^task-stats]
+
+[^task-stats]: Counts cover retained tasks visible through the task API as of September 17, 2026 (PT); deleted tasks are excluded. Open includes 194 open, 5 in-progress, and 111 backlog tasks; closed means done. The task attributed to “Nil phone (via Agent 3)” is counted as agent-created. Creator and assignee counts conservatively match recorded names to distinct current agents. Assignees are the recorded owners, not necessarily the people or agents who completed the work.
 
 Tasks are persisted as a flat JSON file. Bun's single-threaded event loop handles concurrency naturally, so no locking needed.
 
@@ -419,6 +448,10 @@ There are no passwords or accounts; every browser request is gated by a session 
 This has to be repeated for every device. Members can mint additional tokens, but only for their own devices, not for new members.
 
 I self-host my office. For reachability beyond my own VPN, the best path I've found is [Tailscale Funnel](https://isomux.com/docs/access-and-invites).
+
+<Callout>
+  I also built a managed version for people who don't want to set up and maintain their own server: [isomux.com/hosted](https://isomux.com/hosted). I cover its provisioning, billing, and architecture in [Building a Hosted Agents Product End-to-End](/blog/hosted-isomux).
+</Callout>
 
 ### Live User Presence
 
