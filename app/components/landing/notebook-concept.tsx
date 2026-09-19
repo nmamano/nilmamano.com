@@ -86,7 +86,7 @@ export function NotebookConcept() {
             <div className={styles.narrative}>
               <p>I&apos;m now absorbed in the question of how we work with agents. I aim to deconstruct the limitations we bought into when we accepted TUIs like Claude Code as the default.</p>
               <p>I created <A href="https://isomux.com">isomux.com</A>, a multi-user &amp; multi-agent meta-harness (<A href="/blog/isomux">built in public</A>), and started <A href="https://isomux.app">isomux.app</A>, a hosting business around it (also <A href="/blog/hosted-isomux">built in public</A>). I focus on <A href="/blog/agent-ui">bringing agents to non-technical users</A>. My favorite feature is the <A href="/blog/personal-software-suites">personal-software suite</A>.</p>
-              <p><strong>I&apos;m looking for my next opportunity <span className={styles.opportunityLastLine}>in this space.</span></strong></p>
+              <p><strong>I&apos;m looking for my next opportunity in this space.</strong></p>
             </div>
           </div>
           <a target="_blank" rel="noopener noreferrer" href="/blog/isomux" className={`${styles.illustration} ${styles.officeScene}`} aria-label="Read about Isomux"><ApprovedOffice /></a>
