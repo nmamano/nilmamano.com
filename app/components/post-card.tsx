@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
+import { FaXTwitter, FaLinkedin } from "@/components/site-icons-fa6";
 import { formatDate } from "../lib/date-utils";
 import type { Post } from "../lib/posts";
 import { renderPostBody } from "../lib/post-render";

@@ -1,29 +1,51 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
+import styles from "./research.module.css";
 import { getAllPublications, Publication } from "@/app/lib/publications";
 import {
-  PublicationCardPreview,
   PublicationExpandedContent,
 } from "@/app/components/publication-card";
-import { ExpandableCardGrid } from "@/app/components/expandable-card-grid";
+import { Dialog, DialogContent, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Maximize2, FileText, BookOpen, Github, Play } from "lucide-react";
 
 function PublicationGrid({ publications }: { publications: Publication[] }) {
   return (
-    <ExpandableCardGrid
-      items={publications}
-      getItemKey={(pub) => pub.id}
-      renderCard={(publication, index, isExpanded) => (
-        <PublicationCardPreview
-          publication={publication}
-          isExpanded={isExpanded}
-          showExpandIcon={true}
-        />
-      )}
-      renderExpandedContent={(publication) => (
-        <PublicationExpandedContent publication={publication} />
-      )}
-    />
+    <div className={styles.paperList}>
+      {publications.map((publication) => (
+        <Dialog key={publication.id}>
+          <article className={styles.paper}>
+            <DialogTrigger asChild>
+              <button type="button" className={styles.paperPreview} aria-label={`Read about ${publication.title}`}>
+                <span className={styles.thumbnail}>
+                  <Image src={publication.coverImage || "/placeholder.svg"} alt="" width={160} height={110} />
+                </span>
+                <span className={styles.paperText}>
+                  <span className={styles.paperTitle}>{publication.title}</span>
+                  <span className={styles.authors}>{publication.not_alphabetical_order ? "* " : ""}{publication.authors.join(", ")}</span>
+                  {publication.publisher && <span className={styles.venue}>{publication.publisher}</span>}
+                  <span className={styles.excerpt}>{publication.description[0].replace(/<[^>]*>/g, "")}</span>
+                </span>
+                <Maximize2 className={styles.openIcon} size={16} aria-hidden="true" />
+              </button>
+            </DialogTrigger>
+            <nav className={styles.paperLinks} aria-label={`Resources for ${publication.title}`}>
+              {publication.links?.pdf && <a href={publication.links.pdf} target="_blank" rel="noopener noreferrer"><FileText size={15} />Read Paper</a>}
+              {publication.links?.blog && <a href={publication.links.blog} target="_blank" rel="noopener noreferrer"><BookOpen size={15} />Blog Post</a>}
+              {publication.links?.github && <a href={publication.links.github} target="_blank" rel="noopener noreferrer"><Github size={15} />Source Code</a>}
+              {publication.links?.demo && <a href={publication.links.demo} target="_blank" rel="noopener noreferrer"><Play size={15} />Demo</a>}
+            </nav>
+          </article>
+          <DialogContent className={styles.paperDialog} aria-describedby={undefined}>
+            <DialogTitle className={styles.dialogTitle}>{publication.title}</DialogTitle>
+            <div className={styles.dialogBody}>
+              <PublicationExpandedContent publication={publication} showTitle={false} />
+            </div>
+          </DialogContent>
+        </Dialog>
+      ))}
+    </div>
   );
 }
 
@@ -45,11 +67,11 @@ function ResearchSection() {
   return (
     <section
       id="research"
-      className="pt-1 pb-6 md:pt-2 md:pb-12 lg:pt-3 lg:pb-16 scroll-mt-16"
+      className={styles.publications}
     >
-      <div className="max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold mb-8">Publications</h2>
-        <ul className="text-muted-foreground mb-8 list-disc pl-6 space-y-2">
+      <div>
+        <h2 className={styles.sectionTitle}>Publications</h2>
+        <ul className={styles.readingNotes}>
           <li>Click on a publication for a brief summary.</li>
           <li>
             All papers are <b>freely available online</b> (PDF icon).
@@ -80,8 +102,8 @@ function ResearchSection() {
         </ul>
 
         {/* Conference Publications Section */}
-        <div className="mb-12">
-          <h3 className="text-xl font-semibold mb-6">
+        <div className={styles.publicationGroup} id="conference-publications">
+          <h3 className={styles.groupTitle}>
             Conference Publications
           </h3>
           {conferencePublications.length > 0 ? (
@@ -92,8 +114,8 @@ function ResearchSection() {
         </div>
 
         {/* Journal Publications Section */}
-        <div className="mb-12">
-          <h3 className="text-xl font-semibold mb-6">
+        <div className={styles.publicationGroup} id="journal-publications">
+          <h3 className={styles.groupTitle}>
             Journal Publications
           </h3>
           {journalPublications.length > 0 ? (
@@ -104,8 +126,8 @@ function ResearchSection() {
         </div>
 
         {/* PhD Dissertation Section */}
-        <div className="mb-12">
-          <h3 className="text-xl font-semibold mb-6">
+        <div className={styles.publicationGroup} id="dissertation">
+          <h3 className={styles.groupTitle}>
             PhD Dissertation
           </h3>
           <PublicationGrid publications={dissertations} />
@@ -117,9 +139,8 @@ function ResearchSection() {
 
 function AcademicBackground() {
   return (
-    <section className="max-w-4xl mx-auto mb-16">
-      <h1 className="text-3xl font-bold mb-6">Research</h1>
-      <div className="space-y-4 text-muted-foreground">
+    <section className={styles.background} aria-label="Academic background and research focus">
+      <div className={styles.biography}>
         <p>
           I received a PhD as part of the{" "}
           <Link
@@ -156,6 +177,8 @@ function AcademicBackground() {
           . Before that, I got a bachelor&apos;s degree in CS from UPC in my
           hometown, Barcelona.
         </p>
+      </div>
+      <div className={styles.researchFocus}>
         <p>
           My research spans computational geometry, greedy algorithms, graph
           data structures, computational biology, and recreational mathematics.
@@ -219,17 +242,6 @@ function AcademicBackground() {
           </Link>
           )).
         </p>
-        <p>
-          My personal highlight is{" "}
-          <Link
-            href="https://x.com/Nil053/status/2067322147819946361"
-            className="text-primary hover:underline"
-            target="_blank"
-          >
-            being cited by Donald Knuth
-          </Link>
-          .
-        </p>
       </div>
     </section>
   );
@@ -237,7 +249,10 @@ function AcademicBackground() {
 
 export default function ResearchPage() {
   return (
-    <div className="container mx-auto px-4 py-8">
+    <div className={styles.researchPage}>
+      <header className={styles.pageHeader}>
+        <h1>Research</h1>
+      </header>
       <AcademicBackground />
       <ResearchSection />
     </div>

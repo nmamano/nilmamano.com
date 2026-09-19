@@ -1,0 +1,44 @@
+.sheet {
+  --paper: #fbf6e9;
+  --ink: #30464b;
+  --muted: #64726a;
+  --orange: #d78861;
+  --mint: #8bb8a7;
+  --gold: #d8b66f;
+  --line: #d8d8c8;
+  min-height: 100svh;
+  padding: 0 32px 40px;
+  color: var(--ink);
+  background: var(--paper);
+  font-family: Arial, Helvetica, sans-serif;
+}
+:global(.dark) .sheet { --paper: #29332e; --ink: #e3e7d8; --muted: #b0beaf; --line: #4a5c50; --orange: #b96d4a; --mint: #537d6d; --gold: #ae8741; }
+.header { max-width: 1440px; margin: auto; padding: 16px 0; display: flex; align-items: center; gap: 20px; border-bottom: 1px solid var(--line); }
+.header nav { display: flex; flex-wrap: wrap; gap: 12px 28px; font-size: 13px; }
+.header a { color: inherit; text-decoration: none; padding: 8px 0; }
+.header button { margin-left: auto; flex-shrink: 0; display: grid; place-items: center; width: 40px; height: 40px; cursor: pointer; }
+.header a:focus-visible, .header button:focus-visible { outline: 2px solid var(--orange); outline-offset: 4px; }
+.sun { display: none; }
+:global(.dark) .sun { display: block; }
+:global(.dark) .moon { display: none; }
+.group { max-width: 1440px; margin: 0 auto; padding: 26px 0 30px; scroll-margin-top: 16px; }
+.group + .group { border-top: 1px solid var(--line); }
+.group h1 { margin: 0 0 18px; font: 27px/1.2 Georgia, 'Times New Roman', serif; letter-spacing: -.025em; }
+.options { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px; }
+.option { margin: 0; padding: 0 4px 9px; min-width: 0; }
+.art { aspect-ratio: 320 / 260; display: grid; place-items: center; }
+.art svg { display: block; width: 100%; height: auto; overflow: visible; }
+.option figcaption { width: fit-content; margin: 4px auto 0; padding: 4px 12px; border: 1px solid var(--line); border-radius: 3px; color: var(--ink); font: 13px/1.5 monospace; }
+@media (min-width: 1350px) { .options { grid-template-columns: repeat(5, minmax(0, 1fr)); } }
+@media (max-width: 950px) { .options { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; } }
+@media (max-width: 700px) {
+  .sheet { padding: 0 18px 30px; }
+  .header { gap: 8px; padding: 10px 0; }
+  .header nav { gap: 0 15px; font-size: 11px; }
+  .group { padding: 24px 0; }
+  .group h1 { font-size: 23px; }
+  .options { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 8px; }
+  .option { padding: 0; }
+  .option figcaption { font-size: 12px; }
+}
+@media (max-width: 370px) { .options { grid-template-columns: 1fr; } .option { max-width: 280px; width: 100%; margin: auto; } }

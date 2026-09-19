@@ -1,0 +1,40 @@
+.researchPage{font-size:16px;max-width:960px;margin:0 auto;padding:24px 0 24px}
+.pageHeader{display:flex;justify-content:space-between;align-items:baseline;gap:20px;margin-bottom:20px}
+.pageHeader h1{font:40px/1.15 Georgia,serif;letter-spacing:-1px}
+.jumpLinks{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:16px}
+.jumpLinks a,.background a,.readingNotes a{text-decoration:underline;text-underline-offset:3px;text-decoration-color:hsl(var(--muted-foreground)/.45)}
+.background{columns:1;column-gap:36px;line-height:1.7;font-size:16px;color:hsl(var(--muted-foreground));padding-bottom:20px;border-bottom:1px solid hsl(var(--border))}
+.biography p+p{margin-top:18px;color:hsl(var(--foreground))}
+.biography,.researchFocus{display:contents}.background p{margin-bottom:14px}.background p:last-child{margin-bottom:0}
+.publications{padding-top:20px;scroll-margin-top:80px}
+.sectionTitle{font:28px/1.2 Georgia,serif;margin-bottom:14px}
+.readingNotes{display:grid;grid-template-columns:1fr;gap:6px 28px;font-size:16px;line-height:1.6;color:hsl(var(--muted-foreground));margin-bottom:20px;list-style:disc;padding-left:17px}
+.publicationGroup{margin-top:24px;scroll-margin-top:80px}
+.groupTitle{font-size:17px;line-height:1.5;font-weight:600;margin-bottom:10px}
+.paperList{min-width:0;display:grid;grid-template-columns:1fr;column-gap:30px;border-top:1px solid hsl(var(--border))}
+.paper{display:flex;flex-direction:column;padding:16px 0;border-bottom:1px solid hsl(var(--border))}
+.paperPreview{width:100%;display:grid;grid-template-columns:80px minmax(0,1fr) 16px;gap:12px;align-items:start;text-align:left;border-radius:5px}
+.paperPreview:hover .paperTitle{text-decoration:underline;text-underline-offset:3px}
+.paperPreview:focus-visible{outline:2px solid hsl(var(--ring));outline-offset:6px}
+.thumbnail{display:flex;align-items:center;justify-content:center;width:80px;height:76px;padding:5px;border-radius:4px;background:#faf8f2;overflow:hidden}
+.thumbnail img{max-width:100%;max-height:100%;object-fit:contain}
+.paperText{display:flex;flex-direction:column;gap:4px;min-width:0}
+.paperTitle{font-size:16px;line-height:1.4;font-weight:600}
+.authors{font-size:16px;line-height:1.5;color:hsl(var(--muted-foreground))}
+.venue{font-size:16px;line-height:1.5;color:hsl(var(--muted-foreground));font-weight:500}
+.excerpt{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;font-size:16px;line-height:1.6;color:hsl(var(--muted-foreground));margin-top:3px}
+.openIcon{margin-top:4px;color:hsl(var(--muted-foreground))}
+.paperLinks{display:flex;flex-wrap:wrap;gap:8px 18px;padding-top:10px;margin:auto 0 0 92px;font-size:16px}
+.paperLinks a{display:inline-flex;align-items:center;gap:5px;color:hsl(var(--primary));min-height:26px}
+.paperLinks a:hover{text-decoration:underline;text-underline-offset:3px}
+.paperDialog{width:calc(100% - 32px);max-width:850px;max-height:calc(100dvh - 32px);display:grid;grid-template-rows:auto minmax(0,1fr);gap:0;padding:0;overflow:hidden}
+.dialogTitle{padding:22px 52px 18px 26px;border-bottom:1px solid hsl(var(--border));font-size:21px;line-height:1.4}
+.dialogBody{font-size:16px;overflow-y:auto;overscroll-behavior:contain;padding:22px 26px;line-height:1.7;overflow-wrap:anywhere}
+@media(max-width:800px){.pageHeader{display:block}.jumpLinks{margin-top:15px}.background{columns:1}.researchFocus{border:0;padding:0}.paperList{grid-template-columns:1fr}.groupTitle{padding:0;font-size:18px}.readingNotes{grid-template-columns:1fr}}
+@media(max-width:480px){.researchPage{padding-top:24px}.paperPreview{grid-template-columns:64px minmax(0,1fr);gap:12px}.thumbnail{width:64px;height:64px;padding:4px}.openIcon{display:none}.paperTitle{font-size:16px}.paperLinks{margin-left:76px;gap:6px 12px}.excerpt{font-size:16px}.dialogTitle{font-size:18px;padding:18px 44px 16px 18px}.dialogBody{padding:18px}.background{font-size:16px}}
+
+:global(.dark) .researchPage,:global(.dark) .paperDialog{--primary:215 85% 74%}
+:global(.dark) .thumbnail{background:#e5e4df}
+.background .biography p:last-child{margin-bottom:14px}
+
+.dialogBody p{font-size:16px}

@@ -42,14 +42,6 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
           {!isBlog && (
             <nav className="flex items-center gap-6 text-sm font-medium leading-none">
               <Link
-                href="/about"
-                className={`leading-none transition-colors hover:text-foreground/80 ${
-                  currentRoute === "about" ? "text-primary" : ""
-                }`}
-              >
-                About
-              </Link>
-              <Link
                 href="/research"
                 className={`leading-none transition-colors hover:text-foreground/80 ${
                   currentRoute === "research" ? "text-primary" : ""

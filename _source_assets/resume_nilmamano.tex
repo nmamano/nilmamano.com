@@ -19,6 +19,7 @@
 \usepackage{titlesec}
 
 \renewcommand\labelitemi{--}
+\setlist[description]{topsep=4pt,itemsep=4pt,parsep=1pt}
 
 
 \usepackage[left=0.4in, right=0.4in, bottom=0.35in, top=0.35in]{geometry}
@@ -69,6 +70,19 @@ nil @ mamano . com\\
 %\noindent Computer Science Ph.D. looking to build my career as a software engineer. My research is about algorithms and data structures, specializing in performance. Strong problem-solving skills from solving algorithmic research problems; Effective communication skills from collaborating with 16 co-authors; solid CS fundamentals; Quick learner eager to learn and grow.
 
 \section*{Experience}
+\subsection*{Isomux}
+\vspace{-3px}
+\begin{description}
+	\item[Founder \& Engineer]\quad \href{https://isomux.com}{isomux.com} \hfill 2026 -- Current
+
+	\noindent\llap{\textbullet\hspace{6pt}}Built a multi-user, multi-agent platform where humans and agents (Claude, Codex, and others) collaborate in shared conversations, with an isometric office UI and animated agent workers for desktop and mobile. (TypeScript, React, Bun, WebSocket, Claude Agent SDK, Codex App Server, OpenCode)
+
+	\vspace{2px}
+	\noindent\llap{\textbullet\hspace{6pt}}Designed agent-to-agent messaging, a shared task board, hierarchical memory, and a personal-software suite where agents build apps that the platform runs. Added cron jobs, a built-in editor, terminal, and diff tool, all controllable by agents through an API.
+
+	\vspace{2px}
+	\noindent\llap{\textbullet\hspace{6pt}}Launched Hosted Isomux (\href{https://isomux.app}{isomux.app}): customers pay and get a private agent server without touching a terminal. Built billing, automated server provisioning, DNS, TLS, and updates. (Next.js, Stripe, PostgreSQL, Fly.io, Cloudflare)
+\end{description}
 \subsection*{Beyond Cracking the Coding Interview}
 \vspace{-3px}
 \begin{description}
@@ -77,7 +91,7 @@ nil @ mamano . com\\
 	\noindent\llap{\textbullet\hspace{6pt}}Co-wrote the official sequel to Cracking the Coding Interview with Gayle L. McDowell et al. \#1 Best Seller in Data Structures \& Algorithms on Amazon (\href{https://www.amazon.com/dp/195570600X}{amazon.com/dp/195570600X}).
 
 	\vspace{2px}
-	\noindent\llap{\textbullet\hspace{6pt}}Built \href{https://dsatoolkit.com}{dsatoolkit.com}, a companion site to practice all the book's problems, each linking to an AI interviewer I co-designed (tens of thousands of interviews).
+	\noindent\llap{\textbullet\hspace{6pt}}Built \href{https://dsatoolkit.com}{dsatoolkit.com}, a companion site to practice all the book's problems, each linking to an AI interviewer I co-designed (tens of thousands of interviews conducted).
 
 	\vspace{2px}
 	\noindent\llap{\textbullet\hspace{6pt}}Orchestrated LLMs for large-scale codebase changes, such as translating 288 book solutions from Python to Go with few-shot prompting and test-driven retry loops.
@@ -99,28 +113,32 @@ nil @ mamano . com\\
 
 \end{description}
 
+\section*{Education}
+\begin{description}
+\item[PhD + Master's in Computer Science]\quad University of California Irvine, GPA 3.83/4 \hfill Sep 2015 -- Dec 2019
+
+\noindent\llap{\textbullet\hspace{6pt}}Co-authored 9 papers on algorithm design, including as main author in tier A conferences like ICALP and ISAAC. The papers describe new algorithmic improvements in graph theory (routing), computational geometry (clustering, matching, TSP), and computational biology (network alignment) (\href{https://scholar.google.bg/citations?hl=en&user=LIuIigEAAAAJ}{scholar.google.bg/citations?user=LIuIigEAAAAJ}).
+
+\vspace{2px}
+\noindent\llap{\textbullet\hspace{6pt}}Led a research project from inception to publication: came up with an original problem, engaged 3 colleagues to work on it, and collaborated with them to solve it. We invented an algorithm for the knight's tour problem (cited by Donald Knuth).
+
+\item[B.E. in Computer Science]\quad Polytechnic University of Catalonia (99th percentile GPA) \hfill Sep 2011 -- Jul 2015
+
+\noindent\llap{\textbullet\hspace{6pt}}Created SANA, a C++ biological network alignment tool that uses simulated annealing. It has 100+ citations and has been actively maintained by 50+ collaborators for 10+ years, with 2,000+ commits (\href{https://github.com/nmamano/SANA}{github.com/nmamano/SANA}).
+\end{description}
+
 \section*{AI Projects}
 \begin{description}
-	\item[Isomux]\quad \href{https://isomux.com}{isomux.com} \hfill 2026 -- current
-
-	\noindent\llap{\textbullet\hspace{6pt}}Building a meta-harness where multiple Claude and Codex agents and humans can collaborate in the same conversation. (React, Bun, WebSocket, Claude Agent SDK, Codex App Server)
-
-	\vspace{2px}
-	\noindent\llap{\textbullet\hspace{6pt}}Isometric office UI with animated agent workers as an intuitive visual metaphor, optimized for desktop and mobile.
-
-	\vspace{2px}
-	\noindent\llap{\textbullet\hspace{6pt}}Cron jobs, a shared task board, a built-in editor, terminal, diff tool, and more, all controllable by the agents via an API.
-
 	\item[Context Composer]\quad \href{https://github.com/nmamano/context-composer}{github.com/nmamano/context-composer} \hfill 2026
 
 	\noindent\llap{\textbullet\hspace{6pt}}Built a proxy that sits between Claude Code and Anthropic's servers, giving you (or another agent) fine-grained control over the live context: delete, rewrite, reorder, or compact individual fragments without the agent noticing. (Bun, TypeScript)
 
 	\item[Wall Game]\quad \href{https://wallgame.io}{wallgame.io} \hfill 2025
 
-	\noindent\llap{\textbullet\hspace{6pt}}A full-stack online board game with AIs as first-class citizens through a bot protocol. (React, TypeScript, WebSocket, PostgreSQL)
+	\noindent\llap{\textbullet\hspace{6pt}}Built a full-stack online board game with a bot protocol and $\sim$100 games played daily. (React, TypeScript, WebSocket, PostgreSQL)
 
 	\vspace{2px}
-	\noindent\llap{\textbullet\hspace{6pt}}Implemented a Negamax-based engine and adapted an AlphaZero-style engine, training a model to superhuman strength via self-play. (C++, PyTorch, TensorRT, ONNX)
+	\noindent\llap{\textbullet\hspace{6pt}}Implemented a Negamax-based engine and adapted an AlphaZero-style engine, training ResNets and transformer models to superhuman strength via self-play. (C++, PyTorch, TensorRT, ONNX)
 
 \begin{comment}
 	 
@@ -144,20 +162,6 @@ nil @ mamano . com\\
 	
 	Java $|$ Designed a high-level programming language to specify the position evaluation rules of a chess engine. Built a transpiler that converts the code into C++ and integrates it with the search algorithm from the Faile chess engine, allowing users to build their own chess engines and experiment with the evaluation rules without needing to understand the search algorithm.
 \end{comment}	
-\end{description}
-
-\section*{Education}
-\begin{description}
-\item[PhD + Master's in Computer Science]\quad University of California Irvine, GPA 3.83/4 \hfill Sep 2015 -- Dec 2019
-
-\noindent\llap{\textbullet\hspace{6pt}}Co-authored 9 peer-reviewed papers on algorithm design, including as main author in tier A conferences like ICALP and ISAAC. The papers describe new algorithmic improvements in graph theory (routing), computational geometry (clustering, matching, TSP), and computational biology (network alignment) (\href{https://scholar.google.bg/citations?hl=en&user=LIuIigEAAAAJ}{scholar.google.bg/citations?user=LIuIigEAAAAJ}).
-
-\vspace{2px}
-\noindent\llap{\textbullet\hspace{6pt}}Led a research project from inception to publication: came up with an original problem, engaged 3 colleagues to work on it, and collaborated with them to solve it. We invented an algorithm for the knight's tour problem (cited by Donald Knuth).
-
-\item[B.E. in Computer Science]\quad Polytechnic University of Catalonia, GPA 3.8/4 (99th percentile) \hfill Sep 2011 -- Jul 2015
-
-\noindent\llap{\textbullet\hspace{6pt}}Created SANA, a C++ biological network alignment tool that uses simulated annealing. It has 100+ citations and has been actively maintained by 50+ collaborators for 10+ years, with 2,000+ commits (\href{https://github.com/nmamano/SANA}{github.com/nmamano/SANA}).
 \end{description}
 
 \end{document}

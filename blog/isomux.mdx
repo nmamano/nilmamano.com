@@ -69,7 +69,7 @@ I spend all day managing agents, and I wasn't a fan of the Claude Code UX. I got
 
 Each agent has a customizable name and look and sits at a desk. You see who is working, who's sleeping, and who needs you (hand raised) at a glance.
 
-The idea is that **by anthropomorphizing agents, we reduce cognitive load**; we're more used to coordinating humans than terminals.
+The idea is that **by anthropomorphizing agents, we make them accessible to non-technical users**; coordinating with humans comes naturally to everyone.
 
 In the [hierarchical agents](#hierarchical-agents) section, we'll see more implications of this metaphor.
 
@@ -91,7 +91,7 @@ The server is event-driven. Updates come in from three ends: browsers (over WebS
   alt="Isomux system design: two users' devices talk to the Bun service over WebSocket and a REST API; inside the service, an agent lifecycle and event loop run agents through a shared backend abstraction connected to the Claude Agent SDK and Codex App Server; state persists to the local file system (~/.isomux)"
 />
 
-Claude agents use the [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk), Codex agents use the [Codex CLI's App Server](https://github.com/openai/codex), and OpenCode agents use a pinned shared OpenCode server. All three sit behind the same backend abstraction. There are multiple ways of making a meta-harness multi-provider; the [appendix](#appendix-three-ways-to-make-a-meta-harness-multi-provider) shows a comparison.
+Claude agents use the [Claude Agent SDK](https://docs.anthropic.com/en/docs/claude-code/sdk), Codex agents use the [Codex CLI's App Server](https://github.com/openai/codex), and [OpenCode](https://opencode.ai) agents use a shared OpenCode server. All three sit behind the same backend abstraction. There are multiple ways of making a meta-harness multi-provider; the [appendix](#appendix-three-ways-to-make-a-meta-harness-multi-provider) shows a comparison.
 
 <Callout>
   I've been building Isomux from inside Isomux since the first day. Developing a dev tool from itself is fun!

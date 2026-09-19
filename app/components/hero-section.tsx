@@ -1,8 +1,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
-import { FaXTwitter, FaLinkedin, FaGithub, FaFilePdf } from "react-icons/fa6";
-import { SiGooglescholar } from "react-icons/si";
+import { FaXTwitter, FaLinkedin, FaGithub, FaFilePdf } from "@/components/site-icons-fa6";
+import { SiGooglescholar } from "@/components/site-icons-si";
 
 export default function HeroSection() {
   return (

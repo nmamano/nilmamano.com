@@ -55,7 +55,7 @@ export const HIGHLIGHT_BODIES: Record<string, React.ReactNode> = {
   research: (
     <>
       <A href="https://scholar.google.bg/citations?user=LIuIigEAAAAJ&hl=en">
-        10 peer-reviewed papers
+        9 papers
       </A>{" "}
       with 180 citations in computational geometry, graphs, computational
       biology, and recreational math - all{" "}

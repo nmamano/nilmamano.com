@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { FaGithub, FaFilePdf, FaPlay, FaChevronDown, FaBook } from "react-icons/fa";
+import { FaGithub, FaFilePdf, FaPlay, FaChevronDown, FaBook } from "@/components/site-icons-fa";
 import Image from "next/image";
 import { Publication } from "@/app/lib/publications";
 
@@ -94,11 +94,13 @@ export const PublicationCardPreview = ({
 
 interface PublicationExpandedContentProps {
   publication: Publication;
+  showTitle?: boolean;
 }
 
-// Expanded content component - rendered below the row
+// Full paper description, also used inside the research dialog.
 export const PublicationExpandedContent = ({
   publication,
+  showTitle = true,
 }: PublicationExpandedContentProps) => {
   const [imagesLoaded, setImagesLoaded] = useState(false);
 
@@ -110,7 +112,7 @@ export const PublicationExpandedContent = ({
     <div>
       {/* Title and metadata */}
       <div className="mb-4">
-        <h3 className="text-xl font-medium">{publication.title}</h3>
+        {showTitle && <h3 className="text-xl font-medium">{publication.title}</h3>}
         <p className="text-sm text-muted-foreground mt-1">
           {publication.not_alphabetical_order ? "* " : ""}
           {publication.authors.join(", ")}

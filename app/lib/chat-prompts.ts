@@ -21,7 +21,7 @@ Tech Interview Consultant. Designed and taught the DS&A curriculum for coding in
 
 ## Education
 - PhD + Master's in Computer Science, University of California Irvine (Sep 2015 - Dec 2019), GPA 3.83/4. Advisors: David Eppstein, Michael Goodrich.
-  - His research spans computational geometry, greedy algorithms, graph data structures, computational biology, and recreational mathematics. Co-authored 9 peer-reviewed papers, including as main author in tier A conferences like ICALP and ISAAC.
+  - His research spans computational geometry, greedy algorithms, graph data structures, computational biology, and recreational mathematics. Co-authored 9 papers, including as main author in tier A conferences like ICALP and ISAAC.
   - Led a research project from inception to publication: came up with an original problem, engaged 3 colleagues to work on it, and collaborated with them to solve it and write a paper. Invented an algorithm for the knight's tour problem (cited by Knuth).
   - Led 100+ teaching sessions and guest lectures with 50+ students.
 - B.E. in Computer Science, Polytechnic University of Catalonia (Sep 2011 - Jul 2015), GPA 3.8/4 (99th percentile).

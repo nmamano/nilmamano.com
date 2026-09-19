@@ -32,7 +32,7 @@ export const PUBLICATIONS: Publication[] = [
     authors: ["Nil Mamano"],
     coverImage: "/blog/greedy-algorithms/local_greedy_tsp_crop.gif",
     links: {
-      pdf: "/thesis/nilthesis.pdf",
+      pdf: "/dissertation/nildissertation.pdf",
       blog: "/blog/greedy-algorithms",
     },
     description: [

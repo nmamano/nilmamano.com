@@ -4,7 +4,7 @@ import { mediaClass, mediaStyle } from "../../lib/post-media";
 import { formatDate } from "../../lib/date-utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
+import { FaXTwitter, FaLinkedin } from "@/components/site-icons-fa6";
 import { CurationControls } from "../../components/curation-controls";
 import { Metadata } from "next";
 

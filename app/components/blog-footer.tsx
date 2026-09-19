@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { FaXTwitter, FaLinkedin } from "react-icons/fa6";
+import { FaXTwitter, FaLinkedin } from "@/components/site-icons-fa6";
 import { getRandomPosts } from "../lib/blog";
 import { BlogPostCard } from "./blog-post-card";
 import { NewsletterSubscription } from "./newsletter-subscription";

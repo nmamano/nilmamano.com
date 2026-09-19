@@ -59,7 +59,7 @@ export const HIGHLIGHTS: Highlight[] = [
     statement: "Algorithms research",
     image: "/knight/3d.svg",
     blurb:
-      "10 peer-reviewed papers with 180 citations in computational geometry, graphs, computational biology, and recreational math - all publicly available.",
+      "9 papers with 180 citations in computational geometry, graphs, computational biology, and recreational math - all publicly available.",
     links: [
       { label: "Research", href: "/research" },
       {

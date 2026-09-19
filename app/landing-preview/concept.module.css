@@ -1,0 +1,141 @@
+.preview {
+  --paper: #f7f4ed; --ink: #34352f; --muted: #74756b; --accent: #52644a; --line: #dcded2;
+  color: var(--ink); background: var(--paper); min-height: 100svh;
+  font-family: Arial, Helvetica, sans-serif; font-size: 16px;
+}
+:global(.dark) .preview { --paper: #212520; --ink: #deded3; --muted: #9da497; --accent: #b0c19c; --line: #3b4438; }
+.preview a { transition: color .15s, text-decoration-color .15s; }
+.preview a:focus-visible, .preview button:focus-visible { outline: 2px solid var(--accent); outline-offset: 5px; border-radius: 2px; }
+.chooser { height: 44px; display: flex; align-items: center; justify-content: center; gap: 8px; padding: 0 16px; font: 12px Arial, sans-serif; border-bottom: 1px solid var(--line); background: var(--paper); }
+.previewLabel { color: var(--muted); margin-right: 8px; font-size: 10px; text-transform: uppercase; letter-spacing: .12em; }
+.chooser > a { padding: 7px 10px; border-radius: 4px; }
+.chooser > a[aria-current="page"] { background: var(--ink); color: var(--paper); }
+.chooser button { margin-left: 8px; padding: 9px; }
+.sun { display: none; } :global(.dark) .sun { display: block; } :global(.dark) .moon { display: none; }
+.canvas { max-width: 1120px; margin: auto; padding: 0 40px; min-height: calc(100svh - 44px); display: flex; flex-direction: column; }
+.siteNav { display: flex; justify-content: space-between; align-items: center; padding: 24px 0; font-size: 13px; }
+.siteNav nav { display: flex; gap: 26px; }
+.wordmark { font: italic 24px Georgia, serif; letter-spacing: -2px; }
+.wordmark span { color: var(--accent); }
+.page { flex: 1; }
+.portrait { width: 94px; height: 94px; flex-shrink: 0; }
+.portrait img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+.night { display: none; } :global(.dark) .day { display: none; } :global(.dark) .night { display: block; }
+.identity h1 { margin: 0; font: 46px/1.1 Georgia, 'Times New Roman', serif; letter-spacing: -.045em; }
+.subtitle { color: var(--muted); font-size: 14px; line-height: 1.6; margin: 9px 0 0; }
+.socials { display: flex; gap: 17px; align-items: center; margin-top: 15px; }
+.socials a { display: inline-flex; align-items: center; justify-content: center; min-height: 32px; color: var(--muted); }
+.socials a:hover { color: var(--ink); }
+.socials svg { width: 17px; height: 17px; }
+.socials .resume { border-left: 1px solid var(--line); padding-left: 18px; gap: 8px; font-size: 12px; color: var(--ink); }
+.story { font-size: 15px; line-height: 1.75; }
+.story p { margin: 0; }
+.story a { color: var(--ink); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--accent) 45%, transparent); text-underline-offset: 3px; text-decoration-thickness: 1px; }
+.story a:hover { color: var(--accent); text-decoration-color: var(--accent); }
+.story .lead { font: 25px/1.45 Georgia, serif; letter-spacing: -.015em; margin-bottom: 24px; }
+.lead span { color: var(--accent); }
+.chapterLabel { display: none; }
+.chapter + .chapter { margin-top: 19px; }
+.otherWork { margin-top: 20px; }
+.footer { display: flex; justify-content: space-between; gap: 20px; padding: 20px 0; border-top: 1px solid var(--line); margin-top: 32px; font-size: 11px; color: var(--muted); }
+.footer nav { display: flex; gap: 20px; }
+/* A: a short letter, on warm paper. */
+.letter .canvas { max-width: 880px; }
+.letter .page { padding: 24px 32px 12px; }
+.letter .identity { display: flex; gap: 26px; align-items: center; margin-bottom: 30px; }
+.letter .story { font-family: Georgia, 'Times New Roman', serif; font-size: 17px; line-height: 1.65; }
+.letter .story .lead { font-size: 25px; }
+/* B: a personal study, identity in the margin and a clean reading column. */
+.study { --paper: #f0f2ec; --ink: #29362e; --muted: #6f7c70; --accent: #5b7557; --line: #d2dbcf; }
+:global(.dark) .study { --paper: #19251f; --ink: #e1e8db; --muted: #9ba99b; --accent: #b6c99b; --line: #35453a; }
+.study .page { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 64px; align-content: center; padding: 30px 0 44px; }
+.study .identity { border-right: 1px solid var(--line); padding-right: 30px; }
+.study .portrait { width: 132px; height: 154px; margin-bottom: 27px; }
+.study .portrait img { border-radius: 70px 70px 8px 8px; }
+.study .identity h1 { font-size: 43px; }
+.study .subtitle { max-width: 200px; margin-top: 13px; }
+.study .socials { gap: 15px; flex-wrap: wrap; margin-top: 23px; }
+.study .socials .resume { flex-basis: 100%; justify-content: flex-start; padding-left: 0; border-left: 0; }
+.study .lead { font-size: 29px; }
+.study .footer { margin-top: 0; }
+/* C: an editorial spread, two chapters side by side. */
+.journal { --paper: #faf8f5; --ink: #3c322d; --muted: #89776b; --accent: #a35639; --line: #e3d9cf; }
+:global(.dark) .journal { --paper: #28231f; --ink: #eee0d0; --muted: #b2a08c; --accent: #d79c79; --line: #493d32; }
+.journal .page { display: flex; flex-direction: column; justify-content: center; padding: 20px 0 30px; }
+.journal .identity { display: flex; align-items: center; gap: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--line); margin-bottom: 25px; }
+.journal .portrait { width: 96px; height: 96px; }
+.journal .identityText { flex: 1; display: grid; grid-template-columns: 1fr auto; column-gap: 20px; }
+.journal .identity h1 { font-size: 48px; }
+.journal .subtitle { grid-column: 1; }
+.journal .socials { grid-column: 2; grid-row: 1 / 3; margin-top: 0; }
+.journal .lead { max-width: 780px; font-size: 29px; margin-bottom: 30px; }
+.journal .chapters { display: grid; grid-template-columns: 1fr 1.12fr; gap: 48px; }
+.journal .chapter + .chapter { margin-top: 0; }
+.journal .chapterLabel { display: block; font-size: 10px; text-transform: uppercase; letter-spacing: .11em; color: var(--accent); margin-bottom: 13px; }
+.journal .otherWork { max-width: 760px; margin-top: 27px; padding-top: 20px; border-top: 1px solid var(--line); }
+.journal .footer { margin-top: 0; }
+@media (min-width: 760px) and (max-height: 800px) {
+  .siteNav { padding-top: 17px; padding-bottom: 17px; }
+  .letter .page { padding-top: 10px; }
+  .letter .identity { margin-bottom: 20px; }
+  .letter .story { font-size: 16px; line-height: 1.6; }
+  .letter .story .lead { font-size: 23px; margin-bottom: 19px; }
+  .footer { margin-top: 20px; padding: 15px 0; }
+  .study .page { padding-top: 15px; padding-bottom: 24px; }
+}
+@media (max-width: 759px) {
+  .canvas { padding: 0 24px; }
+  .siteNav { padding: 19px 0; }
+  .siteNav nav { gap: 22px; }
+  .identity h1 { font-size: 38px; }
+  .portrait { width: 76px; height: 76px; }
+  .subtitle { font-size: 12px; }
+  .story { font-size: 15px; line-height: 1.75; }
+  .story .lead { font-size: 24px; line-height: 1.45; margin-bottom: 25px; }
+  .letter .page { padding: 12px 0 0; }
+  .letter .identity { gap: 19px; margin-bottom: 30px; }
+  .letter .story { font-size: 17px; line-height: 1.65; }
+  .letter .socials { margin-top: 12px; gap: 14px; }
+  .letter .socials .resume { padding-left: 12px; }
+  .study .page { display: block; padding: 12px 0 0; }
+  .study .identity { border: 0; padding: 0 0 25px; margin-bottom: 27px; border-bottom: 1px solid var(--line); display: flex; gap: 22px; align-items: center; }
+  .study .portrait { width: 92px; height: 120px; margin: 0; }
+  .study .identity h1 { font-size: 36px; }
+  .study .subtitle { max-width: 215px; }
+  .study .socials { margin-top: 12px; gap: 13px; }
+  .study .socials .resume { flex-basis: auto; padding-left: 10px; border-left: 1px solid var(--line); }
+  .study .lead { font-size: 26px; }
+  .study .footer { margin-top: 30px; }
+  .journal .page { padding: 12px 0 0; }
+  .journal .identity { gap: 20px; padding-bottom: 25px; }
+  .journal .identityText { display: block; }
+  .journal .identity h1 { font-size: 37px; }
+  .journal .portrait { width: 76px; height: 76px; }
+  .journal .socials { margin-top: 12px; gap: 13px; }
+  .journal .socials .resume { padding-left: 12px; }
+  .journal .chapters { display: block; }
+  .journal .chapter + .chapter { margin-top: 28px; }
+  .journal .lead { font-size: 26px; margin-bottom: 29px; }
+  .journal .otherWork { margin-top: 25px; }
+  .journal .footer { margin-top: 30px; }
+  .footer { align-items: flex-start; gap: 12px; font-size: 10px; }
+  .footer nav { gap: 12px; flex-wrap: wrap; justify-content: flex-end; }
+}
+@media (max-width: 370px) {
+  .canvas { padding: 0 18px; }
+  .previewLabel { display: none; }
+  .identity h1, .study .identity h1, .journal .identity h1 { font-size: 32px; }
+  .socials { flex-wrap: wrap; gap: 10px; }
+  .study .identity { gap: 15px; }
+  .study .portrait { width: 74px; height: 100px; }
+  .journal .identity { gap: 15px; }
+  .letter .identity { gap: 15px; }
+  .footer { flex-direction: column; }
+}
+
+@media (max-width: 480px) {
+  .chooser { min-height: 44px; height: auto; flex-wrap: wrap; gap: 2px; padding: 4px 8px; }
+  .chooser .previewLabel { display: none; }
+  .chooser > a { font-size: 11px; padding: 7px 6px; white-space: nowrap; }
+  .chooser button { margin-left: 2px; padding: 7px; }
+}

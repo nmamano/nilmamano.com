@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect, ReactNode } from "react";
 import { useGridColumns } from "@/hooks/use-grid-columns";
-import { FaChevronUp } from "react-icons/fa";
+import { FaChevronUp } from "@/components/site-icons-fa";
 
 interface ExpandableCardGridProps<T> {
   items: T[];

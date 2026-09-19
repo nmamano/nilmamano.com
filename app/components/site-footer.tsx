@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { FaXTwitter, FaLinkedin, FaGithub } from "react-icons/fa6";
+import { FaXTwitter, FaLinkedin, FaGithub } from "@/components/site-icons-fa6";
 
 export function SiteFooter() {
   return (
@@ -17,12 +17,6 @@ export function SiteFooter() {
         <nav className="flex gap-4 sm:gap-6 mx-auto items-center">
           <Link className="text-xs hover:underline underline-offset-4" href="/">
             Home
-          </Link>
-          <Link
-            className="text-xs hover:underline underline-offset-4"
-            href="/about"
-          >
-            About
           </Link>
           <Link
             className="text-xs hover:underline underline-offset-4 flex items-center gap-1"
