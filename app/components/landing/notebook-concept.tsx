@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useEffect, useId, useState } from "react";
 import { useTheme } from "next-themes";
-import { ArrowUp, Square, Moon, Sun } from "lucide-react";
+import { ArrowRight, ArrowUp, Square, Moon, Sun } from "lucide-react";
 import { FaXTwitter, FaLinkedin, FaGithub } from "@/components/site-icons-fa6";
 import { SiGooglescholar } from "@/components/site-icons-si";
 import styles from "./notebook.module.css";
@@ -29,11 +29,26 @@ function Profiles() {
     <a target="_blank" rel="noopener noreferrer" href="https://linkedin.com/in/nilmamano/" aria-label="LinkedIn" title="LinkedIn"><FaLinkedin /></a>
     <a target="_blank" rel="noopener noreferrer" href="https://x.com/Nil053" aria-label="X" title="X"><FaXTwitter /></a>
     <a target="_blank" rel="noopener noreferrer" href="https://scholar.google.com/citations?user=LIuIigEAAAAJ" aria-label="Google Scholar" title="Google Scholar"><SiGooglescholar /></a>
-    <div className={styles.profilePages}><a target="_blank" rel="noopener noreferrer" href="/resume/resume_nilmamano.pdf">Resume</a><A href="/blog">Blog</A></div>
+    <div className={styles.profilePages}><a target="_blank" rel="noopener noreferrer" href="/resume/resume_nilmamano.pdf">Resume</a></div>
   </nav>;
 }
 
-export function NotebookConcept() {
+type LatestPost = { slug: string; title: string; date: string };
+
+function LatestPosts({ posts }: { posts: LatestPost[] }) {
+  return <section className={styles.blogCard} aria-labelledby="notebook-blog-title">
+    <span className={styles.cardPaper} aria-hidden="true" />
+    <div className={styles.blogCardHeading}>
+      <h2 id="notebook-blog-title"><A href="/blog">From the blog</A></h2>
+      <A href="/blog">All posts <ArrowRight size={15} aria-hidden="true" /></A>
+    </div>
+    <ul>
+      {posts.map(post => <li key={post.slug}><A href={`/blog/${post.slug}`}>{post.title}</A><time>{post.date}</time></li>)}
+    </ul>
+  </section>;
+}
+
+export function NotebookConcept({ latestPosts = [] }: { latestPosts?: LatestPost[] }) {
   const { resolvedTheme, setTheme } = useTheme();
   const [chapterLinksActive, setChapterLinksActive] = useState(true);
   useEffect(() => {
@@ -46,6 +61,7 @@ export function NotebookConcept() {
   return <div className={styles.book}>
     <main className={styles.desk}>
       <section className={`${styles.sheet} ${styles.cover}`} id="notebook-cover" aria-labelledby="notebook-title">
+        <Link className={styles.blogTab} href="/blog" target="_blank" rel="noopener noreferrer">Blog <ArrowRight size={17} aria-hidden="true" /></Link>
         <div className={styles.spread}>
           <header className={styles.coverCopy}>
             <div className={styles.coverTop}>
@@ -93,13 +109,16 @@ export function NotebookConcept() {
         </div>
       </section>
       </div>
+      <div className={styles.bottomRow}>
+      {latestPosts.length > 0 && <LatestPosts posts={latestPosts} />}
       <section className={styles.afterword} aria-label="Other projects">
         <span className={styles.notePaper} aria-hidden="true" />
         <div className={styles.otherWork}><span className={styles.smallRule} aria-hidden="true" /><p>Some of my other projects include the <A href="https://wallgame.io">Wall Game</A>, the <A href="https://dsatoolkit.com">DSA Toolkit</A>, and the <A href="/blog">Nil Pointers blog</A>.</p><p>I also spent a few formative years at Google, but decided to leave because I realized I do my best work when I&apos;m truly passionate about it.</p></div>
         <a href="#notebook-cover" className={styles.back}>Back to cover <ArrowUp size={16} aria-hidden="true" /></a>
       </section>
+      </div>
     </main>
-    <footer className={styles.footer}><span>© {new Date().getFullYear()} Nil Mamano</span><nav aria-label="More about Nil"><A href="/research">Research</A><A href="/posts">Feed</A><A href="/personal">Outside of work</A><A href="/contact">Get in touch</A><A href="/rss.xml">RSS</A></nav></footer>
+    <footer className={styles.footer}><span>© {new Date().getFullYear()} Nil Mamano</span><nav aria-label="More about Nil"><A href="/blog">Blog</A><A href="/research">Research</A><A href="/posts">Feed</A><A href="/personal">Outside of work</A><A href="/contact">Get in touch</A><A href="/rss.xml">RSS</A></nav></footer>
   </div>;
 }
 
