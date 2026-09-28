@@ -148,7 +148,7 @@ export function NotebookDoodles({ scene }: { scene: "cover" | "algorithms" | "of
       <DoodleLink href="#notebook-dsa" label="Chapter 1: Data Structures and Algorithms" x={70} y={135} width={190} height={210}/>
       <DoodleLink href="#notebook-agents" label="Chapter 2: Agentic Tooling" x={270} y={135} width={200} height={210}/>
     </> : scene === "algorithms" ? <>
-      <DoodleLink href="/posts/recap-of-my-donald-knuth-arc-9946361" label="The knight’s tour" x={20} y={95} width={255} height={250}/>
+      <DoodleLink href="/blog/knights-tour" label="The knight’s tour" x={20} y={95} width={255} height={250}/>
       <DoodleLink href="/dissertation/nildissertation.pdf" label="Nearest-neighbor chains and greedy algorithms" x={275} y={65} width={190} height={90}/>
       <DoodleLink href="https://arxiv.org/pdf/1804.09411" label="Stable-matching Voronoi diagrams" x={300} y={195} width={155} height={150}/>
       <DoodleLink href="https://www.amazon.com/dp/195570600X" label="Beyond Cracking the Coding Interview" x={305} y={330} width={200} height={188}/>
