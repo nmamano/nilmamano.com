@@ -1,0 +1,82 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #06080f; }
+  #card {
+    width: 1200px; height: 630px; position: relative; overflow: hidden;
+    font-family: Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(900px 620px at 88% 46%, #1d1a3f 0%, rgba(29,26,63,0) 68%),
+      linear-gradient(140deg, #0a1120 0%, #070c17 52%, #05080f 100%);
+  }
+  /* faint diagonal lattice, like the other covers */
+  #card::before {
+    content: ""; position: absolute; inset: 0; opacity: .5;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(120,160,230,.055) 0 1px, transparent 1px 84px),
+      repeating-linear-gradient(-45deg, rgba(120,160,230,.055) 0 1px, transparent 1px 84px);
+  }
+
+  .left { position: absolute; left: 78px; top: 180px; }
+  .title { font-size: 66px; font-weight: 800; letter-spacing: -1.6px; line-height: 1.1; color: #ffffff; }
+  .title .accent { color: #a78bfa; }
+  .rule { width: 92px; height: 5px; border-radius: 3px; background: #34d399; margin-top: 34px; }
+  .sub { margin-top: 26px; font-size: 21px; font-weight: 500; color: #93a4c2; letter-spacing: -.2px; line-height: 1.45; }
+
+  /* ---- Shared conversation panel ---- */
+  .panel {
+    position: absolute; right: 70px; top: 147px; width: 470px;
+    background: #0e1727; border: 1px solid #22314c; border-radius: 20px;
+    padding: 18px 20px 20px; box-shadow: 0 30px 70px rgba(0,0,0,.5);
+  }
+  .panel-head { display: flex; align-items: center; gap: 11px; padding-bottom: 14px; border-bottom: 1px solid #1f2d46; margin-bottom: 16px; }
+  .avatar { width: 34px; height: 34px; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 800; color: #0b1020; flex: none; }
+  .panel-title { font-size: 18px; font-weight: 700; color: #e8eefc; }
+  .panel-sub { font-size: 12.5px; font-weight: 500; color: #6f83a6; margin-top: 2px; }
+  .people { margin-left: auto; display: flex; }
+  .people .avatar { width: 26px; height: 26px; border-radius: 50%; font-size: 11px; border: 2px solid #0e1727; margin-left: -7px; }
+
+  .msg { display: flex; gap: 11px; margin-bottom: 14px; }
+  .msg:last-child { margin-bottom: 0; }
+  .msg .avatar { width: 30px; height: 30px; border-radius: 50%; font-size: 12px; }
+  .who { font-size: 13px; font-weight: 700; color: #cddcf6; margin-bottom: 5px; }
+  .who span { font-weight: 500; color: #6f83a6; margin-left: 6px; }
+  .bubble { font-size: 15px; font-weight: 500; color: #b9c7e0; line-height: 1.4; }
+  .app {
+    margin-top: 9px; display: flex; align-items: center; gap: 10px;
+    background: #10261f; border: 1px solid #1f5a45; border-radius: 11px; padding: 9px 12px;
+  }
+  .dot { width: 8px; height: 8px; border-radius: 50%; background: #34d399; box-shadow: 0 0 9px rgba(52,211,153,.85); flex: none; }
+  .app-name { font-size: 14px; font-weight: 700; color: #cdeee0; }
+  .app-url { font-size: 13px; font-weight: 500; color: #5fc9a0; margin-left: auto; }
+  .joined { text-align: center; font-size: 12.5px; font-weight: 600; color: #8b7fd6; margin: 4px 0 14px; }
+
+  .ops { background: #fbbf24; }
+  .eng { background: #60a5fa; }
+  .agent { background: #a78bfa; }
+
+  /* ---- One agent from the live Isomux demo office (isomux.com/demo, dark mode) ---- */
+  .shot {
+    position: absolute; right: 84px; top: 72px; width: 450px; height: 491px;
+    border-radius: 20px; overflow: hidden; border: 1px solid #22314c;
+    box-shadow: 0 30px 70px rgba(0,0,0,.5); background: #0e1320;
+  }
+  .shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+</style>
+</head>
+<body>
+<div id="card">
+  <div class="left">
+    <div class="title">Isomux for<br/><span class="accent">Enterprise</span></div>
+    <div class="rule"></div>
+    <div class="sub">IT/engineers set up the environment.<br/>Normies build with agents.</div>
+  </div>
+
+  <div class="shot"><img src="isomux_enterprise_michael.png" alt="" /></div>
+</div>
+</body>
+</html>

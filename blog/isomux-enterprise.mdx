@@ -1,0 +1,143 @@
+---
+title: "Isomux for Enterprise: Agents for Normies"
+date: "2026-09-30"
+excerpt: "Getting normies to use agents at work with multiplayer agent systems."
+coverImage: "/blog/isomux-enterprise/cover.png"
+categories: ["isomux", "ai", "swe"]
+---
+
+Every company has software engineers/IT and non-technical employees ("normies" henceforth, with love).
+
+Thanks to agents, engineers now iterate much faster,[^in-house] but we are not yet seeing the same gains for normies. That, I think, is the next big unlock in agentic productivity.
+
+[^in-house]: One trend: building things in-house instead of paying for SaaS.
+
+If normies can make their own dashboards, UI tweaks, or simple automations, the engineers are free to focus on architectural work.[^meat-proxy]
+
+[^meat-proxy]: For simple asks, the engineer is likely just going to feed the feature request to an agent, making the engineer a _meat proxy_ between the end user (the normie) and their agents. The goal is to eliminate this middleman role.
+
+<Toc />
+
+## Obstacles
+
+To get normies using agents at work, you need to (1) hide all technical details, and (2) address the "What am I supposed to do with this" question: if you're not a programmer, it's hard to grasp how an agent that can program for you is useful.
+
+On the technical details, here's a non-exhaustive checklist. Does the system require a normie:
+
+- To set up integrations?
+- To open a terminal even once?
+- To remember slash commands?
+- To decide what model or provider to use?
+
+Then, it's probably not accessible enough.
+
+Here's another litmus test: can a normie ask an agent for a just-in-time app, say, a work-relevant dashboard, and get back a working link, without localhost or ports?
+
+The viral insight of OpenClaw was to bring the agents where the normies already are. But even then:
+
+- You still have the "What To Do" question
+- A non-programmer eventually hits technical roadblocks
+
+So you can't just get them credits for an OpenClaw or Claude Cowork.
+
+## Solution: multiplayer agents
+
+The key to solving both pain points is to make the system _fully multiplayer_, so the engineers and the normies access the same agents, same conversations, in real time.
+
+Then, it's a 3 step dance:
+
+1. IT sets up the agents and their environment
+2. Normies start playing with it
+3. IT steps in whenever normies inevitably hit a technical roadblock[^tested]
+
+[^tested]: I haven't tested this in an enterprise setting yet, but it's how I [unblocked a friend](/posts/today-a-friend-pinged-me-one-of-6267505) and [helped my dad use agents](/posts/multiplayer-agents-are-the-gateway-for-onboarding-9399018).
+
+<BlogImage
+  src="/blog/isomux-enterprise/overview-normies.svg"
+  alt="IT and normies sit outside a box labelled Isomux, which runs in your infra with the harnesses you choose. Inside are two panels: Agents with shared conversations, such as Report Maker on Claude Code and Data Visualizer on Codex, and Apps reached by links instead of ports, such as churn-dashboard at churn.acme.isomux.app. Numbered arrows follow the 3-step dance: 1, IT sets up the agents; 2, normies join through an invite link and chat with the agents; 3, IT joins the conversations in real time. The agents register the apps they build, and normies open the app link with the same login."
+  caption="The [apps](#just-in-time-apps) and [Isomux](#isomux) itself are covered below."
+/>
+
+In Step 1, the engineers do the technical lift: permissions, API keys, integrations (e.g., the company's MCPs), etc. They also set their system prompts so the agents are _normie-aligned_: the agents have the context of when they are talking to one and respond accordingly.
+
+The agents should guide normies to use them effectively, for example, by suggesting to build a just-in-time app for them when appropriate.
+
+The challenge is to serve both engineers and normies. Normie tools often come prepackaged, but engineers hate lock-in. Multiplayer fixes this: IT controls the hosting, models, and harnesses, and the normies never see any of it.
+
+### Accessible UX
+
+Claude Code was made by engineers for engineers, and that set the tone for most agentic tools. We should [rethink that](/blog/agent-ui), starting with anthropomorphizing agents, because normies are used to working with people, not terminal sessions.[^named-agents]
+
+[^named-agents]: In a platform that anthropomorphizes agents like Isomux, the engineers can set up an agent named Report Maker, one named Data Visualizer, etc. The goal is to make "what to do" as obvious as possible.
+
+### Just-in-time apps
+
+The final piece is how to make normie-made just-in-time apps scale as the number of users (and apps per user) grow. I solved this in Isomux with a ["personal software suite"](/blog/personal-software-suites), which is like an "app store" for just-in-time apps.
+
+TL;DR: after an agent builds an app (in any web stack), instead of picking a port and serving it there, it registers it with Isomux, and then Isomux
+
+- gives it a proper URL (a subdomain of the system's URL),
+- manages its lifetime so it survives the agent,
+- lists it in the "app store",
+- and handles auth by reusing Isomux's own auth (if you can talk to an agent, you can see its apps).[^insight]
+
+[^insight]: Key insight: just-in-time apps benefit from many of the features of a multiplayer agent system: 24/7 access, a lifetime that outlasts the agents, multi-device support, and human collaboration with authentication.
+
+Also, the apps can message the agents back, which is helpful for things like monitoring dashboards.
+
+[This section](/blog/personal-software-suites#the-app-orchestrator) explains how it works. Here's a demo:[^no-lock-in]
+
+<BlogCarousel
+  images={[
+    {
+      src: "/posts/personal-software-suite-in-isomux/1-ask-and-register.png",
+      alt: "An Isomux conversation. The user asks for an app that plots their commits over time at weekly resolution, where clicking a week sends the agent a message; further down, a 'Register app' tool call carries the app's name, command, working directory, and description.",
+      caption: "I ask an agent for a personal-software app **(1)**, and the agent registers it with Isomux **(2)**.",
+    },
+    {
+      src: "/posts/personal-software-suite-in-isomux/2-apps-page.png",
+      alt: "The Apps page lists running apps with live previews. Each row shows its port, restart count, the agent that created it, and its owner; two rows were created by different agents and belong to different users.",
+      caption: "The app appears in the Isomux Apps page **(3)**. It shows all the apps I have access to, including ones registered by other agents on behalf of other users.",
+    },
+    {
+      src: "/posts/personal-software-suite-in-isomux/3-open-on-phone.png",
+      alt: "The commit plot app is open in a phone browser at its own subdomain, showing weekly commit bars with a rolling average, a selected week's per-repository breakdown, and a button reading 'Ask the agent what happened'.",
+      caption: "I open the app from my phone. It works because it has access to my Isomux office. Notice the clean URL **(4)**. A button in the app messages the agent back **(5)**.",
+    },
+    {
+      src: "/posts/personal-software-suite-in-isomux/4-app-messages-agent.png",
+      alt: "The agent's conversation shows a message labeled 'COMMIT-PLOT and APP', which reports the week the user clicked and its commit counts per repository, followed by the agent's answer explaining what shipped that week.",
+      caption: "The agent acts on the message, closing the loop **(6)**.",
+    },
+  ]}
+/>
+
+[^no-lock-in]: Note: there's no lock-in to Isomux for running the app. It remains a standalone app that can run outside Isomux.
+
+## Isomux
+
+[Isomux](https://isomux.com) is my implementation of this vision: a multiplayer agent orchestration system that is accessible to normies and a daily driver for engineers.
+
+It runs harnesses like Claude Code or Codex in your own infra, but adds a few key things:
+
+- An [accessible UX](/blog/agent-ui) leaning on anthropomorphization: the whole thing looks like an office with agent coworkers.
+- Smooth normie onboarding: it's browser-based, and normies literally just click an invite link from IT and they are set.
+- Shared agent conversations with real-time sync over WebSockets, so the engineers can prepare things and intervene
+- The app store.
+- Runs in your own infra, with no harness lock-in, provider lock-in, deployment lock-in, ...
+- Agent orchestration: agents have context on other Isomux agents, can read their logs, and message each other.[^app-ex]
+
+[^app-ex]: Example use case: an engineer's agent can keep an eye on the normies' agents and surface issues.
+
+If you want the normies at your company to start using agents and find this vision compelling and want to explore it at your company, [contact me](#links).
+
+### Links
+
+- Landing page: [isomux.com](https://isomux.com)
+- GitHub (all source available): [github.com/nmamano/isomux](https://github.com/nmamano/isomux)
+- Design and architecture: [nilmamano.com/blog/isomux](/blog/isomux)
+- UX ideas in Isomux: [nilmamano.com/blog/agent-ui](/blog/agent-ui)
+- Just-in-time-app suite: [nilmamano.com/blog/personal-software-suites](/blog/personal-software-suites)
+- Hosting setup (AWS, Render, etc.): [isomux.com/docs/hosting](https://isomux.com/docs/hosting)
+- [License](https://github.com/nmamano/isomux/blob/main/LICENSE) (TL;DR: Free for non-production use like testing, and for any orgs up to 10 people.)
+- Contact: Nil on [X](https://x.com/Nil053), [LinkedIn](https://www.linkedin.com/in/nilmamano/), the [Isomux discord](https://discord.gg/yuMPcqKSBr), or at llc@isomux.com.
