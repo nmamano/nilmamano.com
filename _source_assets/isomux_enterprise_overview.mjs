@@ -85,7 +85,7 @@ function build(v) {
   // 3: engineers join the conversation.
   path("M 180 172 L 436 172", true);
   badge(250, 172, v.n.join);
-  text(270, 162, "join in real time", { size: 14, fill: arrow });
+  text(270, 162, "step in when stuck", { size: 14, fill: arrow });
   // 1: NTEs join with one click and chat.
   path("M 180 300 L 436 300");
   badge(250, 300, v.n.invite);
