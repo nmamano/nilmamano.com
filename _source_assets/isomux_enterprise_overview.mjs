@@ -26,7 +26,7 @@ const arrow = "#4a5568";
 // apps stay unnumbered.
 const CHARS = ["report-maker", "data-visualizer"];
 const VARIANTS = [
-  { file: "overview-normies.svg", eng: "IT", users: "Normies", n: { setup: 1, invite: 2, join: 3 } },
+  { file: "overview-normies.svg", eng: "Engineers", users: "Normies", n: { setup: 1, invite: 2, join: 3 } },
 ];
 
 function build(v) {
@@ -49,11 +49,9 @@ function build(v) {
 
   // People.
   rect(20, 110, 160, 84, gray);
-  text(100, 147, v.eng, { size: 19, weight: 700, fill: gray.stroke, anchor: "middle" });
-  text(100, 172, "set up, step in", { size: 14, fill: gray.stroke, anchor: "middle", opacity: 0.85 });
+  text(100, 159, v.eng, { size: 19, weight: 700, fill: gray.stroke, anchor: "middle" });
   rect(20, 270, 160, 84, gray);
-  text(100, 307, v.users, { size: 19, weight: 700, fill: gray.stroke, anchor: "middle" });
-  text(100, 332, "build with agents", { size: 14, fill: gray.stroke, anchor: "middle", opacity: 0.85 });
+  text(100, 319, v.users, { size: 19, weight: 700, fill: gray.stroke, anchor: "middle" });
 
   // Agents panel.
   rect(440, 96, 260, 234, blue);
@@ -91,7 +89,7 @@ function build(v) {
   // 1: NTEs join with one click and chat.
   path("M 180 300 L 436 300");
   badge(250, 300, v.n.invite);
-  text(270, 290, "invite link, then chat", { size: 14, fill: arrow });
+  text(270, 290, "chat with the agents", { size: 14, fill: arrow });
   // 4: agents register apps.
   path("M 700 213 L 756 213");
   if (v.n.register) badge(730, 213, v.n.register);
