@@ -115,11 +115,11 @@ We tried multiple ways of **streaming pixels,** although it's inherently a janky
 
 But maybe that's tolerable if the agent is doing most of the navigation. We tried a few approaches:
 
-1. Screenshots: CDP screencast JPEGs over a WebSocket, with mouse and keyboard sent back. We tuned it a lot: binary frames, backpressure, sizing the viewport to the panel, high-DPI captures. Still laggy, especially scrolling.
-2. Video: H.264 with Xvfb (virtual display), ffmpeg (encoder) and WebCodecs.
-3. VP8 over WebRTC ([Neko](https://github.com/m1k1o/neko)).
-4. VNC: [KasmVNC](https://github.com/kasmtech/KasmVNC) and TigerVNC/noVNC.
-5. Tab capture with `getDisplayMedia` (what video calls use). Chrome asks "share this tab?" first, which needs a human, and disabling it could be risky. Even past that, it's still a video from the same server browser.
+1. **Screenshots.** Chrome's built-in screencast sends a JPEG of the page each time it changes. We sent those over a WebSocket, and sent mouse and keyboard back. We tuned it a lot: binary frames, backpressure, sizing the viewport to the panel, high-DPI captures. Still laggy, especially scrolling.
+2. **Video.** We ran Chrome on a virtual screen (Xvfb), encoded that screen as H.264 video with ffmpeg, and decoded it in the client with WebCodecs.
+3. **WebRTC video**, the real-time tech behind video calls, using [Neko](https://github.com/m1k1o/neko), an open-source tool for sharing a server browser this way.
+4. **Remote desktop (VNC)**, the classic way to view and control another computer's screen, in a web page with [KasmVNC](https://github.com/kasmtech/KasmVNC) or TigerVNC with noVNC.
+5. **Tab capture** with `getDisplayMedia` (what video calls use). Chrome asks "share this tab?" first, which needs a human, and disabling it could be risky. Even past that, it's still a video from the same server browser.
 
 We benchmarked the first four on the same click-to-pixel test. The best was H.264, with a median of 102.7 ms, against 104.3 ms for the JPEG stream. Video used less bandwidth and scrolled more smoothly, but clicks weren't faster, and it needed more dependencies, like a virtual display.
 
