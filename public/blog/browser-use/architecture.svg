@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 440" font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+<defs>
+  <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+    <path d="M 0 0 L 10 5 L 0 10 z" fill="#4a5568"/>
+  </marker>
+</defs>
+<rect x="0" y="0" width="1000" height="440" fill="#ffffff"/>
+<rect x="20" y="20" width="470" height="400" rx="14" fill="#f0e9ff" stroke="#6b46c1" stroke-width="2"/>
+<text x="44" y="54" font-size="21" font-weight="700" fill="#6b46c1" text-anchor="start">Isomux server</text>
+<text x="44" y="78" font-size="16" font-weight="500" fill="#6b46c1" text-anchor="start" opacity="0.78">in the cloud</text>
+<rect x="44" y="100" width="190" height="220" rx="12" fill="#ffffff" stroke="#4a5568" stroke-width="1.5"/>
+<text x="62" y="130" font-size="18" font-weight="700" fill="#4a5568" text-anchor="start">Agents</text>
+<rect x="60" y="148" width="158" height="42" rx="9" fill="#f4f5f7" stroke="#4a5568" stroke-width="1.2"/>
+<text x="139" y="175" font-size="15" font-weight="600" fill="#1a202c" text-anchor="middle">Claude Code</text>
+<rect x="60" y="202" width="158" height="42" rx="9" fill="#f4f5f7" stroke="#4a5568" stroke-width="1.2"/>
+<text x="139" y="229" font-size="15" font-weight="600" fill="#1a202c" text-anchor="middle">Codex</text>
+<rect x="60" y="256" width="158" height="42" rx="9" fill="#f4f5f7" stroke="#4a5568" stroke-width="1.2"/>
+<text x="139" y="283" font-size="15" font-weight="600" fill="#1a202c" text-anchor="middle">OpenCode</text>
+<rect x="290" y="100" width="176" height="96" rx="12" fill="#ffffff" stroke="#6b46c1" stroke-width="1.5"/>
+<text x="378" y="136" font-size="17" font-weight="700" fill="#6b46c1" text-anchor="middle">Browser API</text>
+<text x="378" y="162" font-size="11.5" font-weight="500" fill="#6b46c1" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace">POST /api/agents/:id</text>
+<text x="378" y="178" font-size="11.5" font-weight="500" fill="#6b46c1" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace">/browser</text>
+<rect x="290" y="224" width="176" height="96" rx="12" fill="#ffffff" stroke="#6b46c1" stroke-width="1.5"/>
+<text x="378" y="262" font-size="17" font-weight="700" fill="#6b46c1" text-anchor="middle">Playwright</text>
+<text x="378" y="286" font-size="13" font-weight="500" fill="#6b46c1" text-anchor="middle" opacity="0.85">selectors, waiting,</text>
+<text x="378" y="303" font-size="13" font-weight="500" fill="#6b46c1" text-anchor="middle" opacity="0.85">snapshots</text>
+<path d="M 234 210 L 286 150" fill="none" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="240" y="168" font-size="13" font-weight="500" fill="#4a5568" text-anchor="start" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace">curl</text>
+<path d="M 378 196 L 378 220" fill="none" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="44" y="360" font-size="14" font-weight="500" fill="#6b46c1" text-anchor="start" opacity="0.85">Screenshots go straight into the agent's chat.</text>
+<text x="44" y="384" font-size="14" font-weight="500" fill="#6b46c1" text-anchor="start" opacity="0.85">The server refuses file:// URLs and other bad input.</text>
+<rect x="590" y="20" width="390" height="400" rx="14" fill="#e7f2ff" stroke="#2b6cb0" stroke-width="2"/>
+<text x="614" y="54" font-size="21" font-weight="700" fill="#2b6cb0" text-anchor="start">User's computer</text>
+<text x="614" y="78" font-size="16" font-weight="500" fill="#2b6cb0" text-anchor="start" opacity="0.78">their own Chrome, already logged in</text>
+<rect x="614" y="100" width="342" height="96" rx="12" fill="#ffffff" stroke="#2b6cb0" stroke-width="1.5"/>
+<text x="785" y="136" font-size="17" font-weight="700" fill="#2b6cb0" text-anchor="middle">Isomux extension</text>
+<text x="785" y="162" font-size="13" font-weight="500" fill="#2b6cb0" text-anchor="middle" opacity="0.85">relays CDP commands</text>
+<text x="785" y="179" font-size="12" font-weight="500" fill="#2b6cb0" text-anchor="middle" font-family="'JetBrains Mono', ui-monospace, Menlo, monospace">with chrome.debugger</text>
+<rect x="614" y="230" width="164" height="110" rx="12" fill="#e8f6ee" stroke="#2f855a" stroke-width="2"/>
+<text x="696" y="262" font-size="16" font-weight="700" fill="#2f855a" text-anchor="middle">Offered tab</text>
+<rect x="674" y="276" width="44" height="22" rx="5" fill="#2f855a" stroke="#2f855a" stroke-width="0"/>
+<text x="696" y="292" font-size="13" font-weight="800" fill="#ffffff" text-anchor="middle">ON</text>
+<text x="696" y="322" font-size="13" font-weight="500" fill="#2f855a" text-anchor="middle">agents can act here</text>
+<rect x="792" y="230" width="164" height="110" rx="12" fill="#f4f5f7" stroke="#4a5568" stroke-width="2" stroke-dasharray="7 5"/>
+<text x="874" y="262" font-size="16" font-weight="700" fill="#4a5568" text-anchor="middle">Other tabs</text>
+<text x="874" y="296" font-size="13" font-weight="500" fill="#4a5568" text-anchor="middle">invisible</text>
+<text x="874" y="314" font-size="13" font-weight="500" fill="#4a5568" text-anchor="middle">to agents</text>
+<path d="M 696 196 L 696 226" fill="none" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)"/>
+<text x="614" y="384" font-size="14" font-weight="500" fill="#2b6cb0" text-anchor="start" opacity="0.85">The user turns on agent control per tab.</text>
+<path d="M 470 272 L 540 272 L 540 148 L 610 148" fill="none" stroke="#4a5568" stroke-width="2" marker-end="url(#arrow)" marker-start="url(#arrow)"/>
+<rect x="486" y="185" width="108" height="50" rx="9" fill="#ffffff" stroke="#4a5568" stroke-width="1.5"/>
+<text x="540" y="207" font-size="14" font-weight="700" fill="#4a5568" text-anchor="middle">WebSocket</text>
+<text x="540" y="225" font-size="11.5" font-weight="500" fill="#4a5568" text-anchor="middle">extension dials out</text>
+</svg>

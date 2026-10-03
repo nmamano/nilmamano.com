@@ -1,0 +1,69 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #06080f; }
+  #card {
+    width: 1200px; height: 630px; position: relative; overflow: hidden;
+    font-family: Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(900px 620px at 86% 48%, #102a33 0%, rgba(16,42,51,0) 68%),
+      linear-gradient(140deg, #0a1120 0%, #070c17 52%, #05080f 100%);
+  }
+  /* faint diagonal lattice, like the other covers */
+  #card::before {
+    content: ""; position: absolute; inset: 0; opacity: .5;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(120,160,230,.055) 0 1px, transparent 1px 84px),
+      repeating-linear-gradient(-45deg, rgba(120,160,230,.055) 0 1px, transparent 1px 84px);
+  }
+
+  .left { position: absolute; left: 78px; top: 190px; }
+  .title { font-size: 66px; font-weight: 800; letter-spacing: -1.6px; line-height: 1.1; color: #ffffff; }
+  .title .accent { color: #5eead4; }
+  .rule { width: 92px; height: 5px; border-radius: 3px; background: #a78bfa; margin-top: 34px; }
+  .sub { margin-top: 26px; font-size: 24px; font-weight: 500; color: #93a4c2; letter-spacing: -.2px; }
+
+  /* Big, text-free picture: an agent in the cloud drives a tab in the user's browser. */
+  .art { position: absolute; right: 60px; top: 40px; width: 470px; height: 550px; }
+</style>
+</head>
+<body>
+<div id="card">
+  <div class="left">
+    <div class="title">Browser Use for<br/><span class="accent">Cloud Agents</span></div>
+    <div class="rule"></div>
+    <div class="sub">An implementation guide</div>
+  </div>
+
+  <svg class="art" viewBox="0 0 470 550">
+    <!-- cloud -->
+    <path d="M118 196 C70 196 52 150 84 122 C78 78 128 54 164 76 C182 34 252 26 280 70 C318 46 372 70 368 116 C410 124 414 196 362 196 Z"
+          fill="#1a2440" stroke="#3b4d78" stroke-width="3"/>
+    <!-- link from the cloud to the browser -->
+    <path d="M235 204 L235 262" stroke="#a78bfa" stroke-width="6" stroke-linecap="round" stroke-dasharray="2 14"/>
+    <!-- browser window -->
+    <rect x="20" y="270" width="430" height="270" rx="22" fill="#0e1727" stroke="#2a3a5c" stroke-width="3"/>
+    <path d="M20 292 a22 22 0 0 1 22 -22 h386 a22 22 0 0 1 22 22 v34 h-430 z" fill="#0a1220"/>
+    <circle cx="50" cy="298" r="8" fill="#2a3954"/><circle cx="76" cy="298" r="8" fill="#2a3954"/><circle cx="102" cy="298" r="8" fill="#2a3954"/>
+    <rect x="128" y="286" width="230" height="24" rx="12" fill="#16223a"/>
+    <!-- ON badge -->
+    <rect x="370" y="282" width="62" height="32" rx="8" fill="#34d399"/>
+    <text x="401" y="306" font-size="21" font-weight="800" fill="#062a22" text-anchor="middle" font-family="Inter, sans-serif">ON</text>
+    <!-- page content -->
+    <rect x="56" y="356" width="200" height="18" rx="9" fill="#26344f"/>
+    <rect x="56" y="390" width="300" height="14" rx="7" fill="#1c2942"/>
+    <rect x="56" y="416" width="250" height="14" rx="7" fill="#1c2942"/>
+    <rect x="56" y="460" width="358" height="52" rx="14" fill="#34d399"/>
+    <!-- agent cursor -->
+    <path d="M300 468 L300 524 L314 510 L325 532 L335 527 L324 506 L344 506 Z" fill="#a78bfa" stroke="#120a2b" stroke-width="3" stroke-linejoin="round"/>
+  </svg>
+  <!-- real office character (rendered from isomux ui/office/Character.tsx), sitting in the cloud -->
+  <img src="isomux_enterprise_chars/report-maker.svg" alt=""
+       style="position:absolute; right: 248px; top: 66px; width: 116px; height: 152px;" />
+</div>
+</body>
+</html>
