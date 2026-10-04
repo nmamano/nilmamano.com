@@ -1,0 +1,346 @@
+---
+title: "The Knight's Tour With Fewest Turns: Solved by Agents"
+date: "2026-10-03"
+excerpt: "AI agents closed the gap on a problem from our 2019 paper: every closed knight's tour needs at least 8n - 28 turns, and some have only 8n - 14."
+coverImage: "/blog/knights-tour-turns/cover.png"
+categories: ["research"]
+---
+
+<Callout title="Knight's tour series">
+  This post is part 2 of a series. Part 1 is the backstory of our original paper. Parts 2 and 3 are about how AI improved its results.
+
+1. [Lifecycle of a CS research paper: my knight's tour paper](/blog/knights-tour)
+2. The Knight's Tour With Fewest Turns: Solved by Agents (this post)
+3. Knight's tours with fewer crossings (work in progress)
+
+</Callout>
+
+In my [knight's tour post](/blog/knights-tour), I described our tours with `9.25n + O(1)` turns on an `n x n` board, and a lower bound of about `6n`. Here's the [paper](https://arxiv.org/abs/1904.02824).
+
+Recently, I asked a team of AI agents to try to make progress in either direction, and they managed to close the gap:
+
+<BlogImage
+  src="/blog/knights-tour-turns/progress_turns.png"
+  alt="Timeline of the best known lower and upper bounds on turns"
+  width="100%"
+/>
+  
+- **Lower bound:** For `n >= 8`, every closed tour has at least `8n - 28` turns.
+- **Upper bound:** There are closed tours with `8n - 14` turns, for every even `n >= 48`.[^improved]
+
+[^improved]: Since this post was written, the agents found tours with `8n - 17` turns when `n ≡ 2 (mod 8)` and `8n - 16` when `n ≡ 6 (mod 8)`. See [Open questions](#open-questions).
+
+So, the gap is now just a constant: between 14 and 28 turns below `8n`.
+
+This post explains the new tour and lower bound argument found by the agents, as well as how I orchestrated the agents. They also improved the bounds for the fewest crossings, but these results will be in a separate post (WIP).
+
+<Callout title="How this came about">
+  I told Donald Knuth about our paper after his 2025 X-mas lecture about Knight's Tours, and he put the problem in The Art of Computer Programming, as Exercise 7.2.2.4-161.
+
+A student, Shisheng Li, found it there, improved our crossings bound, and emailed me (more on that in the [first post](/blog/knights-tour#more-unexpected-help)).
+
+That got me back into the problem, and I handed it off to a team of Opus 5.5 and Astra agents in [Isomux](/blog/isomux), my meta-harness. More on the [agent setup](#agent-team-orchestration-via-isomux) below.
+
+</Callout>
+
+<Toc />
+
+## Recap
+
+A closed knight's tour visits every cell of the board once and returns to the start.
+
+<BlogImage
+  src="/blog/knights-tour-turns/knights_tour_anim.gif"
+  alt="Animation of a knight's tour on an 8x8 chessboard"
+  width="40%"
+  caption="A knight's tour on an 8x8 board. Animation by Ilmari Karonen, from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Knight%27s_tour_anim_2.gif)."
+/>
+
+A square or "cell" is a _turn_ if the knight changes direction there.
+
+The idea from the paper is to imagine a 2x2 "formation" of four knights moving together, because such a formation can move leaving no gaps in between:
+
+<BlogImage
+  src="/blog/knights-tour/formation_moves.png"
+  alt="Formation moves"
+  width="80%"
+/>
+
+The formation covers the board along long diagonals, so the only turns are along the edges:
+
+<BlogImage
+  src="/blog/knights-tour/formation_path.png"
+  alt="The path of the knight formation: long parallel diagonal sweeps across the board, with short turnarounds at the sides and staircase-shaped corner regions"
+  width="60%"
+/>
+
+Finally, in the corners, the 4 paths are connected into a single cycle.
+
+With this approach, all the turns are near the sides of the board:
+
+- 2 turns per row on the left and right sides.
+- 2.75 turns per column on average on each of the top and bottom sides.
+
+Parker Williams later reduced the turns per column to 2.625 (see [below](#the-upper-bound)). Across the four edges, this gave a total of `2n + 2n + 2.625n + 2.625n = 9.25n` turns, plus some constant.
+
+The paper also gave a lower bound of about `6n`, meaning that our tour was proven to be within a factor of about `9.25n / 6n ≈ 1.54` of optimal, leaving the actual minimum as an open problem.
+
+## The new bounds
+
+**AI Agents closed the gap between the lower and upper bounds**, up to a constant (personally, in the spirit of asymptotic analysis, I don't care about the exact constant as much):
+
+<Callout>
+  For every even `n >= 48`, the minimum number of turns `T(n)` of a closed
+  knight's tour on an `n x n` board satisfies `8n - 28 <= T(n) <= 8n - 14`.
+</Callout>
+
+And this is what the new tours look like:
+
+<DemoEmbed
+  src="https://nmamano.github.io/MinCrossingsKnightsTour/?metric=turns"
+  href="https://nmamano.github.io/MinCrossingsKnightsTour/?metric=turns"
+  title="Interactive demo: knight tours with few turns"
+/>
+
+The [interactive demo](https://nmamano.github.io/MinCrossingsKnightsTour/?metric=turns) shows the tour of each step in this research progression chart above.
+
+## The lower bound
+
+The `6n` lower bound in our paper uses a fairly convoluted argument. In comparison, the agents came up with a shorter, simpler, and more elegant `8n - 64` lower bound using the pigeonhole principle. We'll see that proof first, before we see how they refined it to `8n - 28`.
+
+The argument looks at the four columns next to one side of the board, and it shows that they contain at least `2n` turns.
+
+Call a move from column 2 or 3 _outward_ if it goes to column 1 or to column 4:
+
+<BlogImage
+  src="/blog/knights-tour-turns/four_columns.png"
+  alt="Four boards, one for each of columns 1 to 4, each showing every knight move from one cell. Column 1: all four moves go right. Columns 2 and 3: moves to column 1 or 4 are outward, the others are not. Column 4: two moves go right and two go back into columns 2-3."
+  caption="Every possible move from a cell in each of the first four columns."
+  width="100%"
+/>
+
+Now we analyze each column:
+
+- In **Column 1**, every cell is a turn, accounting for `n` turns.
+
+- In **Columns 2 and 3**, if the two moves adjacent to a cell are outward, that cell has a turn.
+
+Now, we count how many outward moves go from columns 1 and 4 to columns 2 and 3. Column 1 sends `2n`. Column 4 sends some unknown number, `B`, so the total is `2n + B`.
+
+That's `2n + B` outward moves going into `2n` cells, and each cell can hold at most 2 of those. By the pigeonhole principle, at least `B` cells hold two. Thus, there are at least `B` turns in columns 2 and 3.
+
+- A cell in **Column 4** with no move back into columns 2-3 has both moves going right, so it is a turn. At most `B` cells of column 4 have a move back, so at least `n - B` of them turn.
+
+**Adding up**: `n + B + (n - B) = 2n`.
+
+The same holds at all four sides, which gives `8n`. The only problem is that the strips overlap at the corners:
+
+<BlogImage
+  src="/blog/knights-tour-turns/strips.png"
+  alt="Four strips of width 4; the 4x4 corner squares belong to two strips"
+  caption="The four strips. A corner square (red) belongs to two strips, so its turns are counted twice."
+  width="50%"
+/>
+
+Each corner square has 16 cells, so at most 64 turns are counted twice. That gives `8n - 64`.
+
+The corners don't really lose 16 turns each. A finer look at a `4 x 4` corner shows that it loses at most 7. That improves the bound to `8n - 28`. The details are in the [full proofs](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/TURNS_PROOFS.md#c-the-corner-certificate-and-8n---28).
+
+Both bounds, `8n - 64` and `8n - 28`, are checked in Lean 4 with Mathlib, a proof assistant. The formal statements use the same definition of a turn as the paper.
+
+## The upper bound
+
+The lower bound argument says that each side needs at least 2 turns per row or column, on average.
+
+The left and right sides of the paper's tours already did exactly that:
+
+<BlogImage
+  src="/blog/knights-tour-turns/side_paths.png"
+  alt="The left side of the paper's tour, with the four paths of one formation colored red, green, blue and purple. The formation comes in along its diagonals and turns around within the first two columns."
+  width="40%"
+/>
+
+So, we focused on the top and bottom edges. We call the transition of the 2x2 knight formation from one group of four diagonals to the next along the bottom side a "heel" because of the shoe-like shape. Here's one expanded out:
+
+<BlogImage
+  src="/blog/knights-tour-turns/heel_original.png"
+  alt="The original heel of the paper, with the four knight paths of the formation in four colors"
+  width="80%"
+/>
+
+Progress came from iteratively relaxing the strict 2x2 knight formation.
+
+1. Parker's optimized heels, with 2.625 turns per column, let the four knights break formation temporarily, but only inside the heel's own 8x4 box. They still enter and leave the heel in the same permutation as the original heel, preserving the integrity of the whole tour.
+
+<BlogImage
+  src="/blog/knights-tour-turns/heel21.png"
+  alt="Parker's optimized heel with the four paths of one formation colored red, green, blue and purple. All four paths stay inside the dashed 8x4 heel box."
+  width="70%"
+/>
+
+2. The first AI improvement removed the walls between heels: paths can step into neighboring heels, as long as the four incoming diagonals still go out on the next four diagonals, in any order. The corners then join everything back into a single cycle. This improved the turns to 2.25 per column.
+
+<BlogImage
+  src="/blog/knights-tour-turns/t18_band.png"
+  alt="The 18-turn bottom piece with the four paths of one formation colored red, green, blue and purple. They come down in that order, cross the dashed heel boxes into the next heel, and go back up in the order green, purple, blue, red."
+  width="80%"
+/>
+
+3. The second and final improvement dropped the 2x2 knight formation entirely: the four incoming diagonals don't need to exit as the next four adjacent diagonals. At this point, it's just a repeating pattern every 8 columns:
+
+<BlogImage
+  src="/blog/knights-tour-turns/t16_paths.png"
+  alt="The 16-turn bottom piece with the four paths of one formation colored red, green, blue and purple. Red and purple connect to lines further right, while green and blue connect to lines from formations further left, across several dashed heel boxes."
+  width="80%"
+/>
+
+The sides also change (still 2 turns per row):
+
+<BlogImage
+  src="/blog/knights-tour-turns/left_band.png"
+  alt="The left side of the new tour, with the same four colored lines as the bottom figure. Each line turns around within the first two columns and leaves on the line three positions over, so every row has two turns."
+  width="50%"
+/>
+
+The four `6 x 6` corners are solved by a computer search, once for each even value of `n mod 8`. So there are 4 sets of corners, and each set works for every even board size `n >= 48` in its residue class modulo 8.
+
+<BlogImage
+  src="/blog/knights-tour-turns/t16_band.png"
+  alt="Bottom-left part of the 48 x 48 tour with every turn marked in red. The dashed 6 x 6 square is the corner, and the two dashed 8 x 4 blocks of the bottom piece have 16 turns each."
+  width="100%"
+/>
+
+See the [interactive demo](https://nmamano.github.io/MinCrossingsKnightsTour/?metric=turns) for the full tour.
+
+### Counting the turns
+
+Outside the corner columns, the bottom counts repeat as `2, 2, 3, 1, 2, 2, 1, 3` (red dots above). This averages to 2. The top uses the same template, just flipped.
+
+Outside of the corner rows, each row has 2 turns on the left side and 2 on the right side.
+
+The four corners have 82 turns in total (it just happens to be the case regardless of `n mod 8`).
+
+Outside the corners, there are `n - 12` columns and `n - 12` rows. So the total is `82 + 4(n - 12) + 4(n - 12) = 8n - 14`.
+
+### Ensuring it's a single tour
+
+For every even `n >= 48`, the construction gives each cell two distinct legal neighbors, and the choices are reciprocal. This gives cycles covering the board. We must also show that there is only one cycle.
+
+A computer check confirms this directly for every even `n` from 48 to 102.
+
+For larger boards, the argument is that growing the board by 8 does not change how things connect:
+
+<BlogImage
+  src="/blog/knights-tour-turns/grow.png"
+  alt="The tours for n = 48 and n = 56"
+  caption="The tours for n = 48 and n = 56. Same corners."
+  width="100%"
+/>
+
+Going from `n` to `n + 8` inserts one more bottom-left block, left-right block, and right-top block:
+
+<BlogImage
+  src="/blog/knights-tour-turns/blocks.png"
+  alt="The n = 72 tour with one block of each kind shaded: bottom-left, left-right and right-top"
+  width="80%"
+/>
+
+A _block_ consists of 8 consecutive diagonal lines and the pieces at both ends of those lines. Its paths meet the rest of the tour through a few "ports". Some paths cross the block, and some come back out on the same side.
+
+A computer check validated that two copies of a block (far away enough from the corners), glued end to end, connect their outer ports exactly like one copy, without closing a loop in the middle.
+
+## Open questions
+
+The exact minimum remains open between `8n - 28` and `8n - 14`, and it could depend on `n mod 8`.
+
+Since this post was written, the agents found tours with `8n - 17` turns when `n ≡ 2 (mod 8)` and `8n - 16` when `n ≡ 6 (mod 8)`, by optimizing `8x8` corners together with 4-row deep and 4-column deep bands on the sides. I won't include these in this post, but they are in the [interactive demo](https://nmamano.github.io/MinCrossingsKnightsTour/?metric=turns) and described [here](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/TURNS_IMPROVED.md).
+
+The agents claim that the exact minimum is `8n - 20` for `n = 14` and `16`, and `8n - 21` for `n = 18`.
+
+A significant effort went into attempting to close the gap. At this point, it seems prudent to wait for better models before trying again.
+
+## Agent Team Orchestration Via Isomux
+
+I used [Isomux](https://isomux.com) for orchestration, because it allows Claude and Codex agents to exist side-by-side and message each other.
+
+I created a room with a single Opus 5.5 agent, `Chief Researcher`, and set the following room instructions (written by hand). Room instructions are inherited by every agent spawned in this room.
+
+```
+Room for one-off tasks, not related to any of Nil's main projects (Isomux, Wall Game, etc.) but which may require deep computation, exploration, and agent-to-agent communication.
+
+The main workflow is that Nil gives a a prompt to the Chief Researcher, and the Chief Researcher decides by herself how many additional helper agents to spawn, which models to give them, and how to assign tasks to them, as necessary to achieve the mission.
+
+The agents can coordinate by putting findings in files, decided organically by the C.R., by using the taskboard (scoped to this room), or by direct agent-to-agent communication. It's the C.R.'s responsibility to ensure the workers work efficienctly, having the context they need, without interrupting each other too much.
+
+Rules:
+
+- Avoid "Max" thinking effort without Nil's direct approval. Rest are fine.
+- C.R. and the workers can use subagents liberally.
+```
+
+Then, this was the prompt to `Chief Researcher` that kicked it off:
+
+```
+I described a research idea in the email below.
+Your task is to pursue it and report back the maximum improvements you can find on either bound.
+Feel free to branch out from my specific idea if you see other promising ways of improving the bounds.
+
+[forwarded email thread]
+
+Context:
+https://nilmamano.com/blog/knights-tour
+https://arxiv.org/pdf/1904.02824
+
+I'm here to answer any questions and assist.
+```
+
+The mentioned "research idea" was a type of heel relaxation that roughly maps to the first improvement found by the agents.
+
+From there, it wrote a shared brief, split the work, and spawned the other agents itself, a mix of Opus and Astra:
+
+<BlogImage
+  src="/blog/knights-tour-turns/research_lab.png"
+  alt="The Research Lab room in Isomux: eight agents at their desks, including the Chief Researcher, KT Integrator, KT Lower Bounds, KT Edge Searcher, KT Structures, KT Verifier, KT Turns Theory and KT Lean, each with its current task shown above its desk"
+  width="100%"
+/>
+
+I checked in with `Chief Researcher` from time to time. I'd say I barely steered at all.
+
+I kept it to one room intentionally so it wouldn't burn unbounded tokens. That may have bottlenecked progress.
+
+Each agent had a main job and its own folder for its findings. These are the ones that mattered for turns (others worked on crossings):
+
+- `Turns Builder` searched for heels with the fewest turns, using a constraint solver (CP-SAT, from Google's OR-Tools).
+- `Integrator` turned heels into full tours. It solved the corners with the same solver. It also checked that the tours repeat when `n` grows by 8.
+- `Turns Theory` did the lower bound: first the four-column argument, and then the corner certificate.
+- `Verifier` rebuilt every result with its own code, written from the definitions in the paper.
+- `Lean` wrote the Lean proofs of `8n - 64` and, later, `8n - 28`.
+
+The agents worked through the night and seemingly had no plans to stop (until I told them I was happy with the final constant gap). They sent each other messages and wrote their results to files. Whenever an agent context got about half full, the agent handed off the work to a new session for itself (something they know they can do via an Isomux server endpoint).
+
+One emergent rule was that a claim counts only after an independent check. The Verifier audited each claim and logged a verdict. Two days in, it had logged 52 numbered claims. Some failed, and the agents then fixed the statement or dropped it.[^claim]
+
+[^claim]: Here's one example from turns. The Integrator's check that the tours repeat every 8 sizes looked at finitely many sizes. The Verifier did not accept that as a proof for every `n`. Turns Theory then wrote the block argument that is now in the [full proofs](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/TURNS_PROOFS.md#f-one-closed-tour-for-every-n-block-insertion), and the Verifier passed it.
+
+### Timeline
+- October 1, 4:06 pm: I handed over the email.
+- October 1, 5:26 pm: Lower bound raised to `8n - 64`.
+- October 1, 5:42 pm: Upper bound lowered to `8.5n`.
+- October 1, 5:43 pm: Lower bound raised to `8n - 28`.
+- October 1, 6:23 pm: Upper bound lowered to `8n - 14`.
+- October 1, 7:17 pm: `8n - 64` lower bound checked in Lean, 37 minutes after I asked whether that was possible (I had never proved anything in Lean before).
+- October 3, 6:50 pm: Upper bound lowered to `8n - 17` when `n ≡ 2 (mod 8)` and to `8n - 16` when `n ≡ 6 (mod 8)`.[^improved]
+
+October 2 and 3 went to crossings, audits, write-ups (where I'm the bottleneck), the interactive demo, and trying to close the constant gap.
+
+## Conclusions
+
+I want to remark that, for the lower bound, (1) the agents did **not** build upon our methods, this was a novel approach, and (2) they did **not** just throw computation at the problem. They came up with an elegant mathematical argument that's better than any of us could come up with. The upper bound improvements above are similarly original.
+
+The complete proofs, with every definition and every finite check, are in the [MinCrossingsKnightsTour repository](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/TURNS_PROOFS.md).
+  
+The improvements on the lower and upper bounds for the sibling problem of minimizing crossings, which will be in the next post, were even more impressive.
+
+The Opus agents took less than 20% of weekly credits on the $200 plan, with most of it going into the harder problem of minimizing crossings. So, I'd say the research in this post took under $5 at subscription prices for the Opus agents.
+
+Put bluntly, agents destroyed humans (or specifically me) at research, at least when it comes to this problem. Cost wise, it's over three orders of magnitude cheaper compared to months of grad student salary.
