@@ -14,6 +14,8 @@ ROOT = Path.home() / 'nil/knight-formation-research'
 sys.path.insert(0, str(ROOT / 'w-turnstheory')); sys.path.insert(0, str(ROOT / 'writeup/turns/figures'))
 from check_knight_tiles import microtiles, cross, tile
 from tt16 import build
+sys.path.insert(0, str(ROOT))
+from kt.core import edges as tour_edges
 
 OUT = Path(__file__).resolve().parents[1] / 'public/blog/knights-tour-crossings'
 DPI = 160
@@ -245,6 +247,36 @@ def fig_nested():
     save(fig, 'lb_nested')
 
 
+def fig_fold_corner():
+    """Tile coverage at the bottom-left corner of the n = 96 fold tour, with three corner paths and their bad squares."""
+    import json
+    from collections import Counter
+    n = 96; x1 = y1 = 30
+    t = json.load(open(ROOT / 'w-integrator/tours/FOLD24_n96.json'))['tour']
+    E = {tuple(sorted(((a[1], n - 1 - a[0]), (b[1], n - 1 - b[0])))) for a, b in tour_edges(t)}
+    C = Counter(q for e in E for q in microtiles(e))
+    fig, ax = plt.subplots(figsize=(5.6, 5.6))
+    frame(ax, 0, x1, 0, y1, pad=.3)
+    for i in range(x1):
+        for j in range(y1):
+            for k in range(4):
+                m = C[i, j, k]
+                fc = {0: 'white', 1: TILE}.get(m, RED)
+                ax.add_patch(mp.Polygon(quarter((i, j, k)), fc=fc, ec='#ffffff' if m else '#d5dbe0', lw=.3, zorder=1))
+    for e in E:
+        if all(0 <= p[0] <= x1 and 0 <= p[1] <= y1 for p in e):
+            ax.plot([e[0][0], e[1][0]], [e[0][1], e[1][1]], color=INK, lw=.4, alpha=.35, zorder=2)
+    for r in (13, 18, 23):
+        pts = [(r + .5, 1.5), (r + .5, r + .5), (1.5, r + .5)]
+        ax.plot(*zip(*pts), color=CORR, lw=2.6, zorder=4, solid_capstyle='round')
+        sq = [(r, j) for j in range(1, r + 1)] + [(j, r) for j in range(r - 1, 0, -1)]
+        for i, j in sq:
+            if any(C[i, j, k] != 1 for k in range(4)):
+                ax.add_patch(mp.Rectangle((i, j), 1, 1, fill=False, ec=INK, lw=2.4, zorder=5))
+    ax.plot([0, x1], [0, 0], color=INK, lw=2); ax.plot([0, 0], [0, y1], color=INK, lw=2)
+    save(fig, 'lb_fold_corner')
+
+
 def fig_numberline():
     fig, ax = plt.subplots(figsize=(6.6, 1.9))
     ax.set_xlim(3.6, 12.6); ax.set_ylim(-1.3, 1.3); ax.axis('off')
@@ -261,5 +293,5 @@ def fig_numberline():
 
 
 if __name__ == '__main__':
-    fig_tile(); fig_overlap(); fig_tiled(); fig_square(); fig_strip(); fig_corner_box(); fig_nested()
+    fig_tile(); fig_overlap(); fig_tiled(); fig_square(); fig_strip(); fig_corner_box(); fig_nested(); fig_fold_corner()
     print('wrote', sorted(p.name for p in OUT.glob('lb_*.png')))

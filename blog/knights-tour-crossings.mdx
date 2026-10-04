@@ -313,7 +313,14 @@ I haven't had time to review this proof myself, and no human has checked it yet.
 
 </Callout>
 
-#### Step 1: imperfect tiling costs extra
+The `4n` proof only uses the total area of the tiles. The `5n` proof also looks at how well they cover the board, and shows that near every corner they can't cover it perfectly. It has four steps:
+
+1. Imperfect covering costs extra crossings.
+2. A _charge_, measured along a path, detects imperfect covering.
+3. About `2n` separate paths around the corners must have a charge.
+4. The tour can't avoid this cheaply at the sides.
+
+#### Step 1: bad quarters cost extra crossings
 
 Call a quarter _bad_ if it isn't covered exactly once: either no tile covers it, or several do. Here are the quarters near the corner of a real tour, colored blue if covered exactly once, red if covered more than once, and white if not covered:
 
@@ -325,7 +332,15 @@ Call a quarter _bad_ if it isn't covered exactly once: either no tile covers it,
 
 The long straight lines inside the board tile it perfectly. All the trouble is at the sides.
 
-One useful fact is that within each unit square, a tile always covers two neighboring quarters: one of the top and bottom quarters, and one of the left and right quarters. So the top and bottom quarters together are covered exactly as many times as the left and right quarters together. So, if a square has any bad quarter, it has at least two.
+The `4n` bound is exact only if the overlap is perfectly efficient: no holes, no quarter covered three or more times, and every crossing overlapping in two quarters. The sides already need about one crossing per row, about `4n` in total, and their overlap is enough on its own. So any other bad quarter is waste: a hole, a quarter covered too many times, or overlap from a crossing that the sides didn't need. A [careful count](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/CROSSINGS_PROOFS.md#b1-tiles-and-one-scalar-count) turns this into:
+
+```text
+crossings >= 4n - 1 + (bad quarters) / 4 + (side crossings beyond one per row) / 2
+```
+
+So each bad quarter costs at least `1/4` of an extra crossing, and each extra crossing at the sides counts at least `1/2`. The one exception is a quarter covered twice by a single side crossing whose tiles share two quarters. That overlap is the side crossings' own, so it doesn't count as bad.
+
+Bad quarters also come in pairs. Within each unit square, a tile always covers two neighboring quarters: one of the top and bottom quarters, and one of the left and right quarters. So the top and bottom quarters together are covered exactly as many times as the left and right quarters together, and a square with a bad quarter has at least two:
 
 <BlogImage
   src="/blog/knights-tour-crossings/lb_square.png"
@@ -333,19 +348,24 @@ One useful fact is that within each unit square, a tile always covers two neighb
   width="60%"
 />
 
-**Bad quarters cost extra crossings.** The sides need about one crossing per row, so about `4n` crossings in total (this is how the paper proved its `4n` bound). At up to 1/2 of overlap each, those side crossings alone can absorb all the `2n - 1` of overlap area from the `4n` bound. Anything else is extra. A white quarter is a hole: the tile area that is missing there has to overlap somewhere else, which needs more crossings. And a quarter covered twice or more, away from the side crossings, is overlap from a crossing the sides didn't need. A [careful count](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/CROSSINGS_PROOFS.md#b1-tiles-and-one-scalar-count) shows that each such bad quarter costs at least 1/4 of an extra crossing. So a square with bad quarters costs at least half an extra crossing.
+So a square with bad quarters costs at least half an extra crossing.
 
-#### Step 2: a charge that forces bad quarters
+#### Step 2: a charge that detects bad quarters
 
-To force bad quarters, the agents used a conserved quantity.
+To force bad quarters, the agents used the same black and white balance as in the [corner imbalance](#the-corner-imbalance-4n-3) of the upper bound. There, we froze everything outside a corner region and found that the black cells and the white cells inside couldn't be matched. Here, the tour is arbitrary, so nothing is frozen. Instead, the balance is measured along a path.
 
-Color the cells like a chessboard, and orient every move and every unit grid edge from black to white. Now take a path that goes from square center to square center, and count the moves and grid edges that cross it, with a sign for the direction, modulo 3. Call this the path's _charge_.
+Color the cells like a chessboard, and orient every move from its black end to its white end. Do the same for the unit grid edges between neighboring cells, which also join a black and a white cell. Now take a path through the centers of the grid squares. Its _charge_ is the number of moves and grid edges that cross it from left to right, minus the number that cross it from right to left, modulo 3.
 
-The key property is that a step of the path between two quarters covered exactly once adds nothing to the charge. So, if a path has nonzero charge, it must pass next to a bad quarter.
+Two facts make the charge useful:
+
+- **Around a closed loop, the charge is 0.** Every cell has 2 moves and 4 grid edges. For the cells inside the loop, all 6 point out of each black cell and into each white cell, and the ones between two inside cells cancel. So the charge around the loop is `6 x (black cells - white cells)`, which is 0 modulo 3. This is the same black and white balance as in the corner region.
+- **A step between two well-covered quarters adds 0.** Each step of the path, from one square to the next, crosses one grid edge, and passes through the two quarters on either side of it. A [computer-checked identity](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/CROSSINGS_PROOFS.md#b2-charge-and-bad-squares) says that the step adds `m1 + m2 + 1`, up to sign, modulo 3, where `m1` and `m2` are the numbers of tiles that cover those two quarters. If both are covered exactly once, that is `3`, which is 0 modulo 3. The grid edges and the modulo 3 are there to make this true.
+
+So, if a path has a nonzero charge, at least one of its steps passes through a bad quarter.
 
 #### Step 3: about 2n charged paths around the corners
 
-Now take a path that goes up the right side of a box at a corner of the board, and then left along the top of the box:
+Take a box at a corner of the board, and a path that goes up the right side of the box and then left along its top:
 
 <BlogImage
   src="/blog/knights-tour-crossings/lb_corner_box.png"
@@ -353,11 +373,19 @@ Now take a path that goes up the right side of a box at a corner of the board, a
   width="50%"
 />
 
-Around the whole box, the charge adds up to zero. The part of the box boundary along the sides of the board is easy to compute, because only grid edges cross it, and the two short pieces at the ends only depend on a few moves in the two _end rows_ next to the sides.
+Close the path into a loop around the box. The rest of the loop runs just outside the two sides of the board, where only grid edges cross it, so its charge is easy to compute. The exceptions are the two short pieces at its ends, which depend on a few moves in the two _end rows_ next to the sides. If both end rows are _normal_, the rest of the loop has charge 1. The whole loop has charge 0, so the path has charge `-1`, which is `2` modulo 3. So the path must pass through a bad quarter.
 
-If these end rows are _normal_, then the outside part has charge 1. The cheap side pattern, with one crossing per row, is normal. (The exact test is in the [full proofs](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/CROSSINGS_PROOFS.md#b3-the-endpoint-test-and-strong-rows).) So the path itself has charge 2, and it must pass next to a bad quarter.
+The cheap side pattern, with one crossing per row, is normal. (The exact test is in the [full proofs](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/CROSSINGS_PROOFS.md#b3-the-endpoint-test-and-strong-rows).)
 
-This is the corner imbalance from the fold tours. Every corner path crosses the diagonal that starts at its corner, so the corridor along each diagonal fold serves all of them at once.
+Here is how this looks in the `96 x 96` fold tour. Every corner path, from size 12 to 44, finds its bad quarters where it crosses the corridor along the diagonal fold:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/lb_fold_corner.png"
+  alt="Tile coverage at the bottom-left corner of the 96 x 96 fold tour. The quarters are blue where covered exactly once. Red quarters run along both sides of the board, where the side crossings overlap, and red and white quarters form a band along the diagonal fold. Three purple corner paths go up and then left, and the squares where each one meets a bad quarter are outlined: all of them are on the diagonal band."
+  width="60%"
+/>
+
+This is the corner imbalance of the upper bound, seen from the other side. All the paths at a corner cross its diagonal, so one corridor serves all of them.
 
 The agents used boxes of every size from 12 up to about `n/2`, at all four corners:
 
@@ -367,11 +395,11 @@ The agents used boxes of every size from 12 up to about `n/2`, at all four corne
   width="50%"
 />
 
-The paths don't touch, and there are `2n - 60` of them. If all of them are charged, each one forces two bad quarters in a different square, which is half an extra crossing per path. That's `n` extra crossings on top of `4n`, so `5n` in total.
+The paths don't touch, and there are `2n - 60` of them. If all of them are charged, each one has its own square with at least two bad quarters. By Step 1, that's half an extra crossing per path, so `n` extra crossings on top of `4n`.
 
 #### Step 4: abnormal rows don't help
 
-A tour can avoid paying for a path by making one of its end rows _abnormal_. Then the charge calculation doesn't apply, and the path is dropped.
+A tour can avoid paying for a path by making one of its end rows _abnormal_. A row is abnormal if its moves fail the test from Step 3, or if a side crossing there overlaps in two quarters where the path ends. Those quarters don't count as bad (Step 1), so the path couldn't use them. Either way, the path is dropped.
 
 But abnormal rows cost crossings too. A computer check goes through every possible pattern of moves in the four columns next to a side, row by row, as a finite-state machine with 3,136 states. It shows that each side has at least one crossing per row, plus one more for each abnormal row, minus a constant:
 
@@ -381,9 +409,11 @@ But abnormal rows cost crossings too. A computer check goes through every possib
   width="30%"
 />
 
-In the final count, each abnormal row is worth half a crossing, exactly what the dropped path would have cost. So every corner path pays half a crossing either way: through its bad quarters, or through its abnormal end row.
+By Step 1, each of these extra side crossings counts at least half a crossing, which is what the dropped path would have cost. Each row is an end row of at most one path. So every corner path pays half a crossing either way: through its bad quarters, or through its abnormal end row.
 
 Keeping track of the constants gives `5n - 597`. The details are in the [full proofs](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/CROSSINGS_PROOFS.md#b-full-proof-every-tour-has-at-least-5n---597-crossings-including-the-4n---2-tile-bound), which call abnormal rows _strong_.
+
+The fold tours pay about `2/3` of a crossing per corner path in their corridors, where the proof asks for `1/2`. And the trapped loops (`+n`) have no counterpart in the proof. Together, that is the gap between `5n` and `19n/3`.
 
 ## Open questions
 
