@@ -11,7 +11,7 @@ categories: ["research"]
 
 1. [Lifecycle of a CS research paper: my knight's tour paper](/blog/knights-tour)
 2. The Knight's Tour With Fewest Turns: Solved by Agents (this post)
-3. Knight's tours with fewer crossings (work in progress)
+3. [The Knight's Tour With Fewest Crossings: Agents Narrow the Gap](/blog/knights-tour-crossings)
 
 </Callout>
 
@@ -32,7 +32,7 @@ So, the gap is now just a constant: between 14 and 28 turns below `8n`.
 
 The bounds have likely moved since I wrote this post. As new results come in, they will appear in [Results since the post](#results-since-the-post).
 
-This post explains the new tour and lower bound argument found by the agents, as well as how I orchestrated the agents. They also improved the bounds for the fewest crossings, but these results will be in a separate post (WIP).
+This post explains the new tour and lower bound argument found by the agents, as well as how I orchestrated the agents. They also improved the bounds for the fewest crossings, but these results are in a [separate post](/blog/knights-tour-crossings).
 
 <Callout title="How this came about">
   I told Donald Knuth about our paper after his 2025 X-mas lecture about Knight's Tours, and he put the problem in The Art of Computer Programming, as Exercise 7.2.2.4-161.
@@ -52,8 +52,8 @@ A closed knight's tour visits every cell of the board once and returns to the st
 <BlogImage
   src="/blog/knights-tour-turns/knights_tour_anim.gif"
   alt="Animation of a knight's tour on an 8x8 chessboard"
-  width="40%"
-  caption="A knight's tour on an 8x8 board. Animation by Ilmari Karonen, from [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Knight%27s_tour_anim_2.gif)."
+  width="30%"
+  caption="A knight's tour. By Ilmari Karonen, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Knight%27s_tour_anim_2.gif)."
 />
 
 A square or "cell" is a _turn_ if the knight changes direction there.
@@ -343,7 +343,7 @@ I want to remark that, for the lower bound, (1) the agents did **not** build upo
 
 The complete proofs, with every definition and every finite check, are in the [MinCrossingsKnightsTour repository](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/TURNS_PROOFS.md).
   
-The improvements on the lower and upper bounds for the sibling problem of minimizing crossings, which will be in the next post, were even more impressive.
+The improvements on the lower and upper bounds for the sibling problem of minimizing crossings, which are in the [next post](/blog/knights-tour-crossings), were even more impressive.
 
 The Opus agents took less than 20% of weekly credits on the $200 plan, with most of it going into the harder problem of minimizing crossings (not counting a subsequent effort to try to close the constant gap). So, I'd say the research in this post took under $5 at subscription prices for the Opus agents.
 

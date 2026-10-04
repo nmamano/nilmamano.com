@@ -1,0 +1,434 @@
+---
+title: "The Knight's Tour With Fewest Crossings: Agents Narrow the Gap"
+date: "2026-10-04"
+excerpt: "AI agents narrowed a gap from our 2019 paper: every closed knight's tour needs at least 5n - 597 crossings, and some have at most 19n/3 + 142."
+coverImage: "/blog/knights-tour-crossings/cover.png"
+categories: ["research"]
+---
+
+<Callout title="Knight's tour series">
+  This post is part 3 of a series. Part 1 is the backstory of our original paper. Parts 2 and 3 are about how AI improved its results.
+
+1. [Lifecycle of a CS research paper: my knight's tour paper](/blog/knights-tour)
+2. [The Knight's Tour With Fewest Turns: Solved by Agents](/blog/knights-tour-turns)
+3. The Knight's Tour With Fewest Crossings: Agents Narrow the Gap (this post)
+
+</Callout>
+
+In my [knight's tour post](/blog/knights-tour), the crossings result was the weak one. Our tours had `12n + O(1)` crossings on an `n x n` board, and the best lower bound was about `4n`. Here's the [paper](https://arxiv.org/abs/1904.02824).
+
+In the [turns post](/blog/knights-tour-turns), I described how a team of AI agents closed the gap for turns. The same team also worked on crossings, and moved both bounds:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/progress_crossings.png"
+  alt="Timeline of the best known lower and upper bounds on crossings. The paper (April 2019) had 4n and 13n, Parker Williams brought the upper bound to 12n (January 2022), and Shisheng Li to 11.5n (May 2026). On October 1, 2026, the agent team lowered the upper bound to 9n, 7.15n and then 6.33n, and over the next day and a half raised the lower bound in steps from 4n to 5n."
+  width="100%"
+/>
+
+- **Lower bound (tentative - not human-reviewed):** For every even `n >= 32`, every closed tour has at least `5n - 597` crossings.
+- **Upper bound:** There are closed tours with at most `19n/3 + 142` crossings, about `6.33n`, for every even `n >= 96`.
+
+The ratio between the bounds went from about `3` to `19/15`, about `1.27`.
+
+This post explains the new tours and the new lower bound argument found by the agents.
+
+<Callout title="How this came about">
+  I told Donald Knuth about our paper after his 2025 X-mas lecture about Knight's Tours, and he put the problem in The Art of Computer Programming, as Exercise 7.2.2.4-161.
+
+A student, Shisheng Li, found it there, improved the crossings upper bound to `11.5`, and emailed us (more on that in the [first post](/blog/knights-tour#more-unexpected-help)).
+
+That got me back into the problem, and I handed it off to a team of Opus 5.5 and Astra agents in [Isomux](/blog/isomux). It's the same agent run as in the [turns post](/blog/knights-tour-turns): turns took them about two hours, and crossings about a day and a half more. More on the [agent orchestration](#agent-team-orchestration-via-isomux) below.
+
+</Callout>
+
+<Toc />
+
+## Recap
+
+A closed knight's tour visits every cell of the board once and returns to the start:
+
+<BlogImage
+  src="/blog/knights-tour-turns/knights_tour_anim.gif"
+  alt="Animation of a knight's tour on an 8x8 chessboard"
+  width="30%"
+  caption="A knight's tour. By Ilmari Karonen, [Wikimedia Commons](https://commons.wikimedia.org/wiki/File:Knight%27s_tour_anim_2.gif)."
+/>
+
+A _crossing_ is a pair of moves of the tour whose segments cross.
+ 
+The idea from the paper is to imagine a 2x2 "formation" of four knights moving together, because such a formation can move leaving no gaps in between:
+
+<BlogImage
+  src="/blog/knights-tour/formation_moves.png"
+  alt="Formation moves"
+  width="80%"
+/>
+
+The formation covers the board along long diagonals:
+
+<BlogImage
+  src="/blog/knights-tour/formation_path.png"
+  alt="The path of the knight formation: long parallel diagonal sweeps across the board, with short turnarounds at the sides and staircase-shaped corner regions"
+  width="60%"
+/>
+
+Parallel lines never cross, so the inside of the board has no crossings at all. All of them are near the sides, where the formation turns around:
+
+- 2.5 crossings per row on the left and right sides.
+- 4 crossings per column on average on each of the top and bottom sides.
+
+Parker Williams later reduced the crossings per column to 3.5 (see [below](#better-heels-from-12n-to-7-15n)). Across the four edges, this gave a total of `2.5n + 2.5n + 3.5n + 3.5n = 12n` crossings, plus some constant. Later, Shisheng Li brought it down to `11.5n`.
+
+The paper's lower bound of `4n - O(1)` comes from a case analysis of the moves next to each side: each side has about one crossing per row or column.
+
+## The new bounds
+
+<Callout>
+  For every even `n >= 96`, the minimum number of crossings `X(n)` of a closed
+  knight's tour on an `n x n` board satisfies `5n - 597 <= X(n) <= 19n/3 + 142`.
+
+  The lower bound, which is still tentative, holds for every even `n >= 32`.
+</Callout>
+
+This is what the new tours look like:
+
+<DemoEmbed
+  src="https://nmamano.github.io/MinCrossingsKnightsTour/?metric=crossings&step=6&n=96"
+  href="https://nmamano.github.io/MinCrossingsKnightsTour/?metric=crossings&step=6&n=96"
+  title="Interactive demo: knight tours with few crossings"
+/>
+
+The **main original idea by the agents** is the addition of turns along the two main diagonals and two middle lines. This is to ensure that the paths always approach the edges at a steep angle, which turns out to be better than when paths approach at a shallow angle. Our knight-formation-based approach, which is completely disregraded in the agent's solution, approached two sides at steep angles and two at shallow angles.
+
+The [interactive demo](https://nmamano.github.io/MinCrossingsKnightsTour/?metric=crossings&step=6&n=96) shows the tour of each step in the progress chart above.
+
+## The upper bound
+
+### Better heels: from 12n to 7.15n
+
+The top and bottom sides had the most crossings, so the first improvements focused on them. We call the transition of the 2x2 knight formation from one group of four diagonals to the next along the bottom side a "heel" because of the shoe-like shape. Here's one expanded out:
+
+<BlogImage
+  src="/blog/knights-tour-turns/heel_original.png"
+  alt="The original heel of the paper, with the four knight paths of the formation in red, green, blue and purple. The paths come down along parallel diagonals, turn around inside the dashed 8x4 heel box, and go back up on the next four diagonals."
+  width="80%"
+/>
+
+Progress came from iteratively relaxing the strict 2x2 knight formation.
+
+1. `12n`: Parker's heels, optimized for crossings, have 28 crossings per 8 columns, or 3.5 per column. The four knights stay inside their heel's 8x4 box:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/heel_parker.png"
+  alt="The bottom side of a tour with Parker's crossing-optimized heels, with the four paths of one formation colored red, green, blue and purple. All four paths stay inside the dashed 8x4 heel box."
+  width="100%"
+/>
+
+2. `11.5n`: Shisheng Li replaced every five adjacent heels with a single 40-column template that keeps the formation but has 10 fewer crossings: 130 per 40 columns, or 3.25 per column:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/heel_shisheng.png"
+  alt="The bottom side of a tour with Shisheng Li's 40-column template, outlined as one long dashed box, with the four paths of one formation colored red, green, blue and purple."
+  width="100%"
+/>
+
+3. `9n`: The first AI improvement removed the walls between heels: each heel can overlap with the next, indefinitely, whereas Li's approach only allowed overlap in groups of five. The four incoming diagonals still go out on the next four diagonals, but in a different order, and the corners join everything back into a single cycle. This heel has 16 crossings per 8 columns, or 2 per column:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/heel_new.png"
+  alt="The bottom side of a tour with the new heel, with the four paths of one formation colored red, green, blue and purple. They come down in that order, turn around, and one of them leaves the dashed heel box into the next heel."
+  width="100%"
+/>
+
+4. `7.15n`: The second AI improvement dropped the 2x2 formation entirely. It used a different repeating pattern on each of the four sides, and then verified that they the corners can be wired correctly. [Click here] to see what it looks like.
+
+But the bigger step came from a different layout: folds.
+
+### Folds
+
+The new layout splits the board into 8 triangles. Each triangle is covered by straight parallel lines, in one of the four directions of knight moves. Here's a starting point, which is not yet a full tour:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/fold_field.png"
+  alt="A square board split into 8 triangles by its two diagonals and its two midlines, drawn dashed. Each triangle is filled with parallel knight-move lines, colored by direction: blue, orange, green and purple."
+  width="70%"
+/>
+
+Where two triangles meet, the lines bounce off the boundary, like a fold in a sheet of paper, so they don't cross:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/fold_closeup.png"
+  alt="Close-up of a diagonal fold. Blue lines from the upper left and green lines from below meet at the dashed fold line, where each blue line continues as a green line. Two lines of each family are highlighted; none of them cross."
+  width="30%"
+/>
+
+So, the inside of the board has no crossings. All the crossings come from completing this layout into one tour.
+
+### The sides: 1 crossing per row or column
+
+At each side, when knights come in at a steep angle, the cheapest way to turn knights around costs 1 crossing per row:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/edge_uturn.png"
+  alt="The U-turns at the left side of the board. Blue lines arrive from the right, turn around in the first two columns, and leave. Each row has exactly one crossing, marked with a red dot."
+  width="40%"
+/>
+
+That is `n` per side, so `4n` in total, which matches the paper's lower bound of about one crossing per row at each side. If nothing else went wrong, we'd have tours with `4n + O(1)` crossings.
+
+But two things go wrong.
+
+### Trapped loops (+n)
+
+Near the middle of each side, the lines come in, bounce off a fold, and come back out to the same side. With the cheap U-turns, they close into many small loops instead of one big tour (left).
+
+The fix is to flip the U-turn pattern on a quarter of each side (right, shaded). Then the former loops join into one path, drawn in blue for the part that fits in the picture:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/chevrons.png"
+  alt="Left: the middle of the left side of the board. Lines bounce off the horizontal fold and come back to the same side, closing into 8 small nested loops, each drawn in its own color. Right: the same region with the U-turns flipped along a quarter of the side, shaded red. One path is drawn in blue: it zigzags through all the former loops, so they are now part of one path."
+  width="80%"
+/>
+
+The flipped pattern costs 2 crossings per row instead of 1. That is `n/4` extra crossings per side, so `+n` in total.[^folds]
+
+[^folds]: In every variant of the fold layout that the agents built and checked, fixing the trapped loops cost about `n` or more. That is an observation, not a theorem. A different layout could do better.
+
+### The corner imbalance (+4n/3)
+
+The second thing that goes wrong is subtler.
+
+Take a square region of any size at a corner of the board, and freeze everything outside it: the cheap U-turns at the sides and the straight lines. Each cell inside the region still needs some moves: 2, minus the moves already coming in from outside. Every move inside the region joins a black cell and a white cell. So the region can only be completed if its black cells, together, need exactly as many moves as its white cells.
+
+For example, here is the `6 x 6` region at the bottom-left corner, with the number of moves each cell still needs. The black cells need 28 moves in total, and the white cells need 29. They don't match, so the region can't be completed.
+
+<BlogImage
+  src="/blog/knights-tour-crossings/corner_demand.png"
+  alt="The bottom-left corner of the fold layout, on a checkerboard with dark black cells. A dashed 6 x 6 region at the corner has all its inside moves removed; the moves coming in from outside are drawn dark, and each cell in the region shows how many moves it still needs: 0, 1 or 2."
+  width="40%"
+/>
+
+The cheap tweaks don't fix this. For example, shifting the diagonal fold by one line (below) changes three cells, and the totals become 29 for black and 27 for white. The difference jumped by 3, from -1 to +2. Tweaks like this change it by 3 at a time, so it never reaches 0:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/corner_demand_shift.png"
+  alt="The same bottom-left corner of the fold layout with the diagonal fold shifted by one line. In the dashed 6 x 6 region, each cell shows how many moves it still needs; the three cells whose number changed are outlined in red."
+  width="40%"
+/>
+
+Making the square region bigger doesn't help either. For example, on a `96 x 96` board, every square at the corner, from `5 x 5` up to `40 x 40`, comes out off by one.
+
+So every corner square needs a change: some move crossing its boundary has to be different. The squares are nested, so each one needs its own change, all the way out until the mismatch can cancel with the other corners' at the center. The cheapest place we found to make these changes is along the diagonal fold, with a jog of the lines that costs about 2 crossings every 3 columns:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/flux.png"
+  alt="Left: a square board with mismatches +1 and -1 at alternating corners, joined to a 0 at the center by purple bands along the diagonals. Right: a corridor along a diagonal fold, between blue and green line families, with pairs of crossings (red dots) at regular intervals."
+  width="70%"
+/>
+
+That is `2/3` of a crossing per column. Four corridors, each about `n/2` columns long, add `4n/3` crossings.
+
+### The total: 19n/3
+
+<BlogImage
+  src="/blog/knights-tour-crossings/count.png"
+  alt="Where the crossings of the fold tours are. Edges, shaded light teal along all four sides: U-turns, 1 crossing per row, 4n in total. Arch flips, shaded red on a quarter of each side: +1 per row, +n in total. Corridors, purple along the four half-diagonals: 2/3 per unit of x, 4n/3 in total. Folds, dashed: no crossings."
+  width="60%"
+/>
+
+That is `4n + n + 4n/3 = 19n/3`, plus a constant from the corners and the center. The corners, the center, the side midpoints, and the ends of the flipped quarters are filled in by a computer search, which also reduces their crossings. This is done once for each even board size from 96 to 118, and larger boards reuse the same pieces.
+
+For example, here is the `96 x 96` tour, with 720 crossings in red:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/tour96.png"
+  alt="The full 96 x 96 fold tour. Eight triangles of parallel lines in four colors. Red dots mark the 720 crossings: a dense line along all four sides, pairs along the four diagonals, and small clusters at the corners, the side midpoints and the center."
+  width="90%"
+/>
+
+The formula gives `19 * 96 / 3 = 608`, and the constant adds 112 more.
+
+### Ensuring it's a single tour
+
+For every even `n >= 96`, the construction gives each cell two distinct legal neighbors, and the choices are reciprocal. This gives cycles covering the board. We must also show that there is only one cycle.
+
+For each even `n` from 96 to 118, a computer search finds pieces that close the layout into a single tour. Copying those pieces gives the tours for larger boards, and a computer check confirms that they are single cycles for every even `n` up to 166.
+
+For larger boards, the argument is that growing the board by 24 does not change how things connect:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/fold_grow.png"
+  alt="The fold tours for n = 96 (720 crossings) and n = 120 (872 crossings), side by side at the same scale, with crossings in red. Both have the same eight triangles, the same diagonal corridors, and the same clusters of crossings at the corners, the side midpoints and the center."
+  width="100%"
+/>
+
+Going from `n` to `n + 24` inserts two more copies of each of eight blocks: one block near each corner and one on each side.
+
+<BlogImage
+  src="/blog/knights-tour-crossings/fold_blocks.png"
+  alt="The n = 96 fold tour with its eight insertion blocks shaded. Four corner blocks, in teal, are V-shaped bands of 6 lines that bend at the diagonal folds near each corner. Four side blocks, in orange, are bands of 6 chevron lines that bend at the midline of each side."
+  width="80%"
+/>
+
+A _block_ consists of 6 consecutive lines, each bent at a fold, and the pieces at both ends of those lines. Its paths meet the rest of the tour through a few "ports". Some paths cross the block, and some come back out on the same side.
+
+A computer check validated that two copies of a corner block, glued end to end, connect their outer ports exactly like one copy, without closing a loop in the middle.
+
+The side blocks behave differently: each copy shifts its four paths by one position. So, every `+24` switches the connection pattern between two states, and `+48` brings back the first one. A computer check confirmed that both states give a single cycle (details in the [full proofs](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/CROSSINGS_PROOFS.md#a3-complete-block-matchings-and-the-two-states)).[^step12]
+
+[^step12]: Growing the board by 12 instead of 24 does not work: it gives the other rotations, and for example at `n = 112` it gives three cycles.
+
+## The 4n lower bound
+
+The agents first found a new, short proof of the paper's `4n` bound, using area. Then they refined the same argument to `5n`.
+
+Put the cells at the points of a grid. Each knight move is then the long diagonal of a small parallelogram, whose short diagonal is the unit grid edge with the same midpoint. Call this parallelogram the move's _tile_. Every tile has area exactly 1.
+
+If we cut each unit square of the grid along both of its diagonals, we get four _quarter triangles_. Every tile is made of exactly four of them:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/lb_tile.png"
+  alt="Left: a knight move drawn as the long diagonal of a blue parallelogram, whose short diagonal is a dashed unit grid edge. Right: the same parallelogram, split into four quarter triangles of unit squares."
+  width="80%"
+/>
+
+Two tiles overlap exactly when their moves cross, and they share either one or two quarters:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/lb_overlap.png"
+  alt="Two pairs of crossing moves with their tiles. In the left pair the tiles share one quarter triangle (red); in the right pair they share two quarter triangles (red)."
+  width="80%"
+/>
+
+A tour on an `n x n` board has `n^2` moves, so the tiles have a total area of `n^2`. But they all fit in the square spanned by the cells, which only has area `(n - 1)^2`. That leaves `2n - 1` of _tile area_ that must go into overlaps. Each crossing accounts for at most `1/2` of overlap, so there are at least `4n - 2` crossings.
+
+This bound was checked in Lean.
+
+## The 5n lower bound (tentative)
+
+<Callout title="Status of this proof">
+  Unlike the `4n` bound, this proof is not checked in Lean. It combines an agent hand-written argument with a computer check of the side strips. The `Verifier` agent, which runs on a different model than the agents that wrote the proof, audited the argument and rebuilt the computer check with its own code.
+
+I haven't had time to review this proof myself, and no human has checked it yet. Until then, consider it tentative. If you want to help, I'd appreciate it. It could even be a collaboration opportunity to turn this into a paper. The [full proof](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/CROSSINGS_PROOFS.md#b-full-proof-every-tour-has-at-least-5n---597-crossings-including-the-4n---2-tile-bound) is in the repo.
+
+</Callout>
+
+#### Step 1: imperfect tiling costs extra
+
+Call a quarter _bad_ if it isn't covered exactly once: either no tile covers it, or several do. Here are the quarters near the corner of a real tour, colored blue if covered exactly once, red if covered more than once, and white if not covered:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/lb_tiled.png"
+  alt="Tile coverage near a corner of a 48 x 48 tour. Far from the sides, the long straight lines of the tour tile the board perfectly (all blue). Near the left and bottom sides there are red quarters, covered twice or more, and white quarters, not covered at all."
+  width="70%"
+/>
+
+The long straight lines inside the board tile it perfectly. All the trouble is at the sides.
+
+One useful fact is that within each unit square, a tile always covers two neighboring quarters: one of the top and bottom quarters, and one of the left and right quarters. So the top and bottom quarters together are covered exactly as many times as the left and right quarters together. So, if a square has any bad quarter, it has at least two.
+
+<BlogImage
+  src="/blog/knights-tour-crossings/lb_square.png"
+  alt="Two unit squares, each with the knight moves whose tiles cover it; the cells are at the grid points. Left: two moves leave the bottom-left corner of the square and a third move crosses both, so the top and right quarters are covered twice (red) and the bottom and left quarters once (blue). Right: only two crossing moves; the top quarter is covered twice (red), the left and right quarters once (blue), and the bottom quarter not at all (white)."
+  width="60%"
+/>
+
+**Bad quarters cost extra crossings.** The sides need about one crossing per row, so about `4n` crossings in total (this is how the paper proved its `4n` bound). At up to 1/2 of overlap each, those side crossings alone can absorb all the `2n - 1` of overlap area from the `4n` bound. Anything else is extra. A white quarter is a hole: the tile area that is missing there has to overlap somewhere else, which needs more crossings. And a quarter covered twice or more, away from the side crossings, is overlap from a crossing the sides didn't need. A [careful count](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/CROSSINGS_PROOFS.md#b1-tiles-and-one-scalar-count) shows that each such bad quarter costs at least 1/4 of an extra crossing. So a square with bad quarters costs at least half an extra crossing.
+
+#### Step 2: a charge that forces bad quarters
+
+To force bad quarters, the agents used a conserved quantity.
+
+Color the cells like a chessboard, and orient every move and every unit grid edge from black to white. Now take a path that goes from square center to square center, and count the moves and grid edges that cross it, with a sign for the direction, modulo 3. Call this the path's _charge_.
+
+The key property is that a step of the path between two quarters covered exactly once adds nothing to the charge. So, if a path has nonzero charge, it must pass next to a bad quarter.
+
+#### Step 3: about 2n charged paths around the corners
+
+Now take a path that goes up the right side of a box at a corner of the board, and then left along the top of the box:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/lb_corner_box.png"
+  alt="A box at the bottom-left corner of the board. A purple path goes up the right side of the box and then left along its top, ending next to the left side of the board. Its two ends, next to the bottom and left sides, are marked as end rows."
+  width="50%"
+/>
+
+Around the whole box, the charge adds up to zero. The part of the box boundary along the sides of the board is easy to compute, because only grid edges cross it, and the two short pieces at the ends only depend on a few moves in the two _end rows_ next to the sides.
+
+If these end rows are _normal_, then the outside part has charge 1. The cheap side pattern, with one crossing per row, is normal. (The exact test is in the [full proofs](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/CROSSINGS_PROOFS.md#b3-the-endpoint-test-and-strong-rows).) So the path itself has charge 2, and it must pass next to a bad quarter.
+
+This is the corner imbalance from the fold tours. Every corner path crosses the diagonal that starts at its corner, so the corridor along each diagonal fold serves all of them at once.
+
+The agents used boxes of every size from 12 up to about `n/2`, at all four corners:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/lb_nested.png"
+  alt="A 48 x 48 board with four families of nested L-shaped corner paths, one family per corner. In the bottom-left family, one path is dashed gray: its end row next to the left side is abnormal (red), so the path is dropped."
+  width="50%"
+/>
+
+The paths don't touch, and there are `2n - 60` of them. If all of them are charged, each one forces two bad quarters in a different square, which is half an extra crossing per path. That's `n` extra crossings on top of `4n`, so `5n` in total.
+
+#### Step 4: abnormal rows don't help
+
+A tour can avoid paying for a path by making one of its end rows _abnormal_. Then the charge calculation doesn't apply, and the path is dropped.
+
+But abnormal rows cost crossings too. A computer check goes through every possible pattern of moves in the four columns next to a side, row by row, as a finite-state machine with 3,136 states. It shows that each side has at least one crossing per row, plus one more for each abnormal row, minus a constant:
+
+<BlogImage
+  src="/blog/knights-tour-crossings/lb_strip.png"
+  alt="Two strips of four columns next to the left side of the board, with crossings marked as red dots. Left: the normal pattern, with one crossing per row. Right: an abnormal pattern, with two crossings per row."
+  width="30%"
+/>
+
+In the final count, each abnormal row is worth half a crossing, exactly what the dropped path would have cost. So every corner path pays half a crossing either way: through its bad quarters, or through its abnormal end row.
+
+Keeping track of the constants gives `5n - 597`. The details are in the [full proofs](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/CROSSINGS_PROOFS.md#b-full-proof-every-tour-has-at-least-5n---597-crossings-including-the-4n---2-tile-bound), which call abnormal rows _strong_.
+
+## Open questions
+
+The factor on `n` in the minimum number of crossings remains open, somewhere between `5` and `19/3`.
+
+A significant effort went into attempting to close the gap, but neither direction budged. At this point, it seems prudent to wait for better models before trying again.
+
+## Agent Team Orchestration Via Isomux
+
+The setup is described in the [turns post](/blog/knights-tour-turns#agent-team-orchestration-via-isomux): one room in [Isomux](https://isomux.com), a `Chief Researcher` agent that spawned its own team, and one kickoff prompt.
+
+<BlogImage
+  src="/blog/knights-tour-turns/research_lab.png"
+  alt="The Research Lab room in Isomux: eight agents at their desks, including the Chief Researcher, KT Integrator, KT Lower Bounds, KT Edge Searcher, KT Structures, KT Verifier, KT Turns Theory and KT Lean, each with its current task shown above its desk"
+  width="100%"
+/>
+
+These are the ones that mattered for crossings:
+
+- `Edge Searcher` searched for heels and side pieces with the fewest crossings, using a constraint solver (CP-SAT, from Google's OR-Tools).
+- `Structures` designed the fold layout and worked out how the corner imbalance flows to the center.
+- `Lower Bounds` worked on the lower bound: the charge, the side strips, and their computer checks.
+- `Turns Theory` wrote the proofs, and later the shorter proof of `5n`.
+- `Integrator` turned all of this into full tours, and built the interactive demo.
+- `Verifier` rebuilt every result with its own code and audited every claim. As with turns, a claim counted only after the Verifier audited it.
+- `Lean` wrote the Lean proof of `4n - 2`.
+
+At subscription prices, the whole thing costed less than $20.
+
+### Timeline
+
+The agents were not working continuously through the entire period.
+
+- October 1, 4:06 pm: Work started.
+- October 1, 4:59 pm: Upper bound lowered to `9n`.
+- October 1, 6:55 pm: Upper bound lowered to `7.15n`.
+- October 1, 8:31 pm: Upper bound lowered to `19n/3 ≈ 6.33n`, with the fold layout.
+- October 1, 9:26 pm: First lower bound above `4n`: `4.0001n`.
+- October 2, 12:21 am: Lower bound raised to `14n/3 ≈ 4.67n`, after six intermediate steps.
+- October 2, 8:36 pm to 10:11 pm: Lower bound raised to `4.73n`, `4.74n` and `4.8n`.
+- October 3, 2:50 am: Lower bound raised to `5n`.
+- October 3, 11:40 am: A shorter proof of the lower bound, with a better constant: `5n - 597`.
+
+## Conclusions
+
+I want to remark that the agents did not follow our preexisting methods, but rather invented new ones entirely. In fact, for the `4n` lower bound, they were not content with the fact that we already proved it - they came up with a nicer proof themselves. The tiling, the area-based bounds, the folds, the black and white parity analysis - it's all new.
+
+The complete proofs are in the [MinCrossingsKnightsTour repository](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/CROSSINGS_PROOFS.md).
