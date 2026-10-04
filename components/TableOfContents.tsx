@@ -1,7 +1,6 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import Link from "next/link";
+import React, { useEffect, useRef, useState } from "react";
 
 interface TocItem {
   id: string;
@@ -16,6 +15,7 @@ interface TableOfContentsProps {
 export function TableOfContents({ className = "" }: TableOfContentsProps) {
   const [tocItems, setTocItems] = useState<TocItem[]>([]);
   const [activeId, setActiveId] = useState<string>("");
+  const sidebarRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     // Extract headings from the page, only h1, h2, h3 (max 3 levels)
@@ -63,57 +63,60 @@ export function TableOfContents({ className = "" }: TableOfContentsProps) {
 
     setTocItems(uniqueItems);
 
-    // Set up intersection observer for active section highlighting
-    const observerOptions = {
-      rootMargin: "-80px 0% -80% 0%",
-      threshold: 0,
-    };
-
-    // Keep track of visible headings
+    const headingElements = uniqueItems
+      .map((item) => document.getElementById(item.id))
+      .filter((heading): heading is HTMLElement => heading !== null);
     const visibleHeadings = new Set<string>();
-
-    const observerCallback = (entries: IntersectionObserverEntry[]) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          visibleHeadings.add(entry.target.id);
-        } else {
-          visibleHeadings.delete(entry.target.id);
-        }
-      });
-
-      // Find the topmost visible heading
-      if (visibleHeadings.size > 0) {
-        const visibleHeadingElements = Array.from(visibleHeadings)
-          .map((id) => document.getElementById(id))
-          .filter(Boolean)
-          .sort((a, b) => a!.offsetTop - b!.offsetTop);
-
-        if (visibleHeadingElements.length > 0) {
-          setActiveId(visibleHeadingElements[0]!.id);
-        }
-      } else {
-        // No headings visible, clear active state
-        setActiveId("");
-      }
-    };
+    setActiveId(headingElements[0]?.id || "");
 
     const observer = new IntersectionObserver(
-      observerCallback,
-      observerOptions
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) visibleHeadings.add(entry.target.id);
+          else visibleHeadings.delete(entry.target.id);
+        });
+
+        const current = headingElements.find((heading) =>
+          visibleHeadings.has(heading.id)
+        );
+        // Keep the previous section active between headings.
+        if (current) setActiveId(current.id);
+      },
+      { rootMargin: "-80px 0px -65% 0px", threshold: 0 }
     );
 
-    // Only observe headings that are in our ToC
-    items.forEach((item) => {
-      const heading = document.getElementById(item.id);
-      if (heading) {
-        observer.observe(heading);
-      }
-    });
+    headingElements.forEach((heading) => observer.observe(heading));
 
     return () => {
       observer.disconnect();
     };
   }, []);
+
+  useEffect(() => {
+    const sidebar = sidebarRef.current;
+    if (!sidebar || !activeId) return;
+
+    const activeLink = sidebar.querySelector<HTMLElement>(
+      `[data-toc-id="${CSS.escape(activeId)}"]`
+    );
+    if (!activeLink) return;
+
+    const padding = 24;
+    const linkTop = activeLink.offsetTop;
+    const linkBottom = linkTop + activeLink.offsetHeight;
+    const visibleTop = sidebar.scrollTop + padding;
+    const visibleBottom = sidebar.scrollTop + sidebar.clientHeight - padding;
+
+    if (linkTop < visibleTop || linkBottom > visibleBottom) {
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
+      sidebar.scrollTo({
+        top: Math.max(0, linkTop - sidebar.clientHeight / 2),
+        behavior: reduceMotion ? "auto" : "smooth",
+      });
+    }
+  }, [activeId]);
 
   if (tocItems.length === 0) {
     return null;
@@ -127,9 +130,12 @@ export function TableOfContents({ className = "" }: TableOfContentsProps) {
       const headerOffset = 80;
       const elementPosition = element.offsetTop - headerOffset;
 
+      const reduceMotion = window.matchMedia(
+        "(prefers-reduced-motion: reduce)"
+      ).matches;
       window.scrollTo({
         top: elementPosition,
-        behavior: "smooth",
+        behavior: reduceMotion ? "auto" : "smooth",
       });
 
       // Update URL without triggering navigation
@@ -138,9 +144,13 @@ export function TableOfContents({ className = "" }: TableOfContentsProps) {
     }
   };
 
-  return (
+  const renderContents = (wide = false) => (
     <nav
-      className={`toc border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-800/50 ${className}`}
+      className={
+        wide
+          ? "toc min-h-full py-6 pl-10 pr-4"
+          : `toc border border-gray-200 dark:border-gray-700 rounded-lg p-4 bg-gray-50 dark:bg-gray-800/50 ${className}`
+      }
       aria-label="Table of contents"
     >
       <h4 className="text-sm font-semibold text-gray-900 dark:text-gray-100 mb-3 uppercase tracking-wide">
@@ -150,6 +160,9 @@ export function TableOfContents({ className = "" }: TableOfContentsProps) {
         {tocItems.map((item, index) => {
           const isActive = activeId === item.id;
           const getIndentClass = (level: number) => {
+            if (wide) {
+              return level >= 3 ? "ml-4" : "";
+            }
             switch (level) {
               case 1:
                 return ""; // No indent for h1
@@ -170,7 +183,9 @@ export function TableOfContents({ className = "" }: TableOfContentsProps) {
               <a
                 href={`#${item.id}`}
                 onClick={(e) => handleClick(e, item.id)}
-                className={`block py-1 px-2 rounded transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 ${
+                aria-current={isActive ? "location" : undefined}
+                data-toc-id={wide ? item.id : undefined}
+                className={`block py-1 ${wide ? "-ml-2 px-2" : "px-2"} rounded transition-colors duration-200 hover:bg-gray-200 dark:hover:bg-gray-700 ${
                   isActive
                     ? "text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/30 font-medium"
                     : "text-gray-600 dark:text-gray-300 hover:text-gray-900 dark:hover:text-gray-100"
@@ -183,6 +198,20 @@ export function TableOfContents({ className = "" }: TableOfContentsProps) {
         })}
       </ul>
     </nav>
+  );
+
+  return (
+    <>
+      <div className="2xl:hidden">{renderContents()}</div>
+      <aside className="not-prose fixed bottom-0 left-0 top-14 z-10 hidden w-[calc(50%-30.5rem)] border-r border-gray-200 bg-background/95 dark:border-gray-700 2xl:block">
+        <div
+          ref={sidebarRef}
+          className="h-full overflow-y-auto overscroll-contain"
+        >
+          {renderContents(true)}
+        </div>
+      </aside>
+    </>
   );
 }
 
