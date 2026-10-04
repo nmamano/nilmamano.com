@@ -203,7 +203,7 @@ export function TableOfContents({ className = "" }: TableOfContentsProps) {
   return (
     <>
       <div className="2xl:hidden">{renderContents()}</div>
-      <aside className="not-prose fixed bottom-0 left-0 top-14 z-10 hidden w-[calc(50%-30.5rem)] border-r border-gray-200 bg-background/95 dark:border-gray-700 2xl:block">
+      <aside className="not-prose fixed bottom-0 left-0 top-14 z-10 toc-sidebar hidden w-[max(22rem,calc(50%-30.5rem))] border-r border-gray-200 bg-background/95 dark:border-gray-700 2xl:block">
         <div
           ref={sidebarRef}
           className="h-full overflow-y-auto overscroll-contain"

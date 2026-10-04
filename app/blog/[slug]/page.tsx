@@ -88,7 +88,7 @@ export default async function BlogPost({
   const backLink = category ? `/blog/category/${category}` : "/blog";
 
   return (
-    <div className="container mx-auto max-w-4xl px-4 py-12">
+    <div className="blog-post-container container mx-auto max-w-4xl px-4 py-12">
       <div className="mb-8">
         <Link
           href={backLink}

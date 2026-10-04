@@ -86,7 +86,7 @@ export function BlogImage({
         <figcaption
           className="text-base font-medium text-gray-700 dark:text-gray-300"
           style={{
-            maxWidth: width === "100%" ? "100%" : width,
+            width: "100%",
             textAlign: centered ? "center" : "left",
             marginTop: "0.6rem",
           }}
@@ -147,7 +147,7 @@ export function BlogVideo({
         <figcaption
           className="text-base font-medium text-gray-700 dark:text-gray-300"
           style={{
-            maxWidth: width === "100%" ? "100%" : width,
+            width: "100%",
             textAlign: centered ? "center" : "left",
             marginTop: "0rem",
           }}

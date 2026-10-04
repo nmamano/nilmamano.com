@@ -370,3 +370,12 @@ body {
 .prose .blog-media img {
   margin: 0;
 }
+
+/* Sidebar table of contents (TableOfContents.tsx, 2xl and up): keep the post clear of the sidebar. */
+@media (min-width: 1536px) {
+  .blog-post-container:has(.toc-sidebar) {
+    /* Text column starts at max(24rem, 50vw - 28rem) in the viewport; subtract main's centering (max-w-7xl) and padding (md:px-6). */
+    margin-left: calc(max(24rem, 50vw - 28rem) - max(0px, 50vw - 40rem) - 1.5rem);
+    margin-right: auto;
+  }
+}

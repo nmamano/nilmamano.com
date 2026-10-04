@@ -92,11 +92,13 @@ The paper's lower bound of `4n - O(1)` comes from a case analysis of the moves n
 
 This is what the new tours look like:
 
-<DemoEmbed
-  src="https://nmamano.github.io/MinCrossingsKnightsTour/?metric=crossings&step=6&n=96"
-  href="https://nmamano.github.io/MinCrossingsKnightsTour/?metric=crossings&step=6&n=96"
-  title="Interactive demo: knight tours with few crossings"
-/>
+<a href="https://nmamano.github.io/MinCrossingsKnightsTour/?metric=crossings&step=6&n=96" target="_blank" rel="noopener noreferrer">
+  <BlogImage
+    src="/blog/knights-tour-crossings/demo_fold96.png"
+    alt="The interactive demo showing the fold design, step 6 of 6, on a 96 x 96 board. The board is split into eight triangles of parallel lines in four colors by its two diagonals and its two midlines, with crossings in red along the sides and in bands along the diagonals. A side panel lists the six steps of the progression, from the original formation heel at 13n to the fold design at 19n/3."
+    width="100%"
+  />
+</a>
 
 The **main original idea by the agents** is the addition of turns along the two main diagonals and two middle lines. This is to ensure that the paths always approach the edges at a steep angle, which turns out to be better than when paths approach at a shallow angle. Our knight-formation-based approach, which is completely disregraded in the agent's solution, approached two sides at steep angles and two at shallow angles.
 
