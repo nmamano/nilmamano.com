@@ -11,8 +11,6 @@ export default function ClientSyntaxHighlighter({
   const prismLoaded = useRef(false);
 
   useEffect(() => {
-    let observer: MutationObserver | null = null;
-
     const loadAndHighlight = async () => {
       try {
         // Only load Prism once
@@ -57,36 +55,8 @@ export default function ClientSyntaxHighlighter({
               "Container ref is null when trying to apply highlighting"
             );
           }
-
-          // Set up an observer to detect content changes
-          observer = new MutationObserver((mutations) => {
-            // Check if the changes are from Prism or actual content changes
-            const isPrismChange = mutations.some((mutation) => {
-              // If any of the added nodes have Prism classes, it's a Prism change
-              return Array.from(mutation.addedNodes).some(
-                (node) =>
-                  node instanceof Element &&
-                  (node.classList.contains("token") ||
-                    node.parentElement?.classList.contains("token"))
-              );
-            });
-
-            if (!isPrismChange && containerRef.current) {
-              Prism.highlightAllUnder(containerRef.current);
-            }
-          });
-
-          // Observe changes to the container and its descendants
-          if (containerRef.current) {
-            observer.observe(containerRef.current, {
-              childList: true,
-              subtree: true,
-              attributes: true,
-              attributeFilter: ["class"],
-            });
-          } else {
-            console.error("Container ref is null when setting up observer");
-          }
+          // No MutationObserver: the MDX is static after hydration, and re-highlighting
+          // on class changes (e.g. the TOC scrollspy) looped on blocks Prism leaves as plain text.
         }
       } catch (err) {
         console.error("Error initializing syntax highlighting:", err);
@@ -100,13 +70,6 @@ export default function ClientSyntaxHighlighter({
         console.error("Fatal error in syntax highlighting:", err);
       });
     }
-
-    // Cleanup observer on unmount
-    return () => {
-      if (observer) {
-        observer.disconnect();
-      }
-    };
   }, []);
 
   return <div ref={containerRef}>{children}</div>;
