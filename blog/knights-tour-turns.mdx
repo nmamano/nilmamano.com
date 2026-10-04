@@ -26,11 +26,11 @@ Recently, I asked a team of AI agents to try to make progress in either directio
 />
   
 - **Lower bound:** For `n >= 8`, every closed tour has at least `8n - 28` turns.
-- **Upper bound:** There are closed tours with `8n - 14` turns, for every even `n >= 48`.[^improved]
-
-[^improved]: Since this post was written, the agents found tours with `8n - 17` turns when `n ≡ 2 (mod 8)` and `8n - 16` when `n ≡ 6 (mod 8)`. See [Open questions](#open-questions).
+- **Upper bound:** There are closed tours with `8n - 14` turns, for every even `n >= 48`.
 
 So, the gap is now just a constant: between 14 and 28 turns below `8n`.
+
+The bounds have likely moved since I wrote this post. As new results come in, they will appear in [Results since the post](#results-since-the-post).
 
 This post explains the new tour and lower bound argument found by the agents, as well as how I orchestrated the agents. They also improved the bounds for the fewest crossings, but these results will be in a separate post (WIP).
 
@@ -253,11 +253,16 @@ A computer check validated that two copies of a block (far away enough from the 
 
 The exact minimum remains open between `8n - 28` and `8n - 14`, and it could depend on `n mod 8`.
 
-Since this post was written, the agents found tours with `8n - 17` turns when `n ≡ 2 (mod 8)` and `8n - 16` when `n ≡ 6 (mod 8)`, by optimizing `8x8` corners together with 4-row deep and 4-column deep bands on the sides. I won't include these in this post, but they are in the [interactive demo](https://nmamano.github.io/MinCrossingsKnightsTour/?metric=turns) and described [here](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/TURNS_IMPROVED.md).
-
 The agents claim that the exact minimum is `8n - 20` for `n = 14` and `16`, and `8n - 21` for `n = 18`.
 
 A significant effort went into attempting to close the gap. At this point, it seems prudent to wait for better models before trying again.
+
+## Results since the post
+
+The agents have kept working on this problem and keep reporting results. I won't cover them in this post, but I'll list them here as they come in. The proofs are in the [MinCrossingsKnightsTour repository](https://github.com/nmamano/MinCrossingsKnightsTour/tree/master/bounds-2026).
+
+- Upper bound: tours with `8n - 17` turns when `n ≡ 2 (mod 8)` and `8n - 16` when `n ≡ 6 (mod 8)` ([proof](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/TURNS_IMPROVED.md), [interactive demo](https://nmamano.github.io/MinCrossingsKnightsTour/?metric=turns)).
+- Lower bound: every closed tour has at least `8n - 24` turns, for `n >= 20` ([proof](https://github.com/nmamano/MinCrossingsKnightsTour/blob/master/bounds-2026/TURNS_LOWER24.md)).
 
 ## Agent Team Orchestration Via Isomux
 
@@ -329,7 +334,6 @@ One emergent rule was that a claim counts only after an independent check. The V
 - October 1, 5:43 pm: Lower bound raised to `8n - 28`.
 - October 1, 6:23 pm: Upper bound lowered to `8n - 14`.
 - October 1, 7:17 pm: `8n - 64` lower bound checked in Lean, 37 minutes after I asked whether that was possible (I had never proved anything in Lean before).
-- October 3, 6:50 pm: Upper bound lowered to `8n - 17` when `n ≡ 2 (mod 8)` and to `8n - 16` when `n ≡ 6 (mod 8)`.[^improved]
 
 October 2 and 3 went to crossings, audits, write-ups (where I'm the bottleneck), the interactive demo, and trying to close the constant gap.
 
