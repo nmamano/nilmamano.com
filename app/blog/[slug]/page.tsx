@@ -12,6 +12,22 @@ import remarkGfm from "remark-gfm";
 import CopyLinkButton from "@/components/CopyLinkButton";
 import ChatWidget from "@/components/chat-widget";
 
+// The footnote back link. The default bare "↩" renders as an emoji on iOS;
+// U+FE0E asks for the text glyph. Keeps the default's superscript count for
+// a footnote referenced more than once.
+function footnoteBackContent(_: number, rereferenceIndex: number) {
+  const content: any[] = [{ type: "text", value: "↩︎" }];
+  if (rereferenceIndex > 1) {
+    content.push({
+      type: "element",
+      tagName: "sup",
+      properties: {},
+      children: [{ type: "text", value: String(rereferenceIndex) }],
+    });
+  }
+  return content;
+}
+
 // Generate metadata for each blog post
 export async function generateMetadata({
   params,
@@ -148,6 +164,7 @@ export default async function BlogPost({
                 mdxOptions: {
                   remarkPlugins: [remarkGfm],
                   rehypePlugins: [],
+                  remarkRehypeOptions: { footnoteBackContent },
                 },
               }}
             />
