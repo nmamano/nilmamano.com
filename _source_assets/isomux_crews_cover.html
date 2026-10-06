@@ -1,0 +1,52 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #06080f; }
+  #card {
+    width: 1200px; height: 630px; position: relative; overflow: hidden;
+    font-family: Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(900px 620px at 88% 46%, #1d1a3f 0%, rgba(29,26,63,0) 68%),
+      linear-gradient(140deg, #0a1120 0%, #070c17 52%, #05080f 100%);
+  }
+  /* faint diagonal lattice, like the other covers */
+  #card::before {
+    content: ""; position: absolute; inset: 0; opacity: .5;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(120,160,230,.055) 0 1px, transparent 1px 84px),
+      repeating-linear-gradient(-45deg, rgba(120,160,230,.055) 0 1px, transparent 1px 84px);
+  }
+
+  .left { position: absolute; left: 78px; top: 150px; }
+  .eyebrow { font-size: 20px; font-weight: 700; color: #a78bfa; letter-spacing: .2px; margin-bottom: 18px; }
+  .title { font-size: 60px; font-weight: 800; letter-spacing: -1.5px; line-height: 1.1; color: #ffffff; }
+  .title .accent { color: #a78bfa; }
+  .rule { width: 92px; height: 5px; border-radius: 3px; background: #34d399; margin-top: 34px; }
+  .sub { margin-top: 26px; font-size: 21px; font-weight: 500; color: #93a4c2; letter-spacing: -.2px; line-height: 1.45; }
+
+  /* ---- The Hosted Isomux SRE room, a real Isomux render (the post's room screenshot, cropped) ---- */
+  .shot {
+    position: absolute; right: 70px; top: 60px; width: 470px; height: 509px;
+    border-radius: 20px; overflow: hidden; border: 1px solid #22314c;
+    box-shadow: 0 30px 70px rgba(0,0,0,.5); background: #0e1320;
+  }
+  .shot img { display: block; width: 100%; height: 100%; object-fit: cover; }
+</style>
+</head>
+<body>
+<div id="card">
+  <div class="left">
+    <div class="eyebrow">Isomux for Enterprise 2</div>
+    <div class="title">Turning your<br/>company<br/><span class="accent">AI native</span></div>
+    <div class="rule"></div>
+    <div class="sub">One room per business process.<br/>A crew of agents runs it 24/7.</div>
+  </div>
+
+  <div class="shot"><img src="isomux_crews_sre_crop.png" alt="" /></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,166 @@
+---
+title: "Isomux for Enterprise 2: Turning your company AI native"
+date: "2026-10-05"
+excerpt: "A playbook for turning your company AI native with Isomux, one automated business process at a time."
+coverImage: "/blog/isomux-crews/cover.png"
+categories: ["isomux", "ai", "swe"]
+---
+  
+<Callout>
+This post is part 2 in a series on how Isomux adds value at your company:
+
+- [Isomux for Enterprise: Agents for Normies](/blog/isomux-enterprise): how to get non-technical employees to leverage agents.
+- Isomux for Enterprise 2: Turning your company AI native (this post): a playbook for automating more and more of your company.
+</Callout>
+
+<Toc />
+
+## Agent crews
+
+The concept of an _AI native_ company is one where most things are run by agents. Most people imagine "AI employees" which get more and more capable, until you talk to them just like a normal employee.
+
+Steve Yegge has a different take on how to make a company AI native in his [Gas City post](https://yegge.ai/essays/welcome-to-gas-city/), and it clicked for me because it's simpler and easier to get started:[^radical]
+
+1. Find the narrowest business process
+2. Build agentic automation around it
+3. Repeat
+
+Gas City has a concept of a "pack", a small crew of agents that runs one business process, 24/7. His example is user image moderation for a game:
+
+- Agent 1 wakes up whenever a player uploads an image and gives an approval/reject verdict
+- Agent 2 checks the first agent's choice and has final say
+
+Having multiple agents with specialized roles has two purposes: (1) a safety net against agent mistakes or "hallucinations",[^providers] and (2) matching the shape of any multi-step business process.
+
+The work of turning a company AI native, then, is managing these crews as you add more of them, each more complex than the last.
+
+## Crews in Isomux
+
+**Isomux has all the ingredients for this approach toward turning a company AI native** (the examples below will make this concrete):
+
+- Setting up crews: one room = one crew.[^room-size]
+
+<BlogImage
+  src="/blog/isomux-crews/sre-room.png"
+  width="70%"
+  alt="An Isomux room with five agents at their desks: Lead SRE, whose current task reads 'Lead SRE setup and business...', and SRE 1 to SRE 4. SRE 1 is awake, with the task 'Investigating control_plane lif...'; SRE 2, SRE 3 and SRE 4 are asleep."
+/>
+
+- Building custom apps and dashboards around each business process, with just-in-time apps that get proper URLs and reuse the office's authentication.
+
+<BlogImage
+  src="/blog/isomux-crews/business-health.png"
+  width="70%"
+  alt="The business-health app open in a browser at business-health.(redacted).com. Its last cycle ran 15 minutes ago. Three status cards: Neon Allowance is OK, with its plan and byte usage; Customer Offices is OK, with its details redacted; Control Plane shows PROBLEM, with 5 instances and attention items about test offices."
+/>
+
+- Seeing all your crews at a glance: the built-in "app store" for just-in-time apps becomes the crew catalog.
+
+<BlogImage
+  src="/blog/isomux-crews/apps-page.png"
+  width="70%"
+  alt="The Isomux Apps page with 9 apps. Under Running: business-health, which checks every business health indicator every 15 minutes and alerts the Lead SRE; image-moderation, which shows player image uploads with each verdict and its review; onboarding-guide, the onboarding guide with a chatbot for new-hire questions; and wallgame-users. Each app shows a live preview, the agent that created it, and its owner. Under Stopped: commit-plot and game-video. An Archived section is collapsed."
+/>
+
+- Inviting colleagues to manage the crews (Isomux is fully multiplayer). You can invite people to specific rooms/crews.
+
+<BlogImage
+  src="/blog/isomux-crews/room-access.png"
+  width="70%"
+  alt="The Rooms section of a member's settings in Isomux, titled 'Access: rooms this member can see and act in (office-owner managed).' Of five rooms (Isomux, Research Lab, Isomux Security Audit, Hosted Isomux SRE and Projects), only Hosted Isomux SRE is checked."
+/>
+
+- Getting pages from the crew (or the app) for escalations.
+
+<BlogImage
+  src="/blog/isomux-crews/lead-sre-page.png"
+  width="70%"
+  alt="A Discord channel where the Pages app posts '@Nil [Hosted Isomux] test: Lead SRE pager', with a card reading 'This is a test page from Lead SRE. No incident. Ack it to stop the repeats.', signed Hosted Isomux SRE, Lead SRE. Below it, a second message reads 'Resolved: [Hosted Isomux] test: Lead SRE pager'."
+/>
+
+- Using webhooks, scheduled jobs (cron jobs), or app-to-agent messages to wake up the crew.
+
+<BlogImage
+  src="/blog/isomux-crews/crew-app-loop.svg"
+  width="70%"
+  alt="A four-node loop. Humans chat with the crew and get replies and pages back; humans click in the just-in-time app and see its dashboard. The crew writes the app's implementation and the app sends the crew alerts. Both the crew and the app take actions on the business systems, which send data back to both, and webhooks to the crew."
+/>
+
+<Callout>
+**You don't need to set up the crew manually.** Explain it to, say, your "Crew Creator" agent, and it'll take it from there.
+
+It'll probably take some iterations to fine-tune a crew. It's not quite as simple as "one prompt, one business process automated," but it's as close as possible.
+</Callout>
+
+## Crew example
+
+I have a [Hosted Isomux](https://isomux.app) business that I need to monitor. If, e.g., the web storefront goes down, I need it handled ASAP.
+
+This is what I did:
+
+1. Asked my preexisting "Isomux Tech Lead" agent to **create a room** called "Hosted Isomux SRE".
+2. Asked the Isomux Tech Lead to add context about the business in the **room system prompt**, including how to connect to the DB and the server logs. The room system prompt is added to every agent in the room.
+3. Asked the Isomux Tech Lead to **spawn five agents** in the room: "Lead SRE", and SRE 1 through 4. The room system prompt establishes the workflow: when a new alert reaches the Lead SRE, it either dispatches the work to an SRE or escalates by paging me. (Isomux agents can message each other.)
+4. Asked the Lead SRE to **build a just-in-time app** that (1) checks every business health indicator every 15 minutes, (2) shows them in a dashboard, and (3) messages the Lead SRE agent on any bad signal. (Isomux just-in-time apps can message agents.)
+
+The setup guarantees that, anytime anything looks wrong, we get an agent looking at it within 15 minutes, with all necessary context. The agent then follows the playbook in the room system prompt.
+
+<Callout>
+When everything works, I rarely need to look at the room or the dashboard until I get paged.
+</Callout>
+
+### Why I like having a lead agent
+
+In most crews, I designate one agent as the lead. It doesn't do work itself; it just coordinates.
+
+That has a few advantages:
+
+- The crew can handle multiple tasks coming in close together
+- The lead agent sees every issue coming in, so it can infer patterns
+- The lead agent's own chat stays available for me to drop in anytime and chat with it
+- The lead agent can clear the sessions of the workers before dispatching work to them, so the workers don't suffer from context rot
+- The lead agent's own context stays small since it's not doing the heavy lifting, so it doesn't suffer from context rot as much. When necessary, it can hand itself off to a new session.
+
+### Sensitive actions
+
+What if we don't want every agent to be able to UPDATE the database?
+
+We could set it up so the workers are not allowed to do such queries without approval from the lead. If we are paranoid, we can add a "DB Integrity Guard" agent prompted to protect the DB at all costs, and only let that agent approve operations.
+
+Isomux doesn't isolate agents from each other at the OS level yet, so treat this as a guardrail, not a security boundary.[^isolation]
+
+## Another example
+
+Say your company has an onboarding guide. Maintaining it is a chore, so you create the Onboarding Guide Crew.
+
+You update the guide page so that, when a new employee has a question, they can ask a chatbot right there (routed to another agent in the crew).
+
+Every time they do, that triggers the crew:
+
+1. An editor agent looks at the question and asks itself: how can the guide be improved so this is covered better? Then it edits the guide.
+2. An adversarial reviewer agent makes sure the guide doesn't bloat. It is told that the longer something is, the less attention readers keep.
+
+## Conclusions
+
+If you want to start turning your company AI native and find this vision compelling, [contact me](#links). [Isomux](https://isomux.com) runs in your own infra. It doesn't lock you into any harness, provider, deployment shape, etc.
+
+I'm currently looking for design partners.
+
+### Links
+
+- Part 1: [Isomux for Enterprise: Agents for Normies](/blog/isomux-enterprise)
+- Landing page: [isomux.com](https://isomux.com)
+- GitHub (all source available): [github.com/nmamano/isomux](https://github.com/nmamano/isomux)
+- Design and architecture: [nilmamano.com/blog/isomux](/blog/isomux)
+- Just-in-time-app suite: [nilmamano.com/blog/personal-software-suites](/blog/personal-software-suites)
+- Hosting setup (AWS, Render, etc.): [isomux.com/docs/hosting](https://isomux.com/docs/hosting)
+- [License](https://github.com/nmamano/isomux/blob/main/LICENSE) (TL;DR: Free for non-production use like testing, and for any orgs up to 10 people.)
+- Contact: Nil on [X](https://x.com/Nil053), [LinkedIn](https://www.linkedin.com/in/nilmamano/), the [Isomux discord](https://discord.gg/yuMPcqKSBr), or at llc@isomux.com.
+
+[^room-size]: An Isomux room has 8 desks, so a crew can have up to 8 agents. That's enough: most crews need a handful.
+
+[^radical]: There are more radical versions of an AI native company, like [this one](https://www.youtube.com/watch?v=X_JsIHUfUjc), where all data is stored, as soon as it exists, somewhere agents can reach it, so they have full context and can trace any connection. That's probably a good idea for a new company, but it's hard to turn an existing company into one.
+
+[^providers]: Some suggest using different providers for different agents in the crew (like Claude and Codex) so they cover each other's blind spots.
+
+[^isolation]: In a system where agents message each other, there's a tradeoff between collaboration and isolation. Isomux leans toward collaboration.
