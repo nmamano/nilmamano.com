@@ -37,6 +37,8 @@ export function BlogImage({
   // Convert width to number for Next.js Image if possible
   // Next.js Image needs numeric width/height
   const numericWidth = width.endsWith("%") ? undefined : parseInt(width);
+  // Percentage widths fill the column on phones (see .blog-image-pct in globals.css).
+  const widthClass = width.endsWith("%") ? " blog-image-pct" : "";
 
   const imageStyle = {
     maxWidth: "100%",
@@ -67,7 +69,7 @@ export function BlogImage({
             ...imageStyle,
             width: width,
           }}
-          className="rounded-md"
+          className={"rounded-md" + widthClass}
           unoptimized={true} // Key prop for animated GIFs
         />
       ) : (
@@ -79,7 +81,7 @@ export function BlogImage({
             width,
             ...imageStyle,
           }}
-          className="rounded-md"
+          className={"rounded-md" + widthClass}
         />
       )}
       {caption && (

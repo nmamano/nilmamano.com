@@ -371,6 +371,15 @@ body {
   margin: 0;
 }
 
+/* On phones, an image with a percentage width (e.g. width="50%") fills the
+   column: half of a phone column is too small to read. !important beats the
+   inline width. */
+@media (max-width: 767px) {
+  .prose .blog-media .blog-image-pct {
+    width: 100% !important;
+  }
+}
+
 /* Sidebar table of contents (TableOfContents.tsx, 2xl and up): keep the post clear of the sidebar. */
 @media (min-width: 1536px) {
   .blog-post-container:has(.toc-sidebar) {
