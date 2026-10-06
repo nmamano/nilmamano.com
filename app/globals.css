@@ -371,12 +371,11 @@ body {
   margin: 0;
 }
 
-/* On phones, an image with a percentage width (e.g. width="50%") fills the
-   column: half of a phone column is too small to read. !important beats the
-   inline width. */
+/* BlogImage mobileWidth: the image's width on phones, for images that are
+   too small at their desktop width. !important beats the inline width. */
 @media (max-width: 767px) {
-  .prose .blog-media .blog-image-pct {
-    width: 100% !important;
+  .prose .blog-media .blog-image-mobile {
+    width: var(--blog-image-mobile-width) !important;
   }
 }
 

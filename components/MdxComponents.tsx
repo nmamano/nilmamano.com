@@ -21,6 +21,7 @@ interface BlogImageProps {
   centered?: boolean;
   needsBackground?: boolean;
   caption?: string;
+  mobileWidth?: string;
 }
 
 export function BlogImage({
@@ -30,6 +31,7 @@ export function BlogImage({
   centered = true,
   needsBackground = false,
   caption,
+  mobileWidth,
 }: BlogImageProps) {
   // Check if the image is a GIF
   const isGif = src.toLowerCase().endsWith(".gif");
@@ -37,8 +39,12 @@ export function BlogImage({
   // Convert width to number for Next.js Image if possible
   // Next.js Image needs numeric width/height
   const numericWidth = width.endsWith("%") ? undefined : parseInt(width);
-  // Percentage widths fill the column on phones (see .blog-image-pct in globals.css).
-  const widthClass = width.endsWith("%") ? " blog-image-pct" : "";
+  // Optional width on phones, for images that are too small at their desktop
+  // width (see .blog-image-mobile in globals.css).
+  const widthClass = mobileWidth ? " blog-image-mobile" : "";
+  const mobileVar = mobileWidth
+    ? ({ "--blog-image-mobile-width": mobileWidth } as React.CSSProperties)
+    : {};
 
   const imageStyle = {
     maxWidth: "100%",
@@ -68,6 +74,7 @@ export function BlogImage({
           style={{
             ...imageStyle,
             width: width,
+            ...mobileVar,
           }}
           className={"rounded-md" + widthClass}
           unoptimized={true} // Key prop for animated GIFs
@@ -80,6 +87,7 @@ export function BlogImage({
           style={{
             width,
             ...imageStyle,
+            ...mobileVar,
           }}
           className={"rounded-md" + widthClass}
         />
