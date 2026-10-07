@@ -20,14 +20,7 @@ export default function BlogFooter({ currentPostSlug }: BlogFooterProps) {
       </div>
 
       {/* Random posts section */}
-      {otherPosts.length > 0 && (
-        <div className="mb-12">
-          <h3 className="text-xl font-semibold mb-6 text-center">
-            Want to read more? Here are other posts:
-          </h3>
-          <RandomPosts posts={otherPosts} count={3} />
-        </div>
-      )}
+      <RandomPosts posts={otherPosts} count={3} />
 
       {/* Author info section */}
       <div className="flex flex-col items-center justify-center space-y-4 text-center">
