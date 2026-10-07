@@ -60,7 +60,7 @@ Here's the high-level idea of how the separator hierarchy supports reactive NN:
 
 **Preprocessing**:
 - Build the separator hierarchy for G.
-- For each separator vertex s and each node v in the same or adjacent component, precompute d(s, v) — the shortest-path distance. This takes O(n · |S|) time per level, and O(n^{1.5}) total for planar graphs.
+- For each separator vertex s and each node v in the same or adjacent component, precompute d(s, v) — the shortest-path distance. This takes O(n · |S|) time per level, and O(n^\{1.5\}) total for planar graphs.
 - For each node v, maintain a list of "closest sites" organized by the hierarchy.
 
 **Query `nearest(v)`**:
@@ -73,16 +73,16 @@ Here's the high-level idea of how the separator hierarchy supports reactive NN:
 - Update the relevant parts of the hierarchy.
 - Future queries skip deleted sites.
 
-<!-- TODO: Consider KaTeX for this equation -->
+{/* TODO: Consider KaTeX for this equation */}
 **Theorem (Chapter 5)**: For a graph G with a separator hierarchy of total size T(n), the reactive NN data structure supports:
 - Preprocessing in O(T(n)) time.
 - Each `nearest` query in O(√n · log n) time (for planar / sparse-crossing graphs).
 - Each `delete` in O(√n) time.
 
-<!-- TODO: Consider KaTeX for this equation -->
-For n-node graphs with sparse crossing structure (which includes road networks), T(n) = O(n^{1.5}), giving O(n^{1.5} log n) total time for n queries and deletions.
+{/* TODO: Consider KaTeX for this equation */}
+For n-node graphs with sparse crossing structure (which includes road networks), T(n) = O(n^\{1.5\}), giving O(n^\{1.5\} log n) total time for n queries and deletions.
 
-<!-- TODO: add figure showing separator hierarchy decomposition -->
+{/* TODO: add figure showing separator hierarchy decomposition */}
 
 ## The Full Algorithm for Geographic Stable Matching
 
@@ -96,12 +96,12 @@ Combining the FCC algorithm (Chapter 4) with the reactive NN data structure (Cha
 3. Run the FCC algorithm: maintain a chain; extend by querying the reactive NN for the current chain tail's nearest neighbor; merge when mutual nearest neighbors are found.
 4. After each match, delete the matched pair from the reactive NN structure.
 
-<!-- TODO: Consider KaTeX for this equation -->
-**Total time**: O(n^{1.5} log n) for graphs with sparse crossing structure.
+{/* TODO: Consider KaTeX for this equation */}
+**Total time**: O(n^\{1.5\} log n) for graphs with sparse crossing structure.
 
 This is the key result of Chapter 5:
 
-<Callout>**Theorem 5.4**: Geographic stable matching on an n-node graph with a sparse crossing graph can be solved in O(n^{1.5} log n) time — substantially better than the O(n²) of Gale-Shapley or naive FCC for large n.</Callout>
+<Callout>**Theorem 5.4**: Geographic stable matching on an n-node graph with a sparse crossing graph can be solved in O(n^\{1.5\} log n) time — substantially better than the O(n²) of Gale-Shapley or naive FCC for large n.</Callout>
 
 ## Experimental Validation: Delaware Road Network
 
@@ -120,7 +120,7 @@ Key findings:
 
 The FCC algorithm's runtime independence from k is the key advantage: because the reactive NN structure handles deletions efficiently, the algorithm doesn't slow down as more centers fill up.
 
-<!-- TODO: add figure showing experimental runtime comparison -->
+{/* TODO: add figure showing experimental runtime comparison */}
 
 ## Road Networks as Graphs with Sparse Crossing Structure
 
@@ -140,7 +140,7 @@ Chapter 5 also develops **bichromatic closest-pair** data structures for graphs,
 
 This is useful for the stable matching setting where we're matching two separate groups (e.g., clients to servers) rather than finding mutual nearest neighbors within a single set.
 
-The bichromatic version follows the same separator hierarchy approach, with preprocessing time O(n^{1.5}) and query time O(√n log n) for planar / sparse-crossing graphs.
+The bichromatic version follows the same separator hierarchy approach, with preprocessing time O(n^\{1.5\}) and query time O(√n log n) for planar / sparse-crossing graphs.
 
 ## Connection to the Broader Framework
 

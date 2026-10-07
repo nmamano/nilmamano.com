@@ -1,7 +1,6 @@
 import { getPostBySlug, getAllPostSlugs } from "../../lib/blog";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
-import Link from "next/link";
 import Image from "next/image";
 import components from "../../../components/MdxComponents";
 import ClientSyntaxHighlighter from "../../../components/ClientSyntaxHighlighter";
@@ -11,6 +10,7 @@ import BlogFooter from "../../components/blog-footer";
 import remarkGfm from "remark-gfm";
 import CopyLinkButton from "@/components/CopyLinkButton";
 import ChatWidget from "@/components/chat-widget";
+import BlogBackLink from "@/components/BlogBackLink";
 
 // The footnote back link. The default bare "↩" renders as an emoji on iOS;
 // U+FE0E asks for the text glyph. Keeps the default's superscript count for
@@ -83,15 +83,11 @@ export async function generateStaticParams() {
 // Make the component async and correctly handle params
 export default async function BlogPost({
   params,
-  searchParams,
 }: {
   params: { slug: string };
-  searchParams: { category?: string };
 }) {
   // Need to await params before destructuring
   const { slug } = await params;
-  const searchParamsObj = await searchParams;
-  const { category } = searchParamsObj;
 
   // Then use the destructured variable
   const post = await getPostBySlug(slug);
@@ -101,17 +97,10 @@ export default async function BlogPost({
     notFound();
   }
 
-  const backLink = category ? `/blog/category/${category}` : "/blog";
-
   return (
     <div className="blog-post-container container mx-auto max-w-4xl px-4 py-12">
       <div className="mb-8">
-        <Link
-          href={backLink}
-          className="text-primary hover:underline inline-flex items-center"
-        >
-          ← Back to all posts
-        </Link>
+        <BlogBackLink />
       </div>
 
       <article className="prose prose-lg dark:prose-invert max-w-none">

@@ -81,7 +81,7 @@ The Traveling Salesman Problem (TSP) asks for the shortest tour through a set of
 
 This is global greedy on a specific evaluation function. The thesis proves GLE holds: local greedy multi-fragment — where you connect any pair of fragment endpoints that is locally cheapest among all endpoints they interact with — gives the same tour.
 
-<!-- TODO: add figure showing multi-fragment TSP construction -->
+{/* TODO: add figure showing multi-fragment TSP construction */}
 
 The deteriorating property here is subtle: as fragments grow, the feasibility constraints become more complex (you can't create a premature cycle, and each endpoint can be used at most once). But evaluations (edge lengths) are fixed, and feasibility can only restrict further. GLE applies.
 

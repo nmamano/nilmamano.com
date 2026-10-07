@@ -31,7 +31,7 @@ Stability here means the same thing as in Chapter 4: a site s and a point p form
 
 The resulting diagram is called the **stable-matching Voronoi diagram** of (S, A), where S is the set of sites and A gives each site its appetite.
 
-<!-- TODO: Add figure - side-by-side colorful diagrams showing SMVD with appetite=1 (left, overlapping disks) and appetite=2 (right, larger cells) for 25 sites -->
+{/* TODO: Add figure - side-by-side colorful diagrams showing SMVD with appetite=1 (left, overlapping disks) and appetite=2 (right, larger cells) for 25 sites */}
 
 ## How It Looks
 
@@ -39,7 +39,7 @@ The first thing to notice is that stable-matching Voronoi cells are *not* convex
 
 This happens because the circle-growing process — which we'll describe shortly — can be blocked and rerouted by other sites' regions, leaving isolated fragments that eventually get assigned to a site that "grew past" them.
 
-<!-- TODO: Add figure - comparison of SMVD (left, colorful irregular cells) vs standard Voronoi (right, clean polygons) for same 25 sites -->
+{/* TODO: Add figure - comparison of SMVD (left, colorful irregular cells) vs standard Voronoi (right, clean polygons) for same 25 sites */}
 
 There's a nice limiting relationship: as all appetites grow to infinity, the stable-matching Voronoi diagram converges to the standard Voronoi diagram. The standard Voronoi diagram is just the special case where each site has unlimited appetite.
 
@@ -51,7 +51,7 @@ There's a beautiful way to visualize how a stable-matching Voronoi diagram forms
 
 Geometrically, this process can be modeled as growing **cones** in 3D. Embed the sites in the plane z = 0 and grow an upward cone from each site. The stable-matching Voronoi diagram is the *lower envelope* of these cones — but unlike in the standard Voronoi case, the cones are cut off at finite height (each cone stops when its footprint reaches the site's appetite). The height at which each cone is cut varies by site.
 
-<!-- TODO: Add figure - 3D view of truncated cones forming the SMVD of 3 sites (green, purple, tan wedge shapes) -->
+{/* TODO: Add figure - 3D view of truncated cones forming the SMVD of 3 sites (green, purple, tan wedge shapes) */}
 
 ## The Structure of the Diagram
 
@@ -73,12 +73,12 @@ In a standard Voronoi diagram for n sites, the number of faces, edges, and verti
 
 For stable-matching Voronoi diagrams, things are much worse.
 
-<!-- TODO: Consider KaTeX for this equation -->
-**Upper bound (Theorem 6.11):** A stable-matching Voronoi diagram for n sites has O(n^{2+ε}) faces, edges, and vertices, for any ε > 0.
+{/* TODO: Consider KaTeX for this equation */}
+**Upper bound (Theorem 6.11):** A stable-matching Voronoi diagram for n sites has O(n^\{2+ε\}) faces, edges, and vertices, for any ε > 0.
 
-The proof uses the fact that the diagram is the lower envelope of n truncated cones. A classical result by Sharir and Agarwal on lower envelopes of algebraic surfaces gives the O(n^{2+ε}) bound.
+The proof uses the fact that the diagram is the lower envelope of n truncated cones. A classical result by Sharir and Agarwal on lower envelopes of algebraic surfaces gives the O(n^\{2+ε\}) bound.
 
-<!-- TODO: Consider KaTeX for this equation -->
+{/* TODO: Consider KaTeX for this equation */}
 **Lower bound (Theorem 6.14):** The worst-case complexity is Ω(n²), even when all sites have the same appetite.
 
 <Callout>The lower bound construction is elegant: arrange n/2 sites in a tight ring (the "X sites") and n/2 sites evenly spaced around a larger circle (the "Y sites"). Each Y site fills its appetite with a disk-shaped region, while each X site ends up with long thin wedge-shaped regions that get cut by the Y disks into many separate pieces, yielding Θ(n²) faces total. Stable-matching Voronoi diagrams can be quadratically more complex than standard Voronoi diagrams.</Callout>
@@ -108,7 +108,7 @@ This includes a binary search procedure on a triangulation of the feasible regio
 
 **3. Discretized plane**
 
-<!-- TODO: Consider KaTeX for this equation -->
+{/* TODO: Consider KaTeX for this equation */}
 Discretize the plane into an m × m grid and match pixels to sites. This reduces to the geometric stable matching problem from Chapter 4, which can be solved using the first-choice chain algorithm in O(m² log⁴ m) time.
 
 ## Why It Matters
@@ -129,4 +129,4 @@ With the theory of stable-matching Voronoi diagrams in hand, Chapter 7 applies t
 
 The idea: model a territory as a graph or grid, set district centers as sites, and use stable matching to assign voters to districts with equal population. Stability becomes the new notion of compactness — fair districts where neither voters nor district centers would prefer to be matched differently.
 
-<!-- TODO: flag: the figure references in this post (6.1–6.3) are images from the thesis PDF and need to be recreated or adapted for web display -->
+{/* TODO: flag: the figure references in this post (6.1–6.3) are images from the thesis PDF and need to be recreated or adapted for web display */}

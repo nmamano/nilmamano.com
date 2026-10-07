@@ -147,7 +147,7 @@ However, this local greedy does _not_ necessarily produce the same solution as t
   needsBackground={true}
 />
 
-The nodes are labeled with their weights. The edges of the graph are shown in black, and the edges of the interaction graph are shown dashed in blue. Below each node, their initial evaluation is shown in red. Initially, the locally-dominant nodes are the ones with weight 5 and 8. GG chooses the node with weight 8 first, and then (after readjusting the evaluations), the node with weight 6. In contrast, LG could start by picking the node with weight 5, resulting in a different final solution, _{5, 8}_.
+The nodes are labeled with their weights. The edges of the graph are shown in black, and the edges of the interaction graph are shown dashed in blue. Below each node, their initial evaluation is shown in red. Initially, the locally-dominant nodes are the ones with weight 5 and 8. GG chooses the node with weight 8 first, and then (after readjusting the evaluations), the node with weight 6. In contrast, LG could start by picking the node with weight 5, resulting in a different final solution, _\{5, 8\}_.
 
 I do not mean to imply that LG is not "good" without GLE -- only that the solution may differ. In this particular case, even though we do not have GLE, GG and LG guarantee the same approximation ratio. I'll defer to my thesis for more details. Also in my thesis are other Greedys for MWIS that _do_ have GLE, showing that GLE is not only about the problem, but also about the evaluation function.
 

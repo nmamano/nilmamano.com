@@ -52,18 +52,18 @@ For the road network setting, three algorithms are compared:
 
 **2. Circle-growing (CG):** Run k simultaneous Dijkstra instances, one from each center. Match each node to the first instance that reaches it, and halt each instance when its center has filled its quota. This mimics the circle-growing process for stable-matching Voronoi diagrams (Chapter 6). Runtime: O(kn log n), with a much smaller memory footprint than GS.
 
-**3. First-choice chain (FCC) with reactive NN:** The nearest-neighbor chain algorithm paired with the separator hierarchy data structure from Chapter 5. Runtime: **O(n^{1.5} log n)**, independent of k.
+**3. First-choice chain (FCC) with reactive NN:** The nearest-neighbor chain algorithm paired with the separator hierarchy data structure from Chapter 5. Runtime: **O(n^\{1.5\} log n)**, independent of k.
 
-<!-- TODO: add Figure 7.1 — four colored maps of Texas, Michigan, Washington DC, and Illinois road networks with 6 random districts each -->
+{/* TODO: add Figure 7.1 — four colored maps of Texas, Michigan, Washington DC, and Illinois road networks with 6 random districts each */}
 
-<!-- TODO: add Figure 7.2 and Table 7.1 — runtime comparison plots for DC and Delaware road networks -->
+{/* TODO: add Figure 7.2 and Table 7.1 — runtime comparison plots for DC and Delaware road networks */}
 
 **Experimental results (Delaware road network, 48,812 nodes):**
 
 - CG is the fastest in practice for small and moderate k. On the Texas road network (2 million nodes), CG finishes in 3 seconds with k = 6 centers.
 - GS runs out of memory at k ≈ 256 due to its O(nk) storage requirement.
 - CG runs out of memory at k ≈ 8192.
-- FCC has nearly **flat runtime as k increases** — its O(n^{1.5} log n) bound is truly independent of k. It's the only algorithm that runs for the full range of k values on all tested networks.
+- FCC has nearly **flat runtime as k increases** — its O(n^\{1.5\} log n) bound is truly independent of k. It's the only algorithm that runs for the full range of k values on all tested networks.
 
 The tradeoff: CG wins for small k, FCC wins for large k (many small districts).
 
@@ -88,11 +88,11 @@ When circles start overlapping heavily, the circle-growing algorithm wastes time
 
 <Callout>The key insight: switch from circle-growing to pair heap at a cutoff point. Circle-growing is faster when regions are mostly disjoint (early phase). Pair heap is faster when many regions overlap and most nearby pixels are already matched (late phase). Any small cutoff (around 0.15) substantially reduces total runtime. The optimal cutoff is relatively insensitive to k, n, or the choice of metric.</Callout>
 
-<!-- TODO: add Figure 7.3 — colorful 900×900 grid with 100 random center districts -->
+{/* TODO: add Figure 7.3 — colorful 900×900 grid with 100 random center districts */}
 
-<!-- TODO: add Figure 7.5 — execution time comparison of all grid algorithms -->
+{/* TODO: add Figure 7.5 — execution time comparison of all grid algorithms */}
 
-<!-- TODO: add Figure 7.6 — cutoff optimization plots -->
+{/* TODO: add Figure 7.6 — cutoff optimization plots */}
 
 ## Center Location: Stable k-Means
 
@@ -110,7 +110,7 @@ This converges, but gives no guarantee on equal-sized regions.
 
 This guarantees equal-sized regions at every iteration. The resulting algorithm converges to a partition that is both stable and approximately compact.
 
-<!-- TODO: add Figure 7.8 — before/after comparison: random centers (left, fragmented regions) vs stable k-means (right, more compact regions) for Euclidean, Manhattan, Chebyshev metrics -->
+{/* TODO: add Figure 7.8 — before/after comparison: random centers (left, fragmented regions) vs stable k-means (right, more compact regions) for Euclidean, Manhattan, Chebyshev metrics */}
 
 ### Weighted Centroids
 
@@ -120,9 +120,9 @@ The fix: use **weighted centroids**, where each pixel p is weighted by d(p, c)^q
 
 The best results come from **-0.8 < q < 0.4**. At q = -1, the algorithm recovers Weiszfeld's method for the geometric median.
 
-<!-- TODO: add Figure 7.9 — plot of average pixel-center distance vs exponent q for stable k-means -->
+{/* TODO: add Figure 7.9 — plot of average pixel-center distance vs exponent q for stable k-means */}
 
-<!-- TODO: add Figure 7.10 — visual results of stable k-means with various exponents q = -2, -1, 0.1, 0.2, 0.5 -->
+{/* TODO: add Figure 7.10 — visual results of stable k-means with various exponents q = -2, -1, 0.1, 0.2, 0.5 */}
 
 ## The Fundamental Tension
 

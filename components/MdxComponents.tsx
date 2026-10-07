@@ -344,8 +344,16 @@ export function Solution({ number, title, link }: SolutionProps) {
 
 // Simple markdown parser for captions
 
-const slugify = (text: string) => {
-  return text
+// Plain text of heading children, which can hold elements such as <em>.
+const textOf = (node: any): string => {
+  if (node == null || typeof node === "boolean") return "";
+  if (typeof node === "string" || typeof node === "number") return String(node);
+  if (Array.isArray(node)) return node.map(textOf).join("");
+  return textOf(node.props?.children);
+};
+
+const slugify = (children: any) => {
+  return textOf(children)
     .toLowerCase()
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/(^-|-$)+/g, "");
@@ -391,7 +399,7 @@ const components = {
   td: TableCell,
   // Custom heading components that add IDs
   h1: ({ children, ...props }: any) => {
-    const id = slugify(children as string);
+    const id = slugify(children);
     return (
       <h1 id={id} {...props}>
         {children}
@@ -399,7 +407,7 @@ const components = {
     );
   },
   h2: ({ children, ...props }: any) => {
-    const id = slugify(children as string);
+    const id = slugify(children);
     return (
       <h2 id={id} {...props}>
         {children}
@@ -407,7 +415,7 @@ const components = {
     );
   },
   h3: ({ children, ...props }: any) => {
-    const id = slugify(children as string);
+    const id = slugify(children);
     return (
       <h3 id={id} {...props}>
         {children}
@@ -415,7 +423,7 @@ const components = {
     );
   },
   h4: ({ children, ...props }: any) => {
-    const id = slugify(children as string);
+    const id = slugify(children);
     return (
       <h4 id={id} {...props}>
         {children}
@@ -423,7 +431,7 @@ const components = {
     );
   },
   h5: ({ children, ...props }: any) => {
-    const id = slugify(children as string);
+    const id = slugify(children);
     return (
       <h5 id={id} {...props}>
         {children}
@@ -431,7 +439,7 @@ const components = {
     );
   },
   h6: ({ children, ...props }: any) => {
-    const id = slugify(children as string);
+    const id = slugify(children);
     return (
       <h6 id={id} {...props}>
         {children}
