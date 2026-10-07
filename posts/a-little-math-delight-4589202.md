@@ -6,10 +6,11 @@ status: published
 xUrl: 'https://x.com/Nil053/status/2106401107614589202'
 tweetId: '2106401107614589202'
 linkedinUrl: 'https://www.linkedin.com/feed/update/urn:li:activity:7512165062925516800'
-segments: 2
+segments: 3
 images:
   - /posts/a-little-math-delight-4589202/tour.png
   - /blog/knights-tour-turns/progress_turns.png
+  - /blog/knights-tour-turns/research_lab.png
 tags:
   - research
   - ai
@@ -29,3 +30,7 @@ The agent team also improved the previous known lower bound of about 6n to 8n - 
 The only remaining gap is the constant, between 14 and 28.
 
 Blog post to follow soon.
+
+---
+
+Credits to the team
