@@ -1,4 +1,5 @@
 import { getAllPosts } from "../../../lib/blog";
+import { getAllPosts as getFeedPosts } from "../../../lib/posts";
 import { getCategoryConfig } from "../../../lib/blog-categories";
 import BlogList from "../../../components/blog-list";
 import { notFound } from "next/navigation";
@@ -54,5 +55,11 @@ export default async function BlogCategoryPage({
     notFound();
   }
 
-  return <BlogList posts={posts} initialCategory={category} />;
+  return (
+    <BlogList
+      posts={posts}
+      initialCategory={category}
+      feedCount={getFeedPosts({ includeHidden: false }).length}
+    />
+  );
 }

@@ -1,5 +1,5 @@
-import Link from "next/link";
-import { getAllPosts, getPostStats } from "../lib/posts";
+import { getAllPosts } from "../lib/posts";
+import { getAllPosts as getBlogPosts } from "../lib/blog";
 import { PostFeed } from "../components/post-feed";
 import { Metadata } from "next";
 
@@ -15,40 +15,13 @@ export const metadata: Metadata = {
 
 export default function PostsPage() {
   const posts = getAllPosts();
-  const stats = getPostStats();
-  const showingHidden = process.env.NODE_ENV !== "production";
 
-  return (
-    <div className="container mx-auto max-w-2xl px-4 py-12">
-      <h1 className="text-3xl font-medium tracking-tighter sm:text-4xl mb-2 text-center">
-        Feed
-      </h1>
-      <p className="text-muted-foreground text-center mb-8">
-        Short-form thoughts / Social media posts
-      </p>
-
-      {showingHidden && (
-        <div className="mb-8 rounded-md border border-dashed border-border bg-muted/40 p-3 text-sm text-muted-foreground text-center">
-          Dev view — showing all {stats.total} posts, including{" "}
-          {stats.imported} imported/hidden. In production only the{" "}
-          {stats.published} promoted ones appear. Curation buttons edit the
-          posts/*.md files directly.
-          <div className="mt-2">
-            <Link
-              href="/posts/compose"
-              className="inline-block rounded border border-primary/40 px-3 py-1 text-primary hover:bg-primary/10"
-            >
-              ＋ New post (composer)
-            </Link>
-          </div>
-        </div>
-      )}
-
-      {posts.length === 0 ? (
-        <p className="text-center text-muted-foreground">No posts yet.</p>
-      ) : (
-        <PostFeed posts={posts} dev={showingHidden} />
-      )}
-    </div>
+  return posts.length === 0 ? (
+    <p className="py-12 text-center text-muted-foreground">No posts yet.</p>
+  ) : (
+    <PostFeed
+      posts={posts}
+      blogCount={getBlogPosts().length}
+    />
   );
 }

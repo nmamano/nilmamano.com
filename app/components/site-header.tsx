@@ -1,9 +1,9 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
-  const isBlog = currentRoute === "blog";
+  // Blog and feed share one header: back link on phones, no Research link.
+  const isBlog = currentRoute === "blog" || currentRoute === "posts";
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
@@ -53,26 +53,28 @@ export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
           )}
         </div>
         <div className="ml-auto flex items-center space-x-3">
-          <Link
-            href="/posts"
-            className={`text-sm font-medium leading-none transition-colors hover:text-foreground/80 ${
-              currentRoute === "posts" ? "text-primary" : ""
-            }`}
+          <nav
+            aria-label="Blog or feed"
+            className="flex items-center rounded-full border border-border p-0.5 text-sm font-medium"
           >
-            Feed
-          </Link>
-          <Link href="/blog">
-            <Button
-              variant="default"
-              className={`font-bold h-9 !py-0 bg-gray-900 hover:bg-gray-700 text-white dark:bg-primary dark:hover:bg-primary/90 dark:text-primary-foreground ${
-                currentRoute === "blog"
-                  ? "ring-2 ring-primary ring-offset-2"
-                  : ""
-              }`}
-            >
-              Blog
-            </Button>
-          </Link>
+            {[
+              { href: "/blog", label: "Blog", route: "blog" },
+              { href: "/posts", label: "Feed", route: "posts" },
+            ].map(({ href, label, route }) => (
+              <Link
+                key={route}
+                href={href}
+                aria-current={currentRoute === route ? "page" : undefined}
+                className={`px-4 py-1.5 rounded-full leading-none transition-colors ${
+                  currentRoute === route
+                    ? "bg-primary text-primary-foreground"
+                    : "text-muted-foreground hover:text-foreground"
+                }`}
+              >
+                {label}
+              </Link>
+            ))}
+          </nav>
 
           <ThemeToggle />
         </div>

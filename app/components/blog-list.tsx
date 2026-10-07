@@ -5,28 +5,26 @@ import Link from "next/link";
 import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import { BlogPost } from "../lib/blog";
-import { CATEGORIES, getCategoryConfig } from "../lib/blog-categories";
+import {
+  CATEGORIES,
+  getCategoryConfig,
+  visibleCategories,
+} from "../lib/blog-categories";
 import { filterPostsByCategory } from "../lib/blog-client";
 import { formatDate } from "../lib/date-utils";
 import { useRouter } from "next/navigation";
 import { NewsletterSubscription } from "./newsletter-subscription";
+import { CategoryDot } from "./category-dot";
 
 interface BlogListProps {
   posts: BlogPost[];
   initialCategory?: string;
-}
-
-function CategoryDot({ category }: { category: string }) {
-  const config = getCategoryConfig(category);
-  return (
-    <span
-      className={`h-2 w-2 shrink-0 rounded-full border border-current ${config.bgColor} ${config.textColor}`}
-    />
-  );
+  /** Number of published feed posts, for the sidebar's Feed link. */
+  feedCount: number;
 }
 
 const FILTER_CATEGORIES = Object.entries(CATEGORIES).filter(
-  ([, config]) => !config.hiddenFromFilters
+  ([, config]) => !config.hidden
 );
 
 function BlogPostRow({
@@ -72,7 +70,7 @@ function BlogPostRow({
             {post.date && (
               <time dateTime={post.date}>{formatDate(post.date)}</time>
             )}
-            {post.categories?.map((category) => {
+            {visibleCategories(post.categories).map((category) => {
               return (
                 <span
                   key={category}
@@ -93,6 +91,7 @@ function BlogPostRow({
 export default function BlogList({
   posts: allPosts,
   initialCategory,
+  feedCount,
 }: BlogListProps) {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
@@ -123,15 +122,9 @@ export default function BlogList({
   ];
 
   return (
-    <div className="py-8 grid gap-6 lg:gap-10 lg:grid-cols-[280px_minmax(0,1fr)]">
-      <aside className="lg:[@media(min-height:860px)]:sticky lg:top-24 self-start flex flex-col gap-6">
-        <div>
-          <h1 className="font-mono text-4xl tracking-tighter">nil pointers</h1>
-          <p className="text-sm text-muted-foreground mt-2">
-            Agentic systems · Building in public · Teaching DS&A · CS research
-            highlights
-          </p>
-        </div>
+    <div className="py-8 grid grid-cols-[minmax(0,1fr)] gap-6 lg:gap-10 lg:grid-cols-[280px_minmax(0,1fr)]">
+      <aside className="lg:[@media(min-height:800px)]:sticky lg:top-24 self-start flex flex-col gap-6">
+        <h1 className="font-mono text-4xl tracking-tighter">nil pointers</h1>
 
         {/* Category filter: a list in the sidebar, chips on narrow screens */}
         <nav aria-label="Blog topics" className="hidden lg:flex flex-col text-sm">
@@ -163,13 +156,8 @@ export default function BlogList({
             href="/posts"
             className="mt-2 pt-3 border-t border-border px-2 pb-1.5 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
           >
-            <span className="flex-1">
-              Feed{" "}
-              <span className="text-xs text-muted-foreground">
-                · short posts
-              </span>
-            </span>
-            <ArrowRight size={14} aria-hidden="true" />
+            <span className="flex-1">Feed</span>
+            <span className="text-xs tabular-nums">{feedCount}</span>
           </Link>
         </nav>
         <div className="flex lg:hidden flex-wrap gap-2">

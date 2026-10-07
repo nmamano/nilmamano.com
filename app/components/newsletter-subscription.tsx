@@ -81,21 +81,22 @@ export function NewsletterSubscription({
             disabled={isPending}
             required
           />
-          <Button type="submit" disabled={isPending} className="w-full">
-            {isPending ? "Subscribing..." : "Subscribe"}
-          </Button>
+          <div className="flex items-center gap-3">
+            <Button type="submit" disabled={isPending}>
+              {isPending ? "Subscribing..." : "Subscribe"}
+            </Button>
+            <span className="text-xs text-muted-foreground">
+              or follow via{" "}
+              <Link
+                href="/rss.xml"
+                className="font-medium text-primary underline-offset-4 hover:underline"
+              >
+                RSS
+              </Link>
+            </span>
+          </div>
           {statusMessage}
         </form>
-        <p className="text-xs text-muted-foreground">
-          Or follow via{" "}
-          <Link
-            href="/rss.xml"
-            className="font-medium text-primary underline-offset-4 hover:underline"
-          >
-            RSS
-          </Link>
-          .
-        </p>
       </div>
     );
   }

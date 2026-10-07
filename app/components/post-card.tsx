@@ -8,6 +8,11 @@ import type { Post } from "../lib/posts";
 import { renderPostBody } from "../lib/post-render";
 import { mediaClass, mediaStyle } from "../lib/post-media";
 import { CurationControls } from "./curation-controls";
+import { CategoryDot } from "./category-dot";
+import {
+  getCategoryConfig,
+  visibleCategories,
+} from "../lib/blog-categories";
 
 const DEV = process.env.NODE_ENV !== "production";
 
@@ -30,9 +35,9 @@ export function PostCard({
   const isVideo = firstImage?.src.toLowerCase().endsWith(".mp4");
 
   return (
-    <article className="card-border rounded-lg px-5 pt-3 pb-5 bg-card text-card-foreground hover:shadow-md transition-shadow">
-      <div className="flex items-center justify-between text-sm text-muted-foreground mb-4">
-        <time dateTime={post.date} className="text-muted-foreground/60">
+    <article className="card-border rounded-lg px-5 pt-4 pb-5 bg-card text-card-foreground">
+      <div className="flex items-center justify-between text-xs text-muted-foreground mb-4">
+        <time dateTime={post.date}>
           {formatDate(post.date)}
         </time>
         {post.status === "imported" && (
@@ -131,15 +136,16 @@ export function PostCard({
         </div>
       )}
 
-      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
-        {(post.tags ?? []).map((t) => (
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs">
+        {visibleCategories(post.tags).map((t) => (
           <button
             key={t}
             onClick={() => onTagClick?.(t)}
-            className="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary hover:bg-primary/20"
-            title={`filter by ${t}`}
+            className="inline-flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground"
+            title={`Filter by ${getCategoryConfig(t).name}`}
           >
-            {t}
+            <CategoryDot category={t} />
+            {getCategoryConfig(t).name}
           </button>
         ))}
         <Link
@@ -157,7 +163,7 @@ export function PostCard({
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-primary inline-flex items-center gap-1"
           >
-            <FaXTwitter className="h-3.5 w-3.5" /> View on X ↗
+            <FaXTwitter className="h-3 w-3" /> View on X ↗
           </a>
         )}
         {post.linkedinUrl && (
@@ -167,7 +173,7 @@ export function PostCard({
             rel="noopener noreferrer"
             className="text-muted-foreground hover:text-primary inline-flex items-center gap-1"
           >
-            <FaLinkedin className="h-3.5 w-3.5" /> LinkedIn ↗
+            <FaLinkedin className="h-3 w-3" /> LinkedIn ↗
           </a>
         )}
       </div>

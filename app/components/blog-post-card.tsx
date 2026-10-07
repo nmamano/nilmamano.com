@@ -2,7 +2,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "../lib/date-utils";
 import { BlogPost } from "../lib/blog";
-import { getCategoryConfig } from "../lib/blog-categories";
+import {
+  getCategoryConfig,
+  visibleCategories,
+} from "../lib/blog-categories";
 
 interface BlogPostCardProps {
   post: BlogPost;
@@ -60,9 +63,9 @@ export function BlogPostCard({ post, selectedCategory }: BlogPostCardProps) {
           </div>
 
           {/* Category chips */}
-          {post.categories && post.categories.length > 0 && (
+          {visibleCategories(post.categories).length > 0 && (
             <div className="flex flex-wrap gap-2 mb-4">
-              {post.categories.map((category) => {
+              {visibleCategories(post.categories).map((category) => {
                 const config = getCategoryConfig(category);
                 return (
                   <span

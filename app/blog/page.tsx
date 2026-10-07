@@ -1,4 +1,5 @@
 import { getAllPosts } from "../lib/blog";
+import { getAllPosts as getFeedPosts } from "../lib/posts";
 import BlogList from "../components/blog-list";
 import { Metadata } from "next";
 
@@ -31,5 +32,10 @@ export const metadata: Metadata = {
 
 export default function BlogPage() {
   const posts = getAllPosts();
-  return <BlogList posts={posts} />;
+  return (
+    <BlogList
+      posts={posts}
+      feedCount={getFeedPosts({ includeHidden: false }).length}
+    />
+  );
 }

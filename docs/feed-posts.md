@@ -14,8 +14,7 @@ You should not need to read code to add one. This is the format.
 
 - Path: `posts/<slug>.md`.
 - Slug = filename without `.md`. Convention: a few slugified words from the
-  first line plus a `-<7digits>` suffix for uniqueness (the composer does this
-  automatically). Any unique slug works.
+  first line plus a `-<7digits>` suffix for uniqueness. Any unique slug works.
 
 ## Frontmatter (YAML)
 
@@ -49,7 +48,7 @@ Field notes:
 - **status**: `imported` hides the post from the live site; it still shows in
   the dev feed (see below) with curation controls. `published` makes it live.
   Promote a draft with the "publish" button in the dev feed, or by editing this
-  field. (The composer writes `published`.)
+  field.
 - **segments**: must match the number of `---`-delimited chunks in the body.
 - **images**: any path under `public/` (e.g. `/posts/<slug>/pic.png` or an
   existing asset like a blog cover). The first image renders below the post; a
@@ -80,12 +79,7 @@ the image in `images` and the link in a second segment.
 
 ## Adding a post
 
-1. **Composer (preferred)** — dev only, at `/posts/compose`. Paste the content,
-   set tags, and it writes the file with `source: original`, `status:
-   published`, and `segments` auto-counted. It does **not** set `images` or a
-   hidden status, so edit the frontmatter afterward if you need a thumbnail or
-   want to stage it hidden.
-2. **By hand** — create `posts/<slug>.md` with the frontmatter above.
+Create `posts/<slug>.md` with the frontmatter above.
 
 To stage a draft without publishing, set `status: imported`; flip to
 `published` when ready.
@@ -93,7 +87,7 @@ To stage a draft without publishing, set `status: imported`; flip to
 ## Dev feed
 
 The feed runs a persistent dev server (systemd `nilmamano-feed.service`) at
-http://auntie:3002 so the composer and curation UI work. It shows **all** posts,
+http://auntie:3002 so the curation UI works. It shows **all** posts,
 including hidden/`imported` ones. Do not start your own `next dev` on port 3002;
 use `systemctl --user restart|status nilmamano-feed`.
 
