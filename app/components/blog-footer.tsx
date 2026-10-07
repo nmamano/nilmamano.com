@@ -1,8 +1,8 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { FaXTwitter, FaLinkedin } from "@/components/site-icons-fa6";
-import { getRandomPosts } from "../lib/blog";
-import { BlogPostCard } from "./blog-post-card";
+import { getOtherPosts } from "../lib/blog";
+import RandomPosts from "./random-posts";
 import { NewsletterSubscription } from "./newsletter-subscription";
 
 interface BlogFooterProps {
@@ -10,7 +10,7 @@ interface BlogFooterProps {
 }
 
 export default function BlogFooter({ currentPostSlug }: BlogFooterProps) {
-  const randomPosts = getRandomPosts(currentPostSlug, 3);
+  const otherPosts = getOtherPosts(currentPostSlug);
 
   return (
     <footer className="mt-16 pt-8 border-t border-gray-300 dark:border-white/40">
@@ -20,16 +20,12 @@ export default function BlogFooter({ currentPostSlug }: BlogFooterProps) {
       </div>
 
       {/* Random posts section */}
-      {randomPosts.length > 0 && (
+      {otherPosts.length > 0 && (
         <div className="mb-12">
           <h3 className="text-xl font-semibold mb-6 text-center">
             Want to read more? Here are other posts:
           </h3>
-          <div className="space-y-4">
-            {randomPosts.map((post) => (
-              <BlogPostCard key={post.slug} post={post} />
-            ))}
-          </div>
+          <RandomPosts posts={otherPosts} count={3} />
         </div>
       )}
 

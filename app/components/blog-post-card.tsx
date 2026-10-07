@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { formatDate } from "../lib/date-utils";
-import { BlogPost } from "../lib/blog";
+import type { BlogPost } from "../lib/blog";
 import {
   getCategoryConfig,
   visibleCategories,

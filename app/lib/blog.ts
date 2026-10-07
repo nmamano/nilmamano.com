@@ -110,24 +110,10 @@ export function getAllPostSlugs(): string[] {
     .map((fileName) => fileName.replace(/\.mdx$/, ""));
 }
 
-// Get 3 random posts (excluding the current post if provided)
-export function getRandomPosts(
-  excludeSlug?: string,
-  count: number = 3
-): BlogPost[] {
-  const allPosts = getAllPosts();
-
-  // Filter out the current post if provided
-  const availablePosts = excludeSlug
-    ? allPosts.filter((post) => post.slug !== excludeSlug)
-    : allPosts;
-
-  // If we don't have enough posts, return all available posts
-  if (availablePosts.length <= count) {
-    return availablePosts;
-  }
-
-  // Shuffle the array and take the first 'count' items
-  const shuffled = [...availablePosts].sort(() => Math.random() - 0.5);
-  return shuffled.slice(0, count);
+// Posts for the footer's random picks: all posts except the current one,
+// without content, because the client gets the whole list
+export function getOtherPosts(excludeSlug?: string): BlogPost[] {
+  return getAllPosts()
+    .filter((post) => post.slug !== excludeSlug)
+    .map(({ content, ...post }) => ({ ...post, content: "" }));
 }
