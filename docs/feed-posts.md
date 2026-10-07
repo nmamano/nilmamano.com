@@ -86,10 +86,11 @@ To stage a draft without publishing, set `status: imported`; flip to
 
 ## Dev feed
 
-The feed runs a persistent dev server (systemd `nilmamano-feed.service`) at
-http://auntie:3002 so the curation UI works. It shows **all** posts,
-including hidden/`imported` ones. Do not start your own `next dev` on port 3002;
-use `systemctl --user restart|status nilmamano-feed`.
+The dev server is the Isomux app `nilmamano` (`npm run dev` in this repo, at
+http://127.0.0.1:21008). Its feed shows **all** posts, including
+hidden/`imported` ones, with the curation controls. Do not start your own
+`next dev` in this repo: two dev processes corrupt the shared `.next`. Restart
+it through the Isomux apps API (`POST /api/apps/nilmamano/restart`).
 
 ## Importing an X post from its URL
 
