@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowRight } from "lucide-react";
 import { BlogPost } from "../lib/blog";
 import {
   CATEGORIES,
@@ -19,8 +18,6 @@ import { CategoryDot } from "./category-dot";
 interface BlogListProps {
   posts: BlogPost[];
   initialCategory?: string;
-  /** Number of published feed posts, for the sidebar's Feed link. */
-  feedCount: number;
 }
 
 const FILTER_CATEGORIES = Object.entries(CATEGORIES).filter(
@@ -91,7 +88,6 @@ function BlogPostRow({
 export default function BlogList({
   posts: allPosts,
   initialCategory,
-  feedCount,
 }: BlogListProps) {
   const router = useRouter();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(
@@ -115,7 +111,7 @@ export default function BlogList({
     : allPosts;
 
   const filters: [string | null, string][] = [
-    [null, "All posts"],
+    [null, "All"],
     ...FILTER_CATEGORIES.map(
       ([key, config]) => [key, config.name] as [string, string]
     ),
@@ -124,7 +120,7 @@ export default function BlogList({
   return (
     <div className="py-8 grid grid-cols-[minmax(0,1fr)] gap-6 lg:gap-10 lg:grid-cols-[280px_minmax(0,1fr)]">
       <aside className="lg:[@media(min-height:800px)]:sticky lg:top-24 self-start flex flex-col gap-6">
-        <h1 className="font-mono text-4xl tracking-tighter">nil pointers</h1>
+        <h1 className="font-mono text-4xl tracking-tighter">Blog</h1>
 
         {/* Category filter: a list in the sidebar, chips on narrow screens */}
         <nav aria-label="Blog topics" className="hidden lg:flex flex-col text-sm">
@@ -152,13 +148,6 @@ export default function BlogList({
               </button>
             );
           })}
-          <Link
-            href="/posts"
-            className="mt-2 pt-3 border-t border-border px-2 pb-1.5 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <span className="flex-1">Feed</span>
-            <span className="text-xs tabular-nums">{feedCount}</span>
-          </Link>
         </nav>
         <div className="flex lg:hidden flex-wrap gap-2">
           {filters.map(([key, name]) => {
@@ -175,16 +164,10 @@ export default function BlogList({
                 }`}
               >
                 {key && <CategoryDot category={key} />}
-                {key ? name : "All"}
+                {name}
               </button>
             );
           })}
-          <Link
-            href="/posts"
-            className="inline-flex items-center gap-1 px-3 py-1 rounded-full border border-border text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Feed <ArrowRight size={13} aria-hidden="true" />
-          </Link>
         </div>
 
         <NewsletterSubscription compact />

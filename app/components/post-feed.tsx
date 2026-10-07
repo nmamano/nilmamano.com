@@ -1,26 +1,22 @@
 "use client";
 
-// Client-side feed: sidebar with search, tag filters and a Blog link (same
-// layout as the blog list), and in-place expandable post cards.
+// Client-side feed: sidebar with search and tag filters (same layout as the
+// blog list), and in-place expandable post cards.
 
-import { useState } from "react";
-import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import type { Post } from "../lib/posts";
 import { PostCard } from "./post-card";
 import { getCategoryConfig } from "../lib/blog-categories";
 import { CategoryDot } from "./category-dot";
 
-export function PostFeed({
-  posts,
-  blogCount,
-}: {
-  posts: Post[];
-  /** Number of blog posts, for the sidebar's Blog link. */
-  blogCount: number;
-}) {
+const PAGE = 30;
+
+export function PostFeed({ posts }: { posts: Post[] }) {
   const [query, setQuery] = useState("");
   const [tag, setTag] = useState<string | null>(null);
+  // Render the feed in pages: all 600+ cards at once froze the page.
+  const [limit, setLimit] = useState(PAGE);
+  const sentinel = useRef<HTMLDivElement>(null);
 
   const tagCounts = new Map<string, number>();
   for (const p of posts) {
@@ -52,15 +48,29 @@ export function PostFeed({
     return true;
   });
 
+  useEffect(() => setLimit(PAGE), [query, tag]);
+  useEffect(() => {
+    const el = sentinel.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (entries[0].isIntersecting) setLimit((n) => n + PAGE);
+      },
+      { rootMargin: "1500px" }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [limit, filtered.length]);
+
   const tagFilters: [string | null, string, number][] = [
-    [null, "All posts", posts.length],
+    [null, "All", posts.length],
     ...allTags.map(([t, n]) => [t, getCategoryConfig(t).name, n] as [string, string, number]),
   ];
 
   return (
     <div className="py-8 grid grid-cols-[minmax(0,1fr)] gap-6 lg:gap-10 lg:grid-cols-[280px_minmax(0,1fr)]">
       <aside className="lg:[@media(min-height:800px)]:sticky lg:top-24 self-start flex flex-col gap-6">
-        <h1 className="font-mono text-4xl tracking-tighter">feed</h1>
+        <h1 className="font-mono text-4xl tracking-tighter">Feed</h1>
 
         <input
           type="search"
@@ -94,13 +104,6 @@ export function PostFeed({
               </button>
             );
           })}
-          <Link
-            href="/blog"
-            className="mt-2 pt-3 border-t border-border px-2 pb-1.5 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
-          >
-            <span className="flex-1">Blog</span>
-            <span className="text-xs tabular-nums">{blogCount}</span>
-          </Link>
         </nav>
         <div className="flex lg:hidden flex-wrap gap-2">
           {tagFilters.map(([t, label]) => {
@@ -117,16 +120,10 @@ export function PostFeed({
                 }`}
               >
                 {t && <CategoryDot category={t} />}
-                {t ? label : "All"}
+                {label}
               </button>
             );
           })}
-          <Link
-            href="/blog"
-            className="inline-flex items-center gap-1 px-3 py-1 rounded-full border border-border text-sm text-muted-foreground hover:text-foreground transition-colors"
-          >
-            Blog <ArrowRight size={13} aria-hidden="true" />
-          </Link>
         </div>
 
       </aside>
@@ -142,13 +139,14 @@ export function PostFeed({
           <p className="text-muted-foreground py-4">No matching posts.</p>
         ) : (
           <ul className="space-y-4">
-            {filtered.map((post) => (
+            {filtered.slice(0, limit).map((post) => (
               <li key={post.slug}>
                 <PostCard post={post} onTagClick={(t) => setTag(t)} />
               </li>
             ))}
           </ul>
         )}
+        {filtered.length > limit && <div ref={sentinel} className="h-px" />}
       </div>
     </div>
   );

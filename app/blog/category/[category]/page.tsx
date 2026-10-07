@@ -1,5 +1,4 @@
-import { getAllPosts } from "../../../lib/blog";
-import { getAllPosts as getFeedPosts } from "../../../lib/posts";
+import { getAllPosts, getPostSummaries } from "../../../lib/blog";
 import { getCategoryConfig } from "../../../lib/blog-categories";
 import BlogList from "../../../components/blog-list";
 import { notFound } from "next/navigation";
@@ -44,7 +43,7 @@ export default async function BlogCategoryPage({
   params,
 }: BlogCategoryPageProps) {
   const { category } = await params;
-  const posts = getAllPosts();
+  const posts = getPostSummaries();
 
   // Check if the category exists in any post
   const categoryExists = posts.some((post) =>
@@ -59,7 +58,6 @@ export default async function BlogCategoryPage({
     <BlogList
       posts={posts}
       initialCategory={category}
-      feedCount={getFeedPosts({ includeHidden: false }).length}
     />
   );
 }

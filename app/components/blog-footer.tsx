@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { FaXTwitter, FaLinkedin } from "@/components/site-icons-fa6";
-import { getOtherPosts } from "../lib/blog";
+import { getPostSummaries } from "../lib/blog";
 import RandomPosts from "./random-posts";
 import { NewsletterSubscription } from "./newsletter-subscription";
 
@@ -10,7 +10,7 @@ interface BlogFooterProps {
 }
 
 export default function BlogFooter({ currentPostSlug }: BlogFooterProps) {
-  const otherPosts = getOtherPosts(currentPostSlug);
+  const otherPosts = getPostSummaries(currentPostSlug);
 
   return (
     <footer className="mt-16 pt-8 border-t border-gray-300 dark:border-white/40">

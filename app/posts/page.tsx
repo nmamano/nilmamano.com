@@ -1,5 +1,4 @@
 import { getAllPosts } from "../lib/posts";
-import { getAllPosts as getBlogPosts } from "../lib/blog";
 import { PostFeed } from "../components/post-feed";
 import { Metadata } from "next";
 
@@ -19,9 +18,6 @@ export default function PostsPage() {
   return posts.length === 0 ? (
     <p className="py-12 text-center text-muted-foreground">No posts yet.</p>
   ) : (
-    <PostFeed
-      posts={posts}
-      blogCount={getBlogPosts().length}
-    />
+    <PostFeed posts={posts} />
   );
 }

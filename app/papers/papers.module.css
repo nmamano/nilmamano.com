@@ -1,0 +1,8 @@
+.paperDialog{width:calc(100% - 32px);max-width:850px;max-height:calc(100dvh - 32px);display:grid;grid-template-rows:auto minmax(0,1fr);gap:0;padding:0;overflow:hidden}
+.dialogTitle{padding:22px 52px 18px 26px;border-bottom:1px solid hsl(var(--border));font-size:21px;line-height:1.4}
+.dialogBody{font-size:16px;overflow-y:auto;overscroll-behavior:contain;padding:22px 26px;line-height:1.7;overflow-wrap:anywhere}
+.dialogBody p{font-size:16px}
+.thumbnail{background:#faf8f2}
+@media(max-width:480px){.dialogTitle{font-size:18px;padding:18px 44px 16px 18px}.dialogBody{padding:18px}}
+:global(.dark) .paperDialog{--primary:215 85% 74%}
+:global(.dark) .thumbnail{background:#e5e4df}

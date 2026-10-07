@@ -61,7 +61,7 @@ export const HIGHLIGHTS: Highlight[] = [
     blurb:
       "9 papers with 180 citations in computational geometry, graphs, computational biology, and recreational math - all publicly available.",
     links: [
-      { label: "Research", href: "/research" },
+      { label: "Research", href: "/papers" },
       {
         label: "Google Scholar",
         href: "https://scholar.google.bg/citations?user=LIuIigEAAAAJ&hl=en",

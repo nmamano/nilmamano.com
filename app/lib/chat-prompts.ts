@@ -95,7 +95,7 @@ Nil's blog is at nilmamano.com/blog. Posts by category:
 - "Google Notes" (nilmamano.com/blog/google-notes) -- personal reference notes from Google (WIP)
 
 ## Publications
-Nil has 7 conference papers, 4 journal papers, and a PhD dissertation. Full list with links at nilmamano.com/research.
+Nil has 7 conference papers, 4 journal papers, and a PhD dissertation. Full list with links at nilmamano.com/papers.
 
 ### Conference Papers
 - "Taming the Knight's Tour: Minimizing Turns and Crossings" (FUN'20). All prior efficient algorithms for the generalized knight's tour used divide-and-conquer. This paper proposes the first algorithm following a completely new approach, where the knight crosses the board in long directional lines. Proves existence of tours with only O(n) crossings vs O(n^2) for all prior algorithms. Extended to 3D boards and giraffe tours. Algorithm later cited by Knuth.

@@ -72,7 +72,7 @@ function Cover() {
 
 function Algorithms() {
   return <>
-    {/* Research motifs from app/research/page.tsx and app/lib/publications.ts:
+    {/* Research motifs from app/components/paper-list.tsx and app/lib/publications.ts:
         knight tours, nearest-neighbor chains, geometric regions, graph separators.
         These are margin sketches, not figures reproducing a paper's construction. */}
     <g transform="translate(46 115) rotate(-7 115 100)">

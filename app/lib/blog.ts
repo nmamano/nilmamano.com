@@ -110,9 +110,9 @@ export function getAllPostSlugs(): string[] {
     .map((fileName) => fileName.replace(/\.mdx$/, ""));
 }
 
-// Posts for the footer's random picks: all posts except the current one,
-// without content, because the client gets the whole list
-export function getOtherPosts(excludeSlug?: string): BlogPost[] {
+// Posts without their content, for lists that run in the browser (the blog
+// list, the footer's random picks), so pages do not ship every post's text.
+export function getPostSummaries(excludeSlug?: string): BlogPost[] {
   return getAllPosts()
     .filter((post) => post.slug !== excludeSlug)
     .map(({ content, ...post }) => ({ ...post, content: "" }));

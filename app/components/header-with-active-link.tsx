@@ -11,8 +11,8 @@ export function HeaderWithActiveLink() {
     currentRoute = "blog";
   } else if (pathname.startsWith("/posts")) {
     currentRoute = "posts";
-  } else if (pathname === "/research") {
-    currentRoute = "research";
+  } else if (pathname === "/papers") {
+    currentRoute = "papers";
   } else if (pathname === "/media-kit") {
     currentRoute = "media-kit";
   } else if (pathname === "/") {

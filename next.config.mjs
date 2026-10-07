@@ -27,6 +27,11 @@ const nextConfig = {
         permanent: true,
       },
       {
+        source: "/research",
+        destination: "/papers",
+        permanent: true,
+      },
+      {
         source: "/resume",
         destination: "/resume/resume_nilmamano.pdf",
         permanent: false,

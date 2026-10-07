@@ -59,7 +59,7 @@ export const HIGHLIGHT_BODIES: Record<string, React.ReactNode> = {
       </A>{" "}
       with 180 citations in computational geometry, graphs, computational
       biology, and recreational math - all{" "}
-      <A href="/research">publicly available</A>.
+      <A href="/papers">publicly available</A>.
     </>
   ),
 };
