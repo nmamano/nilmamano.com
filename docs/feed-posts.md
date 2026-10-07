@@ -46,9 +46,7 @@ Field notes:
   those were not rewritten.)
 
 - **status**: `imported` hides the post from the live site; it still shows in
-  the dev feed (see below) with curation controls. `published` makes it live.
-  Promote a draft with the "publish" button in the dev feed, or by editing this
-  field.
+  the dev feed (see below). `published` makes it live.
 - **segments**: must match the number of `---`-delimited chunks in the body.
 - **images**: any path under `public/` (e.g. `/posts/<slug>/pic.png` or an
   existing asset like a blog cover). The first image renders below the post; a
@@ -88,7 +86,7 @@ To stage a draft without publishing, set `status: imported`; flip to
 
 The dev server is the Isomux app `nilmamano` (`npm run dev` in this repo, at
 http://127.0.0.1:21008). Its feed shows **all** posts, including
-hidden/`imported` ones, with the curation controls. Do not start your own
+hidden/`imported` ones. Do not start your own
 `next dev` in this repo: two dev processes corrupt the shared `.next`. Restart
 it through the Isomux apps API (`POST /api/apps/nilmamano/restart`).
 

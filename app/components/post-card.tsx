@@ -7,14 +7,11 @@ import { formatDate } from "../lib/date-utils";
 import type { Post } from "../lib/posts";
 import { renderPostBody } from "../lib/post-render";
 import { mediaClass, mediaStyle } from "../lib/post-media";
-import { CurationControls } from "./curation-controls";
 import { CategoryDot } from "./category-dot";
 import {
   getCategoryConfig,
   visibleCategories,
 } from "../lib/blog-categories";
-
-const DEV = process.env.NODE_ENV !== "production";
 
 export function PostCard({
   post,
@@ -46,16 +43,6 @@ export function PostCard({
           </span>
         )}
       </div>
-
-      {DEV && (
-        <CurationControls
-          slug={post.slug}
-          status={post.status}
-          content={post.content}
-          linkedinText={post.linkedinText}
-          tags={post.tags}
-        />
-      )}
 
       {expanded ? (
         <div

@@ -5,7 +5,6 @@ import { formatDate } from "../../lib/date-utils";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { FaXTwitter, FaLinkedin } from "@/components/site-icons-fa6";
-import { CurationControls } from "../../components/curation-controls";
 import { Metadata } from "next";
 
 const DEV = process.env.NODE_ENV !== "production";
@@ -128,16 +127,6 @@ export default async function PostPermalink({
             </a>
           )}
         </div>
-
-        {DEV && (
-          <CurationControls
-            slug={post.slug}
-            status={post.status}
-            content={post.content}
-            linkedinText={post.linkedinText}
-            tags={post.tags}
-          />
-        )}
       </article>
     </div>
   );
