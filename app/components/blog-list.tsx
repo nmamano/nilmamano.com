@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { ArrowRight } from "lucide-react";
 import { BlogPost } from "../lib/blog";
 import { CATEGORIES, getCategoryConfig } from "../lib/blog-categories";
 import { filterPostsByCategory } from "../lib/blog-client";
@@ -13,6 +14,15 @@ import { NewsletterSubscription } from "./newsletter-subscription";
 interface BlogListProps {
   posts: BlogPost[];
   initialCategory?: string;
+}
+
+function CategoryDot({ category }: { category: string }) {
+  const config = getCategoryConfig(category);
+  return (
+    <span
+      className={`h-2 w-2 shrink-0 rounded-full border border-current ${config.bgColor} ${config.textColor}`}
+    />
+  );
 }
 
 const FILTER_CATEGORIES = Object.entries(CATEGORIES).filter(
@@ -63,13 +73,13 @@ function BlogPostRow({
               <time dateTime={post.date}>{formatDate(post.date)}</time>
             )}
             {post.categories?.map((category) => {
-              const config = getCategoryConfig(category);
               return (
                 <span
                   key={category}
-                  className={`text-[11px] leading-none px-2 py-1 rounded-full ${config.bgColor} ${config.textColor}`}
+                  className="inline-flex items-center gap-1.5"
                 >
-                  {config.name}
+                  <CategoryDot category={category} />
+                  {getCategoryConfig(category).name}
                 </span>
               );
             })}
@@ -114,7 +124,7 @@ export default function BlogList({
 
   return (
     <div className="py-8 grid gap-6 lg:gap-10 lg:grid-cols-[280px_minmax(0,1fr)]">
-      <aside className="lg:[@media(min-height:820px)]:sticky lg:top-24 self-start flex flex-col gap-6">
+      <aside className="lg:[@media(min-height:860px)]:sticky lg:top-24 self-start flex flex-col gap-6">
         <div>
           <h1 className="font-mono text-4xl tracking-tighter">nil pointers</h1>
           <p className="text-sm text-muted-foreground mt-2">
@@ -141,11 +151,7 @@ export default function BlogList({
                     : "text-muted-foreground hover:bg-muted hover:text-foreground"
                 }`}
               >
-                {key && (
-                  <span
-                    className={`h-2 w-2 rounded-full border border-current ${getCategoryConfig(key).bgColor} ${getCategoryConfig(key).textColor}`}
-                  />
-                )}
+                {key && <CategoryDot category={key} />}
                 <span className="flex-1">{name}</span>
                 <span className="text-xs text-muted-foreground tabular-nums">
                   {count}
@@ -153,28 +159,44 @@ export default function BlogList({
               </button>
             );
           })}
+          <Link
+            href="/posts"
+            className="mt-2 pt-3 border-t border-border px-2 pb-1.5 flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <span className="flex-1">
+              Feed{" "}
+              <span className="text-xs text-muted-foreground">
+                · short posts
+              </span>
+            </span>
+            <ArrowRight size={14} aria-hidden="true" />
+          </Link>
         </nav>
         <div className="flex lg:hidden flex-wrap gap-2">
           {filters.map(([key, name]) => {
             const active = selectedCategory === key;
-            const colors = key
-              ? `${getCategoryConfig(key).bgColor} ${getCategoryConfig(key).textColor}`
-              : active
-                ? "bg-primary text-primary-foreground"
-                : "bg-blue-100 text-black";
             return (
               <button
                 key={name}
                 onClick={() => handleCategoryChange(key)}
                 aria-current={active ? "page" : undefined}
-                className={`px-3 py-1 rounded-full text-sm font-medium transition-opacity ${colors} ${
-                  active ? "" : "opacity-60 hover:opacity-100"
+                className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full border text-sm transition-colors ${
+                  active
+                    ? "bg-muted border-transparent font-medium text-foreground"
+                    : "border-border text-muted-foreground hover:text-foreground"
                 }`}
               >
+                {key && <CategoryDot category={key} />}
                 {key ? name : "All"}
               </button>
             );
           })}
+          <Link
+            href="/posts"
+            className="inline-flex items-center gap-1 px-3 py-1 rounded-full border border-border text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            Feed <ArrowRight size={13} aria-hidden="true" />
+          </Link>
         </div>
 
         <NewsletterSubscription compact />
