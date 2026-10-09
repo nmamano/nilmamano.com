@@ -6,6 +6,10 @@ coverImage: "/blog/two-list-stable-matching/cover.png"
 categories: ["research"]
 ---
 
+<Callout title="Update (October 2026)">
+Agents cracked it. A 2-list stable matching can be found in `O(n^2 sqrt(log log n / log n))` time, which is `o(n^2)`. The proof is not Lean-verified or human-reviewed, but it seems legit. See the [update](#update-agents-cracked-it) at the end.
+</Callout>
+
 I thought it'd be fun to write two complementary posts: "The hardest problem I solved in my PhD" (WIP) and "The easiest problem I couldn't solve in my PhD" (this one).
 
 I'll state the problem, why I think it's easy despite not solving it, and talk a bit about what I tried.
@@ -266,6 +270,16 @@ I think this demo should be useful for anyone looking to tackle the problem.
 I lost my notes on the problem, so I can't recall everything I tried, but I think it's the problem that has gnawed at me the most from my research.[^2] Anyway; reasoning‑mode LLMs, here's your chance!
 
 [^2]: I recently solved a problem that gnawed at me even more, the [double-edge cut problem](/blog/double-edge-cut-problem). I hope this one falls next!
+
+## Update: Agents Cracked It
+
+In October 2026, agents found an `o(n^2)` algorithm for 2-list stable matching. It runs in `O(n^2 sqrt(log log n / log n))` time. So it beats Gale-Shapley, but only by a sub-logarithmic factor.
+
+Everything is in [this repo](https://github.com/nmamano/two-list-stable-matching-research): the paper, proofs, solvers, hard instances, and verification code. You probably will need an agent to explain it to you.
+
+It was much harder than it looked. A first team of agents (Opus 5.5 and Astra) worked on it for about five hours. They found a lot of structure, fast algorithms for special cases, a tight bound on the number of stable matchings (at most `2^(n/2)`), and quadratic lower bounds for whole families of Gale-Shapley-style algorithms. But no general `o(n^2)` algorithm. The algorithm came later, shared by a friend who chose to stay anonymous. Then, agents independently checked its main structural theorem, with a proof review and exhaustive checks on small instances. As of 2026-10-09, nobody has independently checked the running-time analysis.
+
+Whether we can get to `O(n^(2-ε))`, or even near-linear time, is still open.
 
 <Callout title="Fun fact">
   I once gave a lecture on stable matching, and I had two groups of four students volunteer to simulate the rounds of the algorithm.
