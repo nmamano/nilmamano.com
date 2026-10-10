@@ -113,7 +113,7 @@ export function NotebookConcept({ latestPosts = [] }: { latestPosts?: LatestPost
       {latestPosts.length > 0 && <LatestPosts posts={latestPosts} />}
       <section className={styles.afterword} aria-label="Other projects">
         <span className={styles.notePaper} aria-hidden="true" />
-        <div className={styles.otherWork}><span className={styles.smallRule} aria-hidden="true" /><p>Some of my other projects include the <A href="https://wallgame.io">Wall Game</A>, the <A href="https://dsatoolkit.com">DSA Toolkit</A>, <A href="https://bigospeedrun.com">Big O Speedrun</A>, and the <A href="/blog">Nil Pointers blog</A>.</p><p>I also spent a few formative years at Google, but decided to leave because I realized I do my best work when I&apos;m truly passionate about it.</p></div>
+        <div className={styles.otherWork}><span className={styles.smallRule} aria-hidden="true" /><p>Some of my other projects include the <A href="https://wallgame.io">Wall Game</A>, the <A href="https://dsatoolkit.com">DSA Toolkit</A>, and <A href="https://bigospeedrun.com">Big O Speedrun</A>.</p><p>I also spent a few formative years at Google, but decided to leave because I realized I do my best work when I&apos;m truly passionate about it.</p></div>
         <a href="#notebook-cover" className={styles.back}>Back to cover <ArrowUp size={16} aria-hidden="true" /></a>
       </section>
       </div>
