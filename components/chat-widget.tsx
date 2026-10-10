@@ -33,6 +33,42 @@ const starterQuestions: Record<string, string[]> = {
   ],
 };
 
+// The homepage is the notebook landing page (app/components/landing), so the
+// widget there uses its paper, ink and cover-green colors instead of the
+// site's shadcn theme.
+const notebookTheme = {
+  launcher:
+    "fixed bottom-6 right-6 z-50 flex -rotate-2 items-center gap-2 rounded-[3px_9px_9px_3px] border-l-[6px] border-[#394f42] bg-[#4c6255] py-2.5 pl-4 pr-5 font-[Georgia,serif] text-[17px] text-[#f2ebdb] shadow-[1px_2px_#303c2c,3px_8px_16px_#33271440] transition-transform hover:-translate-y-1 active:translate-y-0",
+  panel:
+    "border-[#d6dccc] bg-[#fbf6e9] text-[#263a42] shadow-[1px_2px_2px_#33271420,4px_12px_24px_#33271440]",
+  divider: "border-[#d6dccc]",
+  title: "font-[Georgia,serif] text-lg font-normal",
+  icon: "text-[#456d60]",
+  closeHover: "hover:bg-[#f2ebdb]",
+  muted: "text-[#67766f] font-[Georgia,serif] italic",
+  starter: "border-[#d6dccc] font-[Georgia,serif] text-[15px] hover:bg-[#f2ebdb]",
+  userBubble: "bg-[#4c6255] text-[#f2ebdb]",
+  botBubble: "bg-[#f2ebdb]",
+  input: "border-[#d6dccc] bg-[#fffdf6] text-[#263a42] placeholder:text-[#67766f] focus-visible:ring-[#456d60]",
+  send: "bg-[#4c6255] text-[#f2ebdb] hover:bg-[#394f42]",
+};
+
+const defaultTheme = {
+  launcher:
+    "fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-105 active:scale-95",
+  panel: "bg-background",
+  divider: "",
+  title: "font-semibold",
+  icon: "text-primary",
+  closeHover: "hover:bg-muted",
+  muted: "text-muted-foreground",
+  starter: "hover:bg-muted",
+  userBubble: "bg-primary text-primary-foreground",
+  botBubble: "bg-muted",
+  input: "",
+  send: "",
+};
+
 function getMessageText(message: { parts: Array<{ type: string; text?: string }> }): string {
   return message.parts
     .filter((p) => p.type === "text")
@@ -101,6 +137,7 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
   });
 
   const isLoading = status === "submitted" || status === "streaming";
+  const theme = context === "homepage" ? notebookTheme : defaultTheme;
 
   // Auto-scroll on new messages
   useEffect(() => {
@@ -228,10 +265,10 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="fixed bottom-6 right-6 z-50 flex h-14 w-14 items-center justify-center rounded-full bg-primary text-primary-foreground shadow-lg transition-transform hover:scale-105 active:scale-95"
+          className={theme.launcher}
           aria-label="Open chat"
         >
-          <MessageCircle className="h-6 w-6" />
+          {context === "homepage" ? "Ask about Nil" : <MessageCircle className="h-6 w-6" />}
         </button>
       )}
 
@@ -239,19 +276,19 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
       {isOpen && (
         <div
           ref={panelRef}
-          className="fixed bottom-6 right-6 z-50 flex w-[min(400px,calc(100vw-3rem))] flex-col rounded-xl border bg-background shadow-2xl sm:h-[500px] h-[min(500px,calc(100vh-6rem))]"
+          className={`fixed bottom-6 right-6 z-50 flex w-[min(400px,calc(100vw-3rem))] flex-col rounded-xl border shadow-2xl ${theme.panel} sm:h-[500px] h-[min(500px,calc(100vh-6rem))]`}
         >
           {/* Header */}
-          <div className="flex items-center justify-between border-b px-4 py-3">
+          <div className={`flex items-center justify-between border-b px-4 py-3 ${theme.divider}`}>
             <div className="flex items-center gap-2">
-              <MessageCircle className="h-5 w-5 text-primary" />
-              <span className="font-semibold">
+              <MessageCircle className={`h-5 w-5 ${theme.icon}`} />
+              <span className={theme.title}>
                 {context === "homepage" ? "Ask about Nil" : "Ask about this post"}
               </span>
             </div>
             <button
               onClick={() => setIsOpen(false)}
-              className="rounded-md p-1 hover:bg-muted"
+              className={`rounded-md p-1 ${theme.closeHover}`}
               aria-label="Close chat"
             >
               <X className="h-5 w-5" />
@@ -262,7 +299,7 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
           <ScrollArea className="flex-1 px-4 py-3" ref={scrollRef}>
             {messages.length === 0 ? (
               <div className="flex flex-col gap-2">
-                <p className="text-sm text-muted-foreground mb-2">
+                <p className={`text-sm mb-2 ${theme.muted}`}>
                   {context === "homepage"
                     ? "Ask me anything about Nil!"
                     : "Ask me about this blog post!"}
@@ -271,7 +308,7 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
                   <button
                     key={q}
                     onClick={() => handleStarterClick(q)}
-                    className="rounded-lg border px-3 py-2 text-left text-sm transition-colors hover:bg-muted"
+                    className={`rounded-lg border px-3 py-2 text-left text-sm transition-colors ${theme.starter}`}
                   >
                     {q}
                   </button>
@@ -286,9 +323,7 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
                   >
                     <div
                       className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
-                        m.role === "user"
-                          ? "bg-primary text-primary-foreground"
-                          : "bg-muted"
+                        m.role === "user" ? theme.userBubble : theme.botBubble
                       }`}
                     >
                       <p className="whitespace-pre-wrap">{renderFormattedText(getMessageText(m))}</p>
@@ -297,7 +332,7 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
                 ))}
                 {isLoading && messages[messages.length - 1]?.role === "user" && (
                   <div className="flex justify-start">
-                    <div className="rounded-lg bg-muted px-3 py-2">
+                    <div className={`rounded-lg px-3 py-2 ${theme.botBubble}`}>
                       <Loader2 className="h-4 w-4 animate-spin" />
                     </div>
                   </div>
@@ -314,7 +349,7 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
           </ScrollArea>
 
           {/* Footer */}
-          <div className="border-t px-4 py-2">
+          <div className={`border-t px-4 py-2 ${theme.divider}`}>
             {quoted && (
               <div className="mb-2 flex items-start gap-2 rounded-md border bg-muted/50 px-2 py-1.5 text-xs text-muted-foreground">
                 <Quote className="mt-0.5 h-3.5 w-3.5 shrink-0" />
@@ -335,13 +370,13 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
                 onChange={(e) => setInput(e.target.value)}
                 placeholder={quoted ? "Ask about the selected text..." : "Type a message..."}
                 disabled={isLoading}
-                className="flex-1"
+                className={`flex-1 ${theme.input}`}
               />
-              <Button type="submit" size="icon" disabled={isLoading || (!input.trim() && !quoted)}>
+              <Button type="submit" size="icon" className={theme.send} disabled={isLoading || (!input.trim() && !quoted)}>
                 <Send className="h-4 w-4" />
               </Button>
             </form>
-            <p className="mt-1.5 text-center text-[10px] text-muted-foreground">
+            <p className={`mt-1.5 text-center text-[10px] ${context === "homepage" ? "text-[#67766f]" : "text-muted-foreground"}`}>
               Powered by Claude
             </p>
           </div>
