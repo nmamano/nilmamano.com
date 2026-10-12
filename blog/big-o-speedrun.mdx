@@ -1,0 +1,146 @@
+---
+title: "Academia 2.0"
+date: "2026-10-12"
+excerpt: "Building Big O Speedrun in two days: how agents ingest, verify, and broadcast new research results, and my agentic workflow."
+coverImage: "/blog/big-o-speedrun/cover.png"
+categories: ["research", "ai", "swe"]
+---
+
+On October 5-6, OpenAI and Anthropic posted agent-made breakthroughs to long-standing complexity bounds for 3SUM, integer multiplication, the Fourier transform, APSP, and several other classic problems. 
+
+I thought the field got nuked.
+
+But within days, Twitter users started pointing their own agents at those results and collectively pushing the bounds further, sometimes minutes apart, making incredible progress.
+
+The complexity for integer multiplication, `O(n log^(1-k) n)`, dropped from `k ~= 10^-55` to `k ~= 10^-3` over a couple of days and hundreds of PRs.
+
+This felt like a new form of research. _Academia 2.0_, if you will:
+
+- Lean replaces peer review
+- GitHub replaces arXiv
+- Anyone with extra LLM usage can contribute
+- Orchestrated on group chats and openly on X
+- Much faster but in more incremental steps
+- Agent legibility `>` human legibility
+
+The fast pace introduced a need for new ways to coordinate and avoid working on obsolete goals.
+
+I did DS\&A research for 5 years, but if I can help make this process more effective and draw attention to it, it'd be a way bigger contribution.
+
+So I rushed to build something. 
+
+I identified four pieces of infrastructure:
+
+1. An automated way to track the latest results
+2. Independent Lean verification
+3. A space for people to coordinate
+4. A way to broadcast new results to the community
+
+Since it felt like the beginning of a speedrun, I called the site [Big O Speedrun](https://bigOspeedrun.com). Each problem is a race.
+
+<BlogImage
+  src="/blog/big-o-speedrun/landing.png"
+  alt="The Big O Speedrun landing page. A table lists six problems (Integer Multiplication, Matrix Multiplication, Fourier Transform, 3SUM, APSP, Subset Sum) with columns for the classic bound, the agent breakthrough, and the latest bound with its date and evidence level, such as Claimed or Lean Verified. Checkboxes above the table filter by Claimed, Human Verified, and Lean Verified."
+/>
+  
+This post covers how I built it (skip footnotes, they're implementation details).
+
+<Toc />
+
+## System architecture
+
+The site is a mostly static Astro site in the [site repo](https://github.com/bigospeedrun/site).[^static] Lean proofs go to a separate [verifier repo](https://github.com/bigospeedrun/verifier). Everything is automated with GitHub workflows, a few agents in my [Isomux](/blog/isomux) office, and webhooks.
+
+[^static]: The only server-side parts are two Vercel functions: the visitor chat widget, which calls Claude, and a route that returns a Markdown version of any page when the request asks for `text/markdown`, as agents do. The records are never served dynamically: each data change is a new commit and a new deploy.
+
+<BlogImage
+  src="/blog/big-o-speedrun/system-diagram.svg"
+  alt="System diagram of Big O Speedrun. Ingest: an hourly GitHub workflow in the site repo imports new results from registered community repos, such as the integer multiplication one, and a watch cronjob in the Isomux office (a fresh GPT-6 Astra session every 3 hours) searches GitHub and alerts the Lead Dev agent (Claude Opus 5.5, shown with its office avatar), which sends one of four worker agents (GPT-6 Astra) to review the claim, reviews the worker's commit, and either registers a new community repo or adds a one-off find to the site repo. Verify: players submit a Lean proof as an issue or pull request to the verifier repo, where a sandboxed GitHub-hosted runner checks it with Comparator and posts a receipt on the issue or PR; the hourly workflow imports submissions and receipts into the site repo. Broadcast: a push to the site repo deploys bigOspeedrun.com on Vercel; the hourly workflow posts new records to Discord through a webhook; its follow-up commit triggers a GitHub webhook that wakes the X Poster agent (GPT-6 Astra), which posts to X through a browser tab. I chat with the Lead Dev."
+  needsBackground={true}
+/>
+
+Every record has one of three evidence levels:
+
+- **Lean Verified**: the gold standard. We rebuilt the Lean proof from source and the Lean kernel checked that it proves our exact problem statement.
+- **Human Verified**: for problems that don't have Lean formalization yet, we rely on community consensus, e.g., a PR accepted into a community repo: a public repo where people organically converged to race on one problem, like [CrocSwap/integer-mult-bounds](https://github.com/CrocSwap/integer-mult-bounds) for integer multiplication.
+- **Claimed**: everything else.
+
+## Tracking the latest results
+
+New results reach the site through three routes:
+
+1. **An hourly GitHub workflow** in the site repo polls the community repos. A repo becomes a community repo when a worker agent checks that it states the same problem, adds it to the site's repo registry, and writes a small importer for its format, and the Lead Dev reviews and pushes the change. Each hour, the workflow imports new PRs and merges and commits the result, and Vercel deploys the commit.[^cron]
+2. **A watch cronjob** in the office starts a fresh agent session every 3 hours. It searches GitHub for new repos about the tracked problems and follows the public GitHub activity of the most active contributors. When it finds a repo that states a bound, it alerts the Lead Dev, who sends a worker to read it. The worker checks that it's the same problem in the same model, pins the commit, and commits the row locally. The Lead reviews it and pushes. If it was the best bound when it appeared, it goes on the board as Claimed.
+3. **Direct submissions** to our verifier (next section).
+
+[^cron]: GitHub's own cron fired only twice in about 10 hours on October 10. Now a systemd timer on the office box triggers the same workflow every hour, and GitHub's cron stays as a backup.
+
+One of the principles was to not force others to use our repo, or to change how they work at all.
+
+## Independent Lean verification
+
+Lean makes this kind of research move fast; agents love it.
+
+We don't rely on claims that something was checked. We rebuild every proof with fixed dependencies and check it against our own copy of the statement.
+
+The trusted statements come from the original results: OpenAI's model for the Fourier transform, and Anthropic's statement for 3SUM and APSP.[^param]
+
+[^param]: The statements take the bound as a parameter: a submission proves, for example, that 3SUM is solvable in O(n^(p/q)) for its own p/q, and the verifier builds that exact target itself from the unchanged statement.
+
+We use [Comparator](https://github.com/leanprover/comparator), the Lean community's tool. It checks that the submitted statement matches the trusted one and replays the proof in the Lean kernel. The only allowed axioms are Lean's three standard ones. A second, independent kernel (nanoda) then rechecks the proof as an advisory check: a real rejection sends the record back for review.
+
+Anyone can submit, either as a PR to the [verifier repo](https://github.com/bigospeedrun/verifier) that adds a folder with the proof, or as an issue that points to a public repo and commit. GitHub workflows do the rest:
+
+- If the claimed bound doesn't match or beat the current record, the workflow doesn't run the proof check, and the result is listed as Claimed.
+- If the proof passes, the PR merges automatically and the record becomes Lean Verified on the site at the next hourly refresh.
+- If the proof fails, the PR closes automatically, with the receipt as the reason. A timeout or infrastructure failure leaves it open with a review label.
+
+The proof checks can take hours and many GBs of RAM. Thankfully, GitHub Actions is free for public repos. So, each proof runs on a fresh GitHub-hosted runner (4 cores, 16 GB).[^isolation][^first]
+
+[^isolation]: The submitted code is untrusted, so the proof job runs inside a bubblewrap sandbox with no network, no access to the token that posts results, dependency versions pinned, and a memory cap. It ignores the submission's own build files. A separate job, which never runs submitted code, posts the receipt.
+
+[^first]: The first outside submission went through end to end on October 11: c0ldzy17 pushed the 3SUM exponent from about 1.996 to 1.962, the verifier checked the proof on a GitHub runner in about 80 minutes, the site and Discord picked it up, and the X post went out after one retry.
+
+## A space to coordinate
+
+The Lead Dev set up (via an API token) a public [Discord server](https://discord.gg/JEN582WvNv) with one channel per problem where people racing can coordinate. Others coordinate publicly on X or on X group chats.
+
+The site itself is a resource for agents. It follows the best practices in [is-agentic.com](https://is-agentic.com/scan/bigospeedrun.com): every page is also available as Markdown, there's an [llms.txt](https://bigospeedrun.com/llms.txt), and the about page tells an agent how to pick a problem and submit a result.
+
+## Broadcasting new results
+
+We needed ways of letting the community keep up to date with the developments, as well as ideally create interest.
+
+When the hourly workflow imports a new record or a verification of an existing record, it posts it to the Discord `#records` channel through a webhook.
+
+To broadcast on X, API costs are quite high, so we do it via browser use: an agent drives a Chrome tab on my old laptop, (which now stays permanently just for this) with a tab logged in as [@bigOspeedrun](https://x.com/bigospeedrun). The chain is:
+
+1. After Discord accepts a post, the workflow saves its X text to a JSON file in the site repo and commits it.
+2. GitHub sends a push webhook to the Isomux office.
+3. The webhook wakes the X Poster, an agent with no other job. It reads the JSON file and posts each new entry as is.[^inject]
+
+[^inject]: An agent on X is a potential target for prompt injection. The X Poster's instructions allow it to open only the compose page and @bigospeedrun's own posts, to type only the prepared text, and to stop if any page asks it to do something.
+
+## How it was built
+
+It took 2 days to launch, plus another day of follow-ups. Commit count across repos is at about ~340 as of October 11, all "vibe coded".
+
+The setup was one Lead Dev agent and four workers, all in one Isomux room. My first rule for the Lead was that it never does work itself: it dispatches tasks to the workers, so its own chat stays free for me. The workers commit locally, the Lead reviews their work and pushes, and it comes back to me only with decisions and a summary. The Lead runs Claude Opus 5.5, and the workers run GPT-6 Astra on Codex. A fifth worker later became the X Poster.
+
+My job was mostly taste and decisiones, like pushing for clear threshold for human-verified and lean-verified that translated across problems.
+
+## Playing the game
+
+My own agents set a record once the verifier was public.
+
+I chose the Fourier transform because it had a Lean proof.
+
+I set an Opus 5.5 agent to orchestrate 4 Codex and 3 Opus 5.5, all on high, on a separate Isomux room. I used a minimal prompt: I just pointed the orchestrator at the leaderboard and said to keep going until I said to stop. I gave them 9h.
+
+Overnight, they combined layout ideas from the community repo with their own search and wrote the first Lean proofs for them, improving the record's exponent by 16.6%.[^dft] It went through the same public verifier as everyone else.
+
+[^dft]: The exponent saving κ in O(n log^(1-κ) n) went from 4381239/5000000000 (about 8.76e-4) to 2555269/2500000000 (about 1.022e-3). See [verifier PR #3](https://github.com/bigospeedrun/verifier/pull/3) for the credits.
+
+## Takeaways
+
+If you want to join, point your agent at the [about page](https://bigospeedrun.com/about) and pick a problem. The [Discord](https://discord.gg/JEN582WvNv) has a channel for each one.

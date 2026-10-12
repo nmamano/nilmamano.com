@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: #06080f; }
+  #card {
+    width: 1200px; height: 630px; position: relative; overflow: hidden;
+    font-family: Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif;
+    background:
+      radial-gradient(900px 620px at 85% 50%, #1b2440 0%, rgba(27,36,64,0) 68%),
+      linear-gradient(140deg, #0a1120 0%, #070c17 52%, #05080f 100%);
+  }
+  #card::before {
+    content: ""; position: absolute; inset: 0; opacity: .5;
+    background-image:
+      repeating-linear-gradient(45deg, rgba(120,160,230,.055) 0 1px, transparent 1px 84px),
+      repeating-linear-gradient(-45deg, rgba(120,160,230,.055) 0 1px, transparent 1px 84px);
+  }
+  .top { position: absolute; left: 70px; right: 70px; top: 42px; display: flex; align-items: flex-end; justify-content: space-between; }
+  .eyebrow { display: flex; align-items: center; gap: 12px; font-size: 20px; font-weight: 700; color: #ffd21f; margin-bottom: 8px; }
+  .eyebrow img { width: 40px; height: 40px; border-radius: 9px; }
+  .title { font-size: 72px; font-weight: 800; letter-spacing: -2px; line-height: 1.05; color: #ffffff; }
+  .title .accent { color: #ffd21f; }
+  .sub { font-size: 22px; font-weight: 500; color: #93a4c2; padding-bottom: 10px; }
+  .shot {
+    position: absolute; left: 95px; right: 95px; top: 192px;
+    border-radius: 14px; overflow: hidden; border: 1px solid #2a3a58;
+    box-shadow: 0 30px 70px rgba(0,0,0,.55); background: #111925; padding: 10px 10px 4px;
+  }
+  .shot img { display: block; width: 100%; }
+</style>
+</head>
+<body>
+<div id="card">
+  <div class="top">
+    <div>
+      <div class="eyebrow"><img src="big_o_speedrun_bos_icon.png" alt="" />Big O Speedrun</div>
+      <div class="title">Academia <span class="accent">2.0</span></div>
+    </div>
+    <div class="sub">built in two days</div>
+  </div>
+  <div class="shot"><img src="big_o_speedrun_cover_chart.png" alt="" /></div>
+</div>
+</body>
+</html>
