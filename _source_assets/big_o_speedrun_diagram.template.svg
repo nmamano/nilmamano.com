@@ -60,7 +60,7 @@
 
   <!-- ===== Office ===== -->
   <rect x="35" y="440" width="180" height="90" rx="8" fill="#f5f7fb" stroke="#3d4a5c" stroke-width="1.5"/>
-  <text x="125" y="472" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Watch cronjob</text>
+  <text x="125" y="472" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Watch cron job</text>
   <text x="125" y="492" font-size="12" fill="#5a6577" text-anchor="middle">fresh session every 3 h</text>
   <text x="125" y="510" font-size="12" fill="#5a6577" text-anchor="middle">GPT-6 Astra</text>
 
