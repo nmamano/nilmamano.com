@@ -6,9 +6,9 @@ coverImage: "/blog/big-o-speedrun/cover.png"
 categories: ["research", "ai", "swe"]
 ---
 
-In early October, OpenAI and Anthropic posted agent-made breakthroughs to long-standing complexity bounds for several classic problems, like 3SUM, integer multiplication, the Fourier transform, APSP.
+In early October, OpenAI and Anthropic posted agent-made breakthroughs to long-standing complexity bounds for several classic problems, like 3SUM, integer multiplication, the Fourier transform, and APSP.
 
-I thought human relevance was over.
+I thought human relevance in my field of study was over.
 
 But within days, X users started pointing their own agents at those results and collectively pushing the bounds further.
 
@@ -92,11 +92,12 @@ Everything is automated with GitHub workflows, a few agents in my [Isomux](/blog
 
 ## Tracking the latest results
 
-New results reach the site through three routes:
+New results reach the site through four routes:
 
 1. **An hourly GitHub workflow** in the site repo polls the community repos. A repo becomes a community repo when a worker agent checks that it states the same problem, adds it to the site's repo registry, and writes a small importer for its format, and the Lead Dev reviews and pushes the change. Each hour, the workflow imports new PRs and merges and commits the result, and Vercel deploys the commit.[^cron]
 2. **A [watch cron job](https://github.com/bigospeedrun/watch)** in the office starts a fresh agent session every 3 hours. It searches GitHub for new repos about the tracked problems and follows the public GitHub activity of the most active contributors. When it finds a repo that states a bound, it alerts the Lead Dev, who sends a worker to read it. The worker checks that it's the same problem in the same model, pins the commit, and commits the row locally. The Lead reviews it and pushes. If it was the best bound when it appeared, it goes on the board as Claimed.
-3. **Direct submissions** to our verifier (next section).
+3. **A Discord channel**, `#submit-a-result`, where anyone can post a link to a new result. On each run, the watch cron job collects the GitHub links posted there, alerts the Lead Dev, and reacts to the message with 👀. A worker then reviews the repo like any other lead.
+4. **Direct submissions** to our verifier (next section).
 
 [^cron]: GitHub's own cron fired only twice in about 10 hours on October 10. Now a systemd timer on the office box triggers the same workflow every hour, and GitHub's cron stays as a backup.
 
