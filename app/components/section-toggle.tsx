@@ -7,9 +7,10 @@ const SECTIONS = [
   { href: "/blog", label: "Blog", route: "blog" },
   { href: "/posts", label: "Feed", route: "posts" },
   { href: "/papers", label: "Papers", route: "papers" },
+  { href: "/games", label: "Games", route: "games" },
 ];
 
-// Blog / Feed / Papers toggle. The pill slides to the clicked tab at once,
+// Blog / Feed / Papers / Games toggle. The pill slides to the clicked tab at once,
 // before the route loads: its leading edge moves first and the trailing edge
 // catches up, so the pill stretches and then settles with a small overshoot.
 // The pill holds a white copy of the labels that stays aligned with the real
@@ -63,12 +64,12 @@ export function SectionToggle({ currentRoute }: { currentRoute?: string }) {
         ? [trail, lead]
         : [lead, trail];
 
-  const tabClass = "px-4 py-1.5 rounded-full leading-none whitespace-nowrap";
+  const tabClass = "px-2.5 sm:px-4 py-1.5 rounded-full leading-none whitespace-nowrap";
 
   return (
     <nav
       ref={navRef}
-      aria-label="Blog, feed or papers"
+      aria-label="Blog, feed, papers or games"
       className="relative flex items-center overflow-hidden rounded-full border border-border p-0.5 text-sm font-medium"
     >
       {SECTIONS.map(({ href, label, route }) => (

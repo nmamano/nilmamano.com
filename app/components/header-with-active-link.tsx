@@ -13,6 +13,8 @@ export function HeaderWithActiveLink() {
     currentRoute = "posts";
   } else if (pathname === "/papers") {
     currentRoute = "papers";
+  } else if (pathname === "/games") {
+    currentRoute = "games";
   } else if (pathname === "/media-kit") {
     currentRoute = "media-kit";
   } else if (pathname === "/") {
