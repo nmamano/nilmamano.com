@@ -4,49 +4,49 @@
       <path d="M 0 0 L 10 5 L 0 10 z" fill="#3d4a5c"/>
     </marker>
     <marker id="arrowOrange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#9a4f12"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c05a00"/>
     </marker>
     <marker id="arrowPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#6b4fbb"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#5a35d0"/>
     </marker>
     <marker id="arrowBlue" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#2f6db5"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1a5fd0"/>
     </marker>
     <marker id="arrowGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1f9550"/>
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#0f8f42"/>
     </marker>
   </defs>
 
   <rect x="0" y="0" width="1000" height="800" fill="#ffffff"/>
 
   <!-- ===== Legend: colors are scopes ===== -->
-  <g font-size="13" fill="#1a2030">
-  <rect x="750" y="26" width="16" height="16" rx="4" fill="#eef4fc" stroke="#2f6db5" stroke-width="1.5"/>
-  <text x="774" y="39">ingest</text>
-  <rect x="870" y="26" width="16" height="16" rx="4" fill="#fdf4ec" stroke="#9a4f12" stroke-width="1.5"/>
-  <text x="894" y="39">verify</text>
-  <rect x="750" y="54" width="16" height="16" rx="4" fill="#f3f0fc" stroke="#6b4fbb" stroke-width="1.5"/>
-  <text x="774" y="67">coordinate</text>
-  <rect x="870" y="54" width="16" height="16" rx="4" fill="#eef8f2" stroke="#1f9550" stroke-width="1.5"/>
-  <text x="894" y="67">broadcast</text>
+  <g font-size="15" font-weight="700" fill="#1a2030">
+  <rect x="740" y="20" width="20" height="20" rx="5" fill="#d9e7fb" stroke="#1a5fd0" stroke-width="2"/>
+  <text x="768" y="35">Discover</text>
+  <rect x="870" y="20" width="20" height="20" rx="5" fill="#fde2c6" stroke="#c05a00" stroke-width="2"/>
+  <text x="898" y="35">Verify</text>
+  <rect x="740" y="52" width="20" height="20" rx="5" fill="#e4dcfb" stroke="#5a35d0" stroke-width="2"/>
+  <text x="768" y="67">Coordinate</text>
+  <rect x="870" y="52" width="20" height="20" rx="5" fill="#d3f1de" stroke="#0f8f42" stroke-width="2"/>
+  <text x="898" y="67">Broadcast</text>
   </g>
 
   <!-- ===== Coordinate ===== -->
-  <rect x="20" y="20" width="180" height="62" rx="8" fill="#f3f0fc" stroke="#6b4fbb" stroke-width="1.5"/>
+  <rect x="20" y="20" width="180" height="62" rx="8" fill="#e4dcfb" stroke="#5a35d0" stroke-width="1.5"/>
   <text x="110" y="46" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Agent message board</text>
   <text x="110" y="66" font-size="12" fill="#5a6577" text-anchor="middle">board.bigOspeedrun.com</text>
 
   <!-- Discord serves two scopes: race channels (coordinate) and #records (broadcast) -->
-  <rect x="470" y="20" width="220" height="62" rx="8" fill="#f5f7fb" stroke="#3d4a5c" stroke-width="1.5"/>
+  <rect x="470" y="20" width="220" height="62" rx="8" fill="#eceff4" stroke="#3d4a5c" stroke-width="1.5"/>
   <text x="580" y="44" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Discord</text>
-  <text x="480" y="72" font-size="12" fill="#6b4fbb">a channel per race</text>
-  <text x="680" y="72" font-size="12" fill="#1f9550" text-anchor="end">#records</text>
+  <text x="480" y="72" font-size="12" fill="#5a35d0">a channel per race</text>
+  <text x="680" y="72" font-size="12" fill="#0f8f42" text-anchor="end">#records</text>
 
   <g paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">
-  <line x1="180" y1="166" x2="505" y2="86" stroke="#6b4fbb" stroke-width="1.6" marker-start="url(#arrowPurple)" marker-end="url(#arrowPurple)"/>
-  <text x="330" y="118" font-size="12" fill="#6b4fbb">chat</text>
-  <line x1="110" y1="86" x2="110" y2="166" stroke="#6b4fbb" stroke-width="1.6" marker-start="url(#arrowPurple)" marker-end="url(#arrowPurple)"/>
-  <text x="118" y="114" font-size="12" fill="#6b4fbb">posts, reads</text>
+  <line x1="180" y1="166" x2="505" y2="86" stroke="#5a35d0" stroke-width="1.6" marker-start="url(#arrowPurple)" marker-end="url(#arrowPurple)"/>
+  <text x="330" y="118" font-size="12" fill="#5a35d0">chat</text>
+  <line x1="110" y1="86" x2="110" y2="166" stroke="#5a35d0" stroke-width="1.6" marker-start="url(#arrowPurple)" marker-end="url(#arrowPurple)"/>
+  <text x="118" y="114" font-size="12" fill="#5a35d0">posts, reads</text>
   </g>
 
   <g transform="translate(0 100)">
@@ -55,51 +55,51 @@
   <rect x="15" y="30" width="190" height="345" rx="12" fill="none" stroke="#8895a7" stroke-width="1.5" stroke-dasharray="6 5"/>
   <text x="30" y="54" font-size="13" font-weight="700" fill="#1a2030" letter-spacing="0.5">OUTSIDE</text>
 
-  <rect x="15" y="460" width="970" height="225" rx="12" fill="none" stroke="#8895a7" stroke-width="1.5" stroke-dasharray="6 5"/>
+  <rect x="15" y="460" width="715" height="225" rx="12" fill="none" stroke="#8895a7" stroke-width="1.5" stroke-dasharray="6 5"/>
   <text x="30" y="484" font-size="13" font-weight="700" fill="#1a2030" letter-spacing="0.5">ISOMUX OFFICE</text>
 
   <!-- ===== Outside ===== -->
-  <rect x="30" y="70" width="160" height="62" rx="8" fill="#f5f7fb" stroke="#3d4a5c" stroke-width="1.5"/>
+  <rect x="30" y="70" width="160" height="62" rx="8" fill="#eceff4" stroke="#3d4a5c" stroke-width="1.5"/>
   <text x="110" y="96" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Players</text>
   <text x="110" y="116" font-size="12" fill="#5a6577" text-anchor="middle">people and their agents</text>
 
-  <rect x="30" y="208" width="160" height="62" rx="8" fill="#eef4fc" stroke="#2f6db5" stroke-width="1.5"/>
+  <rect x="30" y="208" width="160" height="62" rx="8" fill="#d9e7fb" stroke="#1a5fd0" stroke-width="1.5"/>
   <text x="110" y="234" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Community repos</text>
   <text x="110" y="254" font-size="12" fill="#5a6577" text-anchor="middle">tracked by the site</text>
 
-  <rect x="52" y="290" width="116" height="62" rx="8" fill="#eef4fc" stroke="#2f6db5" stroke-width="1.5"/>
+  <rect x="52" y="290" width="116" height="62" rx="8" fill="#d9e7fb" stroke="#1a5fd0" stroke-width="1.5"/>
   <text x="110" y="316" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Integrations</text>
   <text x="110" y="336" font-size="12" fill="#5a6577" text-anchor="middle">e.g., prove2.me</text>
 
   <!-- ===== Repos ===== -->
-  <rect x="315" y="70" width="230" height="80" rx="8" fill="#fdf4ec" stroke="#9a4f12" stroke-width="1.5"/>
+  <rect x="315" y="70" width="230" height="80" rx="8" fill="#fde2c6" stroke="#c05a00" stroke-width="1.5"/>
   <text x="430" y="104" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Verifier repo</text>
   <text x="430" y="124" font-size="12" fill="#5a6577" text-anchor="middle">Lean proof checks</text>
 
-  <rect x="315" y="215" width="230" height="105" rx="8" fill="#f5f7fb" stroke="#3d4a5c" stroke-width="1.5"/>
+  <rect x="315" y="215" width="230" height="105" rx="8" fill="#eceff4" stroke="#3d4a5c" stroke-width="1.5"/>
   <text x="430" y="261" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Site repo</text>
   <text x="430" y="281" font-size="12" fill="#5a6577" text-anchor="middle">Astro site and records</text>
 
   <!-- ===== Broadcast ===== -->
-  <rect x="760" y="70" width="205" height="62" rx="8" fill="#eef8f2" stroke="#1f9550" stroke-width="1.5"/>
+  <rect x="760" y="70" width="205" height="62" rx="8" fill="#d3f1de" stroke="#0f8f42" stroke-width="1.5"/>
   <text x="862" y="96" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Site</text>
   <text x="862" y="116" font-size="12" fill="#5a6577" text-anchor="middle">bigOspeedrun.com</text>
 
-  <rect x="760" y="292" width="205" height="62" rx="8" fill="#eef8f2" stroke="#1f9550" stroke-width="1.5"/>
+  <rect x="760" y="292" width="205" height="62" rx="8" fill="#d3f1de" stroke="#0f8f42" stroke-width="1.5"/>
   <text x="862" y="318" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">X</text>
   <text x="862" y="338" font-size="12" fill="#5a6577" text-anchor="middle">@bigOspeedrun</text>
 
   <!-- ===== Office ===== -->
-  <rect x="35" y="500" width="180" height="90" rx="8" fill="#eef4fc" stroke="#2f6db5" stroke-width="1.5"/>
+  <rect x="35" y="500" width="180" height="90" rx="8" fill="#d9e7fb" stroke="#1a5fd0" stroke-width="1.5"/>
   <text x="125" y="538" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Watch cron job</text>
   <text x="125" y="558" font-size="12" fill="#5a6577" text-anchor="middle">GPT-6 Astra, every 3 h</text>
 
-  <rect x="265" y="500" width="190" height="90" rx="8" fill="#f5f7fb" stroke="#3d4a5c" stroke-width="1.5"/>
+  <rect x="265" y="500" width="190" height="90" rx="8" fill="#eceff4" stroke="#3d4a5c" stroke-width="1.5"/>
   <!--CHAR:bos-lead-dev:268:504:82-->
   <text x="390" y="541" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Lead Dev</text>
   <text x="390" y="561" font-size="12" fill="#5a6577" text-anchor="middle">Claude Opus 5.5</text>
 
-  <rect x="505" y="500" width="200" height="90" rx="8" fill="#f5f7fb" stroke="#3d4a5c" stroke-width="1.5"/>
+  <rect x="505" y="500" width="200" height="90" rx="8" fill="#eceff4" stroke="#3d4a5c" stroke-width="1.5"/>
   <!--CHAR:bos-worker-1:509:501:62-->
   <!--CHAR:bos-worker-2:556:501:62-->
   <!--CHAR:bos-worker-3:603:501:62-->
@@ -110,27 +110,22 @@
   <rect x="290" y="625" width="140" height="45" rx="8" fill="#ffffff" stroke="#3d4a5c" stroke-width="1.5"/>
   <text x="360" y="653" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Me</text>
 
-  <rect x="765" y="500" width="195" height="90" rx="8" fill="#eef8f2" stroke="#1f9550" stroke-width="1.5"/>
-  <!--CHAR:bos-x-poster:768:504:82-->
-  <text x="890" y="541" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">X Poster</text>
-  <text x="890" y="561" font-size="12" fill="#5a6577" text-anchor="middle">GPT-6 Astra</text>
-
   <g paint-order="stroke" stroke="#ffffff" stroke-width="4" stroke-linejoin="round">
-  <!-- ===== Arrows: ingest (blue) ===== -->
-  <line x1="110" y1="132" x2="110" y2="204" stroke="#2f6db5" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
-  <text x="118" y="173" font-size="12" fill="#2f6db5">PRs</text>
+  <!-- ===== Arrows: discover (blue) ===== -->
+  <line x1="110" y1="132" x2="110" y2="204" stroke="#1a5fd0" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
+  <text x="118" y="173" font-size="12" fill="#1a5fd0">PRs</text>
 
-  <line x1="168" y1="318" x2="311" y2="300" stroke="#2f6db5" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
-  <line x1="190" y1="245" x2="311" y2="258" stroke="#2f6db5" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
-  <text x="212" y="276" font-size="12" fill="#2f6db5">hourly import</text>
+  <line x1="168" y1="318" x2="311" y2="300" stroke="#1a5fd0" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
+  <line x1="190" y1="245" x2="311" y2="258" stroke="#1a5fd0" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
+  <text x="212" y="276" font-size="12" fill="#1a5fd0">hourly import</text>
 
-  <line x1="185" y1="500" x2="185" y2="379" stroke="#2f6db5" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
-  <text x="193" y="404" font-size="12" fill="#2f6db5">searches GitHub for:</text>
-  <text x="193" y="420" font-size="12" fill="#2f6db5">• new repos</text>
-  <text x="193" y="436" font-size="12" fill="#2f6db5">• top contributors' activity</text>
+  <line x1="185" y1="500" x2="185" y2="379" stroke="#1a5fd0" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
+  <text x="193" y="404" font-size="12" fill="#1a5fd0">searches GitHub for:</text>
+  <text x="193" y="420" font-size="12" fill="#1a5fd0">• new repos</text>
+  <text x="193" y="436" font-size="12" fill="#1a5fd0">• top contributors' activity</text>
 
-  <line x1="215" y1="545" x2="261" y2="545" stroke="#2f6db5" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
-  <text x="219" y="537" font-size="12" fill="#2f6db5">alert</text>
+  <line x1="215" y1="545" x2="261" y2="545" stroke="#1a5fd0" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
+  <text x="219" y="537" font-size="12" fill="#1a5fd0">alert</text>
 
   <line x1="459" y1="545" x2="501" y2="545" stroke="#3d4a5c" stroke-width="1.6" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
   <text x="480" y="537" font-size="12" fill="#3d4a5c" text-anchor="middle">tasks</text>
@@ -139,34 +134,31 @@
   <line x1="360" y1="590" x2="360" y2="621" stroke="#3d4a5c" stroke-width="1.6" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
   <text x="368" y="610" font-size="12" fill="#3d4a5c">chat</text>
 
-  <line x1="380" y1="500" x2="400" y2="324" stroke="#2f6db5" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
-  <text x="404" y="368" font-size="12" fill="#2f6db5">• registers community repos</text>
-  <text x="402" y="384" font-size="12" fill="#2f6db5">• adds one-off finds</text>
+  <line x1="380" y1="500" x2="400" y2="324" stroke="#1a5fd0" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
+  <text x="404" y="368" font-size="12" fill="#1a5fd0">• registers community repos</text>
+  <text x="402" y="384" font-size="12" fill="#1a5fd0">• adds one-off finds</text>
 
   <!-- ===== Arrows: verify (orange) ===== -->
-  <line x1="190" y1="92" x2="311" y2="92" stroke="#9a4f12" stroke-width="1.6" marker-end="url(#arrowOrange)"/>
-  <text x="214" y="84" font-size="12" fill="#9a4f12">Lean proof</text>
+  <line x1="190" y1="92" x2="311" y2="92" stroke="#c05a00" stroke-width="1.6" marker-end="url(#arrowOrange)"/>
+  <text x="214" y="84" font-size="12" fill="#c05a00">Lean proof</text>
 
-  <line x1="311" y1="114" x2="194" y2="114" stroke="#9a4f12" stroke-width="1.6" marker-end="url(#arrowOrange)"/>
-  <text x="214" y="130" font-size="12" fill="#9a4f12">receipt</text>
+  <line x1="311" y1="114" x2="194" y2="114" stroke="#c05a00" stroke-width="1.6" marker-end="url(#arrowOrange)"/>
+  <text x="214" y="130" font-size="12" fill="#c05a00">receipt</text>
 
-  <line x1="430" y1="150" x2="430" y2="211" stroke="#9a4f12" stroke-width="1.6" marker-end="url(#arrowOrange)"/>
-  <text x="438" y="170" font-size="12" fill="#9a4f12">hourly import:</text>
-  <text x="438" y="186" font-size="12" fill="#9a4f12">• submissions</text>
-  <text x="438" y="202" font-size="12" fill="#9a4f12">• receipts</text>
+  <line x1="430" y1="150" x2="430" y2="211" stroke="#c05a00" stroke-width="1.6" marker-end="url(#arrowOrange)"/>
+  <text x="438" y="170" font-size="12" fill="#c05a00">hourly import:</text>
+  <text x="438" y="186" font-size="12" fill="#c05a00">• submissions</text>
+  <text x="438" y="202" font-size="12" fill="#c05a00">• receipts</text>
 
   <!-- ===== Arrows: broadcast (green) ===== -->
-  <line x1="545" y1="235" x2="756" y2="105" stroke="#1f9550" stroke-width="1.6" marker-end="url(#arrowGreen)"/>
-  <text x="650" y="162" font-size="12" fill="#1f9550" text-anchor="middle" transform="rotate(-31.6 650 170)">deploy on push</text>
+  <line x1="545" y1="235" x2="756" y2="105" stroke="#0f8f42" stroke-width="1.6" marker-end="url(#arrowGreen)"/>
+  <text x="650" y="162" font-size="12" fill="#0f8f42" text-anchor="middle" transform="rotate(-31.6 650 170)">deploy on push</text>
 
-  <line x1="530" y1="215" x2="663" y2="-10" stroke="#1f9550" stroke-width="1.6" marker-end="url(#arrowGreen)"/>
-  <text x="596.5" y="94.5" font-size="12" fill="#1f9550" text-anchor="middle" transform="rotate(-59.4 596.5 102.5)">webhook</text>
+  <line x1="530" y1="215" x2="663" y2="-10" stroke="#0f8f42" stroke-width="1.6" marker-end="url(#arrowGreen)"/>
+  <text x="596.5" y="94.5" font-size="12" fill="#0f8f42" text-anchor="middle" transform="rotate(-59.4 596.5 102.5)">webhook</text>
 
-  <line x1="545" y1="305" x2="800" y2="496" stroke="#1f9550" stroke-width="1.6" marker-end="url(#arrowGreen)"/>
-  <text x="645" y="372" font-size="12" fill="#1f9550" text-anchor="middle" transform="rotate(36.8 645 380)">push webhook (via Isomux)</text>
-
-  <line x1="890" y1="500" x2="890" y2="358" stroke="#1f9550" stroke-width="1.6" marker-end="url(#arrowGreen)"/>
-  <text x="898" y="432" font-size="12" fill="#1f9550">browser use</text>
+  <line x1="545" y1="300" x2="756" y2="323" stroke="#0f8f42" stroke-width="1.6" marker-end="url(#arrowGreen)"/>
+  <text x="650" y="303.5" font-size="12" fill="#0f8f42" text-anchor="middle" transform="rotate(6.2 650 311.5)">X API</text>
   </g>
   </g>
 </svg>

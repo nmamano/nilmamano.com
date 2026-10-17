@@ -1,7 +1,7 @@
 ---
 title: "Academia 2.0"
 date: "2026-10-12"
-excerpt: "Building Big O Speedrun in two days: how agents ingest, verify, and broadcast new research results, and my agentic workflow."
+excerpt: "Building Big O Speedrun in two days: how agents discover, verify, and broadcast new research results, and my agentic workflow."
 coverImage: "/blog/big-o-speedrun/cover.png"
 categories: ["research", "ai", "swe"]
 ---
@@ -89,7 +89,7 @@ Everything is automated with GitHub workflows, a few agents in my [Isomux](/blog
 
 <BlogImage
   src="/blog/big-o-speedrun/system-diagram.svg"
-  alt="System diagram of Big O Speedrun, colored by scope. Ingest (blue): an hourly GitHub workflow in the site repo imports new results from the community repos tracked by the site and from other integrations, such as prove2.me, and a watch cron job in the Isomux office (GPT-6 Astra, every 3 hours) searches GitHub and alerts the Lead Dev agent (Claude Opus 5.5, shown with its office avatar), which gives tasks to four worker agents (GPT-6 Astra), reviews their commits, and registers community repos or adds one-off finds to the site repo. Verify (orange): players, people and their agents, submit a Lean proof to the verifier repo, which checks it and sends back a receipt; the hourly import brings submissions and receipts into the site repo. Coordinate (purple): players post to and read the agent message board at board.bigOspeedrun.com, and chat on Discord, in a channel per race. Broadcast (green): a push to the site repo deploys bigOspeedrun.com; a webhook posts new records to the Discord #records channel; a push webhook through Isomux wakes the X Poster agent (GPT-6 Astra), which posts to X as @bigOspeedrun through browser use. I chat with the Lead Dev."
+  alt="System diagram of Big O Speedrun, colored by scope. Discover (blue): an hourly GitHub workflow in the site repo imports new results from the community repos tracked by the site and from other integrations, such as prove2.me, and a watch cron job in the Isomux office (GPT-6 Astra, every 3 hours) searches GitHub and alerts the Lead Dev agent (Claude Opus 5.5, shown with its office avatar), which gives tasks to four worker agents (GPT-6 Astra), reviews their commits, and registers community repos or adds one-off finds to the site repo. Verify (orange): players, people and their agents, submit a Lean proof to the verifier repo, which checks it and sends back a receipt; the hourly import brings submissions and receipts into the site repo. Coordinate (purple): players post to and read the agent message board at board.bigOspeedrun.com, and chat on Discord, in a channel per race. Broadcast (green): a push to the site repo deploys bigOspeedrun.com; a webhook posts new records to the Discord #records channel, and the X API posts them as @bigOspeedrun. I chat with the Lead Dev."
   needsBackground={true}
 />
 
@@ -147,23 +147,17 @@ We needed ways of letting the community keep up to date with the developments, a
 
 When the hourly workflow imports a new record or a verification of an existing record, it posts it to the Discord `#records` channel through a webhook.
 
+After Discord accepts a post, the same workflow posts it to [@bigOspeedrun](https://x.com/bigospeedrun) through the X API.
+
 <Callout>
-  The X account got banned, so now we are using the API instead of browser use.
+  API costs are quite high, so at first we broadcast on X via browser use: an agent drove a Chrome tab on my old laptop, logged in as @bigOspeedrun. The X account got banned, so now we are using the API.
 </Callout>
-
-To broadcast on X, API costs are quite high, so we do it via browser use: an agent drives a Chrome tab on my old laptop, (which now stays permanently just for this) with a tab logged in as [@bigOspeedrun](https://x.com/bigospeedrun). The chain is:
-
-1. After Discord accepts a post, the workflow saves its X text to a JSON file in the site repo and commits it.
-2. GitHub sends a push webhook to the Isomux office.
-3. The webhook wakes the X Poster, an agent with no other job. It reads the JSON file and posts each new entry as is.[^inject]
-
-[^inject]: An agent on X is a potential target for prompt injection. The X Poster's instructions allow it to open only the compose page and @bigOspeedrun's own posts, to type only the prepared text, and to stop if any page asks it to do something.
 
 ## How it was built
 
 It took 2 days to launch, plus another day of follow-ups. Commit count across repos is at about ~340 as of October 11, all "vibe coded".
 
-The setup was one Lead Dev agent and four workers, all in one Isomux room. My first rule for the Lead was that it never does work itself: it dispatches tasks to the workers, so its own chat stays free for me. The workers commit locally, the Lead reviews their work and pushes, and it comes back to me only with decisions and a summary. The Lead runs Claude Opus 5.5, and the workers run GPT-6 Astra on Codex. A fifth worker later became the X Poster.
+The setup was one Lead Dev agent and four workers, all in one Isomux room. My first rule for the Lead was that it never does work itself: it dispatches tasks to the workers, so its own chat stays free for me. The workers commit locally, the Lead reviews their work and pushes, and it comes back to me only with decisions and a summary. The Lead runs Claude Opus 5.5, and the workers run GPT-6 Astra on Codex.
 
 My job was mostly taste and decisiones, like pushing for clear threshold for human-verified and lean-verified that translated across problems.
 
