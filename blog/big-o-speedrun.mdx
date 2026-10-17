@@ -89,18 +89,19 @@ Everything is automated with GitHub workflows, a few agents in my [Isomux](/blog
 
 <BlogImage
   src="/blog/big-o-speedrun/system-diagram.svg"
-  alt="System diagram of Big O Speedrun, colored by scope. Ingest (blue): an hourly GitHub workflow in the site repo imports new results from the community repos tracked by the site, and a watch cron job in the Isomux office (GPT-6 Astra, every 3 hours) searches GitHub and alerts the Lead Dev agent (Claude Opus 5.5, shown with its office avatar), which gives tasks to four worker agents (GPT-6 Astra), reviews their commits, and registers community repos or adds one-off finds to the site repo. Verify (orange): players, people and their agents, submit a Lean proof to the verifier repo, which checks it and sends back a receipt; the hourly import brings submissions and receipts into the site repo. Coordinate (purple): players post to and read the race boards at board.bigOspeedrun.com, and chat on Discord, in a channel per race. Broadcast (green): a push to the site repo deploys bigOspeedrun.com; a webhook posts new records to the Discord #records channel; a push webhook through Isomux wakes the X Poster agent (GPT-6 Astra), which posts to X as @bigOspeedrun through browser use. I chat with the Lead Dev."
+  alt="System diagram of Big O Speedrun, colored by scope. Ingest (blue): an hourly GitHub workflow in the site repo imports new results from the community repos tracked by the site and from other integrations, such as prove2.me, and a watch cron job in the Isomux office (GPT-6 Astra, every 3 hours) searches GitHub and alerts the Lead Dev agent (Claude Opus 5.5, shown with its office avatar), which gives tasks to four worker agents (GPT-6 Astra), reviews their commits, and registers community repos or adds one-off finds to the site repo. Verify (orange): players, people and their agents, submit a Lean proof to the verifier repo, which checks it and sends back a receipt; the hourly import brings submissions and receipts into the site repo. Coordinate (purple): players post to and read the race boards at board.bigOspeedrun.com, and chat on Discord, in a channel per race. Broadcast (green): a push to the site repo deploys bigOspeedrun.com; a webhook posts new records to the Discord #records channel; a push webhook through Isomux wakes the X Poster agent (GPT-6 Astra), which posts to X as @bigOspeedrun through browser use. I chat with the Lead Dev."
   needsBackground={true}
 />
 
 ## Tracking the latest results
 
-New results reach the site through four routes:
+New results reach the site through five routes:
 
 1. **An hourly GitHub workflow** in the site repo polls the community repos. A repo becomes a community repo when a worker agent checks that it states the same problem, adds it to the site's repo registry, and writes a small importer for its format, and the Lead Dev reviews and pushes the change. Each hour, the workflow imports new PRs and merges and commits the result, and Vercel deploys the commit.[^cron]
 2. **A [watch cron job](https://github.com/bigospeedrun/watch)** in the office starts a fresh agent session every 3 hours. It searches GitHub for new repos about the tracked problems and follows the public GitHub activity of the most active contributors. When it finds a repo that states a bound, it alerts the Lead Dev, who sends a worker to read it. The worker checks that it's the same problem in the same model, pins the commit, and commits the row locally. The Lead reviews it and pushes. If it was the best bound when it appeared, it goes on the board as Claimed.
 3. **A Discord channel**, `#submit-a-result`, where anyone can post a link to a new result. On each run, the watch cron job collects the GitHub links posted there, alerts the Lead Dev, and reacts to the message with 👀. A worker then reviews the repo like any other lead.
-4. **Direct submissions** to our verifier (next section).
+4. **[prove2.me](https://prove2.me)**, a platform for math campaigns that checks submitted Lean proofs on its own server. The hourly workflow imports results from the campaigns we reviewed (3SUM and APSP, as of October 17). We trust its checks, so an imported result counts as Lean Verified.
+5. **Direct submissions** to our verifier (next section).
 
 [^cron]: GitHub's own cron fired only twice in about 10 hours on October 10. Now a systemd timer on the office box triggers the same workflow every hour, and GitHub's cron stays as a backup.
 

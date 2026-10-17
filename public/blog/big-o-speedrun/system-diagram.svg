@@ -81,6 +81,10 @@
   <text x="862" y="96" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Site</text>
   <text x="862" y="116" font-size="12" fill="#5a6577" text-anchor="middle">bigOspeedrun.com</text>
 
+  <rect x="760" y="180" width="205" height="62" rx="8" fill="#eef4fc" stroke="#2f6db5" stroke-width="1.5"/>
+  <text x="862" y="206" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Other integrations</text>
+  <text x="862" y="226" font-size="12" fill="#5a6577" text-anchor="middle">e.g., prove2.me</text>
+
   <rect x="760" y="292" width="205" height="62" rx="8" fill="#eef8f2" stroke="#1f9550" stroke-width="1.5"/>
   <text x="862" y="318" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">X</text>
   <text x="862" y="338" font-size="12" fill="#5a6577" text-anchor="middle">@bigOspeedrun</text>
@@ -137,6 +141,9 @@
   <line x1="380" y1="440" x2="400" y2="324" stroke="#2f6db5" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
   <text x="404" y="368" font-size="12" fill="#2f6db5">• registers community repos</text>
   <text x="402" y="384" font-size="12" fill="#2f6db5">• adds one-off finds</text>
+
+  <line x1="760" y1="216" x2="549" y2="268" stroke="#2f6db5" stroke-width="1.6" marker-end="url(#arrowBlue)"/>
+  <text x="655" y="235" font-size="12" fill="#2f6db5" text-anchor="middle" transform="rotate(-13.8 655 242)">hourly import</text>
 
   <!-- ===== Arrows: verify (orange) ===== -->
   <line x1="190" y1="92" x2="311" y2="92" stroke="#9a4f12" stroke-width="1.6" marker-end="url(#arrowOrange)"/>
