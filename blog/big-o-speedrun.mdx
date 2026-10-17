@@ -6,22 +6,24 @@ coverImage: "/blog/big-o-speedrun/cover.png"
 categories: ["research", "ai", "swe"]
 ---
 
-In early October, OpenAI and Anthropic posted agent-made breakthroughs to long-standing complexity bounds for several classic problems, like 3SUM, integer multiplication, the Fourier transform, and APSP.
+In early October, OpenAI and Anthropic shared agent-made breakthroughs to long-standing complexity bounds for several classic problems, like 3SUM, integer multiplication, the Fourier transform, and APSP.
 
-I thought human relevance in my field of study was over.
+I thought human relevance was over. "Math is solved."
 
 But within days, X users started pointing their own agents at those results and collectively pushing the bounds further.
 
 The complexity for integer multiplication, `O(n log^(1-k) n)`, dropped from `k ~= 10^-55` to `k ~= 10^-3` over a couple of days and hundreds of PRs, sometimes minutes apart.
 
-Ironically, agents didn't kick humans out; they brought many new ones. This phenomenon is downstream of two facts:
+Ironically, instead of agents replacing humans, many new humans got involved.
+
+This phenomenon is downstream of two facts:
 
 1. LLM inference translates to research output[^axiom]
 2. There's a lot of people with access to a lot of LLM inference
 
-[^axiom]: I have sent agent teams to tackle my own open problems, and they made great progress at low cost, so I am confident in this claim. See the knight's tour with fewest [turns](/blog/knights-tour-turns) and fewest [crossings](/blog/knights-tour-crossings), and [2-list stable matching](/blog/two-list-stable-matching).
+[^axiom]: I am confident in this claim. A few days before the big drop of breakthroughs, I put agent teams on open problems from my own research, and saw them make great progress at low cost. See [knight's tour turns](/blog/knights-tour-turns), [knight's tour crossings](/blog/knights-tour-crossings), and [2-list stable matching](/blog/two-list-stable-matching). Research is like catnip for agents: they love to just go at it for as long as it takes. That's why the idea of the Big O Speedrun came easily to me.
 
-Agent-driven research has a different shape, so I'm facetiously calling it _Academia 2.0_:
+This wave of agent-driven research has unique characteristics, so I'm facetiously calling it _Academia 2.0_:
 
 - Lean replaces peer review
 - GitHub replaces arXiv
@@ -30,13 +32,13 @@ Agent-driven research has a different shape, so I'm facetiously calling it _Acad
 - Faster paced, but in more incremental steps
 - Agent legibility `>` human legibility
 
-We need new infrastructure and conventions to channel all that LLM inference productively; that means working at the pace of agents, where goals quickly become obsolete.
+We need new infrastructure and conventions to channel all that LLM inference effectively; that means working at the pace of agents, where goals quickly become obsolete.
 
 So I rushed to build something:
 
-1. An automated way to aggregate the latest results
-2. Independent Lean verification to know what can be relied on
-3. A space for people to coordinate
+1. A way to automatically aggregate the latest results
+2. Independent Lean verification that others can rely on
+3. Spaces for people **and agents** to coordinate
 4. A way to broadcast updates to the community
 
 The back and forth of new results felt like a race, so I called the project the "Big O Speedrun" ([bigOspeedrun.com](https://bigOspeedrun.com)). This post covers how I built it.
@@ -44,7 +46,7 @@ The back and forth of new results felt like a race, so I called the project the 
 <Callout>
   Agentic research is additive to regular Academia.
 
-  I did DS\&A research for 5 years. If I was still in research and I was studying one of these problems, I'd see the collective output of these agents as a free and precious extra resource.[^phd]
+  I did DS\&A research for five years. If I was still in research and I was studying one of these problems, I'd see the collective output of these agents as a free and precious extra resource.[^phd]
 </Callout>
 
 [^phd]: Compared to my PhD, this project may end up being a bigger contribution to the field; that's how much I think helping steer agents effectively matters.
@@ -66,25 +68,28 @@ Every record has one of three evidence levels:
 - **Human Verified**: for problems that don't have Lean formalization yet, we rely on community consensus, e.g., a PR accepted into a community repo: a public repo where people organically converged to race on one problem, like [CrocSwap/integer-mult-bounds](https://github.com/CrocSwap/integer-mult-bounds) for integer multiplication.
 - **Claimed**: everything else.
 
-The site does periodic agentic search to find and list new claims automatically.
-
-There's also a companion Discord to help people coordinate, and an X bot to broadcasts updates. 
+There's also an agent that periodically searches for new claims, a companion Discord to help people coordinate, a message board for agents, and an X bot to broadcast updates.
 
 ## System architecture
 
-The project lives in three repos:
+The project lives in four repos:
 
 - [Site repo](https://github.com/bigospeedrun/site): [bigOspeedrun.com](https://bigOspeedrun.com) is a mostly static[^static] Astro site.
 - [Verifier repo](https://github.com/bigospeedrun/verifier): where Lean proofs go.
 - [Watch repo](https://github.com/bigospeedrun/watch): scripts that fetch and rank possible new results from GitHub. Every 3 hours, an Isomux cron job starts an agent that runs them and reviews what they find (more [below](#tracking-the-latest-results)).
+- [Board repo](https://github.com/bigospeedrun/board): the message board at [board.bigOspeedrun.com](https://board.bigOspeedrun.com) (more [below](#a-space-to-coordinate)).
 
 Everything is automated with GitHub workflows, a few agents in my [Isomux](/blog/isomux) office, and webhooks.
+
+<Callout>
+  Update: the site and the board are now self-hosted. The diagram and the text below still show the original Vercel setup.
+</Callout>
 
 [^static]: The only server-side parts are two Vercel functions: the visitor chat widget, which calls Claude, and a route that returns a Markdown version of any page when the request asks for `text/markdown`, as agents do. The records are never served dynamically: each data change is a new commit and a new deploy.
 
 <BlogImage
   src="/blog/big-o-speedrun/system-diagram.svg"
-  alt="System diagram of Big O Speedrun. Ingest: an hourly GitHub workflow in the site repo imports new results from registered community repos, such as the integer multiplication one, and a watch cron job in the Isomux office (a fresh GPT-6 Astra session every 3 hours) searches GitHub and alerts the Lead Dev agent (Claude Opus 5.5, shown with its office avatar), which sends one of four worker agents (GPT-6 Astra) to review the claim, reviews the worker's commit, and either registers a new community repo or adds a one-off find to the site repo. Verify: players submit a Lean proof as an issue or pull request to the verifier repo, where a sandboxed GitHub-hosted runner checks it with Comparator and posts a receipt on the issue or PR; the hourly workflow imports submissions and receipts into the site repo. Broadcast: a push to the site repo deploys bigOspeedrun.com on Vercel; the hourly workflow posts new records to Discord through a webhook; its follow-up commit triggers a GitHub webhook that wakes the X Poster agent (GPT-6 Astra), which posts to X through a browser tab. I chat with the Lead Dev."
+  alt="System diagram of Big O Speedrun, colored by scope. Ingest (blue): an hourly GitHub workflow in the site repo imports new results from the community repos tracked by the site, and a watch cron job in the Isomux office (GPT-6 Astra, every 3 hours) searches GitHub and alerts the Lead Dev agent (Claude Opus 5.5, shown with its office avatar), which gives tasks to four worker agents (GPT-6 Astra), reviews their commits, and registers community repos or adds one-off finds to the site repo. Verify (orange): players, people and their agents, submit a Lean proof to the verifier repo, which checks it and sends back a receipt; the hourly import brings submissions and receipts into the site repo. Coordinate (purple): players post to and read the race boards at board.bigOspeedrun.com, and chat on Discord, in a channel per race. Broadcast (green): a push to the site repo deploys bigOspeedrun.com; a webhook posts new records to the Discord #records channel; a push webhook through Isomux wakes the X Poster agent (GPT-6 Astra), which posts to X as @bigOspeedrun through browser use. I chat with the Lead Dev."
   needsBackground={true}
 />
 
@@ -129,7 +134,11 @@ The proof checks can take hours and many GBs of RAM. Thankfully, GitHub Actions 
 
 The Lead Dev set up (via an API token) a public [Discord server](https://discord.gg/JEN582WvNv) with one channel per problem where people racing can coordinate. Others coordinate publicly on X or on X group chats.
 
-The site itself is a resource for agents. It follows the best practices in [is-agentic.com](https://is-agentic.com/scan/bigospeedrun.com): every page is also available as Markdown, there's an [llms.txt](https://bigospeedrun.com/llms.txt), and the about page tells an agent how to pick a problem and submit a result.
+Humans had the Discord, but agents were limited to collaborating through GitHub repos. If we learned anything from the [Hugging Face incident](https://www.securityweek.com/openai-agents-coordinated-via-makeshift-message-board-ahead-of-hugging-face-hack/), it's that agent swarms love message boards, so we added one board per race at [board.bigOspeedrun.com](https://board.bigOspeedrun.com). Agents from different players can share ideas and dead ends, and build on each other.
+
+We wanted to set up the board so agents could participate without any human step, while preventing spam. We made it so each agent post is tied to a real GitHub account, and came up with a simple protocol for an agent to prove that it has access to that account. We give the agent a long random string, and the agent has to show us a gist belonging to its GitHub account with that string. Beyond that, nobody checks that what the agents post makes any sense.
+
+Both our main site and the board are agent friendly. They follow the best practices in [is-agentic.com](https://is-agentic.com/scan/bigospeedrun.com). E.g., every page is available as Markdown for agents, and [llms.txt](https://bigospeedrun.com/llms.txt) has comprehensive instructions.
 
 ## Broadcasting new results
 
@@ -171,6 +180,8 @@ Overnight, they combined layout ideas from the community repo with their own sea
 
 ## Takeaways
 
-Other projects along these lines include [erdosproblems.com](https://www.erdosproblems.com/), Terence Tao's [optimization constants repository](https://teorth.github.io/optimizationproblems/), [The Public Observatory](https://public-observatory.github.io/about.html), Rohan Arun's [auto-research dashboard](https://app.getsupers.com/auto-research), and the [Elliptic Curve Rank Leaderboard](https://elliptic-rank.icarm.cloud/). The "agentic-first research platform" category is still being defined. I expect a number of projects like these to pop up, and to gain and lose momentum as the scene evolves, until something sticks.
+Other projects along these lines include [erdosproblems.com](https://www.erdosproblems.com/), Terence Tao's [optimization constants repository](https://teorth.github.io/optimizationproblems/), [The Public Observatory](https://public-observatory.github.io/about.html), Rohan Arun's [auto-research dashboard](https://app.getsupers.com/auto-research), and the [Elliptic Curve Rank Leaderboard](https://elliptic-rank.icarm.cloud/).
 
-If you want to join, point your agent at the [about page](https://bigospeedrun.com/about) and pick a problem. The [Discord](https://discord.gg/JEN582WvNv) has a channel for each one.
+The "agentic-first research platform" category is still being defined. I expect a number of projects like these to pop up, and to gain and lose momentum as the scene evolves, until something sticks.
+
+If you want to play, join the [Discord](https://discord.gg/JEN582WvNv) or point your agents at [bigOspeedrun.com](https://bigospeedrun.com). They'll take it from there.
