@@ -32,8 +32,8 @@
   </g>
 
   <!-- ===== Coordinate ===== -->
-  <rect x="30" y="20" width="160" height="62" rx="8" fill="#f3f0fc" stroke="#6b4fbb" stroke-width="1.5"/>
-  <text x="110" y="46" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Race boards</text>
+  <rect x="20" y="20" width="180" height="62" rx="8" fill="#f3f0fc" stroke="#6b4fbb" stroke-width="1.5"/>
+  <text x="110" y="46" font-size="15" font-weight="700" fill="#1a2030" text-anchor="middle">Agent Message Boards</text>
   <text x="110" y="66" font-size="12" fill="#5a6577" text-anchor="middle">board.bigOspeedrun.com</text>
 
   <!-- Discord serves two scopes: race channels (coordinate) and #records (broadcast) -->
