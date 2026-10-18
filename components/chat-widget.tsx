@@ -316,20 +316,41 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
               </div>
             ) : (
               <div className="flex flex-col gap-3">
-                {messages.map((m) => (
-                  <div
-                    key={m.id}
-                    className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
-                  >
+                {messages.map((m, i) => {
+                  const text = getMessageText(m);
+                  // The model thinks before it writes, so the reply can stay empty
+                  // for a moment. An empty finished reply is a refusal, unless the
+                  // request failed (the error line below covers that).
+                  const isLast = i === messages.length - 1;
+                  if (m.role === "assistant" && !text && isLast && isLoading) {
+                    return (
+                      <div key={m.id} className="flex justify-start">
+                        <div className={`rounded-lg px-3 py-2 ${theme.botBubble}`}>
+                          <Loader2 className="h-4 w-4 animate-spin" />
+                        </div>
+                      </div>
+                    );
+                  }
+                  if (m.role === "assistant" && !text && isLast && error) return null;
+                  return (
                     <div
-                      className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
-                        m.role === "user" ? theme.userBubble : theme.botBubble
-                      }`}
+                      key={m.id}
+                      className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
                     >
-                      <p className="whitespace-pre-wrap">{renderFormattedText(getMessageText(m))}</p>
+                      <div
+                        className={`max-w-[85%] rounded-lg px-3 py-2 text-sm ${
+                          m.role === "user" ? theme.userBubble : theme.botBubble
+                        }`}
+                      >
+                        <p className="whitespace-pre-wrap">
+                          {text
+                            ? renderFormattedText(text)
+                            : "Sorry, I can't answer that one. Try asking another way."}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                ))}
+                  );
+                })}
                 {isLoading && messages[messages.length - 1]?.role === "user" && (
                   <div className="flex justify-start">
                     <div className={`rounded-lg px-3 py-2 ${theme.botBubble}`}>

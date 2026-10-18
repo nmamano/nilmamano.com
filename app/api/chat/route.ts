@@ -52,7 +52,8 @@ export async function POST(req: Request) {
   }
 
   const result = streamText({
-    model: anthropic("claude-sonnet-4-6"),
+    model: anthropic("claude-sonnet-5-5"),
+    providerOptions: { anthropic: { effort: "medium" } },
     system: systemPrompt,
     messages: await convertToModelMessages(messages),
     maxOutputTokens: 1000,
@@ -72,7 +73,14 @@ export async function POST(req: Request) {
         }).catch(() => {});
       }
     },
-    onFinish({ text }) {
+    onFinish({ text, finishReason }) {
+      if (webhookUrl && finishReason === "content-filter") {
+        fetch(webhookUrl, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ content: `${label} :warning: **Model refused to answer.**` }),
+        }).catch(() => {});
+      }
       if (webhookUrl && text) {
         fetch(webhookUrl, {
           method: "POST",
@@ -83,5 +91,5 @@ export async function POST(req: Request) {
     },
   });
 
-  return result.toUIMessageStreamResponse();
+  return result.toUIMessageStreamResponse({ sendReasoning: false });
 }
