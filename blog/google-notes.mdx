@@ -6,6 +6,16 @@ coverImage: "/og-image.jpg"
 categories: ["wip"]
 ---
 
+<BlogImage
+  src="/blog/google-notes/before-after.png"
+  alt="Slide titled 'How do Google orgs request bandwidth?' under a map of subsea network cables. Before: a manual process with spreadsheets, a quarterly cadence, and demands for 9 months in the future, with a spreadsheet row Oregon to Taipei, demand 100 Gbps, allocation 80 Gbps. After: a service with UI and database, orgs update demand anytime and get updated allocations weekly, and demand for any day in the future as time-series data, with a step chart of demand (blue) and allocation (red) over time for (YouTube, Oregon, Taipei)"
+/>
+
+<BlogImage
+  src="/blog/google-notes/pipeline.png"
+  alt="Pipeline diagram. Clients (Google Drive, YouTube, Google Cloud) write through a UI to a Bandwidth Timeseries DB, then flow through Service A, Phaser Service, and Service B to a Global optimization solver that also takes network topology time series. The forward Phaser does prioritization phases and aggregation (daily to monthly, per org to all orgs). The result returns through Service B, Phaser Service (monthly to daily, then client deconfliction: fairness, utilization, prioritization, business rules), Service A, and a Validator Service back into the DB"
+/>
+
 ## Input
 
 Coming from (internal) clients (Google products):
@@ -20,6 +30,12 @@ Coming from (internal) clients (Google products):
 Expensive MIP solver:
 
 `(src campus, dst campus) → bandwidth allocation (discrete value per quarter)`
+
+<BlogImage
+  src="/blog/google-notes/graph-flow.png"
+  alt="Graph flow problem variant: a network from source node S through nodes A to F to sink node T, with a capacity on each edge"
+  width="60%"
+/>
 
 ## Deconfliction
 
@@ -37,3 +53,9 @@ Expensive MIP solver:
 - **Business rules**
   - Business continuity: "If we commit to a certain amount, we must give it for as long as it's needed"
   - "If we committed something, and then we took it away because capacity changed, we must prioritize it over allocating new intent"
+
+<BlogImage
+  src="/blog/google-notes/max-min-fairness.png"
+  alt="Max-min fairness bar chart: desired rate for users 1 to 6, with a dashed line at the maximum max-min fair rate. Users 1, 4, and 6 want more than that rate, and the red part above the line is the target rate not served"
+  width="80%"
+/>
