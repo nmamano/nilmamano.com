@@ -9,12 +9,11 @@ export function middleware(request: NextRequest) {
     // Remove .html from the pathname
     const newPathname = url.pathname.replace(/\.html$/, "");
 
-    // Redirect with a relative Location, query kept. Self-hosted, url.origin is the
-    // internal server (localhost:3000), not the public host.
-    return new NextResponse(null, {
-      status: 307,
-      headers: { Location: newPathname + url.search },
-    });
+    // Build the target on the public host, query kept. Self-hosted, url.origin is the
+    // internal server (localhost:3000); Caddy passes the public Host header.
+    const host = request.headers.get("host") ?? url.host;
+    const newUrl = new URL(newPathname + url.search, `https://${host}`);
+    return NextResponse.redirect(newUrl);
   }
 
   return NextResponse.next();
