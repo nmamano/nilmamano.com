@@ -23,21 +23,21 @@ export const metadata: Metadata = {
 };
 
 const domains = [
-  { domain: "nilmamano.com", about: "This site." },
-  { domain: "mamano.com", about: "Coming soon." },
   { domain: "isomux.com", about: "Isomux, agents that act like coworkers." },
   { domain: "isomux.app", about: "Hosted Isomux, a 24/7 office for your agents." },
+  { domain: "nilmamano.com", about: "This site." },
   {
     domain: "bigOspeedrun.com",
     about: "Big O Speedrun, improved algorithmic bounds for classic problems.",
   },
   { domain: "wallgame.io", about: "Wall Game, an online strategy board game." },
-  { domain: "wallwars.net", about: "WallWars, the original version of the Wall Game." },
   {
     domain: "dsatoolkit.com",
     about:
       "DS&A toolkit, reusable techniques for coding interviews, with problems from Beyond Cracking the Coding Interview.",
   },
+  { domain: "wallwars.net", about: "WallWars, the original version of the Wall Game." },
+  { domain: "mamano.com", about: "Unused." },
 ];
 
 export default function DomainsPage() {
