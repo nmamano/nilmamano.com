@@ -7,7 +7,8 @@ const SECTIONS = [
   { href: "/blog", label: "Blog", route: "blog" },
   { href: "/posts", label: "Feed", route: "posts" },
   { href: "/papers", label: "Papers", route: "papers" },
-  { href: "/games", label: "Games", route: "games" },
+  // Wide screens only: on phones four tabs crowd the header.
+  { href: "/games", label: "Games", route: "games", wideOnly: true },
 ];
 
 // Blog / Feed / Papers / Games toggle. The pill slides to the clicked tab at once,
@@ -36,7 +37,8 @@ export function SectionToggle({ currentRoute }: { currentRoute?: string }) {
     const measure = () => {
       const nav = navRef.current;
       const tab = active ? tabRefs.current[active] : null;
-      if (!nav || !tab) return setPill(null);
+      // A wide-only tab is display: none on phones, so it has no box.
+      if (!nav || !tab || !tab.offsetWidth) return setPill(null);
       const left = tab.offsetLeft;
       const right = nav.clientWidth - tab.offsetLeft - tab.offsetWidth;
       setPill((prev) => ({
@@ -72,7 +74,7 @@ export function SectionToggle({ currentRoute }: { currentRoute?: string }) {
       aria-label="Blog, feed, papers or games"
       className="relative flex items-center overflow-hidden rounded-full border border-border p-0.5 text-sm font-medium"
     >
-      {SECTIONS.map(({ href, label, route }) => (
+      {SECTIONS.map(({ href, label, route, wideOnly }) => (
         <Link
           key={route}
           href={href}
@@ -81,7 +83,7 @@ export function SectionToggle({ currentRoute }: { currentRoute?: string }) {
           }}
           onClick={() => route !== currentRoute && setClicked(route)}
           aria-current={currentRoute === route ? "page" : undefined}
-          className={`${tabClass} transition-colors ${
+          className={`${tabClass} ${wideOnly ? "hidden md:block" : ""} transition-colors ${
             // Before the pill is measured (server HTML), mark the tab itself.
             !pill && active === route
               ? "bg-primary text-primary-foreground"
@@ -105,8 +107,11 @@ export function SectionToggle({ currentRoute }: { currentRoute?: string }) {
             className="absolute -top-0.5 flex items-center p-0.5 text-primary-foreground"
             style={{ left: -pill.left, transition: `left ${leftT}` }}
           >
-            {SECTIONS.map(({ label, route }) => (
-              <span key={route} className={tabClass}>
+            {SECTIONS.map(({ label, route, wideOnly }) => (
+              <span
+                key={route}
+                className={`${tabClass} ${wideOnly ? "hidden md:block" : ""}`}
+              >
                 {label}
               </span>
             ))}
