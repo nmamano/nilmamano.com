@@ -9,14 +9,12 @@ export function middleware(request: NextRequest) {
     // Remove .html from the pathname
     const newPathname = url.pathname.replace(/\.html$/, "");
 
-    // Create a new URL with the modified pathname
-    const newUrl = new URL(newPathname, url.origin);
-
-    // Preserve query parameters
-    newUrl.search = url.search;
-
-    // Redirect to the new URL
-    return NextResponse.redirect(newUrl);
+    // Redirect with a relative Location, query kept. Self-hosted, url.origin is the
+    // internal server (localhost:3000), not the public host.
+    return new NextResponse(null, {
+      status: 307,
+      headers: { Location: newPathname + url.search },
+    });
   }
 
   return NextResponse.next();
