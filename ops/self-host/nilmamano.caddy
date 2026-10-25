@@ -6,6 +6,14 @@
 # Caddy, so the names use HTTP-01. After the 24 h soak, add `import cloudflare_only` as the
 # first line of each block (no handle blocks here, so a top-level import runs).
 
+# Plain HTTP: the host's catch-all http:// block answers unknown hosts with 421 (its global
+# options disable the automatic redirects), and Cloudflare's Always Use HTTPS is off. Vercel
+# answered with a 308 to HTTPS, path and query kept; Caddy does the same. ACME's HTTP-01
+# challenge is still answered on port 80.
+http://nilmamano.com, http://www.nilmamano.com, http://nmamano.com {
+	redir https://nilmamano.com{uri} 308
+}
+
 # Vercel answered these with a 308 to the apex, path and query kept; Caddy does the same.
 www.nilmamano.com, nmamano.com {
 	tls {
