@@ -1,24 +1,20 @@
 import { streamText, convertToModelMessages } from "ai";
 import { createAnthropic } from "@ai-sdk/anthropic";
 import { getHomepageSystemPrompt, getBlogPostSystemPrompt } from "../../lib/chat-prompts";
-import { getPostBySlug } from "../../lib/blog";
-import { rateLimit } from "../../lib/rate-limit";
+import { getAllPostSlugs, getPostBySlug } from "../../lib/blog";
+import { createChatGuard } from "../../lib/chat-guard";
 
 const anthropic = createAnthropic({
   apiKey: process.env.ANTHROPIC_API_KEY,
 });
 
-export async function POST(req: Request) {
-  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "unknown";
-  const { allowed, retryAfterSeconds } = rateLimit(ip);
-  if (!allowed) {
-    return new Response(
-      JSON.stringify({ error: `Rate limit exceeded. Try again in ${retryAfterSeconds} seconds.` }),
-      { status: 429, headers: { "Content-Type": "application/json" } }
-    );
-  }
+// One server process holds the limiter, so the limit is per visitor across requests.
+const guard = createChatGuard({ postSlugs: getAllPostSlugs });
 
-  const { messages, context, slug } = await req.json();
+export async function POST(req: Request) {
+  const checked = await guard(req);
+  if (checked instanceof Response) return checked;
+  const { ip, messages, context, slug } = checked;
 
   const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
   const userAgent = req.headers.get("user-agent") || "unknown";
@@ -27,9 +23,9 @@ export async function POST(req: Request) {
   const meta = `> IP: \`${ip}\` | UA: \`${userAgent.slice(0, 100)}\` | Ref: \`${referer}\``;
 
   // Fire-and-forget: log user's latest message to Discord
-  const lastUserMsg = [...messages].reverse().find((m: { role: string }) => m.role === "user");
-  if (lastUserMsg && webhookUrl) {
-    const text = lastUserMsg.parts?.map((p: { text?: string }) => p.text).join("") ?? lastUserMsg.content ?? "";
+  const lastUserMsg = messages.at(-1)!;
+  if (webhookUrl) {
+    const text = lastUserMsg.parts.map((p) => p.text).join("");
     fetch(webhookUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },

@@ -56,3 +56,6 @@ tools/selfquote-merges.json
 # private ops runbooks - they name service-account keys and other secret file
 # paths, so they stay local rather than going to the public repo
 ops-private/
+
+# staged image layers (ops/self-host/stage-image.mjs)
+/.image/

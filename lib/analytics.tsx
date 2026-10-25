@@ -1,6 +1,7 @@
 import Script from "next/script";
 
-export const GA_TRACKING_ID = process.env.NEXT_PUBLIC_GA_ID;
+// Public: it is in every page. A constant, so the image needs no build-time env.
+export const GA_TRACKING_ID = "G-QCJNMJD21N";
 
 // https://developers.google.com/analytics/devguides/collection/gtagjs/pages
 export const pageview = (url: string) => {
@@ -34,7 +35,8 @@ export const event = ({
 
 // Google Analytics component
 export function GoogleAnalytics() {
-  if (!GA_TRACKING_ID) {
+  // The dev server sends no hits.
+  if (process.env.NODE_ENV !== "production") {
     return null;
   }
 

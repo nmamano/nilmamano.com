@@ -127,7 +127,16 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
   const popupRef = useRef<HTMLButtonElement>(null);
 
   const transport = useMemo(
-    () => new DefaultChatTransport({ body: { context, slug } }),
+    () =>
+      new DefaultChatTransport({
+        body: { context, slug },
+        // The server takes at most 20 messages, and the last one is the visitor's.
+        prepareSendMessagesRequest: ({ id, messages, body, trigger, messageId }) => {
+          const recent = messages.slice(-20);
+          while (recent.length > 1 && recent[0].role !== "user") recent.shift();
+          return { body: { ...body, id, messages: recent, trigger, messageId } };
+        },
+      }),
     [context, slug]
   );
 
@@ -228,9 +237,11 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
     e.preventDefault();
     const q = input.trim();
     if ((!q && !quoted) || isLoading) return;
-    const text = quoted
-      ? `Regarding this excerpt:\n\n"${quoted}"\n\n${q || "Can you explain this?"}`
-      : q;
+    // The server takes at most 2,000 characters a message: shorten the excerpt.
+    const ask = q || "Can you explain this?";
+    const room = 2000 - ask.length - 30;
+    const excerpt = quoted && quoted.length > room ? `${quoted.slice(0, Math.max(0, room - 1))}…` : quoted;
+    const text = quoted ? `Regarding this excerpt:\n\n"${excerpt}"\n\n${ask}` : q;
     sendMessage({ text });
     setInput("");
     setQuoted(null);
@@ -389,6 +400,7 @@ export default function ChatWidget({ context, slug }: ChatWidgetProps) {
                 ref={inputRef}
                 value={input}
                 onChange={(e) => setInput(e.target.value)}
+                maxLength={1800}
                 placeholder={quoted ? "Ask about the selected text..." : "Type a message..."}
                 disabled={isLoading}
                 className={`flex-1 ${theme.input}`}
