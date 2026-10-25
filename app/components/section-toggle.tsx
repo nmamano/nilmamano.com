@@ -7,11 +7,12 @@ const SECTIONS = [
   { href: "/blog", label: "Blog", route: "blog" },
   { href: "/posts", label: "Feed", route: "posts" },
   { href: "/papers", label: "Papers", route: "papers" },
-  // Wide screens only: on phones four tabs crowd the header.
+  // Wide screens only: on phones more than three tabs crowd the header.
   { href: "/games", label: "Games", route: "games", wideOnly: true },
+  { href: "/domains", label: "Domains", route: "domains", wideOnly: true },
 ];
 
-// Blog / Feed / Papers / Games toggle. The pill slides to the clicked tab at once,
+// Blog / Feed / Papers / Games / Domains toggle. The pill slides to the clicked tab at once,
 // before the route loads: its leading edge moves first and the trailing edge
 // catches up, so the pill stretches and then settles with a small overshoot.
 // The pill holds a white copy of the labels that stays aligned with the real
@@ -71,7 +72,7 @@ export function SectionToggle({ currentRoute }: { currentRoute?: string }) {
   return (
     <nav
       ref={navRef}
-      aria-label="Blog, feed, papers or games"
+      aria-label="Site sections"
       className="relative flex items-center overflow-hidden rounded-full border border-border p-0.5 text-sm font-medium"
     >
       {SECTIONS.map(({ href, label, route, wideOnly }) => (

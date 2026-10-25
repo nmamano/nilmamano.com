@@ -15,6 +15,8 @@ export function HeaderWithActiveLink() {
     currentRoute = "papers";
   } else if (pathname === "/games") {
     currentRoute = "games";
+  } else if (pathname === "/domains") {
+    currentRoute = "domains";
   } else if (pathname === "/media-kit") {
     currentRoute = "media-kit";
   } else if (pathname === "/") {

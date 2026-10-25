@@ -3,8 +3,8 @@ import { ThemeToggle } from "@/components/theme-toggle";
 import { SectionToggle } from "./section-toggle";
 
 export function SiteHeader({ currentRoute }: { currentRoute?: string }) {
-  // Blog, feed, papers and games share one header: back link on phones.
-  const isBlog = ["blog", "posts", "papers", "games"].includes(currentRoute ?? "");
+  // Blog, feed, papers, games and domains share one header: back link on phones.
+  const isBlog = ["blog", "posts", "papers", "games", "domains"].includes(currentRoute ?? "");
 
   return (
     <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
