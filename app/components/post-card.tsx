@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { Check, Copy } from "lucide-react";
 import { FaXTwitter, FaLinkedin } from "@/components/site-icons-fa6";
 import { formatDate } from "../lib/date-utils";
 import type { Post } from "../lib/posts";
@@ -21,6 +22,17 @@ export function PostCard({
   onTagClick?: (tag: string) => void;
 }) {
   const [expanded, setExpanded] = useState(false);
+  const [copied, setCopied] = useState(false);
+
+  const copyPermalink = async () => {
+    try {
+      await navigator.clipboard.writeText(
+        `${window.location.origin}/posts/${post.slug}`
+      );
+      setCopied(true);
+      setTimeout(() => setCopied(false), 1500);
+    } catch {}
+  };
 
   const segments = post.content.split(/\n-{3,}\n/);
   const preview = segments[0].trim();
@@ -135,14 +147,29 @@ export function PostCard({
             {getCategoryConfig(t).name}
           </button>
         ))}
-        <Link
-          href={`/posts/${post.slug}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="text-primary hover:underline"
-        >
-          Permalink
-        </Link>
+        <span className="inline-flex items-center gap-1.5">
+          <Link
+            href={`/posts/${post.slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-primary hover:underline"
+          >
+            Permalink
+          </Link>
+          <button
+            type="button"
+            onClick={copyPermalink}
+            className="text-muted-foreground hover:text-primary"
+            aria-label={copied ? "Link copied" : "Copy link"}
+            title={copied ? "Link copied" : "Copy link"}
+          >
+            {copied ? (
+              <Check className="h-3.5 w-3.5" />
+            ) : (
+              <Copy className="h-3.5 w-3.5" />
+            )}
+          </button>
+        </span>
         {post.xUrl && (
           <a
             href={post.xUrl}
