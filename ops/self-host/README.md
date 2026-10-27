@@ -32,4 +32,4 @@ Until all of these exist, every tick ends `refused` and changes nothing.
 - A failed check after a swap: automatic (the previous digest runs again, the new one goes on `auto-deploy/failed`).
 - A bad commit: `git revert` and push; the next image deploys within about 10 minutes.
 - A pin: create `/etc/nilmamano/auto-deploy.hold`, put the wanted digest in `release.env` and its commit in `release.commit`, then `docker compose -p nilmamano -f /opt/nilmamano/compose.yaml --env-file /opt/nilmamano/release.env up -d --wait`.
-- Back to Vercel during the soak: remove the `cloudflare_only` gate first (a drained Caddy reload), then point the DNS records back at Vercel.
+- No way back to Vercel: the Vercel project was deleted on 2026-10-27. Every rollback happens on the VPS.
