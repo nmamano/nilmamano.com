@@ -87,7 +87,7 @@ export function NotebookConcept({ latestPosts = [] }: { latestPosts?: LatestPost
             <div className={styles.chapterHeading}><span className={styles.chapterNumber}>Chapter 1</span><span className={styles.chapterStatus}>(Finished)</span></div>
             <h2 id="notebook-dsa-title">DS&amp;A<span className={styles.titleDot}>.</span></h2>
             <div className={styles.narrative}>
-              <p>Data Structures &amp; Algorithms was my first passion. It brought me to the US as a <A href="/papers">PhD student</A>. I co-authored <A href="/papers">9 papers</A> (<a target="_blank" rel="noopener noreferrer" href="https://scholar.google.com/citations?user=LIuIigEAAAAJ" title="191 citations on Google Scholar, checked September 17, 2026">190+ citations</a>, if you want such metrics).</p>
+              <p>Data Structures &amp; Algorithms was my first passion. It brought me to the US as a <A href="/papers">PhD student</A>.</p>
               <p>For me, the highlights were being <A href="/posts/recap-of-my-donald-knuth-arc-9946361">cited by Knuth</A> himself in TAOCP and co-authoring <A href="https://www.amazon.com/dp/195570600X">the sequel to <em>Cracking the Coding Interview</em></A> with Gayle McDowell et al.</p>
             </div>
           </div>
