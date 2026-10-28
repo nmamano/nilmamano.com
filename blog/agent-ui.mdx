@@ -31,9 +31,7 @@ Non-technical people can think of "remaining context" as being like their phone'
   width="70%"
 />
 
-The isomux server lets agents know when their remaining context drops below 50% and 25% so they can start steering the user toward a good stopping point.
-
-**Principle:** help users learn good habits rather than hide things from them (such as automatically compacting at 100%).
+For models with 1M context windows, the isomux server lets agents know when their remaining context drops below 50% and 25% so they can start steering the user toward a good stopping point.
 
 **Bonus:** Also include a usage pill which defaults to whichever limit is most constrained (5h vs weekly). This is especially convenient when using agents from multiple providers.
 
@@ -55,6 +53,15 @@ Give them a UI to find their skills, sorted by what they use most.
 Skills only apply at the beginning of a chat message, so the "Sk" button near the input area disappears once the user starts typing.
 
 Showing usage counts is oddly satisfying. I'm almost at 1000 /clear's :)
+
+The most common skill is /clear, so I actually made it into an "End" button in the UI.
+
+For browsing, editing, and creating skills, there's a full skills page:
+
+<BlogImage
+  src="/blog/agent-ui/skills-page.png"
+  alt="The isomux Skills page. Tabs at the top read 'All agents 5', 'Commands 20', 'Claude 1', 'Codex 0' and 'OpenCode 0', next to a search box and a green 'New skill' button. The left column lists user skills (/release-notes used 12 times, /standup used 4 times) and skills built into isomux (/grill-me, /handoff, /wrap-session), each with a one-line description. The right pane shows /release-notes with its SKILL.md path, Preview, SKILL.md, Edit and Delete buttons, and the rendered skill: four numbered steps for drafting release notes"
+/>
 
 **Bonus:** it's especially important not to make users memorize skill parameters, such as how to specify a cron job interval. Cron jobs should have a proper UI.
 
@@ -155,7 +162,21 @@ Every agent management system seems to converge on vertical tabs, so literally a
 
 For instance, this office view lets you see, at a glance, each agent's body language, conversation summaries, and other humans' presence:
 
-<BlogVideo src="/posts/agent-management-systems-must-be-pretty-9638506/isomux-themes.mp4" />
+<DemoEmbed
+  src="https://isomux.com/demo?embed"
+  href="https://isomux.com/demo"
+  title="Isomux live demo"
+/>
+
+Agents usually fall into two kinds: agents that you interact with (pets), and workers that just do the work assigned to them by other agents (cattle).
+
+To reflect this, each Isomux room has a back room (behind a trap door). Unlike subagents, they are still first-class agents the user can check in on, just tucked away:
+
+<BlogImage
+  src="/posts/isomux-back-room-3242357/back-room.png"
+  alt="The isomux back room: an isometric brick-walled basement with 'BACK ROOM' painted on the wall, hanging lights, a ladder up to the main room, and a chalkboard reading 'Today 12 on shift'. Six agents labeled Isomux Worker and six labeled Isomux Reviewer sit asleep along long wooden benches"
+  width="70%"
+/>
 
 **Bonus:** Add navigation shortcuts. Isomux uses Tab/Shift+Tab to cycle rooms, 1-8 to talk to the agent at that desk, Tab/Shift+Tab to cycle between agents in the room (skipping idle ones), and Esc to return to the office.
 
@@ -181,11 +202,31 @@ This is what isomux's [human-agent shared task board](/posts/task-system-designe
   alt="The isomux task board, headed 'Tasks, 33 shown', with a quick-add input scoped to the room 'Nil's Projects' and filters for room, status, assignee, and search. Below, a table of tasks with status dot, priority, title, assignee, author and age. Most rows read 'WallGamer · for Nil', showing agent-filed tasks alongside ones Nil filed himself"
 />
 
-**Bonus:** Handoff is better than compact. In isomux, agents can clear their own context and start a new session with a prompt of their choice.
+#### Compact vs Handoff
 
-The `/handoff` skill tells the agent to propose a prompt, ask the user to approve it, and execute the handoff.
+After a compact, the agent sees a summary while the user still sees the whole conversation. A handoff to a fresh session is more honest: the user and the agent see the same context.
 
-### 11. Live collaboration
+In isomux, a handoff can happen in three ways:
+
+- Humans can trigger it with `/handoff`.
+- Agents can trigger it themselves.
+- Isomux can trigger it if auto-handoff is enabled (it is by default): when an agent's context fills up, the agent writes a brief and continues in a fresh session that starts from it.
+
+### 11. Give agents an inbox
+Agents often need the user to unblock them (an answer, a decision, an action only they can take). In multi-agent settings, those are easy to miss.
+
+In isomux, agents can create _asks_: requests that stay pinned in the chat until the user replies.
+
+The inbox collects the asks from all agents in one place:
+
+<BlogImage
+  src="/blog/agent-ui/inbox-asks.png"
+  alt="The isomux Inbox on its Asks tab, next to a Pages tab. Asks are grouped by agent and room: Angela asks 'Can I move the cat photo archive to the shared drive?'; Michael asks about booking the conference room, which version of a speech goes out Friday, 'Who gives the opening toast, Jim or Dwight?' with Jim and Dwight buttons, and 'Sign in to Linear so I can file the all-hands follow-ups.' with an 'Open MCP servers' link; Creed asks 'Do you still need the QA report by Friday?'. Each ask has a reply box with Reply and Dismiss buttons"
+/>
+
+Urgent things go through _pages_ instead: they reach the user's phone through Discord or device notifications, and repeat until someone acks them.
+
+### 12. Live collaboration
 
 Let users collaborate as if it was Google Docs.
 
@@ -209,7 +250,7 @@ The hard part is the tradeoff between collaboration and privacy. For isomux I we
 
 [^distribution]: Live collaboration has potential not only as a feature, but also as a distribution channel: if a tool is useful when you use it on your own, but gets more powerful when you bring in a friend or coworker, users help you bring new ones.
 
-### 12. Let agents discover and message each other
+### 13. Let agents discover and message each other
 Agent-to-agent communication (between agents that the user talks to, not just subagents) enables a ton of cool stuff. Here are some examples:
 
 <BlogImage
@@ -229,7 +270,14 @@ The key to making this work is in the details of the message queue:
 - let both humans and agents [queue or steer](/posts/decision-when-building-agents-queueing-vs-steering-9972381). (Agent-to-agent communication works best when one steers and the other queues.)
 - let both humans and agents update, remove, and/or flush queued messages
 
-### 13. The 5-hour hack
+To help keep track of multi-agent systems, in Isomux, agent-to-agent messages show the agent's face, and clicking the name opens that agent.
+
+<BlogImage
+  src="/blog/agent-ui/agent-messages.png"
+  alt="An isomux chat with an agent named Frontend Dev. A member asks for a dark mode toggle with Reviewer's sign-off before merge. Between the agent's replies, two one-row 'Send a message to' cards show the receiving agent's face and linked name, Reviewer and then Backend Dev, followed by the start of the message. Each answer arrives as a compact row with a dashed left edge: the sender's face, linked name and room ('Reviewer · Web App', 'Backend Dev · API'), and the text clamped to two lines, the longer one with an expand chevron"
+/>
+
+### 14. The 5-hour hack
 
 You know when you hit the 5-hour limit one hour in, and wonder what to do for four hours?
 
@@ -237,12 +285,12 @@ This is a bit cheeky, but a cron job that pings each provider every 5 hours is a
 
 [^interview]: One time, I had a vibe coding interview and timed my 5-hour reset to fall in the middle of it.
 
-### 14. Voice both ways, on every device
+### 15. Voice both ways, on every device
 Rambling at agents is now a legit way of working, so voice input is a must.
 
 One advantage of a browser-based frontend is that you can lean on the browser's speech-recognition and speech-synthesis APIs. They are not great, but they are free and built-in.
 
-### 15. Deterministic denials for no-no actions
+### 16. Deterministic denials for no-no actions
 A boring one, but a good safety net. Isomux blocks:
 
 - Git commands that discard work
@@ -262,7 +310,7 @@ Two ways of making false positives less annoying (which they are!):
 - Exceptions, lots of them (e.g., `rm -rf` under `/tmp`)
 - A copy-command-to-terminal button when commands get blocked
 
-### 16. Offer predefined agent templates
+### 17. Offer predefined agent templates
 When a user spawns an agent, offer a set of ready-made profiles next to the blank one.
 
 <BlogImage
@@ -274,7 +322,7 @@ Each profile comes with a dedicated system prompt, and, as they accumulate memor
 
 It helps users realize potential use cases for agents they may not have thought of.
 
-### 17. Let personal software ride the meta-harness runtime
+### 18. Let personal software ride the meta-harness runtime
 Software-for-one doesn't scale once a user has 10+ agents spinning up their own apps: ports are hard to remember, can collide, and are unfamiliar to non-technical users; apps may go down when the user clears the session.
 
 The missing piece is an app orchestrator module in the meta-harness itself, because the meta-harness already solves the hard parts: an always-on box, accounts and permissions, a UI that syncs across devices, and an API agents already call.
@@ -313,7 +361,14 @@ The whole loop:
   ]}
 />
 
-### 18. Experiment: slide mode
+**Bonus:** the app page has a chat widget, so the user can talk to the agent that built the app without leaving it.
+
+<BlogImage
+  src="/blog/personal-software-suites/loop/widget.png"
+  alt="The loop app open at its short address, with the chat widget open on the right. The app shows its task-state diagram on the left and a design packet card in the Triage queue in the middle. The widget panel, titled 'Chat with Isomux Curator' with an 'Open app directly' link, notes that the chat is shared with members of the agent's room, shows the curator's last reply summarizing triage decisions, and has a hint to paste a screenshot, a message box, and Attach image and Send buttons. A 'Chat' button with the curator's avatar sits in the bottom-right corner"
+/>
+
+### 19. Experiment: slide mode
 
 Agents yap too much; users tune out. _Slide mode_ forces the agent to design a single slide for each turn. E.g.:
 
@@ -325,7 +380,7 @@ Agents yap too much; users tune out. _Slide mode_ forces the agent to design a s
 
 I don't use slide mode much because generation is too slow. Attempts to speed it up degraded slide quality too much.
 
-### 19. Experiment: continuation variants
+### 20. Experiment: continuation variants
 
 The model produces probabilities for every token. How can we use that?
 

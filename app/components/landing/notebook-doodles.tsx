@@ -158,7 +158,7 @@ export function NotebookDoodles({ scene }: { scene: "cover" | "algorithms" | "of
       <DoodleLink href="/blog/isomux#agent-human-shared-task-board" label="Agent-human shared task board" x={390} y={100} width={110} height={120}/>
       <DoodleLink href="/blog/isomux" label="Isomux: an office for agents and humans" x={125} y={185} width={280} height={150}/>
       <DoodleLink href="/blog/agent-ui" label="Making agents user-friendly" x={20} y={320} width={110} height={140}/>
-      <DoodleLink href="/blog/personal-software-suites" label="Personal-software suites" x={260} y={355} width={190} height={125}/>
+      <DoodleLink href="/blog/personal-software-suites" label="Personal app stores" x={260} y={355} width={190} height={125}/>
     </>}
   </svg>;
 }

@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import type React from "react";
+import { ReviewLink } from "./components/review-notes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -95,6 +96,7 @@ export default function RootLayout({
           <AnalyticsProvider>
             <LayoutShell>{children}</LayoutShell>
             <Toaster />
+            <ReviewLink />
           </AnalyticsProvider>
         </ThemeProvider>
       </body>

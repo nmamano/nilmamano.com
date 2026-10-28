@@ -1,7 +1,6 @@
 import { getPostBySlug, getAllPostSlugs } from "../../lib/blog";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 import components from "../../../components/MdxComponents";
 import ClientSyntaxHighlighter from "../../../components/ClientSyntaxHighlighter";
 import { formatDate } from "../../lib/date-utils";
@@ -11,6 +10,7 @@ import remarkGfm from "remark-gfm";
 import CopyLinkButton from "@/components/CopyLinkButton";
 import ChatWidget from "@/components/chat-widget";
 import BlogBackLink from "@/components/BlogBackLink";
+import ReviewNotes, { InlineReviewNotes } from "../../components/review-notes";
 
 // The footnote back link. The default bare "↩" renders as an emoji on iOS;
 // U+FE0E asks for the text glyph. Keeps the default's superscript count for
@@ -103,6 +103,9 @@ export default async function BlogPost({
         <BlogBackLink />
       </div>
 
+      <ReviewNotes name={slug} />
+      <InlineReviewNotes name={slug} />
+
       <article className="prose prose-lg dark:prose-invert max-w-none">
         <h1 id="title" className="text-3xl font-bold mb-2">
           {post.title}
@@ -116,28 +119,6 @@ export default async function BlogPost({
           </div>
           <CopyLinkButton slug={post.slug} />
         </div>
-
-        {/* Cover Image */}
-        {post.coverImage && (
-          <div className="flex justify-center mb-8">
-            <div className="w-[300px] h-[192px] flex items-center justify-center">
-              <Image
-                src={post.coverImage}
-                alt={post.title}
-                width={300}
-                height={192}
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "100%",
-                  width: "auto",
-                  height: "auto",
-                  objectFit: "contain",
-                }}
-                className="rounded-md"
-              />
-            </div>
-          </div>
-        )}
 
         {/* MDX content first rendered server-side */}
         <div className="markdown-content">

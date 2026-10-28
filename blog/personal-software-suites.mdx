@@ -1,12 +1,19 @@
 ---
-title: "The Personal Software Suite"
+title: "The Personal App Store"
 date: "2026-08-28"
-excerpt: "A case for personal-software suites as a meta-harness feature: the agents build the apps, and the meta-harness runs them."
+excerpt: "A case for personal app stores as a meta-harness feature: the agents build the apps, and the meta-harness runs them."
 coverImage: "/blog/personal-software-suites/cover.png"
 categories: ["isomux", "ai", "swe"]
 ---
 
-In this post, I make a case for **personal-software suites as a meta-harness feature**.
+Isomux has an app store for vibe-coded software: you ask an agent to make a web app, and then other users in your office can see it on their browsers or install it on their phone's home screen in one click.
+
+<BlogImage
+  src="/blog/personal-software-suites/apps-page.png"
+  alt="The Apps page with six running apps in two columns: business-health, commit-plot, game-video, loop, policy-elo and todo. Each row has a thumbnail of the app with an open icon, the app's name, its short address under office.example.com, a one-line description, the agent that created it and the owner, and a menu button. Filters at the top read 'Only mine' and 'All rooms'"
+/>
+
+In this post, I explain how that works; and, more broadly, I make a case for **personal app stores as a meta-harness feature**.
 
 <Toc />
 
@@ -66,7 +73,7 @@ The clean solution is an **app orchestrator module in the meta-harness itself.**
 - multi-device
 - an API agents already call
 
-The app orchestrator piggybacks on all of that and adds centralized port assignment. Ideally, it also hides ports from the end user and shows them a nice UI with all their apps: the **personal app suite**.
+The app orchestrator piggybacks on all of that and adds centralized port assignment. Ideally, it also hides ports from the end user and shows them a nice UI with all their apps: the **personal app store**.
 
 <BlogImage
   src="/blog/personal-software-suites/port-problem.svg"
@@ -79,12 +86,22 @@ How it works:[^details]
 
 - The app orchestrator manages an app registry.
 - The agents register apps _by name_ via the meta-harness API (which they know about via the meta-harness system prompt).
-- The orchestrator finds a free port for the app and gives it a name-based URL, like `todo-list.metaharness-url` (`metaharness-url` is where you manage your agents).
+- The orchestrator finds a free port for the app and gives it a name-based URL, like `metaharness-url/todo-list` (`metaharness-url` is where you manage your agents).
 - Apps share the lifetime of the meta-harness, not the agents. They survive individual sessions.
 - Apps ride the same authentication as the meta-harness, so privacy and multiplayer features come for free.[^room-visibility]
+- The user can install an app on their phone's home screen, like a native app.[^home-screen]
 - The meta-harness UI includes a page where the user can see and manage all their apps, like a personal app store.
+- Each app has a chat widget, so the user can talk to the agent that built it without leaving the app. The user can paste screenshots of the app into it.
 
 [^room-visibility]: The way it works in Isomux is that the office owner can see apps registered by every agent, whereas office members can see only apps registered by agents in rooms they have access to.
+
+[^home-screen]: Isomux is a PWA (Progressive Web Application), so "Add to Home Screen" installs it as a native app. Each app inherits this behavior, so "Add to Home Screen" works on them too.
+
+<BlogImage
+  src="/blog/personal-software-suites/chat-widget.png"
+  width="360px"
+  alt="The chat widget open on this blog's preview app. The panel is titled 'Chat with Personal Site Agent', with 'Open without chat' and 'Install as app' links, and notes that the chat is shared with members of the agent's room. It shows a screenshot the user pasted and the agent's last reply about the post in review. Below are a message box with a draft reply, a hint to paste a screenshot, and Attach image and Send buttons. A 'Chat' button with the agent's avatar sits in the bottom-right corner."
+/>
 
 Meta-harnesses often have API endpoints for messaging agents, which means that the infrastructure to implement the [closed-loop](#personal-software) is already there.
 
@@ -100,13 +117,13 @@ Here is the full workflow in Isomux (follow the captions):
       caption: "I ask an agent for a personal-software app **(1)**, and the agent registers it with Isomux **(2)**.",
     },
     {
-      src: "/posts/personal-software-suite-in-isomux/2-apps-page.png",
-      alt: "The Apps page lists running apps with live previews. Each row shows its port, restart count, the agent that created it, and its owner; two rows were created by different agents and belong to different users.",
+      src: "/blog/personal-software-suites/apps-page-annotated.png",
+      alt: "The Apps page with six running apps in two columns, each with a thumbnail, its name, its short address, a one-line description, the agent that created it and the owner. The commit-plot row is marked with a circled 3, and its creator and owner are underlined in red.",
       caption: "The app appears in the Isomux Apps page **(3)**. It shows all the apps I have access to, including ones registered by other agents on behalf of other users.",
     },
     {
       src: "/posts/personal-software-suite-in-isomux/3-open-on-phone.png",
-      alt: "The commit plot app is open in a phone browser at its own subdomain, showing weekly commit bars with a rolling average, a selected week's per-repository breakdown, and a button reading 'Ask the agent what happened'.",
+      alt: "The commit plot app is open in a phone browser at its own address, showing weekly commit bars with a rolling average, a selected week's per-repository breakdown, and a button reading 'Ask the agent what happened'.",
       caption: "I open the app from my phone. It works because it has access to my Isomux office. Notice the clean URL **(4)**. A button in the app messages the agent back **(5)**.",
     },
     {
@@ -122,12 +139,38 @@ Here is the full workflow in Isomux (follow the captions):
 This section is to give readers ideas for things they can use personal software for.
 
 <Callout>
-Despite the feature being fairly new, as of 2026-08-28, my office is running **13 apps, built by 8 agents for 3 different users.**[^dunno]
+Despite the feature being fairly new, as of 2026-10-28, my office is running **29 apps, built by 25 agents for 5 different users.**[^dunno]
 
-  Two guests in my office got apps built for them without ever seeing a port, a terminal, or a deploy. They asked an agent for something, and a URL appeared.
+  Four guests in my office, including family members, got apps built for them without ever seeing a port, a terminal, or a deploy. They asked an agent for something, and a URL appeared.
 </Callout>
 
 [^dunno]: I don't know their tech stacks, but I've seen at least JS and Python apps. I also don't know which ones are on GitHub, if any. As mentioned, these are non-concerns for just-in-time apps.
+
+A cute detail is that the app orchestrator gives each one a different favicon:
+
+<BlogImage
+  src="/blog/personal-software-suites/app-tabs.png"
+  alt="A browser tab bar with seven tabs open side by side, each showing a different favicon: the office itself, then Aurora, Business health, Commit Plot, Wall Game video, and two more."
+/>
+
+### Loop Engineering App
+
+My biggest app runs the [development loop](/blog/loop-engineering) of Isomux itself.
+
+<BlogImage
+  src="/blog/personal-software-suites/loop/widget.png"
+  alt="The loop app open at its short address, with the chat widget open on the right. The app shows its task-state diagram on the left and a design packet card in the Triage queue in the middle. The widget panel, titled 'Chat with Isomux Curator' with an 'Open app directly' link, notes that the chat is shared with members of the agent's room, shows the curator's last reply summarizing triage decisions, and has a hint to paste a screenshot, a message box, and Attach image and Send buttons. A 'Chat' button with the curator's avatar sits in the bottom-right corner"
+/>
+
+The Isomux backlog had hundreds of tasks, so I made an app to help me clear them. It moves them through a pipeline of agents, and only stops for me at triage and sign-off.
+
+It plugs into the office in many ways:
+
+- **Task board:** the board is the loop's only state. Every 2 minutes, the app gives the next ready task to each free worker agent.
+- **Agent messaging:** Agents send "design packets" for tasks to the app, where I triage them. Triage decisions go back to the agents to kick off implementation.
+- **Chat widget:** I refine the app as I go by talking to the agent that built it.
+
+### Other Examples
 
 Six personal examples:[^fun-fact]
 
@@ -143,48 +186,39 @@ Six personal examples:[^fun-fact]
     {
       src: "/blog/personal-software-suites/apps/policy-elo.png",
       alt: "The policy-elo app: a dashboard titled 'Policy strength across generations' with counters for clean games, policy lines, loadable range and excluded games, a sidebar of toggleable board conditions, and a scatter plot of relative Elo rising across generations.",
-      caption: "The Elo rating evolution of the transformer for the [wallgame.io](https://wallgame.io) AI.",
+      caption: "The Elo rating evolution of the transformer I was training for the [wallgame.io](https://wallgame.io) AI.",
     },
     {
-      src: "/blog/personal-software-suites/apps/feed-drafts.png",
-      alt: "The feed composer: on the left, a box to write a post with a note that a line of three dashes breaks it into thread segments, plus a tags field and a 'Save to site' button. On the right, the same text rendered as 'Copy for X' with a tweet count and 'Copy for LinkedIn' with a character count, each with its own copy button.",
-      caption: "Where I draft and preview posts before cross-posting them to X, LinkedIn, and the [feed](https://nilmamano.com/posts) on my site.",
+      src: "/blog/personal-software-suites/apps/review-notes.png",
+      alt: "A draft blog post on the dev preview of this site. Above a paragraph that starts with 'Principle:' and has a dashed amber outline sits an amber box headed 'Review note - not part of the post' that reads 'Mine (your point): the rewritten principle.'",
+      caption: "A dev preview of this blog, where an editor agent leaves review notes on my draft, and then I iterate with them through the chat widget. This post went through it.",
     },
     {
       src: "/blog/personal-software-suites/apps/game-video.png",
-      alt: "The game-to-video app: a short form with a field for a wallgame.io game URL, controls for seconds per move, shape, music and board theme, and a 'Make the video' button.",
-      caption: "A form where I can paste the URL for a [wallgame.io](https://wallgame.io) game and make a video of it to share on social media.",
+      alt: "The Wall Game daily video page for 2026-10-27, marked posted, with a status badge per platform: X, TikTok, Instagram, Facebook, Bluesky and Threads live, YouTube dry-run. Below, four frames from the day's vertical video: a game board with red and blue walls, captioned 'bot thinks it's winning' and 'one wall. 2 to 12', with a red vs blue step counter.",
+      caption: "A daily video pipeline for [wallgame.io](https://wallgame.io). An agent finds exciting moments in real games and edits them into short videos with captions, zooms and sound effects. I review videos in the app, approve/reject them with feedback that goes back to the agent, and the app publishes approved ones to various social medias.",
     },
     {
-      src: "/blog/personal-software-suites/apps/commit-plot.png",
-      alt: "A stacked bar chart of commits per week since July 2020 with a four-week rolling average, a legend naming the top repositories and their commit counts, and a panel below reading 'No week selected'.",
-      caption: "A chart of my commits over time. Shown in the [Demo](#demo) above.",
+      src: "/blog/isomux/message-timeline.png",
+      alt: "A timeline of 2,776 messages between me and 23 agents over three days, one row per agent. Orange curves are messages from me to an agent, purple curves are agent to agent, yellow dots mark the end of a turn, and red dots mark a scheduled self-message.",
+      caption: "A timeline of the messages between me and my agents, and between agents. More in [Isomux: Designing a Meta-Harness](/blog/isomux).",
     },
-        {
-      src: "/blog/personal-software-suites/apps/todo.png",
-      alt: "The todo app, with the task list blacked out. A header reads \"Nil's Todos, 91 open\", above a box to add a task with a list picker set to Today, then empty Today and Inbox sections.",
-      caption: "My TODO list, as in the example [above](#personal-software).",
+    {
+      src: "/blog/personal-software-suites/apps/merge-viewer.png",
+      alt: "The merge viewer showing the Cube DAG: a cube at the top, with arrows labelled edge, opposite, 90 degrees and 180 degrees leading to the solids each merge makes (pointy cylinder, square torus, 90 degree twist, 180 degree twist), and further arrows down to a pointy torus and a torus with a torus hole. Each solid shows its face, edge and vertex counts. Dashed red arrows mark merges that are not possible.",
+      caption: "An interactive 3D viewer for my [merging geometry](/blog/merging-geometry) research.",
     },
   ]}
 />
 
-A cute detail is that the app orchestrator gives each one a different favicon:
-
-<BlogImage
-  src="/blog/personal-software-suites/app-tabs.png"
-  alt="A browser tab bar with seven tabs open side by side, each showing a different favicon: the office itself, then Aurora, Business health, Commit Plot, Wall Game video, and two more."
-/>
-
 ## Conclusions
 
-The personal software suite fits naturally in the meta-harness and doesn't really have any downside, which is rare.[^security]
+The personal app store fits naturally in the meta-harness and doesn't really have any downside, which is rare.[^security] The main pieces were already there; the missing connection was the app orchestrator module.
 
 [^security]: Another major upside that didn't even make it to the post is that, by controlling ports at the meta-harness level, you can lock down security a lot more tightly than if random agents are exposing ports willy-nilly.
 
-The main pieces were already there; the missing connection was the app orchestrator module.
-
 I expect the idea to catch on or be re-invented by a bigger player soon. If you are building on top of harnesses, copy it! Or hire me and I'll do it :)
 
-But if you just want your own suite, check out [Isomux](https://isomux.com).
+But if you just want your own app store, check out [Isomux](https://isomux.com).
 
 _Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_new-blog-post-the-personal-software-suite-share-7500049455870582784-6Tmt) or the [X post](https://x.com/Nil053/status/2094284144960487780)._

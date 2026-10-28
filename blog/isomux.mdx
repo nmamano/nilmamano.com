@@ -8,43 +8,20 @@ categories: ["isomux", "ai", "swe"]
 
 This post covers how I built [isomux.com](https://isomux.com) ([github](https://github.com/nmamano/isomux)) and the lessons I learned about designing meta-harnesses.
 
-I describe independently-developed features like [inter-agent skills](#applications), "Google Docs"-style [live collaboration](#human-collaboration), [meta-harness reflection](#meta-harness-reflection), [agent-driven UI](#giving-agents-ui-superpowers), [hierarchical agents](#hierarchical-agents), [an agent-human shared task board](#agent-human-shared-task-board), and (in a standalone post) [a personal-software suite](/blog/personal-software-suites).
+I describe independently-developed features like [inter-agent skills](#applications), "Google Docs"-style [live collaboration](#human-collaboration), [meta-harness reflection](#meta-harness-reflection), [agent-driven UI](#giving-agents-ui-superpowers), [hierarchical agents](#hierarchical-agents), and (in a standalone post) [a personal app store](/blog/personal-software-suites).
 
 For a closer look at the UX side, see [Making Agents User-Friendly](/blog/agent-ui).
 
-<Toc />
+For how Isomux came to be, see [Isomux Backstory](/blog/isomux-backstory).
 
-## Introduction
-
-I went through every level of [Steve Yegge's hierarchy](https://steve-yegge.medium.com/welcome-to-gas-town-4f25ee16dd04).
-
-<BlogImage
-  src="/blog/isomux/steve_hierarchy.png"
-  alt="Steve Yegge's 8 levels of coding agent usage, from Y/N confirmations in a single chat (level 1) to an orchestrator managing a fleet of Claude Code instances (level 8)"
-/>
-
-<BlogImage
-  src="/blog/isomux/commits-per-week.png"
-  alt="My weekly commit count from Nov 2024 to Sep 2026, banded by stage of Yegge's hierarchy: Level 4 with Cursor as daily driver, Level 5 with Claude Code from Oct 2025, and Levels 6-8 with Isomux from Mar 2026. Weekly commits climb from single digits to a peak near 250"
-/>
-
-Isomux started as a nicer way to manage agents; back then, I had a mix of local and remote sessions.[^remote-only] For the former, I had to keep my laptop open; for the latter, I had to ssh all the time.
-
-[^remote-only]: Tasks like [model training](/blog/wall-game-ai) can only be done remotely.
-
-The fix was to run all my agents on a server with a browser UI:
-
-- All my devices see the same agents and conversations.
-- All my agents outlive my laptop and see the same environment.
-
-Over time, I developed Isomux into a **meta-harness**: Claude Code and Codex are harnesses around models, while Isomux sits one level above them and runs them side by side.[^meta-harness]
+Isomux is a **meta-harness**: Claude Code and Codex are harnesses around models, while Isomux sits one level above them and runs them side by side.[^meta-harness]
 
 <BlogImage
   src="/blog/personal-software-suites/layers.svg"
   alt="Three nested boxes. The innermost is the model. Around it is the harness, which asks how we make the most out of a model, with Claude Code and Codex as examples. Around that is the meta-harness, which asks how humans make the most out of agents, with Omnigent, qm, and Isomux as examples."
 />
 
-This refined my thesis of what a meta-harness should be:
+My thesis of what a meta-harness should be:
 
 <Callout>
   **Thesis:** every conversation should be [multi-user](#human-collaboration),
@@ -55,23 +32,7 @@ This refined my thesis of what a meta-harness should be:
 
 [^meta-harness]: Databricks' [Omnigent post](https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents) (June 2026) names this layer a _meta-harness_: a system that sits above individual agent harnesses to combine, control, and share them. Isomux predates it by two months, but I've adopted the term.
 
-### Office Metaphor
-
-Isomux (Isometric Multiplexer) has something extra: it's cute.
-
-<DemoEmbed
-  src="https://isomux.com/demo?embed"
-  href="https://isomux.com/demo"
-  title="Isomux live demo"
-/>
-
-I spend all day managing agents, and I wasn't a fan of the Claude Code UX. I got a bit creative and made an [office metaphor](https://x.com/mom_agency_/status/2054909371071582501?s=20) for agents (with isometric graphics for the nostalgia).
-
-Each agent has a customizable name and look and sits at a desk. You see who is working, who's sleeping, and who needs you (hand raised) at a glance.
-
-The idea is that **by anthropomorphizing agents, we make them accessible to non-technical users**; coordinating with humans comes naturally to everyone.
-
-In the [hierarchical agents](#hierarchical-agents) section, we'll see more implications of this metaphor.
+<Toc />
 
 ## Architecture Overview
 
@@ -356,7 +317,7 @@ It's still important to offer a UI option to flush the queue immediately, so the
 
 ### Agent Orchestration
 
-Agent-to-agent collaboration is the gateway to Level 8 in [Yegge's hierarchy](#introduction).
+Agent-to-agent collaboration is the gateway to Level 8 in [Yegge's hierarchy](/blog/isomux-backstory).
 
 I've been experimenting with a workflow where I talk to a single agent, "Isomux Manager", to decide what tasks to pick up next. We look for tasks that don't touch the same files. Then, I let that agent dispatch the tasks to (up to) 6 worker agents in parallel. In turn, each of those runs their work by their own reviewer agent.
 
@@ -527,8 +488,8 @@ Here are some of the features I added for my own convenience.
 Before Anthropic added the `auto` permission mode, I ran all my agents in `bypassPermissions` mode. Isomux injects `PreToolUse` hooks into every Claude SDK session that block dangerous commands before they execute.
 
 1. **Git safety**: blocks destructive git commands.
-2. **Filesystem safety**: blocks `rm -rf` on root/home paths while allowing it on temp directories.
-3. **Isomux config protection**: blocks all writes to `~/.isomux/`, since that directory is managed by the server. Read operations are allowed (agents need to read `agents-summary.json` to discover each other).
+2. **Filesystem safety**: blocks `rm -rf`, except on a single entry directly inside `/tmp`.
+3. **Isomux config protection**: blocks all writes to `~/.isomux/`, since that directory is managed by the server. Reads are allowed, except for the folders that hold secrets.
 4. **Secrets protection**: blocks reads of `.env` files, private keys, and credential files (agents get a clear error and a hint to ask the user instead).
 
 The hooks matter less now that `auto` mode exists, where a model classifier approves routine operations on its own. When something does get blocked, it surfaces in the agent's chat and I decide how to proceed. The hooks are still a nice safety net: a hook is a deterministic rule, so it holds even when the classifier gets something wrong.
@@ -540,7 +501,7 @@ The embedded terminal is handy when you need to run a blocked command.
   alt="Embedded terminal in Isomux"
 />
 
-As of writing, Codex doesn't have equivalent hooks.
+Codex and OpenCode agents now run the same checks, through Codex's own hooks and an OpenCode plugin.
 
 ### Skills
 
@@ -562,21 +523,28 @@ In addition to dynamically fetching all these skills (except Enterprise), I have
 
 One advantage of the frontend being browser-based is that we can leverage the existing voice-to-text and text-to-speech APIs for prompts and responses, respectively.
 
+Users can also switch to more accurate speech recognition and better voices with integrations.
+
 ### Attention Tracking and Notifications
 
-The attention system is simple but effective. An agent "needs attention" when it transitions from a working state to a terminal state while the user is looking at a different agent.
+Agents "needing attention" get a pulsing indicator. An agent needs attention when it finishes a turn that the user started while the user is looking at a different agent.
 
-On the office view, agents needing attention get a pulsing indicator. Combined with sound notifications (when the browser tab is hidden), you never miss when an agent finishes or gets stuck.
+In addition, you can set up sound and push notifications per room:
+
+<BlogImage
+  src="/blog/isomux/room-alert-levels.png"
+  alt="The Rooms section of Isomux's profile settings, in dark mode. It lists five levels per room, from least to most: Hidden (not on the tab bar), Tucked (tucked at the end of the tab bar), Shown (on the tab bar), Sound (makes a sound when an agent in the room answers you while Isomux is in the background), and Push (also a notification on your devices; turn it on for each device in Integrations, Pager). Below, a table gives each room a five-step control of bars that grow from left to right: Conference Room is set to Sound and The Annex to Shown."
+/>
 
 ### Auto-Generated Conversation Topics
 
 Each agent displays a short topic below its nametag, like "Fixing auth middleware tests" or "Refactoring WebSocket layer."
 
-What's interesting is how they're generated. When the first user message comes in, the server fires off a background prompt: it builds a context snippet from that message (plus the last few, if the topic is regenerated later) and asks for a topic in 8 words or fewer.
+When the first user message comes in, the server fires off a background prompt: it builds a context snippet from that message (or from the first and last few, when you hit refresh) and asks for a topic in 8 words or fewer.
 
 Orchestration tools should be mindful with server-initiated prompts like this. They spend user tokens doing something that's not directly answering the user.
 
-In this case, it's a trivial amount, but I still use a cheaper model (Sonnet).
+In this case, it's a trivial amount, but I still use a cheaper model (Sonnet for Claude agents).
 
 The topic is included in the agent manifest, helping agents know what others are up to. It is also persisted per-session in `sessions.json`, so it survives server restarts and shows up when browsing past sessions to resume.
 
@@ -588,19 +556,19 @@ This feature goes two ways: (1) the agent shows us images or lets us download fi
 
 For (1), imagine that we ask the model to make a plot and show it to us. The model can write a Python script with matplotlib and generate a .png. But then, how does it show it to us? It uses the REST-API-for-UI pattern from [Giving Agents UI Superpowers](#giving-agents-ui-superpowers): a dedicated endpoint the agent calls on a file path, and the file renders inline in the conversation if it's an image. Otherwise, it shows as a "download" chip.
 
-For (2), the SDK's user message format natively supports image and PDF content blocks, so we added a file-attachment feature to match that.
+For (2), any file type works.
 
-The upload path itself is what you'd see in typical chatting apps: files never travel over the WebSocket - only metadata does. The browser sends files via multipart HTTP POST to `/api/upload/{agentId}`, and then the server saves them to a per-agent `files/` directory (SHA256-deduped) and returns attachment metadata. On the frontend, the "send" button is blocked while uploads are in progress.
+The upload path itself is what you'd see in typical chatting apps: files never travel over the WebSocket - only metadata does. The browser sends files via multipart HTTP POST to `/api/upload/{agentId}`, and then the server saves them to a per-agent `files/` directory (identical re-uploads are deduped) and returns attachment metadata. On the frontend, the "send" button is blocked while uploads are in progress.
 
-When it's time to send the actual SDK message to Claude, the text and attachment references are combined.
+When it's time to send the message, each attachment becomes one line with its name, type, size, and saved path. The agent opens a file with its own tools only if it needs it, so unused files cost no context.
 
 ### Built-in Diff Tool
 
-Raw `git diff` output dumped into chat is hard to read. The user can run `/isomux-diff` to render uncommitted changes as a styled diff card inline. Agents have the same affordance via `POST /agents/:id/diff`, so an agent finishing a refactor can show its own work as a styled diff instead of a wall of text.
+Raw `git diff` output dumped into chat is hard to read. The user can run `/isomux-diff` to render uncommitted changes as a styled diff card inline. Agents have the same affordance via `POST /api/agents/:id/diff`, so an agent finishing a refactor can show its own work as a styled diff instead of a wall of text.
 
 ### Built-in Editor
 
-The tool from which I edit this post - especially convenient with a remote server. The editor side panel opens files in CodeMirror, an open-source web editor component. Humans can open files via `/isomux-edit <path>`, while agents can `POST /agents/:id/edit-file` to offer an "[Open in editor]" card.
+The tool from which I edit this post - especially convenient with a remote server. The editor side panel opens files in CodeMirror, an open-source web editor component. Humans can open files via `/isomux-edit <path>`, while agents can `POST /api/agents/:id/edit-file` to offer an "[Open in editor]" card.
 
 <BlogImage
   src="/blog/isomux/built-in-editor.jpeg"
@@ -619,16 +587,16 @@ When looking at the list of past conversations to resume, forked sessions get a 
 
 ### Cron Jobs
 
-A common pattern I wanted to support: "every morning at 9, look at what every agent did yesterday and summarize." So Isomux has cron jobs (you can get to the cron job UI by clicking the wall clock).
+A common pattern I wanted to support: "every morning at 9, look at what every agent did yesterday and summarize." So Isomux has cron jobs (you can get to the list of cron jobs by clicking the wall clock).
 
-A cron job is a schedule (daily/weekly/every N minutes) plus a prompt, with the same configurability as a desk agent (model, thinking effort, cwd, permission mode). On each scheduled fire, the server spins up a fresh SDK session, sends the prompt, and streams the result to a JSONL log just like an agent. Though cron jobs don't have a persistent identity like desk agents.
+A cron job is a schedule (daily/weekly/every N minutes, or on demand) plus a prompt, with the same configurability as a desk agent (model, thinking effort, cwd, engine), except that only permission modes that need no approval are allowed. On each scheduled fire, the server spins up a fresh SDK session, sends the prompt, and streams the result to a JSONL log just like an agent. Though cron jobs don't have a persistent identity like desk agents.
 
 A few decisions worth calling out:
 
 - **Each scheduled fire is its own session.** If a daily summary needs context from yesterday, it can `cat` the prior transcript from `~/.isomux/cronjobs/<jobId>/<runId>/`; the system prompt points it there.
 - **Runs are resumable and forkable.** A daily summary can become an interactive follow-up.
 - **Overlap policy: skip, don't queue.** Manual "Run now" bypasses this.
-- **Missed fires from server downtime are silently dropped.**
+- **A fire missed while the server was down runs once when it comes back**, not once per missed slot.
 - **Per cron job token spend rolls into `/isomux-usage`.** Same fork-aware accounting as agents. The total usage combines agents and cron jobs.
 
 ## Final Thoughts
@@ -648,7 +616,7 @@ The points above are not orthogonal. They compound into a much richer experience
 
 Let me know if you'd be interested in this becoming an actual lecture!
 
-## Appendix: Fork-Aware Usage Accounting
+<Collapsible title="Appendix: Fork-Aware Usage Accounting" id="appendix-fork-aware-usage-accounting">
 
 Isomux has an `/isomux-usage` command that renders a table with current-session and lifetime usage for each agent.
 
@@ -661,7 +629,9 @@ So we persist two buckets per session: `usage` for the current run (tokens accum
 
 Forks add another wrinkle. When Session B forks Session A at turn 5, some of A's accounting leaks into B's first reported turn. To avoid double-counting when summing across sessions, we record the parent's usage at the fork point as `forkBaseUsage` on the child and subtract it. Getting "cumulative at the fork point" means looking up the snapshot right before the fork point, so we save a snapshot after every turn for exactly this.
 
-## Appendix: How the Backends Work
+</Collapsible>
+
+<Collapsible title="Appendix: How the Backends Work" id="appendix-how-the-backends-work">
 
 ### Claude Agent SDK
 
@@ -689,7 +659,9 @@ Claude and Codex agents share all the same office features. They can message eac
 
 Auth piggybacks on the CLI, again: if `codex login` works (ChatGPT subscription) or `OPENAI_API_KEY` is set, Isomux's spawned subprocess inherits it. No API key plumbed through Isomux itself.
 
-## Appendix: Three Ways to Make a Meta-Harness Multi-Provider
+</Collapsible>
+
+<Collapsible title="Appendix: Three Ways to Make a Meta-Harness Multi-Provider" id="appendix-three-ways-to-make-a-meta-harness-multi-provider">
 
 Let's talk about making an ADE / meta-harness multi-provider.
 
@@ -715,3 +687,5 @@ In all three cases, the meta-harness provides the agents with an API to perform 
 ---
 
 _Want to leave a comment? You can post under the [linkedin post](https://www.linkedin.com/posts/nilmamano_isomux-design-and-architecture-share-7446310732176130048-pJz3) or the [X post](https://x.com/Nil053/status/2040545416710947027)._
+
+</Collapsible>

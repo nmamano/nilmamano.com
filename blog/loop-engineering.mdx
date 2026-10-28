@@ -1,0 +1,152 @@
+---
+title: "Loop Engineering"
+date: "2026-10-28"
+excerpt: "What I learned from moving Isomux development from work sessions to a continuous loop of agents."
+coverImage: "/blog/personal-software-suites/loop/widget.png"
+categories: ["isomux", "ai", "swe"]
+---
+
+Until recently, I worked on [Isomux](https://isomux.com) in sessions. In a session, a Manager Agent and I picked a batch of tasks that we wanted to work on. Then, the manager dispatched the tasks to up to 6 worker/reviewer pairs in parallel, each doing 1-4 tasks in the same region of the code base. At the end, the manager brought a consolidated report to me.
+
+<BlogImage
+  src="/blog/isomux/level8-orchestration.png"
+  alt="Agent orchestration across two rooms: in the dev room, the Isomux Manager fans out gold task-assignment arrows to six worker agents (Isomuxer1 to 6); each worker has a two-way arrow to its counterpart reviewer agent (Reviewer1 to 6) in a separate review room"
+/>
+
+While this was highly parallel, each session needed me at the beginning and at the end.
+
+Recently, I switched to a loop: agents pick up tasks on their own and make progress until I'm needed. My job is to keep the loop fed and unblocked.
+
+A week in, I cleared the whole task board: every P0-P3 task was done or backlogged.
+
+This post is about how the experiment went and what I learned.
+
+<Toc />
+
+## The loop
+
+Here are the states a task goes through. The orange states need me:
+
+<BlogImage
+  src="/blog/personal-software-suites/loop/states.png"
+  width="50%"
+  mobileWidth="100%"
+  alt="The loop app's task-state diagram with live counts. A task goes from Filed to Triage (curator), Decided (you decided), Ready (curator applied), Working (app), Merging (approved), Sign-off (to sign off), Push (approved, or directly from Merging when there is nothing to sign off) and Done (pushed). Triage and Sign-off are orange; the other states are blue. Side branches lead from Decided to On hold, Backlog and Obsolete, a packet arrow goes from Working back to Triage, and CI red, rejected or reverted arrows go back to Ready."
+/>
+
+### 1. Triage
+
+A Curator agent looks at each task and recommends what to do with it **and why**:
+
+- **Go:** a worker implements it, and it gets merged to main.
+- **Design Round:** a worker researches it and sends me a design packet back for triage.
+- **On Hold:** the loop doesn't touch it.
+- **Backlog:** it goes to P4, and the loop doesn't pick it up.
+- **Obsolete:** the task gets closed.
+
+It also proposes a priority and an effort estimate. It's told to argue against the task first.
+
+Then I adjust its choice and, optionally, leave a note.
+
+<BlogImage
+  src="/blog/loop-engineering/triage-card.png"
+  alt="A triage card in the loop app for the task 'A secret named OPENAI_API_KEY breaks Codex: agents sign in with its placeholder', filed by Isomux Worker 4. The header reads 'Board: no priority, no tag, yours: P2, go, effort M'. Below are the curator's Why and Effort lines and a proposed scope with a new title, then the choice buttons go (selected), design, on hold, backlog, obsolete and rewrite, the priority buttons P0 to P3 with P2 selected, a note box for the curator, and Confirm and Later buttons."
+/>
+
+After my choice, the task moves to "Decided". There, the Curator Agent picks it back up and looks at my notes, potentially tweaking the task. If the choice is Go or Design Round, the task moves to the Ready queue.
+
+### 2. Workers And Reviewers
+
+Tasks from the Ready queue are picked up by up to `N` workers in parallel, each in its own git worktree. I often set `N = 4`.
+
+Each worker has a reviewer. For each task:
+
+1. They agree on the design.
+2. The worker adds stubs (new types and function signatures).
+3. The reviewer adds tests, and checks that they fail for the right reason.
+4. The worker implements.
+
+They can iterate on that.
+
+The reviewer writes the tests first to prevent a common agent error, which is repeating the implementation in the tests.
+
+When a task was classified as Design Round, the worker researches it instead. Where a picture helps, it builds a prototype on its branch and takes screenshots. Then it sends me a design packet: a question, 2-4 options with their cost, and a recommendation. A worker can also turn a Go task into a Design Round when it runs into something during the implementation that needs my call.
+
+The packet comes back to me in Triage, and I decide it like any other task:
+
+<BlogImage
+  src="/blog/personal-software-suites/loop/design-packet.png"
+  alt="A design packet card in the loop app's Triage queue for task 'Papercuts: let agents report friction they hit during work'. It asks 'When an agent works around a problem (a broken link, a wrong doc, a confusing error), where does it write that down?' and lists four options with their cost, one marked recommended, then the worker's recommendation, an Evidence fold, the branch, choice buttons (go, design, on hold, backlog, obsolete), a note box for the curator, and Confirm and Later buttons."
+/>
+
+### 3. Main
+
+When a Go task is done, it goes to the Main Agent: the agent that owns the main branch and is in charge of it.
+
+Main Agent rebases and squashes the branch, runs CI, and merges it. If CI fails because of the branch, the task goes back to the Ready queue with a note. If CI fails and then passes on a rerun, the test is flaky: Main Agent quarantines the test and files a task to fix it.
+
+### 4. Sign-off
+
+When a worker hands off a task, it prepares a "Sign-off packet" with the task's user-facing changes and posts it to the loop app. It appears in the Sign-Off queue after Main Agent has merged it. It's like code review, but it only shows a summary, before/after screenshots and videos with a red frame around the change, and before/after user-facing copy.
+
+I can add more comments at this stage, and they become a new task that goes through the loop. But before I look, a Sign-off Scout Agent predicts my verdict on each packet (quick stamp, look closer, or push back) and suggests comments I may want to write. I can use a suggestion with one click.
+
+<BlogImage
+  src="/blog/loop-engineering/sign-off-screenshots.png"
+  alt="A sign-off item in the loop app. At the top, a before/after pair of phone screenshots of a secret request in the Inbox, each with a red frame around the request's reason text. Below, a purple 'Suggested edit' block reads 'the reason text is smaller than the other asks' text. same size as an ask prompt', with a Use button, then a comment box, a '1 suggested edit on this card' banner, a note box, and Approve and Reject buttons. The next item starts below with a green 'Quick stamp' label and the Scout's one-line reason."
+/>
+
+### 5. Push
+
+After my comments are addressed, the commits go to the push queue, and anything there gets pushed to GitHub in one click.
+
+## The numbers
+
+After 7 days, I cleared every P0-P3 task. In the 10 days since the loop started:[^measured]
+
+[^measured]: Measured 2026-10-28 at 06:27 PT from the loop app's data, the task board's history, and the git log. Days are in PT.
+
+- I made 553 triage decisions: 507 on the Curator's proposals and 46 on design packets. I took the Curator's choice 80% of the time.
+- 426 tasks went all the way from dispatch to merge. The median time from dispatch to merge was 32 minutes.
+- Main got 476 commits in 10 days, 48 per day. The week before the loop, it averaged 28 per day.
+- I signed off 228 items. I approved 61 of them with comments, and I rejected one.
+
+## What I learned
+
+### I'm the bottleneck
+
+It's a firehose. I'm bottlenecking the factory at both ends, triaging and signing off.
+
+One reason I'm the bottleneck is that I review ~all user-facing copy and UI changes. I think people use "amount of AI slop" as a proxy for quality (and it's probably a good proxy).
+
+Sometimes, it was hard to find a clean point to push/cut a release. In those cases, I changed the loop to only P0s until I cut a release.
+
+### N as a token budget
+
+I started with 2 worker/reviewer pairs.
+
+Then I went up to 4 because I wasn't burning tokens fast enough to use my weekly limit fully.
+
+The opposite also happened: the loop halted when I was out of tokens.
+
+### Other lessons
+
+- **The Curator learned my taste:** Every decision I make goes back to the Curator, with my note when I override it. When a note states a general rule, the Curator saves it to its memory.
+- **Old tasks need reinterpretation:** Some tasks were 50 days old. Isomux had changed a lot since they were filed, so the dispatch message now includes the task's age, and the worker checks old tasks against today's main before starting.
+- **Tasks spawn tasks:** Since the loop started, 433 new tasks were filed, mostly by agents. (Many were tweaks requested at the sign-off stage filed as new tasks.)
+- **The Scout's stamp is reliable:** Of the 121 items it marked as a quick stamp, I approved 117 without a comment.
+
+## The loop app
+
+The loop app itself is a [just-in-time app](/blog/personal-software-suites). The first version took one evening, and it has been changing ever since.
+
+It belongs to the Curator, and I can talk to the Curator from a chat widget inside the app:
+
+<BlogImage
+  src="/blog/personal-software-suites/loop/widget.png"
+  alt="The loop app open at its short address, with the chat widget open on the right. The app shows its task-state diagram on the left and a design packet card in the Triage queue in the middle. The widget panel, titled 'Chat with Isomux Curator' with an 'Open app directly' link, notes that the chat is shared with members of the agent's room, shows the curator's last reply summarizing triage decisions, and has a hint to paste a screenshot, a message box, and Attach image and Send buttons. A 'Chat' button with the curator's avatar sits in the bottom-right corner"
+/>
+
+The app talks to the rest of the office: it reads and claims tasks on the task board, messages the agents, and receives their design packets and sign-off items.
+
+This was a really fun first experiment in loop engineering. For where I think this is going, see [Loop Engineering and the End of Agents](/blog/end-of-agents).

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Renders the cover for the "Personal Software Suites" blog post.
+# Renders the cover for the "Personal App Store" blog post.
 # Run from the repo root: sh _source_assets/personal_software_suites_cover.sh
 set -e
 mkdir -p public/blog/personal-software-suites

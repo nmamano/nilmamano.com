@@ -13,6 +13,7 @@ import {
 import TocElement from "./TableOfContents";
 import { parseCaption } from "./parse-caption";
 import { BlogCarousel } from "./BlogCarousel";
+import { Collapsible } from "./Collapsible";
 
 interface BlogImageProps {
   src: string;
@@ -370,6 +371,7 @@ const components = {
   Problem,
   Solution,
   Toc: TocElement,
+  Collapsible,
   // Table components
   Table,
   TableBody,
