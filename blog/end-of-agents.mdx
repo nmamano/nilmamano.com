@@ -2,7 +2,7 @@
 title: "Loop Engineering and the End of Agents"
 date: "2026-10-30"
 excerpt: "I propose a metric: eDPM, effective Decisions Per Minute."
-coverImage: "/blog/loop-engineering/triage-card.png"
+coverImage: "/blog/end-of-agents/cover.png"
 categories: ["isomux", "ai", "swe"]
 ---
 
@@ -39,6 +39,11 @@ Loop engineering reminds me of event-driven architectures (EDA):
 - **Events:** past facts, like "task filed", "merged at sha X", or "I decided go, P1".
 - **Policies:** rules like "whenever event X happens, decide, and then take action Y".
 - **Actions:** something that results in new events.
+
+<BlogImage
+  src="/blog/end-of-agents/eda-loop.svg"
+  alt="The EDA loop as three boxes. Event (a past fact, such as 'task filed', 'merged at sha X' or 'I decided go, P1') points to Policy (whenever event X happens, decide), which holds a Decider slot that can be code, an agent or a human. Policy points to Action (take action Y), which holds an Actor slot that can be code, an agent or a human. An arrow labeled 'results in new events' goes from Action back to Event."
+/>
 
 Workflows like the SDLC can be seen as a chain of policies.
 
@@ -100,11 +105,21 @@ You might start with a single workflow, like pushing PRs for one project.
 
 But you don't want to manage a loop app per project, so you add all your projects as inputs (Events) to your Decision Node.[^per-project] Then you realize: why am I making decisions anywhere else, if this has the best eDPM? So it progressively eats every event source in your life. Your email. Your bills. Your online shopping. Your group chats. Your whole life falls into the Decision Node, like a black hole gobbling everything up.
 
+<BlogImage
+  src="/blog/end-of-agents/black-hole.svg"
+  alt="A gravity well drawn as a funnel-shaped grid, with the Decision Node as a dark hole at the bottom. Event sources slide down toward it: Project A and Project B are deepest, near the hole; Email and Bills are partway down; Online shopping and Group chats are at the rim."
+/>
+
 ### 3. The single Decision Node architecture
 
 Most people doing loop engineering have various human gates along the SDLC. Maybe there's triage at the top and sign-off at the end.
 
 There's no point for you the human to be jumping between different queues. It's all decisions at the end of the day. Bring them all to a single queue (with flexible decision packets), so that the system can scale to unlimited events and actions.
+
+<BlogImage
+  src="/blog/end-of-agents/single-decision-node.svg"
+  alt="Two projects, each a pipeline Filed, Triage, Work, Merge, Sign-off, Push, where Triage and Sign-off are human gates. Before: 4 human gates, with a You circle next to the Triage and Sign-off of each project. After: 1 Decision Node: the Triage and Sign-off of both projects point to one Decision Node (every decision, one queue), with a single You next to it."
+/>
 
 ## What are the problems with this framework?
 
