@@ -15,9 +15,9 @@ In January, I read Steve Yegge's [Gas Town](https://steve-yegge.medium.com/welco
   alt="Steve Yegge's 8 levels of coding agent usage, from Y/N confirmations in a single chat (level 1) to an orchestrator managing a fleet of Claude Code instances (level 8)"
 />
 
-I was at Level 5. The post warns you not to try to jump straight to Level 8, so I asked myself what was one thing I could pick up from it to help me up the hierarchy.
+I was at Level 5. The post warns you not to try to jump straight to Level 8, so I looked for one thing I could pick up from it to help me up the hierarchy.
 
-That one thing was [tmux](https://github.com/tmux/tmux) (short for Terminal MUltipleXer). It helped me manage a few Claude Code sessions at once, but I didn't want to spend all day every day looking at terminals. So I got a bit creative and made a wrapper that was cuter to look at, with isometric graphics. Hence Isomux (ISOmetric MUltipleXer):
+That one thing was [tmux](https://github.com/tmux/tmux) (short for Terminal MUltipleXer), which did help with managing a few Claude Code sessions at once. But I didn't want to spend all day every day looking at terminals. So I got a bit creative and made a wrapper that was cuter to look at, with isometric graphics. Hence, Isomux (ISOmetric MUltipleXer):
 
 <DemoEmbed
   src="https://isomux.com/demo?embed"
@@ -25,9 +25,9 @@ That one thing was [tmux](https://github.com/tmux/tmux) (short for Terminal MUlt
   title="Isomux live demo"
 />
 
-That started a pattern: using agents to solve pain points in my environment.
+That started a pattern: evolving Isomux to solve pain points in my environment.
 
-For example, another pain point was having to manage a mix of local and remote sessions.[^remote-only] For the former, I had to keep my laptop open. For the latter, I had to ssh all the time.
+For example, another pain point was having to manage a mix of local and remote sessions.[^remote-only] For the former, I had to keep my laptop open; for the latter, I had to ssh all the time.
 
 [^remote-only]: Tasks like [model training](/blog/wall-game-ai) can only be done remotely.
 
@@ -43,7 +43,7 @@ Over time, I developed Isomux into a [meta-harness](/blog/isomux):
   alt="Three nested boxes. The innermost is the model. Around it is the harness, which asks how we make the most out of a model, with Claude Code and Codex as examples. Around that is the meta-harness, which asks how humans make the most out of agents, with Omnigent, qm, and Isomux as examples."
 />
 
-I started Isomux on March 27, 2026, and I built it from inside it since that day.[^first-day] In fact, I haven't used anything else since (except on occasions where I managed to brick Isomux during development and used "bare bones" Claude Code to unbrick it).
+I started Isomux on March 27, 2026, and I built it from inside it since that day.[^first-day] In fact, the only times I've used anything else since then is when I accidentally bricked Isomux during development and had to use "bare bones" Claude Code to unbrick it.
 
 [^first-day]: Here's [Isomux on its first day, next to how it looked in August](/posts/how-it-started-how-its-going).
 
@@ -66,15 +66,23 @@ Each agent has a customizable name and look and sits at a desk. You see who is w
 
 - **Mar 27, 2026:** First commit.
 - **Mar 28: Multi-device and multiplayer (in the same VPN).** The same office, live on laptop and phone. Messages carry the sender's name, so several people can talk to the same agents.
-- **Apr 3:** Published [Isomux: Designing a Meta-Harness](/blog/isomux).
 - **May 9: [Agent-to-agent messaging](/blog/isomux#direct-messages).**
 - **May 10: Multi-provider.** Codex agents, side by side with Claude Code agents.
 - **May 14: Member accounts** with invite links (multiplayer no longer restricted to the same VPN).
-- **Aug 8:** Published [Making Agents User-Friendly](/blog/agent-ui).
-- **Aug 24:** Turned Isomux into a company and launched my first product, Hosted Isomux ([isomux.app](https://isomux.app)). See [Building a Hosted Agents Product End-to-End](/blog/hosted-isomux).
-- **Aug 28:** Published [The Personal App Store](/blog/personal-software-suites).
-- **Sep 30 and Oct 5:** Published Isomux for Enterprise ([part 1](/blog/isomux-enterprise), [part 2](/blog/isomux-crews)).
+- **Aug 24:** Turned Isomux into a company and launched my first product, Hosted Isomux ([isomux.app](https://isomux.app)).
 
 By May, Isomux had all four of [multi-user, multi-agent, multi-device, and multi-provider](/blog/isomux) in the same conversation; as of October, I haven't found another product that does.[^closest]
 
 [^closest]: The Isomux dates are from its git history. The closest products I found: [Databricks Omnigent](https://www.databricks.com/blog/introducing-omnigent-meta-harness-combine-control-and-share-your-agents) (June 2026) has multi-user, multi-device, and multi-provider, with agents working across sessions on its roadmap. [Devin](https://x.com/cognition/status/2041888298654650658) (April 2026) and [Amp](https://ampcode.com/news/multiplayer) (July 2026) added multiplayer sessions, and Claude Code added cross-session messaging in [v2.1.224](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md) (August 2026).
+
+## Building in public
+
+- **Apr 3, 2026:** [Isomux: Designing a Meta-Harness](/blog/isomux)
+- **Aug 8, 2026:** [Making Agents User-Friendly](/blog/agent-ui)
+- **Aug 21, 2026:** [Building a Hosted Agents Product End-to-End](/blog/hosted-isomux)
+- **Aug 28, 2026:** [The Personal App Store](/blog/personal-app-store)
+- **Sep 30, 2026:** [Isomux for Enterprise: Agents for Normies](/blog/isomux-enterprise)
+- **Oct 3, 2026:** [Browser Use for Cloud Agents: An Implementation Guide](/blog/browser-use)
+- **Oct 5, 2026:** [Isomux for Enterprise 2: Turning your company AI native](/blog/isomux-crews)
+- **Oct 29, 2026:** [Loop Engineering](/blog/loop-engineering)
+- **Oct 30, 2026:** [Loop Engineering and the End of Agents](/blog/end-of-agents)

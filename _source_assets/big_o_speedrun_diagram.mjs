@@ -1,4 +1,4 @@
-// Builds the system diagram for the "Academia 2.0" (Big O Speedrun) post.
+// Builds the system diagram for the "Research 2.0" (Big O Speedrun) post.
 // The template marks each agent avatar with <!--CHAR:name:x:y:height-->; the
 // avatars are the real BOS agents' outfits, rendered from isomux's
 // ui/office/Character.tsx (big_o_speedrun_chars_render.tsx, waiting pose).

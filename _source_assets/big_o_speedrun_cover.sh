@@ -1,5 +1,5 @@
 #!/bin/sh
-# Renders the cover for the "Academia 2.0" blog post.
+# Renders the cover for the "Research 2.0" blog post.
 # The chart is a real dark-mode capture of bigospeedrun.com
 # (_source_assets/big_o_speedrun_cover_chart_capture.mjs).
 # Run from the repo root: sh _source_assets/big_o_speedrun_cover.sh

@@ -16,7 +16,7 @@ function Research() {
 }
 
 function Agents() {
-  return <p>I&apos;m now absorbed in the question of how we work with agents. I think many of the limitations that we accept when interacting with agents are historical artifacts, and my work aims to deconstruct them. I <A href="/blog/isomux">built in public</A> a multi-user, multi-agent platform (<A href="https://isomux.com">isomux.com</A>) and started <A href="https://isomux.app">isomux.app</A>, a hosting business around it (also <A href="/blog/hosted-isomux">built in public</A>). My focus is on <A href="/blog/agent-ui">bringing agents to non-technical users</A>. One feature I&apos;m proud of is the <A href="/blog/personal-software-suites">personal app store</A>.</p>;
+  return <p>I&apos;m now absorbed in the question of how we work with agents. I think many of the limitations that we accept when interacting with agents are historical artifacts, and my work aims to deconstruct them. I <A href="/blog/isomux">built in public</A> a multi-user, multi-agent platform (<A href="https://isomux.com">isomux.com</A>) and started <A href="https://isomux.app">isomux.app</A>, a hosting business around it (also <A href="/blog/hosted-isomux">built in public</A>). My focus is on <A href="/blog/agent-ui">bringing agents to non-technical users</A>. One feature I&apos;m proud of is the <A href="/blog/personal-app-store">personal app store</A>.</p>;
 }
 
 function OtherWork() {

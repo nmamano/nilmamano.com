@@ -52,6 +52,11 @@ const nextConfig = {
         destination: "/resume/resume_nilmamano.pdf",
         permanent: false,
       },
+      {
+        source: "/blog/personal-software-suites",
+        destination: "/blog/personal-app-store",
+        permanent: true,
+      },
     ];
   },
 };

@@ -1,6 +1,6 @@
 ---
 title: "Loop Engineering and the End of Agents"
-date: "2026-10-28"
+date: "2026-10-30"
 excerpt: "I propose a metric: eDPM, effective Decisions Per Minute."
 coverImage: "/blog/loop-engineering/triage-card.png"
 categories: ["isomux", "ai", "swe"]
@@ -8,7 +8,7 @@ categories: ["isomux", "ai", "swe"]
 
 In this post, I share my most forward-looking ideas after experimenting with [loop engineering](/blog/loop-engineering).
 
-Today, people talk to agents a lot. But think about what you are really doing when you talk to agents. You are digging through walls of text to fish out only 2 things: decisions you need to make, and actions you need to take.
+Today, people talk to agents a lot. But think about what you are really doing when you talk to agents. You are **digging through walls of text to fish out only 2 things: decisions you need to make, and actions you need to take**.
 
 So I propose a system that makes **Decisions** and **Actions** the first-class citizens, and agents the implementation detail.
 
@@ -24,11 +24,13 @@ The easy PRs to push through are not the valuable ones. And agents always find s
 
 I propose a metric: **eDPM**
 
-**eDPM:** effective Decisions Per Minute
+**eDPM:** effective Decisions Per Minute[^eapm]
+
+[^eapm]: The term is based on eAPM (effective Actions Per Minute) in competitive videogames like StarCraft. eAPM counts only the actions that do something, not spam clicks.
 
 An "effective decision" is one that requires my judgement. One where two reasonable humans could disagree, and that disagreement would have a meaningful downstream impact. In practice, it's one where my agents can't predict what I want.
 
-eDPM is the thing to optimize for.
+eDPM is the thing to optimize for. Not PRs or tokens used.
 
 ## The EDA framework
 
