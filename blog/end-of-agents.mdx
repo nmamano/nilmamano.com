@@ -121,6 +121,15 @@ There's no point for you the human to be jumping between different queues. It's 
   alt="Two projects, each a pipeline Filed, Triage, Work, Merge, Sign-off, Push, where Triage and Sign-off are human gates. Before: 4 human gates, with a You circle next to the Triage and Sign-off of each project. After: 1 Decision Node: the Triage and Sign-off of both projects point to one Decision Node (every decision, one queue), with a single You next to it."
 />
 
+## An attempted implementation
+
+I built a first version of the Decision Node, [Antifeed](https://github.com/nmamano/antifeed), and a [loop app](https://github.com/nmamano/isomux-loop) that fed it one project's triage, sign-off and push. They worked well enough that the feature moved into [Isomux](https://github.com/nmamano/isomux) itself, as asks in the Inbox. Both repos stay up as reference implementations.
+
+<BlogImage
+  src="/blog/end-of-agents/antifeed-card.png"
+  alt="An Antifeed decision card in the Queue tab, for a Wall Game triage task: the task title and description at the top, then a box outlined in red and labeled 'Premove: the predicted call' that shows go, P2, 72% sure and a one-line reason, next to an Against box. Below are a chat box for the Predictor and the Your call section, with go and P2 pre-filled, a note box, and Confirm and Later buttons."
+/>
+
 ## What are the problems with this framework?
 
 There are some quirks I'm still trying to work out:
