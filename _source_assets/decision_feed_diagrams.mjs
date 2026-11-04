@@ -1,10 +1,10 @@
-// Generates the conceptual diagrams for "Loop Engineering and the End of Agents":
-// the EDA loop, gates vs. one Decision Node, and the black hole.
+// Generates the conceptual diagrams for "The Decision Feed":
+// the EDA loop, gates vs. one Decision Feed, and the black hole.
 // Same style as the other site diagrams (personal_software_suites_layers.mjs).
-// Run from the repo root: node _source_assets/end_of_agents_diagrams.mjs
+// Run from the repo root: node _source_assets/decision_feed_diagrams.mjs
 import { mkdirSync, writeFileSync } from "node:fs";
 
-const OUT = "public/blog/end-of-agents";
+const OUT = "public/blog/decision-feed";
 const FONT = `Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif`;
 const C = {
   blue: { s: "#2b6cb0", f: "#e7f2ff" },
@@ -72,7 +72,7 @@ mkdirSync(OUT, { recursive: true });
   writeFileSync(`${OUT}/eda-loop.svg`, svg(W, H, b));
 }
 
-// 2. Two projects: four human queues vs. one Decision Node.
+// 2. Two projects: four human queues vs. one Decision Feed.
 {
   const W = 1000;
   const stages = ["Filed", "Triage", "Work", "Merge", "Sign-off", "Push"];
@@ -107,9 +107,9 @@ mkdirSync(OUT, { recursive: true });
   const sep = bY + rh + 40;
   b += `  <line x1="24" y1="${sep}" x2="976" y2="${sep}" stroke="#e2e8f0" stroke-width="2"/>\n`;
 
-  // After: every gate sends to the one Decision Node.
+  // After: every gate sends to the one Decision Feed.
   const top2 = sep + 70;
-  b += text(24, top2 - 22, "After: 1 Decision Node", { size: 20, weight: 700, anchor: "start" });
+  b += text(24, top2 - 22, "After: 1 Decision Feed", { size: 20, weight: 700, anchor: "start" });
   const a2 = top2, b2 = top2 + 250;
   b += row(a2, "Project A") + row(b2, "Project B");
   const nw = 300, nh = 70, nx = (mid(1) + mid(4)) / 2 - nw / 2, ny = (a2 + rh + b2) / 2 - nh / 2;
@@ -119,13 +119,13 @@ mkdirSync(OUT, { recursive: true });
     b += arrow(mid(i), b2, tx, ny + nh, C.orange.s);
   }
   b += box(nx, ny, nw, nh, C.orange, 12);
-  b += text(nx + nw / 2, ny + 30, "Decision Node", { size: 20, weight: 700, fill: C.orange.s });
+  b += text(nx + nw / 2, ny + 30, "Decision Feed", { size: 20, weight: 700, fill: C.orange.s });
   b += text(nx + nw / 2, ny + 53, "every decision, one queue", { size: 14, weight: 500, fill: C.orange.s, opacity: 0.85 });
   b += you(nx + nw + 44, ny + nh / 2);
-  writeFileSync(`${OUT}/single-decision-node.svg`, svg(W, b2 + rh + 30, b));
+  writeFileSync(`${OUT}/single-decision-feed.svg`, svg(W, b2 + rh + 30, b));
 }
 
-// 3. The black hole: a gravity well. Event sources slide down into the Decision Node.
+// 3. The black hole: a gravity well. Event sources slide down into the Decision Feed.
 {
   const W = 1000, H = 500, cx = 500, top = 150, R = 440, rMin = 46, tilt = 0.26;
   // Depth of the well at radius r: flat at the rim, steep near the center.
@@ -152,7 +152,7 @@ mkdirSync(OUT, { recursive: true });
   b += `  <ellipse cx="${cx}" cy="${f1(hy)}" rx="${rMin * 2.1}" ry="${f1(rMin * tilt * 2.6)}" fill="url(#glow)"/>\n`;
   b += `  <ellipse cx="${cx}" cy="${f1(hy)}" rx="${rMin}" ry="${f1(rMin * tilt)}" fill="#1a1530" stroke="${C.orange.s}" stroke-width="2.5"/>\n`;
   b += box(cx - 95, hy + 28, 190, 40, C.orange, 20);
-  b += text(cx, hy + 54, "Decision Node", { size: 17, weight: 700, fill: C.orange.s });
+  b += text(cx, hy + 54, "Decision Feed", { size: 17, weight: 700, fill: C.orange.s });
   // Event sources on the slope, each with a short arrow down the well. The ones it ate first are deepest.
   const items = [
     ["Group chats", C.purple, 400, 0.3], ["Online shopping", C.green, 390, 2.85],
@@ -170,5 +170,6 @@ mkdirSync(OUT, { recursive: true });
   }
   writeFileSync(`${OUT}/black-hole.svg`, svg(W, H, b));
 }
+
 
 console.log("written to", OUT);

@@ -1,30 +1,30 @@
 ---
-title: "Loop Engineering and the End of Agents"
+title: "The Decision Feed"
 date: "2026-10-30"
 excerpt: "I propose a metric: eDPM, effective Decisions Per Minute."
-coverImage: "/blog/end-of-agents/cover.png"
+coverImage: "/blog/decision-feed/cover.png"
 categories: ["isomux", "ai", "swe"]
 ---
 
-In this post, I share my most forward-looking ideas after experimenting with [loop engineering](/blog/loop-engineering).
+The **Decision Feed** is a system that maximizes for what I call **eDPM**: effective Decisions Per Minute.[^eapm]
 
-Today, people talk to agents a lot. But think about what you are really doing when you talk to agents. You are **digging through walls of text to fish out only 2 things: decisions you need to make, and actions you need to take**.
+Think about what you are really doing when you talk to agents: digging through walls of text to fish out the **decisions** you need to make and **actions** you need to take.
 
 So I propose a system that makes **Decisions** and **Actions** the first-class citizens, and agents the implementation detail.
+
+The system is a feed of Decision/Action Packets aggregated across all your agent workflows.[^origin]
+
+[^origin]: I got here after experimenting with [loop engineering](/blog/loop-engineering).
 
 <Toc />
 
 ## eDPM
 
-Some people today are automating the SDLC (Software Development Life Cycle) and merging hundreds of PRs a day with loop engineering.
+Some people track how productive their agentic workflow is by counting PRs. But you know [Goodhart's law](https://en.wikipedia.org/wiki/Goodhart%27s_law): "when a measure becomes a target, it ceases to be a good measure".
 
-But, you know [Goodhart's law](https://en.wikipedia.org/wiki/Goodhart%27s_law): "when a measure becomes a target, it ceases to be a good measure".
+Agents always find something to polish: feature PRs generate clean-up PRs, and even clean-up PRs generate clean-up PRs.
 
-The easy PRs to push through are not the valuable ones. And agents always find something to polish. Feature PRs generate clean-up PRs. Even clean-up PRs generate clean-up PRs.
-
-I propose a metric: **eDPM**
-
-**eDPM:** effective Decisions Per Minute[^eapm]
+That's why I propose the eDPM metric.
 
 [^eapm]: The term is based on eAPM (effective Actions Per Minute) in competitive videogames like StarCraft. eAPM counts only the actions that do something, not spam clicks.
 
@@ -41,35 +41,37 @@ Loop engineering reminds me of event-driven architectures (EDA):
 - **Actions:** something that results in new events.
 
 <BlogImage
-  src="/blog/end-of-agents/eda-loop.svg"
+  src="/blog/decision-feed/eda-loop.svg"
   alt="The EDA loop as three boxes. Event (a past fact, such as 'task filed', 'merged at sha X' or 'I decided go, P1') points to Policy (whenever event X happens, decide), which holds a Decider slot that can be code, an agent or a human. Policy points to Action (take action Y), which holds an Actor slot that can be code, an agent or a human. An arrow labeled 'results in new events' goes from Action back to Event."
 />
 
-Workflows like the SDLC can be seen as a chain of policies.
+Workflows like the SDLC (Software Development Life Cycle) can be seen as a chain of policies.
 
 Every policy that holds a choice has a **Decider**, and every action has an **Actor**. Both are pluggable: code, an agent, or the human. A decider can also be a mix: the agent decides above a confidence threshold the human sets, else the human does.
 
 Every policy starts with the human as the decider. Over time, they can be handed off to an agent or codified as code. Irreversible decisions, like cutting a release, stay with the human.
 
-All the decisions that need the human land in a single queue: the **Decision Node**. So do the actions only the human can take.
+All the decisions that need the human land in a single queue: the **Decision Feed**. So do the actions only the human can take.
 
-The idea is that humans will sit at the Decision Node throughout their entire work time, making decisions and taking actions.
+The idea is that humans will sit at the Decision Feed throughout their entire work time, making decisions and taking actions.
 
-Every decision should come with a **Premove** (an agent that predicts and prefills your call) based on **Precedent** (your calls on prior similar situations). As trust is earned, the decider can be switched to the agent making the premoves.
+Every decision should come with a **Premove** (an agent that predicts and prefills your call) based on **Precedent** (your calls on prior similar situations). Track how often the Premove is right: as trust is earned, the decider can be switched to the agent making the premoves.
+
+[^slide-mode]: This principle started as [slide mode](/blog/agent-ui#19-experiment-slide-mode), a failed experiment from a few months ago. The premise was that agents yap too much and users tune out, so slide mode forced the agent to design a single slide for each turn. It didn't work because it added delay to each turn, but the Inbox is asynchronous, so it's not an issue.
 
 [^per-project]: In practice, each project gets its own Premove agent, so no single agent needs context about every project.
 
-## What about the actions?
+## What about actions?
 
 People emphasize actions (like merging a PR), but once the necessary decisions are made, actions are mostly process to automate. 90% of actions agents can already do; 9% are "meat proxy" actions you wish they could (2FA, sudo, payments, captcha, etc.). The remaining 1% are things you actually want to do (like writing this post :).
 
-## What about our beloved agents?
+## What about agents?
 
 As mentioned, we interact with agents mostly to get to the decisions and actions that need us.
 
 So, agents (harnesses, [meta-harnesses](/blog/isomux), agent orchestration, agent swarms, all that) are the how; the mechanism. They are low-level implementation details. The EDA framework is a layer of abstraction above. Agent swarms may go away tomorrow; the implementation changes, but the framework stays.
 
-I predict that we won't chat with agents anymore except where it's helpful to make a decision.
+Chatting with an agent is still the best way to _start_ things: an idea, a task, a new workflow. But once things are running, what you need from agents is mostly decisions and actions, and those don't need a chat.
 
 ## What's new about all this?
 
@@ -84,7 +86,7 @@ Take the example of merging a PR.
 - **Better:** your agents also predict your decision and nitpicks; you just press enter.
 - **Token-maxxing:** your agents preemptively build the PR in a worktree and show you a decision packet with before/after screenshots and videos, as well as takeaways from the implementation; an independent agent predicts your call.
 
-The idea of decision packet is central. Every decision brought to you must be optimized for ease of choice, and the decision packet format must be very flexible to let the agent optimize for that. It could contain
+The idea of decision packet is central. Every decision brought to you must be optimized for ease of choice,[^slide-mode] and the decision packet format must be very flexible to let the agent optimize for that. It could contain
 
 - a smart diff,
 - screenshots with red frames around the important part,
@@ -103,48 +105,92 @@ Of course none of this is hard-coded; you constantly vibe-refine every aspect of
 
 You might start with a single workflow, like pushing PRs for one project.
 
-But you don't want to manage a loop app per project, so you add all your projects as inputs (Events) to your Decision Node.[^per-project] Then you realize: why am I making decisions anywhere else, if this has the best eDPM? So it progressively eats every event source in your life. Your email. Your bills. Your online shopping. Your group chats. Your whole life falls into the Decision Node, like a black hole gobbling everything up.
+But you don't want to manage a loop app per project, so you add all your projects as inputs (Events) to your Decision Feed.[^per-project] Then you realize: why am I making decisions anywhere else, if this has the best eDPM? So it progressively eats every event source in your life. Your email. Your bills. Your online shopping. Your group chats. Your whole life falls into the Decision Feed, like a black hole gobbling everything up.
 
 <BlogImage
-  src="/blog/end-of-agents/black-hole.svg"
-  alt="A gravity well drawn as a funnel-shaped grid, with the Decision Node as a dark hole at the bottom. Event sources slide down toward it: Project A and Project B are deepest, near the hole; Email and Bills are partway down; Online shopping and Group chats are at the rim."
+  src="/blog/decision-feed/black-hole.svg"
+  alt="A gravity well drawn as a funnel-shaped grid, with the Decision Feed as a dark hole at the bottom. Event sources slide down toward it: Project A and Project B are deepest, near the hole; Email and Bills are partway down; Online shopping and Group chats are at the rim."
 />
 
-### 3. The single Decision Node architecture
+### 3. The single Decision Feed architecture
 
-Most people doing loop engineering have various human gates along the SDLC. Maybe there's triage at the top and sign-off at the end.
+Most people doing loop engineering have various human gates along the SDLC (maybe triage at the top and sign-off at the end), or different workflows per project.
 
 There's no point for you the human to be jumping between different queues. It's all decisions at the end of the day. Bring them all to a single queue (with flexible decision packets), so that the system can scale to unlimited events and actions.
 
 <BlogImage
-  src="/blog/end-of-agents/single-decision-node.svg"
-  alt="Two projects, each a pipeline Filed, Triage, Work, Merge, Sign-off, Push, where Triage and Sign-off are human gates. Before: 4 human gates, with a You circle next to the Triage and Sign-off of each project. After: 1 Decision Node: the Triage and Sign-off of both projects point to one Decision Node (every decision, one queue), with a single You next to it."
+  src="/blog/decision-feed/single-decision-feed.svg"
+  alt="Two projects, each a pipeline Filed, Triage, Work, Merge, Sign-off, Push, where Triage and Sign-off are human gates. Before: 4 human gates, with a You circle next to the Triage and Sign-off of each project. After: 1 Decision Feed: the Triage and Sign-off of both projects point to one Decision Feed (every decision, one queue), with a single You next to it."
 />
 
-## An attempted implementation
+## Isomux Implementation
 
-I built a first version of the Decision Node, [Antifeed](https://github.com/nmamano/antifeed), and a [loop app](https://github.com/nmamano/isomux-loop) that fed it one project's triage, sign-off and push. They worked well enough that the feature moved into [Isomux](https://github.com/nmamano/isomux) itself, as asks in the Inbox. Both repos stay up as reference implementations.
+I first built a [loop engineering app](/blog/loop-engineering) specific to Isomux development ([GitHub](https://github.com/nmamano/isomux-loop)). Then, I built a separate generic Decision Feed app ([GitHub](https://github.com/nmamano/antifeed)), based on this write-up.
+
+But then I realized that the Isomux Inbox feature is a better fit (for someone who already spends all day in Isomux).
+
+In Isomux, when an agent needs you, it opens an **ask**: a card in your Inbox with the question, the options, and a reply box. Asks from every agent, in every room, land in the same Inbox, and they stay there until you answer.
 
 <BlogImage
-  src="/blog/end-of-agents/antifeed-card.png"
-  alt="An Antifeed decision card in the Queue tab, for a Wall Game triage task: the task title and description at the top, then a box outlined in red and labeled 'Premove: the predicted call' that shows go, P2, 72% sure and a one-line reason, next to an Against box. Below are a chat box for the Predictor and the Your call section, with go and P2 pre-filled, a note box, and Confirm and Later buttons."
+  src="/blog/decision-feed/inbox-asks.png"
+  alt="The Isomux Inbox, Asks tab, with filters for room, priority and member, and sort controls. Four open asks: an Isomux Curator triage ask with go starred, the Curator and Consult's reason, effort and the case against; an Isomux Sign-off Scout ask with a red/green diff of one copy change, a Before/After image, and Approve starred; an Isomux Worker 2 design question with its pick starred; and a Wall Game Curator triage ask with backlog starred. Each ask shows a priority (P2 to P4) and Reply, Dismiss, Not now, Discuss in chat and Simplify buttons. The content is from a test office."
 />
+
+The Inbox can be turned into the Decision (and Action) Feed.
+
+Each ask carries a decision packet:
+
+- agent-provided options, with the agent's pick marked,
+- images and videos,
+- red/green diffs,
+- filters and sorts by room, priority, and age,
+- a Simplify button for when an ask is unclear,
+- an Undo before my answer is sent.
+
+Apps can open asks too.
+
+### Project crews
+
+A coding project can join as an [agent crew](/blog/isomux-crews#agent-crews), effectively absorbing [loop engineering](/blog/loop-engineering) into the Decision Feed:[^crews-live]
+
+- **PM:** my point of contact, with the final say on process. If I bring an idea to the PM, it files it as a task. A small [app](/blog/personal-app-store) watches the task board and wakes the Curator agent when there are new tasks.
+- **Comms:** collects tasks from every outside channel: GitHub issues and PRs, the Discord server, the landing-page chatbot, and the support inbox. A webhook wakes it for each new item. It adds the item to an open task on the same topic (without personal data), or files a new task. It never replies to anyone outside.
+- **Curator:** opens one triage ask per new task.
+- **Consult:** the Premove. It predicts my call from my past answers. The Curator asks it for the prediction before creating the ask.
+- **Worker and reviewer pairs:** they implement the triaged tasks, in a worktree. Can be multiple pairs at once.
+- **Sign-off Scout:** opens one Approve or Revert ask per merged task.
+- **Main:** the only agent that writes to main. It brings pushes as asks.
+
+For example, here's the crew for Isomux itself. I have an equivalent one for wallgame.io.
+
+<BlogImage
+  src="/blog/decision-feed/isomux-crew-office.png"
+  alt="The Isomux room in the office, at night. The crew sits at adjacent desks: Isomux Comms, Consult, Curator, Sign-off Scout, Main and PM, each with a name tag and a short status line; Nil's Direct Helper sits at another desk. A red box labeled Inbox marks the letter tray on the wall, and a red box on a floor hatch is labeled 'Workers and Reviewers are in the basement'."
+/>
+
+The crew agents auto-handoff their context at around 350k tokens used, so their context is made of past calls. After a handoff, they can pull past decisions from their own conversation history.[^ask-log]
+
+[^ask-log]: Isomux logs every ask, so past calls can be analyzed for accuracy.
+
+[^crews-live]: As of Oct 31, Isomux and Wall Game run this way.
 
 ## What are the problems with this framework?
 
 There are some quirks I'm still trying to work out:
 
 1. **Decision fatigue.** We don't enjoy doing a single thing all day; and by removing all the mechanical work, we left only the part where we need to pay attention.
-2. **The human's role feels reductive.** It's like [Bryan Johnson](https://en.wikipedia.org/wiki/Bryan_Johnson) eating whatever the Health Algorithm says. Agents feel empowering, but somehow eDPM flips that and makes you feel like a metric.
+2. **The human's role feels reductive.**[^bryan] Agents feel empowering, but somehow eDPM flips that and makes you feel like a metric.
+
+[^bryan]: It's like [Bryan Johnson](https://en.wikipedia.org/wiki/Bryan_Johnson) eating whatever the Health Algorithm says.
 
 ## What's the end game?
 
-eDPM is still short-term thinking. The end game is turning the Decision Node into the **Anti Feed**. A feed is designed to scroll endlessly. We want the opposite.
+eDPM is still short-term thinking. The end game of the Decision Feed is the **Anti Feed**. A feed is designed to scroll endlessly. We want the opposite.
 
 I predict a shift toward:
 
-- integrating more events (so all your decisions are routed to the Decision Node)
+- integrating more events (so all your decisions are routed to the Decision Feed)
 - predicting decisions better (RL on your past decisions)
 - automating more actions ([browser use](/blog/browser-use), computer use)
 
-Once everything is integrated into the Decision Node, all decisions are predicted correctly, and all actions are automated, labor ends for good.
+Once everything is integrated into the Decision Feed, all decisions are predicted correctly, and all actions are automated, labor ends for good.

@@ -53,6 +53,11 @@ const nextConfig = {
         permanent: false,
       },
       {
+        source: "/blog/end-of-agents/:path*",
+        destination: "/blog/decision-feed/:path*",
+        permanent: true,
+      },
+      {
         source: "/blog/personal-software-suites",
         destination: "/blog/personal-app-store",
         permanent: true,

@@ -39,7 +39,7 @@
   <ellipse cx="500" cy="407" rx="96.60000000000001" ry="31.1" fill="url(#glow)"/>
   <ellipse cx="500" cy="407" rx="46" ry="12" fill="#1a1530" stroke="#b45309" stroke-width="2.5"/>
   <rect x="405" y="435" width="190" height="40" rx="20" fill="#fdf0e0" stroke="#b45309" stroke-width="2"/>
-  <text x="500" y="461" text-anchor="middle" font-size="17" font-weight="700" fill="#b45309">Decision Node</text>
+  <text x="500" y="461" text-anchor="middle" font-size="17" font-weight="700" fill="#b45309">Decision Feed</text>
   <line x1="811.6" y1="189.1" x2="778.7" y2="191.7" stroke="#6b46c1" stroke-width="2"/>
   <polygon points="767.8,192.5 778.3,186.7 779.1,196.6" fill="#6b46c1"/>
   <rect x="817.6" y="167.7" width="129" height="32" rx="16" fill="#f0e9ff" stroke="#6b46c1" stroke-width="1.5"/>
