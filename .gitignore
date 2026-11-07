@@ -59,3 +59,6 @@ ops-private/
 
 # staged image layers (ops/self-host/stage-image.mjs)
 /.image/
+
+# Claude Code per-user settings (may hold secrets from "don't ask again")
+**/.claude/settings.local.json
