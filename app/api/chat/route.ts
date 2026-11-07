@@ -14,13 +14,12 @@ const guard = createChatGuard({ postSlugs: getAllPostSlugs });
 export async function POST(req: Request) {
   const checked = await guard(req);
   if (checked instanceof Response) return checked;
-  const { ip, messages, context, slug } = checked;
+  const { messages, context, slug } = checked;
 
   const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
-  const userAgent = req.headers.get("user-agent") || "unknown";
   const referer = req.headers.get("referer") || "unknown";
   const label = context === "blog" ? `[blog/${slug}]` : "[homepage]";
-  const meta = `> IP: \`${ip}\` | UA: \`${userAgent.slice(0, 100)}\` | Ref: \`${referer}\``;
+  const meta = `> Ref: \`${referer}\``;
 
   // Fire-and-forget: log user's latest message to Discord
   const lastUserMsg = messages.at(-1)!;

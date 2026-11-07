@@ -9,7 +9,7 @@ export function SiteFooter() {
           © 2025 nilmamano.com. All rights reserved.{" "}
           <span
             className="underline cursor-help [&:hover]:delay-75"
-            title="I use Google Analytics to track page views. Data is anonymized, IPs are hidden, and no personal info is stored except what you provide in forms. Emails from blog subscribers are stored by the sender.net service, not myself directly. I do not use data for advertising."
+            title="I use Google Analytics to track page views. Data is anonymized, IPs are hidden, and no personal info is stored except what you provide in forms or the chat. Emails from blog subscribers are stored by the sender.net service, not myself directly. Chat messages go to Anthropic to generate replies, and I get a copy. I do not use data for advertising."
           >
             Privacy policy
           </span>
