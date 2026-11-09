@@ -238,6 +238,8 @@ Instead of overarchitecting the system to enforce rules like "an agent shouldn't
 
 The full history of memory updates is saved in `~/.isomux`, out of reach of the agents, in case an agent does a destructive UPDATE.
 
+All the memory scopes intentionally have a limited length cap, like 5000 characters for an agent's memory. When it's close to full, the agent is prompted at the beginning of a session to bring this up to the user and volunteer to make cuts. I generally accept their suggestions, but they are quite shy with cuts, so sometimes I dig in myself through Isomux's UI. This flow can seem intrusive, but unchecked memory tends to accumulate obsolete and incorrect facts, something that Steve Yegge calls [heresies](https://steve-yegge.medium.com/gas-town-emergency-user-manual-cf0e4556d74b).
+
 ### Hierarchical Usage
 
 The hierarchy even shows up in the books. The `/isomux-usage` command renders a table where token spend rolls up level by level: each agent's current **session**, summed into that **agent's** lifetime total, summed into **per-room** totals, and finally an **office-wide** grand total that folds in cron-job spend.
