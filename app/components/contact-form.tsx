@@ -10,7 +10,6 @@ import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -86,11 +85,6 @@ export default function ContactForm() {
     <Card className="w-full max-w-2xl mx-auto border-2 border-gray-200 dark:border-gray-700">
       <CardHeader>
         <CardTitle className="text-2xl font-bold">Get in touch</CardTitle>
-        <CardDescription>
-          If you need an expert in DS&A or coding interviews, I may be able to
-          help! Currently open to interesting projects after writing{" "}
-          <em>Beyond Cracking the Coding Interview.</em>
-        </CardDescription>
       </CardHeader>
       <CardContent>
         <p className="mb-4 text-sm text-muted-foreground">
