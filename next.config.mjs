@@ -1,6 +1,28 @@
 import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
+// Content-Security-Policy (task a346ce37). Outside hosts: Google Analytics
+// (gtag.js and its beacons) and the two demo iframes (DemoEmbed in blog posts).
+// Next.js inlines its bootstrap scripts, so script-src needs 'unsafe-inline';
+// the host list still blocks scripts from any other server.
+// Rollout: Report-Only first; switch CSP_HEADER to "Content-Security-Policy"
+// once the browser console shows no violations on each page type.
+const CSP_HEADER = "Content-Security-Policy-Report-Only";
+const CSP = [
+  "default-src 'self'",
+  "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
+  "style-src 'self' 'unsafe-inline'",
+  "img-src 'self' data: blob: https://www.googletagmanager.com https://*.google-analytics.com",
+  "font-src 'self' data:",
+  "connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com",
+  "media-src 'self'",
+  "frame-src https://isomux.com https://nmamano.github.io",
+  "object-src 'none'",
+  "base-uri 'self'",
+  "form-action 'self'",
+  "frame-ancestors 'none'",
+].join("; ");
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   // The VPS image runs .next/standalone (Dockerfile); Vercel ignores this.
@@ -28,12 +50,20 @@ const nextConfig = {
   // Cloudflare caches pages for 5 minutes at most, and each deploy purges the
   // zone. Without this, Next sends a one-year s-maxage on prerendered pages.
   async headers() {
-    return [
+    const headers = [
       {
         source: "/:path((?!api/|_next/).*)",
         headers: [{ key: "Cache-Control", value: "public, max-age=0, s-maxage=300" }],
       },
     ];
+    // Production only: the dev server needs eval and its own websocket.
+    if (process.env.NODE_ENV === "production") {
+      headers.push({
+        source: "/:path*",
+        headers: [{ key: CSP_HEADER, value: CSP }],
+      });
+    }
+    return headers;
   },
   async redirects() {
     return [
