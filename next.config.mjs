@@ -2,17 +2,20 @@ import { createRequire } from "module";
 const require = createRequire(import.meta.url);
 
 // Content-Security-Policy (task a346ce37). Outside hosts: Google Analytics
-// (gtag.js and its beacons) and the two demo iframes (DemoEmbed in blog posts).
+// (gtag.js and its beacons), the demo iframes in blog posts, and the
+// dsatoolkit.com cover image (blog/toolkit.mdx). zod probes eval with
+// Function(""); the block is harmless (zod falls back), so no 'unsafe-eval'.
 // Next.js inlines its bootstrap scripts, so script-src needs 'unsafe-inline';
 // the host list still blocks scripts from any other server.
-// Rollout: Report-Only first; switch CSP_HEADER to "Content-Security-Policy"
-// once the browser console shows no violations on each page type.
-const CSP_HEADER = "Content-Security-Policy-Report-Only";
+// Rollout: Report-Only from 2026-11-17, enforced after a headless Chrome check
+// of each page type. To debug a block, set CSP_HEADER to
+// "Content-Security-Policy-Report-Only" again.
+const CSP_HEADER = "Content-Security-Policy";
 const CSP = [
   "default-src 'self'",
   "script-src 'self' 'unsafe-inline' https://www.googletagmanager.com",
   "style-src 'self' 'unsafe-inline'",
-  "img-src 'self' data: blob: https://www.googletagmanager.com https://*.google-analytics.com",
+  "img-src 'self' data: blob: https://dsatoolkit.com https://www.googletagmanager.com https://*.google-analytics.com",
   "font-src 'self' data:",
   "connect-src 'self' https://www.googletagmanager.com https://*.google-analytics.com https://*.analytics.google.com",
   "media-src 'self'",
