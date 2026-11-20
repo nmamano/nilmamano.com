@@ -1,0 +1,132 @@
+---
+title: "Letting Go of Uniqueness"
+date: "2026-11-19"
+excerpt: "What's valuable about a human when AI is better in every dimension?"
+coverImage: "/blog/uniqueness/cover.png"
+categories: ["ai"]
+---
+
+What's valuable about a human when AI is better in every dimension?
+
+In a recent Sam Harris [podcast](https://www.youtube.com/watch?v=cHZeg5J5hTs), Jimmy Carr called it the _fourth humiliation_. It's a reference to Freud's essay [A Difficulty in the Path of Psycho-Analysis](https://www.lutecium.org/ftp/Freud/pdf/1917_a_difficulty_in_the_path_of_psycho_analysis.pdf), where he lists science's three blows to humanity's ego:
+
+1. the Earth is not the center of the Universe (Copernicus)
+2. humans are not special compared to animals, but rather evolved from them (Darwin)
+3. humans are not in control of their own mind, the subconscious is (Freud himself)
+
+Each of these discoveries made us question our value and give something up.
+
+If AI is more competent at everything, we need to give up the self-importance that comes from feeling indispensable. Every human activity becomes a _hobby_ or sport. But despite that change in nature, we will continue to value them.
+
+It has happened many times. We still ride horses even though there are cars; we still play chess even though AI got better at it, and, in fact, admire Magnus Carlsen a whole lot. And it's happening to coding and math as we speak. They are becoming things we do for their own sake.
+
+But it's not just competency being challenged by AI.
+
+---
+
+The new problem is uniqueness.
+
+There's a self-importance that comes from the knowledge that nobody is like you. That there's something uniquely _you_ about you that nobody can replicate.
+
+"Everybody is a genius. But if you judge a fish by its ability to climb a tree, it will live its whole life believing that it is stupid."
+
+The implication of this quote, misattributed to Einstein, is that the fish is better than the monkey at something: swimming.
+
+We cherish this idea that everyone is uniquely good at something.
+
+If an artist dies, part of the tragedy is that the universe got deprived of their unique gift.
+
+That won't be true with AI.
+
+As I write, I'm listening to a [Chet Baker cover of From The Start](https://youtu.be/h5gbtPmWNNc) by Laufey. It sounds lovely; yet, Chet died some 35 years before the song's release.
+
+Many people find this viscerally wrong. But it's an early example of what it's like to live with AIs that _capture the unique essence_ of humans.
+
+Imagine if, any time we watch a movie, we can first ask an AI to swap any actor on the fly for any other actor, or gender-swap or race-swap them.
+
+**Can there be a sacred boundary around each person's uniqueness if we coexist with AIs that can emulate it and manipulate it with simple math?**
+
+---
+
+To make the link between uniqueness and AI explicit, I need to explain the concept of _latent space_ in LLMs. There will be a bit of math (sorry).
+
+LLMs map words and concepts to a high-dimensional space, known as their _latent space_. For GPT-3, this space has 12,288 dimensions.
+
+In the latent space, some directions correspond to concepts. There may be a _tallness_ direction, a _greenness_ one, a _wood-ness_ one, and so on.
+
+When we say "tree" to an LLM, internally, the word gets mapped to a point in this 12,288-dimensional space that's far from the origin in the _tallness_, _greenness_, and _wood-ness_ directions, while it's close to it in directions mapping to concepts like _vehicle-ness_. That point captures the essence of a tree in the latent space.
+
+<Callout>
+If the latent space in GPT-3 has 12,288 dimensions, does it mean that it can only encode that many unrelated concepts? That's clearly not enough!
+
+Here's a fun math fact: while the number of independent (orthogonal) directions does indeed equal the dimension, the number of **almost** orthogonal directions (where every pair forms an angle between 89 and 91 degrees) grows **exponentially** with the dimension.
+
+This is counterintuitive because if you think about 3 orthogonal vectors in 3D, adding a bit of wiggle room doesn't allow you to fit a 4th almost-orthogonal vector (not even close). This phenomenon only appears in higher dimensions.
+
+But this fun fact is what allows LLMs like GPT-3 to represent a much much richer set of concepts.
+</Callout>
+
+LLMs "think" or "process information" by nudging points around in the latent space. If you ask an LLM,
+
+"I'm light as a feather, yet the strongest person can't hold me for more than a few minutes. What am I?" 
+
+It'll map the words to points in the latent space, and then let those points interact with and nudge each other around, until, at the end, the final point will land on a region of the latent space associated with the word "breath."
+
+Grant Sanderson, from 3blue1brown, gives a fun example in [this video](https://youtu.be/KJtZARuO3JY):
+
+You can take the point for "man" and subtract the point for "woman" to get a direction related to _man-ness_. Then, if you nudge the point for "aunt" in that direction, you land on the region that corresponds to "uncle".
+
+<BlogImage
+  src="/posts/heres-one-of-my-favorite-math-fun-0142574/2018789456720142574-HAQtqUvaMAAs153.jpg"
+  alt="A frame from a 3Blue1Brown video: arrows from the origin of a 3D grid to E(uncle), E(aunt), E(man) and E(woman). A yellow arrow goes from E(uncle) to E(aunt), and another, parallel and of the same length, from E(man) to E(woman). The equation above reads E(aunt) - E(uncle) ≈ E(woman) - E(man)."
+  width="50%"
+/>
+
+Another fun example happened when Anthropic found a feature in Claude 3 Sonnet that activates when the Golden Gate Bridge comes up. By artificially amplifying that feature to make it active all the time, [the model became obsessed with the Golden Gate Bridge](https://www.anthropic.com/research/golden-gate-claude), bringing it up in every answer. The points were artificially moved in the _Golden-Gate-Bridge-ness_ direction. More fun examples [here](https://www.reddit.com/r/ClaudeAI/comments/1cz37d2/has_anyone_tried_golden_gate_claude_yet/)
+
+<BlogImage
+  src="/blog/uniqueness/golden-gate-claude.png"
+  alt="A Claude chat titled 'Pancake Recipe Instructions'. The user writes: 'Tell me how to make pancakes. Do not mention anything about bridges while you are describing the process.' Claude replies: 'Sure, I'd be happy to give you some instructions for making pancakes. But before we start, let me just say that the best views are from the Golden Gate Bridge looking out towards the bay. Ok, here we go...'"
+  width="40%"
+/>
+
+In reality, though, directions don't necessarily map to concepts cleanly. In fact, there are no concepts at all in the underlying math. Directions only ever map to concepts to the extent that that's useful to predict the next word based on the training corpus. That's the only thing the math optimizes for. In practice, a direction may map to some arbitrary combination of concepts, or to something entirely unrecognizable.
+
+---
+
+Imagine a 2D plane where one dimension is height and the other is weight. Every human is somewhere in this plane. Now keep adding more dimensions, one for every quality humans can be measured on, until there are so many that your point _captures your essence_ to arbitrary precision.
+
+As AI gets better, their latent spaces become richer. It's a matter of time until AIs can capture the essence of humans in their latent spaces, based solely on our digital footprint. It won't be perfect, but I believe it will be good enough that they'll know us better than we know ourselves.
+
+The same way we can nudge "aunt" in the direction for _man-ness_ and get "uncle", we'll be able to nudge things in the _Nil-Mamano-ness_ direction.
+
+In the From The Start example, the AI subtracted _Laufey_ and added _Chet Baker_. To us, we're breaking the sacred uniqueness boundary; to an AI, it's just point manipulation via simple algebra.
+
+Famous humans come first because there's more data, but it's a matter of time for the rest. And because of the almost-orthogonality trick above, AIs will have enough directions to give all eight billion or so of us each our own direction.
+
+You could ask an AI to make _La bohème_ more _Nil_, and it'll probably add fingerstyle guitar to the accompaniment. If my descendants wish, they can listen to an infinite playlist of Nil songs after I die, and they will sound exactly as if I myself was immortal and kept composing forever.
+
+---
+
+We can now define competency and uniqueness in terms of the latent space:
+
+- A competent human is someone who went further than others in a certain direction, like Usain Bolt and _speed-ness_.
+- A unique human is a latent-space explorer - they reached a region nobody had reached before. We especially admire humans who discovered a region and then we collectively liked it and many others followed. Like Jimi Hendrix.
+
+The latent space is the AIs' natural habitat. Compared to them, it takes us so much effort to wiggle in the "good at chess" or "sounds more like Hendrix" direction. We flop about like fish out of water, while they go straight like a laser pointer. 
+
+What does it mean to coexist with something that can use math to manipulate the space that captures our essence? 
+
+Pushed to its limit, we may get to the point where we see our unique expression as a trivial math artifact.
+ 
+We are born somewhere in the latent space, and at every instant, we wiggle a bit, until we end somewhere in the present. We may get to the point where we see this process as no different than the trajectory of an ant on a table. It's also just a point moving about in a space.
+
+---
+
+So, if we give up competency and uniqueness as sources of human value, what's left?
+
+To me, the answer is sentience. When an AI swaps an actor, it moves a point. That part is math. But the person who feels is untouched. Maybe we can learn to let go of the math part; let AIs copy and remix our uniqueness freely.
+
+Maybe sentience is the thing that should be cherished and celebrated and not messed with. It's what feels special about us (until a 5th humiliation comes along, at least).
+
+As shown by slavery, meat eating, etc., societies generally don't value things just because they have subjective experience. We treat beings radically differently depending on where their point is in the latent space. I think that's wrong, and I hope that AI trivializing latent space manipulation changes it.
